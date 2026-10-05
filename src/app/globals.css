@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #F8F9FD;
+    --foreground: #0F0C3B;
+    --surface: #FFFFFF;
+    --surface-card: #FFFFFF;
+    --border-subtle: #E2E8F0;
+    
+    /* Ophir Purple & Lavender Theme Tokens */
+    --color-brand-dark: #0F0C3B;
+    --color-brand-navy: #18124E;
+    --color-brand-primary: #4F46E5;
+    --color-brand-lavender: #EDE9FE;
+    --color-brand-mist: #F5F3FF;
+    
+    /* Escrow & Trust */
+    --color-escrow-badge: #EEF2FF;
+    --color-escrow-text: #3730A3;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-jakarta), var(--font-inter), system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-jakarta), var(--font-inter), system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+  }
+}
+
+/* Utilities & Components */
+@layer utilities {
+  .text-purple-gradient {
+    background: linear-gradient(135deg, #6366F1 0%, #4F46E5 50%, #312E81 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .bg-hero-gradient {
+    background: linear-gradient(135deg, #18124E 0%, #0F0C3B 100%);
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+  }
+
+  .glass-dark-card {
+    background: rgba(15, 12, 59, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .purple-border-glow {
+    border: 1px solid rgba(79, 70, 229, 0.35);
+    box-shadow: 0 0 15px rgba(79, 70, 229, 0.12);
+  }
+
+  /* Hide number input spinners */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+}
+
+/* Modern Crisp Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F3F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+
