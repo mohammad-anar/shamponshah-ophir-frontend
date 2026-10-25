@@ -14,10 +14,13 @@ import {
   Sparkles,
   ChevronDown,
   X,
+  Loader2,
 } from "lucide-react";
 import { VENDORS, Vendor } from "@/data/mockData";
 import VendorCard from "@/components/ui/VendorCard/VendorCard";
 import { cn } from "@/lib/utils";
+import { useGetVendorsQuery } from "@/redux/service/vendors/vendorsApi";
+import { useGetCategoriesQuery } from "@/redux/service/categories/categoriesApi";
 
 export default function VendorsDirectoryPage() {
   const searchParams = useSearchParams();
@@ -34,6 +37,34 @@ export default function VendorsDirectoryPage() {
   const [sortBy, setSortBy] = useState("recommended");
   const [currentPage, setCurrentPage] = useState(1);
 
+  // RTK Query hooks
+  const { data: categoriesData } = useGetCategoriesQuery();
+  const { data: apiResponse, isLoading: isVendorsLoading } = useGetVendorsQuery({
+    category: selectedService !== "all" ? selectedService : undefined,
+    city: selectedCity !== "All Cities" ? selectedCity : undefined,
+    tier: selectedTier !== "all" ? selectedTier : undefined,
+    search: searchQuery.trim() || undefined,
+  });
+
+  const liveCategories = categoriesData?.data || categoriesData || [];
+
+  const allVendors = useMemo(() => {
+    const liveVendors: Vendor[] = Array.isArray(apiResponse?.data)
+      ? apiResponse.data
+      : Array.isArray(apiResponse?.vendors)
+      ? apiResponse.vendors
+      : Array.isArray(apiResponse)
+      ? apiResponse
+      : [];
+    if (!liveVendors || liveVendors.length === 0) {
+      return VENDORS;
+    }
+    // Merge live vendors with mock data, ensuring no duplicate IDs
+    const liveIds = new Set(liveVendors.map((v) => v.id));
+    const uniqueMocks = VENDORS.filter((v) => !liveIds.has(v.id));
+    return [...liveVendors, ...uniqueMocks];
+  }, [apiResponse]);
+
   const cities = [
     "All Cities",
     "New York",
@@ -48,12 +79,12 @@ export default function VendorsDirectoryPage() {
   ];
 
   const filteredVendors = useMemo(() => {
-    return VENDORS.filter((v) => {
+    return allVendors.filter((v) => {
       // Service match
       if (selectedService !== "all" && selectedService !== "All Services") {
         if (
-          !v.category.toLowerCase().includes(selectedService.toLowerCase()) &&
-          !v.categoryLabel.toLowerCase().includes(selectedService.toLowerCase())
+          !v.category?.toLowerCase().includes(selectedService.toLowerCase()) &&
+          !v.categoryLabel?.toLowerCase().includes(selectedService.toLowerCase())
         ) {
           return false;
         }
@@ -171,7 +202,7 @@ export default function VendorsDirectoryPage() {
             className="w-full h-full min-h-[50px] px-6 bg-[#0F1228] hover:bg-[#1A1F40] active:scale-98 text-white text-sm font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
           >
             <Search className="w-4 h-4" />
-            <span>Find Artisans</span>
+            <span>Find Vendors</span>
           </button>
         </div>
 
@@ -187,11 +218,21 @@ export default function VendorsDirectoryPage() {
                 className="bg-[#F4F2EE] px-2.5 py-1.5 rounded-lg text-obsidian font-semibold focus:outline-none"
               >
                 <option value="all">All Services</option>
-                <option value="cinematography">Cinematography & Photo</option>
-                <option value="floral">Floral & Stage</option>
-                <option value="music">Live Music & DJ</option>
-                <option value="catering">Catering & Banquets</option>
-                <option value="dessert">Bespoke Cakes</option>
+                {liveCategories.length > 0 ? (
+                  liveCategories.map((cat: any) => (
+                    <option key={cat.id} value={cat.slug || cat.name.toLowerCase()}>
+                      {cat.name}
+                    </option>
+                  ))
+                ) : (
+                  <>
+                    <option value="cinematography">Cinematography & Photo</option>
+                    <option value="floral">Floral & Stage</option>
+                    <option value="music">Live Music & DJ</option>
+                    <option value="catering">Catering & Banquets</option>
+                    <option value="dessert">Bespoke Cakes</option>
+                  </>
+                )}
               </select>
             </div>
 
@@ -321,7 +362,7 @@ export default function VendorsDirectoryPage() {
             <Sparkles className="w-8 h-8 text-gold-500 mx-auto" />
             <h3 className="font-serif font-bold text-xl text-obsidian">No vendors match your exact filters</h3>
             <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
-              Try adjusting your location or category filters to see more verified master artisans across the network.
+              Try adjusting your location or category filters to see more verified master vendors across the network.
             </p>
             <button
               onClick={handleReset}
@@ -351,7 +392,7 @@ export default function VendorsDirectoryPage() {
               href="/become-a-vendor"
               className="px-6 py-3 bg-[#4F46E5] hover:bg-[#4338CA] text-white font-bold text-xs rounded-xl shadow-md hover:shadow-indigo-500/25 transition-all"
             >
-              Apply as an Artisan
+              Apply as an Vendor
             </Link>
           </div>
         </div>
