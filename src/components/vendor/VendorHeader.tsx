@@ -2,26 +2,52 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { 
   Search, 
   Bell, 
   Menu, 
   ChevronDown, 
   Sparkles, 
-  Award,
-  LogOut,
-  Settings,
-  ExternalLink,
-  ArrowLeftRight
+  Award, 
+  LogOut, 
+  Settings, 
+  ExternalLink, 
+  ArrowLeftRight,
+  User
 } from "lucide-react";
+import { useGetMyVendorProfileQuery } from "@/redux/service/vendors/vendorsApi";
+import { useGetUserNotificationsQuery } from "@/redux/service/notifications/notificationsApi";
+import { useAppDispatch } from "@/redux/hooks/hooks";
+import { logout } from "@/redux/features/auth";
+import { baseApi } from "@/redux/api/baseApi";
 
 interface VendorHeaderProps {
   onMenuToggle: () => void;
 }
 
 export default function VendorHeader({ onMenuToggle }: VendorHeaderProps) {
-  const [showNotifications, setShowNotifications] = useState(false);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const [showProfile, setShowProfile] = useState(false);
+
+  const { data: rawProfile } = useGetMyVendorProfileQuery();
+  const { data: rawNotifications } = useGetUserNotificationsQuery();
+
+  const profile = (rawProfile as any)?.data || rawProfile;
+  const notificationsList = (rawNotifications as any)?.data || (Array.isArray(rawNotifications) ? rawNotifications : []);
+  const unreadCount = notificationsList.filter((n: any) => !n.isRead).length;
+
+  const vendorName = profile?.user?.name || profile?.businessName || "Marcus Reed";
+  const businessName = profile?.businessName || profile?.name || "Party Pulse Events";
+  const initials = vendorName.split(" ").map((n: string) => n[0]).join("").slice(0, 2).toUpperCase() || "VR";
+  const tier = profile?.tier ? `${profile.tier} Vendor` : "Rising Vendor";
+
+  const handleSignOut = () => {
+    dispatch(logout());
+    dispatch(baseApi.util.resetApiState());
+    router.push("/login");
+  };
 
   return (
     <header className="sticky top-0 z-30 h-16 bg-white border-b border-slate-200 px-4 md:px-8 flex items-center justify-between">
@@ -57,55 +83,64 @@ export default function VendorHeader({ onMenuToggle }: VendorHeaderProps) {
         </Link>
 
         {/* Tier Badge */}
-        <div className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200 text-[11px] font-bold">
+        <Link
+          href="/vendor/levels"
+          className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200 text-[11px] font-bold hover:bg-amber-100 transition-colors"
+        >
           <Award className="w-3.5 h-3.5 text-amber-600" />
-          <span>Rising Vendor (91% to Pro)</span>
-        </div>
+          <span>{tier}</span>
+        </Link>
 
         {/* Notifications */}
-        <button
-          onClick={() => setShowNotifications(!showNotifications)}
+        <Link
+          href="/vendor/notifications"
           className="relative p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors"
+          title="Notifications"
         >
           <Bell className="w-4 h-4" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-500 border-2 border-white" />
-        </button>
+          {unreadCount > 0 && (
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-500 border-2 border-white animate-pulse" />
+          )}
+        </Link>
 
         {/* Vendor Profile */}
         <div className="relative">
           <button
             onClick={() => setShowProfile(!showProfile)}
-            className="flex items-center gap-2 pl-2 py-1 rounded-lg hover:bg-slate-100 transition-colors"
+            className="flex items-center gap-2 pl-2 py-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
           >
             <div className="w-8 h-8 rounded-full bg-[#0F0C3B] text-white flex items-center justify-center font-bold text-xs shadow-xs">
-              MR
+              {initials}
             </div>
             <div className="hidden lg:flex flex-col text-left leading-tight">
-              <span className="text-xs font-bold text-[#0F0C3B]">Marcus Reed</span>
-              <span className="text-[10px] text-slate-500">Party Pulse Events</span>
+              <span className="text-xs font-bold text-[#0F0C3B]">{vendorName}</span>
+              <span className="text-[10px] text-slate-500">{businessName}</span>
             </div>
             <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden lg:block" />
           </button>
 
           {showProfile && (
-            <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 text-xs">
+            <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 text-xs animate-in fade-in">
               <div className="px-3 py-2 border-b border-slate-100">
-                <p className="font-bold text-[#0F0C3B]">Marcus Reed</p>
-                <p className="text-[11px] text-slate-500">Party Pulse Events</p>
+                <p className="font-bold text-[#0F0C3B]">{vendorName}</p>
+                <p className="text-[11px] text-slate-500">{businessName}</p>
               </div>
-              <Link href="/user" className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">
+              <Link href="/vendor/profile" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">
+                <User className="w-3.5 h-3.5 text-slate-400" /> Public Profile
+              </Link>
+              <Link href="/user" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">
                 <ExternalLink className="w-3.5 h-3.5 text-slate-400" /> Client View
               </Link>
-              <Link href="/admin" className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">
-                <ExternalLink className="w-3.5 h-3.5 text-slate-400" /> Admin Console
-              </Link>
-              <Link href="/vendor/payout-settings" className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">
+              <Link href="/vendor/payout-settings" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">
                 <Settings className="w-3.5 h-3.5 text-slate-400" /> Payout Settings
               </Link>
               <div className="border-t border-slate-100 my-1" />
-              <Link href="/login" className="flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50">
+              <button 
+                onClick={handleSignOut} 
+                className="w-full text-left flex items-center gap-2 px-3 py-2 text-rose-600 hover:bg-rose-50 cursor-pointer font-semibold"
+              >
                 <LogOut className="w-3.5 h-3.5" /> Sign Out
-              </Link>
+              </button>
             </div>
           )}
         </div>
