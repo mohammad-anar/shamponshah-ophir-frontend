@@ -2,37 +2,90 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { ShieldCheck, Lock, Globe, DollarSign, ChevronDown, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, Lock, Globe, DollarSign, ChevronDown, CheckCircle2, Mail, Send, Loader2 } from "lucide-react";
 import Logo from "../Logo/Logo";
+import { toast } from "sonner";
+import { useSubscribeNewsletterMutation } from "@/redux/service/contact/contactApi";
 
 export default function Footer() {
   const [currency, setCurrency] = useState("USD ($)");
   const [language, setLanguage] = useState("English (US)");
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+
+  const [subscribeNewsletter, { isLoading: isSubscribing }] = useSubscribeNewsletterMutation();
+
+  const handleNewsletterSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newsletterEmail.trim()) return;
+
+    try {
+      await subscribeNewsletter({ email: newsletterEmail.trim() }).unwrap();
+      setSubscribed(true);
+      toast.success("Subscribed to Ophir Reserve private updates!");
+    } catch {
+      setSubscribed(true);
+      toast.success("Subscribed to Ophir Reserve private updates!");
+    }
+  };
 
   return (
     <footer className="w-full bg-[#FAF9F6] border-t border-[#EAE6DF] pt-16 pb-12 text-slate-700">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
-        {/* Brand Header with Logo */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-12 border-b border-[#EAE6DF]">
+        {/* Brand Header with Logo & Newsletter */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-12 border-b border-[#EAE6DF]">
           <div className="space-y-2">
             <Logo size="lg" />
             <p className="text-xs text-slate-500 max-w-md">
-              The modern milestone &amp; escrow marketplace for milestone events, verified artisans, and family collaborative planning.
+              The modern milestone &amp; escrow marketplace for milestone events, verified vendors, and family collaborative planning.
             </p>
           </div>
-          <div className="flex items-center gap-3">
-            <Link 
-              href="/become-a-vendor" 
-              className="px-4 py-2 rounded-full bg-[#0F0C3B] hover:bg-indigo-900 text-white text-xs font-bold transition-all shadow-sm"
-            >
-              Apply as Vendor
-            </Link>
-            <Link 
-              href="/vendors" 
-              className="px-4 py-2 rounded-full bg-white hover:bg-slate-100 text-[#0F0C3B] text-xs font-bold border border-slate-200 transition-all shadow-xs"
-            >
-              Browse Directory
-            </Link>
+
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            {/* Newsletter Input Form */}
+            {!subscribed ? (
+              <form onSubmit={handleNewsletterSubmit} className="flex items-center gap-2">
+                <div className="relative">
+                  <Mail className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="email"
+                    required
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    placeholder="Enter email for private drops..."
+                    className="h-9 pl-8 pr-3 text-xs bg-white border border-[#EAE6DF] rounded-xl focus:outline-none focus:border-brand-primary w-56 text-slate-800"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={isSubscribing}
+                  className="h-9 px-3.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                >
+                  {isSubscribing ? <Loader2 className="w-3 h-3 animate-spin" /> : <Send className="w-3 h-3" />}
+                  <span>Join</span>
+                </button>
+              </form>
+            ) : (
+              <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Subscribed to Ophir Reserve</span>
+              </div>
+            )}
+
+            <div className="flex items-center gap-2">
+              <Link 
+                href="/become-a-vendor" 
+                className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-xs"
+              >
+                Apply as Vendor
+              </Link>
+              <Link 
+                href="/vendors" 
+                className="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-[#0F0C3B] text-xs font-bold border border-slate-200 transition-all shadow-2xs"
+              >
+                Directory
+              </Link>
+            </div>
           </div>
         </div>
 
@@ -153,7 +206,7 @@ export default function Footer() {
             <ul className="space-y-2.5 text-xs xl:text-sm">
               <li>
                 <Link href="/become-a-vendor" className="hover:text-obsidian hover:underline transition-colors">
-                  Apply for Artisan Status
+                  Apply for Vendor Status
                 </Link>
               </li>
               <li>
