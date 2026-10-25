@@ -9,18 +9,20 @@ import { RootState } from "../store";
 import { logout, setAccessToken } from "../features/auth";
 
 const baseQuery = fetchBaseQuery({
-  // baseUrl: "https://pamelam.code-commando.com/api",
-  baseUrl: "https://roof-cost.onrender.com/api/v1",
-  // baseUrl: "https://arcroofs.com/api/v1",
-  // baseUrl: "http://localhost:3000/api",
+  baseUrl: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4005/api/v1",
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).auth?.accessToken;
+    let token = (getState() as RootState).auth?.accessToken;
+    if (!token && typeof document !== "undefined") {
+      const match = document.cookie.match(new RegExp("(?:^|; )accessToken=([^;]*)"));
+      if (match) token = decodeURIComponent(match[1]);
+    }
     if (token) {
-      headers.set("Authorization", `${token}`);
+      const cleanToken = token.startsWith("Bearer ") ? token : `Bearer ${token}`;
+      headers.set("Authorization", cleanToken);
     }
     return headers;
   },
-  credentials: "include", // ✅ includes HttpOnly cookies like refresh token
+  credentials: "include",
 });
 
 const baseQueryWithReauth: BaseQueryFn<
@@ -31,23 +33,25 @@ const baseQueryWithReauth: BaseQueryFn<
   let result = await baseQuery(args, api, extraOptions);
 
   if (result.error && result.error.status === 401) {
-    // Refresh access token
-    const refreshResult = await baseQuery(
-      {
-        url: "/auth/refresh-token",
-        method: "POST",
-      },
-      api,
-      extraOptions
-    );
+    const refreshToken = (api.getState() as RootState).auth?.refreshToken;
+    if (refreshToken) {
+      const refreshResult = await baseQuery(
+        {
+          url: "/auth/refresh",
+          method: "POST",
+          body: { refreshToken },
+        },
+        api,
+        extraOptions
+      );
 
-    if (refreshResult.data) {
-      const newAccessToken = (refreshResult.data as any).accessToken;
-
-      api.dispatch(setAccessToken(newAccessToken));
-
-      // Retry the original request
-      result = await baseQuery(args, api, extraOptions);
+      if (refreshResult.data) {
+        const newAccessToken = (refreshResult.data as any).accessToken;
+        api.dispatch(setAccessToken(newAccessToken));
+        result = await baseQuery(args, api, extraOptions);
+      } else {
+        api.dispatch(logout());
+      }
     } else {
       api.dispatch(logout());
     }
@@ -59,7 +63,22 @@ const baseQueryWithReauth: BaseQueryFn<
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQueryWithReauth,
-  tagTypes: ["auth", "roofing", "window"],
+  tagTypes: [
+    "auth",
+    "vendors",
+    "categories",
+    "gigs",
+    "jobs",
+    "offers",
+    "orders",
+    "payments",
+    "events",
+    "family-hub",
+    "reviews",
+    "messages",
+    "notifications",
+    "admin",
+  ],
   endpoints: () => ({}),
 });
 
