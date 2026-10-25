@@ -74,11 +74,32 @@ const jobsList = [
   },
 ];
 
+import { useGetAllJobsQuery } from "@/redux/service/admin/adminApi";
+
 export default function AdminJobsBidsPage() {
+  const { data: apiJobs, isLoading } = useGetAllJobsQuery();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("ALL");
 
-  const filteredJobs = jobsList.filter((job) => {
+  const rawJobs = apiJobs?.data || apiJobs?.jobs || (Array.isArray(apiJobs) ? apiJobs : null);
+  const jobs = (rawJobs && Array.isArray(rawJobs) && rawJobs.length > 0)
+    ? rawJobs.map((j: any) => ({
+        id: `JOB-${(j.id || "").substring(0, 5).toUpperCase()}`,
+        realId: j.id,
+        title: j.title,
+        category: j.category?.name || "Event Service",
+        client: `${j.clientProfile?.displayName || j.client?.name || "Client"} (${j.location || j.city || "Chicago"})`,
+        clientAvatar: (j.clientProfile?.displayName || j.client?.name || "CL").substring(0, 2).toUpperCase(),
+        date: j.eventDate ? new Date(j.eventDate).toLocaleDateString() : "Upcoming",
+        location: j.location || `${j.city || "Chicago"}, IL`,
+        budget: j.budgetMin && j.budgetMax ? `$${Number(j.budgetMin).toFixed(0)} – $${Number(j.budgetMax).toFixed(0)}` : j.budgetMin ? `$${Number(j.budgetMin).toFixed(0)}` : "$400 – $600",
+        bidsCount: j._count?.offers || j.offers?.length || 0,
+        status: j.status || "OPEN_BIDDING",
+        timeLeft: j.status === "OPEN" || j.status === "OPEN_BIDDING" ? "Active RFP" : j.status,
+      }))
+    : jobsList.map(j => ({ ...j, realId: j.id }));
+
+  const filteredJobs = jobs.filter((job) => {
     const matchesFilter = activeFilter === "ALL" || job.status === activeFilter;
     const matchesSearch = 
       job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -94,7 +115,7 @@ export default function AdminJobsBidsPage() {
         <div>
           <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">Jobs &amp; Bids Monitor</h1>
           <p className="text-xs text-slate-500 mt-1">
-            Audit client celebration RFPs, inspect artisan proposal bids, review pricing spreads, and moderate custom job requests
+            Audit client celebration RFPs, inspect vendor proposal bids, review pricing spreads, and moderate custom job requests
           </p>
         </div>
       </div>
@@ -153,7 +174,7 @@ export default function AdminJobsBidsPage() {
                 >
                   <td className="py-3.5 px-4 max-w-xs">
                     <Link
-                      href={`/admin/jobs/${job.id}`}
+                      href={`/admin/jobs/${job.realId || job.id}`}
                       className="font-bold text-[#0F0C3B] group-hover:text-brand-primary line-clamp-1 block transition-colors"
                     >
                       {job.title}
@@ -199,7 +220,7 @@ export default function AdminJobsBidsPage() {
                   </td>
                   <td className="py-3.5 px-4 text-right whitespace-nowrap">
                     <Link
-                      href={`/admin/jobs/${job.id}`}
+                      href={`/admin/jobs/${job.realId || job.id}`}
                       className="px-3 py-1.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-2xs"
                     >
                       <Eye className="w-3 h-3" /> Full Details
