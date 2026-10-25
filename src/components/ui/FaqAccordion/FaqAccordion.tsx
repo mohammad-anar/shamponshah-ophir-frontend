@@ -4,9 +4,18 @@ import React, { useState } from "react";
 import { ChevronDown, HelpCircle } from "lucide-react";
 import { FAQS } from "@/data/mockData";
 import { cn } from "@/lib/utils";
+import { useGetFaqsQuery } from "@/redux/service/contact/contactApi";
 
 export default function FaqAccordion() {
+  const { data: faqsData } = useGetFaqsQuery();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const liveCategories = faqsData?.data || faqsData;
+  const liveFaqs = Array.isArray(liveCategories)
+    ? liveCategories.flatMap((c: any) => c.questions || [])
+    : [];
+
+  const displayFaqs = liveFaqs.length > 0 ? liveFaqs : FAQS;
 
   const toggle = (idx: number) => {
     setOpenIndex(openIndex === idx ? null : idx);
@@ -30,7 +39,7 @@ export default function FaqAccordion() {
 
         {/* Accordion Items */}
         <div className="space-y-3">
-          {FAQS.map((faq, idx) => {
+          {displayFaqs.map((faq: any, idx: number) => {
             const isOpen = openIndex === idx;
             return (
               <div
