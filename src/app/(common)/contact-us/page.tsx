@@ -4,7 +4,7 @@ import ContactUsClient from "@/components/pages/info/ContactUsClient";
 
 export const metadata: Metadata = constructMetadata({
   title: "Contact Us | 24/7 Concierge & Hospitality Desk",
-  description: "Get in touch with the Ophir hospitality concierge, artisan relations team, or escrow mediation desk.",
+  description: "Get in touch with the Ophir hospitality concierge, vendor relations team, or escrow mediation desk.",
   canonicalUrl: "/contact-us",
 });
 
