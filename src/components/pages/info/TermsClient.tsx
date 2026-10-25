@@ -29,7 +29,7 @@ export default function TermsOfServicePage() {
               1. The Utsob Trust Vault & Milestone Escrow Protocol
             </h2>
             <p>
-              Ophir Reserve Technologies Inc. operates as a technology facilitator providing segregated escrow vault services. When a client books an artisan through Ophir Reserve, 100% of contracted funds are placed into an independent FDIC-insured depository account.
+              Ophir Reserve Technologies Inc. operates as a technology facilitator providing segregated escrow vault services. When a client books an vendor through Ophir Reserve, 100% of contracted funds are placed into an independent FDIC-insured depository account.
             </p>
             <p>
               Funds are held under strict programmatic lock and disbursed solely according to the contracted milestone schedule:
@@ -55,7 +55,7 @@ export default function TermsOfServicePage() {
               3. Independent Mediation Council & Dispute Resolution
             </h2>
             <p>
-              In the unlikely event of an artisan non-appearance, force majeure event, or material breach of contract, our Independent Mediation Council reviews recorded contracts, timestamped communications, and evidence within 48 hours. If breach is determined, the client receives an immediate 100% escrow refund.
+              In the unlikely event of an vendor non-appearance, force majeure event, or material breach of contract, our Independent Mediation Council reviews recorded contracts, timestamped communications, and evidence within 48 hours. If breach is determined, the client receives an immediate 100% escrow refund.
             </p>
           </section>
 
@@ -64,7 +64,7 @@ export default function TermsOfServicePage() {
               4. Guild Verification & Background Standards
             </h2>
             <p>
-              All listed artisans maintain verified government identities, commercial general liability insurance minimums ($1M+ for high-hazard staging), and raw portfolio authenticity checks.
+              All listed vendors maintain verified government identities, commercial general liability insurance minimums ($1M+ for high-hazard staging), and raw portfolio authenticity checks.
             </p>
           </section>
         </div>
