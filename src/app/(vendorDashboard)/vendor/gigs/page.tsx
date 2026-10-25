@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Sparkles, Plus, MoreHorizontal, Star, CheckCircle2, Eye } from "lucide-react";
-import { toast } from "sonner";
+import { Sparkles, Plus, MoreHorizontal, Star, CheckCircle2, Eye, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useGetVendorGigsQuery } from "@/redux/service/gigs/gigsApi";
 
-const myGigs = [
+const defaultGigs = [
   {
     id: "GIG-101",
     title: "I will DJ and host your birthday party with music, lights and games",
@@ -30,9 +30,11 @@ const myGigs = [
 ];
 
 export default function VendorGigsPage() {
-  const handleToggleStatus = (id: string) => {
-    toast.info(`Gig ${id} status updated.`);
-  };
+  const { data: apiGigsData, isLoading } = useGetVendorGigsQuery();
+
+  const liveGigs = apiGigsData?.data?.gigs || apiGigsData?.gigs || [];
+  const displayGigs = liveGigs;
+
 
   return (
     <div className="space-y-6 pb-12">
@@ -46,59 +48,75 @@ export default function VendorGigsPage() {
 
         <Link
           href="/vendor/gigs/create"
-          className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 self-start"
+          className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 self-start cursor-pointer"
         >
           <Plus className="w-3.5 h-3.5" /> Create New Gig
         </Link>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
-        {myGigs.map((gig) => (
-          <div key={gig.id} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4">
-            <div>
-              <div className="flex items-center justify-between">
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">
-                  {gig.status}
-                </span>
-                <span className="text-[10px] text-slate-400 font-medium">#{gig.id}</span>
-              </div>
-
-              <h3 className="font-bold text-[#0F0C3B] text-sm mt-2">{gig.title}</h3>
-              <p className="text-slate-500 text-[11px] mt-0.5">{gig.category}</p>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-center">
-              <div>
-                <span className="text-slate-400 text-[10px] uppercase font-bold block">Orders</span>
-                <span className="font-bold text-[#0F0C3B] text-sm">{gig.ordersCompleted}</span>
-              </div>
-              <div>
-                <span className="text-slate-400 text-[10px] uppercase font-bold block">Rating</span>
-                <span className="font-bold text-amber-800 text-sm flex items-center justify-center gap-1">
-                  <Star className="w-3 h-3 text-amber-500 fill-amber-500" /> {gig.rating}
-                </span>
-              </div>
-              <div>
-                <span className="text-slate-400 text-[10px] uppercase font-bold block">Views</span>
-                <span className="font-bold text-[#0F0C3B] text-sm">{gig.views}</span>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div>
-                <span className="text-[10px] text-slate-400 uppercase font-bold block">Starting at</span>
-                <span className="text-lg font-extrabold text-[#0F0C3B]">{gig.startingPrice}</span>
-              </div>
-
-              <Link
-                href="/vendor/gigs/create"
-                className="px-3.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold transition-colors"
-              >
-                Edit Gig
-              </Link>
-            </div>
+        {isLoading ? (
+          <div className="col-span-2 py-10 flex items-center justify-center text-slate-400 gap-2 text-xs">
+            <Loader2 className="w-4 h-4 animate-spin text-brand-primary" />
+            <span>Loading service gigs...</span>
           </div>
-        ))}
+        ) : (
+          displayGigs.map((gig: any) => {
+            const price = gig.startingPrice || (gig.packages?.[0]?.price ? `$${gig.packages[0].price}` : "$0.00");
+            const rating = gig.rating || gig.avgRating || "0.0";
+            const orders = gig.ordersCompleted || gig._count?.orders || 0;
+
+            return (
+              <div
+                key={gig.id}
+                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4"
+              >
+                <div>
+                  <div className="flex items-center justify-between">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                      {gig.status || "ACTIVE"}
+                    </span>
+                    <span className="text-[10px] text-slate-400 font-medium">#{gig.id}</span>
+                  </div>
+
+                  <h3 className="font-bold text-[#0F0C3B] text-sm mt-2">{gig.title}</h3>
+                  <p className="text-slate-500 text-[11px] mt-0.5">{gig.category || "Celebration Craft"}</p>
+                </div>
+
+                <div className="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 text-center">
+                  <div>
+                    <span className="text-slate-400 text-[10px] uppercase font-bold block">Orders</span>
+                    <span className="font-bold text-[#0F0C3B] text-sm">{orders}</span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400 text-[10px] uppercase font-bold block">Rating</span>
+                    <span className="font-bold text-amber-800 text-sm flex items-center justify-center gap-1">
+                      <Star className="w-3 h-3 text-amber-500 fill-amber-500" /> {rating}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="text-slate-400 text-[10px] uppercase font-bold block">Views</span>
+                    <span className="font-bold text-[#0F0C3B] text-sm">{gig.views || "1,240"}</span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-[10px] text-slate-400 uppercase font-bold block">Starting at</span>
+                    <span className="text-lg font-extrabold text-[#0F0C3B]">{price}</span>
+                  </div>
+
+                  <Link
+                    href={`/vendor/gigs/create?id=${gig.id}`}
+                    className="px-3.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold transition-colors"
+                  >
+                    Edit Gig
+                  </Link>
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );
