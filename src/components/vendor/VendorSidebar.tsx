@@ -19,8 +19,11 @@ import {
   Settings,
   Coins,
   ShieldCheck,
+  Scale,
   X
 } from "lucide-react";
+import { useGetVendorOrdersQuery } from "@/redux/service/orders/ordersApi";
+import { useGetUserConversationsQuery } from "@/redux/service/messages/messagesApi";
 
 interface VendorSidebarProps {
   isOpen: boolean;
@@ -40,40 +43,59 @@ interface NavSection {
   items: NavItem[];
 }
 
-const navSections: NavSection[] = [
-  {
-    title: "WORK",
-    items: [
-      { label: "Overview", href: "/vendor", icon: LayoutDashboard },
-      { label: "Orders", href: "/vendor/orders", icon: ShoppingBag, badge: "5", badgeColor: "bg-indigo-100 text-indigo-800" },
-      { label: "Messages", href: "/vendor/messages", icon: MessageSquare, badge: "2", badgeColor: "bg-amber-500 text-white" },
-      { label: "Calendar", href: "/vendor/calendar", icon: Calendar },
-    ],
-  },
-
-  {
-    title: "GROW",
-    items: [
-      { label: "My Gigs", href: "/vendor/gigs", icon: Sparkles },
-      { label: "Find Jobs", href: "/vendor/find-jobs", icon: Search },
-      { label: "My Offers", href: "/vendor/offers", icon: FileCheck },
-      { label: "Analytics", href: "/vendor/analytics", icon: TrendingUp },
-      { label: "Reviews", href: "/vendor/reviews", icon: Star },
-      { label: "Levels", href: "/vendor/levels", icon: Award },
-    ],
-  },
-  {
-    title: "MONEY",
-    items: [
-      { label: "Earnings & Wallet", href: "/vendor/earnings", icon: Wallet },
-      { label: "Payout Settings", href: "/vendor/payout-settings", icon: Settings },
-      { label: "Bid Credits", href: "/vendor/bid-credits", icon: Coins },
-    ],
-  },
-];
-
 export default function VendorSidebar({ isOpen, onClose }: VendorSidebarProps) {
   const pathname = usePathname();
+
+  const { data: rawOrders } = useGetVendorOrdersQuery();
+  const { data: rawConversations } = useGetUserConversationsQuery();
+
+  const ordersList = (rawOrders as any)?.data?.orders || (rawOrders as any)?.orders || (Array.isArray(rawOrders) ? rawOrders : []);
+  const activeOrdersCount = ordersList.filter((o: any) => o.status !== "COMPLETED" && o.status !== "CANCELLED").length;
+
+  const convList = (rawConversations as any)?.data || (Array.isArray(rawConversations) ? rawConversations : []);
+  const unreadMessagesCount = convList.reduce((acc: number, c: any) => acc + (c.unreadCount || 0), 0);
+
+  const navSections: NavSection[] = [
+    {
+      title: "WORK",
+      items: [
+        { label: "Overview", href: "/vendor", icon: LayoutDashboard },
+        { 
+          label: "Orders", 
+          href: "/vendor/orders", 
+          icon: ShoppingBag, 
+          badge: activeOrdersCount > 0 ? String(activeOrdersCount) : undefined, 
+          badgeColor: "bg-indigo-100 text-indigo-800" 
+        },
+        { 
+          label: "Messages", 
+          href: "/vendor/messages", 
+          icon: MessageSquare, 
+          badge: unreadMessagesCount > 0 ? String(unreadMessagesCount) : undefined, 
+          badgeColor: "bg-amber-500 text-white" 
+        },
+        { label: "Calendar", href: "/vendor/calendar", icon: Calendar },
+        { label: "Disputes", href: "/vendor/disputes", icon: Scale },
+      ],
+    },
+    {
+      title: "SERVICES",
+      items: [
+        { label: "My Gigs", href: "/vendor/gigs", icon: Sparkles },
+        { label: "Find Jobs", href: "/vendor/find-jobs", icon: Search },
+        { label: "My Offers", href: "/vendor/offers", icon: FileCheck },
+        { label: "Reviews", href: "/vendor/reviews", icon: Star },
+        { label: "Analytics", href: "/vendor/analytics", icon: TrendingUp },
+      ],
+    },
+    {
+      title: "MONEY",
+      items: [
+        { label: "Earnings & Wallet", href: "/vendor/earnings", icon: Wallet },
+        { label: "Payout Settings", href: "/vendor/payout-settings", icon: Settings },
+      ],
+    },
+  ];
 
   return (
     <>
