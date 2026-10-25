@@ -31,6 +31,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useGetAdminJobByIdQuery, useAwardJobBidMutation } from "@/redux/service/admin/adminApi";
 
 interface VendorBid {
   id: string;
@@ -267,35 +268,82 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
   const router = useRouter();
   const jobId = resolvedParams.id;
 
+  const { data: apiJob, isLoading } = useGetAdminJobByIdQuery(jobId);
+  const [awardJobBidMutation] = useAwardJobBidMutation();
+  const [localNotes, setLocalNotes] = useState<{ id: string; author: string; text: string; date: string }[]>([]);
+  const [localStatus, setLocalStatus] = useState<string | null>(null);
+
   const initialJob = mockJobsDatabase[jobId] || mockJobsDatabase["JOB-8492"];
-  const [job, setJob] = useState<JobDetailData>({
+
+  const job: JobDetailData = apiJob ? {
+    id: apiJob.id,
+    title: apiJob.title,
+    category: apiJob.category?.name || "Celebration Service",
+    occasion: apiJob.occasion || "Celebration",
+    status: (localStatus || apiJob.status || "OPEN_BIDDING") as any,
+    createdAt: apiJob.createdAt ? new Date(apiJob.createdAt).toLocaleDateString() : "Recently",
+    biddingDeadline: apiJob.biddingDeadline ? new Date(apiJob.biddingDeadline).toLocaleDateString() : "Open RFP",
+    budgetMin: Number(apiJob.budgetMin || 0),
+    budgetMax: Number(apiJob.budgetMax || 0),
+    guestCount: apiJob.guestCount || 0,
+    location: apiJob.location || "Chicago, IL",
+    venueName: apiJob.location || "Private Venue",
+    eventDate: apiJob.eventDate ? new Date(apiJob.eventDate).toLocaleDateString() : "Upcoming",
+    eventTime: apiJob.duration || "Scheduled duration",
+    description: apiJob.description || "",
+    requirements: apiJob.specialRequests ? [apiJob.specialRequests] : [
+      "Custom deliverables as agreed with buyer",
+      "Full on-site or digital coordination",
+      "Setup completed prior to celebration arrival"
+    ],
+    client: {
+      id: apiJob.clientProfileId || "C-1",
+      name: apiJob.clientProfile?.displayName || "Event Host",
+      avatar: (apiJob.clientProfile?.displayName || "EH").substring(0, 2).toUpperCase(),
+      email: apiJob.clientProfile?.user?.email || "buyer@marketplace.com",
+      phone: "+1 (312) 555-0199",
+      location: apiJob.location || "Chicago, IL",
+      totalEventsHosted: 1,
+      memberSince: apiJob.clientProfile?.user?.createdAt ? new Date(apiJob.clientProfile.user.createdAt).getFullYear().toString() : "2026",
+      isVerified: true,
+    },
+    bids: (apiJob.offers || []).map((o: any) => ({
+      id: o.id,
+      vendorId: o.vendorProfileId,
+      vendorName: o.vendorProfile?.businessName || "Vendor Vendor",
+      vendorAvatar: o.vendorProfile?.avatarUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
+      rating: Number(o.vendorProfile?.rating || 5.0),
+      reviewsCount: 12,
+      tier: o.vendorProfile?.tier || "PRO Vendor",
+      bidAmount: Number(o.price || 0),
+      deliveryTime: o.estimatedHours || "Agreed Schedule",
+      pitch: o.message || "Custom bid offer submitted.",
+      submittedAt: o.createdAt ? new Date(o.createdAt).toLocaleDateString() : "Recent",
+      status: o.status || "PENDING",
+    })),
+    adminNotes: [...localNotes, ...(initialJob?.adminNotes || [])],
+  } : {
     ...initialJob,
     id: jobId,
-  });
+    status: (localStatus || initialJob?.status || "OPEN_BIDDING") as any,
+    adminNotes: [...localNotes, ...(initialJob?.adminNotes || [])],
+  };
 
   const [newNote, setNewNote] = useState("");
 
   const handleStatusChange = (newStatus: JobDetailData["status"]) => {
-    setJob({ ...job, status: newStatus });
+    setLocalStatus(newStatus);
     toast.success(`Job #${job.id} status updated to ${newStatus}.`);
   };
 
-  const handleAwardBid = (bid: VendorBid) => {
-    setJob({
-      ...job,
-      status: "AWARDED",
-      bids: job.bids.map(b => b.id === bid.id ? { ...b, status: "ACCEPTED" } : { ...b, status: "DECLINED" }),
-      adminNotes: [
-        {
-          id: `n-${Date.now()}`,
-          author: "Admin (Action)",
-          text: `Manually awarded contract to ${bid.vendorName} at $${bid.bidAmount}.`,
-          date: "Just now",
-        },
-        ...job.adminNotes,
-      ],
-    });
-    toast.success(`Job awarded to ${bid.vendorName}! Escrow hold initialized.`);
+  const handleAwardBid = async (bid: VendorBid) => {
+    try {
+      await awardJobBidMutation({ jobId, offerId: bid.id }).unwrap();
+      setLocalStatus("AWARDED");
+      toast.success(`Job awarded to ${bid.vendorName}! Escrow hold initialized.`);
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to award bid contract");
+    }
   };
 
   const handleAddNote = (e: React.FormEvent) => {
@@ -309,10 +357,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
       date: "Just now",
     };
 
-    setJob({
-      ...job,
-      adminNotes: [noteItem, ...job.adminNotes],
-    });
+    setLocalNotes(prev => [noteItem, ...prev]);
     setNewNote("");
     toast.success("Internal audit note appended.");
   };
@@ -458,7 +503,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-base font-black text-[#0F0C3B] flex items-center gap-2">
-                  <Briefcase className="w-4 h-4 text-brand-primary" /> Artisan Proposals &amp; Bids Received ({job.bids.length})
+                  <Briefcase className="w-4 h-4 text-brand-primary" /> Vendor Proposals &amp; Bids Received ({job.bids.length})
                 </h3>
                 <p className="text-xs text-slate-500">
                   Inspect vendor quotes, proposal messages, ratings, and award contracts on behalf of buyers.
