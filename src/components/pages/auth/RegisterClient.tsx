@@ -12,9 +12,15 @@ import AuthFooter from "@/components/pages/auth/AuthFooter";
 import AuthSideHero from "@/components/pages/auth/AuthSideHero";
 import { cn } from "@/lib/utils";
 
+import { useRegisterUserMutation } from "@/redux/service/auth/authApi";
+import { useAppDispatch } from "@/redux/hooks/hooks";
+import { setUser } from "@/redux/features/auth";
+
 export default function RegisterPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const dispatch = useAppDispatch();
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
   const role = searchParams.get("role") || "client";
 
   const [firstName, setFirstName] = useState("Amina");
@@ -25,7 +31,6 @@ export default function RegisterPage() {
   const [zipCode, setZipCode] = useState("78701");
   const [agreedTerms, setAgreedTerms] = useState(true);
   const [newsletter, setNewsletter] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   // Password validation checks
   const isLengthValid = password.length >= 8;
@@ -42,19 +47,53 @@ export default function RegisterPage() {
 
   const strengthLabel = strengthScore === 3 ? "Strong" : strengthScore === 2 ? "Medium" : "Weak";
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!agreedTerms) {
       toast.error("Please agree to the Terms of Service.");
       return;
     }
 
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Account created successfully! Please verify your email.");
-      router.push(`/verify-email?email=${encodeURIComponent(email)}`);
-    }, 1200);
+    try {
+      const isVendor = role.toLowerCase() === "vendor";
+      const displayName = `${firstName} ${lastName}`.trim();
+      const res = await registerUser({
+        email,
+        password,
+        role: isVendor ? "VENDOR" : "CLIENT",
+        displayName: !isVendor ? displayName : undefined,
+        businessName: isVendor ? displayName : undefined,
+        city: "Chicago",
+        state: "IL",
+      }).unwrap();
+
+      dispatch(
+        setUser({
+          user: res.user,
+          accessToken: res.accessToken,
+          refreshToken: res.refreshToken,
+        })
+      );
+
+      // Set cookies for Edge runtime Next.js middleware and browser
+      document.cookie = `accessToken=${res.accessToken}; path=/; max-age=604800; SameSite=Lax`;
+      document.cookie = `role=${res.user.role}; path=/; max-age=604800; SameSite=Lax`;
+      document.cookie = `roll=${res.user.role}; path=/; max-age=604800; SameSite=Lax`;
+
+      if (typeof localStorage !== "undefined") {
+        localStorage.setItem("token", res.accessToken);
+      }
+
+      toast.success("Account created successfully!");
+
+      if (isVendor) {
+        router.push("/vendor");
+      } else {
+        router.push("/user");
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Registration failed. Please try again.");
+    }
   };
 
   return (
@@ -73,7 +112,7 @@ export default function RegisterPage() {
                 </span>
                 <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
                   <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-                  {role === "vendor" ? "Artisan Studio" : "Host Account"}
+                  {role === "vendor" ? "Vendor Studio" : "Host Account"}
                 </span>
               </div>
 
