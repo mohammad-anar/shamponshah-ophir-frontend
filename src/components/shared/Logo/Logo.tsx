@@ -52,7 +52,7 @@ export default function Logo({
           alt="Ophir"
           width={64}
           height={64}
-          className="w-full h-full object-contain drop-shadow-xs"
+          className="w-full h-full lg:scale-150  object-contain drop-shadow-xs"
           priority
         />
       </div>
