@@ -85,7 +85,7 @@ export default function SelectRolePage() {
                       I want to hire
                     </h3>
                     <p className="text-[11px] text-slate-500 mt-0.5">
-                      Find artisans & plan milestone celebrations.
+                      Find vendors & plan milestone celebrations.
                     </p>
                   </div>
 
@@ -96,7 +96,7 @@ export default function SelectRolePage() {
                     </div>
                     <div className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
-                      <span>Vetted cultural artisans</span>
+                      <span>Vetted cultural vendors</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
@@ -105,7 +105,7 @@ export default function SelectRolePage() {
                   </div>
                 </div>
 
-                {/* Option 2: Vendor / Artisan */}
+                {/* Option 2: Vendor / Vendor */}
                 <div
                   onClick={() => setSelectedRole("vendor")}
                   className={cn(
@@ -200,14 +200,14 @@ export default function SelectRolePage() {
           {/* Right: Rich Hero Panel */}
           <div className="lg:col-span-6 xl:col-span-6">
             <AuthSideHero
-              badge="Trusted by 8,000+ Verified Artisans"
+              badge="Trusted by 8,000+ Verified Vendors"
               vaultScore="4.96/5 Vault Score"
               headline="Every celebration deserves the right people."
               subheadline="Whether assembling your dream multi-day vendor collective or booking high-value commissions with total fund protection."
               quote="Ophir Reserve eliminated all awkward deposit negotiations. Clients deposit safely into escrow, and we do our best creative work without chasing invoices."
               authorName="Elena Rostova"
               authorRole="Velvet & Bloom Floral • Elite Guild"
-              badgeLabel="Elite Guild Artisan"
+              badgeLabel="Elite Guild Vendor"
             />
           </div>
         </div>
