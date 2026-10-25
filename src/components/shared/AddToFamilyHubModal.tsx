@@ -7,28 +7,13 @@ import {
   Check, 
   Plus, 
   X, 
-  DollarSign, 
   ShoppingBag, 
-  Heart,
-  MessageSquare,
-  ShieldCheck,
-  CheckCircle2
+  ShieldCheck, 
+  CheckCircle2,
+  Lock,
 } from "lucide-react";
 import { toast } from "sonner";
-
-interface JoinedFamilyHub {
-  id: string;
-  name: string;
-  role: string;
-  membersCount: number;
-  eventDate: string;
-}
-
-const mockJoinedHubs: JoinedFamilyHub[] = [
-  { id: "hub-1", name: "Emily & David's Golden Ophir Wedding", role: "Host / Admin", membersCount: 4, eventDate: "Nov 15, 2025" },
-  { id: "hub-2", name: "Miller 40th Birthday Bash", role: "Co-Planner", membersCount: 6, eventDate: "Dec 08, 2025" },
-  { id: "hub-3", name: "Carter Family Holiday Gala", role: "Family Member", membersCount: 8, eventDate: "Dec 24, 2025" },
-];
+import { useGetWorkspaceQuery, useAddBoardItemMutation } from "@/redux/service/family-hub/familyHubApi";
 
 interface AddToFamilyHubModalProps {
   isOpen: boolean;
@@ -49,23 +34,62 @@ export default function AddToFamilyHubModal({
   onClose,
   service,
 }: AddToFamilyHubModalProps) {
-  const [selectedHubId, setSelectedHubId] = useState(mockJoinedHubs[0].id);
+  const { data: wsData, isLoading: isWsLoading } = useGetWorkspaceQuery();
+  const [addBoardItem, { isLoading: isAdding }] = useAddBoardItemMutation();
   const [personalNote, setPersonalNote] = useState(
-    `Hey everyone! I found this amazing ${service.category} service by ${service.vendorName}. What do you think about booking them for our event?`
+    `Hey everyone! I found this amazing ${service.category} service by ${service.vendorName}. What do you think about booking them for our family?`
   );
   const [isSuccess, setIsSuccess] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleAdd = (e: React.FormEvent) => {
+  const ws = wsData?.data || wsData;
+  const primaryBoard = ws?.boards?.[0];
+  const hubName = ws?.name || "Family Collaboration Hub";
+  const membersCount = (ws?.members?.length || 0) + 1;
+
+  const existingItems = primaryBoard?.items || [];
+  const isAlreadyAdded = existingItems.some(
+    (item: any) =>
+      (service.id && (item.gigId === service.id || item.id === service.id)) ||
+      item.title?.toLowerCase().trim() === service.name?.toLowerCase().trim()
+  );
+
+  const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    const targetHub = mockJoinedHubs.find((h) => h.id === selectedHubId);
-    setIsSuccess(true);
-    toast.success(`Added "${service.name}" to ${targetHub?.name}! All members can now vote and co-pay.`);
-    setTimeout(() => {
-      setIsSuccess(false);
-      onClose();
-    }, 1200);
+    if (isAlreadyAdded) {
+      toast.error("This service has already been added to your Family Hub");
+      return;
+    }
+
+    const targetBoardId = primaryBoard?.id || "primary";
+
+    try {
+      await addBoardItem({
+        boardId: targetBoardId,
+        data: {
+          gigId: service.id,
+          title: service.name,
+          notes: JSON.stringify({
+            price: service.price,
+            vendorName: service.vendorName,
+            category: service.category,
+            image: service.image,
+            note: personalNote,
+          }),
+          status: "SHORTLISTED",
+        },
+      }).unwrap();
+
+      setIsSuccess(true);
+      toast.success(`Added "${service.name}" to ${hubName}!`);
+      setTimeout(() => {
+        setIsSuccess(false);
+        onClose();
+      }, 1000);
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to add service to Family Hub");
+    }
   };
 
   return (
@@ -78,14 +102,13 @@ export default function AddToFamilyHubModal({
               <Users2 className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-[#0F0C3B]">Add Service to Family Hub</h3>
-              <p className="text-[11px] text-slate-500">Collaborative voting & co-payment board</p>
+              <h3 className="font-serif font-bold text-base text-[#0F0C3B]">Recommend to Family Hub</h3>
+              <p className="text-[11px] text-slate-500">Collaborate with family members before booking</p>
             </div>
           </div>
-
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+            className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -111,89 +134,90 @@ export default function AddToFamilyHubModal({
 
           {/* Form */}
           <form onSubmit={handleAdd} className="space-y-4">
-            {/* Select Destination Family Hub */}
+            {/* Target Family Hub */}
             <div>
               <label className="block font-bold text-slate-700 mb-1.5">
-                Choose Family Hub / Celebration Workspace *
+                Target Family Workspace
               </label>
-              <div className="space-y-2">
-                {mockJoinedHubs.map((hub) => {
-                  const isSelected = selectedHubId === hub.id;
-                  return (
-                    <div
-                      key={hub.id}
-                      onClick={() => setSelectedHubId(hub.id)}
-                      className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
-                        isSelected
-                          ? "bg-[#EDE9FE] border-brand-primary ring-1 ring-brand-primary"
-                          : "bg-white border-slate-200 hover:bg-slate-50"
-                      }`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs ${
-                          isSelected ? "bg-brand-primary text-white" : "bg-slate-100 text-slate-700"
-                        }`}>
-                          {hub.name.charAt(0)}
-                        </div>
-                        <div>
-                          <p className="font-bold text-xs text-[#0F0C3B]">{hub.name}</p>
-                          <p className="text-[10px] text-slate-500">
-                            {hub.membersCount} family members &bull; Event: {hub.eventDate}
-                          </p>
-                        </div>
-                      </div>
+              <div className="p-3 rounded-2xl bg-[#EDE9FE]/50 border border-brand-primary/40 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-brand-primary text-white flex items-center justify-center font-bold text-xs">
+                    {hubName.charAt(0)}
+                  </div>
+                  <div>
+                    <p className="font-bold text-xs text-[#0F0C3B]">{hubName}</p>
+                    <p className="text-[10px] text-slate-500">
+                      {membersCount} family member{membersCount === 1 ? "" : "s"} active
+                    </p>
+                  </div>
+                </div>
 
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white text-slate-700 border border-slate-200">
-                        {hub.role}
-                      </span>
-                    </div>
-                  );
-                })}
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white text-brand-primary border border-indigo-200">
+                  Active Hub
+                </span>
               </div>
             </div>
 
             {/* Note to Family Members */}
             <div>
               <label className="block font-bold text-slate-700 mb-1">
-                Pitch Note to Family Members (Optional)
+                Recommendation Note for Family Members
               </label>
               <textarea
                 rows={3}
                 value={personalNote}
                 onChange={(e) => setPersonalNote(e.target.value)}
-                placeholder="Why do you recommend this vendor?"
+                placeholder="Why do you recommend this service?"
                 className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-3 text-xs text-slate-800 focus:outline-none focus:border-brand-primary resize-none"
               />
             </div>
 
-            <div className="p-3 rounded-xl bg-indigo-50/60 border border-indigo-100 flex items-center gap-2 text-[11px] text-indigo-900">
-              <ShieldCheck className="w-4 h-4 text-brand-primary flex-shrink-0" />
-              <span>All members can cast votes and contribute partial payments securely via Stripe.</span>
-            </div>
+            {isAlreadyAdded ? (
+              <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 flex items-center gap-2 text-[11px] text-amber-900 font-medium">
+                <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0" />
+                <span>This service is already recommended in your Family Hub. Each service can only be added once.</span>
+              </div>
+            ) : (
+              <div className="p-3 rounded-xl bg-indigo-50/60 border border-indigo-100 flex items-center gap-2 text-[11px] text-indigo-900">
+                <ShieldCheck className="w-4 h-4 text-brand-primary shrink-0" />
+                <span>All family members can review, upvote, or book this service with 100% milestone escrow protection.</span>
+              </div>
+            )}
 
             {/* Action Buttons */}
             <div className="pt-2 flex items-center justify-end gap-3 border-t border-slate-100">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800"
+                className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800 cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                disabled={isSuccess}
-                className="px-6 py-2.5 rounded-xl bg-[#4F46E5] hover:bg-[#4338CA] text-white text-xs font-bold transition-all shadow-md hover:shadow-indigo-500/25 flex items-center gap-1.5"
+                disabled={isAdding || isSuccess || isAlreadyAdded}
+                className={`px-6 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer disabled:opacity-60 ${
+                  isAlreadyAdded
+                    ? "bg-amber-100 text-amber-800 border border-amber-300 cursor-not-allowed"
+                    : "bg-[#4F46E5] hover:bg-[#4338CA] text-white"
+                }`}
               >
-                {isSuccess ? (
+                {isAlreadyAdded ? (
+                  <>
+                    <CheckCircle2 className="w-4 h-4 text-amber-600" />
+                    <span>Already in Family Hub</span>
+                  </>
+                ) : isSuccess ? (
                   <>
                     <CheckCircle2 className="w-4 h-4 text-emerald-300" />
                     <span>Added to Hub!</span>
                   </>
+                ) : isAdding ? (
+                  <span>Adding...</span>
                 ) : (
                   <>
-                    <Plus className="w-4 h-4 text-amber-300" />
-                    <span>Add to Family Hub</span>
+                    <Plus className="w-4 h-4" />
+                    <span>Recommend Service</span>
                   </>
                 )}
               </button>
