@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { 
   Search, 
   Bell, 
@@ -16,22 +17,54 @@ import {
   Users2,
   Check
 } from "lucide-react";
+import { useGetMeQuery } from "@/redux/service/auth/authApi";
+import { useGetWorkspaceQuery } from "@/redux/service/family-hub/familyHubApi";
+import { useGetUserNotificationsQuery } from "@/redux/service/notifications/notificationsApi";
+import { useGetUserConversationsQuery } from "@/redux/service/messages/messagesApi";
+import { useAppDispatch } from "@/redux/hooks/hooks";
+import { logout } from "@/redux/features/auth";
+import { baseApi } from "@/redux/api/baseApi";
 
 interface UserHeaderProps {
   onMenuToggle: () => void;
 }
 
-const joinedHubs = [
-  { id: "hub-1", name: "Emily & David's Wedding" },
-  { id: "hub-2", name: "Miller 40th Birthday" },
-  { id: "hub-3", name: "Carter Family Holiday" },
-];
-
 export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
-  const [showNotifications, setShowNotifications] = useState(false);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const [showProfile, setShowProfile] = useState(false);
   const [showHubPicker, setShowHubPicker] = useState(false);
-  const [activeHub, setActiveHub] = useState(joinedHubs[0]);
+
+  const { data: meData } = useGetMeQuery();
+  const { data: workspaceData } = useGetWorkspaceQuery();
+  const { data: notificationsData } = useGetUserNotificationsQuery();
+  const { data: conversationsData } = useGetUserConversationsQuery();
+
+  const me = (meData as any)?.data || meData;
+  const userName = me?.clientProfile?.fullName || me?.name || "Client Host";
+  const userEmail = me?.email || "host@ophir.com";
+  const initials = userName
+    .split(" ")
+    .map((w: string) => w[0])
+    .filter(Boolean)
+    .join("")
+    .slice(0, 2)
+    .toUpperCase() || "CH";
+
+  const workspace = (workspaceData as any)?.data || workspaceData;
+  const activeHubName = workspace?.name || "Emma's Celebration Board";
+
+  const notifList = Array.isArray(notificationsData) ? notificationsData : (notificationsData?.data || []);
+  const unreadNotifs = notifList.filter((n: any) => !n.isRead).length;
+
+  const convList = Array.isArray(conversationsData) ? conversationsData : (conversationsData?.data || []);
+  const unreadMessages = convList.reduce((acc: number, c: any) => acc + (c.unreadCount || 0), 0);
+
+  const handleSignOut = () => {
+    dispatch(logout());
+    dispatch(baseApi.util.resetApiState());
+    router.push("/login");
+  };
 
   return (
     <header className="sticky top-0 z-30 h-16 bg-white border-b border-slate-200 px-4 md:px-8 flex items-center justify-between">
@@ -59,76 +92,54 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
       <div className="flex items-center gap-3 md:gap-4">
         {/* Workspace / Family Hub Switcher */}
         <div className="relative hidden sm:block">
-          <button
-            onClick={() => setShowHubPicker(!showHubPicker)}
+          <Link
+            href="/user/family-hub"
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-2xs"
           >
             <Users2 className="w-3.5 h-3.5 text-brand-primary" />
-            <span className="max-w-[130px] truncate">{activeHub.name}</span>
-            <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
-          </button>
-
-          {showHubPicker && (
-            <div className="absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 z-50 text-xs space-y-1">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 py-1 block">
-                Active Celebration Hub
-              </span>
-              {joinedHubs.map((hub) => (
-                <div
-                  key={hub.id}
-                  onClick={() => {
-                    setActiveHub(hub);
-                    setShowHubPicker(false);
-                  }}
-                  className={`p-2 rounded-xl cursor-pointer transition-colors flex items-center justify-between ${
-                    activeHub.id === hub.id ? "bg-[#EDE9FE] text-[#0F0C3B] font-bold" : "hover:bg-slate-50 text-slate-700"
-                  }`}
-                >
-                  <span className="truncate">{hub.name}</span>
-                  {activeHub.id === hub.id && <Check className="w-3.5 h-3.5 text-brand-primary" />}
-                </div>
-              ))}
-              <div className="pt-1.5 border-t border-slate-100">
-                <Link
-                  href="/user/family-hub"
-                  onClick={() => setShowHubPicker(false)}
-                  className="w-full py-1.5 px-3 rounded-lg text-brand-primary font-bold hover:bg-indigo-50 flex items-center gap-1.5"
-                >
-                  <Users2 className="w-3.5 h-3.5" /> View Family Board
-                </Link>
-              </div>
-            </div>
-          )}
+            <span className="max-w-[150px] truncate">{activeHubName}</span>
+          </Link>
         </div>
 
         {/* Notifications */}
         <Link 
           href="/user/notifications"
           className="relative p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors"
+          title="Notifications"
         >
           <Bell className="w-4 h-4" />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-500 border-2 border-white" />
+          {unreadNotifs > 0 && (
+            <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-full bg-amber-500 text-[10px] font-bold text-white flex items-center justify-center border border-white">
+              {unreadNotifs}
+            </span>
+          )}
         </Link>
 
         {/* Messages */}
         <Link 
           href="/user/messages"
           className="relative p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors hidden sm:block"
+          title="Messages"
         >
           <MessageSquare className="w-4 h-4" />
+          {unreadMessages > 0 && (
+            <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-full bg-indigo-600 text-[10px] font-bold text-white flex items-center justify-center border border-white">
+              {unreadMessages}
+            </span>
+          )}
         </Link>
 
         {/* User Profile */}
         <div className="relative">
           <button
             onClick={() => setShowProfile(!showProfile)}
-            className="flex items-center gap-2 pl-2 py-1 rounded-lg hover:bg-slate-100 transition-colors"
+            className="flex items-center gap-2 pl-2 py-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
           >
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
-              EC
+              {initials}
             </div>
             <span className="hidden md:block text-xs font-bold text-[#0F0C3B]">
-              Emily Carter
+              {userName}
             </span>
             <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden md:block" />
           </button>
@@ -136,8 +147,8 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
           {showProfile && (
             <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 text-xs">
               <div className="px-3 py-2 border-b border-slate-100">
-                <p className="font-bold text-[#0F0C3B]">Emily Carter</p>
-                <p className="text-[11px] text-slate-500">emily.carter@gmail.com</p>
+                <p className="font-bold text-[#0F0C3B] truncate">{userName}</p>
+                <p className="text-[11px] text-slate-500 truncate">{userEmail}</p>
               </div>
               <Link href="/vendor" className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">
                 <ExternalLink className="w-3.5 h-3.5 text-slate-400" /> Switch to Seller Mode
@@ -149,9 +160,12 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
                 <Settings className="w-3.5 h-3.5 text-slate-400" /> Account Settings
               </Link>
               <div className="border-t border-slate-100 my-1" />
-              <Link href="/login" className="flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50">
+              <button
+                onClick={handleSignOut}
+                className="w-full flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50 cursor-pointer text-left"
+              >
                 <LogOut className="w-3.5 h-3.5" /> Sign Out
-              </Link>
+              </button>
             </div>
           )}
         </div>
