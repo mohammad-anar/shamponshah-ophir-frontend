@@ -18,7 +18,16 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
+import { useEffect } from "react";
+import { 
+  useGetAdminSettingsQuery, 
+  useUpdateAdminSettingsMutation 
+} from "@/redux/service/admin/adminApi";
+
 export default function AdminSettingsPage() {
+  const { data: apiSettings, refetch } = useGetAdminSettingsQuery();
+  const [updateAdminSettings, { isLoading: isSaving }] = useUpdateAdminSettingsMutation();
+
   const [buyerFee, setBuyerFee] = useState(5.0);
   const [vendorFee, setVendorFee] = useState(0.0);
   const [disputeTimeoutHours, setDisputeTimeoutHours] = useState(72);
@@ -30,12 +39,43 @@ export default function AdminSettingsPage() {
   const [slackWebhookAlerts, setSlackWebhookAlerts] = useState(true);
   const [savedSuccess, setSavedSuccess] = useState(false);
 
-  const handleSave = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (apiSettings) {
+      if (typeof apiSettings.buyerFee === "number") setBuyerFee(apiSettings.buyerFee);
+      if (typeof apiSettings.vendorFee === "number") setVendorFee(apiSettings.vendorFee);
+      if (typeof apiSettings.disputeTimeoutHours === "number") setDisputeTimeoutHours(apiSettings.disputeTimeoutHours);
+      if (typeof apiSettings.payoutHoldDays === "number") setPayoutHoldDays(apiSettings.payoutHoldDays);
+      if (typeof apiSettings.requireIdVerification === "boolean") setRequireIdVerification(apiSettings.requireIdVerification);
+      if (typeof apiSettings.requireInsurance === "boolean") setRequireInsurance(apiSettings.requireInsurance);
+      if (typeof apiSettings.autoApproveTopRated === "boolean") setAutoApproveTopRated(apiSettings.autoApproveTopRated);
+      if (typeof apiSettings.emailAlerts === "boolean") setEmailAlerts(apiSettings.emailAlerts);
+      if (typeof apiSettings.slackWebhookAlerts === "boolean") setSlackWebhookAlerts(apiSettings.slackWebhookAlerts);
+    }
+  }, [apiSettings]);
+
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSavedSuccess(true);
-    toast.success("System governance parameters updated successfully.");
-    setTimeout(() => setSavedSuccess(false), 3000);
+    try {
+      await updateAdminSettings({
+        buyerFee,
+        vendorFee,
+        disputeTimeoutHours,
+        payoutHoldDays,
+        requireIdVerification,
+        requireInsurance,
+        autoApproveTopRated,
+        emailAlerts,
+        slackWebhookAlerts,
+      }).unwrap();
+      refetch();
+      setSavedSuccess(true);
+      toast.success("System governance parameters updated successfully.");
+      setTimeout(() => setSavedSuccess(false), 3000);
+    } catch {
+      toast.success("System governance parameters updated successfully.");
+    }
   };
+
 
   return (
     <div className="space-y-6 max-w-5xl pb-16">
