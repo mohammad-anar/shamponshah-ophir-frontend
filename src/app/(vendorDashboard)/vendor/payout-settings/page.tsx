@@ -1,172 +1,150 @@
 "use client";
 
-import { useState } from "react";
-import { 
-  Settings, 
-  CreditCard, 
-  Building2, 
-  ShieldCheck, 
-  CheckCircle2, 
-  Lock, 
-  Save, 
-  ArrowUpRight, 
-  AlertCircle,
-  Sparkles
+import {
+  ShieldCheck,
+  ArrowUpRight,
+  ExternalLink,
+  Loader2,
 } from "lucide-react";
+import { toast } from "sonner";
+import {
+  useGetStripeStatusQuery,
+  useConnectStripeMutation,
+  useLazyGetStripePortalQuery,
+} from "@/redux/service/payments/paymentsApi";
 
 export default function VendorPayoutSettingsPage() {
-  const [payoutSchedule, setPayoutSchedule] = useState("Automatic Daily");
-  const [bankName, setBankName] = useState("Chase Bank Commercial");
-  const [accountNumber, setAccountNumber] = useState("•••• •••• •••• 8912");
-  const [routingNumber, setRoutingNumber] = useState("••••• 0210");
-  const [instantDebitCard, setInstantDebitCard] = useState("•••• •••• •••• 4421 (Visa Debit)");
-  const [savedSuccess, setSavedSuccess] = useState(false);
+  const { data: stripeStatusData, isLoading: isStatusLoading } = useGetStripeStatusQuery();
+  const [connectStripe, { isLoading: isConnecting }] = useConnectStripeMutation();
+  const [triggerGetPortal, { isFetching: isPortalLoading }] = useLazyGetStripePortalQuery();
 
-  const handleSave = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSavedSuccess(true);
-    setTimeout(() => setSavedSuccess(false), 3000);
+  const stripeStatus = stripeStatusData?.data || stripeStatusData || {};
+  const isConnected = !!stripeStatus.connected;
+  const payoutsEnabled = !!stripeStatus.payoutsEnabled;
+
+  const handleConnectStripe = async () => {
+    try {
+      const res = await connectStripe().unwrap();
+      const onboardingUrl = (res as any)?.data?.url || (res as any)?.url;
+      if (onboardingUrl) {
+        toast.info("Redirecting to Stripe Express onboarding...");
+        window.location.assign(onboardingUrl);
+      } else {
+        toast.error("Could not obtain Stripe onboarding link");
+      }
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to initialize Stripe Connect");
+    }
+  };
+
+  const handleOpenStripePortal = async () => {
+    try {
+      toast.info("Generating Stripe Express login session...");
+      const res = await triggerGetPortal().unwrap();
+      const portalUrl = (res as any)?.data?.url || (res as any)?.url;
+      if (portalUrl) {
+        window.location.assign(portalUrl);
+      } else {
+        toast.error("Stripe did not return an account portal link.");
+      }
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Could not open Stripe Express.");
+    }
   };
 
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="space-y-6 max-w-4xl pb-12">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">Payout & Bank Settings</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
-              Stripe Connect Active
+            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">
+              Stripe Connect payout settings
+            </h1>
+            <span
+              className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${
+                isConnected
+                  ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                  : "bg-amber-50 text-amber-800 border-amber-200"
+              }`}
+            >
+              {isConnected ? "Stripe Connect Active" : "Stripe Setup Pending"}
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-1">
-            Configure direct deposit bank routing, instant payout debit card, and automated disbursement schedules.
+            Complete identity verification and manage your payout account through Stripe Express.
           </p>
         </div>
 
-        <button
-          onClick={handleSave}
-          className="px-5 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start sm:self-auto"
-        >
-          <Save className="w-4 h-4" /> Save Bank Preferences
-        </button>
       </div>
 
-      {savedSuccess && (
-        <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs font-bold flex items-center gap-2 animate-in fade-in">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Payout settings updated and synced with Stripe Connect.
-        </div>
-      )}
-
       {/* Stripe Connect Banner */}
-      <div className="bg-[#0F0C3B] text-white p-5 rounded-2xl flex items-center justify-between shadow-md">
+      <div className="bg-[#0F0C3B] text-white p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-white/10 rounded-xl">
+          <div className="p-3 bg-white/10 rounded-xl flex-shrink-0">
             <ShieldCheck className="w-6 h-6 text-emerald-400" />
           </div>
           <div>
-            <h3 className="text-sm font-bold">Stripe Connect Verified (ID: acct_1N9x...4490)</h3>
-            <p className="text-xs text-indigo-200">Instant ACH & Debit transfer capabilities are enabled for your business.</p>
+            <h3 className="text-sm font-bold flex items-center gap-1.5">
+              <span>Stripe Connect Express</span>
+              {isConnected && (
+                <span className="text-[10px] font-mono px-2 py-0.2 bg-white/20 rounded">
+                  Connected
+                </span>
+              )}
+            </h3>
+            <p className="text-xs text-indigo-200 mt-0.5">
+              {isConnected
+                ? "Milestone transfers arrive in your connected Stripe balance. Bank payout timing is controlled by Stripe."
+                : "Complete Stripe Connect onboarding to receive marketplace transfers."}
+            </p>
           </div>
         </div>
 
-        <button 
-          onClick={() => alert("Opening Stripe Express Dashboard in new window...")}
-          className="px-3.5 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold border border-white/20 transition-colors flex items-center gap-1.5"
-        >
-          Stripe Portal <ArrowUpRight className="w-3.5 h-3.5" />
-        </button>
+        {isConnected ? (
+          <button
+            onClick={handleOpenStripePortal}
+            disabled={isPortalLoading}
+            className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold border border-white/20 transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
+          >
+            Stripe Portal <ArrowUpRight className="w-3.5 h-3.5" />
+          </button>
+        ) : (
+          <button
+            onClick={handleConnectStripe}
+            disabled={isConnecting || isStatusLoading}
+            className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shadow-md cursor-pointer disabled:opacity-50"
+          >
+            {isConnecting ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            ) : (
+              <ExternalLink className="w-3.5 h-3.5" />
+            )}
+            <span>Connect Stripe Account</span>
+          </button>
+        )}
       </div>
 
-      {/* Settings Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Direct Deposit Bank Account */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-xs">
-          <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3">
-            <div className="p-2 rounded-xl bg-indigo-50 text-brand-primary">
-              <Building2 className="w-4 h-4" />
-            </div>
-            <div>
-              <h2 className="text-sm font-bold text-[#0F0C3B]">Direct Deposit Bank Account</h2>
-              <p className="text-xs text-slate-500">For standard 48h zero-fee ACH deposits</p>
-            </div>
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-xs">
+        <h2 className="text-sm font-bold text-[#0F0C3B]">Bank and payout details</h2>
+        <p className="text-xs text-slate-600">
+          Add or update bank details in Stripe Express. This marketplace does not collect or store bank account or routing numbers.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <span className="block text-slate-500">Transfer capability</span>
+            <strong className="text-[#0F0C3B]">{stripeStatus.transfersEnabled ? "Enabled" : "Setup required"}</strong>
           </div>
-
-          <div className="space-y-3.5 text-xs">
-            <div>
-              <label className="block text-slate-700 font-bold mb-1">Financial Institution</label>
-              <input
-                type="text"
-                value={bankName}
-                onChange={(e) => setBankName(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none focus:border-brand-primary"
-              />
-            </div>
-
-            <div>
-              <label className="block text-slate-700 font-bold mb-1">Account Number (Checking)</label>
-              <input
-                type="text"
-                value={accountNumber}
-                onChange={(e) => setAccountNumber(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-mono font-bold focus:outline-none focus:border-brand-primary"
-              />
-            </div>
-
-            <div>
-              <label className="block text-slate-700 font-bold mb-1">Routing Number (ABA)</label>
-              <input
-                type="text"
-                value={routingNumber}
-                onChange={(e) => setRoutingNumber(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-mono font-bold focus:outline-none focus:border-brand-primary"
-              />
-            </div>
+          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <span className="block text-slate-500">Bank payouts</span>
+            <strong className="text-[#0F0C3B]">{payoutsEnabled ? "Enabled" : "Setup required"}</strong>
           </div>
         </div>
-
-        {/* Instant Payout Debit Card */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-xs">
-          <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3">
-            <div className="p-2 rounded-xl bg-purple-50 text-purple-600">
-              <CreditCard className="w-4 h-4" />
-            </div>
-            <div>
-              <h2 className="text-sm font-bold text-[#0F0C3B]">Instant Transfer Debit Card</h2>
-              <p className="text-xs text-slate-500">Disburse within 30 minutes (1% fee)</p>
-            </div>
-          </div>
-
-          <div className="space-y-3.5 text-xs">
-            <div>
-              <label className="block text-slate-700 font-bold mb-1">Registered Debit Card</label>
-              <input
-                type="text"
-                value={instantDebitCard}
-                onChange={(e) => setInstantDebitCard(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-mono font-bold focus:outline-none focus:border-brand-primary"
-              />
-            </div>
-
-            <div>
-              <label className="block text-slate-700 font-bold mb-1">Automated Schedule</label>
-              <select
-                value={payoutSchedule}
-                onChange={(e) => setPayoutSchedule(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none"
-              >
-                <option>Automatic Daily (As milestones sign off)</option>
-                <option>Weekly (Every Monday morning)</option>
-                <option>Bi-Weekly (1st & 15th of the month)</option>
-                <option>Manual Withdrawal Only</option>
-              </select>
-            </div>
-
-            <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-slate-600 text-[11px] leading-relaxed">
-              Escrow milestone releases are automatically triggered when a client signs off on deliverables or after 72h auto-completion.
-            </div>
-          </div>
-        </div>
+        {stripeStatus.requirements?.currently_due?.length > 0 && (
+          <p className="text-xs text-amber-700">
+            Stripe needs more information: {stripeStatus.requirements.currently_due.join(", ")}
+          </p>
+        )}
       </div>
     </div>
   );
