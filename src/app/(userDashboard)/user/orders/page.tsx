@@ -1,62 +1,55 @@
 "use client";
 
 import { useState } from "react";
-import { ShoppingBag, Lock, ShieldCheck, CheckCircle2, ChevronRight, Download } from "lucide-react";
+import Link from "next/link";
+import { ShoppingBag, Lock, ShieldCheck, CheckCircle2, ChevronRight, Download, Loader2, UploadCloud } from "lucide-react";
 import OrderDetailDrawer from "@/components/user/OrderDetailDrawer";
 import { cn } from "@/lib/utils";
-
-const orders = [
-  {
-    id: "JB-20455",
-    vendorName: "Windy City Sound (Marcus Reed)",
-    serviceTitle: "DJ and Emcee for 5th Birthday Party",
-    totalAmount: "$850.00",
-    eventDate: "Saturday, November 14, 2026",
-    location: "Lincoln Park Conservatory, Chicago, IL",
-    status: "IN_PROGRESS",
-    currentMilestone: "Milestone 2 of 2: Post-Event Signoff",
-    milestones: [
-      { name: "Milestone 1 • Booking Deposit (50%)", amount: "$425.00", status: "PAID" as const },
-      { name: "Milestone 2 • Post-Event Delivery Approval (50%)", amount: "$425.00", status: "PENDING" as const },
-    ],
-  },
-  {
-    id: "JB-20448",
-    vendorName: "Bloom Studio Chicago",
-    serviceTitle: "Floral & Pastel Balloon Arch",
-    totalAmount: "$850.00",
-    eventDate: "Saturday, November 14, 2026",
-    location: "Lincoln Park Conservatory",
-    status: "IN_DELIVERY",
-    currentMilestone: "Milestone 3 of 5: In Delivery",
-    milestones: [
-      { name: "Design Concept Approval", amount: "$280.00", status: "PAID" as const },
-      { name: "Floral Sourcing", amount: "$285.00", status: "PAID" as const },
-      { name: "On-site Installation", amount: "$285.00", status: "PENDING" as const },
-    ],
-  },
-  {
-    id: "JB-20432",
-    vendorName: "Chef Marcus (Sweet Delights)",
-    serviceTitle: "Custom 2-Tier Birthday Cake",
-    totalAmount: "$350.00",
-    eventDate: "Saturday, November 14, 2026",
-    location: "Lincoln Park",
-    status: "CONFIRMED",
-    currentMilestone: "Milestone 2 of 5: Design Finalized",
-    milestones: [
-      { name: "Design Finalized", amount: "$175.00", status: "PAID" as const },
-      { name: "Delivery & Setup", amount: "$175.00", status: "PENDING" as const },
-    ],
-  },
-];
+import { useGetClientOrdersQuery } from "@/redux/service/orders/ordersApi";
 
 export default function UserOrdersPage() {
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const { data: apiOrdersData, isLoading } = useGetClientOrdersQuery();
+
+  const liveOrders = Array.isArray(apiOrdersData) ? apiOrdersData : (apiOrdersData?.data?.orders || apiOrdersData?.orders || apiOrdersData?.data || []);
+  const displayOrders = liveOrders;
+
+  const formatDate = (dateVal: any) => {
+    if (!dateVal) return "Upcoming";
+    try {
+      const d = new Date(dateVal);
+      if (isNaN(d.getTime())) return String(dateVal);
+      return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+    } catch {
+      return "Upcoming";
+    }
+  };
 
   const handleOpenOrder = (ord: any) => {
-    setSelectedOrder(ord);
+    // Format into OrderDetailDrawer shape if from API
+    const formatted = ord.vendorProfile
+      ? {
+          id: ord.id,
+          vendorName: ord.vendorProfile?.businessName || ord.vendorProfile?.user?.name || ord.vendorProfile?.name || "Verified Vendor",
+          vendorUserId: ord.vendorProfile?.userId || ord.vendorProfile?.user?.id || "",
+          serviceTitle: ord.gig?.title || ord.notes || "Event Milestone Service",
+          totalAmount: `$${Number(ord.grandTotal || ord.subtotal || 0).toFixed(2)}`,
+          eventDate: formatDate(ord.eventDate),
+          location: ord.event?.location || ord.deliveryNotes || "Event Location",
+          status: ord.status,
+          deliveryNotes: ord.deliveryNotes,
+          currentMilestone: `Active Milestones (${ord.milestones?.length || 0})`,
+          milestones: (ord.milestones || []).map((m: any) => ({
+            id: m.id,
+            name: m.label || m.title || "Milestone Delivery",
+            amount: `$${Number(m.amount || 0).toFixed(2)}`,
+            status: m.status,
+          })),
+        }
+      : ord;
+
+    setSelectedOrder(formatted);
     setDrawerOpen(true);
   };
 
@@ -70,49 +63,143 @@ export default function UserOrdersPage() {
 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#0F0C3B]">My Orders &amp; Escrow Contracts</h1>
+          <h1 className="text-2xl font-bold text-[#0F0C3B]">My Orders</h1>
           <p className="text-xs text-slate-500 mt-1">
-            Track active milestones, review vendor deliveries, and approve escrow disbursements
+            Track active milestones, review vendor deliveries, and approve milestone payments
           </p>
         </div>
       </div>
 
       <div className="space-y-3">
-        {orders.map((ord) => (
-          <div
-            key={ord.id}
-            onClick={() => handleOpenOrder(ord)}
-            className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:border-indigo-300 hover:shadow-sm transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-11 h-11 rounded-xl bg-indigo-50 text-brand-primary flex items-center justify-center font-bold text-lg flex-shrink-0">
-                <ShoppingBag className="w-5 h-5" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="font-bold text-[#0F0C3B] text-sm">{ord.serviceTitle}</span>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-800">
-                    #{ord.id}
-                  </span>
-                </div>
-                <p className="text-slate-500 mt-0.5">{ord.vendorName} • {ord.eventDate}</p>
-                <span className="text-[11px] font-semibold text-amber-700 mt-1 block">
-                  {ord.currentMilestone}
-                </span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 self-end sm:self-center">
-              <div className="text-right">
-                <span className="text-base font-extrabold text-[#0F0C3B] block">{ord.totalAmount}</span>
-                <span className="text-[10px] text-emerald-600 font-bold flex items-center gap-1 justify-end">
-                  <ShieldCheck className="w-3 h-3" /> Escrow Protected
-                </span>
-              </div>
-              <ChevronRight className="w-4 h-4 text-slate-400" />
+        {isLoading ? (
+          <div className="py-10 flex items-center justify-center text-slate-400 gap-2 text-xs">
+            <Loader2 className="w-4 h-4 animate-spin text-brand-primary" />
+            <span>Loading orders...</span>
+          </div>
+        ) : displayOrders.length === 0 ? (
+          <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-500 space-y-3">
+            <ShoppingBag className="w-10 h-10 text-slate-300 mx-auto" />
+            <h3 className="font-bold text-[#0F0C3B] text-base">No orders yet</h3>
+            <p className="text-xs text-slate-400 max-w-sm mx-auto">
+              You haven't booked any vendor services yet. Browse our verified artisans or save services in your Family Hub to get started.
+            </p>
+            <div className="flex items-center justify-center gap-3 pt-2">
+              <Link href="/services" className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white text-xs font-bold transition-all shadow-xs">
+                Browse Services
+              </Link>
+              <Link href="/user/family-hub" className="px-4 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold transition-all">
+                Family Hub
+              </Link>
             </div>
           </div>
-        ))}
+        ) : (
+          displayOrders.map((ord: any) => {
+            const title = ord.serviceTitle || ord.gig?.title || ord.notes || "Event Milestone Service";
+            const vendorName = ord.vendorName || ord.vendorProfile?.businessName || ord.vendorProfile?.user?.name || ord.vendorProfile?.name || "Verified Vendor";
+            const dateStr = formatDate(ord.eventDate);
+            const amountStr = ord.totalAmount || `$${Number(ord.grandTotal || ord.subtotal || 0).toFixed(2)}`;
+
+            const milestones = ord.milestones || [];
+            const totalMs = milestones.length;
+            const releasedMs = milestones.filter((m: any) => m.status === "RELEASED" || m.status === "PAID").length;
+            const pendingReleaseMs = milestones.filter((m: any) => m.status === "PENDING_RELEASE").length;
+            const fundedMs = milestones.filter((m: any) => ["FUNDED", "PENDING_RELEASE", "APPROVED_PENDING_RELEASE", "RELEASED", "PAID"].includes(m.status)).length;
+            const scheduledMs = milestones.filter((m: any) => m.status === "APPROVED_PENDING_RELEASE").length;
+
+            let milestoneStatusText = "Pending Payment";
+            let milestoneBadgeClass = "bg-slate-100 text-slate-700";
+
+            if (ord.status === "PENDING_PAYMENT") {
+              milestoneStatusText = "Payment Required · Order Not Started";
+              milestoneBadgeClass = "bg-amber-50 text-amber-800 border border-amber-200";
+            } else if (ord.status === "COMPLETED" && scheduledMs > 0) {
+              milestoneStatusText = `Approved · ${scheduledMs} Transfer${scheduledMs === 1 ? "" : "s"} in 7-day hold`;
+              milestoneBadgeClass = "bg-blue-50 text-blue-800 border border-blue-200";
+            } else if (ord.status === "COMPLETED" || (totalMs > 0 && releasedMs === totalMs)) {
+              milestoneStatusText = "All Milestones Transferred";
+              milestoneBadgeClass = "bg-emerald-50 text-emerald-800 border border-emerald-200/60";
+            } else if (pendingReleaseMs > 0) {
+              milestoneStatusText = `Delivery Submitted (${pendingReleaseMs} Approval Needed)`;
+              milestoneBadgeClass = "bg-amber-50 text-amber-800 border border-amber-200/60 animate-pulse";
+            } else if (fundedMs > 0) {
+              milestoneStatusText = `${fundedMs} of ${totalMs} Milestones Funded`;
+              milestoneBadgeClass = "bg-blue-50 text-blue-800 border border-blue-200/60";
+            } else if (totalMs === 1) {
+              milestoneStatusText = "1 Milestone • Payment Locked";
+              milestoneBadgeClass = "bg-indigo-50 text-indigo-700 border border-indigo-100";
+            } else if (totalMs > 1) {
+              milestoneStatusText = `0/${totalMs} Milestones Paid`;
+              milestoneBadgeClass = "bg-slate-100 text-slate-700 border border-slate-200";
+            } else if (ord.status === "CONFIRMED" || ord.status === "IN_PROGRESS") {
+              milestoneStatusText = "In Progress • Payment Secured";
+              milestoneBadgeClass = "bg-emerald-50 text-emerald-800 border border-emerald-200/60";
+            }
+
+            const milestoneSubtitle = totalMs === 1
+              ? "Single Milestone Payment"
+              : totalMs > 1
+              ? `${totalMs} Milestone Payments • ${releasedMs} Released`
+              : "Milestone Payment";
+
+            return (
+              <div
+                key={ord.id}
+                onClick={() => handleOpenOrder(ord)}
+                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:border-indigo-300 hover:shadow-sm transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-indigo-50 text-brand-primary flex items-center justify-center font-bold text-lg flex-shrink-0">
+                    <ShoppingBag className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-[#0F0C3B] text-sm">{title}</span>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-800">
+                        #{ord.id}
+                      </span>
+                    </div>
+                    <p className="text-slate-500 mt-0.5">{vendorName} • {dateStr}</p>
+                    <span className="text-[11px] font-semibold text-brand-primary mt-1 block">
+                      {ord.currentMilestone || milestoneSubtitle}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 self-end sm:self-center flex-wrap">
+                  <div className="text-right">
+                    <span className="font-extrabold text-[#0F0C3B] text-base block">{amountStr}</span>
+                    <span className={cn("px-2.5 py-0.5 rounded-full text-[10px] font-bold inline-block mt-0.5", milestoneBadgeClass)}>
+                      {milestoneStatusText}
+                    </span>
+                  </div>
+
+                      {ord.status === "PENDING_PAYMENT" && (
+                    <Link
+                      href={`/checkout?orderId=${encodeURIComponent(ord.id)}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-2xs"
+                    >Pay first milestone</Link>
+                  )}
+
+                  {pendingReleaseMs > 0 && (
+                    <div className="flex items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+                      <button
+                        type="button"
+                        onClick={() => handleOpenOrder(ord)}
+                        className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-2xs flex items-center gap-1 cursor-pointer"
+                      >
+                        <UploadCloud className="w-3.5 h-3.5" />
+                        <span>Review &amp; Action</span>
+                      </button>
+                    </div>
+                  )}
+
+                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );
