@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { 
   Bookmark, 
@@ -11,12 +11,16 @@ import {
   Trash2, 
   MessageSquare, 
   Sparkles,
-  ExternalLink,
-  ChevronRight
+  ChevronRight,
+  Loader2,
+  Users2,
 } from "lucide-react";
+import { useSaveVendorMutation, useGetSavedVendorsQuery } from "@/redux/service/vendors/vendorsApi";
+import { toast } from "sonner";
 
 interface SavedVendor {
   id: string;
+  slug?: string;
   name: string;
   category: string;
   avatar: string;
@@ -30,102 +34,94 @@ interface SavedVendor {
   specialty: string;
 }
 
-const mockSavedVendors: SavedVendor[] = [
-  {
-    id: "v1",
-    name: "Windy City Sound DJ",
-    category: "Music & Entertainment",
-    avatar: "WC",
-    rating: 4.95,
-    reviewsCount: 124,
-    location: "Chicago, IL (Will Travel 60 mi)",
-    startingPrice: 1200,
-    priceUnit: "event",
-    tier: "Top Rated",
-    image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&auto=format&fit=crop&q=80",
-    specialty: "High-energy multi-genre party DJ with wireless sound & uplighting package.",
-  },
-  {
-    id: "v2",
-    name: "Lumina Cinematic Films",
-    category: "Photography & Cinema",
-    avatar: "LC",
-    rating: 5.0,
-    reviewsCount: 88,
-    location: "Chicago, IL",
-    startingPrice: 2800,
-    priceUnit: "day",
-    tier: "Elite Partner",
-    image: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=600&auto=format&fit=crop&q=80",
-    specialty: "Documentary-style 4K cinema with licensed aerial drone cinematography.",
-  },
-  {
-    id: "v3",
-    name: "Velvet Bloom Florals",
-    category: "Decor & Floral Design",
-    avatar: "VB",
-    rating: 4.88,
-    reviewsCount: 65,
-    location: "Naperville, IL",
-    startingPrice: 1500,
-    priceUnit: "setup",
-    tier: "Rising Vendor",
-    image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&auto=format&fit=crop&q=80",
-    specialty: "Bespoke ceremony arches, organic cascading runners, and bridal floral sets.",
-  },
-  {
-    id: "v4",
-    name: "Gourmet Bites & Bar Co.",
-    category: "Catering & Bar Service",
-    avatar: "GB",
-    rating: 4.92,
-    reviewsCount: 110,
-    location: "Evanston, IL",
-    startingPrice: 65,
-    priceUnit: "guest",
-    tier: "Top Rated",
-    image: "https://images.unsplash.com/photo-1555244162-803834f70033?w=600&auto=format&fit=crop&q=80",
-    specialty: "Farm-to-table farm grazing tables and custom signature cocktail mixology.",
-  }
-];
-
 export default function UserSavedVendorsPage() {
-  const [vendors, setVendors] = useState<SavedVendor[]>(mockSavedVendors);
+  const { data: apiSavedData, isLoading } = useGetSavedVendorsQuery();
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
+  const [saveVendor, { isLoading: isRemoving }] = useSaveVendorMutation();
 
-  const handleRemove = (id: string) => {
-    setVendors(vendors.filter((v) => v.id !== id));
+  const rawList = Array.isArray(apiSavedData) ? apiSavedData : (apiSavedData?.data || []);
+
+  const vendors: SavedVendor[] = useMemo(() => {
+    return rawList.map((item: any) => {
+      const vp = item.vendorProfile || item;
+      const cat = vp.categories?.[0]?.category?.name || vp.category?.name || "Event Services";
+      const startingPrice = vp.gigs?.[0]?.packages?.[0]?.price
+        ? Number(vp.gigs[0].packages[0].price)
+        : Number(vp.startingPrice || 0);
+      const image =
+        vp.portfolio?.[0]?.url ||
+        vp.coverUrl ||
+        vp.avatarUrl ||
+        "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800";
+
+      return {
+        id: vp.id || item.id,
+        slug: vp.slug,
+        name: vp.businessName || vp.name || "Vendor Professional",
+        category: cat,
+        avatar: (vp.businessName || vp.name || "VP").slice(0, 2).toUpperCase(),
+        rating: Number(vp.rating || 0),
+        reviewsCount: Number(vp.reviewCount || 0),
+        location: vp.city ? `${vp.city}${vp.state ? `, ${vp.state}` : ""}` : "Location not listed",
+        startingPrice,
+        priceUnit: "event",
+        tier: vp.tier === "ELITE" ? "Elite Partner" : vp.tier === "PRO" ? "Top Rated" : "Rising Vendor",
+        image,
+        specialty: vp.bio || vp.tagline || "Vetted event professional on the Ophir platform.",
+      };
+    });
+  }, [rawList]);
+
+  // Dynamically derive available categories from real saved vendors
+  const availableCategories = useMemo(() => {
+    const set = new Set<string>();
+    vendors.forEach((v) => {
+      if (v.category) set.add(v.category);
+    });
+    return ["All", ...Array.from(set)];
+  }, [vendors]);
+
+  const handleRemove = async (id: string, name?: string) => {
+    try {
+      await saveVendor(id).unwrap();
+      toast.success(`Removed ${name || "vendor"} from your saved list`);
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to remove vendor from saved list");
+    }
   };
 
   const filtered = vendors.filter((v) => {
-    const matchesSearch = v.name.toLowerCase().includes(searchQuery.toLowerCase()) || v.specialty.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch =
+      v.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      v.specialty.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      v.location.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = categoryFilter === "All" || v.category === categoryFilter;
     return matchesSearch && matchesCategory;
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-12">
       {/* Top Header */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2.5">
             <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">Saved Vendors & Shortlist</h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#EDE9FE] text-[#0F0C3B]">
               {vendors.length} Saved
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-1">
-            Compare your shortlisted professionals, check availability calendars, or request customized quotes.
+            Your personal shortlist of vetted professionals. Compare vendor services, check reviews, and book directly.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <Link
-            href="/user/post-job"
-            className="px-4 py-2 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2"
+            href="/services"
+            className="px-4 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-[#0F0C3B] rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-2"
           >
-            <Sparkles className="w-4 h-4 text-amber-400" /> Post a Job for All
+            <Sparkles className="w-4 h-4 text-[#0F0C3B]" /> Browse All Services
           </Link>
         </div>
       </div>
@@ -139,7 +135,7 @@ export default function UserSavedVendorsPage() {
             placeholder="Search saved vendors or specialties..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#F8F9FD] border border-slate-200 rounded-lg pl-9 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-primary"
+            className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-primary"
           />
         </div>
 
@@ -147,42 +143,52 @@ export default function UserSavedVendorsPage() {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="bg-[#F8F9FD] border border-slate-200 rounded-lg px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none"
+            className="bg-[#F8F9FD] border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer"
           >
-            <option value="All">All Categories</option>
-            <option value="Music & Entertainment">Music & Entertainment</option>
-            <option value="Photography & Cinema">Photography & Cinema</option>
-            <option value="Decor & Floral Design">Decor & Floral Design</option>
-            <option value="Catering & Bar Service">Catering & Bar Service</option>
+            {availableCategories.map((c) => (
+              <option key={c} value={c}>
+                {c === "All" ? "All Categories" : c}
+              </option>
+            ))}
           </select>
         </div>
       </div>
 
-      {/* Vendors Grid */}
-      {filtered.length > 0 ? (
+      {/* Loading State */}
+      {isLoading ? (
+        <div className="bg-white border border-slate-200 rounded-3xl p-16 text-center space-y-3">
+          <Loader2 className="w-8 h-8 animate-spin text-brand-primary mx-auto" />
+          <p className="text-xs text-slate-500 font-medium">Loading your saved vendors...</p>
+        </div>
+      ) : filtered.length > 0 ? (
+        /* Real Saved Vendors Grid */
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           {filtered.map((v) => (
             <div
               key={v.id}
-              className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
+              className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
             >
               <div>
                 {/* Image Banner */}
-                <div className="relative h-44 w-full bg-slate-100 overflow-hidden">
+                <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
                   <img
                     src={v.image}
                     alt={v.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+                  
                   <div className="absolute top-3 right-3 flex items-center gap-2">
                     <button
-                      onClick={() => handleRemove(v.id)}
-                      className="p-2 rounded-full bg-white/90 hover:bg-white text-slate-600 hover:text-rose-600 shadow-sm transition-colors"
+                      onClick={() => handleRemove(v.id, v.name)}
+                      disabled={isRemoving}
+                      className="p-2 rounded-xl bg-white/90 hover:bg-white text-slate-600 hover:text-rose-600 shadow-xs transition-colors cursor-pointer"
                       title="Remove from saved"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
+
                   <div className="absolute bottom-3 left-3">
                     <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#0F0C3B]/90 text-white backdrop-blur-xs shadow-xs">
                       {v.tier}
@@ -194,11 +200,13 @@ export default function UserSavedVendorsPage() {
                 <div className="p-5 space-y-3">
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <h3 className="text-base font-bold text-[#0F0C3B]">{v.name}</h3>
+                      <h3 className="text-base font-bold text-[#0F0C3B] group-hover:text-brand-primary transition-colors">
+                        {v.name}
+                      </h3>
                       <p className="text-xs text-brand-primary font-semibold mt-0.5">{v.category}</p>
                     </div>
 
-                    <div className="flex items-center text-amber-500 text-xs font-black bg-amber-50 px-2 py-1 rounded-lg border border-amber-200">
+                    <div className="flex items-center text-amber-500 text-xs font-black bg-amber-50 px-2.5 py-1 rounded-xl border border-amber-200">
                       <Star className="w-3.5 h-3.5 fill-amber-400" />
                       <span className="ml-1">{v.rating}</span>
                       <span className="text-slate-400 font-normal ml-0.5">({v.reviewsCount})</span>
@@ -214,7 +222,7 @@ export default function UserSavedVendorsPage() {
                     <span className="truncate">{v.location}</span>
                   </div>
 
-                  <div className="p-3 bg-[#F8F9FD] rounded-xl border border-slate-100 flex items-center justify-between">
+                  <div className="p-3 bg-[#F8F9FD] rounded-2xl border border-slate-100 flex items-center justify-between">
                     <div>
                       <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Starting Rate</span>
                       <p className="text-sm font-black text-[#0F0C3B]">
@@ -238,28 +246,42 @@ export default function UserSavedVendorsPage() {
                   <MessageSquare className="w-3.5 h-3.5" /> Message
                 </Link>
                 <Link
-                  href={`/vendors/${v.id}`}
+                  href={`/vendors/${v.slug || v.id}`}
                   className="w-full py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 shadow-xs"
                 >
-                  View Catalog <ChevronRight className="w-3.5 h-3.5" />
+                  View Profile <ChevronRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center space-y-3">
-          <Bookmark className="w-10 h-10 text-slate-300 mx-auto" />
-          <h3 className="text-sm font-bold text-[#0F0C3B]">No Saved Vendors Found</h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto">
-            You haven't bookmarked any vendors matching your criteria yet. Explore our curated catalog of event artisans.
-          </p>
-          <Link
-            href="/vendors"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#0F0C3B] text-white rounded-xl text-xs font-bold mt-2"
-          >
-            Explore Vendors
-          </Link>
+        /* Clean Real Empty State */
+        <div className="bg-white border border-slate-200 rounded-3xl p-14 text-center space-y-4 max-w-lg mx-auto shadow-xs">
+          <div className="w-14 h-14 rounded-3xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-brand-primary mx-auto">
+            <Bookmark className="w-7 h-7 text-brand-primary" />
+          </div>
+          <div>
+            <h3 className="text-lg font-serif font-bold text-[#0F0C3B]">No Saved Vendors Yet</h3>
+            <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto leading-relaxed">
+              You haven&apos;t shortlisted any vendors yet. Browse through verified event professionals and click the bookmark or heart icon to save your favorites here.
+            </p>
+          </div>
+          <div className="pt-2 flex items-center justify-center gap-3">
+            <Link
+              href="/services"
+              className="px-5 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold shadow-xs transition-all flex items-center gap-2"
+            >
+              <span>Explore Services</span>
+              <ChevronRight className="w-4 h-4" />
+            </Link>
+            <Link
+              href="/vendors"
+              className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all"
+            >
+              Browse Vendors
+            </Link>
+          </div>
         </div>
       )}
     </div>
