@@ -1,94 +1,155 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Script from "next/script";
 import { useSearchParams } from "next/navigation";
 import {
   ShieldCheck,
   Lock,
   CheckCircle2,
-  CreditCard,
-  Building,
-  Check,
-  Sparkles,
 } from "lucide-react";
-import { VENDORS } from "@/data/mockData";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useGetPaymentMethodsQuery, useCreatePaymentIntentMutation } from "@/redux/service/payments/paymentsApi";
+import { useCreateOrderMutation, useGetOrderByIdQuery } from "@/redux/service/orders/ordersApi";
+import { useGetVendorBySlugQuery } from "@/redux/service/vendors/vendorsApi";
+import { useUpdateBoardItemMutation } from "@/redux/service/family-hub/familyHubApi";
+
+declare global {
+  interface Window {
+    Stripe?: any;
+  }
+}
 
 export default function CheckoutBookingPage() {
   const searchParams = useSearchParams();
-  const vendorId = searchParams.get("vendorId") || "golden-hour-photo";
-  const vendor = VENDORS.find((v) => v.id === vendorId) || VENDORS[0];
+  const vendorId = searchParams.get("vendorId") || "";
+  const packageId = searchParams.get("packageId");
+  const existingOrderId = searchParams.get("orderId") || "";
 
-  const [selectedAddons, setSelectedAddons] = useState<string[]>(["addon-drone"]);
-  const [paymentMethod, setPaymentMethod] = useState<"card" | "ach" | "apple">("card");
-  const [eventDate, setEventDate] = useState("2025-10-18");
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const { data: apiVendorResp } = useGetVendorBySlugQuery(vendorId, {
+    skip: !vendorId,
+  });
+  const { data: existingOrderResp } = useGetOrderByIdQuery(existingOrderId, { skip: !existingOrderId });
 
-  const addonsList = [
-    {
-      id: "addon-drone",
-      title: "Licensed 4K Aerial Drone Coverage",
-      desc: "Full FAA Part 107 licensed cinematic flyovers of venue and grand entrance.",
-      price: 300,
-    },
-    {
-      id: "addon-second",
-      title: "Dedicated Second Master Shooter",
-      desc: "Simultaneous groom prep and guest arrival coverage in low light.",
-      price: 450,
-    },
-    {
-      id: "addon-film",
-      title: "Handcrafted 35mm Analog Film Roll & Prints",
-      desc: "Vintage film scans delivered with 50 heirloom physical prints.",
-      price: 250,
-    },
-  ];
+  const { data: savedMethodsData } = useGetPaymentMethodsQuery();
+  const [createOrder] = useCreateOrderMutation();
+  const [createPaymentIntent] = useCreatePaymentIntentMutation();
+  const [updateBoardItem] = useUpdateBoardItemMutation();
 
-  const toggleAddon = (id: string) => {
-    setSelectedAddons((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
+  const existingOrder = existingOrderResp?.data || existingOrderResp;
+  const liveVendor = apiVendorResp?.data || apiVendorResp || existingOrder?.vendorProfile;
+
+  const vendor = {
+    id: liveVendor?.id || "",
+    name: liveVendor?.businessName || liveVendor?.name || "",
+    avatar: liveVendor?.avatar || liveVendor?.profileImage || "",
+    location: liveVendor?.location || liveVendor?.city || "",
+    packages: liveVendor?.gigs?.[0]?.packages || liveVendor?.packages || [],
   };
 
-  const basePackagePrice = vendor.packages[0]?.price || 1450;
-  const addonsTotal = selectedAddons.reduce((sum, id) => {
-    const found = addonsList.find((a) => a.id === id);
-    return sum + (found ? found.price : 0);
-  }, 0);
+  const selectedPkg = existingOrder
+    ? (existingOrder.package || existingOrder.gig?.packages?.[0] || { id: existingOrder.packageId, title: existingOrder.gig?.title || existingOrder.job?.title || "Accepted proposal", price: existingOrder.subtotal })
+    : packageId 
+    ? (vendor.packages.find((p: any) => p.id === packageId) || vendor.packages[0])
+    : vendor.packages[0];
 
-  const subtotal = basePackagePrice + addonsTotal;
+  const savedMethods = savedMethodsData?.data || savedMethodsData || [];
+
+  const [selectedSavedCardId, setSelectedSavedCardId] = useState<string>("");
+  const [eventDate, setEventDate] = useState("2026-11-18");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [confirmedOrderNumber, setConfirmedOrderNumber] = useState("");
+  const [confirmedChargeAmount, setConfirmedChargeAmount] = useState(0);
+
+  useEffect(() => {
+    if (!selectedSavedCardId && savedMethods.length) {
+      const defaultMethod = savedMethods.find((method: any) => method.isDefault) || savedMethods[0];
+      setSelectedSavedCardId(defaultMethod.stripePaymentMethodId || defaultMethod.id);
+    }
+  }, [savedMethods, selectedSavedCardId]);
+
+  const basePackagePrice = Number(existingOrder?.subtotal ?? selectedPkg?.price ?? 0);
+  const subtotal = basePackagePrice;
   const platformFee = subtotal * 0.05; // 5%
   const grandTotal = subtotal + platformFee;
 
-  const milestone1 = subtotal * 0.3; // 30%
-  const milestone2 = subtotal * 0.5; // 50%
-  const milestone3 = subtotal * 0.2; // 20%
+  const configuredMilestones = Array.isArray(selectedPkg?.escrowSplitJson)
+    ? selectedPkg.escrowSplitJson
+    : selectedPkg?.escrowSplitJson?.milestones || [];
+  const firstLockedMilestone = existingOrder?.milestones?.find((milestone: any) => milestone.status === "LOCKED");
+  const firstMilestonePercent = existingOrder && subtotal > 0
+    ? (Number(firstLockedMilestone?.amount || 0) / subtotal) * 100
+    : configuredMilestones[0]?.percentage || 50;
+  const milestone1 = Number(firstLockedMilestone?.amount ?? subtotal * Number(firstMilestonePercent) / 100);
 
-  const handleConfirmEscrow = (e: React.FormEvent) => {
+  const handleConfirmEscrow = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!existingOrderId && !selectedPkg?.id) {
+      toast.error("Choose an available service package before booking.");
+      return;
+    }
+    if (!selectedSavedCardId) {
+      toast.error("Add and select a payment method before booking.");
+      return;
+    }
+    if (existingOrderId && !existingOrder) {
+      toast.error("The accepted order is still loading or could not be found. Refresh and try again.");
+      return;
+    }
     setIsProcessing(true);
 
-    setTimeout(() => {
+    try {
+      const orderRes = existingOrderId ? null : await createOrder({
+        packageId: selectedPkg?.id,
+        eventDate: new Date(eventDate).toISOString(),
+        deliveryNotes: `Package: ${selectedPkg.title || "Service package"}`,
+      }).unwrap();
+
+      const order = existingOrderId ? existingOrder : (orderRes?.data || orderRes);
+      if (!order?.id) throw new Error("Order could not be created");
+      const payment = await createPaymentIntent({ orderId: order.id, paymentMethodId: selectedSavedCardId }).unwrap();
+      let paymentStatus = payment.paymentStatus;
+      if (["requires_action", "requires_confirmation"].includes(paymentStatus)) {
+        const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+        if (!publishableKey || !window.Stripe) throw new Error("Card authentication is unavailable. Please contact support.");
+        const result = await window.Stripe(publishableKey).confirmCardPayment(payment.clientSecret);
+        if (result.error) throw new Error(result.error.message || "Payment authentication failed");
+        paymentStatus = result.paymentIntent?.status;
+      }
+      if (paymentStatus !== "succeeded") throw new Error("Payment is not confirmed yet. Check your orders before trying again.");
+      const familyBoardItemId = searchParams.get("familyBoardItemId");
+      if (familyBoardItemId) {
+        try {
+          await updateBoardItem({ itemId: familyBoardItemId, data: { status: "BOOKED" } }).unwrap();
+        } catch {
+          toast.error("Payment succeeded, but the Family Hub item could not be updated. Contact support with your order number.");
+        }
+      }
+      setConfirmedOrderNumber(order.orderNumber || order.id);
+      setConfirmedChargeAmount(Number(payment.amount || milestone1 + platformFee * milestone1 / subtotal));
       setIsProcessing(false);
       setIsSuccess(true);
-      toast.success("Deposit locked into Escrow Vault successfully!");
-    }, 1500);
+      toast.success("First milestone payment confirmed.", { description: "Order activation will appear after Stripe confirms the webhook." });
+    } catch (error: any) {
+      setIsProcessing(false);
+      toast.error(error?.data?.message || error?.message || "Payment failed. Your order has not started.");
+    }
   };
 
   return (
     <div className="w-full bg-[#FAF9F6] min-h-screen py-10 lg:py-16">
+      <Script src="https://js.stripe.com/v3/" strategy="afterInteractive" />
       <div className="max-w-[1280px] mx-auto px-6 lg:px-10 space-y-8">
         {/* Step Indicator */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#EAE6DF]">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF2FF] text-[#3730A3] text-xs font-bold uppercase tracking-wider">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>UTSOB ESCROW VAULT CHECKOUT</span>
+              <span>Stripe Connect Checkout</span>
             </div>
             <h1 className="font-serif text-3xl sm:text-4xl font-bold text-obsidian tracking-tight mt-1">
               Secure Milestone Gig Booking
@@ -97,11 +158,11 @@ export default function CheckoutBookingPage() {
 
           <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
             <span className="text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
-              ✓ Step 1: Package
+              âœ“ Step 1: Package
             </span>
-            <span>→</span>
+            <span>â†’</span>
             <span className="text-obsidian bg-white px-2.5 py-1 rounded-md border border-slate-300">
-              Step 2: Vault Lock
+              Step 2: Payment
             </span>
           </div>
         </div>
@@ -123,10 +184,10 @@ export default function CheckoutBookingPage() {
                   </div>
                   <div>
                     <h3 className="font-serif font-bold text-lg text-obsidian">
-                      {vendor.packages[0]?.title || "Golden Hour Wedding Storytelling"}
+                      {selectedPkg?.title || vendor.packages[0]?.title || "Milestone Vendor Package"}
                     </h3>
                     <p className="text-xs text-slate-500">
-                      Artisan: <span className="font-semibold text-obsidian">{vendor.name}</span> • {vendor.location}
+                      Vendor: <span className="font-semibold text-obsidian">{vendor.name}</span> â€¢ {vendor.location}
                     </p>
                   </div>
                 </div>
@@ -152,122 +213,23 @@ export default function CheckoutBookingPage() {
                 </div>
               </div>
 
-              {/* Add-on Upgrades */}
-              <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-luxury border border-[#EAE6DF] space-y-4">
-                <h3 className="font-serif font-bold text-lg text-obsidian">
-                  Custom Add-on Options
-                </h3>
-                <div className="space-y-3">
-                  {addonsList.map((addon) => {
-                    const isSelected = selectedAddons.includes(addon.id);
-                    return (
-                      <div
-                        key={addon.id}
-                        onClick={() => toggleAddon(addon.id)}
-                        className={cn(
-                          "p-4 rounded-2xl border-2 cursor-pointer transition-all flex items-start justify-between gap-4",
-                          isSelected
-                            ? "bg-[#FAF9F5] border-[#0F1228]"
-                            : "bg-white border-[#EAE6DF] hover:border-slate-300"
-                        )}
-                      >
-                        <div className="flex items-start gap-3">
-                          <div
-                            className={cn(
-                              "w-5 h-5 rounded-md flex items-center justify-center mt-0.5 transition-colors",
-                              isSelected ? "bg-[#0F1228] text-white" : "border border-slate-300 bg-white"
-                            )}
-                          >
-                            {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
-                          </div>
-                          <div>
-                            <h4 className="font-semibold text-xs sm:text-sm text-obsidian">
-                              {addon.title}
-                            </h4>
-                            <p className="text-[11px] text-slate-500 mt-0.5">{addon.desc}</p>
-                          </div>
-                        </div>
-
-                        <span className="font-serif font-bold text-sm text-obsidian whitespace-nowrap">
-                          +${addon.price}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Milestone Schedule */}
+              {/* Milestone payment terms */}
               <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-luxury border border-[#EAE6DF] space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="font-serif font-bold text-lg text-obsidian">
-                    Milestone Disbursement Schedule
+                    Milestone payments
                   </h3>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
-                    Client Sign-Off Required
+                    Approval required
                   </span>
                 </div>
-
-                <div className="space-y-3">
-                  {/* Milestone 1 */}
-                  <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#EAE6DF] flex items-center justify-between">
-                    <div className="space-y-0.5">
-                      <div className="flex items-center gap-2">
-                        <span className="w-5 h-5 rounded-full bg-[#0F1228] text-white text-[10px] font-bold flex items-center justify-center">
-                          1
-                        </span>
-                        <h4 className="font-bold text-xs sm:text-sm text-obsidian">
-                          30% Booking Retainer
-                        </h4>
-                      </div>
-                      <p className="text-[11px] text-slate-500 pl-7">
-                        Locks date on artisan calendar. Held safely in vault.
-                      </p>
-                    </div>
-                    <span className="font-serif font-bold text-sm text-obsidian">
-                      ${milestone1.toFixed(2)}
-                    </span>
-                  </div>
-
-                  {/* Milestone 2 */}
-                  <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#EAE6DF] flex items-center justify-between">
-                    <div className="space-y-0.5">
-                      <div className="flex items-center gap-2">
-                        <span className="w-5 h-5 rounded-full bg-[#0F1228] text-white text-[10px] font-bold flex items-center justify-center">
-                          2
-                        </span>
-                        <h4 className="font-bold text-xs sm:text-sm text-obsidian">
-                          50% Day-of Arrival & Execution
-                        </h4>
-                      </div>
-                      <p className="text-[11px] text-slate-500 pl-7">
-                        Released when vendor arrives on site on event day.
-                      </p>
-                    </div>
-                    <span className="font-serif font-bold text-sm text-obsidian">
-                      ${milestone2.toFixed(2)}
-                    </span>
-                  </div>
-
-                  {/* Milestone 3 */}
-                  <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#EAE6DF] flex items-center justify-between">
-                    <div className="space-y-0.5">
-                      <div className="flex items-center gap-2">
-                        <span className="w-5 h-5 rounded-full bg-[#0F1228] text-white text-[10px] font-bold flex items-center justify-center">
-                          3
-                        </span>
-                        <h4 className="font-bold text-xs sm:text-sm text-obsidian">
-                          20% Final Deliverables Sign-Off
-                        </h4>
-                      </div>
-                      <p className="text-[11px] text-slate-500 pl-7">
-                        Released strictly after you review and approve high-res edits.
-                      </p>
-                    </div>
-                    <span className="font-serif font-bold text-sm text-obsidian">
-                      ${milestone3.toFixed(2)}
-                    </span>
-                  </div>
+                <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#EAE6DF] space-y-2 text-sm">
+                  <p className="font-semibold text-obsidian">
+                    First payment today: {firstMilestonePercent}% (${milestone1.toFixed(2)} before the platform fee)
+                  </p>
+                  <p className="text-xs text-slate-600">
+                    Later milestones are charged before that stage begins. After you approve delivery, the vendor transfer is scheduled 7 days later. A dispute pauses the transfer.
+                  </p>
                 </div>
               </div>
             </div>
@@ -276,7 +238,7 @@ export default function CheckoutBookingPage() {
             <div className="lg:col-span-5 space-y-6">
               <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-luxury-lg border border-[#EAE6DF] space-y-6">
                 <h3 className="font-serif font-bold text-xl text-obsidian">
-                  Escrow Deposit Summary
+                  Milestone Payment Summary
                 </h3>
 
                 <div className="space-y-3 text-xs sm:text-sm text-slate-600 border-b border-[#EAE6DF] pb-4">
@@ -285,23 +247,13 @@ export default function CheckoutBookingPage() {
                     <span className="font-bold text-obsidian">${basePackagePrice.toLocaleString()}</span>
                   </div>
 
-                  {addonsTotal > 0 && (
-                    <div className="flex justify-between">
-                      <span>Selected Add-ons ({selectedAddons.length})</span>
-                      <span className="font-bold text-obsidian">+${addonsTotal.toLocaleString()}</span>
-                    </div>
-                  )}
-
                   <div className="flex justify-between">
-                    <span className="flex items-center gap-1">
-                      Platform Concierge & Escrow Fee (5%)
-                    </span>
+                    <span>Platform fee</span>
                     <span className="font-bold text-obsidian">+${platformFee.toFixed(2)}</span>
                   </div>
-
-                  <div className="flex justify-between text-emerald-600 font-semibold">
-                    <span>FDIC Deposit Insurance Protection</span>
-                    <span>$0.00 (Included)</span>
+                  <div className="flex justify-between font-semibold text-obsidian">
+                    <span>First milestone due today (before fee)</span>
+                    <span>${milestone1.toFixed(2)}</span>
                   </div>
                 </div>
 
@@ -309,86 +261,101 @@ export default function CheckoutBookingPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-xs text-slate-400 block font-medium">
-                      TOTAL ESCROW DEPOSIT
+                      ORDER TOTAL
                     </span>
                     <span className="font-serif text-3xl font-extrabold text-obsidian">
                       ${grandTotal.toFixed(2)}
                     </span>
                   </div>
                   <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full">
-                    Protected in Vault
+                    Stripe charges the first milestone and its allocated platform fee today.
                   </span>
                 </div>
 
                 {/* Payment Selection */}
                 <div className="space-y-3 pt-2">
-                  <label className="block text-xs font-semibold text-slate-700">
-                    Select Vault Deposit Method
-                  </label>
-
-                  <div className="grid grid-cols-3 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod("card")}
-                      className={cn(
-                        "p-3 rounded-xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all",
-                        paymentMethod === "card"
-                          ? "bg-[#FAF9F5] border-[#0F1228] text-obsidian shadow-2xs"
-                          : "bg-white border-[#EAE6DF] text-slate-600"
-                      )}
-                    >
-                      <CreditCard className="w-4 h-4" />
-                      <span>Credit Card</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod("ach")}
-                      className={cn(
-                        "p-3 rounded-xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all",
-                        paymentMethod === "ach"
-                          ? "bg-[#FAF9F5] border-[#0F1228] text-obsidian shadow-2xs"
-                          : "bg-white border-[#EAE6DF] text-slate-600"
-                      )}
-                    >
-                      <Building className="w-4 h-4" />
-                      <span>Bank ACH</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setPaymentMethod("apple")}
-                      className={cn(
-                        "p-3 rounded-xl border text-xs font-bold flex flex-col items-center gap-1.5 transition-all",
-                        paymentMethod === "apple"
-                          ? "bg-[#FAF9F5] border-[#0F1228] text-obsidian shadow-2xs"
-                          : "bg-white border-[#EAE6DF] text-slate-600"
-                      )}
-                    >
-                      <Sparkles className="w-4 h-4" />
-                      <span>Apple Pay</span>
-                    </button>
+                  <div className="flex items-center justify-between">
+                    <label className="block text-xs font-semibold text-slate-700">
+                      Choose a saved payment method
+                    </label>
+                    {savedMethods.length > 0 && (
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+                        {savedMethods.length} Saved Card{savedMethods.length > 1 ? "s" : ""}
+                      </span>
+                    )}
                   </div>
+
+                  {savedMethods.length > 0 && (
+                    <div className="space-y-2 mb-2">
+                      {savedMethods.map((pm: any) => (
+                        <div
+                          key={pm.id}
+                          onClick={() => {
+                            setSelectedSavedCardId(pm.stripePaymentMethodId || pm.id);
+                          }}
+                          className={cn(
+                            "p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all text-xs",
+                            selectedSavedCardId === (pm.stripePaymentMethodId || pm.id)
+                              ? "border-brand-primary bg-indigo-50/50 shadow-2xs"
+                              : "border-slate-200 bg-white hover:border-slate-300"
+                          )}
+                        >
+                          <div className="flex items-center gap-2.5">
+                            <span className="px-1.5 py-0.5 bg-slate-900 text-white rounded text-[9px] font-bold uppercase">
+                              {pm.brand || "Card"}
+                            </span>
+                            <span className="font-mono font-bold text-slate-800">
+                              â€¢â€¢â€¢â€¢ {pm.last4 || "4242"}
+                            </span>
+                            {pm.isDefault && (
+                              <span className="text-[9px] font-bold px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded-full">
+                                Default
+                              </span>
+                            )}
+                          </div>
+                          <div className="w-4 h-4 rounded-full border border-slate-300 flex items-center justify-center">
+                            {selectedSavedCardId === (pm.stripePaymentMethodId || pm.id) && (
+                              <div className="w-2 h-2 rounded-full bg-brand-primary" />
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {!savedMethods.length && (
+                    <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                      <span>A verified payment method must be saved to your account before placing or booking an order.</span>
+                      <Link
+                        className="px-3 py-1.5 rounded-lg bg-amber-900 text-white font-bold text-xs whitespace-nowrap text-center hover:bg-amber-950 transition-colors"
+                        href="/user/payments"
+                      >
+                        Add Card First →
+                      </Link>
+                    </div>
+                  )}
                 </div>
 
                 {/* Submit Escrow Button */}
                 <button
                   type="submit"
-                  disabled={isProcessing}
-                  className="w-full h-14 bg-[#0F1228] hover:bg-[#1A1F40] active:scale-99 text-white font-bold text-sm rounded-xl shadow-lg shadow-gold-glow-sm transition-all flex items-center justify-center gap-2"
+                  disabled={isProcessing || !savedMethods.length}
+                  className="w-full h-14 bg-[#0F1228] hover:bg-[#1A1F40] disabled:bg-slate-300 disabled:cursor-not-allowed active:scale-99 text-white font-bold text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {isProcessing ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  ) : !savedMethods.length ? (
+                    <span>Add Payment Method to Book</span>
                   ) : (
                     <>
-                      <Lock className="w-4 h-4 text-gold-400" />
-                      <span>Lock ${grandTotal.toFixed(2)} into Escrow Vault</span>
+                      <Lock className="w-4 h-4 text-amber-300" />
+                      <span>Pay First Milestone — ${milestone1.toFixed(2)} plus fee</span>
                     </>
                   )}
                 </button>
 
                 <p className="text-[11px] text-slate-400 text-center leading-relaxed">
-                  Your funds are segregated in Utsob FDIC-insured escrow. Funds are never released to the vendor without your explicit milestone authorization.
+                  The first milestone is charged now. Later milestones are charged before their work begins. Approved milestone transfers are held for 7 days; disputes pause release.
                 </p>
               </div>
             </div>
@@ -402,19 +369,19 @@ export default function CheckoutBookingPage() {
 
             <div className="space-y-2">
               <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider bg-emerald-50 px-3 py-1 rounded-full">
-                ESCROW VAULT CONFIRMED • BOOKING #OPH-8921
+                PAYMENT CONFIRMED - ORDER #{confirmedOrderNumber}
               </span>
               <h2 className="font-serif text-3xl sm:text-4xl font-bold text-obsidian">
-                Your celebration is officially secured!
+                Your first milestone payment is confirmed.
               </h2>
               <p className="text-sm text-slate-600 max-w-md mx-auto">
-                <span className="font-bold text-obsidian">${grandTotal.toFixed(2)}</span> has been deposited into the Utsob Trust Vault. {vendor.name} has been notified and your date is guaranteed.
+                <span className="font-bold text-obsidian">${confirmedChargeAmount.toFixed(2)}</span> was charged for the first milestone, including its platform fee. The order status updates after Stripe confirms the payment webhook.
               </p>
             </div>
 
             <div className="p-5 rounded-2xl bg-[#FAF9F6] border border-[#EAE6DF] text-xs text-left space-y-2">
               <div className="flex justify-between">
-                <span className="text-slate-500">Artisan:</span>
+                <span className="text-slate-500">Vendor:</span>
                 <span className="font-bold text-obsidian">{vendor.name}</span>
               </div>
               <div className="flex justify-between">
@@ -422,17 +389,17 @@ export default function CheckoutBookingPage() {
                 <span className="font-bold text-obsidian">{eventDate}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Milestone 1 Retainer:</span>
-                <span className="font-bold text-emerald-600">${milestone1.toFixed(2)} Locked</span>
+                <span className="text-slate-500">First milestone:</span>
+                <span className="font-bold text-emerald-600">${milestone1.toFixed(2)} funded</span>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <Link
-                href="/vendors"
+                href="/user/orders"
                 className="w-full sm:w-auto px-6 py-3 bg-[#0F1228] text-white font-semibold text-xs rounded-xl shadow-xs"
               >
-                Browse More Vendors
+                View my orders
               </Link>
               <Link
                 href="/"
