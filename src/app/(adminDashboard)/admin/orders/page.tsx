@@ -25,7 +25,7 @@ import AdminEscrowReleaseModal from "@/components/admin/AdminEscrowReleaseModal"
 const initialOrders = [
   {
     id: "ord-1",
-    orderNumber: "JB-20455",
+    orderNumber: "OPH-20455",
     occasion: "Emma's 5th Birthday Gala",
     clientName: "Emily Carter",
     clientEmail: "emily.carter@gmail.com",
@@ -43,7 +43,7 @@ const initialOrders = [
   },
   {
     id: "ord-2",
-    orderNumber: "JB-20448",
+    orderNumber: "OPH-20448",
     occasion: "Golden Hour Wedding",
     clientName: "Sarah Jenkins",
     clientEmail: "sarah.jenkins@gmail.com",
@@ -61,7 +61,7 @@ const initialOrders = [
   },
   {
     id: "ord-3",
-    orderNumber: "JB-20432",
+    orderNumber: "OPH-20432",
     occasion: "Adams Silver Anniversary",
     clientName: "David Vance",
     clientEmail: "david.vance@gmail.com",
@@ -79,7 +79,7 @@ const initialOrders = [
   },
   {
     id: "ord-4",
-    orderNumber: "JB-20419",
+    orderNumber: "OPH-20419",
     occasion: "TechForward Annual Gala",
     clientName: "Marcus Sterling",
     clientEmail: "marcus.sterling@apex.com",
@@ -97,22 +97,38 @@ const initialOrders = [
   },
 ];
 
+import { useGetAllOrdersQuery } from "@/redux/service/admin/adminApi";
+
 export default function AdminOrdersEscrowPage() {
-  const [orders, setOrders] = useState(initialOrders);
+  const { data: apiOrders, isLoading } = useGetAllOrdersQuery();
   const [search, setSearch] = useState("");
   const [selectedOrderForEscrow, setSelectedOrderForEscrow] = useState<any | null>(null);
 
+  const rawOrders = apiOrders?.data || apiOrders?.orders || apiOrders;
+  const orders = (rawOrders && Array.isArray(rawOrders) && rawOrders.length > 0)
+    ? rawOrders.map((o: any) => ({
+        id: o.id,
+        orderNumber: o.orderNumber || `OPH-${o.id.substring(0, 5).toUpperCase()}`,
+        occasion: o.gig?.title || o.job?.title || "Special Event Milestone",
+        clientName: o.clientProfile?.displayName || o.client?.name || "Client",
+        clientEmail: o.clientProfile?.user?.email || "client@email.com",
+        vendorName: o.vendorProfile?.businessName || o.vendor?.businessName || "Vendor",
+        vendorStripeAccountId: o.vendorProfile?.stripeAccountId || "acct_connected",
+        stripePaymentIntentId: o.stripePaymentIntentId || "pi_vault",
+        service: o.gig?.category?.name || "Celebration Escrow Package",
+        totalAmount: Number(o.grandTotal || 0),
+        escrowLockedAmount: o.status === "COMPLETED" ? 0 : Number(o.grandTotal || 0),
+        escrowStatus: o.status === "COMPLETED" ? "COMPLETED" : o.status === "DISPUTED" ? "DISPUTE_HOLD" : "LOCKED_IN_CUSTODY",
+        milestone: `${o.milestones?.length || 1} Milestones`,
+        date: o.createdAt ? new Date(o.createdAt).toLocaleDateString() : "Recent",
+        protection: "100% Vault Protected",
+        status: o.status || "Active",
+      }))
+    : initialOrders;
+
+
   const handleActionComplete = (actionType: string, details: any) => {
-    setOrders(orders.map((o) => {
-      if (o.id === details.orderId) {
-        return {
-          ...o,
-          escrowLockedAmount: actionType === "release" ? 0 : actionType === "full_refund" ? 0 : o.escrowLockedAmount - details.clientRefundDollar - details.vendorPayoutDollar,
-          escrowStatus: actionType === "release" ? "COMPLETED" : actionType === "full_refund" ? "REFUNDED" : "SPLIT_SETTLED",
-        };
-      }
-      return o;
-    }));
+    toast.success(`Escrow settlement complete: ${actionType}`);
   };
 
   const filtered = orders.filter((o) =>
