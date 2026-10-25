@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Bell, 
   Check, 
@@ -13,9 +13,16 @@ import {
   Calendar,
   Briefcase,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  Loader2
 } from "lucide-react";
 import Link from "next/link";
+import { 
+  useGetUserNotificationsQuery, 
+  useMarkNotificationAsReadMutation, 
+  useMarkAllNotificationsAsReadMutation,
+  useDeleteNotificationMutation,
+} from "@/redux/service/notifications/notificationsApi";
 
 interface VendorNotificationItem {
   id: string;
@@ -72,17 +79,61 @@ const mockVendorNotifications: VendorNotificationItem[] = [
 ];
 
 export default function VendorNotificationsPage() {
-  const [notifications, setNotifications] = useState<VendorNotificationItem[]>(mockVendorNotifications);
+  const { data: apiNotifications, isLoading } = useGetUserNotificationsQuery();
+  const [markRead] = useMarkNotificationAsReadMutation();
+  const [markAllRead] = useMarkAllNotificationsAsReadMutation();
+  const [deleteNotification] = useDeleteNotificationMutation();
+
+  const [notifications, setNotifications] = useState<VendorNotificationItem[]>([]);
   const [filterType, setFilterType] = useState("All");
+
+  useEffect(() => {
+    const rawNotifications = (apiNotifications as any)?.data || (Array.isArray(apiNotifications) ? apiNotifications : []);
+    if (Array.isArray(rawNotifications)) {
+      const mapped: VendorNotificationItem[] = rawNotifications.map((n: any) => ({
+        id: n.id,
+        type: n.type?.toLowerCase().includes("job") ? "job_match" :
+              n.type?.toLowerCase().includes("milestone") ? "milestone" :
+              n.type?.toLowerCase().includes("message") ? "message" :
+              n.type?.toLowerCase().includes("review") ? "review" : "escrow",
+        title: n.title,
+        description: n.body,
+        time: new Date(n.createdAt).toLocaleDateString(),
+        read: n.isRead,
+        actionUrl: n.link || "/vendor",
+        actionLabel: "View Action",
+      }));
+      setNotifications(mapped);
+    }
+  }, [apiNotifications]);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
-  const handleMarkAllAsRead = () => {
-    setNotifications(notifications.map((n) => ({ ...n, read: true })));
+  const handleMarkAsRead = async (id: string) => {
+    try {
+      await markRead(id).unwrap();
+      setNotifications(prev => prev.map(n => n.id === id ? { ...n, read: true } : n));
+    } catch {
+      // Preserve unread state when the server update fails.
+    }
   };
 
-  const handleDelete = (id: string) => {
-    setNotifications(notifications.filter((n) => n.id !== id));
+  const handleMarkAllAsRead = async () => {
+    try {
+      await markAllRead().unwrap();
+      setNotifications((items) => items.map((n) => ({ ...n, read: true })));
+    } catch {
+      // Preserve unread state when the server update fails.
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteNotification(id).unwrap();
+      setNotifications((items) => items.filter((n) => n.id !== id));
+    } catch {
+      // Keep the notification visible if deletion fails.
+    }
   };
 
   const filtered = notifications.filter((n) => {
@@ -108,7 +159,7 @@ export default function VendorNotificationsPage() {
   };
 
   return (
-    <div className="space-y-6 max-w-4xl">
+    <div className="space-y-6 max-w-4xl pb-12">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
@@ -128,7 +179,7 @@ export default function VendorNotificationsPage() {
         {unreadCount > 0 && (
           <button
             onClick={handleMarkAllAsRead}
-            className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-[#0F0C3B] rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start sm:self-auto"
+            className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-[#0F0C3B] rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
           >
             <CheckCheck className="w-4 h-4 text-brand-primary" /> Mark All as Read
           </button>
@@ -136,70 +187,90 @@ export default function VendorNotificationsPage() {
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-2 overflow-x-auto text-xs font-semibold">
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
         {["All", "Unread", "job_match", "milestone", "message", "review"].map((tab) => (
           <button
             key={tab}
             onClick={() => setFilterType(tab)}
-            className={`px-3 py-1.5 rounded-lg capitalize transition-all whitespace-nowrap ${
+            className={`px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all ${
               filterType === tab
-                ? "bg-[#0F0C3B] text-white font-bold"
-                : "text-slate-600 hover:bg-slate-100"
+                ? "bg-[#0F0C3B] text-white shadow-xs"
+                : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
             }`}
           >
-            {tab === "job_match" ? "Job Leads" : tab === "milestone" ? "Milestone Payouts" : tab}
+            {tab === "All" ? "All Updates" :
+             tab === "Unread" ? `Unread (${unreadCount})` :
+             tab === "job_match" ? "Job Leads" :
+             tab === "milestone" ? "Milestones & Escrow" :
+             tab === "message" ? "Messages" : "Client Reviews"}
           </button>
         ))}
       </div>
 
       {/* Notifications List */}
-      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs divide-y divide-slate-100">
-        {filtered.length > 0 ? (
-          filtered.map((item) => (
+      <div className="space-y-3">
+        {isLoading ? (
+          <div className="py-12 flex flex-col items-center justify-center text-slate-400 gap-2 text-xs">
+            <Loader2 className="w-5 h-5 animate-spin text-brand-primary" />
+            <span>Loading notifications...</span>
+          </div>
+        ) : filtered.length === 0 ? (
+          <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-500 text-xs">
+            <Bell className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+            <p className="font-bold text-[#0F0C3B]">You&apos;re all caught up!</p>
+            <p className="text-slate-400 mt-0.5">No notifications matching selected filter.</p>
+          </div>
+        ) : (
+          filtered.map((n) => (
             <div
-              key={item.id}
-              className={`p-4 sm:p-5 flex items-start justify-between gap-4 transition-colors ${
-                !item.read ? "bg-[#F8F9FD]" : "hover:bg-slate-50"
+              key={n.id}
+              onClick={() => handleMarkAsRead(n.id)}
+              className={`p-4 rounded-2xl border transition-all flex items-start gap-4 cursor-pointer ${
+                n.read
+                  ? "bg-white border-slate-200 shadow-2xs opacity-80"
+                  : "bg-indigo-50/40 border-indigo-200 shadow-xs"
               }`}
             >
-              <div className="flex items-start gap-3.5">
-                <div className="p-2.5 rounded-xl bg-white border border-slate-200 shadow-xs mt-0.5">
-                  {getIcon(item.type)}
-                </div>
-
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-xs font-bold text-[#0F0C3B]">{item.title}</h3>
-                    {!item.read && (
-                      <span className="w-2 h-2 rounded-full bg-amber-500" />
-                    )}
-                  </div>
-                  <p className="text-xs text-slate-600 leading-relaxed max-w-xl">{item.description}</p>
-                  <span className="text-[10px] text-slate-400 font-medium">{item.time}</span>
-                </div>
+              <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 shadow-2xs flex items-center justify-center flex-shrink-0 mt-0.5">
+                {getIcon(n.type)}
               </div>
 
-              <div className="flex items-center gap-2 flex-shrink-0">
-                <Link
-                  href={item.actionUrl}
-                  className="px-3 py-1.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-lg text-xs font-bold transition-all flex items-center gap-1 shadow-xs"
-                >
-                  {item.actionLabel} <ChevronRight className="w-3.5 h-3.5" />
-                </Link>
+              <div className="flex-1 space-y-1">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-xs font-bold text-[#0F0C3B]">{n.title}</h3>
+                    {!n.read && (
+                      <span className="w-2 h-2 rounded-full bg-brand-primary flex-shrink-0" />
+                    )}
+                  </div>
+                  <span className="text-[10px] text-slate-400 flex-shrink-0">{n.time}</span>
+                </div>
 
-                <button
-                  onClick={() => handleDelete(item.id)}
-                  className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  {n.description}
+                </p>
+
+                <div className="flex items-center gap-3 pt-2">
+                  <Link
+                    href={n.actionUrl}
+                    className="text-[11px] font-bold text-brand-primary hover:text-indigo-900 flex items-center gap-1"
+                  >
+                    {n.actionLabel} <ChevronRight className="w-3 h-3" />
+                  </Link>
+                  <span className="text-slate-300">&bull;</span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(n.id);
+                    }}
+                    className="text-[11px] text-slate-400 hover:text-rose-600 transition-colors"
+                  >
+                    Dismiss
+                  </button>
+                </div>
               </div>
             </div>
           ))
-        ) : (
-          <div className="p-10 text-center text-slate-500 text-xs">
-            No notifications found.
-          </div>
         )}
       </div>
     </div>
