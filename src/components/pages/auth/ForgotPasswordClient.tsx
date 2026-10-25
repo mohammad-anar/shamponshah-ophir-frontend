@@ -7,21 +7,23 @@ import { toast } from "sonner";
 import AuthHeader from "@/components/pages/auth/AuthHeader";
 import AuthFooter from "@/components/pages/auth/AuthFooter";
 import AuthSideHero from "@/components/pages/auth/AuthSideHero";
+import { useForgotPasswordMutation } from "@/redux/service/auth/authApi";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("maya.torres@gmail.com");
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      await forgotPassword({ email }).unwrap();
       setIsSubmitted(true);
       toast.success("Password recovery link sent!");
-    }, 1000);
+    } catch {
+      setIsSubmitted(true);
+      toast.success("Password recovery link sent!");
+    }
   };
 
   return (
@@ -128,7 +130,7 @@ export default function ForgotPasswordPage() {
           {/* Right: Hero Panel */}
           <div className="lg:col-span-6 xl:col-span-6">
             <AuthSideHero
-              badge="FDIC-Insured Escrow • 100% Verified Artisans"
+              badge="FDIC-Insured Escrow • 100% Verified Vendors"
               vaultScore="4.96/5 Vault Score"
               headline="Every celebration deserves the right people."
               subheadline="Over 50,000 multi-generational milestones coordinated with unyielding contract clarity and milestone-based fund releases."
