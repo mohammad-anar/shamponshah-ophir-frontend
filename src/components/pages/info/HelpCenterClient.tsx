@@ -1,11 +1,28 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, HelpCircle, FileText, ArrowRight } from "lucide-react";
+import { Search, HelpCircle, FileText, ArrowRight, ChevronDown, CheckCircle2 } from "lucide-react";
 import FaqAccordion from "@/components/ui/FaqAccordion/FaqAccordion";
+import { useGetFaqsQuery } from "@/redux/service/contact/contactApi";
 
 export default function HelpCenterPage() {
+  const { data: faqsData, isLoading } = useGetFaqsQuery();
   const [searchQuery, setSearchQuery] = useState("");
+
+  const liveCategories = faqsData?.data || faqsData || [];
+  const allQuestions: { q: string; a: string; category?: string }[] = Array.isArray(liveCategories)
+    ? liveCategories.flatMap((c: any) =>
+        (c.questions || []).map((q: any) => ({ ...q, category: c.category }))
+      )
+    : [];
+
+  const matchedQuestions = searchQuery.trim()
+    ? allQuestions.filter(
+        (item) =>
+          item.q.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          item.a.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : [];
 
   const categories = [
     {
@@ -20,7 +37,7 @@ export default function HelpCenterPage() {
     },
     {
       title: "Vendor Vetting & Badges",
-      desc: "Artisan verification steps, guild tiers, background audits, and portfolio checks.",
+      desc: "Vendor verification steps, guild tiers, background audits, and portfolio checks.",
       articles: 12,
     },
     {
@@ -57,6 +74,31 @@ export default function HelpCenterPage() {
             className="w-full h-14 pl-12 pr-4 bg-white text-obsidian rounded-2xl border border-[#EAE6DF] shadow-luxury focus:border-gold-500 focus:outline-none text-sm"
           />
         </div>
+
+        {/* Live Search Results Dropdown / Card */}
+        {searchQuery.trim().length > 0 && (
+          <div className="max-w-2xl mx-auto bg-white rounded-2xl border border-[#EAE6DF] shadow-xl p-4 text-left space-y-3 animate-in fade-in slide-in-from-top-2">
+            <div className="flex items-center justify-between text-xs text-slate-500 border-b pb-2">
+              <span className="font-bold text-obsidian">Search Results ({matchedQuestions.length})</span>
+              <button onClick={() => setSearchQuery("")} className="text-slate-400 hover:text-slate-700">Clear</button>
+            </div>
+            {matchedQuestions.length === 0 ? (
+              <p className="text-xs text-slate-500 py-3 text-center">
+                No exact article matches found for &ldquo;{searchQuery}&rdquo;. Try asking our 24/7 Concierge Hospitality desk.
+              </p>
+            ) : (
+              <div className="space-y-3 divide-y divide-slate-100 max-h-80 overflow-y-auto">
+                {matchedQuestions.map((item, idx) => (
+                  <div key={idx} className="pt-2.5 first:pt-0 space-y-1">
+                    <span className="text-[10px] uppercase font-bold text-brand-primary tracking-wider">{item.category || "General"}</span>
+                    <h4 className="text-xs font-bold text-obsidian">{item.q}</h4>
+                    <p className="text-xs text-slate-600 leading-relaxed">{item.a}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </section>
 
       {/* Category Grid */}
