@@ -6,9 +6,19 @@ interface LoginRequest {
   password: string;
 }
 
-const authApi = baseApi.injectEndpoints({
+interface RegisterRequest {
+  email: string;
+  password: string;
+  role: "CLIENT" | "VENDOR";
+  displayName?: string;
+  businessName?: string;
+  city?: string;
+  state?: string;
+}
+
+export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    registerUser: builder.mutation({
+    registerUser: builder.mutation<any, RegisterRequest>({
       query: (user) => ({
         url: "/auth/register",
         method: "POST",
@@ -17,46 +27,54 @@ const authApi = baseApi.injectEndpoints({
       invalidatesTags: ["auth"],
     }),
     loginUser: builder.mutation<any, LoginRequest>({
-      query: (user) => ({
+      query: (credentials) => ({
         url: "/auth/login",
         method: "POST",
-        body: user,
+        body: credentials,
       }),
       invalidatesTags: ["auth"],
     }),
-    logout: builder.mutation({
+    getMe: builder.query<any, void>({
+      query: () => ({
+        url: "/auth/me",
+        method: "GET",
+      }),
+      providesTags: ["auth"],
+    }),
+    logout: builder.mutation<any, void>({
       query: () => ({
         url: "/auth/logout",
         method: "POST",
       }),
       invalidatesTags: ["auth"],
     }),
-    forgatPassword: builder.mutation<any, { email: string }>({
-      query: (user) => ({
+    forgotPassword: builder.mutation<any, { email: string }>({
+      query: (data) => ({
         url: "/auth/forgot-password",
         method: "POST",
-        body: user,
+        body: data,
       }),
-      invalidatesTags: ["auth"],
     }),
-    resetPassword: builder.mutation({
-      query: ({ token, user }) => ({
+    resetPassword: builder.mutation<any, { token: string; newPassword: string }>({
+      query: (data) => ({
         url: "/auth/reset-password",
-        method: "PATCH",
-        body: user,
-        headers: {
-          Authorization: `${token}`,
-        },
+        method: "POST",
+        body: data,
+      }),
+    }),
+    verifyEmail: builder.mutation<any, { token: string }>({
+      query: ({ token }) => ({
+        url: `/auth/verify-email?token=${token}`,
+        method: "GET",
       }),
       invalidatesTags: ["auth"],
     }),
-    changePassword: builder.mutation({
-      query: (user) => ({
-        url: "/auth/change-pass",
-        method: "PATCH",
-        body: user,
+    changePassword: builder.mutation<any, { currentPassword: string; newPassword: string }>({
+      query: (data) => ({
+        url: "/users/change-password",
+        method: "POST",
+        body: data,
       }),
-      invalidatesTags: ["auth"],
     }),
   }),
 });
@@ -64,9 +82,10 @@ const authApi = baseApi.injectEndpoints({
 export const {
   useRegisterUserMutation,
   useLoginUserMutation,
+  useGetMeQuery,
   useLogoutMutation,
-  useChangePasswordMutation,
-  useForgatPasswordMutation,
+  useForgotPasswordMutation,
   useResetPasswordMutation,
+  useVerifyEmailMutation,
+  useChangePasswordMutation,
 } = authApi;
-export const { endpoints: authEndpoints } = authApi;
