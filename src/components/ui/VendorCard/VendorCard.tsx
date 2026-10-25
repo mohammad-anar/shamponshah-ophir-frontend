@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Star, ShieldCheck, Heart, MapPin, CheckCircle2, ArrowRight, Sparkles, Users2 } from "lucide-react";
@@ -8,6 +8,7 @@ import { Vendor } from "@/data/mockData";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import AddToFamilyHubModal from "@/components/shared/AddToFamilyHubModal";
+import { useSaveVendorMutation, useGetSavedVendorsQuery } from "@/redux/service/vendors/vendorsApi";
 
 interface VendorCardProps {
   vendor: Vendor;
@@ -15,17 +16,32 @@ interface VendorCardProps {
 }
 
 export default function VendorCard({ vendor, variant = "default" }: VendorCardProps) {
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [saveVendor] = useSaveVendorMutation();
+  const { data: savedData } = useGetSavedVendorsQuery();
+  const savedList = Array.isArray(savedData) ? savedData : (savedData?.data || []);
+  const isSavedInDb = savedList.some((s: any) => s.id === vendor.id || (s.vendorProfile && s.vendorProfile.id === vendor.id));
+
+  const [isFavorite, setIsFavorite] = useState(isSavedInDb);
   const [isFamilyModalOpen, setIsFamilyModalOpen] = useState(false);
 
-  const toggleFavorite = (e: React.MouseEvent) => {
+  useEffect(() => {
+    setIsFavorite(isSavedInDb);
+  }, [isSavedInDb]);
+
+  const toggleFavorite = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setIsFavorite(!isFavorite);
-    if (!isFavorite) {
-      toast.success(`Saved ${vendor.name} to your shortlist!`);
-    } else {
-      toast.info(`Removed ${vendor.name} from shortlist.`);
+    try {
+      const res = await saveVendor(vendor.id).unwrap();
+      const nowSaved = res?.saved !== undefined ? res.saved : !isFavorite;
+      setIsFavorite(nowSaved);
+      if (nowSaved) {
+        toast.success(`Saved ${vendor.name} to your shortlist!`);
+      } else {
+        toast.info(`Removed ${vendor.name} from shortlist.`);
+      }
+    } catch {
+      toast.error("Please login as a client to save vendors.");
     }
   };
 
@@ -56,7 +72,7 @@ export default function VendorCard({ vendor, variant = "default" }: VendorCardPr
         return (
           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 text-[10px] font-bold tracking-wide border border-emerald-200">
             <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-            <span>Verified Artisan</span>
+            <span>Verified Vendor</span>
           </span>
         );
     }
