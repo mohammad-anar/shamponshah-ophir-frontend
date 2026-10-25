@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Bell, 
   Check, 
@@ -15,6 +15,12 @@ import {
   ChevronRight
 } from "lucide-react";
 import Link from "next/link";
+import { 
+  useGetUserNotificationsQuery, 
+  useMarkNotificationAsReadMutation, 
+  useMarkAllNotificationsAsReadMutation,
+  useDeleteNotificationMutation,
+} from "@/redux/service/notifications/notificationsApi";
 
 interface NotificationItem {
   id: string;
@@ -65,8 +71,8 @@ const mockNotifications: NotificationItem[] = [
     description: "Your milestone celebration is exactly 41 days away. 3 of 4 vendor slots confirmed.",
     time: "1 day ago",
     read: true,
-    actionUrl: "/user/events",
-    actionLabel: "Open Timeline",
+    actionUrl: "/services",
+    actionLabel: "Browse Services",
   },
   {
     id: "n5",
@@ -81,22 +87,63 @@ const mockNotifications: NotificationItem[] = [
 ];
 
 export default function UserNotificationsPage() {
-  const [notifications, setNotifications] = useState<NotificationItem[]>(mockNotifications);
+  const { data: apiNotifications } = useGetUserNotificationsQuery();
+  const [markSingleRead] = useMarkNotificationAsReadMutation();
+  const [markAllRead] = useMarkAllNotificationsAsReadMutation();
+  const [deleteNotification] = useDeleteNotificationMutation();
+
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [filterType, setFilterType] = useState<string>("All");
+
+  useEffect(() => {
+    const list = Array.isArray(apiNotifications) ? apiNotifications : (apiNotifications?.data || []);
+    if (Array.isArray(list)) {
+      const mapped: NotificationItem[] = list.map((n: any) => ({
+        id: n.id,
+        type: n.type?.toLowerCase().includes("escrow") || n.type?.toLowerCase().includes("milestone") ? "escrow" :
+              n.type?.toLowerCase().includes("offer") || n.type?.toLowerCase().includes("bid") ? "bid" :
+              n.type?.toLowerCase().includes("message") ? "message" :
+              n.type?.toLowerCase().includes("review") ? "review" : "event",
+        title: n.title,
+        description: n.body,
+        time: new Date(n.createdAt).toLocaleDateString(),
+        read: n.isRead,
+        actionUrl: n.link || "/user",
+        actionLabel: "View Details",
+      }));
+      setNotifications(mapped);
+    }
+  }, [apiNotifications]);
 
   const unreadCount = notifications.filter((n) => !n.read).length;
 
-  const handleMarkAllAsRead = () => {
-    setNotifications(notifications.map((n) => ({ ...n, read: true })));
+  const handleMarkAllAsRead = async () => {
+    try {
+      await markAllRead().unwrap();
+      setNotifications((items) => items.map((n) => ({ ...n, read: true })));
+    } catch {
+      // Keep the current read state when the server update fails.
+    }
   };
 
-  const handleMarkSingleRead = (id: string) => {
-    setNotifications(notifications.map((n) => (n.id === id ? { ...n, read: true } : n)));
+  const handleMarkSingleRead = async (id: string) => {
+    try {
+      await markSingleRead(id).unwrap();
+      setNotifications((items) => items.map((n) => (n.id === id ? { ...n, read: true } : n)));
+    } catch {
+      // Keep the current read state when the server update fails.
+    }
   };
 
-  const handleDelete = (id: string) => {
-    setNotifications(notifications.filter((n) => n.id !== id));
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteNotification(id).unwrap();
+      setNotifications((items) => items.filter((n) => n.id !== id));
+    } catch {
+      // Keep the notification visible if deletion fails.
+    }
   };
+
 
   const filtered = notifications.filter((n) => {
     if (filterType === "All") return true;
