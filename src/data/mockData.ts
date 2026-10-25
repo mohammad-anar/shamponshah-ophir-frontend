@@ -257,7 +257,7 @@ export const VENDORS: Vendor[] = [
         turnaround: "Day-of Completion",
         escrowSplit: "3 Milestones (40/40/20)",
         isPopular: true,
-        features: ["Live flower preservation", "Teardown service included", "On-site floral artisan team"],
+        features: ["Live flower preservation", "Teardown service included", "On-site floral vendor team"],
       },
     ],
     reviewsList: [],
@@ -295,7 +295,7 @@ export const VENDORS: Vendor[] = [
   },
   {
     id: "heritage-culinary",
-    name: "Heritage Culinary Artisans",
+    name: "Heritage Culinary Vendors",
     category: "catering",
     categoryLabel: "Artisanal & Heritage Catering",
     title: "Farm-to-table multi-course plated banquets, royal grazing tables, and sommelier beverage pairings.",
@@ -450,7 +450,7 @@ export const FAQS = [
   },
   {
     q: "What is the 5% platform fee, and who pays it?",
-    a: "Ophir Reserve charges a simple, transparent flat 5% platform fee to clients at checkout to power our FDIC-insured escrow infrastructure, 24/7 concierge support, and dispute mediation protection. Artisans and vendors keep 100% of their invoiced rates with zero hidden lead charges or commissions.",
+    a: "Ophir Reserve charges a simple, transparent flat 5% platform fee to clients at checkout to power our FDIC-insured escrow infrastructure, 24/7 concierge support, and dispute mediation protection. Vendors keep 100% of their invoiced rates with zero hidden lead charges or commissions.",
   },
   {
     q: "How does the Family Account collaborative planning work?",
@@ -458,10 +458,10 @@ export const FAQS = [
   },
   {
     q: "How are vendors vetted before being listed on Ophir Reserve?",
-    a: "Every artisan undergoes a rigorous 4-step council verification: government ID verification, business entity & insurance check, multi-camera raw portfolio audit, and authentic reference checks with past milestone clients. Only the top verified practitioners receive guild badges.",
+    a: "Every vendor undergoes a rigorous 4-step council verification: government ID verification, business entity & insurance check, multi-camera raw portfolio audit, and authentic reference checks with past milestone clients. Only the top verified practitioners receive guild badges.",
   },
   {
     q: "What happens if a vendor cancels or fails to deliver?",
-    a: "Because your funds remain locked in the Utsob Escrow Vault, your money is completely safe. In the rare event of a cancellation, our 24/7 concierge instantly activates emergency contingency backup artisans from our Pro/Elite network, or issues an immediate 100% refund backed by our Independent Mediation Council guarantee.",
+    a: "Because your funds remain locked in the Utsob Escrow Vault, your money is completely safe. In the rare event of a cancellation, our 24/7 concierge instantly activates emergency contingency backup vendors from our Pro/Elite network, or issues an immediate 100% refund backed by our Independent Mediation Council guarantee.",
   },
 ];
