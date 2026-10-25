@@ -20,7 +20,7 @@ export default function AboutUsPage() {
           </h1>
 
           <p className="text-slate-600 text-sm sm:text-base lg:text-lg leading-relaxed">
-            Weddings, galas, and cultural milestones represent the emotional pinnacle of family life. We built Ophir Reserve to ensure every dollar is protected and every artisan is celebrated.
+            Weddings, galas, and cultural milestones represent the emotional pinnacle of family life. We built Ophir Reserve to ensure every dollar is protected and every vendor is celebrated.
           </p>
         </div>
       </section>
@@ -93,7 +93,7 @@ export default function AboutUsPage() {
             <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
               <Award className="w-5 h-5" />
             </div>
-            <h3 className="font-serif font-bold text-lg text-obsidian">Artisan Meritocracy</h3>
+            <h3 className="font-serif font-bold text-lg text-obsidian">Vendor Meritocracy</h3>
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
               Creators advance through verified on-time deliveries and authentic customer sign-offs, creating real trust in the marketplace.
             </p>
