@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -18,9 +18,12 @@ import {
 } from "lucide-react";
 import { VENDORS, Vendor } from "@/data/mockData";
 import VendorCard from "@/components/ui/VendorCard/VendorCard";
+import Pagination from "@/components/ui/Pagination/Pagination";
 import { cn } from "@/lib/utils";
 import { useGetVendorsQuery } from "@/redux/service/vendors/vendorsApi";
 import { useGetCategoriesQuery } from "@/redux/service/categories/categoriesApi";
+
+const PAGE_SIZE = 12;
 
 export default function VendorsDirectoryPage() {
   const searchParams = useSearchParams();
@@ -37,6 +40,10 @@ export default function VendorsDirectoryPage() {
   const [sortBy, setSortBy] = useState("recommended");
   const [currentPage, setCurrentPage] = useState(1);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedService, selectedCity, selectedTier, minRating, searchQuery, sortBy]);
+
   // RTK Query hooks
   const { data: categoriesData } = useGetCategoriesQuery();
   const { data: apiResponse, isLoading: isVendorsLoading } = useGetVendorsQuery({
@@ -44,6 +51,7 @@ export default function VendorsDirectoryPage() {
     city: selectedCity !== "All Cities" ? selectedCity : undefined,
     tier: selectedTier !== "all" ? selectedTier : undefined,
     search: searchQuery.trim() || undefined,
+    limit: 50,
   });
 
   const liveCategories = categoriesData?.data || categoriesData || [];
@@ -126,6 +134,15 @@ export default function VendorsDirectoryPage() {
       return b.reviewCount - a.reviewCount;
     });
   }, [selectedService, selectedCity, selectedTier, minRating, searchQuery, sortBy]);
+
+  const totalPages = Math.ceil(filteredVendors.length / PAGE_SIZE) || 1;
+  const paginatedVendors = useMemo(() => {
+    const startIndex = (currentPage - 1) * PAGE_SIZE;
+    return filteredVendors.slice(startIndex, startIndex + PAGE_SIZE);
+  }, [filteredVendors, currentPage]);
+
+  const startIndex = (currentPage - 1) * PAGE_SIZE + 1;
+  const endIndex = Math.min(currentPage * PAGE_SIZE, filteredVendors.length);
 
   const handleReset = () => {
     setSelectedService("all");
@@ -313,7 +330,7 @@ export default function VendorsDirectoryPage() {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-sm font-bold text-obsidian">
-              Showing {filteredVendors.length} verified vendors in the United States
+              Showing {filteredVendors.length > 0 ? `${startIndex}–${endIndex}` : 0} of {filteredVendors.length} verified vendors in the United States
             </span>
 
             {selectedService !== "all" && (
@@ -352,10 +369,23 @@ export default function VendorsDirectoryPage() {
 
         {/* Vendors Grid */}
         {filteredVendors.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {filteredVendors.map((vendor) => (
-              <VendorCard key={vendor.id} vendor={vendor} />
-            ))}
+          <div className="space-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {paginatedVendors.map((vendor) => (
+                <VendorCard key={vendor.id} vendor={vendor} />
+              ))}
+            </div>
+
+            {/* Pagination Controls */}
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={(page) => {
+                setCurrentPage(page);
+                window.scrollTo({ top: 350, behavior: "smooth" });
+              }}
+              theme="indigo"
+            />
           </div>
         ) : (
           <div className="w-full py-16 bg-white rounded-3xl border border-[#EAE6DF] text-center space-y-4">
