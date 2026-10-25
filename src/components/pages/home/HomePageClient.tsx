@@ -29,7 +29,7 @@ import FaqAccordion from "@/components/ui/FaqAccordion/FaqAccordion";
 import CookieBanner from "@/components/ui/CookieBanner/CookieBanner";
 import heroCollageImg from "@/assets/herosection/hero-collage.png";
 import { cn } from "@/lib/utils";
-import { useGetVendorsQuery } from "@/redux/service/vendors/vendorsApi";
+import { useGetVendorsQuery, useGetVendorShowcaseQuery } from "@/redux/service/vendors/vendorsApi";
 import { useGetCategoriesQuery } from "@/redux/service/categories/categoriesApi";
 
 export default function HomePage() {
@@ -38,6 +38,13 @@ export default function HomePage() {
   // RTK Query Hooks
   const { data: vendorsData } = useGetVendorsQuery({ limit: 8 });
   const { data: categoriesData } = useGetCategoriesQuery();
+  const { data: showcaseData } = useGetVendorShowcaseQuery();
+
+  const showcaseItems = Array.isArray(showcaseData)
+    ? showcaseData
+    : Array.isArray((showcaseData as any)?.data)
+    ? (showcaseData as any).data
+    : [];
 
   const liveVendors = Array.isArray(vendorsData?.data)
     ? vendorsData.data
@@ -500,6 +507,81 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* 5B. VERIFIED EVENT MEDIA & PORTFOLIO SHOWCASE */}
+      {showcaseItems.length > 0 && (
+        <section className="w-full py-16 lg:py-24 bg-white border-t border-[#EAE6DF]">
+          <div className="max-w-[1440px] mx-auto px-6 lg:px-10 space-y-10">
+            <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
+              <div className="space-y-2 max-w-xl">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-slate-400">
+                  REAL CELEBRATIONS &amp; WORK
+                </span>
+                <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-obsidian tracking-tight">
+                  Portfolio &amp; Event Media
+                </h2>
+                <p className="text-slate-600 text-xs sm:text-sm">
+                  Live unedited captures, stages, and productions uploaded directly by verified vendors across recent milestone events.
+                </p>
+              </div>
+
+              <Link
+                href="/vendors"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-[#0F1228] hover:text-gold-600 hover:underline"
+              >
+                <span>Browse all artisan portfolios</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {showcaseItems.slice(0, 8).map((item: any) => {
+                const vendor = item.vendorProfile;
+                const vendorName = vendor?.businessName || "Verified Artisan";
+                const vendorLocation = vendor?.city ? `${vendor.city}${vendor.state ? `, ${vendor.state}` : ""}` : "Chicago, IL";
+
+                return (
+                  <div
+                    key={item.id}
+                    className="group relative rounded-2xl overflow-hidden bg-slate-900 border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 aspect-4/3 flex flex-col justify-end"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={item.url}
+                      alt={item.caption || "Event portfolio photo"}
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-4 flex flex-col justify-end">
+                      <p className="text-white font-bold text-sm leading-snug line-clamp-2">
+                        {item.caption || "Milestone Event Delivery"}
+                      </p>
+
+                      <div className="flex items-center justify-between pt-2 mt-2 border-t border-white/20 text-white/90">
+                        <div className="flex items-center gap-2">
+                          <div className="w-5 h-5 rounded-full bg-white/20 text-white flex items-center justify-center text-[10px] font-bold">
+                            {vendorName.slice(0, 1)}
+                          </div>
+                          <span className="text-xs font-semibold">{vendorName}</span>
+                        </div>
+                        <span className="text-[10px] text-white/70">{vendorLocation}</span>
+                      </div>
+                    </div>
+
+                    {vendor?.slug && (
+                      <Link
+                        href={`/vendors/profile/${vendor.slug}`}
+                        className="absolute inset-0 z-10"
+                        aria-label={`View ${vendorName}`}
+                      />
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* 6. COLLABORATIVE FAMILY PLANNING SECTION */}
       <CollaborativePlanningCard />
