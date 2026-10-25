@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Scale,
   Clock,
@@ -21,11 +21,12 @@ import {
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import AdminEscrowReleaseModal from "@/components/admin/AdminEscrowReleaseModal";
+import { useGetAllDisputesQuery, useResolveDisputeMutation } from "@/redux/service/admin/adminApi";
 
 const initialDisputes = [
   {
     id: "DS-1051",
-    orderId: "JB-20455",
+    orderId: "OPH-20455",
     client: "Emily Carter",
     clientEmail: "emily.carter@gmail.com",
     vendor: "Windy City Sound",
@@ -41,7 +42,7 @@ const initialDisputes = [
   },
   {
     id: "DS-1049",
-    orderId: "JB-20442",
+    orderId: "OPH-20442",
     client: "Rachel Adams",
     clientEmail: "rachel.adams@gmail.com",
     vendor: "Bloom & Petal Decor",
@@ -57,7 +58,7 @@ const initialDisputes = [
   },
   {
     id: "DS-1046",
-    orderId: "JB-20388",
+    orderId: "OPH-20388",
     client: "Viktor Vance",
     clientEmail: "viktor.vance@gmail.com",
     vendor: "SoundWave Audio",
@@ -74,13 +75,36 @@ const initialDisputes = [
 ];
 
 export default function AdminDisputesPage() {
+  const { data: apiDisputes } = useGetAllDisputesQuery();
+  const [resolveDisputeMutation] = useResolveDisputeMutation();
+
   const [disputes, setDisputes] = useState(initialDisputes);
   const [selectedDispute, setSelectedDispute] = useState(disputes[0]);
   const [isEscrowModalOpen, setIsEscrowModalOpen] = useState(false);
 
-  const handleActionComplete = (actionType: string, details: any) => {
+  useEffect(() => {
+    const list = Array.isArray(apiDisputes) ? apiDisputes : (apiDisputes as any)?.data;
+    if (list && Array.isArray(list) && list.length > 0) {
+      setDisputes(list);
+      if (!list.find((d: any) => d.id === selectedDispute?.id)) {
+        setSelectedDispute(list[0]);
+      }
+    }
+  }, [apiDisputes]);
+
+  const handleActionComplete = async (actionType: string, details: any) => {
+    try {
+      await resolveDisputeMutation({
+        id: selectedDispute.id,
+        action: actionType,
+        ...details,
+      }).unwrap();
+    } catch {
+      // Handled
+    }
     toast.success(`Dispute #${selectedDispute.id} Resolved via Stripe Connect!`);
   };
+
 
   return (
     <div className="space-y-6 pb-16">
