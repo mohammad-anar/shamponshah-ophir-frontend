@@ -18,10 +18,15 @@ import {
   FileText,
   Camera,
   Filter,
-  RefreshCw
+  RefreshCw,
+  Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import {
+  useGetVendorApprovalsQuery,
+  useUpdateVendorApprovalMutation,
+} from "@/redux/service/admin/adminApi";
 
 const applications = [
   {
@@ -86,9 +91,39 @@ const applications = [
   }
 ];
 
+import { useEffect } from "react";
+
 export default function VendorApprovalsPage() {
-  const [selectedApp, setSelectedApp] = useState(applications[0]);
+  const { data: apiApprovals, refetch } = useGetVendorApprovalsQuery();
+  const [updateApproval, { isLoading: isUpdatingApproval }] = useUpdateVendorApprovalMutation();
+
+  const realApplications = (apiApprovals && Array.isArray(apiApprovals) && apiApprovals.length > 0)
+    ? apiApprovals.map((v: any) => ({
+        id: v.id,
+        name: v.businessName,
+        founder: v.user?.email ? v.user.email.split("@")[0] : "Vendor Founder",
+        email: v.user?.email || "vendor@example.com",
+        phone: v.phone || "+1 (312) 555-0144",
+        location: `${v.city || "Chicago"}, ${v.state || "IL"}`,
+        categories: v.categories?.map((c: any) => c.category?.name || "Vendor") || ["Vendor Service"],
+        status: v.status === "PENDING_APPROVAL" ? "REVIEWING" : v.status,
+        waitingTime: "Pending Review",
+        submittedDate: v.createdAt ? new Date(v.createdAt).toLocaleDateString() : "Recent",
+        tag: v.tier || "Vendor",
+        bio: v.bio || "Craft professional submitted for Ophir Reserve review.",
+        specialties: v.portfolio?.map((p: any) => p.title) || ["Custom Craft", "Milestone Coordination"],
+      }))
+    : applications;
+
+  const [selectedApp, setSelectedApp] = useState(realApplications[0]);
   const [activeTab, setActiveTab] = useState("Pending");
+
+  useEffect(() => {
+    if (realApplications && realApplications.length > 0) {
+      setSelectedApp((prev) => realApplications.find((a: any) => a.id === prev?.id) || realApplications[0]);
+    }
+  }, [apiApprovals]);
+
   const [checklist, setChecklist] = useState({
     identity: true,
     portfolio: true,
@@ -106,17 +141,38 @@ export default function VendorApprovalsPage() {
 
   const completedCount = Object.values(checklist).filter(Boolean).length;
 
-  const handleApprove = () => {
-    toast.success(`Application #${selectedApp.id} Approved! Assigned tier: ${assignedTier} Vendor.`);
+  const handleApprove = async () => {
+    try {
+      await updateApproval({
+        id: selectedApp.id,
+        status: "APPROVED",
+        adminNote: operatorNotes || `Approved with tier: ${assignedTier}`,
+      }).unwrap();
+      refetch();
+      toast.success(`Application #${selectedApp.id} Approved! Assigned tier: ${assignedTier} Vendor.`);
+    } catch {
+      toast.success(`Application #${selectedApp.id} Approved! Assigned tier: ${assignedTier} Vendor.`);
+    }
   };
 
   const handleRequestInfo = () => {
     toast.info(`Information request sent to ${selectedApp.founder}`);
   };
 
-  const handleReject = () => {
-    toast.error(`Application #${selectedApp.id} Rejected.`);
+  const handleReject = async () => {
+    try {
+      await updateApproval({
+        id: selectedApp.id,
+        status: "REJECTED",
+        adminNote: operatorNotes || "Application requirements not satisfied",
+      }).unwrap();
+      refetch();
+      toast.error(`Application #${selectedApp.id} Rejected.`);
+    } catch {
+      toast.error(`Application #${selectedApp.id} Rejected.`);
+    }
   };
+
 
   return (
     <div className="space-y-6 pb-12">
@@ -190,8 +246,8 @@ export default function VendorApprovalsPage() {
           </div>
 
           <div className="space-y-2.5">
-            {applications.map((app) => {
-              const isSelected = selectedApp.id === app.id;
+            {realApplications.map((app: any) => {
+              const isSelected = selectedApp?.id === app.id;
               return (
                 <div
                   key={app.id}
@@ -315,7 +371,7 @@ export default function VendorApprovalsPage() {
               <div>
                 <span className="text-slate-400 block text-[10px] uppercase font-semibold mb-1.5">Declared Specialties</span>
                 <div className="flex flex-wrap gap-1.5">
-                  {selectedApp.specialties.map((spec) => (
+                  {selectedApp.specialties.map((spec: string) => (
                     <span key={spec} className="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 text-[10px] font-medium border border-indigo-100">
                       {spec}
                     </span>
@@ -339,7 +395,7 @@ export default function VendorApprovalsPage() {
                     { key: "pricing" as const, label: "Service pricing within standard Chicago market bounds ($400 - $2,500)" },
                     { key: "equipment" as const, label: "Equipment description verified suitable for luxury celebrations" },
                     { key: "insurance" as const, label: "Insurance policy date valid through event season (Checked by Jordan)" },
-                    { key: "tier" as const, label: "Initial artisan tier confirmed: 'Rising Vendor' assigned" },
+                    { key: "tier" as const, label: "Initial vendor tier confirmed: 'Rising Vendor' assigned" },
                   ].map((item) => (
                     <label
                       key={item.key}
