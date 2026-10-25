@@ -5,7 +5,7 @@ import { constructMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = constructMetadata({
   title: "Ophir | The Modern Milestone & Escrow Marketplace",
-  description: "Plan, collaborate, and book top-tier event artisans with 100% milestone payment protection and collaborative family registry.",
+  description: "Plan, collaborate, and book top-tier event vendors with 100% milestone payment protection and collaborative family registry.",
 });
 
 export default function CommonLayout({
