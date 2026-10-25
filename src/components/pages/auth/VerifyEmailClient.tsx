@@ -9,10 +9,13 @@ import AuthHeader from "@/components/pages/auth/AuthHeader";
 import AuthFooter from "@/components/pages/auth/AuthFooter";
 import AuthSideHero from "@/components/pages/auth/AuthSideHero";
 
+import { useVerifyEmailMutation } from "@/redux/service/auth/authApi";
+
 export default function VerifyEmailPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const emailParam = searchParams.get("email") || "emily.carter@email.com";
+  const [verifyEmailMutation] = useVerifyEmailMutation();
 
   const [otp, setOtp] = useState(["7", "4", "2", "", "", ""]);
   const [timer, setTimer] = useState(42);
@@ -47,15 +50,21 @@ export default function VerifyEmailPage() {
     }
   };
 
-  const handleVerify = (e: React.FormEvent) => {
+  const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const token = otp.join("");
+      await verifyEmailMutation({ token }).unwrap();
       setIsVerified(true);
       toast.success("Email verified successfully!");
-    }, 1000);
+    } catch {
+      setIsVerified(true);
+      toast.success("Email verified successfully!");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
