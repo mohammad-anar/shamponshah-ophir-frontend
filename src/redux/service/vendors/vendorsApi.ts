@@ -116,6 +116,13 @@ export const vendorsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["vendors"],
     }),
+    getVendorShowcase: builder.query<any, void>({
+      query: () => ({
+        url: "/vendors/showcase",
+        method: "GET",
+      }),
+      providesTags: ["vendors"],
+    }),
   }),
 });
 
@@ -134,6 +141,7 @@ export const {
   useDeletePortfolioItemMutation,
   useToggleSaveVendorMutation,
   useGetSavedVendorsQuery,
+  useGetVendorShowcaseQuery,
 } = vendorsApi;
 
 export const useSaveVendorMutation = useToggleSaveVendorMutation;
