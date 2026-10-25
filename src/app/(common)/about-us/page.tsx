@@ -4,7 +4,7 @@ import AboutUsClient from "@/components/pages/info/AboutUsClient";
 
 export const metadata: Metadata = constructMetadata({
   title: "About Us | Our Mission & Cultural Heritage Story",
-  description: "We help families celebrate without financial friction. Built to honor milestone memories with guaranteed escrow protection and vetted artisans.",
+  description: "We help families celebrate without financial friction. Built to honor milestone memories with guaranteed escrow protection and vetted vendors.",
   canonicalUrl: "/about-us",
 });
 
