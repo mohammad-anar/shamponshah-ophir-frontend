@@ -6,7 +6,7 @@ import Logo from "@/components/shared/Logo/Logo";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
-  Calendar,
+  Sparkles,
   PlusCircle,
   Briefcase,
   ShoppingBag,
@@ -20,6 +20,10 @@ import {
   Settings,
   X
 } from "lucide-react";
+
+import { useGetClientOrdersQuery } from "@/redux/service/orders/ordersApi";
+import { useGetUserNotificationsQuery } from "@/redux/service/notifications/notificationsApi";
+import { useGetUserConversationsQuery } from "@/redux/service/messages/messagesApi";
 
 interface UserSidebarProps {
   isOpen: boolean;
@@ -41,45 +45,57 @@ interface NavSection {
   items: NavItem[];
 }
 
-const navSections: NavSection[] = [
-  {
-    title: "MAIN",
-    items: [
-      { label: "Overview", href: "/user", icon: LayoutDashboard },
-      { label: "My Events", href: "/user/events", icon: Calendar },
-      { label: "Post a Job", href: "/user/post-job", icon: PlusCircle, highlight: true },
-      { label: "My Jobs", href: "/user/jobs", icon: Briefcase },
-      { label: "Orders", href: "/user/orders", icon: ShoppingBag },
-      { label: "Messages", href: "/user/messages", icon: MessageSquare, badge: "3" },
-    ],
-  },
-  {
-    title: "PLAN",
-    items: [
-      { label: "Saved Vendors", href: "/user/saved-vendors", icon: Bookmark },
-      { label: "Family Hub", href: "/user/family-hub", icon: Users2, dot: true },
-    ],
-  },
-  {
-    title: "MONEY",
-    items: [
-      { label: "Payments & Invoices", href: "/user/payments", icon: CreditCard },
-    ],
-  },
-  {
-    title: "ACCOUNT",
-    items: [
-      { label: "Reviews", href: "/user/reviews", icon: Star },
-      { label: "Notifications", href: "/user/notifications", icon: Bell },
-      { label: "Resolution Center", href: "/user/disputes", icon: Scale },
-      { label: "Settings", href: "/user/settings", icon: Settings },
-    ],
-  },
-];
-
-
 export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
   const pathname = usePathname();
+
+  const { data: ordersData } = useGetClientOrdersQuery();
+  const { data: notificationsData } = useGetUserNotificationsQuery();
+  const { data: conversationsData } = useGetUserConversationsQuery();
+
+  const orders = Array.isArray(ordersData) ? ordersData : (ordersData?.data?.orders || ordersData?.orders || ordersData?.data || []);
+  const activeOrdersCount = orders.filter((o: any) => o.status === "ACTIVE" || o.status === "IN_PROGRESS").length;
+
+  const notifs = Array.isArray(notificationsData) ? notificationsData : (notificationsData?.data || []);
+  const unreadNotifsCount = notifs.filter((n: any) => !n.isRead).length;
+
+  const convs = Array.isArray(conversationsData) ? conversationsData : (conversationsData?.data || []);
+  const unreadMessagesCount = convs.reduce((acc: number, c: any) => acc + (c.unreadCount || 0), 0);
+
+  const navSections: NavSection[] = [
+    {
+      title: "MAIN",
+      items: [
+        { label: "Overview", href: "/user", icon: LayoutDashboard },
+        { label: "Browse Services", href: "/services", icon: Sparkles },
+        { label: "Post a Job", href: "/user/post-job", icon: PlusCircle, highlight: true },
+        { label: "My Jobs", href: "/user/jobs", icon: Briefcase },
+        { label: "Orders", href: "/user/orders", icon: ShoppingBag, badge: activeOrdersCount > 0 ? String(activeOrdersCount) : undefined },
+        { label: "Messages", href: "/user/messages", icon: MessageSquare, badge: unreadMessagesCount > 0 ? String(unreadMessagesCount) : undefined },
+      ],
+    },
+    {
+      title: "PLAN",
+      items: [
+        { label: "Saved Vendors", href: "/user/saved-vendors", icon: Bookmark },
+        { label: "Family Hub", href: "/user/family-hub", icon: Users2, dot: true },
+      ],
+    },
+    {
+      title: "MONEY",
+      items: [
+        { label: "Payments & Invoices", href: "/user/payments", icon: CreditCard },
+      ],
+    },
+    {
+      title: "ACCOUNT",
+      items: [
+        { label: "Reviews", href: "/user/reviews", icon: Star },
+        { label: "Notifications", href: "/user/notifications", icon: Bell, badge: unreadNotifsCount > 0 ? String(unreadNotifsCount) : undefined },
+        { label: "Resolution Center", href: "/user/disputes", icon: Scale },
+        { label: "Settings", href: "/user/settings", icon: Settings },
+      ],
+    },
+  ];
 
   return (
     <>
