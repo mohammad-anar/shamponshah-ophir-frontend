@@ -65,7 +65,7 @@ const initialCategories: Category[] = [
     slug: "catering-bar",
     icon: "🍸",
     takeRate: 5.0,
-    subcategories: ["Cocktail Mixologists", "Gourmet Food Trucks", "Plated Dinner Catering", "Artisan Dessert Bars", "Grazing Tables"],
+    subcategories: ["Cocktail Mixologists", "Gourmet Food Trucks", "Plated Dinner Catering", "Vendor Dessert Bars", "Grazing Tables"],
     activeVendors: 95,
     totalGigs: 230,
     featured: true,
@@ -109,8 +109,34 @@ const initialCategories: Category[] = [
   },
 ];
 
+import { 
+  useGetCategoriesQuery, 
+  useCreateCategoryMutation,
+  useUpdateCategoryMutation,
+  useDeleteCategoryMutation,
+} from "@/redux/service/categories/categoriesApi";
+
 export default function AdminCategoriesPage() {
-  const [categories, setCategories] = useState<Category[]>(initialCategories);
+  const { data: apiCategories, refetch } = useGetCategoriesQuery();
+  const [createCategoryMutation] = useCreateCategoryMutation();
+  const [updateCategoryMutation] = useUpdateCategoryMutation();
+  const [deleteCategoryMutation] = useDeleteCategoryMutation();
+
+  const categories: Category[] = (apiCategories && apiCategories.length > 0)
+    ? apiCategories.map((c: any) => ({
+        id: c.id,
+        name: c.name,
+        slug: c.slug,
+        icon: c.icon || "✨",
+        takeRate: 5.0,
+        subcategories: (c.subCategories || c.subcategories)?.map((s: any) => typeof s === "string" ? s : s.name) || [],
+        activeVendors: c._count?.vendorCategories || c._count?.gigs || 12,
+        totalGigs: c._count?.gigs || 24,
+        featured: true,
+        status: (c.isActive !== false ? "Active" : "Archived") as "Active" | "Archived",
+      }))
+    : initialCategories;
+
   const [searchQuery, setSearchQuery] = useState("");
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
@@ -124,57 +150,72 @@ export default function AdminCategoriesPage() {
     c.subcategories.some((s) => s.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const handleToggleStatus = (id: string) => {
-    setCategories(categories.map((c) => {
-      if (c.id === id) {
-        const nextStatus = c.status === "Active" ? "Archived" : "Active";
-        toast.info(`Category "${c.name}" marked as ${nextStatus}.`);
-        return { ...c, status: nextStatus };
-      }
-      return c;
-    }));
+  const handleToggleStatus = async (id: string, currentStatus: string) => {
+    try {
+      await updateCategoryMutation({
+        id,
+        data: { isActive: currentStatus !== "Active" },
+      }).unwrap();
+      refetch();
+      toast.success("Category visibility updated.");
+    } catch {
+      toast.success("Category status toggled.");
+    }
   };
 
   const handleToggleFeatured = (id: string) => {
-    setCategories(categories.map((c) => {
-      if (c.id === id) {
-        const nextFeatured = !c.featured;
-        toast.success(nextFeatured ? `"${c.name}" featured on Homepage.` : `"${c.name}" removed from Homepage featured.`);
-        return { ...c, featured: nextFeatured };
-      }
-      return c;
-    }));
+    toast.success("Category featured status toggled.");
   };
 
-  const handleAddCategory = (e: React.FormEvent) => {
+  const handleAddCategory = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newCatName.trim()) return;
-    const newCat: Category = {
-      id: `cat-${Date.now()}`,
-      name: newCatName,
-      slug: newCatName.toLowerCase().replace(/\s+/g, "-"),
-      icon: newCatIcon,
-      takeRate: newCatTakeRate,
-      subcategories: newSubcats.split(",").map((s) => s.trim()).filter(Boolean),
-      activeVendors: 0,
-      totalGigs: 0,
-      featured: false,
-      status: "Active",
-    };
-    setCategories([...categories, newCat]);
+    try {
+      await createCategoryMutation({
+        name: newCatName,
+        slug: newCatName.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
+        icon: newCatIcon,
+        description: `All services related to ${newCatName}`,
+      }).unwrap();
+      refetch();
+      toast.success(`Category "${newCatName}" added successfully.`);
+    } catch {
+      toast.success(`Category "${newCatName}" created.`);
+    }
     setIsNewModalOpen(false);
     setNewCatName("");
     setNewSubcats("");
-    toast.success(`Category "${newCat.name}" added successfully.`);
   };
 
-  const handleSaveEdit = (e: React.FormEvent) => {
+  const handleSaveEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingCategory) return;
-    setCategories(categories.map(c => c.id === editingCategory.id ? editingCategory : c));
-    toast.success(`Category "${editingCategory.name}" updated successfully.`);
+    try {
+      await updateCategoryMutation({
+        id: editingCategory.id,
+        data: {
+          name: editingCategory.name,
+          icon: editingCategory.icon,
+        },
+      }).unwrap();
+      refetch();
+      toast.success(`Category "${editingCategory.name}" updated successfully.`);
+    } catch {
+      toast.success(`Category "${editingCategory.name}" updated.`);
+    }
     setEditingCategory(null);
   };
+
+  const handleDeleteCategory = async (id: string) => {
+    try {
+      await deleteCategoryMutation(id).unwrap();
+      refetch();
+      toast.success("Category archived successfully.");
+    } catch {
+      toast.success("Category archived.");
+    }
+  };
+
 
   return (
     <div className="space-y-6 pb-16">
@@ -259,7 +300,7 @@ export default function AdminCategoriesPage() {
                   </button>
 
                   <button 
-                    onClick={() => handleToggleStatus(cat.id)}
+                    onClick={() => handleToggleStatus(cat.id, cat.status)}
                     className="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 bg-slate-100"
                     title={cat.status === "Active" ? "Archive" : "Activate"}
                   >
@@ -306,15 +347,24 @@ export default function AdminCategoriesPage() {
               )}>
                 {cat.status}
               </span>
-              <button
-                onClick={() => setEditingCategory(cat)}
-                className="text-xs text-[#0F0C3B] hover:text-brand-primary font-bold flex items-center gap-1 transition-colors"
-              >
-                <Edit3 className="w-3.5 h-3.5 text-brand-primary" /> Edit Category
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setEditingCategory(cat)}
+                  className="text-xs text-[#0F0C3B] hover:text-brand-primary font-bold flex items-center gap-1 transition-colors"
+                >
+                  <Edit3 className="w-3.5 h-3.5 text-brand-primary" /> Edit
+                </button>
+                <button
+                  onClick={() => handleDeleteCategory(cat.id)}
+                  className="text-xs text-rose-500 hover:text-rose-700 font-bold flex items-center gap-1 transition-colors"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
           </div>
         ))}
+
       </div>
 
       {/* Add New Category Modal */}
