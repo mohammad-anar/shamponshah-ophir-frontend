@@ -1,625 +1,884 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { 
   Users2, 
   Plus, 
   ThumbsUp, 
-  MessageSquare, 
   Check, 
   Sparkles, 
-  UserPlus,
-  CreditCard,
-  DollarSign,
-  ShieldCheck,
-  ChevronDown,
-  ShoppingBag,
-  ExternalLink,
-  Crown,
-  Lock,
-  Heart,
-  Calendar,
-  Star,
-  MapPin,
-  Eye
+  UserPlus, 
+  ShieldCheck, 
+  ShoppingBag, 
+  Star, 
+  MapPin, 
+  Trash2, 
+  ArrowRight, 
+  ChevronRight, 
+  X, 
+  CheckCircle2, 
+  AlertCircle 
 } from "lucide-react";
 import { toast } from "sonner";
-import FamilyPaymentModal from "@/components/user/FamilyPaymentModal";
-import FamilyServiceDetailModal, { HubServiceDetail } from "@/components/user/FamilyServiceDetailModal";
-import AddToFamilyHubModal from "@/components/shared/AddToFamilyHubModal";
+import {
+  useGetWorkspaceQuery,
+  useAddBoardItemMutation,
+  useVoteBoardItemMutation,
+  useInviteMemberMutation,
+  useDeleteBoardItemMutation,
+} from "@/redux/service/family-hub/familyHubApi";
+import { useGetPublicGigsQuery } from "@/redux/service/gigs/gigsApi";
+import { useGetMeQuery } from "@/redux/service/auth/authApi";
 
-interface FamilyHubWorkspace {
+interface FamilyMember {
   id: string;
   name: string;
+  avatar: string;
   role: string;
-  eventDate: string;
-  targetBudget: number;
-  totalPledged: number;
-  members: { name: string; avatar: string; role: string; pledged: number }[];
+  email?: string;
 }
 
-const mockWorkspaces: FamilyHubWorkspace[] = [
-  {
-    id: "hub-1",
-    name: "Emily & David's Golden Ophir Wedding",
-    role: "Host / Admin",
-    eventDate: "Nov 15, 2025",
-    targetBudget: 25000,
-    totalPledged: 14000,
-    members: [
-      { name: "Emily Carter", avatar: "EC", role: "Host", pledged: 8500 },
-      { name: "David Miller", avatar: "DM", role: "Co-Host", pledged: 3500 },
-      { name: "Grace Carter (Mom)", avatar: "GC", role: "Contributor", pledged: 2000 },
-      { name: "Uncle Robert", avatar: "UR", role: "Reviewer", pledged: 0 },
-    ],
-  },
-  {
-    id: "hub-2",
-    name: "Miller 40th Birthday Bash",
-    role: "Co-Planner",
-    eventDate: "Dec 08, 2025",
-    targetBudget: 8000,
-    totalPledged: 5400,
-    members: [
-      { name: "David Miller", avatar: "DM", role: "Host", pledged: 3000 },
-      { name: "Emily Carter", avatar: "EC", role: "Co-Host", pledged: 1500 },
-      { name: "Sarah Miller", avatar: "SM", role: "Contributor", pledged: 900 },
-    ],
-  },
-  {
-    id: "hub-3",
-    name: "Carter Family Holiday Gala",
-    role: "Family Member",
-    eventDate: "Dec 24, 2025",
-    targetBudget: 12000,
-    totalPledged: 6000,
-    members: [
-      { name: "Grace Carter", avatar: "GC", role: "Host", pledged: 4000 },
-      { name: "Emily Carter", avatar: "EC", role: "Contributor", pledged: 1000 },
-      { name: "Aunt Claire", avatar: "AC", role: "Contributor", pledged: 1000 },
-    ],
-  },
-];
-
-const initialHubServices: HubServiceDetail[] = [
-  {
-    id: "hs-1",
-    title: "DJ & Emcee Master Sound Reception Set",
-    category: "Music & Entertainment",
-    image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=1000",
-    vendorName: "Windy City Sound DJ",
-    vendorAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
-    vendorRating: 4.9,
-    vendorReviewCount: 142,
-    vendorTier: "Top Rated Vendor",
-    location: "Chicago, IL",
-    totalPrice: 1200,
-    amountPaid: 900,
-    status: "Partially Funded",
-    addedBy: {
-      name: "Emily Carter",
-      avatar: "EC",
-      role: "Host",
-      date: "Oct 2, 2025",
-    },
-    note: "They did my cousin's wedding last year and the dance floor was packed all night! We should definitely lock in this early bird rate.",
-    votesUp: 4,
-    votedBy: ["Emily", "David", "Grace", "Uncle Robert"],
-    inclusions: [
-      "5 Hours Live DJ & Master of Ceremonies Performance",
-      "Wireless Shure Microphones for speeches & toasts",
-      "Club-grade moving head intelligent dance lighting",
-      "Custom curated playlist & 'Do Not Play' blacklist",
-      "Early soundcheck & backup equipment on-site",
-    ],
-    contributors: [
-      { name: "Emily Carter", amount: 600, avatar: "EC", date: "Oct 3, 2025" },
-      { name: "Grace Carter", amount: 300, avatar: "GC", date: "Oct 4, 2025" },
-    ],
-    comments: [
-      {
-        id: "c-1",
-        author: "Grace Carter (Mom)",
-        avatar: "GC",
-        text: "Love their music sample mixes! I just chipped in $300 towards the balance.",
-        time: "Yesterday at 4:20 PM",
-      },
-      {
-        id: "c-2",
-        author: "David Miller",
-        avatar: "DM",
-        text: "Checked their lighting demo, it will match our purple & gold theme perfectly.",
-        time: "2 hours ago",
-      },
-    ],
-  },
-  {
-    id: "hs-2",
-    title: "Cinematic 4K Drone & Dual-Camera Video Package",
-    category: "Photography & Cinema",
-    image: "https://images.unsplash.com/photo-1537633552985-df8429e8048b?auto=format&fit=crop&q=80&w=1000",
-    vendorName: "Lumina Cinematic Films",
-    vendorAvatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200",
-    vendorRating: 5.0,
-    vendorReviewCount: 98,
-    vendorTier: "Elite Master",
-    location: "Los Angeles, CA",
-    totalPrice: 2800,
-    amountPaid: 2800,
-    status: "Funded (Escrow Active)",
-    addedBy: {
-      name: "David Miller",
-      avatar: "DM",
-      role: "Co-Host",
-      date: "Oct 1, 2025",
-    },
-    note: "Includes aerial drone 4K footage of the outdoor venue + 8 minute highlight film. Escrow fully completed!",
-    votesUp: 3,
-    votedBy: ["Emily", "David", "Grace"],
-    inclusions: [
-      "8 Hours Full Day Dual-Cinematographer Coverage",
-      "FAA-Certified 4K Drone Aerial Venue Shots",
-      "Cinematic 7-9 Minute Teaser Highlight Film",
-      "Full Length Raw Speech & Vows Archive",
-      "Digital 4K Download Master with Cloud Backup",
-    ],
-    contributors: [
-      { name: "David Miller", amount: 1800, avatar: "DM", date: "Oct 1, 2025" },
-      { name: "Emily Carter", amount: 1000, avatar: "EC", date: "Oct 2, 2025" },
-    ],
-    comments: [
-      {
-        id: "c-3",
-        author: "David Miller",
-        avatar: "DM",
-        text: "Full amount is now safely in Stripe Escrow. Vendor confirmed date reservation.",
-        time: "3 days ago",
-      },
-    ],
-  },
-  {
-    id: "hs-3",
-    title: "Artisan Dessert & Champagne Bar Setup",
-    category: "Catering & Bar Service",
-    image: "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&q=80&w=1000",
-    vendorName: "Gourmet Bites & Bar Co.",
-    vendorAvatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200",
-    vendorRating: 4.8,
-    vendorReviewCount: 84,
-    vendorTier: "Verified Partner",
-    location: "Chicago, IL",
-    totalPrice: 1500,
-    amountPaid: 500,
-    status: "Partially Funded",
-    addedBy: {
-      name: "Grace Carter (Mom)",
-      avatar: "GC",
-      role: "Contributor",
-      date: "Oct 3, 2025",
-    },
-    note: "Handmade French macarons, chocolate truffles, and a customized champagne tower for the cocktail hour.",
-    votesUp: 2,
-    votedBy: ["Grace", "Uncle Robert"],
-    inclusions: [
-      "French Macarons (150 pcs) & Belgium Ganache Tartlets",
-      "Illuminated 4-Tier Glass Champagne Tower Setup",
-      "2 Dedicated Uniformed Bar Servers for 3 Hours",
-      "Custom Menu Card Display & Floral Accents",
-      "Complete Setup, Service, and Tear-down Clean Up",
-    ],
-    contributors: [
-      { name: "Grace Carter", amount: 500, avatar: "GC", date: "Oct 4, 2025" },
-    ],
-    comments: [
-      {
-        id: "c-4",
-        author: "Grace Carter (Mom)",
-        avatar: "GC",
-        text: "I covered the first $500 deposit! Can someone help cover the remaining $1,000?",
-        time: "Yesterday at 11:30 AM",
-      },
-    ],
-  },
-];
+interface RecommendedService {
+  id: string;
+  boardItemId: string;
+  gigId?: string;
+  vendorId?: string;
+  title: string;
+  category: string;
+  image: string;
+  vendorName: string;
+  vendorAvatar: string;
+  vendorRating: number;
+  vendorReviewCount: number;
+  vendorTier: string;
+  location: string;
+  price: number;
+  status: "SHORTLISTED" | "BOOKED";
+  recommendedBy: {
+    name: string;
+    avatar: string;
+    role: string;
+    date: string;
+  };
+  note: string;
+  votesUp: number;
+  votedBy: string[];
+  inclusions: string[];
+}
 
 export default function FamilyHubPage() {
-  const [activeHub, setActiveHub] = useState<FamilyHubWorkspace>(mockWorkspaces[0]);
-  const [services, setServices] = useState<HubServiceDetail[]>(initialHubServices);
-  const [selectedServiceDetail, setSelectedServiceDetail] = useState<HubServiceDetail | null>(null);
-  const [selectedServiceForPay, setSelectedServiceForPay] = useState<HubServiceDetail | null>(null);
-  const [showHubSwitcher, setShowHubSwitcher] = useState(false);
+  const router = useRouter();
+  const { data: meData } = useGetMeQuery();
+  const { data: wsData, isLoading: isWsLoading } = useGetWorkspaceQuery();
+  const { data: publicGigsResp } = useGetPublicGigsQuery();
+  const [addBoardItem, { isLoading: isAddingItem }] = useAddBoardItemMutation();
+  const [voteBoardItem] = useVoteBoardItemMutation();
+  const [deleteBoardItem] = useDeleteBoardItemMutation();
+  const [inviteMember, { isLoading: isInviting }] = useInviteMemberMutation();
 
-  const handleVote = (serviceId: string) => {
-    setServices(services.map((s) => {
-      if (s.id === serviceId) {
-        return {
-          ...s,
-          votesUp: s.votesUp + 1,
-          votedBy: [...s.votedBy, "You"],
-        };
-      }
-      return s;
-    }));
-    
-    // Also update currently inspected detail modal if open
-    if (selectedServiceDetail && selectedServiceDetail.id === serviceId) {
-      setSelectedServiceDetail({
-        ...selectedServiceDetail,
-        votesUp: selectedServiceDetail.votesUp + 1,
-        votedBy: [...selectedServiceDetail.votedBy, "You"],
+  const [filterTab, setFilterTab] = useState<"all" | "shortlisted" | "booked">("all");
+  const [inviteModalOpen, setInviteModalOpen] = useState(false);
+  const [inviteEmail, setInviteEmail] = useState("");
+  const [inviteRole, setInviteRole] = useState("FAMILY_MEMBER");
+
+  // Delete Confirmation Modal State
+  const [itemToDelete, setItemToDelete] = useState<{ id: string; title: string } | null>(null);
+  const [isDeletingItem, setIsDeletingItem] = useState(false);
+
+  // Recommend Service Modal State
+  const [recommendModalOpen, setRecommendModalOpen] = useState(false);
+  const [selectedGigId, setSelectedGigId] = useState("");
+  const [customTitle, setCustomTitle] = useState("");
+  const [customCategory, setCustomCategory] = useState("Cinematography");
+  const [customPrice, setCustomPrice] = useState("");
+  const [recommendationNote, setRecommendationNote] = useState("");
+
+  const me = (meData as any)?.data || meData;
+  const ws = wsData?.data || wsData;
+  const workspaceTitle = ws?.name || "Family Collaboration Hub";
+
+  // Public gigs for picker
+  const availableGigs = publicGigsResp?.data || (Array.isArray(publicGigsResp) ? publicGigsResp : []);
+
+  // Real Family Members (no fake fallback names)
+  const members: FamilyMember[] = useMemo(() => {
+    const list: FamilyMember[] = [];
+    const ownerName =
+      ws?.owner?.displayName ||
+      ws?.owner?.user?.name ||
+      me?.name ||
+      me?.email?.split("@")[0] ||
+      "Family Host (You)";
+
+    list.push({
+      id: ws?.owner?.id || "owner",
+      name: `${ownerName} (Host)`,
+      avatar: ownerName.slice(0, 2).toUpperCase(),
+      role: "OWNER",
+      email: ws?.owner?.user?.email || me?.email,
+    });
+
+    if (ws?.members && Array.isArray(ws.members)) {
+      ws.members.forEach((m: any, idx: number) => {
+        if (m.userId !== ws?.owner?.userId && m.user?.id !== me?.id) {
+          const name = m.user?.name || m.user?.email?.split("@")[0] || m.inviteEmail || `Member ${idx + 1}`;
+          list.push({
+            id: m.id || `m-${idx}`,
+            name,
+            avatar: name.slice(0, 2).toUpperCase(),
+            role: m.role || "MEMBER",
+            email: m.user?.email || m.inviteEmail,
+          });
+        }
       });
     }
 
-    toast.success("Thumbs up vote recorded on the family board!");
+    return list;
+  }, [ws, me]);
+
+  // Recommended Services parsed strictly from actual database board items (NO dummy data fallback)
+  const services: RecommendedService[] = useMemo(() => {
+    const primaryBoard = ws?.boards?.[0];
+    const items = primaryBoard?.items || [];
+
+    // If 0 items, return empty array so user can delete all and see true empty state
+    if (!Array.isArray(items) || items.length === 0) {
+      return [];
+    }
+
+    return items.map((item: any) => {
+      let parsed: any = {};
+      try {
+        parsed = typeof item.notes === "string" ? JSON.parse(item.notes) : (item.notes || {});
+      } catch {
+        parsed = { note: item.notes };
+      }
+
+      const votes = item.votes || {};
+      const votesUpCount = Object.values(votes).filter((v) => v === "YES").length;
+
+      return {
+        id: item.gigId || item.id,
+        boardItemId: item.id,
+        gigId: item.gigId,
+        vendorId: item.vendorId || parsed.vendorId,
+        title: item.title,
+        category: parsed.category || "Vendor Service",
+        image: parsed.image || "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800",
+        vendorName: parsed.vendorName || "Verified Vendor",
+        vendorAvatar: parsed.vendorAvatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
+        vendorRating: parsed.vendorRating || 0,
+        vendorReviewCount: parsed.vendorReviewCount || 0,
+        vendorTier: parsed.vendorTier || "",
+        location: parsed.location || "Chicago, IL",
+        price: Number(parsed.price || 0),
+        status: (item.status === "BOOKED" ? "BOOKED" : "SHORTLISTED") as "SHORTLISTED" | "BOOKED",
+        recommendedBy: {
+          name: parsed.addedByName || "Family Member",
+          avatar: (parsed.addedByName || "FM").slice(0, 2).toUpperCase(),
+          role: "Collaborator",
+          date: new Date(item.createdAt).toLocaleDateString([], { month: "short", day: "numeric" }),
+        },
+        note: parsed.note || "Recommended for family review and booking.",
+        votesUp: votesUpCount,
+        votedBy: Object.keys(votes),
+        inclusions: parsed.inclusions || [],
+      };
+    });
+  }, [ws]);
+
+  // Tab filter
+  const filteredServices = useMemo(() => {
+    if (filterTab === "shortlisted") return services.filter((s) => s.status === "SHORTLISTED");
+    if (filterTab === "booked") return services.filter((s) => s.status === "BOOKED");
+    return services;
+  }, [services, filterTab]);
+
+  // Handle voting
+  const handleVote = async (e: React.MouseEvent, itemId: string) => {
+    e.stopPropagation();
+    try {
+      await voteBoardItem({ itemId, vote: "YES" }).unwrap();
+      toast.success("Vote recorded! Your recommendation has been added.");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Could not record vote.");
+    }
   };
 
-  const handlePaymentSuccess = (serviceId: string, amount: number, contributorName: string) => {
-    const updated = services.map((s) => {
-      if (s.id === serviceId) {
-        const newPaid = s.amountPaid + amount;
-        return {
-          ...s,
-          amountPaid: newPaid,
-          status: (newPaid >= s.totalPrice ? "Funded (Escrow Active)" : "Partially Funded") as HubServiceDetail["status"],
-          contributors: [
-            ...s.contributors,
-            { 
-              name: contributorName, 
-              amount, 
-              avatar: contributorName.substring(0, 2).toUpperCase(),
-              date: "Today"
-            },
-          ],
-        };
-      }
-      return s;
-    });
+  // Open confirmation modal (NO native browser alert/confirm)
+  const handleDeleteClick = (e: React.MouseEvent, itemId: string, title: string) => {
+    e.stopPropagation();
+    setItemToDelete({ id: itemId, title });
+  };
 
-    setServices(updated);
+  // Confirm delete handler with Sonner toast
+  const handleConfirmDelete = async () => {
+    if (!itemToDelete) return;
+    setIsDeletingItem(true);
+    try {
+      await deleteBoardItem(itemToDelete.id).unwrap();
+      toast.success(`"${itemToDelete.title}" removed from Family Hub`);
+      setItemToDelete(null);
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to remove recommendation");
+    } finally {
+      setIsDeletingItem(false);
+    }
+  };
 
-    if (selectedServiceDetail && selectedServiceDetail.id === serviceId) {
-      const match = updated.find(s => s.id === serviceId);
-      if (match) setSelectedServiceDetail(match);
+  // Handle invite member
+  const handleSendInvite = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!inviteEmail.trim()) {
+      toast.error("Please enter a valid email address");
+      return;
+    }
+    try {
+      await inviteMember({ email: inviteEmail, role: inviteRole }).unwrap();
+      toast.success(`Invitation sent to ${inviteEmail}! They can now view and recommend services.`);
+      setInviteModalOpen(false);
+      setInviteEmail("");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to invite member");
+    }
+  };
+
+  // Handle adding recommendation
+  const handleAddRecommendation = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const primaryBoard = ws?.boards?.[0];
+    const targetBoardId = primaryBoard?.id || "primary";
+
+    const gigToUse = availableGigs.find((g: any) => g.id === selectedGigId);
+    const titleToUse = gigToUse?.title || customTitle;
+    const priceToUse = gigToUse?.packages?.[0]?.price ? Number(gigToUse.packages[0].price) : Number(customPrice || 0);
+    const categoryToUse = gigToUse?.category?.name || customCategory;
+    const vendorNameToUse = gigToUse?.vendorProfile?.businessName || "Verified Vendor";
+    const vendorIdToUse = gigToUse?.vendorProfileId || undefined;
+
+    if (!titleToUse.trim()) {
+      toast.error("Please select a service or enter a service title");
+      return;
+    }
+    if (!gigToUse && (!Number.isFinite(priceToUse) || priceToUse <= 0)) {
+      toast.error("Enter an estimated price above zero for a custom recommendation.");
+      return;
+    }
+
+    const isAlreadyAdded = services.some(
+      (s) =>
+        (gigToUse?.id && (s.gigId === gigToUse.id || s.id === gigToUse.id)) ||
+        s.title?.toLowerCase().trim() === titleToUse.toLowerCase().trim()
+    );
+    if (isAlreadyAdded) {
+      toast.error("This service has already been recommended to your Family Hub");
+      return;
+    }
+
+    try {
+      await addBoardItem({
+        boardId: targetBoardId,
+        data: {
+          gigId: gigToUse?.id || undefined,
+          vendorId: vendorIdToUse,
+          title: titleToUse,
+          status: "SHORTLISTED",
+          notes: JSON.stringify({
+            price: priceToUse,
+            category: categoryToUse,
+            vendorName: vendorNameToUse,
+            note: recommendationNote || "Recommended service for family review and booking.",
+            image: gigToUse?.gallery?.[0]?.url || "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=800",
+            addedByName: me?.name || me?.displayName || "Family Collaborator",
+          }),
+        },
+      }).unwrap();
+
+      toast.success("Service recommended to Family Hub!");
+      setRecommendModalOpen(false);
+      setSelectedGigId("");
+      setCustomTitle("");
+      setRecommendationNote("");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to add service recommendation");
     }
   };
 
   return (
-    <div className="space-y-6 pb-12">
-      {/* Top Multi-Family Hub Selector & Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2 relative">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">Family Planning Hub</h1>
-            
-            {/* Multi-Family Hub Dropdown Switcher */}
-            <div className="relative">
-              <button
-                onClick={() => setShowHubSwitcher(!showHubSwitcher)}
-                className="px-3 py-1 rounded-xl bg-[#EDE9FE] text-[#0F0C3B] border border-indigo-200 text-xs font-bold flex items-center gap-1.5 hover:bg-indigo-100 transition-colors shadow-xs"
-              >
-                <span>{activeHub.name}</span>
-                <ChevronDown className="w-3.5 h-3.5 text-indigo-700" />
-              </button>
+    <div className="space-y-8 pb-16">
+      {/* Delete Confirmation Modal (Custom UI, replacing browser confirm) */}
+      {itemToDelete && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 space-y-5 border border-slate-200 shadow-2xl animate-in fade-in">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 shrink-0">
+                <Trash2 className="w-6 h-6" />
+              </div>
+              <div>
+                <h3 className="font-serif font-bold text-base text-[#0F0C3B]">Remove Recommendation</h3>
+                <p className="text-xs text-slate-500">Remove from family collaboration board</p>
+              </div>
+            </div>
 
-              {showHubSwitcher && (
-                <div className="absolute left-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-slate-200 p-2 z-50 text-xs space-y-1">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-3 py-1 block">
-                    Switch Joined Family Hubs ({mockWorkspaces.length})
-                  </span>
-                  {mockWorkspaces.map((hub) => (
-                    <div
-                      key={hub.id}
-                      onClick={() => {
-                        setActiveHub(hub);
-                        setShowHubSwitcher(false);
-                      }}
-                      className={`p-2.5 rounded-xl cursor-pointer transition-all flex items-center justify-between ${
-                        activeHub.id === hub.id ? "bg-[#EDE9FE] text-[#0F0C3B] font-bold" : "hover:bg-slate-50 text-slate-700"
-                      }`}
-                    >
-                      <div>
-                        <p className="font-bold">{hub.name}</p>
-                        <p className="text-[10px] text-slate-500">{hub.role} &bull; {hub.eventDate}</p>
-                      </div>
-                      {activeHub.id === hub.id && <Check className="w-4 h-4 text-brand-primary" />}
-                    </div>
-                  ))}
-                  <div className="pt-2 border-t border-slate-100">
-                    <Link
-                      href="/user/family-hub/members"
-                      className="w-full py-1.5 px-3 rounded-lg text-brand-primary font-bold hover:bg-indigo-50 flex items-center gap-1.5"
-                    >
-                      <UserPlus className="w-3.5 h-3.5" /> Join / Manage Hub Members
-                    </Link>
-                  </div>
-                </div>
-              )}
+            <p className="text-xs text-slate-600 leading-relaxed bg-slate-50 p-3.5 rounded-2xl border border-slate-100">
+              Are you sure you want to remove <strong className="text-[#0F0C3B]">&ldquo;{itemToDelete.title}&rdquo;</strong> from your Family Hub? Other family members will no longer be able to vote or review this recommendation.
+            </p>
+
+            <div className="flex items-center justify-end gap-2.5 pt-2">
+              <button
+                type="button"
+                disabled={isDeletingItem}
+                onClick={() => setItemToDelete(null)}
+                className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={isDeletingItem}
+                onClick={handleConfirmDelete}
+                className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-2 cursor-pointer disabled:opacity-50"
+              >
+                {isDeletingItem ? (
+                  <span>Removing...</span>
+                ) : (
+                  <>
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Yes, Remove</span>
+                  </>
+                )}
+              </button>
             </div>
           </div>
+        </div>
+      )}
 
-          <p className="text-xs text-slate-500 mt-1">
-            Collaborative decision board: Click any card to inspect full service inclusions, vendor credentials, family feedback, or contribute via Stripe.
+      {/* Invite Member Modal */}
+      {inviteModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 space-y-5 border border-slate-200 shadow-2xl animate-in fade-in">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="p-2 rounded-xl bg-indigo-50 text-brand-primary">
+                  <UserPlus className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-serif font-bold text-base text-[#0F0C3B]">Invite Family Member</h3>
+                  <p className="text-xs text-slate-500">Collaborate & vote on services together</p>
+                </div>
+              </div>
+              <button onClick={() => setInviteModalOpen(false)} className="text-slate-400 hover:text-slate-600">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSendInvite} className="space-y-4 text-xs">
+              <div>
+                <label className="block font-bold text-slate-700 mb-1">Email Address *</label>
+                <input
+                  type="email"
+                  placeholder="partner@example.com"
+                  value={inviteEmail}
+                  onChange={(e) => setInviteEmail(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-primary/20 text-slate-900"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block font-bold text-slate-700 mb-1">Permission Role</label>
+                <select
+                  value={inviteRole}
+                  onChange={(e) => setInviteRole(e.target.value)}
+                  className="w-full px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none text-slate-800 bg-slate-50 cursor-pointer"
+                >
+                  <option value="CO_PLANNER">Co-Planner (Can Recommend & Vote)</option>
+                  <option value="FAMILY_MEMBER">Family Member (Can Recommend & Vote)</option>
+                  <option value="VIEWER">Viewer (View & Upvote only)</option>
+                </select>
+              </div>
+
+              <div className="pt-2 flex items-center justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setInviteModalOpen(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isInviting}
+                  className="px-5 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                >
+                  <span>Send Invite</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Recommend Service Modal */}
+      {recommendModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-lg w-full p-6 space-y-5 border border-slate-200 shadow-2xl animate-in fade-in">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="p-2 rounded-xl bg-amber-50 text-amber-600">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-serif font-bold text-base text-[#0F0C3B]">Recommend a Service</h3>
+                  <p className="text-xs text-slate-500">Suggest an vendor service for the family to review</p>
+                </div>
+              </div>
+              <button onClick={() => setRecommendModalOpen(false)} className="text-slate-400 hover:text-slate-600">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleAddRecommendation} className="space-y-4 text-xs">
+              {availableGigs.length > 0 && (
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">Pick from Catalog</label>
+                  <select
+                    value={selectedGigId}
+                    onChange={(e) => {
+                      setSelectedGigId(e.target.value);
+                      const g = availableGigs.find((item: any) => item.id === e.target.value);
+                      if (g) {
+                        setCustomTitle(g.title);
+                        setCustomCategory(g.category?.name || "Vendor Service");
+                        setCustomPrice(String(g.packages?.[0]?.price || 1200));
+                      }
+                    }}
+                    className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 focus:outline-none cursor-pointer"
+                  >
+                    <option value="">-- Choose an active service --</option>
+                    {availableGigs.map((g: any) => {
+                      const alreadyInHub = services.some(
+                        (s) =>
+                          s.gigId === g.id ||
+                          s.id === g.id ||
+                          s.title?.toLowerCase().trim() === g.title?.toLowerCase().trim()
+                      );
+                      return (
+                        <option key={g.id} value={g.id} disabled={alreadyInHub}>
+                          {g.title} ({g.category?.name || "Service"}) — from ${g.packages?.[0]?.price || 1200}
+                          {alreadyInHub ? " [Already in Family Hub]" : ""}
+                        </option>
+                      );
+                    })}
+                  </select>
+                </div>
+              )}
+
+              <div>
+                <label className="block font-bold text-slate-700 mb-1">Service Title *</label>
+                <input
+                  type="text"
+                  placeholder="e.g., Golden Hour Drone & Video Coverage"
+                  value={customTitle}
+                  onChange={(e) => setCustomTitle(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none text-slate-900"
+                  required
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">Category</label>
+                  <select
+                    value={customCategory}
+                    onChange={(e) => setCustomCategory(e.target.value)}
+                    className="w-full px-3 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 focus:outline-none"
+                  >
+                    <option value="Cinematography">Cinematography</option>
+                    <option value="Floral Design">Floral Design</option>
+                    <option value="Live Music & DJ">Live Music & DJ</option>
+                    <option value="Vendor Catering">Vendor Catering</option>
+                    <option value="Lighting & Production">Lighting & Production</option>
+                    <option value="Event Planning">Event Planning</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block font-bold text-slate-700 mb-1">Estimated Price ($)</label>
+                  <input
+                    type="number"
+                    placeholder="1200"
+                    value={customPrice}
+                    onChange={(e) => setCustomPrice(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 focus:outline-none text-slate-900"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block font-bold text-slate-700 mb-1">Recommendation Note</label>
+                <textarea
+                  rows={3}
+                  placeholder="Tell your family why you recommend this service..."
+                  value={recommendationNote}
+                  onChange={(e) => setRecommendationNote(e.target.value)}
+                  className="w-full px-3.5 py-2 rounded-xl border border-slate-200 focus:outline-none text-slate-900 resize-none"
+                />
+              </div>
+
+              {/* Duplicate Notice */}
+              {services.some(
+                (s) =>
+                  (selectedGigId && (s.gigId === selectedGigId || s.id === selectedGigId)) ||
+                  (customTitle.trim() && s.title?.toLowerCase().trim() === customTitle.toLowerCase().trim())
+              ) && (
+                <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0" />
+                  <span>This service is already in your Family Hub. Each service can only be added once.</span>
+                </div>
+              )}
+
+              <div className="pt-2 flex items-center justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setRecommendModalOpen(false)}
+                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-colors cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={
+                    isAddingItem ||
+                    services.some(
+                      (s) =>
+                        (selectedGigId && (s.gigId === selectedGigId || s.id === selectedGigId)) ||
+                        (customTitle.trim() && s.title?.toLowerCase().trim() === customTitle.toLowerCase().trim())
+                    )
+                  }
+                  className={`px-5 py-2 rounded-xl text-white font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50 ${
+                    services.some(
+                      (s) =>
+                        (selectedGigId && (s.gigId === selectedGigId || s.id === selectedGigId)) ||
+                        (customTitle.trim() && s.title?.toLowerCase().trim() === customTitle.toLowerCase().trim())
+                    )
+                      ? "bg-amber-600 cursor-not-allowed"
+                      : "bg-[#0F0C3B] hover:bg-[#18124E]"
+                  }`}
+                >
+                  <span>
+                    {services.some(
+                      (s) =>
+                        (selectedGigId && (s.gigId === selectedGigId || s.id === selectedGigId)) ||
+                        (customTitle.trim() && s.title?.toLowerCase().trim() === customTitle.toLowerCase().trim())
+                    )
+                      ? "Already in Family Hub"
+                      : "Recommend Service"}
+                  </span>
+                  <Check className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Top Header & Workspace Info */}
+      <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/90 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="px-3 py-0.5 rounded-full bg-indigo-50 border border-indigo-200 text-brand-primary text-[10px] font-extrabold uppercase tracking-wider">
+              Family Collaboration Hub
+            </span>
+            <span className="text-xs text-slate-500 font-medium">
+              &bull; {members.length} Member{members.length === 1 ? "" : "s"} Collaborating
+            </span>
+          </div>
+
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F0C3B] font-serif tracking-tight">
+            {workspaceTitle}
+          </h1>
+
+          <p className="text-xs text-slate-500 mt-1 max-w-xl">
+            Recommend, vote, and finalize vendor services together. Click any service to explore full public details, package tiers, and order directly.
           </p>
         </div>
 
-        {/* Top Actions */}
-        <div className="flex items-center gap-2.5">
-          <Link
-            href="/vendors"
-            className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-[#0F0C3B] rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-xs"
+        {/* Action Buttons */}
+        <div className="flex items-center gap-3 flex-wrap">
+          <button
+            onClick={() => setInviteModalOpen(true)}
+            className="px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-[#0F0C3B] text-xs font-bold transition-all shadow-2xs flex items-center gap-2 cursor-pointer"
           >
-            <ShoppingBag className="w-4 h-4 text-brand-primary" /> Browse Marketplace
-          </Link>
+            <UserPlus className="w-4 h-4 text-brand-primary" />
+            <span>Invite Member</span>
+          </button>
 
-          <Link
-            href="/user/family-hub/members"
-            className="px-4 py-2 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+          <button
+            onClick={() => setRecommendModalOpen(true)}
+            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-[#0F0C3B] text-xs font-extrabold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
           >
-            <UserPlus className="w-4 h-4 text-amber-400" /> Invite Family Member
-          </Link>
+            <Plus className="w-4 h-4 text-[#0F0C3B]" />
+            <span>Recommend a Service</span>
+          </button>
         </div>
       </div>
 
-      {/* Pooled Budget & Members Stats Card */}
-      <div className="bg-gradient-to-r from-[#0F0C3B] to-[#18124E] text-white p-6 rounded-3xl shadow-lg space-y-5">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div className="space-y-1">
-            <span className="text-[10px] font-bold text-amber-300 uppercase tracking-wider">
-              {activeHub.name}
-            </span>
-            <h2 className="text-xl font-black">
-              Pooled Family Escrow Fund: <span className="text-emerald-400">${activeHub.totalPledged.toLocaleString()}</span>
-            </h2>
-            <p className="text-xs text-indigo-200">
-              Target Celebration Budget: ${activeHub.targetBudget.toLocaleString()} &bull; Event Date: {activeHub.eventDate}
-            </p>
+      {/* Family Members Strip */}
+      <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs flex items-center justify-between gap-4 flex-wrap">
+        <div className="flex items-center gap-3">
+          <div className="flex -space-x-2 overflow-hidden">
+            {members.map((m) => (
+              <div
+                key={m.id}
+                title={`${m.name} (${m.role})`}
+                className="inline-block h-8 w-8 rounded-full ring-2 ring-white bg-[#0F0C3B] text-white text-[11px] font-bold flex items-center justify-center"
+              >
+                {m.avatar}
+              </div>
+            ))}
           </div>
-
-          <div className="flex items-center gap-2 bg-white/10 px-3.5 py-2 rounded-2xl backdrop-blur-xs border border-white/10">
-            <ShieldCheck className="w-5 h-5 text-emerald-400" />
-            <div className="text-left">
-              <span className="text-[10px] text-slate-300 font-bold block">Stripe Escrow Custody</span>
-              <span className="text-xs font-bold text-white">Funds released only on milestone signoff</span>
-            </div>
-          </div>
+          <span className="text-xs text-slate-600 font-medium">
+            <strong className="text-[#0F0C3B]">{members.length} member{members.length === 1 ? "" : "s"}</strong> active in this workspace
+          </span>
         </div>
 
-        {/* Member Avatars & Contribution Pills */}
-        <div className="pt-3 border-t border-white/10 flex items-center justify-between flex-wrap gap-3 text-xs">
-          <div className="flex items-center gap-3">
-            <div className="flex -space-x-2">
-              {activeHub.members.map((m, i) => (
-                <div
-                  key={i}
-                  className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-600 text-white flex items-center justify-center font-bold text-[10px] border-2 border-[#0F0C3B] shadow-xs"
-                  title={`${m.name} (${m.role}): $${m.pledged.toLocaleString()} contributed`}
-                >
-                  {m.avatar}
-                </div>
-              ))}
-            </div>
-            <span className="text-slate-300 text-xs font-semibold">
-              {activeHub.members.length} Active Collaborators
-            </span>
-          </div>
-
-          <Link
-            href="/user/family-hub/members"
-            className="text-amber-300 hover:text-amber-200 font-bold text-xs flex items-center gap-1"
-          >
-            Manage Permissions & Spending Caps &rarr;
-          </Link>
-        </div>
+        <Link
+          href="/services"
+          className="text-xs font-bold text-brand-primary hover:underline flex items-center gap-1"
+        >
+          <span>Browse Public Services Catalog</span>
+          <ChevronRight className="w-3.5 h-3.5" />
+        </Link>
       </div>
 
-      {/* Services Added to this Family Hub */}
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h3 className="text-base font-black text-[#0F0C3B]">
-              Shortlisted Services & Crowdfunded Milestones ({services.length})
-            </h3>
-            <p className="text-xs text-slate-500">
-              Click any service card to open full details, inclusions checklist, vendor review badges, and family chat.
-            </p>
-          </div>
+      {/* Board Controls: Filter Tabs & Info */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        {/* Filter Pills */}
+        <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-2xl w-fit">
+          <button
+            onClick={() => setFilterTab("all")}
+            className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              filterTab === "all"
+                ? "bg-white text-[#0F0C3B] shadow-xs"
+                : "text-slate-500 hover:text-slate-900"
+            }`}
+          >
+            All Recommendations ({services.length})
+          </button>
+          <button
+            onClick={() => setFilterTab("shortlisted")}
+            className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              filterTab === "shortlisted"
+                ? "bg-white text-[#0F0C3B] shadow-xs"
+                : "text-slate-500 hover:text-slate-900"
+            }`}
+          >
+            Under Review ({services.filter((s) => s.status === "SHORTLISTED").length})
+          </button>
+          <button
+            onClick={() => setFilterTab("booked")}
+            className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              filterTab === "booked"
+                ? "bg-white text-[#0F0C3B] shadow-xs"
+                : "text-slate-500 hover:text-slate-900"
+            }`}
+          >
+            Booked ({services.filter((s) => s.status === "BOOKED").length})
+          </button>
         </div>
 
-        {/* Services Grid with Rich Card Layout */}
+        {services.length > 0 && (
+          <span className="text-xs text-slate-500">
+            Click any service card to view packages, gallery, and book.
+          </span>
+        )}
+      </div>
+
+      {/* Recommended Services Grid */}
+      {filteredServices.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((svc) => {
-            const pct = Math.min(100, Math.round((svc.amountPaid / svc.totalPrice) * 100));
-            const isFullyFunded = svc.amountPaid >= svc.totalPrice;
-
+          {filteredServices.map((service) => {
+            const isBooked = service.status === "BOOKED";
+            const gig = availableGigs.find((item: any) => item.id === service.gigId);
+            const packageId = gig?.packages?.[0]?.id;
+            const vendorSlug = gig?.vendorProfile?.slug;
+            const checkoutHref = packageId && vendorSlug
+              ? `/checkout?vendorId=${encodeURIComponent(vendorSlug)}&packageId=${encodeURIComponent(packageId)}&familyBoardItemId=${encodeURIComponent(service.boardItemId)}`
+              : null;
             return (
               <div
-                key={svc.id}
-                onClick={() => setSelectedServiceDetail(svc)}
-                className="group bg-white border border-slate-200 hover:border-brand-primary/40 rounded-3xl overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between cursor-pointer"
+                key={service.boardItemId}
+                onClick={() => router.push(`/services/${service.gigId || service.id}`)}
+                className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1 cursor-pointer"
               >
-                {/* Top Image Banner with Category & Vote Pill */}
-                <div className="relative h-44 w-full bg-slate-900 overflow-hidden">
-                  <img
-                    src={svc.image}
-                    alt={svc.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                {/* Image & Category */}
+                <div className="relative h-52 w-full overflow-hidden bg-slate-100">
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
 
-                  {/* Top floating badges */}
-                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between z-10">
-                    <span className="px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] font-bold border border-white/20">
-                      {svc.category}
+                  {/* Top Floating Badges */}
+                  <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
+                    <span className="px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-extrabold text-[#0F0C3B] uppercase tracking-wider shadow-sm">
+                      {service.category}
                     </span>
 
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleVote(svc.id);
-                      }}
-                      className="flex items-center gap-1 text-[11px] font-bold text-white bg-black/60 hover:bg-rose-600/90 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/20 transition-colors"
-                      title="Vote for this vendor service"
+                    <span
+                      className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold shadow-sm ${
+                        isBooked
+                          ? "bg-emerald-500 text-white"
+                          : "bg-amber-500 text-slate-950"
+                      }`}
                     >
-                      <ThumbsUp className="w-3 h-3 text-amber-300" />
-                      <span>{svc.votesUp}</span>
-                    </button>
+                      {isBooked ? "Booked" : "Recommended"}
+                    </span>
                   </div>
 
-                  {/* Vendor Avatar Overlay on bottom banner */}
-                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between text-white">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-white border-2 border-white overflow-hidden flex items-center justify-center text-[#0F0C3B] font-bold text-[10px] shadow-sm">
-                        {svc.vendorAvatar.startsWith("http") ? (
-                          <img src={svc.vendorAvatar} alt={svc.vendorName} className="w-full h-full object-cover" />
-                        ) : (
-                          svc.vendorAvatar
-                        )}
-                      </div>
-                      <div>
-                        <p className="font-bold text-xs text-white drop-shadow-xs line-clamp-1">{svc.vendorName}</p>
-                        <p className="text-[10px] text-slate-200 flex items-center gap-1">
-                          <Star className="w-2.5 h-2.5 fill-amber-300 text-amber-300" />
-                          <span>{svc.vendorRating}</span> &bull; <span>{svc.location}</span>
-                        </p>
-                      </div>
+                  {/* Price Tag */}
+                  <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between text-white">
+                    <div>
+                      <span className="text-[10px] uppercase font-semibold text-slate-300 block">Starting at</span>
+                      <span className="text-2xl font-black font-serif">${service.price.toLocaleString()}</span>
                     </div>
-
-                    <span className="text-xs font-black text-amber-300 font-mono bg-black/60 px-2 py-0.5 rounded-lg border border-white/10">
-                      ${svc.totalPrice.toLocaleString()}
-                    </span>
+                    <div className="flex items-center gap-1 text-[11px] font-semibold text-amber-300">
+                      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                      <span>{service.vendorRating}</span>
+                    </div>
                   </div>
                 </div>
 
                 {/* Card Body */}
-                <div className="p-5 space-y-4 flex-1 flex flex-col justify-between">
-                  <div className="space-y-3">
-                    <div>
-                      <h4 className="text-sm font-bold text-[#0F0C3B] group-hover:text-brand-primary transition-colors line-clamp-1">
-                        {svc.title}
-                      </h4>
-                      
-                      {/* Added by badge */}
-                      <div className="flex items-center gap-1.5 mt-1.5 text-[11px] text-slate-600">
-                        <span className="w-4 h-4 rounded-full bg-[#0F0C3B] text-white flex items-center justify-center font-bold text-[8px]">
-                          {svc.addedBy.avatar}
+                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                  <div>
+                    {/* Vendor Subtitle */}
+                    <div className="flex items-center justify-between text-xs text-slate-500 mb-2">
+                      <div className="flex items-center gap-1.5 font-semibold text-[#0F0C3B]">
+                        <span>{service.vendorName}</span>
+                        <span className="text-[10px] px-1 bg-slate-100 text-slate-600 rounded">
+                          {service.vendorTier}
                         </span>
-                        <span>
-                          Added by <strong className="text-[#0F0C3B]">{svc.addedBy.name}</strong>
-                        </span>
-                        <span className="text-slate-400">&bull; {svc.addedBy.date}</span>
                       </div>
+                      <span className="flex items-center gap-1 text-[11px] text-slate-400">
+                        <MapPin className="w-3 h-3" />
+                        {service.location}
+                      </span>
                     </div>
 
-                    {/* Funding Meter */}
-                    <div className="p-3 bg-[#F8F9FD] rounded-2xl border border-slate-100 space-y-2 text-xs">
-                      <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
-                        <div
-                          style={{ width: `${pct}%` }}
-                          className={`h-full rounded-full transition-all duration-500 ${
-                            isFullyFunded ? "bg-emerald-500" : "bg-gradient-to-r from-amber-400 to-amber-500"
-                          }`}
-                        />
-                      </div>
+                    {/* Title */}
+                    <h3 className="font-serif font-bold text-base text-[#0F0C3B] group-hover:text-brand-primary transition-colors line-clamp-1">
+                      {service.title}
+                    </h3>
 
-                      <div className="flex items-center justify-between text-[11px] font-bold">
-                        <span className={isFullyFunded ? "text-emerald-700" : "text-amber-700"}>
-                          ${svc.amountPaid.toLocaleString()} ({pct}%)
+                    {/* Recommendation Note Box */}
+                    <div className="mt-3 p-3 rounded-2xl bg-indigo-50/60 border border-indigo-100 space-y-1 text-xs">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-bold text-brand-primary flex items-center gap-1">
+                          <Users2 className="w-3 h-3" />
+                          Recommended by {service.recommendedBy.name}
                         </span>
-                        <span className="text-slate-500">
-                          ${(svc.totalPrice - svc.amountPaid).toLocaleString()} remaining
-                        </span>
+                        <span className="text-[10px] text-slate-400">{service.recommendedBy.date}</span>
                       </div>
+                      <p className="text-slate-600 italic text-[11px] leading-relaxed">
+                        &ldquo;{service.note}&rdquo;
+                      </p>
                     </div>
 
-                    {/* Contributors summary */}
-                    {svc.contributors.length > 0 && (
-                      <div className="flex items-center justify-between text-[10px] text-slate-500 pt-1">
-                        <span className="font-semibold text-slate-400 uppercase">Contributors:</span>
-                        <div className="flex items-center gap-1">
-                          {svc.contributors.map((c, i) => (
-                            <span
-                              key={i}
-                              className="w-5 h-5 rounded-full bg-slate-100 text-[#0F0C3B] border border-slate-300 flex items-center justify-center font-bold text-[8px]"
-                              title={`${c.name}: $${c.amount}`}
-                            >
-                              {c.avatar}
-                            </span>
-                          ))}
-                          <span className="font-bold text-slate-700">({svc.contributors.length})</span>
+                    {/* Inclusions list */}
+                    <div className="mt-3 space-y-1 pt-2 border-t border-slate-100">
+                      {service.inclusions.slice(0, 2).map((inc, i) => (
+                        <div key={i} className="flex items-center gap-1.5 text-[11px] text-slate-600">
+                          <CheckCircle2 className="w-3 h-3 text-emerald-600 shrink-0" />
+                          <span className="truncate">{inc}</span>
                         </div>
-                      </div>
-                    )}
+                      ))}
+                    </div>
                   </div>
 
-                  {/* Card Bottom CTA Actions */}
-                  <div className="pt-3 border-t border-slate-100 flex items-center gap-2">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedServiceDetail(svc);
-                      }}
-                      className="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0F0C3B] text-xs font-bold transition-all flex items-center justify-center gap-1"
-                    >
-                      <Eye className="w-3.5 h-3.5 text-brand-primary" />
-                      <span>Details</span>
-                    </button>
-
-                    {isFullyFunded ? (
-                      <div className="flex-1 py-2 bg-emerald-50 text-emerald-800 rounded-xl text-xs font-bold text-center flex items-center justify-center gap-1 border border-emerald-200">
-                        <Check className="w-3.5 h-3.5 text-emerald-600" />
-                        <span>Funded</span>
-                      </div>
-                    ) : (
+                  {/* Footer Actions: Vote & Book */}
+                  <div className="pt-3 border-t border-slate-100 space-y-2">
+                    <div className="flex items-center justify-between gap-2">
+                      {/* Upvote button */}
                       <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedServiceForPay(svc);
-                        }}
-                        className="flex-1 py-2 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center justify-center gap-1"
+                        onClick={(e) => handleVote(e, service.boardItemId)}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-xs font-bold text-slate-700 transition-colors cursor-pointer"
                       >
-                        <CreditCard className="w-3.5 h-3.5 text-amber-400" />
-                        <span>Co-Pay ($)</span>
+                        <ThumbsUp className="w-3.5 h-3.5 text-brand-primary" />
+                        <span>{service.votesUp} Votes</span>
                       </button>
-                    )}
+
+                      {/* Direct Delete button with confirmation modal */}
+                      {!isBooked && (
+                        <button
+                          onClick={(e) => handleDeleteClick(e, service.boardItemId, service.title)}
+                          className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                          title="Remove Recommendation"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Main Action: View Details / Book */}
+                    <div className="grid grid-cols-2 gap-2 pt-1">
+                      <Link
+                        href={`/services/${service.gigId || service.id}`}
+                        onClick={(e) => e.stopPropagation()}
+                        className="py-2 px-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-[#0F0C3B] text-xs font-bold text-center border border-slate-200 transition-colors flex items-center justify-center gap-1"
+                      >
+                        <span>View Details</span>
+                        <ChevronRight className="w-3.5 h-3.5" />
+                      </Link>
+
+                      {checkoutHref ? <Link
+                        href={checkoutHref}
+                        onClick={(e) => e.stopPropagation()}
+                        className="py-2 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-[#0F0C3B] text-xs font-extrabold text-center shadow-xs transition-all flex items-center justify-center gap-1"
+                      ><span>Book Service</span><ArrowRight className="w-3.5 h-3.5" /></Link> : <span title="This service has no available paid package" className="py-2 px-3 rounded-xl bg-slate-100 text-slate-400 text-xs font-bold text-center">Package unavailable</span>}
+                    </div>
                   </div>
                 </div>
               </div>
             );
           })}
         </div>
-      </div>
-
-      {/* Full Service Detail Modal on Card Click */}
-      {selectedServiceDetail && (
-        <FamilyServiceDetailModal
-          isOpen={!!selectedServiceDetail}
-          onClose={() => setSelectedServiceDetail(null)}
-          service={selectedServiceDetail}
-          onVote={handleVote}
-          onPaymentSuccess={handlePaymentSuccess}
-        />
-      )}
-
-      {/* Direct Quick Payment Modal */}
-      {selectedServiceForPay && (
-        <FamilyPaymentModal
-          isOpen={!!selectedServiceForPay}
-          onClose={() => setSelectedServiceForPay(null)}
-          service={{
-            id: selectedServiceForPay.id,
-            title: selectedServiceForPay.title,
-            vendorName: selectedServiceForPay.vendorName,
-            totalPrice: selectedServiceForPay.totalPrice,
-            amountPaid: selectedServiceForPay.amountPaid,
-          }}
-          onPaymentSuccess={handlePaymentSuccess}
-        />
+      ) : (
+        /* Clean Empty State when 0 services exist */
+        <div className="p-16 text-center bg-white rounded-3xl border border-slate-200 shadow-xs max-w-lg mx-auto my-12 space-y-4">
+          <div className="w-14 h-14 rounded-3xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-brand-primary mx-auto">
+            <ShoppingBag className="w-7 h-7 text-brand-primary" />
+          </div>
+          <div>
+            <h3 className="text-lg font-serif font-bold text-[#0F0C3B]">No Service Recommendations Yet</h3>
+            <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto leading-relaxed">
+              Collaborate with your family! Recommend vendor services like cinematography, live music, floral design, or catering to review and book together.
+            </p>
+          </div>
+          <div className="flex items-center justify-center gap-3 pt-2">
+            <button
+              onClick={() => setRecommendModalOpen(true)}
+              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-[#0F0C3B] text-xs font-bold shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+            >
+              <Plus className="w-3.5 h-3.5 text-[#0F0C3B]" />
+              <span>Recommend a Service</span>
+            </button>
+            <Link
+              href="/services"
+              className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors"
+            >
+              Browse Catalog
+            </Link>
+          </div>
+        </div>
       )}
     </div>
   );
 }
-
