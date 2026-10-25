@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Mail, Eye, EyeOff, ShieldCheck, AlertCircle, ArrowRight, Smartphone } from "lucide-react";
+import { Mail, Eye, EyeOff, ShieldCheck, AlertCircle, ArrowRight, Smartphone, Sparkles, Store, Shield, User, Loader2 } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple } from "react-icons/fa";
 import { toast } from "sonner";
@@ -11,27 +11,119 @@ import AuthHeader from "@/components/pages/auth/AuthHeader";
 import AuthFooter from "@/components/pages/auth/AuthFooter";
 import AuthSideHero from "@/components/pages/auth/AuthSideHero";
 
+import { useLoginUserMutation } from "@/redux/service/auth/authApi";
+import { useAppDispatch } from "@/redux/hooks/hooks";
+import { setUser } from "@/redux/features/auth";
+
 export default function LoginPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("maya.torres@gmail.com");
-  const [password, setPassword] = useState("••••••••••••");
+  const dispatch = useAppDispatch();
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const [email, setEmail] = useState("sarah@ophir.com");
+  const [password, setPassword] = useState("Ophir1234!");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [isPhoneMode, setIsPhoneMode] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("+1 (512) 890-4421");
-  const [isLoading, setIsLoading] = useState(false);
-  const [hasError] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [demoLoadingRole, setDemoLoadingRole] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const fillCredentials = (roleEmail: string, rolePass: string) => {
+    setEmail(roleEmail);
+    setPassword(rolePass);
+    setIsPhoneMode(false);
+    setHasError(false);
+  };
+
+  /**
+   * 1-Click direct demo login using credentials from seed.ts
+   */
+  const handleDirectDemoLogin = async (role: "CLIENT" | "VENDOR" | "ADMIN") => {
+    let demoEmail = "sarah@ophir.com";
+    let targetPath = "/user";
+    let roleLabel = "Client (Sarah Jenkins)";
+
+    if (role === "VENDOR") {
+      demoEmail = "luminary@ophir.com";
+      targetPath = "/vendor";
+      roleLabel = "Vendor (Luminary Studios)";
+    } else if (role === "ADMIN") {
+      demoEmail = "admin@ophir.com";
+      targetPath = "/admin";
+      roleLabel = "Admin (Operations Director)";
+    }
+
+    const demoPassword = "Ophir1234!";
+    setEmail(demoEmail);
+    setPassword(demoPassword);
+    setDemoLoadingRole(role);
+    setHasError(false);
+
+    try {
+      const res = await loginUser({ email: demoEmail, password: demoPassword }).unwrap();
+      dispatch(
+        setUser({
+          user: res.user,
+          accessToken: res.accessToken,
+          refreshToken: res.refreshToken,
+        })
+      );
+
+      // Set cookies for Edge runtime Next.js middleware and browser
+      document.cookie = `accessToken=${res.accessToken}; path=/; max-age=604800; SameSite=Lax`;
+      document.cookie = `role=${res.user.role}; path=/; max-age=604800; SameSite=Lax`;
+      document.cookie = `roll=${res.user.role}; path=/; max-age=604800; SameSite=Lax`;
+
+      if (typeof localStorage !== "undefined") {
+        localStorage.setItem("token", res.accessToken);
+      }
+
+      toast.success(`Welcome to Ophir! Logged in as ${roleLabel}.`);
+      router.push(targetPath);
+    } catch (err: any) {
+      setHasError(true);
+      toast.error(err?.data?.message || `Demo login as ${role} failed. Please try again.`);
+    } finally {
+      setDemoLoadingRole(null);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    setHasError(false);
 
-    // Simulate authentication
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Welcome back to Ophir Reserve!");
-      router.push("/");
-    }, 1000);
+    try {
+      const res = await loginUser({ email, password }).unwrap();
+      dispatch(
+        setUser({
+          user: res.user,
+          accessToken: res.accessToken,
+          refreshToken: res.refreshToken,
+        })
+      );
+
+      // Set cookies for Edge runtime Next.js middleware and browser
+      document.cookie = `accessToken=${res.accessToken}; path=/; max-age=604800; SameSite=Lax`;
+      document.cookie = `role=${res.user.role}; path=/; max-age=604800; SameSite=Lax`;
+      document.cookie = `roll=${res.user.role}; path=/; max-age=604800; SameSite=Lax`;
+
+      if (typeof localStorage !== "undefined") {
+        localStorage.setItem("token", res.accessToken);
+      }
+
+      toast.success(`Welcome back, ${res.user.role}!`);
+
+      if (res.user.role === "VENDOR") {
+        router.push("/vendor");
+      } else if (res.user.role === "ADMIN") {
+        router.push("/admin");
+      } else {
+        router.push("/user");
+      }
+    } catch (err: any) {
+      setHasError(true);
+      toast.error(err?.data?.message || "Invalid email or password");
+    }
   };
 
   return (
@@ -46,7 +138,7 @@ export default function LoginPage() {
               {/* Vault Header Pill */}
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF2FF] text-[#3730A3] text-xs font-semibold uppercase tracking-wider">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#3730A3]" />
-                <span>UTSOB VAULT SECURED</span>
+                <span>OPHIR RESERVE SECURED</span>
               </div>
 
               {/* Title & Description */}
@@ -55,8 +147,99 @@ export default function LoginPage() {
                   Welcome back
                 </h1>
                 <p className="text-slate-500 text-xs sm:text-sm">
-                  Sign in to manage your celebration bookings and escrow vault.
+                  Sign in or use 1-click demo login to access your role dashboard.
                 </p>
+              </div>
+
+              {/* Quick 1-Click Demo Login Box */}
+              <div className="p-3.5 rounded-2xl bg-gradient-to-br from-[#FBF9F5] to-[#F5F2EB] border border-[#E2DDD3] space-y-2.5 shadow-2xs">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                    <span>Instant Demo Login (Seed Users)</span>
+                  </div>
+                  <span className="text-[10px] text-slate-500 font-mono">Ophir1234!</span>
+                </div>
+
+                <div className="grid grid-cols-1 gap-2">
+                  {/* Demo Client Button */}
+                  <button
+                    type="button"
+                    disabled={isLoading || !!demoLoadingRole}
+                    onClick={() => handleDirectDemoLogin("CLIENT")}
+                    className="w-full px-3 py-2.5 rounded-xl border border-indigo-200 bg-white hover:bg-indigo-50/60 active:scale-99 transition-all text-left flex items-center justify-between group shadow-2xs cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                        {demoLoadingRole === "CLIENT" ? (
+                          <Loader2 className="w-4 h-4 animate-spin text-indigo-700" />
+                        ) : (
+                          <User className="w-4 h-4" />
+                        )}
+                      </div>
+                      <div className="truncate">
+                        <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                          <span>Login as Client</span>
+                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-indigo-100 text-indigo-700">/user</span>
+                        </div>
+                        <div className="text-[11px] text-slate-500 truncate">sarah@ophir.com (Sarah Jenkins)</div>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-all flex-shrink-0 ml-1" />
+                  </button>
+
+                  {/* Demo Vendor Button */}
+                  <button
+                    type="button"
+                    disabled={isLoading || !!demoLoadingRole}
+                    onClick={() => handleDirectDemoLogin("VENDOR")}
+                    className="w-full px-3 py-2.5 rounded-xl border border-emerald-200 bg-white hover:bg-emerald-50/60 active:scale-99 transition-all text-left flex items-center justify-between group shadow-2xs cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                        {demoLoadingRole === "VENDOR" ? (
+                          <Loader2 className="w-4 h-4 animate-spin text-emerald-700" />
+                        ) : (
+                          <Store className="w-4 h-4" />
+                        )}
+                      </div>
+                      <div className="truncate">
+                        <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                          <span>Login as Vendor</span>
+                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-emerald-100 text-emerald-700">/vendor</span>
+                        </div>
+                        <div className="text-[11px] text-slate-500 truncate">luminary@ophir.com (Luminary Studios)</div>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all flex-shrink-0 ml-1" />
+                  </button>
+
+                  {/* Demo Admin Button */}
+                  <button
+                    type="button"
+                    disabled={isLoading || !!demoLoadingRole}
+                    onClick={() => handleDirectDemoLogin("ADMIN")}
+                    className="w-full px-3 py-2.5 rounded-xl border border-purple-200 bg-white hover:bg-purple-50/60 active:scale-99 transition-all text-left flex items-center justify-between group shadow-2xs cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                        {demoLoadingRole === "ADMIN" ? (
+                          <Loader2 className="w-4 h-4 animate-spin text-purple-700" />
+                        ) : (
+                          <Shield className="w-4 h-4" />
+                        )}
+                      </div>
+                      <div className="truncate">
+                        <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                          <span>Login as Admin</span>
+                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-purple-100 text-purple-700">/admin</span>
+                        </div>
+                        <div className="text-[11px] text-slate-500 truncate">admin@ophir.com (Operations Director)</div>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all flex-shrink-0 ml-1" />
+                  </button>
+                </div>
               </div>
 
               {/* Error Callout Toggleable */}
@@ -232,7 +415,7 @@ export default function LoginPage() {
           {/* Right: Rich Hero Visual Panel */}
           <div className="lg:col-span-6 xl:col-span-6">
             <AuthSideHero
-              badge="FDIC-Insured Escrow • 100% Verified Artisans"
+              badge="FDIC-Insured Escrow • 100% Verified Vendors"
               vaultScore="4.96/5 Vault Score"
               headline="Every celebration deserves the right people."
               subheadline="Over 50,000 multi-generational milestones coordinated with unyielding contract clarity and milestone-based fund releases."
