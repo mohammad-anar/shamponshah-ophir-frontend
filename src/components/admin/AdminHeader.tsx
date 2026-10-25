@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useGetMeQuery } from "@/redux/service/auth/authApi";
 import { 
   Search, 
   Bell, 
@@ -38,13 +39,37 @@ const routeMap: Record<string, { section: string; title: string }> = {
   "/admin/settings": { section: "Platform", title: "System Settings" },
 };
 
+import { useAppDispatch } from "@/redux/hooks/hooks";
+import { logout } from "@/redux/features/auth";
+import { baseApi } from "@/redux/api/baseApi";
+
 export default function AdminHeader({ 
   onMenuToggle, 
   breadcrumbs
 }: AdminHeaderProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
   const [showNotifications, setShowNotifications] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const { data: meData } = useGetMeQuery();
+  const me = (meData as any)?.data || meData;
+  const userName = me?.name || me?.clientProfile?.displayName || me?.vendorProfile?.businessName || "Admin (Ops)";
+  const userRole = me?.role === "ADMIN" ? "Platform Administrator" : "Trust & Safety Lead";
+  const initials = userName
+    .split(" ")
+    .map((w: string) => w[0])
+    .filter(Boolean)
+    .join("")
+    .slice(0, 2)
+    .toUpperCase() || "AD";
+
+  const handleSignOut = () => {
+    dispatch(logout());
+    dispatch(baseApi.util.resetApiState());
+    router.push("/login");
+  };
 
   // Compute breadcrumbs dynamically if not provided
   let computedBreadcrumbs = breadcrumbs;
@@ -183,11 +208,11 @@ export default function AdminHeader({
             className="flex items-center gap-2.5 pl-2 py-1 rounded-lg hover:bg-slate-100 transition-colors"
           >
             <div className="w-8 h-8 rounded-full bg-[#0F0C3B] text-white flex items-center justify-center font-bold text-xs shadow-sm">
-              JO
+              {initials}
             </div>
             <div className="hidden lg:flex flex-col text-left leading-tight">
-              <span className="text-xs font-bold text-[#0F0C3B]">Jordan (Ops)</span>
-              <span className="text-[10px] text-slate-500">Trust & Safety Lead</span>
+              <span className="text-xs font-bold text-[#0F0C3B]">{userName}</span>
+              <span className="text-[10px] text-slate-500">{userRole}</span>
             </div>
             <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
           </button>
@@ -195,8 +220,8 @@ export default function AdminHeader({
           {showUserMenu && (
             <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 text-xs">
               <div className="px-3 py-2 border-b border-slate-100 lg:hidden">
-                <p className="font-bold text-[#0F0C3B]">Jordan (Ops)</p>
-                <p className="text-[11px] text-slate-500">Trust & Safety Lead</p>
+                <p className="font-bold text-[#0F0C3B]">{userName}</p>
+                <p className="text-[11px] text-slate-500">{userRole}</p>
               </div>
               <Link href="/user" className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">
                 <ExternalLink className="w-3.5 h-3.5 text-slate-400" /> Switch to Client View
@@ -208,9 +233,12 @@ export default function AdminHeader({
                 <Settings className="w-3.5 h-3.5 text-slate-400" /> Admin Settings
               </Link>
               <div className="border-t border-slate-100 my-1" />
-              <Link href="/login" className="flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50">
+              <button 
+                onClick={handleSignOut}
+                className="w-full flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50 text-left"
+              >
                 <LogOut className="w-3.5 h-3.5" /> Sign Out
-              </Link>
+              </button>
             </div>
           )}
         </div>
