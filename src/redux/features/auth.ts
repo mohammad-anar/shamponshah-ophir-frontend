@@ -50,9 +50,17 @@ const authSlice = createSlice({
     logout(state) {
       state.user = null;
       state.accessToken = null;
-      // Remove the "roll" cookie
-      document.cookie = "roll=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
-      window.location.href = "/";
+      state.refreshToken = null;
+      state.isLoading = false;
+      if (typeof document !== "undefined") {
+        document.cookie = "accessToken=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax;";
+        document.cookie = "role=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax;";
+        document.cookie = "roll=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Lax;";
+      }
+      if (typeof localStorage !== "undefined") {
+        localStorage.removeItem("token");
+        localStorage.removeItem("auth");
+      }
     },
   },
 });
