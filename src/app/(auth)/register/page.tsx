@@ -4,7 +4,7 @@ import RegisterClient from "@/components/pages/auth/RegisterClient";
 
 export const metadata: Metadata = constructMetadata({
   title: "Create Account | Join Ophir Milestone Marketplace",
-  description: "Create your free Ophir account as a celebration host or apply as a verified event artisan.",
+  description: "Create your free Ophir account as a celebration host or apply as a verified event vendor.",
   canonicalUrl: "/register",
   noIndex: true,
 });
