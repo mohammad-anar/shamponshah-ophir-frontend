@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/shared/Logo/Logo";
 import { cn } from "@/lib/utils";
+import { useGetVendorApprovalsQuery, useGetAllDisputesQuery } from "@/redux/service/admin/adminApi";
 import {
   LayoutDashboard,
   Users,
@@ -81,6 +82,31 @@ const navSections: NavSection[] = [
 
 export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
   const pathname = usePathname();
+  const { data: approvalsData } = useGetVendorApprovalsQuery();
+  const { data: disputesData } = useGetAllDisputesQuery();
+
+  const pendingApprovalsCount = Array.isArray(approvalsData) ? approvalsData.length : (approvalsData as any)?.data?.length || 0;
+  const disputesList = Array.isArray(disputesData) ? disputesData : (disputesData as any)?.data || [];
+  const openDisputesCount = disputesList.filter((d: any) => d.status !== "RESOLVED").length;
+
+  const dynamicSections = navSections.map((section) => ({
+    ...section,
+    items: section.items.map((item) => {
+      if (item.href === "/admin/vendor-approvals") {
+        return {
+          ...item,
+          badge: pendingApprovalsCount > 0 ? pendingApprovalsCount.toString() : undefined,
+        };
+      }
+      if (item.href === "/admin/disputes") {
+        return {
+          ...item,
+          badge: openDisputesCount > 0 ? openDisputesCount.toString() : undefined,
+        };
+      }
+      return item;
+    }),
+  }));
 
   return (
     <>
@@ -109,7 +135,7 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
 
         {/* Navigation list */}
         <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6 custom-scrollbar">
-          {navSections.map((section) => (
+          {dynamicSections.map((section) => (
             <div key={section.title}>
               <p className="px-3 text-[11px] font-semibold text-indigo-300/60 tracking-wider mb-2 uppercase">
                 {section.title}
