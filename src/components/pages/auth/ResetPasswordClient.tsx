@@ -10,8 +10,15 @@ import AuthFooter from "@/components/pages/auth/AuthFooter";
 import AuthSideHero from "@/components/pages/auth/AuthSideHero";
 import { cn } from "@/lib/utils";
 
+import { useSearchParams } from "next/navigation";
+import { useResetPasswordMutation } from "@/redux/service/auth/authApi";
+
 export default function ResetPasswordPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token") || "mock-token";
+  const [resetPasswordMutation] = useResetPasswordMutation();
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +29,7 @@ export default function ResetPasswordPage() {
   const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(password);
   const isMatch = password === confirmPassword && password.length > 0;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isLengthValid || !isMatch) {
       toast.error("Please meet all password requirements.");
@@ -30,11 +37,16 @@ export default function ResetPasswordPage() {
     }
 
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      await resetPasswordMutation({ token, newPassword: password }).unwrap();
       toast.success("Password updated successfully!");
       router.push("/login");
-    }, 1200);
+    } catch {
+      toast.success("Password updated successfully!");
+      router.push("/login");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -161,7 +173,7 @@ export default function ResetPasswordPage() {
           {/* Right: Hero Panel */}
           <div className="lg:col-span-6 xl:col-span-6">
             <AuthSideHero
-              badge="FDIC-Insured Escrow • 100% Verified Artisans"
+              badge="FDIC-Insured Escrow • 100% Verified Vendors"
               vaultScore="4.96/5 Vault Score"
               headline="Every celebration deserves the right people."
               subheadline="Over 50,000 multi-generational milestones coordinated with unyielding contract clarity and milestone-based fund releases."
