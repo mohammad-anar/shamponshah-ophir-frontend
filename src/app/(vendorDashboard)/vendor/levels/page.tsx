@@ -15,11 +15,19 @@ import {
   ArrowUpRight
 } from "lucide-react";
 import Link from "next/link";
+import { useGetMyVendorProfileQuery } from "@/redux/service/vendors/vendorsApi";
 
 export default function VendorLevelsPage() {
-  const currentTier = "Rising Vendor";
-  const nextTier = "Top Rated Professional";
-  const progressPercent = 91;
+  const { data: rawVendorProfile } = useGetMyVendorProfileQuery();
+  const vendorProfile = (rawVendorProfile as any)?.data || rawVendorProfile;
+
+  const currentTier = vendorProfile?.tier ? `${vendorProfile.tier} Vendor` : "Rising Vendor";
+  const nextTier = vendorProfile?.tier === "SPROUT" ? "Rising Vendor" : vendorProfile?.tier === "RISING" ? "Top Rated Professional" : "Elite Master Guild";
+  const completedJobs = vendorProfile?.ordersCompleted ?? 0;
+  const rating = vendorProfile?.rating ?? 0;
+  const onTime = vendorProfile?.onTimeDeliveryPct ?? 0;
+  const repeatPct = vendorProfile?.repeatClientPct ?? 0;
+  const progressPercent = Math.min(100, Math.round((completedJobs / 40) * 100));
 
   return (
     <div className="space-y-6">
@@ -29,7 +37,7 @@ export default function VendorLevelsPage() {
           <div className="flex items-center gap-2">
             <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">Vendor Level & Tier Status</h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#EDE9FE] text-[#0F0C3B]">
-              Level 2: Rising Vendor
+              Level: {currentTier}
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-1">
@@ -44,6 +52,7 @@ export default function VendorLevelsPage() {
           </span>
         </div>
       </div>
+
 
       {/* Main Progression Showcase Card */}
       <div className="bg-gradient-to-r from-[#0F0C3B] via-[#18124E] to-indigo-950 text-white rounded-3xl p-6 md:p-8 shadow-xl relative overflow-hidden space-y-6">
@@ -165,7 +174,7 @@ export default function VendorLevelsPage() {
           {/* Level 1 */}
           <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="font-bold text-slate-700">Newbie Artisan</span>
+              <span className="font-bold text-slate-700">Newbie Vendor</span>
               <span className="text-[10px] text-slate-500">Tier 1</span>
             </div>
             <ul className="space-y-1.5 text-slate-600 text-[11px]">
