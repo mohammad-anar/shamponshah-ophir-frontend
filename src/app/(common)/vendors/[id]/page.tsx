@@ -13,8 +13,8 @@ export async function generateMetadata({ params }: VendorDetailPageProps): Promi
 
   if (!vendor) {
     return constructMetadata({
-      title: "Artisan Profile | Ophir",
-      description: "Explore verified event artisan profile and portfolio on Ophir.",
+      title: "Vendor Profile | Ophir",
+      description: "Explore verified event vendor profile and portfolio on Ophir.",
       canonicalUrl: `/vendors/${id}`,
     });
   }
