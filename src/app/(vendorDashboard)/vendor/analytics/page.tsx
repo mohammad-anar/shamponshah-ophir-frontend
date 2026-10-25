@@ -15,9 +15,28 @@ import {
   BarChart3,
   Award
 } from "lucide-react";
+import { useGetMyVendorProfileQuery, useGetVendorAnalyticsQuery } from "@/redux/service/vendors/vendorsApi";
+import { useGetVendorEarningsQuery } from "@/redux/service/payments/paymentsApi";
 
 export default function VendorAnalyticsPage() {
   const [timeRange, setTimeRange] = useState("Last 30 Days");
+  const { data: vendorProfileData } = useGetMyVendorProfileQuery();
+  const { data: earningsData } = useGetVendorEarningsQuery();
+  const { data: analyticsData } = useGetVendorAnalyticsQuery(timeRange);
+
+  const vendorProfile = vendorProfileData?.data || vendorProfileData;
+  const earnings = earningsData?.data || earningsData || {};
+  const analytics = analyticsData?.data || analyticsData || {};
+
+  const rating = Number(analytics?.rating ?? vendorProfile?.rating ?? 0);
+  const onTimePct = analytics?.onTimeDeliveryPct ?? vendorProfile?.onTimeDeliveryPct ?? 0;
+  const ordersCompleted = analytics?.ordersCompleted ?? vendorProfile?.ordersCompleted ?? 0;
+  const totalEarned = Number(analytics?.totalEarned ?? earnings?.totalEarned ?? 0);
+  const avgOrder = analytics?.avgOrderValue ?? (ordersCompleted > 0 ? Math.round(totalEarned / ordersCompleted) : 0);
+  const profileImpressions = analytics?.profileImpressions ?? 0;
+  const proposalWinRate = analytics?.proposalWinRate ?? 0;
+
+  const monthlyBars = analytics?.monthlyRevenue || [];
 
   return (
     <div className="space-y-6">
@@ -27,7 +46,7 @@ export default function VendorAnalyticsPage() {
           <div className="flex items-center gap-2">
             <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">Performance Analytics</h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#EDE9FE] text-[#0F0C3B]">
-              Top 10% Seller Rank
+              {vendorProfile?.tier || "Unranked"} Seller Rank
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-1">
@@ -38,12 +57,12 @@ export default function VendorAnalyticsPage() {
         <select
           value={timeRange}
           onChange={(e) => setTimeRange(e.target.value)}
-          className="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-700 shadow-xs focus:outline-none self-start sm:self-auto"
+          className="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-700 shadow-xs focus:outline-none self-start sm:self-auto cursor-pointer"
         >
           <option>Last 7 Days</option>
           <option>Last 30 Days</option>
           <option>Last 90 Days</option>
-          <option>All Time (2025)</option>
+          <option>All Time (2026)</option>
         </select>
       </div>
 
@@ -57,10 +76,7 @@ export default function VendorAnalyticsPage() {
             </div>
           </div>
           <div className="flex items-baseline justify-between pt-1">
-            <span className="text-2xl font-black text-[#0F0C3B]">1,480</span>
-            <span className="text-xs font-bold text-emerald-600 flex items-center">
-              <ArrowUpRight className="w-3.5 h-3.5" /> +24%
-            </span>
+            <span className="text-2xl font-black text-[#0F0C3B]">{profileImpressions.toLocaleString()}</span>
           </div>
           <p className="text-[10px] text-slate-400">Search ranking boost: 1.2x active</p>
         </div>
@@ -73,12 +89,9 @@ export default function VendorAnalyticsPage() {
             </div>
           </div>
           <div className="flex items-baseline justify-between pt-1">
-            <span className="text-2xl font-black text-[#0F0C3B]">42.8%</span>
-            <span className="text-xs font-bold text-emerald-600 flex items-center">
-              <ArrowUpRight className="w-3.5 h-3.5" /> +8.5%
-            </span>
+            <span className="text-2xl font-black text-[#0F0C3B]">{proposalWinRate}%</span>
           </div>
-          <p className="text-[10px] text-slate-400">12 bookings from 28 bids submitted</p>
+          <p className="text-[10px] text-slate-400">Winning proposals on verified jobs</p>
         </div>
 
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-1">
@@ -89,12 +102,12 @@ export default function VendorAnalyticsPage() {
             </div>
           </div>
           <div className="flex items-baseline justify-between pt-1">
-            <span className="text-2xl font-black text-[#0F0C3B]">$1,450</span>
+            <span className="text-2xl font-black text-[#0F0C3B]">${avgOrder.toLocaleString()}</span>
             <span className="text-xs font-bold text-emerald-600 flex items-center">
               <ArrowUpRight className="w-3.5 h-3.5" /> +15%
             </span>
           </div>
-          <p className="text-[10px] text-slate-400">Up from $1,260 last quarter</p>
+          <p className="text-[10px] text-slate-400">Across {ordersCompleted} completed jobs</p>
         </div>
 
         <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs space-y-1">
@@ -105,12 +118,13 @@ export default function VendorAnalyticsPage() {
             </div>
           </div>
           <div className="flex items-baseline justify-between pt-1">
-            <span className="text-2xl font-black text-[#0F0C3B]">4.95 / 5</span>
-            <span className="text-xs font-bold text-indigo-600">100% On-time</span>
+            <span className="text-2xl font-black text-[#0F0C3B]">{rating.toFixed(1)} / 5</span>
+            <span className="text-xs font-bold text-indigo-600">{onTimePct}% On-time</span>
           </div>
-          <p className="text-[10px] text-slate-400">0 disputes in 38 completed jobs</p>
+          <p className="text-[10px] text-slate-400">0 disputes in {ordersCompleted} completed jobs</p>
         </div>
       </div>
+
 
       {/* Funnel & Conversion Chart Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
