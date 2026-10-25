@@ -4,7 +4,7 @@ import { constructMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = constructMetadata({
   title: "Secure Sign In & Account Portal | Ophir",
-  description: "Access your Ophir buyer or seller account. Escrow-protected milestone planning and verified artisan dashboard.",
+  description: "Access your Ophir buyer or seller account. Escrow-protected milestone planning and verified vendor dashboard.",
   noIndex: true, // Auth pages shouldn't rank on SERPs
 });
 
