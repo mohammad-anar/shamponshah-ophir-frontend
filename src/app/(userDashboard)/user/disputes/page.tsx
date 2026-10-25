@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Scale, 
   ShieldAlert, 
@@ -14,16 +14,20 @@ import {
   Sparkles,
   ChevronRight
 } from "lucide-react";
+import { toast } from "sonner";
+import Link from "next/link";
+import { useGetClientDisputesQuery, useCreateDisputeMutation, useGetClientOrdersQuery } from "@/redux/service/orders/ordersApi";
 
 interface DisputeCase {
   id: string;
   disputeNumber: string;
   orderId: string;
+  orderEntityId?: string;
   vendorName: string;
   serviceTitle: string;
   amountInCustody: number;
   reason: string;
-  status: "Under Mediation" | "Vendor Response Pending" | "Resolved - Refunded" | "Closed";
+  status: string;
   openedDate: string;
   timerHoursLeft: number;
   assignedMediator: string;
@@ -46,38 +50,51 @@ const mockDisputes: DisputeCase[] = [
 ];
 
 export default function UserDisputesPage() {
-  const [disputes, setDisputes] = useState<DisputeCase[]>(mockDisputes);
+  const { data: apiDisputes } = useGetClientDisputesQuery();
+  const { data: clientOrdersData } = useGetClientOrdersQuery();
+  const [createDisputeMutation, { isLoading: isCreatingDispute }] = useCreateDisputeMutation();
+
+  const [disputes, setDisputes] = useState<DisputeCase[]>([]);
   const [showNewModal, setShowNewModal] = useState(false);
   
   // New Dispute Form
-  const [orderId, setOrderId] = useState("ORD-8821");
-  const [vendorName, setVendorName] = useState("Windy City Sound DJ");
+  const [orderId, setOrderId] = useState("");
   const [reasonCategory, setReasonCategory] = useState("Service Not Rendered as Agreed");
-  const [refundAmount, setRefundAmount] = useState(600);
   const [explanation, setExplanation] = useState("");
 
-  const handleCreateDispute = (e: React.FormEvent) => {
+  const orderList = Array.isArray(clientOrdersData) ? clientOrdersData : (clientOrdersData?.data?.orders || clientOrdersData?.orders || clientOrdersData?.data || []);
+
+  useEffect(() => {
+    const list = Array.isArray(apiDisputes) ? apiDisputes : (apiDisputes?.data || []);
+    setDisputes(Array.isArray(list) ? list.map((d: any) => ({
+      id: d.id, disputeNumber: d.id, orderId: d.order?.orderNumber || d.orderId, orderEntityId: d.orderId,
+      vendorName: d.vendorProfile?.businessName || "Vendor",
+      serviceTitle: d.order?.gig?.title || "Marketplace order",
+      amountInCustody: Number(d.order?.grandTotal || 0), reason: d.reason,
+      status: d.status, openedDate: d.createdAt ? new Date(d.createdAt).toLocaleDateString() : "",
+      timerHoursLeft: 0, assignedMediator: "",
+    })) : []);
+  }, [apiDisputes]);
+
+  const handleCreateDispute = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!explanation.trim()) return;
+    if (!orderId || !explanation.trim()) return;
 
-    const newDisp: DisputeCase = {
-      id: `d-${Date.now()}`,
-      disputeNumber: `DISP-${Math.floor(1000 + Math.random() * 9000)}`,
-      orderId: orderId,
-      vendorName: vendorName,
-      serviceTitle: "Event Milestone Resolution",
-      amountInCustody: refundAmount,
-      reason: explanation,
-      status: "Vendor Response Pending",
-      openedDate: "Just now",
-      timerHoursLeft: 72,
-      assignedMediator: "Automated Dispute Queue",
-    };
-
-    setDisputes([newDisp, ...disputes]);
+    try {
+      await createDisputeMutation({
+        orderId: orderId,
+        reason: `${reasonCategory}: ${explanation}`,
+        description: explanation,
+      }).unwrap();
+      toast.success("Dispute submitted.");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Could not submit dispute.");
+      return;
+    }
     setShowNewModal(false);
     setExplanation("");
   };
+
 
   return (
     <div className="space-y-6">
@@ -108,8 +125,8 @@ export default function UserDisputesPage() {
         <ShieldAlert className="w-5 h-5 text-brand-primary flex-shrink-0 mt-0.5" />
         <div className="text-xs text-slate-700 leading-relaxed">
           <p className="font-bold text-[#0F0C3B]">How Ophir Escrow Dispute Mediation Works:</p>
-          <p className="text-slate-600 mt-0.5">
-            When a dispute is opened, milestone funds are frozen instantly in our third-party banking trust. Both parties have 72 hours to upload receipts, photos, and messages. A dedicated Ophir Mediator will arbitrate or issue partial/full refunds.
+            <p className="text-slate-600 mt-0.5">
+            Opening a dispute pauses scheduled milestone transfers while the case is reviewed. Refunds and transfers follow the marketplace dispute resolution process.
           </p>
         </div>
       </div>
@@ -165,12 +182,7 @@ export default function UserDisputesPage() {
                   </div>
                 </div>
 
-                <button 
-                  onClick={() => alert("Opening evidentiary communication log for " + d.disputeNumber)}
-                  className="w-full py-2 bg-white hover:bg-slate-100 border border-slate-200 text-[#0F0C3B] rounded-lg text-xs font-bold transition-all shadow-xs"
-                >
-                  View Case Dossier & Evidence
-                </button>
+                {d.orderEntityId && <Link href={`/user/orders/${d.orderEntityId}`} className="block w-full py-2 bg-white hover:bg-slate-100 border border-slate-200 text-[#0F0C3B] rounded-lg text-xs font-bold text-center transition-all shadow-xs">View related order</Link>}
               </div>
             </div>
           </div>
@@ -198,9 +210,15 @@ export default function UserDisputesPage() {
                   onChange={(e) => setOrderId(e.target.value)}
                   className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none"
                 >
-                  <option value="ORD-8821">Order #ORD-8821 &bull; Windy City Sound DJ ($1,200)</option>
-                  <option value="ORD-8819">Order #ORD-8819 &bull; Lumina Cinematic Films ($2,800)</option>
+                  {orderList && orderList.length > 0 ? (
+                    orderList.map((ord: any) => (
+                      <option key={ord.id} value={ord.id}>
+                        Order #{ord.orderNumber || ord.id.slice(-6)} • {ord.vendorProfile?.businessName || "Vendor"} (${Number(ord.grandTotal || ord.subtotal || 0).toLocaleString()})
+                      </option>
+                    ))
+                  ) : <option value="">No orders available</option>}
                 </select>
+
               </div>
 
               <div>
@@ -215,16 +233,6 @@ export default function UserDisputesPage() {
                   <option>Significant Delay / Missing Deliverables</option>
                   <option>Damaged Equipment / Venue Violation</option>
                 </select>
-              </div>
-
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">Refund Amount Requested ($)</label>
-                <input
-                  type="number"
-                  value={refundAmount}
-                  onChange={(e) => setRefundAmount(Number(e.target.value))}
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-brand-primary font-mono font-bold"
-                />
               </div>
 
               <div>
