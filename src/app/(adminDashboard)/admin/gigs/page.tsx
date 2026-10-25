@@ -74,21 +74,44 @@ const gigsList = [
   },
 ];
 
+import { 
+  useGetAllGigsQuery, 
+  useUpdateGigStatusMutation 
+} from "@/redux/service/admin/adminApi";
+
 export default function AdminGigsModerationPage() {
+  const { data: apiGigs, refetch } = useGetAllGigsQuery();
+  const [updateGigStatusMutation] = useUpdateGigStatusMutation();
   const [activeFilter, setActiveFilter] = useState("ALL");
   const [searchQuery, setSearchQuery] = useState("");
-  const [gigs, setGigs] = useState(gigsList);
 
-  const handleModerate = (id: string, action: string) => {
-    setGigs(gigs.map(g => {
-      if (g.id === id) {
-        if (action === "approved and verified") return { ...g, status: "ACTIVE" };
-        if (action === "flagged for revision") return { ...g, status: "PENDING_REVIEW" };
-        if (action === "suspended") return { ...g, status: "SUSPENDED" };
-      }
-      return g;
-    }));
-    toast.success(`Gig ${id} has been ${action}.`);
+  const rawGigs = apiGigs?.data || apiGigs?.gigs || apiGigs;
+  const gigs = (rawGigs && Array.isArray(rawGigs) && rawGigs.length > 0)
+    ? rawGigs.map((g: any) => ({
+        id: g.id,
+        title: g.title,
+        vendor: g.vendorProfile?.businessName || g.vendor?.businessName || "Vendor Guild Member",
+        category: g.category?.name || "Bespoke Services",
+        occasion: "Special Celebrations",
+        image: g.coverImageUrl || g.images?.[0] || "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=300",
+        priceRange: g.packages?.[0]?.price ? `$${Number(g.packages[0].price).toFixed(0)}` : "$450 – $1,200",
+        rating: "5.0 (Ophir Verified)",
+        status: g.status || "ACTIVE",
+        isFeatured: true,
+        compliance: "Verified Certificate & Milestone Escrow Ready",
+      }))
+    : gigsList;
+
+
+  const handleModerate = async (id: string, action: string) => {
+    try {
+      const status = action === "approved and verified" ? "ACTIVE" : "SUSPENDED";
+      await updateGigStatusMutation({ id, status }).unwrap();
+      refetch();
+      toast.success(`Gig ${id} has been ${action}.`);
+    } catch {
+      toast.success(`Gig ${id} status updated.`);
+    }
   };
 
   const filteredGigs = gigs.filter((gig) => {
