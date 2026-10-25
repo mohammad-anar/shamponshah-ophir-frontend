@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -19,27 +19,46 @@ import {
 } from "lucide-react";
 import { VENDORS } from "@/data/mockData";
 import { useGetPublicGigsQuery } from "@/redux/service/gigs/gigsApi";
+import { useGetCategoriesQuery } from "@/redux/service/categories/categoriesApi";
 import AddToFamilyHubModal from "@/components/shared/AddToFamilyHubModal";
+import Pagination from "@/components/ui/Pagination/Pagination";
 
-const CATEGORIES = [
-  "All Services",
-  "Cinematography",
-  "Floral Design",
-  "Live Music & DJ",
-  "Vendor Catering",
-  "Lighting & Production",
-  "Event Planning",
-  "Dessert & Cake",
-];
+const PAGE_SIZE = 9;
 
 export default function ServicesCatalogPage() {
   const [selectedCategory, setSelectedCategory] = useState("All Services");
   const [searchQuery, setSearchQuery] = useState("");
   const [priceFilter, setPriceFilter] = useState<"all" | "under1000" | "1000-2500" | "over2500">("all");
   const [selectedServiceForHub, setSelectedServiceForHub] = useState<any | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const { data: gigsResp, isLoading: isGigsLoading } = useGetPublicGigsQuery();
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, searchQuery, priceFilter]);
+
+  const { data: categoriesData } = useGetCategoriesQuery();
+  const { data: gigsResp, isLoading: isGigsLoading } = useGetPublicGigsQuery({ limit: 100 });
   const dbGigs = gigsResp?.data || (Array.isArray(gigsResp) ? gigsResp : []);
+
+  const apiCategories = useMemo(() => {
+    const raw = Array.isArray(categoriesData)
+      ? categoriesData
+      : Array.isArray((categoriesData as any)?.data)
+      ? (categoriesData as any).data
+      : [];
+    if (raw.length > 0) {
+      return ["All Services", ...raw.map((c: any) => c.name)];
+    }
+    return [
+      "All Services",
+      "Photography & Cinema",
+      "Music & Entertainment",
+      "Floral & Event Decor",
+      "Catering & Artisanal Dining",
+      "Craft Bartending & Mixology",
+      "Cakes & Milestone Desserts",
+    ];
+  }, [categoriesData]);
 
   // Merge database gigs with curated mock catalog
   const allServices = useMemo(() => {
@@ -56,7 +75,8 @@ export default function ServicesCatalogPage() {
           vendorProfileId: g.vendorProfileId,
           packageId: pkg?.id,
           title: g.title,
-          category: g.category?.name || "Vendor Service",
+          category: typeof g.category === "object" ? g.category?.name : (g.category || "Vendor Service"),
+          tags: Array.isArray(g.tags) ? g.tags : [],
           description: g.description,
           startingPrice: minPrice,
           image:
@@ -89,6 +109,7 @@ export default function ServicesCatalogPage() {
           packageId: pkg.id,
           title: `${v.name} — ${pkg.title}`,
           category: v.categoryLabel || "Vendor Service",
+          tags: [],
           description: pkg.description || v.bio,
           startingPrice: pkg.price,
           image: v.galleryImages[idx % v.galleryImages.length] || v.heroImage || v.avatar,
@@ -115,17 +136,25 @@ export default function ServicesCatalogPage() {
     return allServices.filter((s) => {
       // Category match
       if (selectedCategory !== "All Services") {
-        if (!s.category.toLowerCase().includes(selectedCategory.toLowerCase().slice(0, 5))) {
-          return false;
-        }
+        const catLower = (s.category || "").toLowerCase();
+        const selLower = selectedCategory.toLowerCase();
+        const matchesCategory =
+          catLower.includes(selLower) ||
+          selLower.includes(catLower) ||
+          (selLower.includes("music") && (catLower.includes("music") || catLower.includes("dj"))) ||
+          (selLower.includes("photo") && (catLower.includes("photo") || catLower.includes("cinema"))) ||
+          (selLower.includes("cater") && catLower.includes("cater")) ||
+          (selLower.includes("cake") && (catLower.includes("cake") || catLower.includes("dessert")));
+        if (!matchesCategory) return false;
       }
       // Search match
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
-        const matchesTitle = s.title.toLowerCase().includes(q);
-        const matchesVendor = s.vendorName.toLowerCase().includes(q);
-        const matchesCat = s.category.toLowerCase().includes(q);
-        if (!matchesTitle && !matchesVendor && !matchesCat) return false;
+        const matchesTitle = s.title?.toLowerCase().includes(q);
+        const matchesVendor = s.vendorName?.toLowerCase().includes(q);
+        const matchesCat = s.category?.toLowerCase().includes(q);
+        const matchesTags = Array.isArray(s.tags) && s.tags.some((t: string) => t.toLowerCase().includes(q));
+        if (!matchesTitle && !matchesVendor && !matchesCat && !matchesTags) return false;
       }
       // Price filter
       if (priceFilter === "under1000" && s.startingPrice >= 1000) return false;
@@ -135,6 +164,15 @@ export default function ServicesCatalogPage() {
       return true;
     });
   }, [allServices, selectedCategory, searchQuery, priceFilter]);
+
+  const totalPages = Math.ceil(filteredServices.length / PAGE_SIZE) || 1;
+  const paginatedServices = useMemo(() => {
+    const startIndex = (currentPage - 1) * PAGE_SIZE;
+    return filteredServices.slice(startIndex, startIndex + PAGE_SIZE);
+  }, [filteredServices, currentPage]);
+
+  const startIndex = (currentPage - 1) * PAGE_SIZE + 1;
+  const endIndex = Math.min(currentPage * PAGE_SIZE, filteredServices.length);
 
   return (
     <div className="min-h-screen bg-[#FAF9F6] pb-24">
@@ -217,7 +255,7 @@ export default function ServicesCatalogPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 relative z-10">
         {/* Category Pills Bar */}
         <div className="bg-white rounded-2xl p-3 shadow-md border border-slate-200/80 flex items-center gap-2 overflow-x-auto scrollbar-none">
-          {CATEGORIES.map((cat) => {
+          {apiCategories.map((cat) => {
             const isActive = selectedCategory === cat;
             return (
               <button
@@ -238,7 +276,8 @@ export default function ServicesCatalogPage() {
         {/* Results Counter & Fast Info */}
         <div className="flex items-center justify-between mt-8 mb-6 text-xs text-slate-500">
           <p>
-            Showing <strong className="text-[#0F0C3B] font-bold">{filteredServices.length}</strong> available vendor services
+            Showing <strong className="text-[#0F0C3B] font-bold">{filteredServices.length > 0 ? `${startIndex}–${endIndex}` : 0}</strong> of{" "}
+            <strong className="text-[#0F0C3B] font-bold">{filteredServices.length}</strong> available vendor services
           </p>
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1.5 font-medium text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
@@ -250,7 +289,7 @@ export default function ServicesCatalogPage() {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredServices.map((service) => (
+          {paginatedServices.map((service) => (
             <div
               key={service.id}
               className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
@@ -362,6 +401,16 @@ export default function ServicesCatalogPage() {
             </div>
           ))}
         </div>
+
+        {/* Pagination Controls */}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={(page) => {
+            setCurrentPage(page);
+            window.scrollTo({ top: 340, behavior: "smooth" });
+          }}
+        />
 
         {filteredServices.length === 0 && (
           <div className="p-16 text-center bg-white rounded-3xl border border-slate-200 shadow-xs max-w-lg mx-auto my-12 space-y-3">
