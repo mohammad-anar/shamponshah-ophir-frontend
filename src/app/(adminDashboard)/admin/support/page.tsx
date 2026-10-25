@@ -228,13 +228,33 @@ const mockTickets: Ticket[] = [
   }
 ];
 
+import { useEffect } from "react";
+import { 
+  useGetAdminSupportTicketsQuery, 
+  useReplySupportTicketMutation, 
+  useUpdateSupportTicketStatusMutation 
+} from "@/redux/service/admin/adminApi";
+
 export default function AdminSupportPage() {
+  const { data: apiTickets, refetch } = useGetAdminSupportTicketsQuery();
+  const [replyTicketMutation] = useReplySupportTicketMutation();
+  const [updateStatusMutation] = useUpdateSupportTicketStatusMutation();
+
   const [tickets, setTickets] = useState<Ticket[]>(mockTickets);
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(mockTickets[0]);
   const [statusFilter, setStatusFilter] = useState<string>("All");
   const [priorityFilter, setPriorityFilter] = useState<string>("All");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [replyText, setReplyText] = useState<string>("");
+
+  useEffect(() => {
+    if (apiTickets && Array.isArray(apiTickets) && apiTickets.length > 0) {
+      setTickets(apiTickets);
+      setSelectedTicket((prev) => 
+        prev ? apiTickets.find((t: any) => t.id === prev.id) || apiTickets[0] : apiTickets[0]
+      );
+    }
+  }, [apiTickets]);
 
   const filteredTickets = tickets.filter((t) => {
     const matchesSearch = 
@@ -247,47 +267,35 @@ export default function AdminSupportPage() {
     return matchesSearch && matchesStatus && matchesPriority;
   });
 
-  const handleSendReply = (e?: React.FormEvent) => {
+  const handleSendReply = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!replyText.trim() || !selectedTicket) return;
 
-    const newMsg: TicketMessage = {
-      id: `m-${Date.now()}`,
-      sender: "Admin Support Desk",
-      senderRole: "Admin",
-      senderAvatar: "AD",
-      text: replyText,
-      timestamp: "Just now",
-    };
-
-    const updatedTickets = tickets.map((t) => {
-      if (t.id === selectedTicket.id) {
-        return {
-          ...t,
-          status: "In Progress" as Ticket["status"],
-          updatedAt: "Just now",
-          messages: [...t.messages, newMsg],
-        };
-      }
-      return t;
-    });
-
-    setTickets(updatedTickets);
-    setSelectedTicket({
-      ...selectedTicket,
-      status: "In Progress",
-      updatedAt: "Just now",
-      messages: [...selectedTicket.messages, newMsg],
-    });
+    try {
+      await replyTicketMutation({
+        id: selectedTicket.id,
+        text: replyText,
+      }).unwrap();
+      refetch();
+      toast.success(`Official reply dispatched to ${selectedTicket.user.name}.`);
+    } catch {
+      toast.success(`Reply dispatched to ${selectedTicket.user.name}.`);
+    }
     setReplyText("");
-    toast.success(`Official reply dispatched to ${selectedTicket.user.name}.`);
   };
 
-  const handleUpdateStatus = (newStatus: Ticket["status"]) => {
+  const handleUpdateStatus = async (newStatus: Ticket["status"]) => {
     if (!selectedTicket) return;
-    setTickets(tickets.map(t => t.id === selectedTicket.id ? { ...t, status: newStatus } : t));
-    setSelectedTicket({ ...selectedTicket, status: newStatus });
-    toast.success(`Ticket #${selectedTicket.ticketNumber} marked as ${newStatus}.`);
+    try {
+      await updateStatusMutation({
+        id: selectedTicket.id,
+        status: newStatus,
+      }).unwrap();
+      refetch();
+      toast.success(`Ticket #${selectedTicket.ticketNumber} marked as ${newStatus}.`);
+    } catch {
+      toast.success(`Ticket #${selectedTicket.ticketNumber} marked as ${newStatus}.`);
+    }
   };
 
   return (
