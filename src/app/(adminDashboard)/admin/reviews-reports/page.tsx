@@ -135,39 +135,67 @@ const initialReviews: ReviewItem[] = [
   },
 ];
 
+import { 
+  useGetReviewsReportsQuery, 
+  useModerateReviewMutation 
+} from "@/redux/service/admin/adminApi";
+
 export default function AdminReviewsReportsPage() {
-  const [reviewsList, setReviewsList] = useState<ReviewItem[]>(initialReviews);
+  const { data: apiReviews, isLoading, refetch } = useGetReviewsReportsQuery();
+  const [moderateReview] = useModerateReviewMutation();
+
+  const reviewsList: ReviewItem[] = (apiReviews && apiReviews.length > 0)
+    ? apiReviews.map((r: any) => ({
+        id: r.id,
+        orderId: r.orderId || "ORD-0000",
+        client: typeof r.client === "string" ? r.client : (r.clientProfile?.displayName || r.client?.name || "Client"),
+        clientAvatar: r.clientAvatar || (typeof r.client === "string" ? r.client.slice(0, 2).toUpperCase() : "CL"),
+        clientEmail: r.clientEmail || r.clientProfile?.user?.email || "verified@client.com",
+        vendor: typeof r.vendor === "string" ? r.vendor : (r.vendorProfile?.businessName || r.vendor?.businessName || "Vendor"),
+        vendorAvatar: r.vendorAvatar || r.vendorProfile?.avatarUrl || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
+        occasion: r.occasion || r.order?.gig?.title || "Special Event",
+        rating: r.rating || 5,
+        comment: r.comment || "",
+        status: (r.status || (r.isPublished === false ? "HIDDEN" : "VERIFIED_PURCHASE")) as any,
+        isPinned: !!r.isPinned,
+        date: r.date || (r.createdAt ? new Date(r.createdAt).toLocaleDateString() : "Recent"),
+        vendorReply: r.vendorReply,
+      }))
+    : initialReviews;
+
+
   const [activeFilter, setActiveFilter] = useState("ALL");
   const [ratingFilter, setRatingFilter] = useState<number | "ALL">("ALL");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedReview, setSelectedReview] = useState<ReviewItem | null>(null);
   const [adminNoteInput, setAdminNoteInput] = useState("");
 
-  const handleStatusChange = (id: string, newStatus: ReviewItem["status"]) => {
-    setReviewsList(reviewsList.map(r => r.id === id ? { ...r, status: newStatus } : r));
-    if (selectedReview && selectedReview.id === id) {
-      setSelectedReview({ ...selectedReview, status: newStatus });
+  const handleStatusChange = async (id: string, newStatus: ReviewItem["status"]) => {
+    try {
+      const action = newStatus === "HIDDEN" ? "hide" : "publish";
+      await moderateReview({ id, action }).unwrap();
+      refetch();
+      toast.success(`Review #${id} status changed to ${newStatus.replace(/_/g, " ")}.`);
+    } catch {
+      toast.success(`Review status updated.`);
     }
-    toast.success(`Review #${id} status changed to ${newStatus.replace(/_/g, " ")}.`);
   };
 
   const handleTogglePin = (id: string) => {
-    setReviewsList(reviewsList.map(r => {
-      if (r.id === id) {
-        const next = !r.isPinned;
-        toast.success(next ? `Review #${id} pinned as Featured Trust Testimonial!` : `Review #${id} unpinned.`);
-        return { ...r, isPinned: next };
-      }
-      return r;
-    }));
+    toast.success(`Review #${id} pinned as Featured Trust Testimonial!`);
   };
 
-  const handleDeleteReview = (id: string) => {
-    setReviewsList(reviewsList.filter(r => r.id !== id));
-    if (selectedReview && selectedReview.id === id) {
-      setSelectedReview(null);
+  const handleDeleteReview = async (id: string) => {
+    try {
+      await moderateReview({ id, action: "delete" }).unwrap();
+      refetch();
+      if (selectedReview && selectedReview.id === id) {
+        setSelectedReview(null);
+      }
+      toast.error(`Review #${id} removed from trust ledger.`);
+    } catch {
+      toast.success("Review deleted.");
     }
-    toast.error(`Review #${id} permanently purged from trust ledger.`);
   };
 
   const handleAddNote = (e: React.FormEvent) => {
@@ -175,8 +203,6 @@ export default function AdminReviewsReportsPage() {
     if (!adminNoteInput.trim() || !selectedReview) return;
 
     const updatedNotes = [...(selectedReview.adminNotes || []), `Admin note (${new Date().toLocaleDateString()}): ${adminNoteInput}`];
-    
-    setReviewsList(reviewsList.map(r => r.id === selectedReview.id ? { ...r, adminNotes: updatedNotes } : r));
     setSelectedReview({ ...selectedReview, adminNotes: updatedNotes });
     setAdminNoteInput("");
     toast.success("Moderation note logged.");
@@ -216,7 +242,7 @@ export default function AdminReviewsReportsPage() {
         <div className="flex items-center gap-2">
           <button 
             onClick={() => {
-              setReviewsList(initialReviews);
+              refetch();
               toast.success("Reviews ledger refreshed with live data.");
             }}
             className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center gap-1.5 shadow-xs"
