@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Star, 
   MessageSquare, 
@@ -13,6 +13,9 @@ import {
   Award,
   Filter
 } from "lucide-react";
+import { toast } from "sonner";
+import { useGetVendorReviewsQuery, useReplyToReviewMutation } from "@/redux/service/reviews/reviewsApi";
+import { useGetMyVendorProfileQuery } from "@/redux/service/vendors/vendorsApi";
 
 interface VendorReview {
   id: string;
@@ -62,12 +65,51 @@ const mockVendorReviews: VendorReview[] = [
 ];
 
 export default function VendorReviewsPage() {
-  const [reviews, setReviews] = useState<VendorReview[]>(mockVendorReviews);
+  const { data: profile } = useGetMyVendorProfileQuery();
+  const vendorProfileId = (profile as any)?.data?.id || profile?.id || "";
+  const { data: reviewsData } = useGetVendorReviewsQuery(
+    { vendorId: vendorProfileId },
+    { skip: !vendorProfileId }
+  );
+  const [replyMutation, { isLoading: isReplying }] = useReplyToReviewMutation();
+
+  const [reviews, setReviews] = useState<VendorReview[]>([]);
   const [replyingToId, setReplyingToId] = useState<string | null>(null);
   const [replyText, setReplyText] = useState("");
 
-  const handleSendReply = (reviewId: string) => {
+  useEffect(() => {
+    const rawReviews = (reviewsData as any)?.data?.reviews || (reviewsData as any)?.data || (Array.isArray(reviewsData) ? reviewsData : []);
+    if (Array.isArray(rawReviews)) {
+      const mapped = rawReviews.map((r: any) => ({
+        id: r.id,
+        clientName: r.clientProfile?.displayName || r.clientProfile?.user?.name || "Verified Host",
+        clientAvatar: (r.clientProfile?.displayName || r.clientProfile?.user?.name || "VH").slice(0, 2).toUpperCase(),
+        eventTitle: r.order?.orderNumber ? `Order #${r.order.orderNumber}` : "Special Milestone Celebration",
+        eventDate: new Date(r.createdAt).toLocaleDateString(),
+        rating: r.rating,
+        comment: r.comment,
+        response: r.vendorReply || undefined,
+        tags: ["Verified Booking", "Escrow Released"],
+      }));
+      setReviews(mapped);
+    }
+  }, [reviewsData]);
+
+  const handleSendReply = async (reviewId: string) => {
     if (!replyText.trim()) return;
+
+    if (!reviewId.startsWith("r")) {
+      try {
+        await replyMutation({ reviewId, reply: replyText }).unwrap();
+        toast.success("Reply published to client review!");
+      } catch (err: any) {
+        toast.error(err?.data?.message || "Could not publish reply.");
+        return;
+      }
+    } else {
+      toast.error("This review is not available.");
+      return;
+    }
 
     setReviews(reviews.map((r) => 
       r.id === reviewId ? { ...r, response: replyText } : r
@@ -75,6 +117,7 @@ export default function VendorReviewsPage() {
     setReplyingToId(null);
     setReplyText("");
   };
+
 
   return (
     <div className="space-y-6">
