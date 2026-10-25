@@ -19,10 +19,12 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useCreateGigMutation } from "@/redux/service/gigs/gigsApi";
 
 export default function CreateGigPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
+  const [createGig, { isLoading: isCreatingGig }] = useCreateGigMutation();
 
   // Form State
   const [gigTitle, setGigTitle] = useState("DJ and host your birthday party with music, lights and games");
@@ -57,11 +59,36 @@ export default function CreateGigPage() {
     setTags(tags.filter((x) => x !== t));
   };
 
-  const handleNext = () => {
-    if (step < 5) setStep(step + 1);
-    else {
-      toast.success("Gig Published! Your service is live on the Ophir marketplace.");
-      router.push("/vendor/gigs");
+  const handleNext = async () => {
+    if (step < 5) {
+      setStep(step + 1);
+    } else {
+      try {
+        const bPrice = parseFloat(basicPrice.replace(/[^0-9.]/g, ""));
+        const sPrice = parseFloat(standardPrice.replace(/[^0-9.]/g, ""));
+        const pPrice = parseFloat(premiumPrice.replace(/[^0-9.]/g, ""));
+        if (![bPrice, sPrice, pPrice].every((price) => Number.isFinite(price) && price > 0)) {
+          toast.error("Enter a valid price for each package.");
+          return;
+        }
+
+        await createGig({
+          title: gigTitle,
+          description,
+          category,
+          tags,
+          packages: [
+            { name: "Basic Package", description: "Standard sound setup and 2 hours music", price: bPrice, turnaroundDays: 3 },
+            { name: "Standard Package", description: "Full audio rig, uplighting, and 4 hours emcee", price: sPrice, turnaroundDays: 3 },
+            { name: "Premium VIP Package", description: "Complete concert audio, moving lights, and 6 hours coverage", price: pPrice, turnaroundDays: 3 },
+          ],
+        }).unwrap();
+
+        toast.success("Gig Published! Your service is live on the marketplace.");
+        router.push("/vendor/gigs");
+      } catch (err: any) {
+        toast.error(err?.data?.message || "Could not publish your service.");
+      }
     }
   };
 
