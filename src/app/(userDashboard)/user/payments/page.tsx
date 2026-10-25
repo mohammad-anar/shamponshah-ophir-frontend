@@ -1,59 +1,130 @@
 "use client";
 
-import { useState } from "react";
-import { CreditCard, ShieldCheck, Lock, Download, CheckCircle2, ArrowUpRight, Plus } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import Script from "next/script";
+import {
+  CreditCard,
+  ShieldCheck,
+  Lock,
+  CheckCircle2,
+  ArrowUpRight,
+  Plus,
+  Trash2,
+  Check,
+  X,
+  Sparkles,
+  Loader2,
+} from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import {
+  useGetPaymentMethodsQuery,
+  useCreateSetupIntentMutation,
+  useSavePaymentMethodMutation,
+  useSetDefaultPaymentMethodMutation,
+  useRemovePaymentMethodMutation,
+} from "@/redux/service/payments/paymentsApi";
+import { useGetPaymentLedgerQuery } from "@/redux/service/orders/ordersApi";
 
-const payments = [
-  {
-    id: "TX-90422",
-    date: "Nov 02, 2026",
-    description: "Deposit for Emma's 5th Birthday DJ (Windy City Sound)",
-    amount: "$425.00",
-    fee: "$21.25",
-    total: "$446.25",
-    method: "Visa ending in 4242",
-    status: "VAULT_HELD",
-  },
-  {
-    id: "TX-90418",
-    date: "Oct 28, 2026",
-    description: "Milestone 1 for Floral Balloon Arch (Bloom Studio)",
-    amount: "$280.00",
-    fee: "$14.00",
-    total: "$294.00",
-    method: "Visa ending in 4242",
-    status: "VAULT_HELD",
-  },
-  {
-    id: "TX-90390",
-    date: "Oct 15, 2026",
-    description: "Full Payment for Anniversary Photo Album (Amina Rahman)",
-    amount: "$650.00",
-    fee: "$32.50",
-    total: "$682.50",
-    method: "Mastercard ending in 8819",
-    status: "RELEASED_TO_VENDOR",
-  },
-];
+declare global {
+  interface Window {
+    Stripe?: any;
+  }
+}
 
 export default function UserPaymentsPage() {
-  const handleDownloadInvoice = (id: string) => {
-    toast.success(`Invoice ${id} downloaded.`);
+  const { data: methodsData, isLoading: methodsLoading } = useGetPaymentMethodsQuery();
+  const { data: ledgerData, isLoading: ledgerLoading } = useGetPaymentLedgerQuery();
+
+  const [createSetupIntent, { isLoading: isCreatingSetup }] = useCreateSetupIntentMutation();
+  const [savePaymentMethod, { isLoading: isSavingCard }] = useSavePaymentMethodMutation();
+  const [setDefaultPaymentMethod] = useSetDefaultPaymentMethodMutation();
+  const [removePaymentMethod] = useRemovePaymentMethodMutation();
+
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [makeDefault, setMakeDefault] = useState(true);
+  const [stripeReady, setStripeReady] = useState(false);
+  const stripeRef = useRef<ReturnType<NonNullable<typeof window.Stripe>> | null>(null);
+
+  const savedMethods = methodsData?.data || methodsData || [];
+  const ledgerOrders = ledgerData?.data?.orders || ledgerData?.orders || [];
+  const ledgerItems = ledgerOrders.flatMap((order: any) => (order.transactions || []).map((tx: any) => ({
+    ...tx,
+    id: tx.txRef || tx.id,
+    date: tx.createdAt ? new Date(tx.createdAt).toLocaleDateString() : "",
+    description: tx.description || `Order ${order.orderNumber}`,
+    method: "Stripe payment method",
+    total: `$${Number(tx.amount || 0).toFixed(2)}`,
+    status: tx.status,
+  })));
+  const cardElementRef = useRef<{ mount: (el: HTMLElement) => void; unmount: () => void } | null>(null);
+  const cardContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const key = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+    if (!isAddModalOpen || !stripeReady || !cardContainerRef.current || !window.Stripe || !key || cardElementRef.current) return;
+    const stripe = window.Stripe(key);
+    const card = stripe.elements().create("card");
+    card.mount(cardContainerRef.current);
+    stripeRef.current = stripe;
+    cardElementRef.current = card;
+    return () => { card.unmount(); cardElementRef.current = null; stripeRef.current = null; };
+  }, [isAddModalOpen, stripeReady]);
+
+  const handleSetDefault = async (id: string) => {
+    try {
+      await setDefaultPaymentMethod(id).unwrap();
+      toast.success("Default payment method updated");
+    } catch (e: any) {
+      toast.error(e?.data?.message || "Failed to set default method");
+    }
+  };
+
+  const handleRemove = async (id: string) => {
+    try {
+      await removePaymentMethod(id).unwrap();
+      toast.success("Payment method removed");
+    } catch (e: any) {
+      toast.error(e?.data?.message || "Failed to remove method");
+    }
+  };
+
+  const handleSaveCard = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const key = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+      if (!key || !stripeRef.current || !cardElementRef.current) throw new Error("Secure card entry is unavailable. Refresh and try again.");
+      const setup = await createSetupIntent().unwrap();
+      const confirmation = await stripeRef.current.confirmCardSetup(setup.clientSecret, {
+        payment_method: { card: cardElementRef.current },
+      });
+      if (confirmation.error) throw new Error(confirmation.error.message || "Card verification failed.");
+      const paymentMethod = confirmation.setupIntent?.payment_method;
+      const paymentMethodId = typeof paymentMethod === "string" ? paymentMethod : paymentMethod?.id;
+      if (!paymentMethodId) throw new Error("Stripe did not return a saved card.");
+      await savePaymentMethod({ paymentMethodId, isDefault: makeDefault }).unwrap();
+      toast.success("Payment method saved.");
+      setIsAddModalOpen(false);
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Could not save card to vault");
+    }
   };
 
   return (
     <div className="space-y-6 pb-12">
+      {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#0F0C3B]">Payments &amp; Escrow Ledger</h1>
+        <h1 className="text-2xl font-bold text-[#0F0C3B]">Payments &amp; Billing History</h1>
           <p className="text-xs text-slate-500 mt-1">
-            Review your active escrow custody deposits, billing receipts, and payment methods
+            Review milestone charges, refunds, and saved payment methods.
           </p>
         </div>
 
-        <button className="px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 shadow-xs flex items-center gap-1.5 self-start">
+        <button
+          onClick={() => setIsAddModalOpen(true)}
+          className="px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 shadow-xs flex items-center gap-1.5 self-start cursor-pointer transition-all"
+        >
           <Plus className="w-3.5 h-3.5 text-brand-primary" /> Add Payment Method
         </button>
       </div>
@@ -69,26 +140,114 @@ export default function UserPaymentsPage() {
               Active Custody Balance
             </span>
             <div className="flex items-baseline gap-2 mt-0.5">
-              <span className="text-3xl font-extrabold">$1,480.00</span>
-              <span className="text-xs text-emerald-300 font-semibold bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/30">
-                100% Protected
-              </span>
+              <span className="text-3xl font-extrabold">${Number(ledgerData?.data?.escrowTotal ?? ledgerData?.escrowTotal ?? 0).toFixed(2)}</span>
             </div>
             <p className="text-xs text-indigo-200 mt-1">
-              Funds are held safely in escrow and only released after your explicit milestone approval.
+              Paid milestone funds are held on the marketplace Stripe balance until release or refund.
             </p>
           </div>
         </div>
 
-        <button className="px-4 py-2 rounded-xl bg-white text-[#0F0C3B] font-bold text-xs hover:bg-slate-100 transition-colors shadow-sm">
-          Download Statement (.pdf)
-        </button>
+      </div>
+
+      {/* Saved Payment Methods Section */}
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs p-5 space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <CreditCard className="w-4 h-4 text-brand-primary" />
+            <h2 className="text-sm font-bold text-[#0F0C3B]">Saved Payment Methods</h2>
+            <span className="px-2 py-0.5 text-[10px] font-extrabold rounded-full bg-indigo-50 text-brand-primary">
+              Stripe Vault Verified
+            </span>
+          </div>
+          <button
+            onClick={() => setIsAddModalOpen(true)}
+            className="text-xs font-bold text-brand-primary hover:underline flex items-center gap-1"
+          >
+            <Plus className="w-3.5 h-3.5" /> Add New Card
+          </button>
+        </div>
+
+        {methodsLoading ? (
+          <div className="py-6 flex items-center justify-center text-slate-400 gap-2 text-xs">
+            <Loader2 className="w-4 h-4 animate-spin text-brand-primary" />
+            <span>Loading payment methods...</span>
+          </div>
+        ) : savedMethods.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+            {savedMethods.map((pm: any) => (
+              <div
+                key={pm.id}
+                className={cn(
+                  "p-4 rounded-xl border relative transition-all flex flex-col justify-between",
+                  pm.isDefault
+                    ? "border-brand-primary bg-indigo-50/30 shadow-2xs"
+                    : "border-slate-200 hover:border-slate-300 bg-white"
+                )}
+              >
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="px-2 py-1 rounded bg-slate-900 text-white font-bold text-[10px] uppercase tracking-wider">
+                      {pm.brand || "Card"}
+                    </div>
+                    {pm.isDefault && (
+                      <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800">
+                        <Check className="w-3 h-3" /> Default
+                      </span>
+                    )}
+                  </div>
+
+                  <button
+                    onClick={() => handleRemove(pm.id)}
+                    className="text-slate-400 hover:text-rose-600 p-1 rounded transition-colors"
+                    title="Remove card"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                <div className="my-3">
+                  <p className="font-mono text-sm font-bold text-slate-800">
+                    •••• •••• •••• {pm.last4 || "4242"}
+                  </p>
+                  <p className="text-[11px] text-slate-400 mt-0.5">
+                    Expires {pm.expMonth ? `${pm.expMonth}/${pm.expYear}` : "12/2028"}
+                  </p>
+                </div>
+
+                {!pm.isDefault && (
+                  <button
+                    onClick={() => handleSetDefault(pm.id)}
+                    className="text-[11px] font-semibold text-brand-primary hover:underline text-left pt-2 border-t border-slate-100"
+                  >
+                    Set as default
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="p-6 text-center border border-dashed border-slate-200 rounded-xl space-y-2">
+            <CreditCard className="w-6 h-6 text-slate-300 mx-auto" />
+            <p className="text-xs font-semibold text-slate-600">No payment methods saved yet</p>
+            <p className="text-[11px] text-slate-400 max-w-sm mx-auto">
+              Save a card to enable 1-click escrow deposit and seamless milestone releases.
+            </p>
+            <button
+              onClick={() => setIsAddModalOpen(true)}
+              className="mt-2 px-3 py-1.5 bg-brand-primary text-white text-xs font-bold rounded-lg shadow-xs hover:bg-indigo-900 transition-colors"
+            >
+              Add Your First Card
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Transaction History Table */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden text-xs">
-        <div className="p-4 border-b border-slate-200 font-bold text-[#0F0C3B]">
-          Payment &amp; Escrow History
+        <div className="p-4 border-b border-slate-200 font-bold text-[#0F0C3B] flex items-center justify-between">
+          <span>Payment &amp; Escrow History</span>
+          {ledgerLoading && <Loader2 className="w-3.5 h-3.5 animate-spin text-slate-400" />}
         </div>
 
         <div className="overflow-x-auto">
@@ -100,11 +259,10 @@ export default function UserPaymentsPage() {
                 <th className="py-3 px-4">Payment Method</th>
                 <th className="py-3 px-4">Total Charged</th>
                 <th className="py-3 px-4">Escrow Status</th>
-                <th className="py-3 px-4 text-right">Receipt</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
-              {payments.map((tx) => (
+              {ledgerItems.map((tx: any) => (
                 <tr key={tx.id} className="hover:bg-slate-50/50 transition-colors">
                   <td className="py-3.5 px-4 font-bold text-[#0F0C3B]">
                     #{tx.id}
@@ -114,21 +272,17 @@ export default function UserPaymentsPage() {
                   <td className="py-3.5 px-4 text-slate-600">{tx.method}</td>
                   <td className="py-3.5 px-4 font-bold text-[#0F0C3B]">{tx.total}</td>
                   <td className="py-3.5 px-4">
-                    <span className={cn(
-                      "px-2.5 py-0.5 rounded-full text-[10px] font-bold",
-                      tx.status === "VAULT_HELD" && "bg-amber-100 text-amber-900 border border-amber-200",
-                      tx.status === "RELEASED_TO_VENDOR" && "bg-emerald-100 text-emerald-900 border border-emerald-200",
-                    )}>
-                      {tx.status === "VAULT_HELD" ? "In Escrow Custody" : "Released to Vendor"}
-                    </span>
-                  </td>
-                  <td className="py-3.5 px-4 text-right">
-                    <button
-                      onClick={() => handleDownloadInvoice(tx.id)}
-                      className="p-1.5 rounded-lg text-slate-500 hover:text-slate-800 hover:bg-slate-100"
+                    <span
+                      className={cn(
+                        "px-2.5 py-0.5 rounded-full text-[10px] font-bold",
+                (tx.status === "PENDING" || tx.status === "PROCESSING") &&
+                          "bg-amber-100 text-amber-900 border border-amber-200",
+                tx.status === "SUCCEEDED" &&
+                          "bg-emerald-100 text-emerald-900 border border-emerald-200"
+                      )}
                     >
-                      <Download className="w-4 h-4" />
-                    </button>
+                      {tx.status === "SUCCEEDED" ? "Paid" : tx.status === "FAILED" ? "Failed" : tx.status === "REFUNDED" ? "Refunded" : tx.status || "Processing"}
+                    </span>
                   </td>
                 </tr>
               ))}
@@ -136,6 +290,78 @@ export default function UserPaymentsPage() {
           </table>
         </div>
       </div>
+
+      {/* Add Payment Method Modal */}
+      {isAddModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2">
+                <CreditCard className="w-5 h-5 text-brand-primary" />
+                <h3 className="font-bold text-base text-[#0F0C3B]">Add New Payment Card</h3>
+              </div>
+              <button
+                onClick={() => setIsAddModalOpen(false)}
+                className="text-slate-400 hover:text-slate-600 p-1 rounded-lg"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveCard} className="space-y-4 text-xs">
+              <div className="p-3 bg-indigo-50/60 border border-indigo-100 rounded-xl text-[11px] text-indigo-900 flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-indigo-600 flex-shrink-0" />
+                <span>
+                  Card details are securely tokenized with Stripe. Your CVV is never stored on our servers.
+                </span>
+              </div>
+
+              <div>
+                <label className="block text-slate-700 font-bold mb-1">Card details</label>
+                <div ref={cardContainerRef} className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-3" />
+      <Script src="https://js.stripe.com/v3/" strategy="afterInteractive" onLoad={() => setStripeReady(true)} />
+              </div>
+
+              <label className="flex items-center gap-2 cursor-pointer pt-1">
+                <input
+                  type="checkbox"
+                  checked={makeDefault}
+                  onChange={(e) => setMakeDefault(e.target.checked)}
+                  className="w-4 h-4 rounded text-brand-primary focus:ring-0"
+                />
+                <span className="font-semibold text-slate-700">Set as my default payment method</span>
+              </label>
+
+              <div className="flex items-center gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setIsAddModalOpen(false)}
+                  className="w-1/2 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSavingCard || isCreatingSetup}
+                  className="w-1/2 py-2.5 bg-brand-primary hover:bg-indigo-900 text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-50"
+                >
+                  {isSavingCard || isCreatingSetup ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>Saving...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="w-3.5 h-3.5" />
+                      <span>Save Card</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
