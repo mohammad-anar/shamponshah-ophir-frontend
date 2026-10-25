@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
   FileBarChart, 
@@ -24,6 +24,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useGetFeesReportsQuery } from "@/redux/service/admin/adminApi";
+
 
 interface FeeTransaction {
   id: string;
@@ -156,11 +158,20 @@ const feeTransactionsList: FeeTransaction[] = [
 ];
 
 export default function AdminFeesReportsPage() {
+  const { data: apiFeesReports } = useGetFeesReportsQuery();
+  const [transactions, setTransactions] = useState<FeeTransaction[]>(feeTransactionsList);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("ALL");
   const [selectedTxn, setSelectedTxn] = useState<FeeTransaction | null>(null);
 
-  const filteredTransactions = feeTransactionsList.filter((txn) => {
+  useEffect(() => {
+    const list = Array.isArray(apiFeesReports) ? apiFeesReports : (apiFeesReports as any)?.data;
+    if (list && Array.isArray(list) && list.length > 0) {
+      setTransactions(list);
+    }
+  }, [apiFeesReports]);
+
+  const filteredTransactions = transactions.filter((txn) => {
     const matchesFilter = activeFilter === "ALL" || txn.status === activeFilter;
     const matchesSearch = 
       txn.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -171,10 +182,10 @@ export default function AdminFeesReportsPage() {
     return matchesFilter && matchesSearch;
   });
 
-  const totalGMV = feeTransactionsList.reduce((acc, t) => acc + (t.status !== "REFUNDED" ? t.grossAmount : 0), 0);
-  const totalBuyerFees = feeTransactionsList.reduce((acc, t) => acc + (t.status !== "REFUNDED" ? t.buyerFee : 0), 0);
-  const totalVendorCommissions = feeTransactionsList.reduce((acc, t) => acc + (t.status !== "REFUNDED" ? t.vendorCommission : 0), 0);
-  const totalNetRevenue = feeTransactionsList.reduce((acc, t) => acc + (t.status !== "REFUNDED" ? t.netPlatformRevenue : 0), 0);
+  const totalGMV = transactions.reduce((acc, t) => acc + (t.status !== "REFUNDED" ? t.grossAmount : 0), 0);
+  const totalBuyerFees = transactions.reduce((acc, t) => acc + (t.status !== "REFUNDED" ? t.buyerFee : 0), 0);
+  const totalVendorCommissions = transactions.reduce((acc, t) => acc + (t.status !== "REFUNDED" ? t.vendorCommission : 0), 0);
+  const totalNetRevenue = transactions.reduce((acc, t) => acc + (t.status !== "REFUNDED" ? t.netPlatformRevenue : 0), 0);
 
   return (
     <div className="space-y-6 pb-16">
@@ -407,7 +418,7 @@ export default function AdminFeesReportsPage() {
                 </div>
 
                 <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase block">Vendor (Artisan)</span>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase block">Vendor (Vendor)</span>
                   <p className="font-bold text-[#0F0C3B]">{selectedTxn.vendorName}</p>
                   <p className="text-[10px] text-slate-500">Verified Stripe Connect</p>
                 </div>
