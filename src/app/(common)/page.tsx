@@ -4,7 +4,7 @@ import HomePageClient from "@/components/pages/home/HomePageClient";
 
 export const metadata: Metadata = constructMetadata({
   title: "Ophir | The Modern Milestone & Escrow Marketplace",
-  description: "The premier escrow-secured marketplace for milestone events, verified artisans, bespoke event services, and family collaborative planning.",
+  description: "The premier escrow-secured marketplace for milestone events, verified vendors, bespoke event services, and family collaborative planning.",
   canonicalUrl: "/",
 });
 
