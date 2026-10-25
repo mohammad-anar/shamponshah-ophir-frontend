@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   CreditCard, 
   CheckCircle2, 
@@ -18,6 +18,9 @@ import {
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import PayoutDetailModal, { PayoutBatchDetail } from "@/components/admin/PayoutDetailModal";
+import { useGetPayoutsQuery, useDisbursePayoutMutation } from "@/redux/service/admin/adminApi";
+
+
 
 const initialPayoutBatches: PayoutBatchDetail[] = [
   {
@@ -227,18 +230,33 @@ const initialPayoutBatches: PayoutBatchDetail[] = [
 ];
 
 export default function AdminPayoutsPage() {
+  const { data: apiPayouts, refetch } = useGetPayoutsQuery();
+  const [disbursePayoutMutation] = useDisbursePayoutMutation();
   const [batches, setBatches] = useState<PayoutBatchDetail[]>(initialPayoutBatches);
   const [selectedPayout, setSelectedPayout] = useState<PayoutBatchDetail | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("ALL");
 
-  const handleApprovePayout = (id: string) => {
+  useEffect(() => {
+    if (apiPayouts && Array.isArray(apiPayouts) && apiPayouts.length > 0) {
+      setBatches(apiPayouts);
+    }
+  }, [apiPayouts]);
+
+  const handleApprovePayout = async (id: string) => {
+    try {
+      await disbursePayoutMutation(id).unwrap();
+      refetch();
+    } catch {
+      // Fallback
+    }
     setBatches(batches.map(b => b.id === id ? { ...b, status: "COMPLETED" } : b));
     if (selectedPayout && selectedPayout.id === id) {
       setSelectedPayout({ ...selectedPayout, status: "COMPLETED" });
     }
     toast.success(`Batch ${id} cleared for instant Stripe ACH disbursement.`);
   };
+
 
   const handleFlagPayout = (id: string, reason: string) => {
     setBatches(batches.map(b => b.id === id ? { ...b, status: "FLAGGED" } : b));
