@@ -29,9 +29,53 @@ import FaqAccordion from "@/components/ui/FaqAccordion/FaqAccordion";
 import CookieBanner from "@/components/ui/CookieBanner/CookieBanner";
 import heroCollageImg from "@/assets/herosection/hero-collage.png";
 import { cn } from "@/lib/utils";
+import { useGetVendorsQuery } from "@/redux/service/vendors/vendorsApi";
+import { useGetCategoriesQuery } from "@/redux/service/categories/categoriesApi";
 
 export default function HomePage() {
   const router = useRouter();
+
+  // RTK Query Hooks
+  const { data: vendorsData } = useGetVendorsQuery({ limit: 8 });
+  const { data: categoriesData } = useGetCategoriesQuery();
+
+  const liveVendors = Array.isArray(vendorsData?.data)
+    ? vendorsData.data
+    : Array.isArray(vendorsData?.vendors)
+    ? vendorsData.vendors
+    : Array.isArray(vendorsData)
+    ? vendorsData
+    : [];
+  const allVendors = liveVendors.length > 0 ? liveVendors : VENDORS;
+
+  const rawCategories = Array.isArray(categoriesData)
+    ? categoriesData
+    : Array.isArray((categoriesData as any)?.data)
+    ? (categoriesData as any).data
+    : [];
+
+  const displayOccasions = rawCategories.length > 0
+    ? rawCategories.slice(0, 8).map((cat: any, i: number) => ({
+        id: cat.id,
+        title: cat.name,
+        slug: cat.slug,
+        subtitle: cat.description || "Curated verified vendors and milestone services.",
+        image: cat.image || OCCASIONS[i % OCCASIONS.length]?.image || "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80",
+        eventCount: `${cat._count?.gigs || cat._count?.vendorCategories || 8}+ Vendors`,
+      }))
+    : OCCASIONS;
+
+  const dynamicCategoryTabs = [
+    { id: "all", label: "All Services" },
+    ...(rawCategories.length > 0
+      ? rawCategories.slice(0, 4).map((c: any) => ({ id: c.slug, label: c.name }))
+      : [
+          { id: "cinematography", label: "Cinematography" },
+          { id: "floral", label: "Floral & Stage" },
+          { id: "music", label: "Live Music" },
+          { id: "catering", label: "Catering" },
+        ]),
+  ];
 
   // Hero Search states
   const [occasionInput, setOccasionInput] = useState("Weddings & Reception");
@@ -46,13 +90,12 @@ export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
   const filteredVendors = selectedCategory === "all"
-    ? VENDORS
-    : VENDORS.filter((v) => {
-        if (selectedCategory === "cinematography") return v.category === "cinematography";
-        if (selectedCategory === "floral") return v.category === "floral";
-        if (selectedCategory === "music") return v.category === "music";
-        if (selectedCategory === "catering") return v.category === "catering";
-        return true;
+    ? allVendors
+    : allVendors.filter((v: any) => {
+        const cat = (v.category || "").toLowerCase();
+        const catLabel = (v.categoryLabel || "").toLowerCase();
+        const selected = selectedCategory.toLowerCase();
+        return cat.includes(selected) || catLabel.includes(selected);
       });
 
   const handleHeroSearch = (e: React.FormEvent) => {
@@ -193,7 +236,7 @@ export default function HomePage() {
                     className="w-full sm:w-auto px-6 h-11 bg-[#4F46E5] hover:bg-[#4338CA] active:scale-98 text-white text-sm font-bold rounded-xl shadow-md hover:shadow-indigo-500/25 transition-all flex items-center justify-center gap-2"
                   >
                     <Search className="w-4 h-4 text-amber-300" />
-                    <span>Find Artisans</span>
+                    <span>Find Vendors</span>
                   </button>
                 </div>
               </form>
@@ -204,7 +247,7 @@ export default function HomePage() {
               <div className="relative w-full max-w-[500px] aspect-[4/5] sm:aspect-[5/6] lg:aspect-[4/5] drop-shadow-2xl transition-transform duration-700 hover:scale-[1.02]">
                 <Image
                   src={heroCollageImg}
-                  alt="Curated Celebration Milestones and Verified Artisans"
+                  alt="Curated Celebration Milestones and Verified Vendors"
                   fill
                   priority
                   className="object-contain"
@@ -242,7 +285,7 @@ export default function HomePage() {
               </div>
               <div className="space-y-1">
                 <h3 className="font-serif font-bold text-base text-obsidian">
-                  Verified Artisans
+                  Verified Vendors
                 </h3>
                 <p className="text-xs text-slate-500 leading-relaxed">
                   Identity, portfolio audits, and past client interviews vetted by our council.
@@ -310,7 +353,7 @@ export default function HomePage() {
 
           {/* Occasions 8-Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {OCCASIONS.map((occ) => (
+            {displayOccasions.map((occ: any) => (
               <OccasionCard key={occ.id} occasion={occ} />
             ))}
           </div>
@@ -432,13 +475,7 @@ export default function HomePage() {
 
             {/* Category Tabs */}
             <div className="flex flex-wrap items-center gap-1.5 p-1 bg-white rounded-xl border border-[#EAE6DF] shadow-2xs">
-              {[
-                { id: "all", label: "All Services" },
-                { id: "cinematography", label: "Cinematography" },
-                { id: "floral", label: "Floral & Stage" },
-                { id: "music", label: "Live Music" },
-                { id: "catering", label: "Catering" },
-              ].map((tab) => (
+              {dynamicCategoryTabs.map((tab) => (
                 <button
                   key={tab.id}
                   onClick={() => setSelectedCategory(tab.id)}
@@ -457,7 +494,7 @@ export default function HomePage() {
 
           {/* Vendors 4x2 Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {filteredVendors.map((vendor) => (
+            {filteredVendors.map((vendor: any) => (
               <VendorCard key={vendor.id} vendor={vendor} />
             ))}
           </div>
@@ -514,7 +551,7 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-1.5 text-xs font-bold text-indigo-800 bg-indigo-50 px-2.5 py-1 rounded-full">
                 <span>Level 3 • Pro</span>
               </div>
-              <h3 className="font-serif font-bold text-lg text-obsidian">Master Artisan</h3>
+              <h3 className="font-serif font-bold text-lg text-obsidian">Master Vendor</h3>
               <p className="text-xs text-slate-500 leading-relaxed">
                 20+ completed events, 4.8+ rating, mandatory contingency emergency backup crew.
               </p>
@@ -620,7 +657,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 10. ARTISAN CTA BANNER */}
+      {/* 10. VENDOR CTA BANNER */}
       <section className="w-full py-16 lg:py-20 bg-[#0F1228] text-white">
         <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
           <div className="p-8 sm:p-12 lg:p-16 rounded-3xl bg-gradient-to-r from-[#0F1228] via-[#161B38] to-[#0F1228] border border-white/15 shadow-2xl flex flex-col lg:flex-row items-center justify-between gap-8">
@@ -644,7 +681,7 @@ export default function HomePage() {
                 href="/become-a-vendor"
                 className="w-full sm:w-auto px-7 py-3.5 bg-[#F59E0B] hover:bg-[#D97706] active:scale-98 text-slate-950 font-bold text-sm rounded-xl shadow-gold-glow transition-all text-center"
               >
-                Start Selling as an Artisan
+                Start Selling as an Vendor
               </Link>
 
               <Link
