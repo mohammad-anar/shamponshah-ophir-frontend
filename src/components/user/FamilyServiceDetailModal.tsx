@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { 
   X, 
   Star, 
@@ -18,13 +19,18 @@ import {
   DollarSign,
   Lock,
   Sparkles,
-  ChevronRight
+  ChevronRight,
+  Trash2,
+  Calendar,
+  Tag,
 } from "lucide-react";
 import { toast } from "sonner";
 import FamilyPaymentModal from "@/components/user/FamilyPaymentModal";
 
 export interface HubServiceDetail {
   id: string;
+  vendorId?: string;
+  gigId?: string;
   title: string;
   category: string;
   image: string;
@@ -36,7 +42,9 @@ export interface HubServiceDetail {
   location: string;
   totalPrice: number;
   amountPaid: number;
-  status: "Funded (Escrow Active)" | "Partially Funded" | "Awaiting Contributions";
+  status: "Booked (Escrow Active)" | "Pending Booking" | "Funded (Escrow Active)" | "Partially Funded" | "Awaiting Contributions";
+  eventId?: string;
+  eventName?: string;
   addedBy: {
     name: string;
     avatar: string;
@@ -55,16 +63,22 @@ interface FamilyServiceDetailModalProps {
   isOpen: boolean;
   onClose: () => void;
   service: HubServiceDetail;
+  events?: Array<{ id: string; title: string; occasion?: string }>;
   onVote: (serviceId: string) => void;
   onPaymentSuccess: (serviceId: string, amount: number, contributorName: string) => void;
+  onAssignEvent?: (serviceId: string, eventId: string, eventTitle: string) => void;
+  onRemoveService?: (serviceId: string) => void;
 }
 
 export default function FamilyServiceDetailModal({
   isOpen,
   onClose,
   service,
+  events = [],
   onVote,
   onPaymentSuccess,
+  onAssignEvent,
+  onRemoveService,
 }: FamilyServiceDetailModalProps) {
   const [comments, setComments] = useState(service.comments || []);
   const [newComment, setNewComment] = useState("");
@@ -159,6 +173,42 @@ export default function FamilyServiceDetailModal({
 
           {/* Modal Scrollable Content */}
           <div className="p-5 sm:p-6 overflow-y-auto space-y-6 flex-1 custom-scrollbar text-xs">
+            {/* Celebration Event Assignment Bar */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-gradient-to-r from-indigo-50/80 to-purple-50/50 rounded-2xl border border-indigo-100">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-white border border-indigo-200 flex items-center justify-center text-brand-primary shadow-xs">
+                  <Calendar className="w-4 h-4 text-indigo-600" />
+                </div>
+                <div>
+                  <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
+                    Assigned Celebration Event
+                  </span>
+                  <span className="font-bold text-[#0F0C3B] text-xs">
+                    {service.eventName || "Unassigned / General Suggestion"}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <select
+                  value={service.eventId || ""}
+                  onChange={(e) => {
+                    const selectedId = e.target.value;
+                    const ev = events.find((item) => item.id === selectedId);
+                    onAssignEvent?.(service.id, selectedId, ev?.title || "Unassigned Suggestion");
+                  }}
+                  className="bg-white border border-slate-200 rounded-xl px-3 py-1.5 font-bold text-xs text-[#0F0C3B] shadow-2xs hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+                >
+                  <option value="">Unassigned / Idea Bank</option>
+                  {events.map((ev) => (
+                    <option key={ev.id} value={ev.id}>
+                      {ev.title} {ev.occasion ? `(${ev.occasion})` : ""}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
             {/* Added By & Member Note Callout */}
             <div className="p-4 rounded-2xl bg-[#EDE9FE]/60 border border-indigo-100 flex items-start gap-3">
               <div className="w-8 h-8 rounded-full bg-[#0F0C3B] text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5 shadow-xs">
@@ -177,69 +227,59 @@ export default function FamilyServiceDetailModal({
               </div>
             </div>
 
-            {/* Crowdfunding & Payment Status Progress */}
+            {/* Full Booking & Escrow Status Banner */}
             <div className="p-5 rounded-2xl bg-[#F8F9FD] border border-slate-200 space-y-3">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                    Crowdfunded Stripe Escrow
+                    Service Booking Status
                   </span>
-                  <h4 className="text-sm font-black text-[#0F0C3B] mt-0.5">
-                    ${service.amountPaid.toLocaleString()} / ${service.totalPrice.toLocaleString()} Funded
-                  </h4>
-                </div>
-
-                <button
-                  onClick={() => onVote(service.id)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 font-bold transition-colors shadow-2xs"
-                >
-                  <ThumbsUp className="w-3.5 h-3.5 text-brand-primary" />
-                  <span>{service.votesUp} Family Likes</span>
-                </button>
-              </div>
-
-              {/* Progress Bar */}
-              <div className="space-y-1">
-                <div className="w-full h-3 bg-slate-200 rounded-full overflow-hidden">
-                  <div
-                    style={{ width: `${pct}%` }}
-                    className={`h-full rounded-full transition-all duration-700 ${
-                      isFullyFunded ? "bg-emerald-500" : "bg-gradient-to-r from-amber-400 to-amber-500"
-                    }`}
-                  />
-                </div>
-                <div className="flex justify-between text-[11px] font-bold">
-                  <span className={isFullyFunded ? "text-emerald-700" : "text-amber-700"}>
-                    {pct}% Funded ({isFullyFunded ? "Complete" : "In Progress"})
-                  </span>
-                  <span className="text-slate-500">
-                    ${remainingDue.toLocaleString()} Remaining Due
-                  </span>
-                </div>
-              </div>
-
-              {/* Contributors Avatars */}
-              {service.contributors.length > 0 && (
-                <div className="pt-2 border-t border-slate-200/60 space-y-1.5">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
-                    Family Contributions ({service.contributors.length})
-                  </span>
-                  <div className="flex flex-wrap gap-2">
-                    {service.contributors.map((c, i) => (
-                      <div
-                        key={i}
-                        className="flex items-center gap-1.5 px-2.5 py-1 bg-white rounded-lg border border-slate-200 text-[11px] font-bold text-[#0F0C3B] shadow-2xs"
-                      >
-                        <span className="w-4 h-4 rounded-full bg-[#0F0C3B] text-white flex items-center justify-center text-[8px]">
-                          {c.avatar}
-                        </span>
-                        <span>{c.name}:</span>
-                        <span className="text-emerald-600 font-mono">${c.amount}</span>
-                      </div>
-                    ))}
+                  <div className="flex items-center gap-2 mt-1">
+                    {isFullyFunded ? (
+                      <span className="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full font-bold text-xs flex items-center gap-1.5 border border-emerald-200">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                        <span>Booked (100% Escrow Funded)</span>
+                      </span>
+                    ) : (
+                      <span className="px-3 py-1 bg-amber-100 text-amber-800 rounded-full font-bold text-xs flex items-center gap-1.5 border border-amber-200">
+                        <Clock className="w-3.5 h-3.5 text-amber-600" />
+                        <span>Pending Full Payment & Booking</span>
+                      </span>
+                    )}
                   </div>
                 </div>
-              )}
+
+                <div className="flex items-center gap-2">
+                  <Link
+                    href={`/user/messages?vendorName=${encodeURIComponent(service.vendorName)}&category=${encodeURIComponent(service.category)}`}
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-indigo-200 text-brand-primary hover:bg-indigo-50 font-bold transition-colors shadow-2xs text-xs"
+                    title="Direct Message this Vendor"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5 text-indigo-600" />
+                    <span>Message Vendor</span>
+                  </Link>
+
+                  <button
+                    type="button"
+                    onClick={() => onVote(service.id)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-200 font-bold transition-colors shadow-2xs text-xs"
+                  >
+                    <ThumbsUp className="w-3.5 h-3.5 text-brand-primary" />
+                    <span>{service.votesUp} Likes</span>
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-3 bg-white rounded-xl border border-slate-200/80 flex items-center justify-between text-xs">
+                <div>
+                  <span className="text-[10px] text-slate-400 uppercase font-semibold block">Total Package Contract</span>
+                  <span className="font-bold text-[#0F0C3B] font-mono text-sm">${service.totalPrice.toLocaleString()}</span>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] text-slate-400 uppercase font-semibold block">Booking Requirement</span>
+                  <span className="text-emerald-700 font-bold text-xs">Single 100% Full Escrow Payment</span>
+                </div>
+              </div>
             </div>
 
             {/* Service Package Inclusions Checklist */}
@@ -309,6 +349,31 @@ export default function FamilyServiceDetailModal({
             </div>
 
             <div className="flex items-center gap-2">
+              <Link
+                href={`/user/messages?vendorId=${service.vendorId || ""}&vendorName=${encodeURIComponent(service.vendorName)}&category=${encodeURIComponent(service.category)}`}
+                className="px-3.5 py-2 text-xs font-semibold text-brand-primary hover:bg-indigo-50 border border-indigo-200 rounded-xl transition-all flex items-center gap-1.5"
+                title="Message Service Provider"
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>Message Vendor</span>
+              </Link>
+
+              {onRemoveService && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (window.confirm(`Are you sure you want to remove "${service.title}" from this Family Hub?`)) {
+                      onRemoveService(service.id);
+                      onClose();
+                    }
+                  }}
+                  className="px-3.5 py-2 text-xs font-semibold text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-xl transition-all flex items-center gap-1.5 border border-rose-100 mr-1"
+                  title="Remove this service from hub"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>Remove</span>
+                </button>
+              )}
               <button
                 onClick={onClose}
                 className="px-4 py-2.5 text-xs font-semibold text-slate-600 hover:text-slate-800"
@@ -319,7 +384,7 @@ export default function FamilyServiceDetailModal({
               {isFullyFunded ? (
                 <div className="px-5 py-2.5 bg-emerald-100 text-emerald-800 rounded-xl text-xs font-bold flex items-center gap-1.5 border border-emerald-200">
                   <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>100% Escrow Funded</span>
+                  <span>Booked (100% Escrow Active)</span>
                 </div>
               ) : (
                 <button
@@ -327,7 +392,7 @@ export default function FamilyServiceDetailModal({
                   className="px-6 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-2"
                 >
                   <CreditCard className="w-4 h-4 text-amber-400" />
-                  <span>Contribute Payment / Co-Pay ($)</span>
+                  <span>Book Service & Pay in Full (${service.totalPrice.toLocaleString()})</span>
                 </button>
               )}
             </div>
