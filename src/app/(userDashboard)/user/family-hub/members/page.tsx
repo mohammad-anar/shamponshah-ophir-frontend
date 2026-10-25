@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { 
   Users2, 
@@ -17,6 +17,8 @@ import {
   Settings,
   Sparkles
 } from "lucide-react";
+import { toast } from "sonner";
+import { useGetWorkspaceQuery, useInviteMemberMutation, useRemoveMemberMutation } from "@/redux/service/family-hub/familyHubApi";
 
 interface Member {
   id: string;
@@ -83,45 +85,74 @@ const initialMembers: Member[] = [
 ];
 
 export default function FamilyHubMembersPage() {
-  const [members, setMembers] = useState<Member[]>(initialMembers);
+  const { data: workspaceData, refetch } = useGetWorkspaceQuery();
+  const [inviteMemberMutation, { isLoading: isInviting }] = useInviteMemberMutation();
+  const [removeMemberMutation] = useRemoveMemberMutation();
+
+  const [members, setMembers] = useState<Member[]>([]);
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviteRole, setInviteRole] = useState<Member["role"]>("Co-Planner");
-  const [copied, setCopied] = useState(false);
   const [showInviteModal, setShowInviteModal] = useState(false);
 
-  const inviteCode = "OPHIR-GOLDEN-CARTER-2025";
+  useEffect(() => {
+    const workspace = workspaceData?.data || workspaceData;
+    if (workspace) {
+      const mapped: Member[] = [
+        ...(workspace.owner ? [{
+          id: `owner-${workspace.ownerId}`,
+          name: workspace.owner.displayName || "Workspace owner",
+          email: workspace.owner.user?.email || "",
+          role: "Host / Admin" as const,
+          avatar: (workspace.owner.displayName || "OW").slice(0, 2).toUpperCase(),
+          canVote: true,
+          canFundEscrow: false,
+          budgetContributed: 0,
+          joinedDate: "Owner",
+          status: "Active" as const,
+        }] : []),
+        ...(workspace.members || []).map((m: any): Member => ({
+        id: m.id,
+        name: m.user?.clientProfile?.displayName || m.user?.email?.split("@")[0] || "Member",
+        email: m.user?.email || "member@example.com",
+        role: m.role === "OWNER" ? "Host / Admin" : m.role === "VIEWER" ? "Guest Reviewer" : "Co-Planner",
+        avatar: (m.user?.clientProfile?.displayName || m.user?.email || "MB").slice(0, 2).toUpperCase(),
+        canVote: true,
+        canFundEscrow: m.role !== "Guest Reviewer",
+        budgetContributed: m.budgetContributed || 0,
+        joinedDate: new Date(m.createdAt).toLocaleDateString(),
+        status: "Active",
+      }))];
+      setMembers(mapped);
+    }
+  }, [workspaceData]);
 
-  const handleCopyCode = () => {
-    navigator.clipboard.writeText(inviteCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleSendInvite = (e: React.FormEvent) => {
+  const handleSendInvite = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inviteEmail.trim()) return;
 
-    const newMem: Member = {
-      id: `m-${Date.now()}`,
-      name: inviteEmail.split("@")[0],
-      email: inviteEmail,
-      role: inviteRole,
-      avatar: inviteEmail.substring(0, 2).toUpperCase(),
-      canVote: true,
-      canFundEscrow: inviteRole === "Co-Planner" || inviteRole === "Family Contributor",
-      budgetContributed: 0,
-      joinedDate: "Just now",
-      status: "Invite Pending",
-    };
+    try {
+      await inviteMemberMutation({ email: inviteEmail, role: inviteRole }).unwrap();
+      toast.success(`${inviteEmail} was added to your family workspace.`);
+      await refetch();
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Could not send invitation.");
+      return;
+    }
 
-    setMembers([...members, newMem]);
     setInviteEmail("");
     setShowInviteModal(false);
   };
 
-  const handleRemoveMember = (id: string) => {
-    setMembers(members.filter((m) => m.id !== id));
+  const handleRemoveMember = async (id: string) => {
+    try {
+      await removeMemberMutation(id).unwrap();
+      setMembers((items) => items.filter((m) => m.id !== id));
+      toast.success("Family member removed.");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Could not remove family member.");
+    }
   };
+
 
   return (
     <div className="space-y-6">
@@ -157,34 +188,10 @@ export default function FamilyHubMembersPage() {
         </button>
       </div>
 
-      {/* Invite Share Banner */}
-      <div className="bg-gradient-to-r from-[#0F0C3B] to-[#18124E] text-white p-5 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4 shadow-md">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
-            <Sparkles className="w-5 h-5 text-amber-400" />
-          </div>
-          <div>
-            <h3 className="text-sm font-bold">Fast Share Invitation Passcode</h3>
-            <p className="text-xs text-indigo-200/80">Family members can enter this code in their Ophir account to join instantly.</p>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-2 bg-black/40 border border-white/10 px-3 py-1.5 rounded-xl">
-          <span className="font-mono text-xs font-bold text-amber-300">{inviteCode}</span>
-          <button
-            onClick={handleCopyCode}
-            className="p-1.5 rounded-lg hover:bg-white/10 text-slate-300 hover:text-white transition-colors"
-          >
-            {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
-          </button>
-        </div>
-      </div>
-
       {/* Members Table Card */}
       <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs">
         <div className="p-4 border-b border-slate-100 flex items-center justify-between">
           <h2 className="text-sm font-bold text-[#0F0C3B]">Collaborator Access & Spending Matrix</h2>
-          <span className="text-xs text-slate-400">Total Pooled Contributions: <strong>$14,000</strong></span>
         </div>
 
         <div className="overflow-x-auto">
