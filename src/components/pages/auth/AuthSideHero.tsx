@@ -19,7 +19,7 @@ interface AuthSideHeroProps {
 }
 
 export default function AuthSideHero({
-  badge = "FDIC-Insured Escrow • 100% Verified Artisans",
+  badge = "FDIC-Insured Escrow • 100% Verified Vendors",
   vaultScore = "4.96/5 Vault Score",
   headline = "Every celebration deserves the right people.",
   subheadline = "Over 50,000 multi-generational milestones coordinated with unyielding contract clarity and milestone-based fund releases.",
