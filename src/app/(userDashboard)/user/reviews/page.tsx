@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Star, 
   MessageSquare, 
@@ -13,6 +13,9 @@ import {
   Image as ImageIcon,
   ChevronRight
 } from "lucide-react";
+import { toast } from "sonner";
+import { useGetClientReviewsQuery } from "@/redux/service/reviews/reviewsApi";
+import { useCreateReviewMutation } from "@/redux/service/orders/ordersApi";
 
 interface PendingReview {
   id: string;
@@ -66,18 +69,21 @@ const mockSubmitted: SubmittedReview[] = [
     id: "r2",
     orderId: "ORD-8790",
     vendorName: "Gourmet Bites & Bar Co.",
-    serviceTitle: "Artisan Grazing Table & Signature Cocktail Bar",
+    serviceTitle: "Vendor Grazing Table & Signature Cocktail Bar",
     avatar: "GB",
     rating: 5,
     date: "Sep 15, 2025",
-    comment: "The signature smoked rosemary old fashioneds were the highlight of the night. Guests are still talking about the cured meats and artisan cheese board!",
+    comment: "The signature smoked rosemary old fashioneds were the highlight of the night. Guests are still talking about the cured meats and vendor cheese board!",
     responseFromVendor: "We loved crafting the menu for you! Thanks for trusting Gourmet Bites.",
   }
 ];
 
 export default function UserReviewsPage() {
-  const [pending, setPending] = useState<PendingReview[]>(mockPending);
-  const [submitted, setSubmitted] = useState<SubmittedReview[]>(mockSubmitted);
+  const { data: apiReviews } = useGetClientReviewsQuery();
+  const [createReviewMutation, { isLoading: isSubmittingReview }] = useCreateReviewMutation();
+
+  const [pending, setPending] = useState<PendingReview[]>([]);
+  const [submitted, setSubmitted] = useState<SubmittedReview[]>([]);
   const [selectedPending, setSelectedPending] = useState<PendingReview | null>(null);
   
   // Review Modal state
@@ -85,9 +91,29 @@ export default function UserReviewsPage() {
   const [reviewComment, setReviewComment] = useState("");
   const [hoverRating, setHoverRating] = useState(0);
 
-  const handleSubmitReview = (e: React.FormEvent) => {
+  useEffect(() => {
+    const raw = (apiReviews as any)?.data || apiReviews;
+    if (raw) {
+      setSubmitted(Array.isArray(raw.submitted) ? raw.submitted : []);
+      setPending(Array.isArray(raw.pending) ? raw.pending : []);
+    }
+  }, [apiReviews]);
+
+  const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedPending || !reviewComment.trim()) return;
+
+    try {
+      await createReviewMutation({
+        orderId: selectedPending.id,
+        rating,
+        comment: reviewComment,
+      }).unwrap();
+      toast.success("Review submitted to vendor!");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Could not submit review.");
+      return;
+    }
 
     const newRev: SubmittedReview = {
       id: `r-${Date.now()}`,
@@ -106,6 +132,7 @@ export default function UserReviewsPage() {
     setReviewComment("");
   };
 
+
   return (
     <div className="space-y-6">
       {/* Top Header */}
@@ -118,7 +145,7 @@ export default function UserReviewsPage() {
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-1">
-            Rate completed event services and help the Ophir community discover trustworthy artisans.
+            Rate completed event services and help the Ophir community discover trustworthy vendors.
           </p>
         </div>
       </div>
