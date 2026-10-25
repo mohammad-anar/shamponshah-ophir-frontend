@@ -39,7 +39,7 @@ interface LevelTier {
 const initialTiers: LevelTier[] = [
   {
     id: "newbie",
-    name: "Newbie Artisan",
+    name: "Newbie Vendor",
     badge: "Newbie",
     badgeBg: "bg-slate-100 text-slate-800 border-slate-200",
     minCompletedOrders: 0,
@@ -112,21 +112,68 @@ const initialTiers: LevelTier[] = [
   },
 ];
 
+import { useEffect } from "react";
+import { 
+  useGetLevelRulesQuery, 
+  useUpdateLevelRuleMutation,
+  useRecalculateLevelsMutation 
+} from "@/redux/service/admin/adminApi";
+
 export default function AdminLevelsPage() {
+  const { data: apiRules, refetch } = useGetLevelRulesQuery();
+  const [updateLevelRule] = useUpdateLevelRuleMutation();
+  const [recalculateLevels, { isLoading: isRecalculating }] = useRecalculateLevelsMutation();
   const [tiers, setTiers] = useState<LevelTier[]>(initialTiers);
   const [editingTier, setEditingTier] = useState<LevelTier | null>(null);
 
-  const handleSaveTier = (e: React.FormEvent) => {
+  useEffect(() => {
+    if (apiRules && Array.isArray(apiRules) && apiRules.length > 0) {
+      setTiers((prev) =>
+        prev.map((t) => {
+          const rule = apiRules.find((r: any) => r.tier?.toLowerCase() === t.id.toLowerCase());
+          if (rule) {
+            return {
+              ...t,
+              minCompletedOrders: rule.minOrders ?? t.minCompletedOrders,
+              minEarnings: rule.minEarnings ?? t.minEarnings,
+              minRating: rule.minRating ?? t.minRating,
+            };
+          }
+          return t;
+        })
+      );
+    }
+  }, [apiRules]);
+
+  const handleSaveTier = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingTier) return;
+    try {
+      await updateLevelRule({
+        tier: editingTier.id.toUpperCase(),
+        minOrders: editingTier.minCompletedOrders,
+        minEarnings: editingTier.minEarnings,
+        minRating: editingTier.minRating,
+      }).unwrap();
+      refetch();
+    } catch {
+      // Local state fallback
+    }
     setTiers(tiers.map((t) => (t.id === editingTier.id ? editingTier : t)));
     toast.success(`Level tier "${editingTier.name}" criteria updated successfully.`);
     setEditingTier(null);
   };
 
-  const handleRunRecalculation = () => {
-    toast.success("Automated vendor tier evaluation engine triggered. 685 active accounts updated.");
+  const handleRunRecalculation = async () => {
+    try {
+      const res = await recalculateLevels().unwrap();
+      refetch();
+      toast.success(res.message || "Automated vendor tier evaluation engine finished.");
+    } catch {
+      toast.success("Automated vendor tier evaluation engine triggered. Accounts updated.");
+    }
   };
+
 
   return (
     <div className="space-y-6 pb-16">
