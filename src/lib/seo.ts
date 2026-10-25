@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const siteConfig = {
   name: "Ophir",
   shortName: "Ophir",
-  description: "The premier escrow-secured marketplace for milestone events, verified artisans, bespoke event services, and family collaborative planning.",
+  description: "The premier escrow-secured marketplace for milestone events, verified vendors, bespoke event services, and family collaborative planning.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://ophir-events.com",
   ogImage: "/og-image.png",
   logo: "/logo.png",
@@ -18,7 +18,7 @@ export const siteConfig = {
     "Floral & Event Decor",
     "FDIC Insured Escrow",
     "Collaborative Family Planning",
-    "Verified Event Artisans",
+    "Verified Event Vendors",
     "Ophir"
   ],
   author: "Ophir Technologies Inc.",
