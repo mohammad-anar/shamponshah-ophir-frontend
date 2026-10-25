@@ -1,20 +1,39 @@
 "use client";
 
 import React, { useState } from "react";
-import { Mail, Phone, MapPin, Headphones, Send, CheckCircle2 } from "lucide-react";
+import { Mail, Phone, MapPin, Headphones, Send, CheckCircle2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useSubmitInquiryMutation } from "@/redux/service/contact/contactApi";
 
 export default function ContactUsPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [topic, setTopic] = useState("concierge");
   const [message, setMessage] = useState("");
+  const [ticketNumber, setTicketNumber] = useState("");
   const [sent, setSent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitInquiry, { isLoading: isSubmitting }] = useSubmitInquiryMutation();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
-    toast.success("Inquiry received! Our concierge will respond within 2 hours.");
+    try {
+      const res = await submitInquiry({
+        name,
+        email,
+        phone: phone.trim() || undefined,
+        topic,
+        message,
+      }).unwrap();
+
+      const ticket = res?.ticketNumber || `OPH-TKT-${Date.now().toString(36).toUpperCase()}`;
+      setTicketNumber(ticket);
+      setSent(true);
+      toast.success(`Inquiry #${ticket} received! Our concierge will respond within 2 hours.`);
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to submit concierge request. Please try again.");
+    }
   };
 
   return (
@@ -66,18 +85,31 @@ export default function ContactUsPage() {
                   </div>
                 </div>
 
-                <div className="space-y-1">
-                  <label className="font-semibold text-slate-700">Assistance Category</label>
-                  <select
-                    value={topic}
-                    onChange={(e) => setTopic(e.target.value)}
-                    className="w-full h-11 px-3.5 bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-white focus:outline-none"
-                  >
-                    <option value="concierge">VIP Celebration Concierge & Vendor Matching</option>
-                    <option value="escrow">Escrow Vault Payouts & Deposit Inquiries</option>
-                    <option value="vendor">Artisan Guild Application & Badging</option>
-                    <option value="dispute">Mediation Council & Terms Inquiry</option>
-                  </select>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <label className="font-semibold text-slate-700">Assistance Category</label>
+                    <select
+                      value={topic}
+                      onChange={(e) => setTopic(e.target.value)}
+                      className="w-full h-11 px-3.5 bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-white focus:outline-none"
+                    >
+                      <option value="concierge">VIP Celebration Concierge & Vendor Matching</option>
+                      <option value="escrow">Escrow Vault Payouts & Deposit Inquiries</option>
+                      <option value="vendor">Vendor Guild Application & Badging</option>
+                      <option value="dispute">Mediation Council & Terms Inquiry</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="font-semibold text-slate-700">Phone Number (Optional)</label>
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="+1 (312) 555-0194"
+                      className="w-full h-11 px-3.5 bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-white focus:outline-none"
+                    />
+                  </div>
                 </div>
 
                 <div className="space-y-1">
@@ -94,10 +126,20 @@ export default function ContactUsPage() {
 
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-8 h-12 bg-[#0F1228] hover:bg-[#1A1F40] active:scale-99 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                  className="w-full sm:w-auto px-8 h-12 bg-[#0F1228] hover:bg-[#1A1F40] active:scale-99 text-white font-semibold rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>Send Concierge Request</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <span>Sending Request...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>Send Concierge Request</span>
+                    </>
+                  )}
                 </button>
               </form>
             ) : (
@@ -105,10 +147,26 @@ export default function ContactUsPage() {
                 <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
-                <h3 className="font-serif text-2xl font-bold text-obsidian">Message Delivered</h3>
+                <div className="space-y-1">
+                  {ticketNumber && (
+                    <span className="text-[11px] font-mono font-bold text-emerald-800 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                      TICKET #{ticketNumber}
+                    </span>
+                  )}
+                  <h3 className="font-serif text-2xl font-bold text-obsidian pt-1">Inquiry Registered</h3>
+                </div>
                 <p className="text-xs text-slate-500 max-w-sm mx-auto">
-                  Our live hospitality team has received your ticket. A senior coordinator will follow up via email within 2 hours.
+                  Our live hospitality desk has registered your ticket. A senior coordinator will follow up via email at <strong className="text-obsidian">{email}</strong> within 2 hours.
                 </p>
+                <button
+                  onClick={() => {
+                    setSent(false);
+                    setMessage("");
+                  }}
+                  className="text-xs font-bold text-brand-primary hover:underline"
+                >
+                  Submit another inquiry &rarr;
+                </button>
               </div>
             )}
           </div>
