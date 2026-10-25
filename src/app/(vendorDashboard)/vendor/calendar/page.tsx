@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Calendar as CalendarIcon, 
   Clock, 
@@ -17,6 +17,9 @@ import {
   X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useGetBlockedDatesQuery, useAddBlockedDateMutation, useRemoveBlockedDateMutation } from "@/redux/service/vendors/vendorsApi";
+import { useGetVendorOrdersQuery } from "@/redux/service/orders/ordersApi";
+import { toast } from "sonner";
 
 interface CalendarEvent {
   id: string;
@@ -27,6 +30,7 @@ interface CalendarEvent {
   location: string;
   status: "CONFIRMED" | "PENDING" | "BLOCKED";
   amount?: number;
+  dbId?: string;
 }
 
 const initialEvents: CalendarEvent[] = [
@@ -38,29 +42,93 @@ const initialEvents: CalendarEvent[] = [
 ];
 
 export default function VendorCalendarPage() {
-  const [currentMonth, setCurrentMonth] = useState("October 2025");
-  const [events, setEvents] = useState<CalendarEvent[]>(initialEvents);
-  const [selectedDay, setSelectedDay] = useState<number | null>(15);
+  const [currentMonth, setCurrentMonth] = useState(() => new Date());
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [showBlockModal, setShowBlockModal] = useState(false);
-  const [blockDayNumber, setBlockDayNumber] = useState(25);
-  const [blockReason, setBlockReason] = useState("Studio Maintenance & Gear Check");
+  const [blockDayNumber, setBlockDayNumber] = useState(new Date().getDate());
+  const [blockReason, setBlockReason] = useState("");
 
-  const daysInMonth = 31;
-  const startDayOffset = 3; // Wednesday start
+  const { data: blockedDatesData } = useGetBlockedDatesQuery();
+  const { data: ordersData } = useGetVendorOrdersQuery();
+  const [addBlockedDate] = useAddBlockedDateMutation();
+  const [removeBlockedDate] = useRemoveBlockedDateMutation();
 
-  const handleAddBlock = (e: React.FormEvent) => {
+  const daysInMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate();
+  const startDayOffset = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1).getDay();
+  const monthLabel = currentMonth.toLocaleDateString(undefined, { month: "long", year: "numeric" });
+
+  // Sync real database orders and blocked dates
+  useEffect(() => {
+    const rawBlocked = (blockedDatesData as any)?.data || (Array.isArray(blockedDatesData) ? blockedDatesData : []);
+    const rawOrders = (ordersData as any)?.data?.orders || (ordersData as any)?.orders || [];
+
+    const mappedEvents: CalendarEvent[] = [];
+
+    if (Array.isArray(rawOrders) && rawOrders.length > 0) {
+      rawOrders.forEach((ord: any, idx: number) => {
+        if (!ord.eventDate) return;
+        const eventDate = new Date(ord.eventDate);
+        if (eventDate.getMonth() !== currentMonth.getMonth() || eventDate.getFullYear() !== currentMonth.getFullYear()) return;
+        const d = eventDate.getDate();
+        mappedEvents.push({
+          id: `ord-${ord.id}`,
+          date: d > 0 && d <= 31 ? d : 12,
+          title: ord.service || ord.gig?.title || `Event Order #${ord.orderNumber}`,
+          time: "4:00 PM – 10:00 PM",
+          client: ord.client || ord.clientProfile?.displayName || "Verified Client",
+          location: "Chicago, IL",
+          status: "CONFIRMED",
+          amount: Number(ord.grandTotal || ord.subtotal || 0),
+        });
+      });
+    }
+
+    if (Array.isArray(rawBlocked) && rawBlocked.length > 0) {
+      rawBlocked.forEach((b: any) => {
+        const blockedDate = new Date(b.date);
+        if (blockedDate.getMonth() !== currentMonth.getMonth() || blockedDate.getFullYear() !== currentMonth.getFullYear()) return;
+        const d = blockedDate.getDate();
+        mappedEvents.push({
+          id: `b-${b.id}`,
+          dbId: b.id,
+          date: d > 0 && d <= 31 ? d : 22,
+          title: b.reason || "Blocked Date",
+          time: "All Day",
+          client: "Personal Block",
+          location: "Unavailable",
+          status: "BLOCKED",
+        });
+      });
+    }
+
+    setEvents(mappedEvents);
+  }, [blockedDatesData, ordersData, currentMonth]);
+
+  const handleAddBlock = async (e: React.FormEvent) => {
     e.preventDefault();
-    const newBlock: CalendarEvent = {
-      id: `b-${Date.now()}`,
-      date: Number(blockDayNumber),
-      title: blockReason,
-      time: "All Day",
-      client: "Personal Block",
-      location: "Unavailable",
-      status: "BLOCKED",
-    };
-    setEvents([...events, newBlock]);
-    setShowBlockModal(false);
+    try {
+      await addBlockedDate({
+        date: new Date(currentMonth.getFullYear(), currentMonth.getMonth(), Number(blockDayNumber)).toISOString(),
+        reason: blockReason,
+      }).unwrap();
+      toast.success("Date blocked.");
+      setShowBlockModal(false);
+      setBlockReason("");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Could not block this date.");
+    }
+  };
+
+  const handleRemoveBlock = async (event: CalendarEvent) => {
+    if (event.dbId) {
+      try {
+        await removeBlockedDate(event.dbId).unwrap();
+        toast.success("Date unblocked!");
+      } catch (err: any) {
+        toast.error(err?.data?.message || "Could not unblock date.");
+      }
+    }
   };
 
   const selectedDayEvents = events.filter((e) => e.date === selectedDay);
@@ -99,14 +167,14 @@ export default function VendorCalendarPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <CalendarDays className="w-5 h-5 text-brand-primary" />
-              <h2 className="text-base font-black text-[#0F0C3B]">{currentMonth}</h2>
+              <h2 className="text-base font-black text-[#0F0C3B]">{monthLabel}</h2>
             </div>
 
             <div className="flex items-center gap-1.5">
-              <button className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600">
+              <button onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1))} className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600">
                 <ChevronLeft className="w-4 h-4" />
               </button>
-              <button className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600">
+              <button onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1))} className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-600">
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>
