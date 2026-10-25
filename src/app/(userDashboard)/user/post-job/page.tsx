@@ -18,10 +18,13 @@ import {
   Clock,
   HelpCircle,
   UploadCloud,
-  CheckCircle2
+  CheckCircle2,
+  Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useCreateJobMutation } from "@/redux/service/jobs/jobsApi";
+import { useGetMeQuery } from "@/redux/service/auth/authApi";
 
 const occasions = [
   { id: "wedding", label: "Wedding", icon: "💍" },
@@ -40,7 +43,7 @@ const serviceOptions = [
   "DJ & Music",
   "Catering",
   "Decoration",
-  "Artisan Cake",
+  "Vendor Cake",
   "Emcee",
   "Kids Entertainer",
   "Photo Booth",
@@ -50,28 +53,41 @@ const serviceOptions = [
 export default function PostJobWizardPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
+  const [createJob, { isLoading: isCreatingJob }] = useCreateJobMutation();
+  const { data: meData } = useGetMeQuery();
+
+  const me = (meData as any)?.data || meData;
+  const clientName = me?.clientProfile?.displayName || me?.name || "Event Host";
+  const clientCity = me?.clientProfile?.city
+    ? `${me.clientProfile.city}, ${me.clientProfile.state || "IL"}`
+    : "Chicago, IL";
+  const hostInitials = (clientName || "EH")
+    .split(" ")
+    .filter(Boolean)
+    .map((n: string) => n[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
 
   // Form State
-  const [occasion, setOccasion] = useState("birthday");
-  const [selectedServices, setSelectedServices] = useState<string[]>(["DJ & Music", "Emcee"]);
-  const [title, setTitle] = useState("High-Energy DJ & Emcee for Emma's 5th Birthday Party");
+  const [occasion, setOccasion] = useState("wedding");
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [title, setTitle] = useState("");
   const [postToFamily, setPostToFamily] = useState(true);
 
   // Step 2
-  const [eventDate, setEventDate] = useState("2026-11-14");
-  const [location, setLocation] = useState("Lincoln Park, Chicago, IL");
-  const [guestCount, setGuestCount] = useState("40");
-  const [duration, setDuration] = useState("4 Hours (2:00 PM – 6:00 PM)");
+  const [eventDate, setEventDate] = useState("");
+  const [location, setLocation] = useState("");
+  const [guestCount, setGuestCount] = useState("");
+  const [duration, setDuration] = useState("");
 
   // Step 3
-  const [description, setDescription] = useState(
-    "Looking for a family-friendly DJ who can keep both 4-6 year olds engaged with interactive games, musical chairs, freeze dance, and provide great background music for parents."
-  );
-  const [specialRequests, setSpecialRequests] = useState("Strobe-free lighting preferred, clean radio edits only.");
+  const [description, setDescription] = useState("");
+  const [specialRequests, setSpecialRequests] = useState("");
 
   // Step 4
-  const [budgetMin, setBudgetMin] = useState("400");
-  const [budgetMax, setBudgetMax] = useState("600");
+  const [budgetMin, setBudgetMin] = useState("");
+  const [budgetMax, setBudgetMax] = useState("");
   const [biddingDuration, setBiddingDuration] = useState("48 Hours");
 
   const toggleService = (svc: string) => {
@@ -82,11 +98,73 @@ export default function PostJobWizardPage() {
     }
   };
 
-  const handleNext = () => {
-    if (step < 5) setStep(step + 1);
-    else {
-      toast.success("Job Published! Your RFP is live and matching vetted artisans in Chicago.");
-      router.push("/user/jobs");
+  const selectedOccasionObj = occasions.find((o) => o.id === occasion);
+
+  const handleNext = async () => {
+    if (step === 1) {
+      if (!title.trim()) {
+        toast.error("Please enter a title for your job request.");
+        return;
+      }
+      if (selectedServices.length === 0) {
+        toast.error("Please select at least one service category.");
+        return;
+      }
+    } else if (step === 2) {
+      if (!location.trim()) {
+        toast.error("Please enter a venue or city location.");
+        return;
+      }
+      if (!eventDate) {
+        toast.error("Please select an event date.");
+        return;
+      }
+    } else if (step === 3) {
+      if (!description.trim()) {
+        toast.error("Please provide a description of your celebration requirements.");
+        return;
+      }
+    } else if (step === 4) {
+      const min = parseFloat(budgetMin) || 0;
+      const max = parseFloat(budgetMax) || 0;
+      if (min < 0 || max <= 0 || min > max) {
+        toast.error("Please enter a valid budget range (Min must be less than or equal to Max).");
+        return;
+      }
+    }
+
+    if (step < 5) {
+      setStep(step + 1);
+    } else {
+      try {
+        let validIsoDate: string | undefined = undefined;
+        if (eventDate) {
+          const d = new Date(eventDate);
+          if (!isNaN(d.getTime())) {
+            validIsoDate = d.toISOString();
+          }
+        }
+
+        await createJob({
+          title: title.trim(),
+          description: description.trim(),
+          category: selectedServices[0] || "General",
+          occasion,
+          budgetMin: parseFloat(budgetMin) || 0,
+          budgetMax: parseFloat(budgetMax) || 0,
+          eventDate: validIsoDate,
+          location: location.trim(),
+          guestCount: parseInt(guestCount, 10) || 0,
+          duration,
+          specialRequests,
+          isPostedToFamily: postToFamily,
+          publishNow: true,
+        }).unwrap();
+        toast.success("Job Published! Your RFP is live and matching vetted vendors in Chicago.");
+        router.push("/user/jobs");
+      } catch (err: any) {
+        toast.error(err?.data?.message || "Failed to publish job");
+      }
     }
   };
 
@@ -168,7 +246,7 @@ export default function PostJobWizardPage() {
                 </span>
                 <h2 className="text-xl font-bold text-[#0F0C3B] mt-1">What do you need help with?</h2>
                 <p className="text-slate-500 mt-0.5">
-                  Select your celebration type and the specific artisan services you are seeking vetted proposals for.
+                  Select your celebration type and the specific vendor services you are seeking vetted proposals for.
                 </p>
               </div>
 
@@ -235,7 +313,7 @@ export default function PostJobWizardPage() {
                   className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-[#0F0C3B] font-medium focus:outline-none focus:border-brand-primary focus:bg-white"
                 />
                 <p className="text-[11px] text-slate-400 mt-1">
-                  💡 A clear, descriptive title attracts 40% faster bids from vetted artisans.
+                  💡 A clear, descriptive title attracts 40% faster bids from vetted vendors.
                 </p>
               </div>
 
@@ -253,7 +331,7 @@ export default function PostJobWizardPage() {
                       </span>
                     </div>
                     <p className="text-[11px] text-slate-600 mt-0.5">
-                      Allow co-hosts to review and vote on this RFP draft before broadcasting to the public artisan network.
+                      Allow co-hosts to review and vote on this RFP draft before broadcasting to the public vendor network.
                     </p>
                   </div>
                 </div>
@@ -280,7 +358,7 @@ export default function PostJobWizardPage() {
                 </span>
                 <h2 className="text-xl font-bold text-[#0F0C3B] mt-1">When and where is your celebration?</h2>
                 <p className="text-slate-500 mt-0.5">
-                  Artisans use date, venue type, and guest count to calculate precise travel and equipment needs.
+                  Vendors use date, venue type, and guest count to calculate precise travel and equipment needs.
                 </p>
               </div>
 
@@ -421,7 +499,7 @@ export default function PostJobWizardPage() {
                 </span>
                 <h2 className="text-xl font-bold text-[#0F0C3B] mt-1">Ready to publish your request?</h2>
                 <p className="text-slate-500 mt-0.5">
-                  Your job will be immediately broadcast to vetted Chicago artisans matching your criteria.
+                  Your job will be immediately broadcast to vetted Chicago vendors matching your criteria.
                 </p>
               </div>
 
@@ -460,10 +538,20 @@ export default function PostJobWizardPage() {
             <button
               type="button"
               onClick={handleNext}
-              className="px-6 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
+              disabled={isCreatingJob}
+              className="px-6 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white text-xs font-bold transition-all shadow-md flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
             >
-              <span>{step === 5 ? "Publish Job to Network" : "Continue"}</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              {isCreatingJob ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  <span>Publishing RFP...</span>
+                </>
+              ) : (
+                <>
+                  <span>{step === 5 ? "Publish Job to Network" : "Continue"}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -484,7 +572,7 @@ export default function PostJobWizardPage() {
             {/* Header banner */}
             <div className="bg-[#18124E] p-4 text-white flex items-center justify-between">
               <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-[10px] font-bold uppercase tracking-wider">
-                🎂 Birthday Celebration
+                {selectedOccasionObj?.icon || "🎉"} {selectedOccasionObj?.label || "Celebration"} RFP
               </span>
               <span className="text-[10px] font-extrabold bg-amber-500 text-[#0F0C3B] px-2 py-0.5 rounded">
                 NEW RFP
@@ -497,7 +585,7 @@ export default function PostJobWizardPage() {
                   {title || "Untitled Job Request"}
                 </h3>
                 <p className="text-[11px] text-slate-500 mt-1">
-                  Looking for {selectedServices.length} verified artisans in the Chicagoland area
+                  Looking for {selectedServices.length} verified vendors in the Chicagoland area
                 </p>
               </div>
 
@@ -536,11 +624,11 @@ export default function PostJobWizardPage() {
               <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold text-[10px]">
-                    EC
+                    {hostInitials}
                   </div>
                   <div>
-                    <span className="font-bold text-[#0F0C3B] block">Emily Carter</span>
-                    <span className="text-[10px] text-slate-400">Lincoln Park, Chicago, IL</span>
+                    <span className="font-bold text-[#0F0C3B] block">{clientName}</span>
+                    <span className="text-[10px] text-slate-400">{clientCity}</span>
                   </div>
                 </div>
               </div>
