@@ -1,19 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { 
   X, 
   Wallet, 
   CheckCircle2, 
-  Building2, 
   ArrowRight, 
   ShieldCheck,
   AlertCircle,
-  Clock,
-  DollarSign
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import { useWithdrawEarningsMutation } from "@/redux/service/payments/paymentsApi";
 
 interface WithdrawFundsDrawerProps {
   isOpen: boolean;
@@ -24,16 +22,28 @@ interface WithdrawFundsDrawerProps {
 export default function WithdrawFundsDrawer({
   isOpen,
   onClose,
-  availableAmount = "540.00"
+  availableAmount = "0.00"
 }: WithdrawFundsDrawerProps) {
   const [withdrawAmount, setWithdrawAmount] = useState(availableAmount);
-  const [payoutMethod, setPayoutMethod] = useState<"instant" | "standard">("instant");
+  const [payoutMethod, setPayoutMethod] = useState<"instant" | "standard">("standard");
+  const [withdrawEarnings, { isLoading }] = useWithdrawEarningsMutation();
+  useEffect(() => setWithdrawAmount(availableAmount), [availableAmount, isOpen]);
 
   if (!isOpen) return null;
 
-  const handleWithdraw = () => {
-    toast.success(`Withdrawal of $${withdrawAmount} initiated to Chase Bank (•••• 4812)!`);
-    onClose();
+  const handleWithdraw = async () => {
+    const amount = Number(withdrawAmount);
+    if (!Number.isFinite(amount) || amount <= 0 || amount > Number(availableAmount)) {
+      toast.error("Enter an amount within your available Stripe balance.");
+      return;
+    }
+    try {
+      await withdrawEarnings({ amount, speed: payoutMethod }).unwrap();
+      toast.success("Payout request sent to Stripe Connect.");
+      onClose();
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Stripe could not create this payout.");
+    }
   };
 
   return (
@@ -47,7 +57,7 @@ export default function WithdrawFundsDrawer({
             </div>
             <div>
               <h3 className="font-bold text-[#0F0C3B] text-base">Withdraw Funds</h3>
-              <p className="text-[11px] text-slate-500">Stripe Connect Instant Settlement</p>
+              <p className="text-[11px] text-slate-500">Payout from your connected Stripe balance</p>
             </div>
           </div>
 
@@ -70,9 +80,7 @@ export default function WithdrawFundsDrawer({
                 Cleared
               </span>
             </div>
-            <p className="text-[11px] text-slate-500">
-              Pending clearance: $360.00 (Clears Sep 28) • Escrow: $1,150.00
-            </p>
+            <p className="text-[11px] text-slate-500">Stripe may take additional time to deposit a payout to your bank.</p>
           </div>
 
           {/* Amount input */}
@@ -95,16 +103,13 @@ export default function WithdrawFundsDrawer({
             <div className="p-3.5 rounded-xl border border-slate-200 bg-white flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div className="w-9 h-9 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold">
-                  <Building2 className="w-5 h-5" />
+                  <Wallet className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-[#0F0C3B]">Chase Checking</h4>
-                  <p className="text-[11px] text-slate-400">•••• 4812 • Verified</p>
+                  <h4 className="font-bold text-[#0F0C3B]">Stripe connected account</h4>
+                  <p className="text-[11px] text-slate-400">Manage bank details in Stripe Express</p>
                 </div>
               </div>
-              <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded">
-                Default
-              </span>
             </div>
           </div>
 
@@ -123,10 +128,9 @@ export default function WithdrawFundsDrawer({
                 )}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-[#0F0C3B]">Instant (1-30 min)</span>
-                  <span className="text-[10px] font-bold text-indigo-600">Free</span>
+                  <span className="font-bold text-[#0F0C3B]">Instant</span>
                 </div>
-                <p className="text-[10px] text-slate-500 mt-1">Direct debit card transfer</p>
+                <p className="text-[10px] text-slate-500 mt-1">If enabled for your account; fees and timing vary.</p>
               </button>
 
               <button
@@ -140,17 +144,16 @@ export default function WithdrawFundsDrawer({
                 )}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-[#0F0C3B]">Standard (1-2 days)</span>
-                  <span className="text-[10px] font-bold text-slate-400">Free</span>
+                  <span className="font-bold text-[#0F0C3B]">Standard</span>
                 </div>
-                <p className="text-[10px] text-slate-500 mt-1">Standard ACH bank transfer</p>
+                <p className="text-[10px] text-slate-500 mt-1">Availability and timing are set by Stripe.</p>
               </button>
             </div>
           </div>
 
           <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500 flex items-center gap-2">
             <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-            <span>Encrypted bank rails via Stripe Treasury • 0% vendor transaction fee</span>
+            <span>Stripe will show the payout status and any applicable payout fee.</span>
           </div>
         </div>
 
@@ -158,9 +161,10 @@ export default function WithdrawFundsDrawer({
         <div className="p-5 border-t border-slate-200 bg-white">
           <button
             onClick={handleWithdraw}
-            className="w-full py-3 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5"
+            disabled={isLoading}
+            className="w-full py-3 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 disabled:opacity-50"
           >
-            <span>Transfer ${withdrawAmount} Now</span>
+            <span>{isLoading ? "Sending to Stripe..." : `Request payout $${withdrawAmount}`}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
