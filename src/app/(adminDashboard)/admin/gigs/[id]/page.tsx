@@ -368,7 +368,7 @@ const mockGigsDatabase: Record<string, GigDetailData> = {
       rating: 4.92,
       completedOrders: 82,
       memberSince: "Feb 2024",
-      tier: "Artisan Baker",
+      tier: "Vendor Baker",
       email: "marcus@sweetdelights.com",
       phone: "+1 (312) 555-8911",
       location: "Chicago, IL",
@@ -424,22 +424,57 @@ const mockGigsDatabase: Record<string, GigDetailData> = {
   },
 };
 
+import { useEffect } from "react";
+import { 
+  useGetAdminGigByIdQuery, 
+  useUpdateGigStatusMutation 
+} from "@/redux/service/admin/adminApi";
+
 export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = use(params);
   const router = useRouter();
   const gigId = resolvedParams.id;
   
+  const { data: apiGig, refetch } = useGetAdminGigByIdQuery(gigId);
+  const [updateGigStatus] = useUpdateGigStatusMutation();
+
   const initialGig = mockGigsDatabase[gigId] || mockGigsDatabase["GIG-101"];
   const [gig, setGig] = useState<GigDetailData>({
     ...initialGig,
     id: gigId, // keep url param id
   });
 
+  useEffect(() => {
+    if (apiGig) {
+      setGig((prev) => ({
+        ...prev,
+        id: apiGig.id,
+        title: apiGig.title,
+        category: apiGig.category?.name || prev.category,
+        status: apiGig.status || prev.status,
+        vendor: {
+          ...prev.vendor,
+          businessName: apiGig.vendorProfile?.businessName || prev.vendor.businessName,
+          email: apiGig.vendorProfile?.user?.email || prev.vendor.email,
+          rating: Number(apiGig.vendorProfile?.rating || 5.0),
+          tier: apiGig.vendorProfile?.tier || prev.vendor.tier,
+        },
+        description: apiGig.description || prev.description,
+      }));
+    }
+  }, [apiGig]);
+
   const [selectedTier, setSelectedTier] = useState<"basic" | "standard" | "premium">("standard");
   const [newNote, setNewNote] = useState("");
   const [commissionInput, setCommissionInput] = useState(gig.commissionRate);
 
-  const handleStatusChange = (newStatus: GigDetailData["status"]) => {
+  const handleStatusChange = async (newStatus: GigDetailData["status"]) => {
+    try {
+      await updateGigStatus({ id: gig.id, status: newStatus }).unwrap();
+      refetch();
+    } catch {
+      // Local state fallback
+    }
     setGig({ ...gig, status: newStatus });
     toast.success(`Gig #${gig.id} status updated to ${newStatus}.`);
   };
@@ -454,6 +489,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
     setGig({ ...gig, commissionRate: commissionInput });
     toast.success(`Platform commission updated to ${commissionInput}% for this gig.`);
   };
+
 
   const handleAddNote = (e: React.FormEvent) => {
     e.preventDefault();
