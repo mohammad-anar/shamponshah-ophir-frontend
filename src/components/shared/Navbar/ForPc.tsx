@@ -124,7 +124,7 @@ export default function ForPc() {
 
           <div ref={searchContainerRef} className="relative w-64 xl:w-80">
             <form onSubmit={handleSearchSubmit} className="relative w-full">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#DFB76C]" />
               <input
                 type="text"
                 value={searchQuery}
@@ -139,7 +139,7 @@ export default function ForPc() {
                   if (e.key === "Escape") setIsSearchOpen(false);
                 }}
                 placeholder="Search artisans, traditions, services..."
-                className="w-full h-9 pl-9 pr-9 text-xs bg-[#121418] hover:bg-[#16181F] focus:bg-[#121418] text-slate-200 placeholder:text-slate-500 rounded-none border border-[#262930] focus:border-[#DFB76C] focus:outline-none transition-all"
+                className="w-full h-9 pl-9 pr-9 text-xs bg-[#121418] hover:bg-[#16181F] focus:bg-[#121418] text-white placeholder:text-[#94A3B8] rounded-none border border-[#262930] focus:border-[#DFB76C] focus:outline-none transition-all"
               />
               {searchQuery && (
                 <button
@@ -148,7 +148,7 @@ export default function ForPc() {
                     setSearchQuery("");
                     setIsSearchOpen(false);
                   }}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 p-0.5 cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-0.5 cursor-pointer"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
