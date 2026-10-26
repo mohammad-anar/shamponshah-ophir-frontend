@@ -7,7 +7,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const publicRoutes = [
     "",
     "/vendors",
-    "/become-a-vendor",
     "/how-it-works",
     "/about-us",
     "/contact-us",
@@ -22,6 +21,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${baseUrl}${route}`,
     lastModified,
     changeFrequency: route === "" || route === "/vendors" ? "daily" : "weekly",
-    priority: route === "" ? 1.0 : route === "/vendors" || route === "/become-a-vendor" ? 0.9 : 0.7,
+    priority: route === "" ? 1.0 : route === "/vendors" ? 0.9 : 0.7,
   }));
 }
