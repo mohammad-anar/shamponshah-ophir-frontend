@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import AddToFamilyHubModal from "@/components/shared/AddToFamilyHubModal";
 import { useSaveVendorMutation, useGetSavedVendorsQuery } from "@/redux/service/vendors/vendorsApi";
+import { useTrackImpression, trackClick } from "@/lib/tracking";
 
 interface VendorCardProps {
   vendor: Vendor;
@@ -16,6 +17,7 @@ interface VendorCardProps {
 }
 
 export default function VendorCard({ vendor, variant = "default" }: VendorCardProps) {
+  const cardRef = useTrackImpression("VENDOR", vendor.id);
   const [saveVendor] = useSaveVendorMutation();
   const { data: savedData } = useGetSavedVendorsQuery();
   const savedList = Array.isArray(savedData) ? savedData : (savedData?.data || []);
@@ -80,10 +82,13 @@ export default function VendorCard({ vendor, variant = "default" }: VendorCardPr
 
   return (
     <>
-      <div className="group relative bg-[#121418] rounded-none overflow-hidden border border-[#26282E] hover:border-[#DFB76C]/60 shadow-lg transition-all duration-300 flex flex-col justify-between">
+      <div 
+        ref={cardRef}
+        className="group relative bg-[#121418] rounded-none overflow-hidden border border-[#26282E] hover:border-[#DFB76C]/60 shadow-lg transition-all duration-300 flex flex-col justify-between"
+      >
         {/* Top Image & Overlays */}
         <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-[#0B0C0E]">
-          <Link href={`/vendors/${vendor.id}`}>
+          <Link href={`/vendors/${vendor.id}`} onClick={() => trackClick("VENDOR", vendor.id)}>
             <Image
               src={vendor.heroImage}
               alt={vendor.name}
