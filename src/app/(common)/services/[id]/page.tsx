@@ -21,10 +21,13 @@ import {
   Lock,
   DollarSign,
   Calendar,
+  Flag,
+  Loader2,
+  AlertTriangle,
 } from "lucide-react";
 import { toast } from "sonner";
 import { VENDORS } from "@/data/mockData";
-import { useGetGigBySlugQuery } from "@/redux/service/gigs/gigsApi";
+import { useGetGigBySlugQuery, useReportGigMutation } from "@/redux/service/gigs/gigsApi";
 import AddToFamilyHubModal from "@/components/shared/AddToFamilyHubModal";
 
 interface ServiceDetailPageProps {
@@ -40,11 +43,46 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
     skip: !serviceId,
   });
 
+  const [reportGigMutation, { isLoading: isSubmittingReport }] = useReportGigMutation();
+
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [selectedPackageIndex, setSelectedPackageIndex] = useState(0);
   const [hubModalOpen, setHubModalOpen] = useState(false);
 
+  // Report Modal State
+  const [reportModalOpen, setReportModalOpen] = useState(false);
+  const [reportReason, setReportReason] = useState("Misleading pricing or inaccurate deliverables");
+  const [reportDescription, setReportDescription] = useState("");
+  const [reporterName, setReporterName] = useState("");
+  const [reporterEmail, setReporterEmail] = useState("");
+
   const liveGig = gigResp?.data || gigResp;
+
+  const handleSubmitReport = async () => {
+    if (!reportDescription.trim()) {
+      toast.error("Please provide a detailed explanation for your report.");
+      return;
+    }
+
+    try {
+      const gigIdentifier = liveGig?.id || serviceId;
+      await reportGigMutation({
+        gigId: gigIdentifier,
+        reason: reportReason,
+        description: reportDescription.trim(),
+        reporterName: reporterName.trim() || undefined,
+        reporterEmail: reporterEmail.trim() || undefined,
+      }).unwrap();
+
+      toast.success("Report Submitted", {
+        description: "Thank you for helping keep the marketplace safe. Administrators will audit this service.",
+      });
+      setReportModalOpen(false);
+      setReportDescription("");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to submit report. Please try again.");
+    }
+  };
 
   // Resolve service data from live API or mock fallback
   const service = useMemo(() => {
@@ -165,6 +203,100 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
         />
       )}
 
+      {/* Report Service Modal */}
+      {reportModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-[#121418] border border-[#26282E] max-w-md w-full p-6 text-white space-y-4 shadow-2xl">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-rose-500/10 border border-rose-500/30 text-rose-400 flex items-center justify-center">
+                <Flag className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-bold text-white text-base">Report Service Listing</h3>
+                <p className="text-xs text-slate-400">
+                  Notify Platform Trust &amp; Safety of policy violations or safety concerns
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-3.5 text-xs">
+              <div>
+                <label className="font-bold text-slate-300 block mb-1">
+                  Reason for Report <span className="text-rose-500">*</span>
+                </label>
+                <select
+                  value={reportReason}
+                  onChange={(e) => setReportReason(e.target.value)}
+                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-slate-200 text-xs focus:border-[#DFB76C] outline-none"
+                >
+                  <option value="Misleading pricing or inaccurate deliverables">Misleading pricing or inaccurate deliverables</option>
+                  <option value="Inappropriate or offensive content">Inappropriate or offensive content</option>
+                  <option value="Copyright or intellectual property infringement">Copyright or intellectual property infringement</option>
+                  <option value="Prohibited services or illegal activity">Prohibited services or illegal activity</option>
+                  <option value="Safety, security or privacy concern">Safety, security or privacy concern</option>
+                  <option value="Suspected fraudulent vendor">Suspected fraudulent vendor</option>
+                  <option value="Other grievance">Other grievance</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="font-bold text-slate-300 block mb-1">
+                  Detailed Explanation <span className="text-rose-500">*</span>
+                </label>
+                <textarea
+                  value={reportDescription}
+                  onChange={(e) => setReportDescription(e.target.value)}
+                  placeholder="Explain clearly what violates platform terms, with relevant details..."
+                  rows={4}
+                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-slate-200 text-xs focus:border-[#DFB76C] outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-slate-300 block mb-1">Your Name (Optional)</label>
+                <input
+                  type="text"
+                  value={reporterName}
+                  onChange={(e) => setReporterName(e.target.value)}
+                  placeholder="Your full name"
+                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-slate-200 text-xs focus:border-[#DFB76C] outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-slate-300 block mb-1">Your Email (Optional)</label>
+                <input
+                  type="email"
+                  value={reporterEmail}
+                  onChange={(e) => setReporterEmail(e.target.value)}
+                  placeholder="your.email@example.com"
+                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-slate-200 text-xs focus:border-[#DFB76C] outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setReportModalOpen(false)}
+                className="flex-1 py-2.5 border border-[#26282E] text-xs font-bold text-slate-400 hover:text-white hover:bg-[#1A1D24] cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={handleSubmitReport}
+                disabled={isSubmittingReport}
+                className="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+              >
+                {isSubmittingReport ? <Loader2 className="w-4 h-4 animate-spin" /> : <Flag className="w-4 h-4" />}
+                <span>Submit Report</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Breadcrumb Navigation */}
       <div className="bg-[#121418] border-b border-[#26282E]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
@@ -221,6 +353,14 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               title="Share Service"
             >
               <Share2 className="w-4 h-4" />
+            </button>
+
+            <button
+              onClick={() => setReportModalOpen(true)}
+              className="p-2.5 rounded-none bg-[#121418] border border-[#26282E] text-slate-400 hover:text-rose-400 hover:border-rose-500/40 transition-colors cursor-pointer"
+              title="Report this service"
+            >
+              <Flag className="w-4 h-4" />
             </button>
           </div>
         </div>
