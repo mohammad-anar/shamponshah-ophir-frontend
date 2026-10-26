@@ -635,7 +635,11 @@ export default function CreateGigPage() {
                 <div className="mt-3 flex items-center gap-2">
                   <button
                     type="button"
-                    className="px-3.5 py-1.5 rounded-lg bg-[#0F0C3B] text-white text-[11px] font-bold shadow-xs hover:bg-[#18124E]"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      fileInputRef.current?.click();
+                    }}
+                    className="px-3.5 py-1.5 rounded-lg bg-[#0F0C3B] text-white text-[11px] font-bold shadow-xs hover:bg-[#18124E] cursor-pointer"
                   >
                     Select Photos from Computer
                   </button>
