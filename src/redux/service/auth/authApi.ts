@@ -10,8 +10,11 @@ interface RegisterRequest {
   email: string;
   password: string;
   role: "CLIENT" | "VENDOR";
+  fullName?: string;
   displayName?: string;
   businessName?: string;
+  phone?: string;
+  website?: string;
   city?: string;
   state?: string;
 }
