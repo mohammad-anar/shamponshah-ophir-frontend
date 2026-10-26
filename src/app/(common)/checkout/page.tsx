@@ -16,12 +16,7 @@ import { useGetPaymentMethodsQuery, useCreatePaymentIntentMutation } from "@/red
 import { useCreateOrderMutation, useGetOrderByIdQuery } from "@/redux/service/orders/ordersApi";
 import { useGetVendorBySlugQuery } from "@/redux/service/vendors/vendorsApi";
 import { useUpdateBoardItemMutation } from "@/redux/service/family-hub/familyHubApi";
-
-declare global {
-  interface Window {
-    Stripe?: any;
-  }
-}
+import StripePaymentModal from "@/components/payment/StripePaymentModal";
 
 export default function CheckoutBookingPage() {
   const searchParams = useSearchParams();
@@ -65,6 +60,8 @@ export default function CheckoutBookingPage() {
   const [confirmedOrderNumber, setConfirmedOrderNumber] = useState("");
   const [confirmedChargeAmount, setConfirmedChargeAmount] = useState(0);
 
+  const [paymentModalOrder, setPaymentModalOrder] = useState<{ id: string; orderNumber?: string; amount: number } | null>(null);
+
   useEffect(() => {
     if (!selectedSavedCardId && savedMethods.length) {
       const defaultMethod = savedMethods.find((method: any) => method.isDefault) || savedMethods[0];
@@ -74,7 +71,8 @@ export default function CheckoutBookingPage() {
 
   const basePackagePrice = Number(existingOrder?.subtotal ?? selectedPkg?.price ?? 0);
   const subtotal = basePackagePrice;
-  const platformFee = subtotal * 0.05; // 5%
+  const platformFee = subtotal * 0.15; // 15% platform fee
+  const vendorNet = subtotal * 0.85; // 85% vendor net
   const grandTotal = subtotal + platformFee;
 
   const configuredMilestones = Array.isArray(selectedPkg?.escrowSplitJson)
@@ -336,26 +334,65 @@ export default function CheckoutBookingPage() {
                   )}
                 </div>
 
-                {/* Submit Escrow Button */}
+                {/* Direct Custom PaymentElement Form Action */}
                 <button
-                  type="submit"
-                  disabled={isProcessing || !savedMethods.length}
-                  className="w-full h-14 bg-[#0F1228] hover:bg-[#1A1F40] disabled:bg-slate-300 disabled:cursor-not-allowed active:scale-99 text-white font-bold text-sm rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  type="button"
+                  onClick={async () => {
+                    if (!existingOrderId && !selectedPkg?.id) {
+                      toast.error("Choose an available service package before booking.");
+                      return;
+                    }
+                    setIsProcessing(true);
+                    try {
+                      const orderRes = existingOrderId ? null : await createOrder({
+                        packageId: selectedPkg?.id,
+                        eventDate: new Date(eventDate).toISOString(),
+                        deliveryNotes: `Package: ${selectedPkg.title || "Service package"}`,
+                        amount: grandTotal,
+                        source: "GIG",
+                      }).unwrap();
+
+                      const order = existingOrderId ? existingOrder : (orderRes?.data || orderRes);
+                      if (!order?.id) throw new Error("Order creation failed");
+
+                      setPaymentModalOrder({
+                        id: order.id,
+                        orderNumber: order.orderNumber,
+                        amount: grandTotal,
+                      });
+                      setIsProcessing(false);
+                    } catch (err: any) {
+                      setIsProcessing(false);
+                      toast.error(err?.data?.message || err?.message || "Could not prepare order for payment");
+                    }
+                  }}
+                  disabled={isProcessing}
+                  className="w-full h-14 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 hover:from-amber-600 hover:to-amber-700 active:scale-99 text-slate-950 font-bold text-sm rounded-xl shadow-xl shadow-amber-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  {isProcessing ? (
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  ) : !savedMethods.length ? (
-                    <span>Add Payment Method to Book</span>
-                  ) : (
-                    <>
-                      <Lock className="w-4 h-4 text-amber-300" />
-                      <span>Pay First Milestone — ${milestone1.toFixed(2)} plus fee</span>
-                    </>
-                  )}
+                  <Lock className="w-4 h-4 text-slate-950" />
+                  <span>Pay with Stripe PaymentElement (${grandTotal.toFixed(2)})</span>
                 </button>
 
+                {/* Submit Escrow Button using Saved Card if available */}
+                {savedMethods.length > 0 && (
+                  <button
+                    type="submit"
+                    disabled={isProcessing || !selectedSavedCardId}
+                    className="w-full h-12 bg-[#1A1F40] hover:bg-[#252B56] disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  >
+                    {isProcessing ? (
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    ) : (
+                      <>
+                        <Lock className="w-3.5 h-3.5 text-amber-300" />
+                        <span>Quick Pay with Saved Card</span>
+                      </>
+                    )}
+                  </button>
+                )}
+
                 <p className="text-[11px] text-slate-400 text-center leading-relaxed">
-                  The first milestone is charged now. Later milestones are charged before their work begins. Approved milestone transfers are held for 7 days; disputes pause release.
+                  Full amount is held in Ophir Escrow Vault (15% platform fee, 85% vendor net). Funds are protected until you approve completed delivery.
                 </p>
               </div>
             </div>
@@ -409,6 +446,23 @@ export default function CheckoutBookingPage() {
               </Link>
             </div>
           </div>
+        )}
+
+        {/* Custom Stripe PaymentElement Modal */}
+        {paymentModalOrder && (
+          <StripePaymentModal
+            isOpen={!!paymentModalOrder}
+            onClose={() => setPaymentModalOrder(null)}
+            orderId={paymentModalOrder.id}
+            orderNumber={paymentModalOrder.orderNumber}
+            amount={paymentModalOrder.amount}
+            onSuccess={(data) => {
+              setPaymentModalOrder(null);
+              setConfirmedOrderNumber(data.orderNumber || paymentModalOrder.orderNumber || paymentModalOrder.id);
+              setConfirmedChargeAmount(Number(data.amount || paymentModalOrder.amount));
+              setIsSuccess(true);
+            }}
+          />
         )}
       </div>
     </div>
