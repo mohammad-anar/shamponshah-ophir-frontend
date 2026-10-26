@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, Menu, X, ChevronDown, User, ShieldCheck, Sparkles, Loader2 } from "lucide-react";
+import { Search, Menu, X, User, Loader2 } from "lucide-react";
 import Logo from "../Logo/Logo";
 import { cn } from "@/lib/utils";
 import { useGetMeQuery } from "@/redux/service/auth/authApi";
@@ -12,7 +12,6 @@ import { useAppSelector } from "@/redux/hooks/hooks";
 
 export default function ForMobile() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isOccasionsOpen, setIsOccasionsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const pathname = usePathname();
@@ -49,15 +48,6 @@ export default function ForMobile() {
     }
   };
 
-  const occasions = [
-    { title: "Weddings & Receptions", href: "/vendors?occasion=weddings" },
-    { title: "Birthdays & Anniversaries", href: "/vendors?occasion=birthdays" },
-    { title: "Baby Showers & Reveals", href: "/vendors?occasion=babyshowers" },
-    { title: "Graduations & Honors", href: "/vendors?occasion=graduations" },
-    { title: "Quinceañeras & Cotillions", href: "/vendors?occasion=quinceaneras" },
-    { title: "Corporate Events & Galas", href: "/vendors?occasion=corporate" },
-  ];
-
   return (
     <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#0B0C0E]/95 backdrop-blur-md border-b border-[#26282E] shadow-2xl">
       <div className="px-4 h-[68px] flex items-center justify-between">
@@ -66,7 +56,7 @@ export default function ForMobile() {
         <div className="flex items-center gap-2">
           <Link
             href={user?.id ? dashboardLink : "/login"}
-            className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#262930] text-[#DFB76C] flex items-center justify-center text-xs font-bold"
+            className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] flex items-center justify-center text-xs font-bold"
             title={user?.name || user?.email || "Account Profile"}
           >
             {user?.id ? userInitials : <User className="w-3.5 h-3.5" />}
@@ -101,7 +91,7 @@ export default function ForMobile() {
                   <button
                     type="button"
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 p-0.5 cursor-pointer"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-0.5 cursor-pointer"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -110,8 +100,8 @@ export default function ForMobile() {
 
               {/* Mobile Services Dropdown (max-height = 1/3 screen) */}
               {searchQuery.trim().length > 0 && (
-                <div className="mt-2 bg-[#121418] rounded-none shadow-luxury-xl border border-[#262930] overflow-hidden">
-                  <div className="px-3.5 py-2 bg-[#0B0C0E] border-b border-[#262930] flex items-center justify-between text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                <div className="mt-2 bg-[#121418] rounded-none shadow-2xl border border-[#26282E] overflow-hidden">
+                  <div className="px-3.5 py-2 bg-[#0B0C0E] border-b border-[#26282E] flex items-center justify-between text-[10px] font-bold text-slate-400 uppercase tracking-widest">
                     <span>Matching Artisans & Services</span>
                     {isSearchingGigs && (
                       <span className="flex items-center gap-1 text-[#DFB76C]">
@@ -164,7 +154,7 @@ export default function ForMobile() {
                   <Link
                     href={`/vendors?q=${encodeURIComponent(searchQuery.trim())}`}
                     onClick={() => setIsOpen(false)}
-                    className="block px-3.5 py-2.5 bg-[#0B0C0E] hover:bg-[#16181F] text-xs font-bold text-[#DFB76C] text-center border-t border-[#262930] uppercase tracking-wider"
+                    className="block px-3.5 py-2.5 bg-[#0B0C0E] hover:bg-[#16181F] text-xs font-bold text-[#DFB76C] text-center border-t border-[#26282E] uppercase tracking-wider"
                   >
                     View all results &rarr;
                   </Link>
@@ -174,35 +164,11 @@ export default function ForMobile() {
 
             {/* Mobile Nav Links */}
             <div className="space-y-1 font-medium">
-              <div>
-                <button
-                  onClick={() => setIsOccasionsOpen(!isOccasionsOpen)}
-                  className="w-full flex items-center justify-between py-3 text-xs uppercase tracking-widest text-slate-300 border-b border-[#262930]"
-                >
-                  <span>Occasions</span>
-                  <ChevronDown className={cn("w-4 h-4 text-slate-500 transition-transform", isOccasionsOpen && "rotate-180")} />
-                </button>
-                {isOccasionsOpen && (
-                  <div className="pl-3 py-2 space-y-2 bg-[#121418] border-l-2 border-[#DFB76C] my-2">
-                    {occasions.map((occ) => (
-                      <Link
-                        key={occ.title}
-                        href={occ.href}
-                        onClick={() => setIsOpen(false)}
-                        className="block py-1 text-xs text-slate-300 hover:text-[#DFB76C]"
-                      >
-                        {occ.title}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-
               <Link
                 href="/services"
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "block py-3 text-xs uppercase tracking-widest border-b border-[#262930]",
+                  "block py-3 text-xs uppercase tracking-widest border-b border-[#26282E]",
                   pathname.startsWith("/services") ? "text-[#DFB76C] font-bold" : "text-slate-300 hover:text-[#DFB76C]"
                 )}
               >
@@ -213,7 +179,7 @@ export default function ForMobile() {
                 href="/vendors"
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "block py-3 text-xs uppercase tracking-widest border-b border-[#262930]",
+                  "block py-3 text-xs uppercase tracking-widest border-b border-[#26282E]",
                   pathname.startsWith("/vendors") ? "text-[#DFB76C] font-bold" : "text-slate-300 hover:text-[#DFB76C]"
                 )}
               >
@@ -223,7 +189,7 @@ export default function ForMobile() {
               <Link
                 href="/how-it-works"
                 onClick={() => setIsOpen(false)}
-                className="block py-3 text-xs uppercase tracking-widest text-slate-300 hover:text-[#DFB76C] border-b border-[#262930]"
+                className="block py-3 text-xs uppercase tracking-widest text-slate-300 hover:text-[#DFB76C] border-b border-[#26282E]"
               >
                 The Process
               </Link>
@@ -231,47 +197,29 @@ export default function ForMobile() {
               <Link
                 href="/help-center"
                 onClick={() => setIsOpen(false)}
-                className="block py-3 text-xs uppercase tracking-widest text-slate-300 hover:text-[#DFB76C] border-b border-[#262930]"
+                className="block py-3 text-xs uppercase tracking-widest text-slate-300 hover:text-[#DFB76C] border-b border-[#26282E]"
               >
                 Escrow Vault
-              </Link>
-
-              <Link
-                href="/become-a-vendor"
-                onClick={() => setIsOpen(false)}
-                className="block py-3 text-xs uppercase tracking-widest text-slate-300 hover:text-[#DFB76C] border-b border-[#262930]"
-              >
-                Artisan Application
               </Link>
             </div>
           </div>
 
           {/* Bottom Actions */}
-          <div className="space-y-3 pt-6 border-t border-[#262930]">
+          <div className="space-y-3 pt-6 border-t border-[#26282E]">
             {user?.id ? (
-              <>
-                <Link
-                  href={user?.role === "CLIENT" ? "/user/post-job" : "/vendors?action=post-job"}
-                  onClick={() => setIsOpen(false)}
-                  className="w-full py-3 text-center block text-xs font-bold uppercase tracking-widest text-[#0B0C0E] bg-[#DFB76C] hover:bg-[#ECC870] rounded-none shadow-gold-glow-sm transition-all"
-                >
-                  Plan Event
-                </Link>
-
-                <Link
-                  href={dashboardLink}
-                  onClick={() => setIsOpen(false)}
-                  className="w-full py-2.5 text-center block text-xs font-bold uppercase tracking-wider text-[#DFB76C] bg-[#121418] hover:bg-[#1A1D24] rounded-none border border-[#262930]"
-                >
-                  Dashboard ({user?.role === "VENDOR" ? "Artisan Portal" : user?.role === "ADMIN" ? "Admin Console" : "Client Portal"})
-                </Link>
-              </>
+              <Link
+                href={dashboardLink}
+                onClick={() => setIsOpen(false)}
+                className="w-full py-2.5 text-center block text-xs font-bold uppercase tracking-wider text-[#DFB76C] bg-[#121418] hover:bg-[#1A1D24] rounded-none border border-[#26282E]"
+              >
+                Dashboard ({user?.role === "VENDOR" ? "Artisan Portal" : user?.role === "ADMIN" ? "Admin Console" : "Client Portal"})
+              </Link>
             ) : (
               <div className="grid grid-cols-2 gap-3">
                 <Link
                   href="/login"
                   onClick={() => setIsOpen(false)}
-                  className="py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-slate-300 bg-[#121418] border border-[#262930] hover:bg-[#1A1D24] rounded-none"
+                  className="py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-slate-300 bg-[#121418] border border-[#26282E] hover:bg-[#1A1D24] rounded-none"
                 >
                   Sign In
                 </Link>
@@ -280,7 +228,7 @@ export default function ForMobile() {
                   onClick={() => setIsOpen(false)}
                   className="py-2.5 text-center text-xs font-bold uppercase tracking-widest text-[#0B0C0E] bg-[#DFB76C] hover:bg-[#ECC870] rounded-none"
                 >
-                  Join
+                  Register
                 </Link>
               </div>
             )}
