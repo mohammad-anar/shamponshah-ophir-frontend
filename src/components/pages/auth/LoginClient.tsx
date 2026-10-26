@@ -20,7 +20,7 @@ export default function LoginPage() {
   const dispatch = useAppDispatch();
   const [loginUser, { isLoading }] = useLoginUserMutation();
   const [resendVerification, { isLoading: isResendingVerification }] = useResendVerificationMutation();
-  const [unverifiedVendor, setUnverifiedVendor] = useState<{ email: string } | null>(null);
+  const [unverifiedUser, setUnverifiedUser] = useState<{ email: string; role: string } | null>(null);
   const [email, setEmail] = useState("sarah@ophir.com");
   const [password, setPassword] = useState("Ophir1234!");
   const [showPassword, setShowPassword] = useState(false);
@@ -113,9 +113,9 @@ export default function LoginPage() {
         localStorage.setItem("token", res.accessToken);
       }
 
-      if (res.user.role === "VENDOR" && !res.user.isEmailVerified) {
-        setUnverifiedVendor({ email: res.user.email });
-        toast.warning("Unverified vendor: Please verify your email to activate your account.");
+      if (!res.user.isEmailVerified) {
+        setUnverifiedUser({ email: res.user.email, role: res.user.role });
+        toast.warning("Your email is not verified. Please verify your email to activate your account.");
         return;
       }
 
@@ -129,6 +129,14 @@ export default function LoginPage() {
         router.push("/user");
       }
     } catch (err: any) {
+      if (err?.data?.isEmailVerified === false) {
+        setUnverifiedUser({
+          email: err.data.email || email,
+          role: err.data.role || "client",
+        });
+        toast.warning(err.data.message || "Please verify your email address to activate your account.");
+        return;
+      }
       setHasError(true);
       toast.error(err?.data?.message || "Invalid email or password");
     }
@@ -250,15 +258,17 @@ export default function LoginPage() {
                 </div>
               </div>
 
-              {/* Unverified Vendor Warning */}
-              {unverifiedVendor && (
+              {/* Unverified Account Warning & Resend Option */}
+              {unverifiedUser && (
                 <div className="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs space-y-3 shadow-xs">
                   <div className="flex items-start gap-2.5">
                     <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
                     <div className="space-y-1">
-                      <h4 className="font-bold text-amber-950 text-sm">Vendor Verification Required</h4>
+                      <h4 className="font-bold text-amber-950 text-sm">
+                        {unverifiedUser.role?.toUpperCase() === "VENDOR" ? "Vendor Email Verification Required" : "Email Verification Required"}
+                      </h4>
                       <p className="text-amber-800 text-xs leading-relaxed">
-                        Your vendor email (<span className="font-semibold">{unverifiedVendor.email}</span>) is not verified. Please verify your email to directly activate your account.
+                        Your account email (<span className="font-semibold">{unverifiedUser.email}</span>) is not verified. Please verify your email with the 6-digit code to activate your account.
                       </p>
                     </div>
                   </div>
@@ -268,8 +278,8 @@ export default function LoginPage() {
                       disabled={isResendingVerification}
                       onClick={async () => {
                         try {
-                          await resendVerification({ email: unverifiedVendor.email }).unwrap();
-                          toast.success("Verification email resent! Check your inbox.");
+                          await resendVerification({ email: unverifiedUser.email }).unwrap();
+                          toast.success("Verification email resent! Check your inbox or console.");
                         } catch (err: any) {
                           toast.error(err?.data?.message || "Failed to resend verification email.");
                         }
@@ -279,18 +289,11 @@ export default function LoginPage() {
                       {isResendingVerification ? "Sending..." : "Resend Verification Email"}
                     </button>
                     <Link
-                      href={`/verify-email?email=${encodeURIComponent(unverifiedVendor.email)}&role=vendor`}
+                      href={`/verify-email?email=${encodeURIComponent(unverifiedUser.email)}&role=${unverifiedUser.role?.toLowerCase() || "client"}`}
                       className="px-3 py-1.5 rounded-lg bg-white border border-amber-300 hover:bg-amber-50 text-amber-900 font-semibold text-xs transition-colors"
                     >
-                      Enter Code
+                      Enter 6-Digit Code
                     </Link>
-                    <button
-                      type="button"
-                      onClick={() => router.push("/vendor")}
-                      className="text-[11px] text-amber-800 hover:underline ml-auto cursor-pointer"
-                    >
-                      Skip to dashboard &rarr;
-                    </button>
                   </div>
                 </div>
               )}
