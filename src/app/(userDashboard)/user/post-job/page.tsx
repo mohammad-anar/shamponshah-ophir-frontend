@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -54,9 +54,17 @@ export default function PostJobWizardPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [createJob, { isLoading: isCreatingJob }] = useCreateJobMutation();
-  const { data: meData } = useGetMeQuery();
+  const { data: meData, isLoading: isMeLoading } = useGetMeQuery();
 
   const me = (meData as any)?.data || meData;
+
+  useEffect(() => {
+    if (!isMeLoading && !me) {
+      toast.error("Login required: You must be logged in as a client to post a job.");
+      router.push("/login?redirect=/user/post-job");
+    }
+  }, [isMeLoading, me, router]);
+
   const clientName = me?.clientProfile?.displayName || me?.name || "Event Host";
   const clientCity = me?.clientProfile?.city
     ? `${me.clientProfile.city}, ${me.clientProfile.state || "IL"}`
@@ -101,6 +109,11 @@ export default function PostJobWizardPage() {
   const selectedOccasionObj = occasions.find((o) => o.id === occasion);
 
   const handleNext = async () => {
+    if (!me) {
+      toast.error("You must be logged in as a client to post a job.");
+      router.push("/login?redirect=/user/post-job");
+      return;
+    }
     if (step === 1) {
       if (!title.trim()) {
         toast.error("Please enter a title for your job request.");
