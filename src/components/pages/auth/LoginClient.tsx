@@ -11,7 +11,7 @@ import AuthHeader from "@/components/pages/auth/AuthHeader";
 import AuthFooter from "@/components/pages/auth/AuthFooter";
 import AuthSideHero from "@/components/pages/auth/AuthSideHero";
 
-import { useLoginUserMutation } from "@/redux/service/auth/authApi";
+import { useLoginUserMutation, useResendVerificationMutation } from "@/redux/service/auth/authApi";
 import { useAppDispatch } from "@/redux/hooks/hooks";
 import { setUser } from "@/redux/features/auth";
 
@@ -19,6 +19,8 @@ export default function LoginPage() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [loginUser, { isLoading }] = useLoginUserMutation();
+  const [resendVerification, { isLoading: isResendingVerification }] = useResendVerificationMutation();
+  const [unverifiedVendor, setUnverifiedVendor] = useState<{ email: string } | null>(null);
   const [email, setEmail] = useState("sarah@ophir.com");
   const [password, setPassword] = useState("Ophir1234!");
   const [showPassword, setShowPassword] = useState(false);
@@ -109,6 +111,12 @@ export default function LoginPage() {
 
       if (typeof localStorage !== "undefined") {
         localStorage.setItem("token", res.accessToken);
+      }
+
+      if (res.user.role === "VENDOR" && !res.user.isEmailVerified) {
+        setUnverifiedVendor({ email: res.user.email });
+        toast.warning("Unverified vendor: Please verify your email to activate your account.");
+        return;
       }
 
       toast.success(`Welcome back, ${res.user.role}!`);
@@ -241,6 +249,51 @@ export default function LoginPage() {
                   </button>
                 </div>
               </div>
+
+              {/* Unverified Vendor Warning */}
+              {unverifiedVendor && (
+                <div className="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs space-y-3 shadow-xs">
+                  <div className="flex items-start gap-2.5">
+                    <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <div className="space-y-1">
+                      <h4 className="font-bold text-amber-950 text-sm">Vendor Verification Required</h4>
+                      <p className="text-amber-800 text-xs leading-relaxed">
+                        Your vendor email (<span className="font-semibold">{unverifiedVendor.email}</span>) is not verified. Please verify your email to directly activate your account.
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-amber-200">
+                    <button
+                      type="button"
+                      disabled={isResendingVerification}
+                      onClick={async () => {
+                        try {
+                          await resendVerification({ email: unverifiedVendor.email }).unwrap();
+                          toast.success("Verification email resent! Check your inbox.");
+                        } catch (err: any) {
+                          toast.error(err?.data?.message || "Failed to resend verification email.");
+                        }
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs transition-colors shadow-2xs disabled:opacity-50 cursor-pointer"
+                    >
+                      {isResendingVerification ? "Sending..." : "Resend Verification Email"}
+                    </button>
+                    <Link
+                      href={`/verify-email?email=${encodeURIComponent(unverifiedVendor.email)}&role=vendor`}
+                      className="px-3 py-1.5 rounded-lg bg-white border border-amber-300 hover:bg-amber-50 text-amber-900 font-semibold text-xs transition-colors"
+                    >
+                      Enter Code
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => router.push("/vendor")}
+                      className="text-[11px] text-amber-800 hover:underline ml-auto cursor-pointer"
+                    >
+                      Skip to dashboard &rarr;
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Error Callout Toggleable */}
               {hasError && (
