@@ -10,7 +10,7 @@ export const metadata: Metadata = constructMetadata({
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="min-h-screen w-full bg-[#FAF9F6] flex flex-col justify-between selection:bg-gold/20 selection:text-obsidian overflow-x-hidden">
+    <div className="min-h-screen w-full bg-[#0B0C0E] text-[#F3F4F6] flex flex-col justify-between selection:bg-[#DFB76C] selection:text-[#0B0C0E] overflow-x-hidden font-sans">
       {children}
     </div>
   );
