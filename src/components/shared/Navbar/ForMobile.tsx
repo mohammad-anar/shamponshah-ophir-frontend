@@ -89,13 +89,13 @@ export default function ForMobile() {
             {/* Mobile Search */}
             <div className="relative">
               <form onSubmit={handleSearch} className="relative">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#DFB76C]" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search artisans, traditions, services..."
-                  className="w-full h-10 pl-10 pr-9 text-xs bg-[#121418] text-slate-200 placeholder:text-slate-500 rounded-none border border-[#262930] focus:border-[#DFB76C] focus:outline-none"
+                  className="w-full h-10 pl-10 pr-9 text-xs bg-[#121418] text-white placeholder:text-[#94A3B8] rounded-none border border-[#26282E] focus:border-[#DFB76C] focus:outline-none"
                 />
                 {searchQuery && (
                   <button
