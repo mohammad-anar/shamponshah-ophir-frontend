@@ -17,7 +17,14 @@ export const categoriesApi = baseApi.injectEndpoints({
       }),
       providesTags: (_res, _err, slug) => [{ type: "categories", id: slug }],
     }),
-    createCategory: builder.mutation<any, { name: string; slug: string; description?: string; imageUrl?: string; icon?: string; sortOrder?: number }>({
+    getAdminCategories: builder.query<any, void>({
+      query: () => ({
+        url: "/categories/admin/all",
+        method: "GET",
+      }),
+      providesTags: ["categories"],
+    }),
+    createCategory: builder.mutation<any, { name: string; slug: string; description?: string; image?: string; imageUrl?: string; icon?: string; sortOrder?: number; order?: number; parentId?: string }>({
       query: (body) => ({
         url: "/categories",
         method: "POST",
@@ -45,6 +52,7 @@ export const categoriesApi = baseApi.injectEndpoints({
 
 export const {
   useGetCategoriesQuery,
+  useGetAdminCategoriesQuery,
   useGetCategoryBySlugQuery,
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
