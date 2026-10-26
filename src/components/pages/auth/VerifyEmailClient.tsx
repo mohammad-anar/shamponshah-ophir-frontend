@@ -9,16 +9,24 @@ import AuthHeader from "@/components/pages/auth/AuthHeader";
 import AuthFooter from "@/components/pages/auth/AuthFooter";
 import AuthSideHero from "@/components/pages/auth/AuthSideHero";
 
-import { useVerifyEmailMutation } from "@/redux/service/auth/authApi";
+import { useVerifyEmailMutation, useResendVerificationMutation } from "@/redux/service/auth/authApi";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks/hooks";
+import { setUser } from "@/redux/features/auth";
 
 export default function VerifyEmailPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const emailParam = searchParams.get("email") || "emily.carter@email.com";
-  const [verifyEmailMutation] = useVerifyEmailMutation();
+  const dispatch = useAppDispatch();
+  const currentUser = useAppSelector((state) => state.auth.user);
+  const emailParam = searchParams.get("email") || currentUser?.email || "vendor@example.com";
+  const roleParam = searchParams.get("role") || currentUser?.role || "client";
+  const isVendor = roleParam.toLowerCase() === "vendor";
 
-  const [otp, setOtp] = useState(["7", "4", "2", "", "", ""]);
-  const [timer, setTimer] = useState(42);
+  const [verifyEmailMutation] = useVerifyEmailMutation();
+  const [resendVerificationMutation, { isLoading: isResending }] = useResendVerificationMutation();
+
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [timer, setTimer] = useState(60);
   const [isVerified, setIsVerified] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
@@ -50,18 +58,42 @@ export default function VerifyEmailPage() {
     }
   };
 
+  const handleResend = async () => {
+    if (timer > 0 || isResending) return;
+    try {
+      await resendVerificationMutation({ email: emailParam }).unwrap();
+      toast.success(`Verification code resent to ${emailParam}! Check your inbox or terminal.`);
+      setTimer(60);
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to resend code. Please try again.");
+    }
+  };
+
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
+    const token = otp.join("").trim();
+    if (token.length < 6) {
+      toast.error("Please enter the complete 6-digit verification code");
+      return;
+    }
+
     setIsLoading(true);
 
     try {
-      const token = otp.join("");
-      await verifyEmailMutation({ token }).unwrap();
+      const res = await verifyEmailMutation({ token }).unwrap();
       setIsVerified(true);
-      toast.success("Email verified successfully!");
-    } catch {
-      setIsVerified(true);
-      toast.success("Email verified successfully!");
+      if (currentUser) {
+        dispatch(
+          setUser({
+            user: { ...currentUser, isEmailVerified: true },
+            accessToken: localStorage.getItem("token"),
+            refreshToken: null,
+          })
+        );
+      }
+      toast.success(res?.message || "Email verified! Account is now directly active.");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Invalid or expired verification code");
     } finally {
       setIsLoading(false);
     }
@@ -128,16 +160,27 @@ export default function VerifyEmailPage() {
                 </button>
               </form>
 
-              {/* Timer & Change Email */}
+              {/* Timer & Resend / Change Email */}
               <div className="flex items-center justify-between text-xs text-slate-500 pt-1">
                 <div className="flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5 text-slate-400" />
-                  <span>
-                    Resend code in{" "}
-                    <span className="font-semibold text-obsidian">
-                      0:{timer < 10 ? `0${timer}` : timer}
+                  {timer > 0 ? (
+                    <span>
+                      Resend code in{" "}
+                      <span className="font-semibold text-obsidian">
+                        0:{timer < 10 ? `0${timer}` : timer}
+                      </span>
                     </span>
-                  </span>
+                  ) : (
+                    <button
+                      type="button"
+                      disabled={isResending}
+                      onClick={handleResend}
+                      className="font-bold text-[#4F46E5] hover:underline disabled:opacity-50"
+                    >
+                      {isResending ? "Sending..." : "Resend code now"}
+                    </button>
+                  )}
                 </div>
 
                 <Link
@@ -164,25 +207,29 @@ export default function VerifyEmailPage() {
                       <CheckCircle2 className="w-4 h-4" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-sm text-obsidian">Email verified</h4>
+                      <h4 className="font-semibold text-sm text-obsidian">
+                        {isVendor ? "Vendor Account Activated" : "Email verified"}
+                      </h4>
                     </div>
                   </div>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded">
-                    Live Preview
+                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
+                    Active
                   </span>
                 </div>
 
                 <p className="text-xs text-slate-500">
-                  Your email address has been successfully authenticated with the Utsob Trust Vault.
+                  {isVendor
+                    ? "Your vendor email is verified and your account is directly activated. No manual approval needed! You can now publish gigs and accept orders."
+                    : "Your email address has been successfully authenticated with Ophir Reserve."}
                 </p>
 
                 <button
                   type="button"
-                  onClick={() => router.push("/")}
-                  className="w-full h-10 flex items-center justify-center gap-2 bg-[#0F1228] hover:bg-[#1A1F40] text-white text-xs font-semibold rounded-xl transition-all"
+                  onClick={() => router.push(isVendor ? "/vendor" : "/user")}
+                  className="w-full h-11 flex items-center justify-center gap-2 bg-[#4F46E5] hover:bg-[#4338CA] text-white text-xs font-semibold rounded-xl transition-all shadow-sm"
                 >
-                  <span>Continue to celebration board</span>
-                  <CheckCircle2 className="w-3.5 h-3.5" />
+                  <span>{isVendor ? "Go to Vendor Dashboard" : "Go to Dashboard"}</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </button>
               </div>
             )}
