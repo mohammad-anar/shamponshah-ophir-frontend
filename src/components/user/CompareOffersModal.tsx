@@ -218,9 +218,9 @@ export default function CompareOffersModal({
           { description: "Total payment is secured in escrow vault. Order is now ACTIVE." }
         );
         if (refetch) await refetch();
-        if (onAcceptOffer) onAcceptOffer(c.name, c.totalPay);
         onClose();
-        router.push(res.orderId ? `/user/orders/${res.orderId}` : "/user/orders");
+        const targetOrderId = res?.id || res?.orderId || res?.data?.id || res?.data?.orderId;
+        router.push(targetOrderId ? `/user/orders/${targetOrderId}` : "/user/orders");
         return;
       } catch (err: any) {
         toast.error(err?.data?.message || err?.message || "Payment charge failed. Offer was not accepted.");
