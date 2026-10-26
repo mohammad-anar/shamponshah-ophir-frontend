@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Star, ShieldCheck, Heart, MapPin, CheckCircle2, ArrowRight, Sparkles, Users2 } from "lucide-react";
-import { Vendor } from "@/data/mockData";
+import type { Vendor } from "@/types/vendor.types";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import AddToFamilyHubModal from "@/components/shared/AddToFamilyHubModal";
@@ -219,8 +219,8 @@ export default function VendorCard({ vendor, variant = "default" }: VendorCardPr
           onClose={() => setIsFamilyModalOpen(false)}
           service={{
             id: vendor.id,
-            name: `${vendor.name} - ${vendor.categoryLabel}`,
-            category: vendor.categoryLabel,
+            name: `${vendor.name} - ${vendor.categoryLabel || vendor.category || "Vendor"}`,
+            category: vendor.categoryLabel || vendor.category || "Vendor",
             price: vendor.startingPrice,
             vendorName: vendor.name,
             image: vendor.heroImage,
