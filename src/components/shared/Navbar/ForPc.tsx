@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Search, ChevronDown, User, ShieldCheck, Sparkles, PlusCircle, Menu, X, Loader2 } from "lucide-react";
+import { Search, User, X, Loader2 } from "lucide-react";
 import Logo from "../Logo/Logo";
 import { cn } from "@/lib/utils";
 import { useGetMeQuery } from "@/redux/service/auth/authApi";
@@ -16,10 +16,7 @@ export default function ForPc() {
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isOccasionsOpen, setIsOccasionsOpen] = useState(false);
   const searchContainerRef = useRef<HTMLDivElement>(null);
-  const occasionsContainerRef = useRef<HTMLDivElement>(null);
-  const occasionsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const token = useAppSelector((state) => state.auth.accessToken);
   const { data: meData } = useGetMeQuery(undefined, { skip: !token });
@@ -36,33 +33,6 @@ export default function ForPc() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  // Occasions dropdown hover handlers with graceful delay
-  const handleOccasionsMouseEnter = () => {
-    if (occasionsTimeoutRef.current) {
-      clearTimeout(occasionsTimeoutRef.current);
-      occasionsTimeoutRef.current = null;
-    }
-    setIsOccasionsOpen(true);
-  };
-
-  const handleOccasionsMouseLeave = () => {
-    if (occasionsTimeoutRef.current) {
-      clearTimeout(occasionsTimeoutRef.current);
-    }
-    occasionsTimeoutRef.current = setTimeout(() => {
-      setIsOccasionsOpen(false);
-    }, 300);
-  };
-
-  const handleOccasionsToggle = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (occasionsTimeoutRef.current) {
-      clearTimeout(occasionsTimeoutRef.current);
-      occasionsTimeoutRef.current = null;
-    }
-    setIsOccasionsOpen((prev) => !prev);
-  };
-
   // Query matching services from backend /gigs
   const { data: rawGigs, isFetching: isSearchingGigs } = useGetPublicGigsQuery(
     { search: debouncedQuery, limit: 10 },
@@ -71,47 +41,24 @@ export default function ForPc() {
 
   const matchingServices = (rawGigs as any)?.data || (Array.isArray(rawGigs) ? rawGigs : []);
 
-  // Close search & occasions dropdown on outside click
+  // Close search dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
         setIsSearchOpen(false);
       }
-      if (occasionsContainerRef.current && !occasionsContainerRef.current.contains(e.target as Node)) {
-        if (occasionsTimeoutRef.current) {
-          clearTimeout(occasionsTimeoutRef.current);
-          occasionsTimeoutRef.current = null;
-        }
-        setIsOccasionsOpen(false);
-      }
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-      if (occasionsTimeoutRef.current) {
-        clearTimeout(occasionsTimeoutRef.current);
-      }
     };
   }, []);
 
-  const occasions = [
-    { title: "Weddings & Receptions", href: "/vendors?occasion=weddings" },
-    { title: "Birthdays & Anniversaries", href: "/vendors?occasion=birthdays" },
-    { title: "Baby Showers & Reveals", href: "/vendors?occasion=babyshowers" },
-    { title: "Graduations & Honors", href: "/vendors?occasion=graduations" },
-    { title: "Quinceañeras & Cotillions", href: "/vendors?occasion=quinceaneras" },
-    { title: "Corporate Events & Galas", href: "/vendors?occasion=corporate" },
-    { title: "Theater & Stage Shows", href: "/vendors?occasion=theater" },
-    { title: "Holiday Parties & Galas", href: "/vendors?occasion=holiday" },
-  ];
-
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSearchOpen(false);
     if (searchQuery.trim()) {
+      setIsSearchOpen(false);
       router.push(`/vendors?q=${encodeURIComponent(searchQuery.trim())}`);
-    } else {
-      router.push("/vendors");
     }
   };
 
@@ -139,7 +86,7 @@ export default function ForPc() {
                   if (e.key === "Escape") setIsSearchOpen(false);
                 }}
                 placeholder="Search artisans, traditions, services..."
-                className="w-full h-9 pl-9 pr-9 text-xs bg-[#121418] hover:bg-[#16181F] focus:bg-[#121418] text-white placeholder:text-[#94A3B8] rounded-none border border-[#262930] focus:border-[#DFB76C] focus:outline-none transition-all"
+                className="w-full h-9 pl-9 pr-9 text-xs bg-[#121418] hover:bg-[#16181F] focus:bg-[#121418] text-white placeholder:text-[#94A3B8] rounded-none border border-[#26282E] focus:border-[#DFB76C] focus:outline-none transition-all"
               />
               {searchQuery && (
                 <button
@@ -158,10 +105,10 @@ export default function ForPc() {
             {/* Dropdown with max height = 1/3 of screen */}
             {isSearchOpen && searchQuery.trim().length > 0 && (
               <div 
-                className="absolute top-full left-0 right-0 mt-2 bg-[#121418] rounded-none shadow-luxury-xl border border-[#262930] z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150"
+                className="absolute top-full left-0 right-0 mt-2 bg-[#121418] rounded-none shadow-2xl border border-[#26282E] z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150"
               >
                 {/* Header */}
-                <div className="px-3.5 py-2 bg-[#0B0C0E] border-b border-[#262930] flex items-center justify-between text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                <div className="px-3.5 py-2 bg-[#0B0C0E] border-b border-[#26282E] flex items-center justify-between text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
                   <span>Matching Artisans & Services</span>
                   {isSearchingGigs && (
                     <span className="flex items-center gap-1 text-[#DFB76C]">
@@ -230,7 +177,7 @@ export default function ForPc() {
                 <Link
                   href={`/vendors?q=${encodeURIComponent(searchQuery.trim())}`}
                   onClick={() => setIsSearchOpen(false)}
-                  className="block px-3.5 py-2.5 bg-[#0B0C0E] hover:bg-[#16181F] text-xs font-bold text-[#DFB76C] text-center border-t border-[#262930] transition-colors uppercase tracking-widest"
+                  className="block px-3.5 py-2.5 bg-[#0B0C0E] hover:bg-[#16181F] text-xs font-bold text-[#DFB76C] text-center border-t border-[#26282E] transition-colors uppercase tracking-widest"
                 >
                   View all results for &quot;{searchQuery}&quot; &rarr;
                 </Link>
@@ -240,60 +187,7 @@ export default function ForPc() {
         </div>
 
         {/* Navigation Links */}
-        <nav className="flex items-center gap-1 xl:gap-2">
-          {/* Occasions Dropdown */}
-          <div
-            ref={occasionsContainerRef}
-            className="relative"
-            onMouseEnter={handleOccasionsMouseEnter}
-            onMouseLeave={handleOccasionsMouseLeave}
-          >
-            <button
-              type="button"
-              onClick={handleOccasionsToggle}
-              className={cn(
-                "flex items-center gap-1.5 px-3 py-2 text-xs uppercase tracking-[0.18em] font-medium text-slate-300 hover:text-[#DFB76C] transition-colors cursor-pointer select-none",
-                isOccasionsOpen && "text-[#DFB76C] bg-[#121418]"
-              )}
-            >
-              <span>Occasions</span>
-              <ChevronDown className={cn("w-3.5 h-3.5 text-slate-500 transition-transform duration-200", isOccasionsOpen && "rotate-180")} />
-            </button>
-
-            {isOccasionsOpen && (
-              <div
-                className="absolute top-full left-0 pt-2 w-64 z-50 transition-all duration-200"
-                onMouseEnter={handleOccasionsMouseEnter}
-                onMouseLeave={handleOccasionsMouseLeave}
-              >
-                {/* Invisible hover bridge to prevent cursor gap */}
-                <div className="absolute -top-3 left-0 right-0 h-3" />
-
-                <div className="bg-[#121418] rounded-none shadow-luxury-xl border border-[#262930] py-2 animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="px-3.5 py-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-[#262930] mb-1">
-                    Select Occasion
-                  </div>
-                  {occasions.map((occ) => (
-                    <Link
-                      key={occ.title}
-                      href={occ.href}
-                      onClick={() => {
-                        if (occasionsTimeoutRef.current) {
-                          clearTimeout(occasionsTimeoutRef.current);
-                          occasionsTimeoutRef.current = null;
-                        }
-                        setIsOccasionsOpen(false);
-                      }}
-                      className="block px-3.5 py-2 text-xs text-slate-300 hover:bg-[#1A1D24] hover:text-[#DFB76C] font-medium transition-colors"
-                    >
-                      {occ.title}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
+        <nav className="flex items-center gap-1 xl:gap-3">
           <Link
             href="/services"
             className={cn(
@@ -337,16 +231,6 @@ export default function ForPc() {
           >
             Vault
           </Link>
-
-          <Link
-            href="/become-a-vendor"
-            className={cn(
-              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium text-slate-300 hover:text-[#DFB76C] transition-colors",
-              pathname === "/become-a-vendor" && "text-[#DFB76C] font-bold"
-            )}
-          >
-            Artisan Apply
-          </Link>
         </nav>
 
         {/* Right CTA Actions */}
@@ -355,16 +239,18 @@ export default function ForPc() {
             <>
               <Link
                 href={dashboardLink}
-                className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[#DFB76C] bg-[#121418] hover:bg-[#1A1D24] border border-[#262930] rounded-none transition-all"
+                className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#DFB76C] bg-[#121418] hover:bg-[#1A1D24] border border-[#26282E] rounded-none transition-all"
               >
                 Dashboard
               </Link>
 
               <Link
-                href={user?.role === "CLIENT" ? "/user/post-job" : "/vendors?action=post-job"}
-                className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#0B0C0E] bg-[#DFB76C] hover:bg-[#ECC870] rounded-none shadow-gold-glow-sm transition-all"
+                href={dashboardLink}
+                aria-label="Account Profile"
+                className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#26282E] hover:border-[#DFB76C] text-[#DFB76C] flex items-center justify-center font-bold text-xs transition-colors"
+                title={user?.name || user?.email || "Account Profile"}
               >
-                <span>Plan Event</span>
+                {userInitials || <User className="w-4 h-4" />}
               </Link>
             </>
           ) : (
@@ -377,22 +263,13 @@ export default function ForPc() {
               </Link>
 
               <Link
-                href="/vendors?action=post-job"
-                className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#0B0C0E] bg-[#DFB76C] hover:bg-[#ECC870] rounded-none transition-all shadow-gold-glow-sm"
+                href="/register"
+                className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#0B0C0E] bg-[#DFB76C] hover:bg-[#ECC870] rounded-none transition-all shadow-md"
               >
-                Plan Event
+                Register
               </Link>
             </>
           )}
-
-          {user?.id && <Link
-            href={user?.id ? dashboardLink : "/login"}
-            aria-label="Account Profile"
-            className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#262930] hover:border-[#DFB76C] text-[#DFB76C] flex items-center justify-center font-bold text-xs transition-colors"
-            title={user?.name || user?.email || "Account Profile"}
-          >
-            {user?.id ? userInitials : <User className="w-4 h-4" />}
-          </Link>}
         </div>
       </div>
     </header>
