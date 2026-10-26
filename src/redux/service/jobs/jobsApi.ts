@@ -79,12 +79,13 @@ export const jobsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["offers", "vendors"],
     }),
-    acceptOffer: builder.mutation<any, { jobId: string; offerId: string }>({
-      query: ({ jobId, offerId }) => ({
+    acceptOffer: builder.mutation<any, { jobId: string; offerId: string; paymentMethodId?: string }>({
+      query: ({ jobId, offerId, paymentMethodId }) => ({
         url: `/user/jobs/${jobId}/offers/${offerId}/accept`,
         method: "POST",
+        body: paymentMethodId ? { paymentMethodId } : undefined,
       }),
-      invalidatesTags: ["jobs", "offers", "orders", "events"],
+      invalidatesTags: ["jobs", "offers", "orders", "events", "payments"],
     }),
     updateJob: builder.mutation<any, { id: string; data: any }>({
       query: ({ id, data }) => ({
