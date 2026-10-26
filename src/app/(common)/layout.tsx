@@ -14,7 +14,7 @@ export default function CommonLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="min-h-screen flex flex-col justify-between w-full bg-[#FAF9F6]">
+    <div className="min-h-screen flex flex-col justify-between w-full bg-[#0B0C0E] text-[#F3F4F6]">
       <Navbar />
       <main className="flex-1 w-full pt-[72px]">
         {children}
