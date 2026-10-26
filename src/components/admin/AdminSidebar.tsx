@@ -4,7 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/shared/Logo/Logo";
 import { cn } from "@/lib/utils";
-import { useGetVendorApprovalsQuery, useGetAllDisputesQuery } from "@/redux/service/admin/adminApi";
+import { 
+  useGetAdminStatsQuery,
+  useGetVendorApprovalsQuery, 
+  useGetAllDisputesQuery 
+} from "@/redux/service/admin/adminApi";
 import {
   LayoutDashboard,
   Users,
@@ -21,7 +25,9 @@ import {
   Layers,
   Settings,
   Lock,
-  X
+  X,
+  Clock,
+  AlertTriangle
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -48,8 +54,9 @@ const navSections: NavSection[] = [
     items: [
       { label: "Overview", href: "/admin", icon: LayoutDashboard },
       { label: "Users", href: "/admin/users", icon: Users },
-      { label: "Vendor Approvals", href: "/admin/vendor-approvals", icon: UserCheck, badge: "12", badgeColor: "bg-amber-500 text-[#0F0C3B]" },
-      { label: "Gigs", href: "/admin/gigs", icon: ShoppingBag },
+      { label: "Vendor Approvals", href: "/admin/vendor-approvals", icon: UserCheck, badge: "0", badgeColor: "bg-amber-500 text-[#0F0C3B]" },
+      { label: "Pending Gigs", href: "/admin/gigs/pending", icon: Clock, badge: "0", badgeColor: "bg-amber-400 text-slate-950" },
+      { label: "Gigs Catalog", href: "/admin/gigs", icon: ShoppingBag },
       { label: "Jobs & Bids", href: "/admin/jobs", icon: Briefcase },
     ],
   },
@@ -63,9 +70,10 @@ const navSections: NavSection[] = [
     ],
   },
   {
-    title: "TRUST",
+    title: "TRUST & SAFETY",
     items: [
-      { label: "Disputes", href: "/admin/disputes", icon: Scale, badge: "4", badgeColor: "bg-red-500 text-white" },
+      { label: "Disputes", href: "/admin/disputes", icon: Scale, badge: "0", badgeColor: "bg-red-500 text-white" },
+      { label: "Service Reports", href: "/admin/reports", icon: AlertTriangle, badge: "0", badgeColor: "bg-rose-500 text-white" },
       { label: "Reviews & Reports", href: "/admin/reviews-reports", icon: Star },
       { label: "Support Tickets", href: "/admin/support", icon: LifeBuoy },
     ],
@@ -82,12 +90,17 @@ const navSections: NavSection[] = [
 
 export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
   const pathname = usePathname();
+  const { data: statsData } = useGetAdminStatsQuery();
   const { data: approvalsData } = useGetVendorApprovalsQuery();
   const { data: disputesData } = useGetAllDisputesQuery();
 
-  const pendingApprovalsCount = Array.isArray(approvalsData) ? approvalsData.length : (approvalsData as any)?.data?.length || 0;
+  const stats = statsData?.data || statsData || {};
+  const pendingGigsCount = stats.pendingGigs || 0;
+  const pendingReportsCount = stats.pendingReports || 0;
+
+  const pendingApprovalsCount = stats.pendingApprovals ?? (Array.isArray(approvalsData) ? approvalsData.length : (approvalsData as any)?.data?.length || 0);
   const disputesList = Array.isArray(disputesData) ? disputesData : (disputesData as any)?.data || [];
-  const openDisputesCount = disputesList.filter((d: any) => d.status !== "RESOLVED").length;
+  const openDisputesCount = stats.openDisputes ?? disputesList.filter((d: any) => d.status !== "RESOLVED").length;
 
   const dynamicSections = navSections.map((section) => ({
     ...section,
@@ -98,10 +111,22 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
           badge: pendingApprovalsCount > 0 ? pendingApprovalsCount.toString() : undefined,
         };
       }
+      if (item.href === "/admin/gigs/pending") {
+        return {
+          ...item,
+          badge: pendingGigsCount > 0 ? pendingGigsCount.toString() : undefined,
+        };
+      }
       if (item.href === "/admin/disputes") {
         return {
           ...item,
           badge: openDisputesCount > 0 ? openDisputesCount.toString() : undefined,
+        };
+      }
+      if (item.href === "/admin/reports") {
+        return {
+          ...item,
+          badge: pendingReportsCount > 0 ? pendingReportsCount.toString() : undefined,
         };
       }
       return item;
