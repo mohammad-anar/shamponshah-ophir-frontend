@@ -23,6 +23,7 @@ import { useGetCategoriesQuery } from "@/redux/service/categories/categoriesApi"
 import AddToFamilyHubModal from "@/components/shared/AddToFamilyHubModal";
 import Pagination from "@/components/ui/Pagination/Pagination";
 import { useTrackImpression, trackClick } from "@/lib/tracking";
+import { applySessionSeededRanking } from "@/lib/ranking.engine";
 
 const PAGE_SIZE = 9;
 
@@ -37,8 +38,24 @@ export default function ServicesCatalogPage() {
     setCurrentPage(1);
   }, [selectedCategory, searchQuery, priceFilter]);
 
+  const [sessionSeed, setSessionSeed] = useState<string>("default_session_seed");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      let seed = sessionStorage.getItem("ophir_browse_seed");
+      if (!seed) {
+        seed = "seed_" + Math.random().toString(36).substring(2, 10);
+        sessionStorage.setItem("ophir_browse_seed", seed);
+      }
+      setSessionSeed(seed);
+    }
+  }, []);
+
   const { data: categoriesData } = useGetCategoriesQuery();
-  const { data: gigsResp, isLoading: isGigsLoading } = useGetPublicGigsQuery({ limit: 100 });
+  const { data: gigsResp, isLoading: isGigsLoading } = useGetPublicGigsQuery({ 
+    limit: 100,
+    seed: sessionSeed,
+  });
   const dbGigs = gigsResp?.data || (Array.isArray(gigsResp) ? gigsResp : []);
 
   const apiCategories = useMemo(() => {
@@ -134,7 +151,7 @@ export default function ServicesCatalogPage() {
 
   // Filtered services
   const filteredServices = useMemo(() => {
-    return allServices.filter((s) => {
+    const baseFiltered = allServices.filter((s: any) => {
       // Category match
       if (selectedCategory !== "All Services") {
         const catLower = (s.category || "").toLowerCase();
@@ -164,7 +181,21 @@ export default function ServicesCatalogPage() {
 
       return true;
     });
-  }, [allServices, selectedCategory, searchQuery, priceFilter]);
+
+    return applySessionSeededRanking(
+      baseFiltered,
+      (s: any) => ({
+        id: s.id,
+        deliveryRate: 98,
+        cancelRatio: 2,
+        tier: s.tier || "PRO",
+        rating: s.rating ?? 4.9,
+        ordersCompleted: s.reviewCount ?? 0,
+      }),
+      sessionSeed,
+      24,
+    );
+  }, [allServices, selectedCategory, searchQuery, priceFilter, sessionSeed]);
 
   const totalPages = Math.ceil(filteredServices.length / PAGE_SIZE) || 1;
   const paginatedServices = useMemo(() => {
