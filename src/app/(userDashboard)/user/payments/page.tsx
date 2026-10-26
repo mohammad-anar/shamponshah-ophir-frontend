@@ -26,12 +26,6 @@ import {
 } from "@/redux/service/payments/paymentsApi";
 import { useGetPaymentLedgerQuery } from "@/redux/service/orders/ordersApi";
 
-declare global {
-  interface Window {
-    Stripe?: any;
-  }
-}
-
 export default function UserPaymentsPage() {
   const { data: methodsData, isLoading: methodsLoading } = useGetPaymentMethodsQuery();
   const { data: ledgerData, isLoading: ledgerLoading } = useGetPaymentLedgerQuery();
@@ -96,7 +90,7 @@ export default function UserPaymentsPage() {
       if (!key || !stripeRef.current || !cardElementRef.current) throw new Error("Secure card entry is unavailable. Refresh and try again.");
       const setup = await createSetupIntent().unwrap();
       const confirmation = await stripeRef.current.confirmCardSetup(setup.clientSecret, {
-        payment_method: { card: cardElementRef.current },
+        payment_method: { card: cardElementRef.current as any },
       });
       if (confirmation.error) throw new Error(confirmation.error.message || "Card verification failed.");
       const paymentMethod = confirmation.setupIntent?.payment_method;
