@@ -15,9 +15,9 @@ export default function SelectRolePage() {
 
   const handleContinue = () => {
     if (selectedRole === "client") {
-      router.push("/register?role=client");
+      router.push("/signup?role=client");
     } else {
-      router.push("/register?role=vendor");
+      router.push("/signup?role=vendor");
     }
   };
 
