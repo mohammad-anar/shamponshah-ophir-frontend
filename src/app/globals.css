@@ -107,4 +107,174 @@
   background: #DFB76C;
 }
 
+/* =========================================================================
+   UNIVERSAL OPHIR RESERVE LUXURY UNIFIED THEME
+   Applies Obsidian Noir, Champagne Gold, and Sharp Architectural Parameters
+   Across All Client, Vendor, and Common Pages
+   ========================================================================= */
+
+/* 1. Sharp architectural edges across all components, cards, buttons, badges, modals */
+*,
+::before,
+::after {
+  border-radius: 0px !important;
+}
+
+/* 2. Global background harmonization */
+.bg-\[\#FAF9F6\],
+.bg-\[\#F8F9FD\],
+.bg-\[\#F7F5EE\],
+.bg-\[\#F9F8F5\],
+.bg-slate-50,
+.bg-gray-50 {
+  background-color: #0B0C0E !important;
+  color: #F3F4F6 !important;
+}
+
+/* 3. Luxury Card surfaces */
+.bg-white {
+  background-color: #121418 !important;
+  color: #F3F4F6 !important;
+  border-color: #26282E !important;
+}
+
+/* 4. Secondary surfaces and pills */
+.bg-\[\#F4F2EE\],
+.bg-\[\#EAE6DF\],
+.bg-slate-100,
+.bg-gray-100 {
+  background-color: #16181F !important;
+  color: #F3F4F6 !important;
+  border-color: #26282E !important;
+}
+
+/* 5. Architectural Borders */
+.border-\[\#EAE6DF\],
+.border-\[\#E2DDD3\],
+.border-slate-200,
+.border-slate-100,
+.border-slate-300,
+.border-gray-200 {
+  border-color: #26282E !important;
+}
+
+/* 6. Text color harmonization */
+.text-obsidian,
+.text-\[\#0F0C3B\],
+.text-\[\#0F1228\],
+.text-slate-900,
+.text-gray-900,
+.text-slate-800,
+.text-gray-800 {
+  color: #F3F4F6 !important;
+}
+
+.text-slate-700,
+.text-slate-600 {
+  color: #CBD5E1 !important;
+}
+
+.text-slate-500,
+.text-slate-400 {
+  color: #94A3B8 !important;
+}
+
+/* 7. Primary Action Buttons: convert legacy dark purple/blue to Champagne Gold */
+.bg-\[\#0F0C3B\],
+.bg-\[\#0F1228\],
+.bg-\[\#4F46E5\],
+.bg-\[\#4338CA\],
+.bg-indigo-600 {
+  background-color: #DFB76C !important;
+  color: #0B0C0E !important;
+  font-weight: 700 !important;
+  border-color: #DFB76C !important;
+}
+
+.bg-\[\#0F0C3B\]:hover,
+.bg-\[\#0F1228\]:hover,
+.bg-\[\#4F46E5\]:hover,
+.bg-\[\#4338CA\]:hover,
+.bg-indigo-600:hover {
+  background-color: #ECC870 !important;
+  color: #0B0C0E !important;
+}
+
+/* 8. Secondary badges & chips */
+.bg-indigo-50,
+.bg-purple-50,
+.bg-\[\#EDE9FE\],
+.bg-\[\#EEF2FF\],
+.bg-\[\#FEF3C7\] {
+  background-color: #1A1D24 !important;
+  color: #DFB76C !important;
+  border: 1px solid rgba(223, 183, 108, 0.25) !important;
+}
+
+.text-\[\#3730A3\],
+.text-\[\#92400E\],
+.text-brand-primary,
+.text-indigo-600 {
+  color: #DFB76C !important;
+}
+
+/* 9. Input & form controls */
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
+  background-color: #0B0C0E !important;
+  border: 1px solid #26282E !important;
+  color: #F3F4F6 !important;
+  border-radius: 0px !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #DFB76C !important;
+  box-shadow: 0 0 0 1px #DFB76C !important;
+  outline: none !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #64748B !important;
+}
+
+/* 10. Tables */
+table {
+  background-color: #121418 !important;
+  color: #F3F4F6 !important;
+  border-collapse: collapse !important;
+}
+
+thead,
+th {
+  background-color: #16181F !important;
+  color: #DFB76C !important;
+  border-bottom: 1px solid #26282E !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+}
+
+td {
+  border-bottom: 1px solid #26282E !important;
+  color: #CBD5E1 !important;
+}
+
+tr:hover td {
+  background-color: #1A1D24 !important;
+}
+
+/* 11. Modals & Drawers */
+[role="dialog"],
+.ant-modal-content,
+.ant-drawer-content {
+  background-color: #121418 !important;
+  color: #F3F4F6 !important;
+  border: 1px solid #26282E !important;
+  border-radius: 0px !important;
+}
+
 
