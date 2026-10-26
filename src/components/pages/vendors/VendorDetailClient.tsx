@@ -28,8 +28,9 @@ import {
   UtensilsCrossed,
   Truck,
   Sparkle,
+  Loader2,
 } from "lucide-react";
-import { VENDORS, Vendor } from "@/data/mockData";
+import type { Vendor } from "@/types/vendor.types";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import AddToFamilyHubModal from "@/components/shared/AddToFamilyHubModal";
@@ -43,7 +44,7 @@ import { getVendorLevelConfig } from "@/config/vendor-levels.config";
 export default function VendorProfilePage() {
   const params = useParams();
   const router = useRouter();
-  const vendorId = (params?.id as string) || "epicurean-bites";
+  const vendorId = (params?.id as string) || "";
 
   // RTK Query hooks
   const { data: apiVendorResp, isLoading: isVendorLoading } = useGetVendorBySlugQuery(vendorId, {
@@ -52,10 +53,7 @@ export default function VendorProfilePage() {
   const [saveVendor] = useSaveVendorMutation();
 
   const liveVendor = apiVendorResp?.data || apiVendorResp;
-  const vendor: any =
-    liveVendor ||
-    VENDORS.find((v) => v.id === vendorId || (v as any).slug === vendorId) ||
-    VENDORS[0];
+  const vendor: any = liveVendor;
 
   // Dynamic Level Config & Theme
   const tierKey = liveVendor?.tier || vendor?.guildTier || vendor?.tier || "PRO";
@@ -75,13 +73,38 @@ export default function VendorProfilePage() {
     category: string;
     price: number;
     vendorName: string;
-  }>({
-    id: vendor?.id || "default",
-    name: `${vendor?.name || "Vendor"} - ${vendor?.categoryLabel || "Specialist"}`,
-    category: vendor?.categoryLabel || "Vendor",
-    price: vendor?.startingPrice || 750,
-    vendorName: vendor?.name || "Vendor",
-  });
+  } | null>(null);
+
+  if (isVendorLoading) {
+    return (
+      <div className="min-h-[75vh] bg-[#0B0C0E] flex flex-col items-center justify-center space-y-4">
+        <Loader2 className="w-10 h-10 text-[#DFB76C] animate-spin" />
+        <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">
+          Loading master artisan profile...
+        </p>
+      </div>
+    );
+  }
+
+  if (!vendor) {
+    return (
+      <div className="min-h-[75vh] bg-[#0B0C0E] flex flex-col items-center justify-center p-6 text-center space-y-4">
+        <div className="w-14 h-14 rounded-none bg-[#121418] border border-[#26282E] flex items-center justify-center text-[#DFB76C]">
+          <ShieldCheck className="w-7 h-7" />
+        </div>
+        <h1 className="font-serif text-3xl font-light text-white">Artisan Profile Not Found</h1>
+        <p className="text-xs text-slate-400 max-w-md">
+          The vendor profile you are looking for may not exist, is under review, or the link is incorrect.
+        </p>
+        <Link
+          href="/vendors"
+          className="mt-2 px-6 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-widest shadow-gold-glow-sm"
+        >
+          Browse Artisan Directory
+        </Link>
+      </div>
+    );
+  }
 
   const handleBookPackage = (pkgId: string) => {
     router.push(`/checkout?vendorId=${vendor.id}&packageId=${pkgId}`);
@@ -973,7 +996,7 @@ export default function VendorProfilePage() {
       )}
 
       {/* Add to Family Hub Modal */}
-      {isFamilyModalOpen && (
+      {isFamilyModalOpen && serviceToAdd && (
         <AddToFamilyHubModal
           isOpen={isFamilyModalOpen}
           onClose={() => setIsFamilyModalOpen(false)}
