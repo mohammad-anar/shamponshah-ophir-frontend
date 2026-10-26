@@ -116,15 +116,15 @@ export default function ForPc() {
   };
 
   return (
-    <header className="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#EAE6DF] shadow-xs transition-all">
+    <header className="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-[#0B0C0E]/95 backdrop-blur-md border-b border-[#26282E] shadow-2xl transition-all">
       <div className="max-w-[1440px] mx-auto px-6 h-[72px] flex items-center justify-between gap-4">
         {/* Brand Logo & Global Search */}
         <div className="flex items-center gap-6">
           <Logo />
 
-          <div ref={searchContainerRef} className="relative w-64 xl:w-96">
+          <div ref={searchContainerRef} className="relative w-64 xl:w-80">
             <form onSubmit={handleSearchSubmit} className="relative w-full">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
               <input
                 type="text"
                 value={searchQuery}
@@ -138,8 +138,8 @@ export default function ForPc() {
                 onKeyDown={(e) => {
                   if (e.key === "Escape") setIsSearchOpen(false);
                 }}
-                placeholder="Search services, vendors, venues..."
-                className="w-full h-10 pl-9 pr-9 text-xs xl:text-sm bg-[#F4F2EE] hover:bg-[#EFECE6] focus:bg-white text-obsidian placeholder:text-slate-400 rounded-full border border-transparent focus:border-gold-500 focus:outline-none transition-all"
+                placeholder="Search artisans, traditions, services..."
+                className="w-full h-9 pl-9 pr-9 text-xs bg-[#121418] hover:bg-[#16181F] focus:bg-[#121418] text-slate-200 placeholder:text-slate-500 rounded-none border border-[#262930] focus:border-[#DFB76C] focus:outline-none transition-all"
               />
               {searchQuery && (
                 <button
@@ -148,7 +148,7 @@ export default function ForPc() {
                     setSearchQuery("");
                     setIsSearchOpen(false);
                   }}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5 cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 p-0.5 cursor-pointer"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -158,13 +158,13 @@ export default function ForPc() {
             {/* Dropdown with max height = 1/3 of screen */}
             {isSearchOpen && searchQuery.trim().length > 0 && (
               <div 
-                className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-luxury-xl border border-[#EAE6DF] z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150"
+                className="absolute top-full left-0 right-0 mt-2 bg-[#121418] rounded-none shadow-luxury-xl border border-[#262930] z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150"
               >
                 {/* Header */}
-                <div className="px-3.5 py-2 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-[11px] font-semibold text-slate-500">
-                  <span>Matching Services</span>
+                <div className="px-3.5 py-2 bg-[#0B0C0E] border-b border-[#262930] flex items-center justify-between text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                  <span>Matching Artisans & Services</span>
                   {isSearchingGigs && (
-                    <span className="flex items-center gap-1 text-gold-600">
+                    <span className="flex items-center gap-1 text-[#DFB76C]">
                       <Loader2 className="w-3 h-3 animate-spin" /> Searching...
                     </span>
                   )}
@@ -172,7 +172,7 @@ export default function ForPc() {
 
                 {/* Scrollable list with max height 1/3 of viewport */}
                 <div 
-                  className="overflow-y-auto divide-y divide-slate-100"
+                  className="overflow-y-auto divide-y divide-[#1A1D24]"
                   style={{ maxHeight: "33.33vh" }}
                 >
                   {matchingServices.length > 0 ? (
@@ -191,16 +191,16 @@ export default function ForPc() {
                           onClick={() => {
                             setIsSearchOpen(false);
                           }}
-                          className="p-3 block hover:bg-[#F9F7F2] transition-colors group cursor-pointer"
+                          className="p-3 block hover:bg-[#1A1D24] transition-colors group cursor-pointer"
                         >
                           <div className="flex items-start justify-between gap-2">
                             <div className="min-w-0 flex-1">
-                              <p className="text-xs font-bold text-obsidian group-hover:text-gold-600 transition-colors line-clamp-1">
+                              <p className="text-xs font-bold text-slate-200 group-hover:text-[#DFB76C] transition-colors line-clamp-1 font-serif">
                                 {service.title}
                               </p>
-                              <div className="flex items-center gap-2 mt-1 text-[11px] text-slate-500">
+                              <div className="flex items-center gap-2 mt-1 text-[11px] text-slate-400">
                                 {service.category?.name && (
-                                  <span className="inline-block px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-medium text-[10px]">
+                                  <span className="inline-block px-1.5 py-0.5 rounded-none bg-[#1E222A] text-[#DFB76C] font-medium text-[10px] uppercase tracking-wider">
                                     {service.category.name}
                                   </span>
                                 )}
@@ -211,8 +211,8 @@ export default function ForPc() {
                             </div>
                             {price && (
                               <div className="text-right flex-shrink-0">
-                                <span className="text-[10px] text-slate-400 block font-medium">Starts at</span>
-                                <span className="text-xs font-bold text-emerald-700 font-mono">${price}</span>
+                                <span className="text-[10px] text-slate-500 block font-medium uppercase tracking-wider">Starts at</span>
+                                <span className="text-xs font-bold text-[#DFB76C] font-mono">${price}</span>
                               </div>
                             )}
                           </div>
@@ -230,7 +230,7 @@ export default function ForPc() {
                 <Link
                   href={`/vendors?q=${encodeURIComponent(searchQuery.trim())}`}
                   onClick={() => setIsSearchOpen(false)}
-                  className="block px-3.5 py-2.5 bg-slate-50 hover:bg-[#F2EFE8] text-xs font-bold text-[#0F0C3B] hover:text-gold-600 text-center border-t border-slate-100 transition-colors"
+                  className="block px-3.5 py-2.5 bg-[#0B0C0E] hover:bg-[#16181F] text-xs font-bold text-[#DFB76C] text-center border-t border-[#262930] transition-colors uppercase tracking-widest"
                 >
                   View all results for &quot;{searchQuery}&quot; &rarr;
                 </Link>
@@ -252,12 +252,12 @@ export default function ForPc() {
               type="button"
               onClick={handleOccasionsToggle}
               className={cn(
-                "flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-slate-700 hover:text-obsidian rounded-lg transition-colors cursor-pointer select-none",
-                isOccasionsOpen && "text-obsidian bg-alabaster-200"
+                "flex items-center gap-1.5 px-3 py-2 text-xs uppercase tracking-[0.18em] font-medium text-slate-300 hover:text-[#DFB76C] transition-colors cursor-pointer select-none",
+                isOccasionsOpen && "text-[#DFB76C] bg-[#121418]"
               )}
             >
               <span>Occasions</span>
-              <ChevronDown className={cn("w-3.5 h-3.5 text-slate-400 transition-transform duration-200", isOccasionsOpen && "rotate-180")} />
+              <ChevronDown className={cn("w-3.5 h-3.5 text-slate-500 transition-transform duration-200", isOccasionsOpen && "rotate-180")} />
             </button>
 
             {isOccasionsOpen && (
@@ -269,8 +269,8 @@ export default function ForPc() {
                 {/* Invisible hover bridge to prevent cursor gap */}
                 <div className="absolute -top-3 left-0 right-0 h-3" />
 
-                <div className="bg-white rounded-2xl shadow-luxury-lg border border-[#EAE6DF] py-2 animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="px-3.5 py-1.5 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                <div className="bg-[#121418] rounded-none shadow-luxury-xl border border-[#262930] py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="px-3.5 py-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-widest border-b border-[#262930] mb-1">
                     Select Occasion
                   </div>
                   {occasions.map((occ) => (
@@ -284,7 +284,7 @@ export default function ForPc() {
                         }
                         setIsOccasionsOpen(false);
                       }}
-                      className="block px-3.5 py-2 text-xs xl:text-sm text-slate-700 hover:bg-[#F9F7F2] hover:text-obsidian font-medium transition-colors"
+                      className="block px-3.5 py-2 text-xs text-slate-300 hover:bg-[#1A1D24] hover:text-[#DFB76C] font-medium transition-colors"
                     >
                       {occ.title}
                     </Link>
@@ -297,10 +297,10 @@ export default function ForPc() {
           <Link
             href="/services"
             className={cn(
-              "px-3 py-1.5 text-sm font-semibold rounded-lg transition-colors",
+              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium transition-colors",
               pathname.startsWith("/services")
-                ? "bg-[#4F46E5] text-white shadow-xs"
-                : "text-slate-700 hover:text-[#4F46E5] hover:bg-indigo-50/50"
+                ? "text-[#DFB76C] font-bold"
+                : "text-slate-300 hover:text-[#DFB76C]"
             )}
           >
             Services
@@ -309,43 +309,43 @@ export default function ForPc() {
           <Link
             href="/vendors"
             className={cn(
-              "px-3 py-1.5 text-sm font-medium rounded-lg transition-colors",
+              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium transition-colors",
               pathname.startsWith("/vendors")
-                ? "text-[#4F46E5] font-bold"
-                : "text-slate-700 hover:text-[#4F46E5] hover:bg-indigo-50/50"
+                ? "text-[#DFB76C] font-bold"
+                : "text-slate-300 hover:text-[#DFB76C]"
             )}
           >
-            Vendors
+            Artisans
           </Link>
 
           <Link
             href="/how-it-works"
             className={cn(
-              "px-3 py-1.5 text-sm font-medium text-slate-700 hover:text-[#4F46E5] hover:bg-indigo-50/50 rounded-lg transition-colors",
-              pathname === "/how-it-works" && "text-[#4F46E5] font-bold"
+              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium text-slate-300 hover:text-[#DFB76C] transition-colors",
+              pathname === "/how-it-works" && "text-[#DFB76C] font-bold"
             )}
           >
-            How It Works
+            Process
           </Link>
 
           <Link
             href="/help-center"
             className={cn(
-              "px-3 py-1.5 text-sm font-medium text-slate-700 hover:text-[#4F46E5] hover:bg-indigo-50/50 rounded-lg transition-colors",
-              pathname === "/help-center" && "text-[#4F46E5] font-bold"
+              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium text-slate-300 hover:text-[#DFB76C] transition-colors",
+              pathname === "/help-center" && "text-[#DFB76C] font-bold"
             )}
           >
-            Escrow Vault
+            Vault
           </Link>
 
           <Link
             href="/become-a-vendor"
             className={cn(
-              "px-3 py-1.5 text-sm font-medium text-slate-700 hover:text-[#4F46E5] hover:bg-indigo-50/50 rounded-lg transition-colors",
-              pathname === "/become-a-vendor" && "text-[#4F46E5] font-bold"
+              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium text-slate-300 hover:text-[#DFB76C] transition-colors",
+              pathname === "/become-a-vendor" && "text-[#DFB76C] font-bold"
             )}
           >
-            Become a Vendor
+            Artisan Apply
           </Link>
         </nav>
 
@@ -355,33 +355,32 @@ export default function ForPc() {
             <>
               <Link
                 href={dashboardLink}
-                className="px-4 py-2 text-xs font-bold text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-200 rounded-xl transition-all shadow-2xs"
+                className="px-3.5 py-2 text-xs font-bold uppercase tracking-wider text-[#DFB76C] bg-[#121418] hover:bg-[#1A1D24] border border-[#262930] rounded-none transition-all"
               >
                 Dashboard
               </Link>
 
               <Link
                 href={user?.role === "CLIENT" ? "/user/post-job" : "/vendors?action=post-job"}
-                className="flex items-center gap-1.5 px-4 py-2 text-sm font-bold text-white bg-[#4F46E5] hover:bg-[#4338CA] active:scale-98 rounded-lg shadow-sm hover:shadow-indigo-500/20 transition-all"
+                className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#0B0C0E] bg-[#DFB76C] hover:bg-[#ECC870] rounded-none shadow-gold-glow-sm transition-all"
               >
-                <PlusCircle className="w-4 h-4 text-amber-300" />
-                <span>Post a Job</span>
+                <span>Plan Event</span>
               </Link>
             </>
           ) : (
             <>
               <Link
                 href="/login"
-                className="px-3.5 py-2 text-sm font-semibold text-slate-800 hover:text-[#4F46E5] hover:bg-indigo-50/50 rounded-lg transition-colors"
+                className="px-3 py-2 text-xs uppercase tracking-[0.18em] font-semibold text-slate-300 hover:text-[#DFB76C] transition-colors"
               >
                 Sign In
               </Link>
 
               <Link
-                href="/register"
-                className="px-4 py-2 text-sm font-semibold text-[#4F46E5] bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 rounded-lg transition-all shadow-xs"
+                href="/vendors?action=post-job"
+                className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#0B0C0E] bg-[#DFB76C] hover:bg-[#ECC870] rounded-none transition-all shadow-gold-glow-sm"
               >
-                Join
+                Plan Event
               </Link>
             </>
           )}
@@ -389,7 +388,7 @@ export default function ForPc() {
           {user?.id && <Link
             href={user?.id ? dashboardLink : "/login"}
             aria-label="Account Profile"
-            className="w-9 h-9 rounded-full bg-[#0F0C3B] hover:bg-[#4F46E5] text-white flex items-center justify-center font-bold text-xs transition-colors shadow-xs"
+            className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#262930] hover:border-[#DFB76C] text-[#DFB76C] flex items-center justify-center font-bold text-xs transition-colors"
             title={user?.name || user?.email || "Account Profile"}
           >
             {user?.id ? userInitials : <User className="w-4 h-4" />}
