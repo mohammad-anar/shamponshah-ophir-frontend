@@ -148,7 +148,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
   const activePackage = service.packages[selectedPackageIndex] || service.packages[0];
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] pb-24">
+    <div className="min-h-screen bg-[#0B0C0E] text-[#F3F4F6] pb-24">
       {/* Add To Family Hub Modal */}
       {hubModalOpen && (
         <AddToFamilyHubModal
@@ -166,16 +166,16 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
       )}
 
       {/* Breadcrumb Navigation */}
-      <div className="bg-white border-b border-slate-200">
+      <div className="bg-[#121418] border-b border-[#26282E]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
-          <div className="flex items-center gap-2 text-xs text-slate-500 flex-wrap">
-            <Link href="/" className="hover:text-brand-primary transition-colors">Home</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            <Link href="/services" className="hover:text-brand-primary transition-colors">Services</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            <span className="font-medium text-slate-600">{service.category}</span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            <span className="font-bold text-[#0F0C3B] truncate max-w-xs">{service.title}</span>
+          <div className="flex items-center gap-2 text-xs text-slate-400 flex-wrap">
+            <Link href="/" className="hover:text-[#DFB76C] transition-colors">Home</Link>
+            <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+            <Link href="/services" className="hover:text-[#DFB76C] transition-colors">Services</Link>
+            <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+            <span className="font-medium text-slate-300">{service.category}</span>
+            <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+            <span className="font-bold text-[#DFB76C] truncate max-w-xs">{service.title}</span>
           </div>
         </div>
       </div>
@@ -185,20 +185,20 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-2">
             <div className="flex items-center gap-2.5 flex-wrap">
-              <span className="px-3 py-1 rounded-full bg-indigo-50 border border-indigo-200/80 text-brand-primary text-xs font-bold tracking-wide uppercase">
+              <span className="px-3 py-1 rounded-none bg-[#121418] border border-[#DFB76C]/30 text-[#DFB76C] text-xs font-bold tracking-widest uppercase">
                 {service.category}
               </span>
-              <span className="px-2.5 py-1 rounded-full bg-amber-500/15 border border-amber-300/60 text-amber-900 text-xs font-extrabold flex items-center gap-1">
-                <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
-                {service.rating} ({service.reviewCount} verified reviews)
+              <span className="px-2.5 py-1 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] text-xs font-bold flex items-center gap-1">
+                <Star className="w-3.5 h-3.5 fill-[#DFB76C] text-[#DFB76C]" />
+                {service.rating} ({service.reviewCount} verified ceremonies)
               </span>
-              <span className="text-xs text-slate-500 flex items-center gap-1 font-medium">
-                <MapPin className="w-3.5 h-3.5 text-slate-400" />
+              <span className="text-xs text-slate-400 flex items-center gap-1 font-medium">
+                <MapPin className="w-3.5 h-3.5 text-[#DFB76C]" />
                 {service.location}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-extrabold text-[#0F0C3B] tracking-tight font-serif">
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight font-serif">
               {service.title}
             </h1>
           </div>
@@ -206,10 +206,10 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setHubModalOpen(true)}
-              className="px-4 py-2.5 rounded-xl border border-indigo-200 bg-indigo-50/80 hover:bg-indigo-100 text-brand-primary text-xs font-bold flex items-center gap-2 transition-all cursor-pointer shadow-2xs"
+              className="px-4 py-2.5 rounded-none border border-[#26282E] bg-[#121418] hover:bg-[#1A1D24] text-[#DFB76C] text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-2xs"
             >
-              <Users2 className="w-4 h-4 text-brand-primary" />
-              <span>Recommend to Family Hub</span>
+              <Users2 className="w-4 h-4 text-[#DFB76C]" />
+              <span>Collaborative Hub</span>
             </button>
 
             <button
@@ -217,7 +217,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                 navigator.clipboard.writeText(window.location.href);
                 toast.success("Service link copied to clipboard!");
               }}
-              className="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors shadow-2xs cursor-pointer"
+              className="p-2.5 rounded-none bg-[#121418] border border-[#26282E] text-slate-300 hover:text-[#DFB76C] transition-colors cursor-pointer"
               title="Share Service"
             >
               <Share2 className="w-4 h-4" />
@@ -232,9 +232,9 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
           {/* Left Column (8 cols): Gallery, Vendor Profile, Inclusions, Reviews */}
           <div className="lg:col-span-8 space-y-8">
             {/* Gallery Section */}
-            <div className="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-xs space-y-3">
+            <div className="bg-[#121418] rounded-none p-4 sm:p-5 border border-[#26282E] shadow-xl space-y-3">
               {/* Main Active Image */}
-              <div className="relative h-72 sm:h-96 md:h-[440px] w-full rounded-2xl overflow-hidden bg-slate-100">
+              <div className="relative h-72 sm:h-96 md:h-[440px] w-full rounded-none overflow-hidden bg-[#0B0C0E]">
                 <Image
                   src={service.images[activeImageIndex] || service.images[0]}
                   alt={service.title}
@@ -243,8 +243,8 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                   priority
                 />
                 <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[11px] font-bold flex items-center gap-1.5">
-                    <Sparkles className="w-3 h-3 text-amber-400" />
+                  <span className="px-3 py-1 rounded-none bg-[#0B0C0E]/85 backdrop-blur-md text-[#DFB76C] border border-[#DFB76C]/30 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                    <Sparkles className="w-3 h-3 text-[#DFB76C]" />
                     Verified Portfolio
                   </span>
                 </div>
@@ -259,10 +259,10 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                       <button
                         key={idx}
                         onClick={() => setActiveImageIndex(idx)}
-                        className={`relative h-16 sm:h-20 rounded-xl overflow-hidden border-2 transition-all cursor-pointer ${
+                        className={`relative h-16 sm:h-20 rounded-none overflow-hidden border transition-all cursor-pointer ${
                           isActive
-                            ? "border-brand-primary ring-2 ring-brand-primary/30"
-                            : "border-transparent opacity-70 hover:opacity-100"
+                            ? "border-[#DFB76C] ring-1 ring-[#DFB76C]"
+                            : "border-[#26282E] opacity-70 hover:opacity-100"
                         }`}
                       >
                         <Image src={img} alt={`View ${idx + 1}`} fill className="object-cover" />
@@ -274,10 +274,10 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
             </div>
 
             {/* Vendor Vendor Bio Card */}
-            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-xs space-y-5">
+            <div className="bg-[#121418] rounded-none p-6 sm:p-7 border border-[#26282E] shadow-xl space-y-5">
               <div className="flex items-center justify-between gap-4 flex-wrap">
                 <div className="flex items-center gap-4">
-                  <div className="relative w-16 h-16 rounded-2xl overflow-hidden ring-2 ring-slate-100 shadow-sm shrink-0">
+                  <div className="relative w-16 h-16 rounded-none overflow-hidden border border-[#26282E] shadow-sm shrink-0 bg-[#0B0C0E]">
                     <Image
                       src={service.vendorAvatar}
                       alt={service.vendorName}
@@ -287,62 +287,62 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="font-serif font-bold text-lg text-[#0F0C3B]">
+                      <h3 className="font-serif font-bold text-lg text-white">
                         {service.vendorName}
                       </h3>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-extrabold bg-amber-500/15 text-amber-900 border border-amber-300">
+                      <span className="px-2 py-0.5 rounded-none text-[10px] font-bold uppercase tracking-wider bg-[#1A1D24] text-[#DFB76C] border border-[#DFB76C]/30">
                         {service.vendorTier}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-500 mt-0.5">
-                      Verified Ophir Vendor Guild Member &bull; {service.location}
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      Verified Ophir Reserve Guild Member &bull; {service.location}
                     </p>
                   </div>
                 </div>
 
                 <Link
                   href={`/vendors/${service.vendorId}`}
-                  className="px-4 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-xs font-bold text-slate-700 border border-slate-200 transition-colors"
+                  className="px-4 py-2 rounded-none bg-[#1A1D24] hover:bg-[#22252F] text-xs font-bold uppercase tracking-wider text-slate-300 border border-[#26282E] transition-colors"
                 >
-                  View Full Profile
+                  View Artisan Profile
                 </Link>
               </div>
 
-              <p className="text-sm text-slate-600 leading-relaxed">
+              <p className="text-sm text-slate-300 leading-relaxed">
                 {service.description}
               </p>
 
               {/* Service Assurance Badges */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-100 text-xs">
-                <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100 text-slate-700">
-                  <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-[#26282E] text-xs">
+                <div className="flex items-center gap-2.5 p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] text-slate-300">
+                  <ShieldCheck className="w-4 h-4 text-[#DFB76C] shrink-0" />
                   <div>
-                    <span className="font-bold block text-[#0F0C3B]">Escrow Custody</span>
-                    <span className="text-[11px] text-slate-500">Funds released on approval</span>
+                    <span className="font-bold block text-white">Escrow Custody</span>
+                    <span className="text-[11px] text-slate-400">Released upon acceptance</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100 text-slate-700">
-                  <Clock className="w-4 h-4 text-brand-primary shrink-0" />
+                <div className="flex items-center gap-2.5 p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] text-slate-300">
+                  <Clock className="w-4 h-4 text-[#DFB76C] shrink-0" />
                   <div>
-                    <span className="font-bold block text-[#0F0C3B]">On-Time Arrival</span>
-                    <span className="text-[11px] text-slate-500">Guaranteed schedule lock</span>
+                    <span className="font-bold block text-white">Punctual Arrival</span>
+                    <span className="text-[11px] text-slate-400">Guaranteed schedule lock</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-100 text-slate-700">
-                  <Award className="w-4 h-4 text-amber-600 shrink-0" />
+                <div className="flex items-center gap-2.5 p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] text-slate-300">
+                  <Award className="w-4 h-4 text-[#DFB76C] shrink-0" />
                   <div>
-                    <span className="font-bold block text-[#0F0C3B]">Vetted Standard</span>
-                    <span className="text-[11px] text-slate-500">Background & gear checked</span>
+                    <span className="font-bold block text-white">Vetted Master</span>
+                    <span className="text-[11px] text-slate-400">Identity & craft authenticated</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Package Details & What's Included */}
-            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-xs space-y-5">
-              <h3 className="font-serif font-bold text-xl text-[#0F0C3B]">
+            <div className="bg-[#121418] rounded-none p-6 sm:p-7 border border-[#26282E] shadow-xl space-y-5">
+              <h3 className="font-serif font-bold text-xl text-white">
                 What is Included in the Selected Package
               </h3>
 
@@ -350,9 +350,9 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                 {activePackage.features.map((feature: string, idx: number) => (
                   <div
                     key={idx}
-                    className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-2.5 text-xs text-slate-700"
+                    className="p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] flex items-start gap-2.5 text-xs text-slate-300"
                   >
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-[#DFB76C] shrink-0 mt-0.5" />
                     <span className="font-medium leading-relaxed">{feature}</span>
                   </div>
                 ))}
@@ -360,18 +360,18 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
             </div>
 
             {/* Client Reviews Section */}
-            <div className="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/90 shadow-xs space-y-6">
+            <div className="bg-[#121418] rounded-none p-6 sm:p-7 border border-[#26282E] shadow-xl space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-serif font-bold text-xl text-[#0F0C3B]">
+                  <h3 className="font-serif font-bold text-xl text-white">
                     Client Reviews & Ratings
                   </h3>
-                  <p className="text-xs text-slate-500 mt-1">
+                  <p className="text-xs text-slate-400 mt-1">
                     Verified client feedback backed by completed escrow milestones
                   </p>
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 font-extrabold text-sm">
-                  <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-none bg-[#0B0C0E] border border-[#26282E] text-[#DFB76C] font-bold text-sm">
+                  <Star className="w-4 h-4 fill-[#DFB76C] text-[#DFB76C]" />
                   <span>{service.rating} / 5.0</span>
                 </div>
               </div>
@@ -380,19 +380,19 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                 {service.reviews.map((rev: any, i: number) => (
                   <div
                     key={i}
-                    className="p-4 rounded-2xl bg-[#FAF9F6] border border-slate-200/80 space-y-2 text-xs"
+                    className="p-4 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-2 text-xs"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-full bg-indigo-100 text-brand-primary font-bold flex items-center justify-center text-xs">
+                        <div className="w-7 h-7 rounded-none bg-[#1A1D24] text-[#DFB76C] font-bold flex items-center justify-center text-xs border border-[#26282E]">
                           {rev.author.slice(0, 2).toUpperCase()}
                         </div>
-                        <span className="font-bold text-[#0F0C3B]">{rev.author}</span>
-                        <span className="text-[10px] text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded">
-                          Verified Order
+                        <span className="font-bold text-white">{rev.author}</span>
+                        <span className="text-[10px] text-emerald-400 font-semibold bg-[#0D211A] border border-emerald-500/30 px-2 py-0.5 rounded-none">
+                          Verified Ceremony
                         </span>
                       </div>
-                      <span className="text-[10px] text-slate-400">{rev.date}</span>
+                      <span className="text-[10px] text-slate-500">{rev.date}</span>
                     </div>
 
                     <div className="flex items-center gap-0.5">
@@ -401,14 +401,14 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                           key={starI}
                           className={`w-3.5 h-3.5 ${
                             starI < rev.rating
-                              ? "fill-amber-400 text-amber-400"
-                              : "text-slate-200"
+                              ? "fill-[#DFB76C] text-[#DFB76C]"
+                              : "text-slate-700"
                           }`}
                         />
                       ))}
                     </div>
 
-                    <p className="text-slate-600 leading-relaxed">{rev.text}</p>
+                    <p className="text-slate-300 leading-relaxed">{rev.text}</p>
                   </div>
                 ))}
               </div>
@@ -416,22 +416,22 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
           </div>
 
           {/* Right Column (4 cols): Sticky Package Selector & Booking Action Card */}
-          <div className="lg:col-span-4 sticky top-6 space-y-5">
+          <div className="lg:col-span-4 sticky top-24 space-y-5">
             {/* Package Selector Card */}
-            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-xl space-y-5">
+            <div className="bg-[#121418] rounded-none p-6 border border-[#26282E] shadow-2xl space-y-5">
               {/* Package Tabs */}
               {service.packages.length > 1 && (
-                <div className="flex rounded-2xl bg-slate-100 p-1 gap-1">
+                <div className="flex rounded-none bg-[#0B0C0E] p-1 gap-1 border border-[#26282E]">
                   {service.packages.map((pkg: any, idx: number) => {
                     const isSelected = idx === selectedPackageIndex;
                     return (
                       <button
                         key={pkg.id || idx}
                         onClick={() => setSelectedPackageIndex(idx)}
-                        className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        className={`flex-1 py-2 rounded-none text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                           isSelected
-                            ? "bg-white text-[#0F0C3B] shadow-xs"
-                            : "text-slate-500 hover:text-slate-900"
+                            ? "bg-[#DFB76C] text-[#0B0C0E] shadow-gold-glow-sm"
+                            : "text-slate-400 hover:text-white"
                         }`}
                       >
                         {pkg.title.split(" ")[0]}
@@ -442,42 +442,42 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               )}
 
               {/* Price & Summary */}
-              <div className="border-b border-slate-100 pb-5 space-y-2">
+              <div className="border-b border-[#26282E] pb-5 space-y-2">
                 <div className="flex items-baseline justify-between">
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Package Price</span>
+                  <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Reserve Price</span>
                   <div className="text-right">
-                    <span className="text-3xl font-black font-serif text-[#0F0C3B]">
+                    <span className="text-3xl font-bold font-mono text-[#DFB76C]">
                       ${activePackage.price.toLocaleString()}
                     </span>
-                    <span className="text-xs text-slate-400 block font-normal">Escrow-backed total</span>
+                    <span className="text-xs text-slate-500 block font-normal">Escrow-safeguarded total</span>
                   </div>
                 </div>
 
-                <h4 className="font-serif font-bold text-base text-[#0F0C3B] pt-2">
+                <h4 className="font-serif font-bold text-base text-white pt-2">
                   {activePackage.title}
                 </h4>
-                <p className="text-xs text-slate-500 leading-relaxed">
+                <p className="text-xs text-slate-400 leading-relaxed">
                   {activePackage.description}
                 </p>
               </div>
 
               {/* Turnaround & Coverage Specs */}
               <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase block">Coverage</span>
-                  <span className="font-bold text-[#0F0C3B]">{activePackage.hours || "Full Event Coverage"}</span>
+                <div className="p-3 rounded-none bg-[#0B0C0E] border border-[#26282E]">
+                  <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block">Coverage</span>
+                  <span className="font-bold text-white">{activePackage.hours || "Ceremonial Duration"}</span>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 border border-slate-100">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase block">Turnaround</span>
-                  <span className="font-bold text-emerald-600">{activePackage.turnaround}</span>
+                <div className="p-3 rounded-none bg-[#0B0C0E] border border-[#26282E]">
+                  <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block">Turnaround</span>
+                  <span className="font-bold text-[#DFB76C]">{activePackage.turnaround}</span>
                 </div>
               </div>
 
               {/* Package Features List */}
               <div className="space-y-2 text-xs">
                 {activePackage.features.slice(0, 4).map((f: string, i: number) => (
-                  <div key={i} className="flex items-center gap-2 text-slate-600">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                  <div key={i} className="flex items-center gap-2 text-slate-300">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#DFB76C] shrink-0" />
                     <span>{f}</span>
                   </div>
                 ))}
@@ -487,29 +487,29 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               <div className="pt-2 space-y-2.5">
                 <Link
                   href={`/checkout?vendorId=${service.vendorId}&packageId=${activePackage.id}`}
-                  className="w-full py-3.5 px-4 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-[#0F0C3B] font-extrabold text-sm text-center shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3.5 px-4 rounded-none bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] font-bold text-xs uppercase tracking-widest text-center shadow-gold-glow transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <Lock className="w-4 h-4 text-[#0F0C3B]" />
-                  <span>Book Now & Lock Escrow</span>
+                  <Lock className="w-4 h-4 text-[#0B0C0E]" />
+                  <span>Reserve & Lock Escrow</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
 
                 <button
                   onClick={() => setHubModalOpen(true)}
-                  className="w-full py-2.5 px-3 rounded-xl border border-indigo-200 bg-indigo-50/70 hover:bg-indigo-100/90 text-brand-primary text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                  className="w-full py-2.5 px-3 rounded-none border border-[#26282E] bg-[#1A1D24] hover:bg-[#22252F] text-[#DFB76C] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors cursor-pointer"
                 >
-                  <Users2 className="w-4 h-4 text-brand-primary" />
-                  <span>Recommend to Family Hub</span>
+                  <Users2 className="w-4 h-4 text-[#DFB76C]" />
+                  <span>Collaborative Hub</span>
                 </button>
               </div>
 
               {/* Escrow Guarantee Footer Note */}
-              <div className="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-200/80 text-[11px] text-emerald-900 space-y-1">
+              <div className="p-3.5 rounded-none bg-[#0D211A] border border-emerald-500/30 text-[11px] text-emerald-300 space-y-1">
                 <div className="flex items-center gap-1.5 font-bold">
-                  <ShieldCheck className="w-4 h-4 text-emerald-700 shrink-0" />
+                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
                   <span>100% Milestone Escrow Protection</span>
                 </div>
-                <p className="text-[10px] text-emerald-800 leading-relaxed">
+                <p className="text-[10px] text-emerald-400/80 leading-relaxed">
                   Your funds remain locked in escrow until you inspect and accept milestone deliverables.
                 </p>
               </div>
