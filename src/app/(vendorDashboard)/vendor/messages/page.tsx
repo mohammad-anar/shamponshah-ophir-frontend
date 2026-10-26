@@ -112,6 +112,37 @@ function VendorMessagesContent() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(false);
   const [isLoadingOlder, setIsLoadingOlder] = useState(false);
+  const [isUploadingAttachment, setIsUploadingAttachment] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleAttachmentUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingAttachment(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("http://localhost:4005/api/v1/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.url) {
+        setInputMessage((prev) => (prev ? `${prev} ${data.url}` : data.url));
+        toast.success("Attachment uploaded! Click Send to deliver.");
+      } else {
+        toast.error("Failed to upload attachment");
+      }
+    } catch {
+      toast.error("Failed to upload attachment file");
+    } finally {
+      setIsUploadingAttachment(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  };
 
   const hasInitiatedRef = useRef(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -765,7 +796,45 @@ function VendorMessagesContent() {
 
             {/* Bottom Message Input Box */}
             <form onSubmit={handleSendMessage} className="p-3 md:p-4 border-t border-slate-200 bg-white">
+              {showEmojiPicker && (
+                <div className="flex items-center gap-2 mb-2 p-2 bg-[#F8F9FD] border border-slate-200 rounded-xl overflow-x-auto">
+                  {["🥂", "✨", "🎉", "💍", "💐", "🙏", "😊", "❤️"].map((emoji) => (
+                    <button
+                      key={emoji}
+                      type="button"
+                      onClick={() => {
+                        setInputMessage((prev) => prev + emoji);
+                        setShowEmojiPicker(false);
+                      }}
+                      className="text-lg hover:scale-125 transition-transform p-1 cursor-pointer"
+                    >
+                      {emoji}
+                    </button>
+                  ))}
+                </div>
+              )}
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleAttachmentUpload}
+                className="hidden"
+                accept="image/*,.pdf,.doc,.docx"
+              />
               <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploadingAttachment}
+                  title="Attach photo or document"
+                  className="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 cursor-pointer disabled:opacity-50"
+                >
+                  {isUploadingAttachment ? (
+                    <Loader2 className="w-4 h-4 animate-spin text-brand-primary" />
+                  ) : (
+                    <Paperclip className="w-4 h-4" />
+                  )}
+                </button>
+
                 <input
                   type="text"
                   placeholder={`Reply to ${activeConv.clientName}...`}
@@ -773,6 +842,15 @@ function VendorMessagesContent() {
                   onChange={(e) => setInputMessage(e.target.value)}
                   className="flex-1 bg-[#F8F9FD] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-primary focus:bg-white"
                 />
+
+                <button
+                  type="button"
+                  onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+                  title="Insert celebratory emoji"
+                  className="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 hidden sm:block cursor-pointer"
+                >
+                  <Smile className="w-4 h-4" />
+                </button>
 
                 <button
                   type="submit"
