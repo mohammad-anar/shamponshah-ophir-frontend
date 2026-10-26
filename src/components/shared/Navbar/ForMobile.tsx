@@ -59,14 +59,14 @@ export default function ForMobile() {
   ];
 
   return (
-    <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#EAE6DF] shadow-xs">
+    <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#0B0C0E]/95 backdrop-blur-md border-b border-[#26282E] shadow-2xl">
       <div className="px-4 h-[68px] flex items-center justify-between">
         <Logo />
 
         <div className="flex items-center gap-2">
           <Link
             href={user?.id ? dashboardLink : "/login"}
-            className="w-8 h-8 rounded-full bg-[#0F1228] text-white flex items-center justify-center text-xs font-bold"
+            className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#262930] text-[#DFB76C] flex items-center justify-center text-xs font-bold"
             title={user?.name || user?.email || "Account Profile"}
           >
             {user?.id ? userInitials : <User className="w-3.5 h-3.5" />}
@@ -74,7 +74,7 @@ export default function ForMobile() {
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 rounded-lg text-slate-800 hover:bg-alabaster-200 transition-colors"
+            className="p-2 rounded-none text-slate-300 hover:text-[#DFB76C] transition-colors"
             aria-label="Toggle menu"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -84,24 +84,24 @@ export default function ForMobile() {
 
       {/* Mobile Drawer */}
       {isOpen && (
-        <div className="fixed inset-x-0 top-[68px] bottom-0 bg-white z-50 flex flex-col justify-between p-5 overflow-y-auto animate-in slide-in-from-top-4 duration-200 border-t border-[#EAE6DF]">
+        <div className="fixed inset-x-0 top-[68px] bottom-0 bg-[#0B0C0E] z-50 flex flex-col justify-between p-5 overflow-y-auto animate-in slide-in-from-top-4 duration-200 border-t border-[#26282E]">
           <div className="space-y-5">
             {/* Mobile Search */}
             <div className="relative">
               <form onSubmit={handleSearch} className="relative">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search services, vendors, venues..."
-                  className="w-full h-11 pl-10 pr-9 text-sm bg-[#F4F2EE] text-obsidian rounded-xl border border-transparent focus:border-gold-500 focus:outline-none"
+                  placeholder="Search artisans, traditions, services..."
+                  className="w-full h-10 pl-10 pr-9 text-xs bg-[#121418] text-slate-200 placeholder:text-slate-500 rounded-none border border-[#262930] focus:border-[#DFB76C] focus:outline-none"
                 />
                 {searchQuery && (
                   <button
                     type="button"
                     onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-0.5 cursor-pointer"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300 p-0.5 cursor-pointer"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -110,18 +110,18 @@ export default function ForMobile() {
 
               {/* Mobile Services Dropdown (max-height = 1/3 screen) */}
               {searchQuery.trim().length > 0 && (
-                <div className="mt-2 bg-white rounded-2xl shadow-luxury-lg border border-[#EAE6DF] overflow-hidden">
-                  <div className="px-3.5 py-2 bg-slate-50 border-b border-slate-100 flex items-center justify-between text-[11px] font-semibold text-slate-500">
-                    <span>Matching Services</span>
+                <div className="mt-2 bg-[#121418] rounded-none shadow-luxury-xl border border-[#262930] overflow-hidden">
+                  <div className="px-3.5 py-2 bg-[#0B0C0E] border-b border-[#262930] flex items-center justify-between text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    <span>Matching Artisans & Services</span>
                     {isSearchingGigs && (
-                      <span className="flex items-center gap-1 text-gold-600">
+                      <span className="flex items-center gap-1 text-[#DFB76C]">
                         <Loader2 className="w-3 h-3 animate-spin" /> Searching...
                       </span>
                     )}
                   </div>
 
                   <div 
-                    className="overflow-y-auto divide-y divide-slate-100"
+                    className="overflow-y-auto divide-y divide-[#1A1D24]"
                     style={{ maxHeight: "33.33vh" }}
                   >
                     {matchingServices.length > 0 ? (
@@ -138,15 +138,15 @@ export default function ForMobile() {
                             key={service.id}
                             href={targetUrl}
                             onClick={() => setIsOpen(false)}
-                            className="p-3 block hover:bg-[#F9F7F2] transition-colors"
+                            className="p-3 block hover:bg-[#1A1D24] transition-colors"
                           >
-                            <p className="text-xs font-bold text-obsidian line-clamp-1">
+                            <p className="text-xs font-bold text-slate-200 line-clamp-1 font-serif">
                               {service.title}
                             </p>
-                            <div className="flex items-center justify-between text-[11px] text-slate-500 mt-1">
+                            <div className="flex items-center justify-between text-[11px] text-slate-400 mt-1">
                               <span className="truncate">{vendorName ? `by ${vendorName}` : service.category?.name}</span>
                               {price && (
-                                <span className="font-bold text-emerald-700 font-mono text-xs ml-2">
+                                <span className="font-bold text-[#DFB76C] font-mono text-xs ml-2">
                                   ${price}
                                 </span>
                               )}
@@ -164,7 +164,7 @@ export default function ForMobile() {
                   <Link
                     href={`/vendors?q=${encodeURIComponent(searchQuery.trim())}`}
                     onClick={() => setIsOpen(false)}
-                    className="block px-3.5 py-2.5 bg-slate-50 hover:bg-[#F2EFE8] text-xs font-bold text-[#0F0C3B] text-center border-t border-slate-100"
+                    className="block px-3.5 py-2.5 bg-[#0B0C0E] hover:bg-[#16181F] text-xs font-bold text-[#DFB76C] text-center border-t border-[#262930] uppercase tracking-wider"
                   >
                     View all results &rarr;
                   </Link>
@@ -177,19 +177,19 @@ export default function ForMobile() {
               <div>
                 <button
                   onClick={() => setIsOccasionsOpen(!isOccasionsOpen)}
-                  className="w-full flex items-center justify-between py-3 text-base text-slate-800 border-b border-slate-100"
+                  className="w-full flex items-center justify-between py-3 text-xs uppercase tracking-widest text-slate-300 border-b border-[#262930]"
                 >
                   <span>Occasions</span>
-                  <ChevronDown className={cn("w-4 h-4 transition-transform", isOccasionsOpen && "rotate-180")} />
+                  <ChevronDown className={cn("w-4 h-4 text-slate-500 transition-transform", isOccasionsOpen && "rotate-180")} />
                 </button>
                 {isOccasionsOpen && (
-                  <div className="pl-3 py-2 space-y-2 bg-[#F9F8F5] rounded-xl my-2">
+                  <div className="pl-3 py-2 space-y-2 bg-[#121418] border-l-2 border-[#DFB76C] my-2">
                     {occasions.map((occ) => (
                       <Link
                         key={occ.title}
                         href={occ.href}
                         onClick={() => setIsOpen(false)}
-                        className="block py-1.5 text-sm text-slate-700 hover:text-obsidian"
+                        className="block py-1 text-xs text-slate-300 hover:text-[#DFB76C]"
                       >
                         {occ.title}
                       </Link>
@@ -202,8 +202,8 @@ export default function ForMobile() {
                 href="/services"
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "block py-3 text-base border-b border-slate-100 font-semibold",
-                  pathname.startsWith("/services") ? "text-[#4F46E5]" : "text-slate-800 hover:text-[#4F46E5]"
+                  "block py-3 text-xs uppercase tracking-widest border-b border-[#262930]",
+                  pathname.startsWith("/services") ? "text-[#DFB76C] font-bold" : "text-slate-300 hover:text-[#DFB76C]"
                 )}
               >
                 Services Catalog
@@ -213,57 +213,57 @@ export default function ForMobile() {
                 href="/vendors"
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "block py-3 text-base border-b border-slate-100 font-medium",
-                  pathname.startsWith("/vendors") ? "text-[#4F46E5]" : "text-slate-800 hover:text-[#4F46E5]"
+                  "block py-3 text-xs uppercase tracking-widest border-b border-[#262930]",
+                  pathname.startsWith("/vendors") ? "text-[#DFB76C] font-bold" : "text-slate-300 hover:text-[#DFB76C]"
                 )}
               >
-                Vendors Directory
+                Premier Artisans
               </Link>
 
               <Link
                 href="/how-it-works"
                 onClick={() => setIsOpen(false)}
-                className="block py-3 text-base text-slate-800 hover:text-[#4F46E5] border-b border-slate-100"
+                className="block py-3 text-xs uppercase tracking-widest text-slate-300 hover:text-[#DFB76C] border-b border-[#262930]"
               >
-                How It Works
+                The Process
               </Link>
 
               <Link
                 href="/help-center"
                 onClick={() => setIsOpen(false)}
-                className="block py-3 text-base text-slate-800 hover:text-[#4F46E5] border-b border-slate-100"
+                className="block py-3 text-xs uppercase tracking-widest text-slate-300 hover:text-[#DFB76C] border-b border-[#262930]"
               >
-                Escrow Vault Protection
+                Escrow Vault
               </Link>
 
               <Link
                 href="/become-a-vendor"
                 onClick={() => setIsOpen(false)}
-                className="block py-3 text-base text-slate-800 hover:text-[#4F46E5] border-b border-slate-100"
+                className="block py-3 text-xs uppercase tracking-widest text-slate-300 hover:text-[#DFB76C] border-b border-[#262930]"
               >
-                Become a Vendor
+                Artisan Application
               </Link>
             </div>
           </div>
 
           {/* Bottom Actions */}
-          <div className="space-y-3 pt-6 border-t border-slate-200">
+          <div className="space-y-3 pt-6 border-t border-[#262930]">
             {user?.id ? (
               <>
                 <Link
                   href={user?.role === "CLIENT" ? "/user/post-job" : "/vendors?action=post-job"}
                   onClick={() => setIsOpen(false)}
-                  className="w-full py-3 text-center block text-sm font-bold text-white bg-[#4F46E5] hover:bg-[#4338CA] rounded-xl shadow-md transition-all"
+                  className="w-full py-3 text-center block text-xs font-bold uppercase tracking-widest text-[#0B0C0E] bg-[#DFB76C] hover:bg-[#ECC870] rounded-none shadow-gold-glow-sm transition-all"
                 >
-                  Post a Job
+                  Plan Event
                 </Link>
 
                 <Link
                   href={dashboardLink}
                   onClick={() => setIsOpen(false)}
-                  className="w-full py-2.5 text-center block text-sm font-bold text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl border border-slate-200"
+                  className="w-full py-2.5 text-center block text-xs font-bold uppercase tracking-wider text-[#DFB76C] bg-[#121418] hover:bg-[#1A1D24] rounded-none border border-[#262930]"
                 >
-                  Go to Dashboard ({user?.role === "VENDOR" ? "Vendor Hub" : user?.role === "ADMIN" ? "Admin Console" : "My Account"})
+                  Dashboard ({user?.role === "VENDOR" ? "Artisan Portal" : user?.role === "ADMIN" ? "Admin Console" : "Client Portal"})
                 </Link>
               </>
             ) : (
@@ -271,16 +271,16 @@ export default function ForMobile() {
                 <Link
                   href="/login"
                   onClick={() => setIsOpen(false)}
-                  className="py-2.5 text-center text-sm font-semibold text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl"
+                  className="py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-slate-300 bg-[#121418] border border-[#262930] hover:bg-[#1A1D24] rounded-none"
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/register"
                   onClick={() => setIsOpen(false)}
-                  className="py-2.5 text-center text-sm font-bold text-white bg-[#0F0C3B] hover:bg-indigo-900 rounded-xl"
+                  className="py-2.5 text-center text-xs font-bold uppercase tracking-widest text-[#0B0C0E] bg-[#DFB76C] hover:bg-[#ECC870] rounded-none"
                 >
-                  Join Now
+                  Join
                 </Link>
               </div>
             )}
