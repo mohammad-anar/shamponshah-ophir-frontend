@@ -38,6 +38,7 @@ import {
   useSaveVendorMutation,
 } from "@/redux/service/vendors/vendorsApi";
 import { useTrackView } from "@/lib/tracking";
+import { getVendorLevelConfig } from "@/config/vendor-levels.config";
 
 export default function VendorProfilePage() {
   const params = useParams();
@@ -55,6 +56,11 @@ export default function VendorProfilePage() {
     liveVendor ||
     VENDORS.find((v) => v.id === vendorId || (v as any).slug === vendorId) ||
     VENDORS[0];
+
+  // Dynamic Level Config & Theme
+  const tierKey = liveVendor?.tier || vendor?.guildTier || vendor?.tier || "PRO";
+  const levelConfig = getVendorLevelConfig(tierKey);
+  const { theme: levelTheme, title: levelTitle, badgeLabel: levelBadgeLabel, perks: levelPerks, levelNumber } = levelConfig;
 
   // Track profile view with deduplication
   useTrackView("VENDOR", liveVendor?.id || vendorId);
@@ -118,8 +124,11 @@ export default function VendorProfilePage() {
 
   return (
     <div className="w-full bg-[#0B0C0E] text-[#F3F4F6] min-h-screen pb-20 font-sans selection:bg-[#DFB76C] selection:text-[#0B0C0E]">
-      {/* Top Hero Banner Image */}
-      <div className="relative w-full h-64 sm:h-80 lg:h-96 bg-[#121418] overflow-hidden border-b border-[#26282E]">
+      {/* Top Hero Banner Image with Level-Based Ambient Accent Overlay */}
+      <div 
+        className="relative w-full h-64 sm:h-80 lg:h-96 bg-[#121418] overflow-hidden border-b transition-colors duration-500"
+        style={{ borderBottomColor: levelTheme.accentBorder }}
+      >
         <Image
           src={vendor.heroImage || "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1600&q=80"}
           alt={vendor.name}
@@ -128,19 +137,33 @@ export default function VendorProfilePage() {
           className="object-cover opacity-70 filter brightness-[0.75] contrast-[1.05] transition-transform duration-700 hover:scale-102"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C0E] via-[#0B0C0E]/40 to-black/40" />
+        {/* Ambient level accent glow */}
+        <div 
+          className="absolute inset-0 pointer-events-none opacity-40 mix-blend-screen transition-opacity duration-700"
+          style={{ background: levelTheme.heroOverlay }}
+        />
 
         <div className="absolute bottom-4 right-6 text-slate-300 text-xs bg-[#0B0C0E]/80 backdrop-blur-md px-3.5 py-1.5 rounded-none border border-[#26282E] shadow-sm flex items-center gap-1.5">
-          <MapPin className="w-3.5 h-3.5 text-[#DFB76C]" />
+          <MapPin className="w-3.5 h-3.5" style={{ color: levelTheme.accentColor }} />
           <span>{vendor.location}</span>
         </div>
       </div>
 
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10 -mt-16 sm:-mt-20 relative z-10 space-y-8">
         {/* Header Profile Header Card */}
-        <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
+        <div 
+          className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border space-y-6 transition-all duration-500"
+          style={{ borderColor: levelTheme.accentBorder }}
+        >
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-none overflow-hidden border-2 border-[#DFB76C] shadow-lg bg-[#0B0C0E] shrink-0">
+              <div 
+                className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-none overflow-hidden border-2 shadow-lg bg-[#0B0C0E] shrink-0 transition-all duration-500"
+                style={{ 
+                  borderColor: levelTheme.accentColor,
+                  boxShadow: `0 0 25px ${levelTheme.glowColor}` 
+                }}
+              >
                 <Image
                   src={vendor.avatar || "https://images.unsplash.com/photo-1583394293214-28ded15ee548?auto=format&fit=crop&w=400&q=80"}
                   alt={vendor.name}
@@ -154,9 +177,16 @@ export default function VendorProfilePage() {
                   <h1 className="font-serif text-2xl sm:text-3xl font-light text-[#F3F4F6] tracking-tight">
                     {vendor.name}
                   </h1>
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] text-[11px] font-bold uppercase tracking-widest border border-[#DFB76C]/30">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#DFB76C]" />
-                    <span>{vendor.guildTierLabel || "Elite Reserve Artisan"}</span>
+                  <span 
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-none text-[11px] font-bold uppercase tracking-widest border transition-colors duration-500"
+                    style={{
+                      backgroundColor: levelTheme.badgeBg,
+                      borderColor: levelTheme.accentBorder,
+                      color: levelTheme.accentColor,
+                    }}
+                  >
+                    <ShieldCheck className="w-3.5 h-3.5" style={{ color: levelTheme.accentColor }} />
+                    <span>{levelBadgeLabel}</span>
                   </span>
                 </div>
 
@@ -166,7 +196,7 @@ export default function VendorProfilePage() {
 
                 <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 pt-1">
                   <span className="flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-[#DFB76C]" />
+                    <MapPin className="w-3.5 h-3.5" style={{ color: levelTheme.accentColor }} />
                     {vendor.location}
                   </span>
                   <span>•</span>
@@ -192,15 +222,20 @@ export default function VendorProfilePage() {
                   });
                   setIsFamilyModalOpen(true);
                 }}
-                className="px-4 py-2.5 bg-[#16181F] hover:bg-[#1F222B] text-[#DFB76C] text-xs font-semibold rounded-none border border-[#26282E] hover:border-[#DFB76C]/60 transition-colors flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-2.5 bg-[#16181F] hover:bg-[#1F222B] text-xs font-semibold rounded-none border transition-colors flex items-center gap-1.5 cursor-pointer"
+                style={{
+                  color: levelTheme.accentColor,
+                  borderColor: levelTheme.accentBorder,
+                }}
               >
-                <Users2 className="w-3.5 h-3.5 text-[#DFB76C]" />
+                <Users2 className="w-3.5 h-3.5" style={{ color: levelTheme.accentColor }} />
                 <span>Collaborative Hub</span>
               </button>
 
               <button
                 onClick={() => handleBookPackage(packagesList[0]?.id || "default")}
-                className="px-5 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-wider rounded-none shadow-md transition-all cursor-pointer"
+                style={{ backgroundColor: levelTheme.accentColor }}
+                className="px-5 py-2.5 text-[#0B0C0E] text-xs font-bold uppercase tracking-wider rounded-none shadow-md hover:brightness-110 transition-all cursor-pointer"
               >
                 Reserve Consultation
               </button>
@@ -232,10 +267,50 @@ export default function VendorProfilePage() {
             </div>
           </div>
 
+          {/* Level Progression & Active Perks Banner */}
+          <div 
+            className="flex flex-wrap items-center justify-between gap-3 p-3.5 border rounded-none text-xs transition-colors duration-500"
+            style={{
+              backgroundColor: levelTheme.badgeBg,
+              borderColor: levelTheme.accentBorder,
+            }}
+          >
+            <div className="flex items-center gap-2.5">
+              <span 
+                className="w-2.5 h-2.5 rounded-full animate-pulse"
+                style={{ backgroundColor: levelTheme.accentColor }}
+              />
+              <span className="font-bold text-white uppercase tracking-wider text-[11px]">
+                {levelTitle} (Level {levelNumber})
+              </span>
+              <span className="text-slate-400 hidden sm:inline">•</span>
+              <span className="text-slate-300 hidden sm:inline text-[11px]">
+                {levelConfig.tagline}
+              </span>
+            </div>
+            <div className="flex items-center gap-2 flex-wrap">
+              {levelPerks.map((perk, idx) => (
+                <span 
+                  key={idx}
+                  className="text-[10px] font-medium px-2 py-0.5 border"
+                  style={{
+                    borderColor: levelTheme.accentBorder,
+                    color: levelTheme.accentColor,
+                  }}
+                >
+                  ✓ {perk}
+                </span>
+              ))}
+            </div>
+          </div>
+
           {/* 5 Stats Metrics Ribbon */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 pt-6 border-t border-[#26282E]">
             <div className="space-y-0.5">
-              <div className="text-[10px] text-[#DFB76C] font-bold uppercase tracking-[0.2em]">
+              <div 
+                className="text-[10px] font-bold uppercase tracking-[0.2em]"
+                style={{ color: levelTheme.accentColor }}
+              >
                 ORDERS COMPLETED
               </div>
               <div className="font-serif text-xl sm:text-2xl font-light text-white">
@@ -245,11 +320,14 @@ export default function VendorProfilePage() {
             </div>
 
             <div className="space-y-0.5">
-              <div className="text-[10px] text-[#DFB76C] font-bold uppercase tracking-[0.2em]">
+              <div 
+                className="text-[10px] font-bold uppercase tracking-[0.2em]"
+                style={{ color: levelTheme.accentColor }}
+              >
                 CLIENT RATING
               </div>
-              <div className="font-serif text-xl sm:text-2xl font-light text-[#DFB76C] flex items-center gap-1.5">
-                <Star className="w-4 h-4 fill-[#DFB76C] text-[#DFB76C]" />
+              <div className="font-serif text-xl sm:text-2xl font-light flex items-center gap-1.5" style={{ color: levelTheme.accentColor }}>
+                <Star className="w-4 h-4" style={{ color: levelTheme.accentColor, fill: levelTheme.accentColor }} />
                 <span>{vendor.rating ? Number(vendor.rating).toFixed(1) : "5.0"} / 5.0</span>
               </div>
               <div className="text-[11px] text-slate-400">
@@ -258,7 +336,10 @@ export default function VendorProfilePage() {
             </div>
 
             <div className="space-y-0.5">
-              <div className="text-[10px] text-[#DFB76C] font-bold uppercase tracking-[0.2em]">
+              <div 
+                className="text-[10px] font-bold uppercase tracking-[0.2em]"
+                style={{ color: levelTheme.accentColor }}
+              >
                 RESPONSE TIME
               </div>
               <div className="font-serif text-xl sm:text-2xl font-light text-white">
@@ -268,7 +349,10 @@ export default function VendorProfilePage() {
             </div>
 
             <div className="space-y-0.5">
-              <div className="text-[10px] text-[#DFB76C] font-bold uppercase tracking-[0.2em]">
+              <div 
+                className="text-[10px] font-bold uppercase tracking-[0.2em]"
+                style={{ color: levelTheme.accentColor }}
+              >
                 ON-TIME DELIVERY
               </div>
               <div className="font-serif text-xl sm:text-2xl font-light text-white">
@@ -278,7 +362,10 @@ export default function VendorProfilePage() {
             </div>
 
             <div className="space-y-0.5">
-              <div className="text-[10px] text-[#DFB76C] font-bold uppercase tracking-[0.2em]">
+              <div 
+                className="text-[10px] font-bold uppercase tracking-[0.2em]"
+                style={{ color: levelTheme.accentColor }}
+              >
                 REPEAT PATRONAGE
               </div>
               <div className="font-serif text-xl sm:text-2xl font-light text-white">
@@ -291,20 +378,24 @@ export default function VendorProfilePage() {
 
         {/* Tab Navigation */}
         <div className="flex items-center gap-2 border-b border-[#26282E] overflow-x-auto pb-1 scrollbar-none">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={cn(
-                "px-5 py-3 text-xs sm:text-sm font-semibold border-b-2 whitespace-nowrap transition-all cursor-pointer rounded-none uppercase tracking-wider",
-                activeTab === tab.id
-                  ? "border-[#DFB76C] text-[#DFB76C] font-bold"
-                  : "border-transparent text-slate-400 hover:text-white"
-              )}
-            >
-              {tab.label}
-            </button>
-          ))}
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                style={isActive ? { borderBottomColor: levelTheme.accentColor, color: levelTheme.accentColor } : {}}
+                className={cn(
+                  "px-5 py-3 text-xs sm:text-sm font-semibold border-b-2 whitespace-nowrap transition-all cursor-pointer rounded-none uppercase tracking-wider",
+                  isActive
+                    ? "font-bold"
+                    : "border-transparent text-slate-400 hover:text-white"
+                )}
+              >
+                {tab.label}
+              </button>
+            );
+          })}
         </div>
 
         {/* Main 2-Column Content Layout */}
