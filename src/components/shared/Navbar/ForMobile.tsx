@@ -201,6 +201,14 @@ export default function ForMobile() {
               >
                 Escrow Vault
               </Link>
+
+              <Link
+                href="/signup?role=vendor"
+                onClick={() => setIsOpen(false)}
+                className="block py-3 text-xs uppercase tracking-widest text-[#DFB76C] font-bold border-b border-[#26282E]"
+              >
+                Become a Vendor
+              </Link>
             </div>
           </div>
 
@@ -224,7 +232,7 @@ export default function ForMobile() {
                   Sign In
                 </Link>
                 <Link
-                  href="/register"
+                  href="/signup?role=client"
                   onClick={() => setIsOpen(false)}
                   className="py-2.5 text-center text-xs font-bold uppercase tracking-widest text-[#0B0C0E] bg-[#DFB76C] hover:bg-[#ECC870] rounded-none"
                 >
