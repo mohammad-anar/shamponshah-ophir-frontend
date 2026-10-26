@@ -2,12 +2,11 @@
 
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { FAQS } from "@/data/mockData";
 import { cn } from "@/lib/utils";
 import { useGetFaqsQuery } from "@/redux/service/contact/contactApi";
 
 export default function FaqAccordion() {
-  const { data: faqsData } = useGetFaqsQuery();
+  const { data: faqsData, isLoading } = useGetFaqsQuery();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const liveCategories = faqsData?.data || faqsData;
@@ -15,7 +14,7 @@ export default function FaqAccordion() {
     ? liveCategories.flatMap((c: any) => c.questions || [])
     : [];
 
-  const displayFaqs = liveFaqs.length > 0 ? liveFaqs : FAQS;
+  const displayFaqs = liveFaqs;
 
   const toggle = (idx: number) => {
     setOpenIndex(openIndex === idx ? null : idx);
