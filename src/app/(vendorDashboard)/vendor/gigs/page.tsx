@@ -124,9 +124,29 @@ export default function VendorGigsPage() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <div className="absolute top-3 left-3">
-                    <span className="px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-[#0F0C3B]/80 backdrop-blur-xs text-white">
-                      {gig.status || "ACTIVE"}
-                    </span>
+                    {gig.status === "PENDING_VERIFICATION" ? (
+                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-amber-500 text-slate-950 shadow-sm flex items-center gap-1 animate-pulse">
+                        <span className="w-1.5 h-1.5 rounded-full bg-slate-950" />
+                        Pending Verification
+                      </span>
+                    ) : gig.status === "REJECTED" ? (
+                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-rose-600 text-white shadow-sm flex items-center gap-1">
+                        Rejected
+                      </span>
+                    ) : gig.status === "SUSPENDED" ? (
+                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-slate-800 text-rose-300 border border-rose-500/30 shadow-sm flex items-center gap-1">
+                        Suspended
+                      </span>
+                    ) : gig.status === "ACTIVE" ? (
+                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-emerald-600 text-white shadow-sm flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-200" />
+                        Active
+                      </span>
+                    ) : (
+                      <span className="px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-[#0F0C3B]/80 backdrop-blur-xs text-white">
+                        {gig.status || "ACTIVE"}
+                      </span>
+                    )}
                   </div>
                   <div className="absolute top-3 right-3">
                     <button
@@ -150,6 +170,12 @@ export default function VendorGigsPage() {
                     <h3 className="font-bold text-[#0F0C3B] text-sm mt-1 line-clamp-2 leading-snug">
                       {gig.title}
                     </h3>
+                    {gig.status === "REJECTED" && gig.rejectionReason && (
+                      <div className="mt-2 p-2 rounded-lg bg-rose-50 border border-rose-200 text-rose-800 text-[11px] leading-tight">
+                        <span className="font-bold block text-rose-900 mb-0.5">Admin Rejection Reason:</span>
+                        {gig.rejectionReason}
+                      </div>
+                    )}
                   </div>
 
                   {/* Performance Metrics */}
