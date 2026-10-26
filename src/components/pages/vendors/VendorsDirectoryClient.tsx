@@ -419,10 +419,10 @@ export default function VendorsDirectoryPage() {
 
           <div className="flex items-center gap-3">
             <Link
-              href="/become-a-vendor"
+              href="/register?role=vendor"
               className="px-6 py-3 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] font-bold text-xs uppercase tracking-widest rounded-none shadow-gold-glow-sm transition-all"
             >
-              Apply as Artisan
+              Register as Vendor
             </Link>
           </div>
         </div>
