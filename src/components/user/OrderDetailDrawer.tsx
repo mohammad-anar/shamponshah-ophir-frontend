@@ -21,10 +21,12 @@ import {
   Award,
   Ban,
   RotateCcw,
-  UploadCloud
+  UploadCloud,
+  CreditCard,
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
+import StripePaymentModal from "@/components/payment/StripePaymentModal";
 import { 
   useApproveMilestoneMutation, 
   useCancelOrderMutation,
@@ -86,6 +88,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
   // Local state to reflect milestone payments immediately
   const [localMilestones, setLocalMilestones] = useState<MilestoneItem[]>([]);
   const [localOrderStatus, setLocalOrderStatus] = useState<string>("");
+  const [payModalOpen, setPayModalOpen] = useState(false);
 
   useEffect(() => {
     if (order) {
@@ -110,6 +113,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
     ],
   };
 
+  const isPendingPayment = localOrderStatus === "PENDING_PAYMENT" || currentOrder.status === "PENDING_PAYMENT";
   const milestonesList = localMilestones.length > 0 ? localMilestones : (currentOrder.milestones || []);
   const allMilestonesCompleted = milestonesList.length > 0 && milestonesList.every(
     (m) => m.status === "RELEASED" || m.status === "PAID"
@@ -484,13 +488,15 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
               <span className="text-xs font-bold text-slate-500">Order #{currentOrder.orderNumber || currentOrder.id}</span>
               <span className={cn(
                 "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide",
-                isOrderCompleted
+                isPendingPayment
+                  ? "bg-amber-100 text-amber-800"
+                  : isOrderCompleted
                   ? "bg-emerald-100 text-emerald-800"
                   : isOrderCancelled
                   ? "bg-rose-100 text-rose-800"
                   : "bg-indigo-100 text-indigo-800"
               )}>
-                {isOrderCompleted ? "Fulfillment Complete" : isOrderCancelled ? "Cancelled" : "Active Order"}
+                {isPendingPayment ? "Payment Required" : isOrderCompleted ? "Fulfillment Complete" : isOrderCancelled ? "Cancelled" : "Active Order"}
               </span>
             </div>
             <h2 className="text-lg font-bold text-[#0F0C3B] mt-1">{currentOrder.serviceTitle}</h2>
@@ -506,6 +512,39 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
 
         {/* Drawer Scrollable Body */}
         <div className="p-6 overflow-y-auto flex-1 space-y-6">
+          {/* Pending Payment Notice */}
+          {isPendingPayment && !isOrderCancelled && (() => {
+            const createdAtMs = currentOrder.createdAt ? new Date(currentOrder.createdAt).getTime() : Date.now();
+            const hoursRemaining = Math.max(0, Math.ceil((createdAtMs + 24 * 60 * 60 * 1000 - Date.now()) / (1000 * 60 * 60)));
+            return (
+              <div className="p-4 rounded-xl bg-amber-50 border border-amber-300 shadow-2xs space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0 mt-0.5">
+                    <DollarSign className="w-4 h-4" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <h4 className="font-bold text-xs text-[#0F0C3B]">Payment Required to Activate Order</h4>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-200 text-amber-900 animate-pulse">
+                        Auto-cancels in {hoursRemaining}h if unpaid
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-slate-600 leading-relaxed mt-0.5">
+                      This direct gig booking is currently unpaid. Funds will be held securely in the Stripe Escrow Vault until completion.
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setPayModalOpen(true)}
+                  className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-xs flex items-center justify-center gap-2 cursor-pointer transition-all"
+                >
+                  <CreditCard className="w-4 h-4" />
+                  <span>Pay Now ({currentOrder.totalAmount})</span>
+                </button>
+              </div>
+            );
+          })()}
           {/* Cancelled Banner */}
           {isOrderCancelled && (
             <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 flex items-start gap-3 text-rose-950">
@@ -814,7 +853,16 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
             )}
           </div>
 
-          {isOrderCompleted ? (
+          {isPendingPayment && !isOrderCancelled ? (
+            <button
+              type="button"
+              onClick={() => setPayModalOpen(true)}
+              className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold flex items-center gap-2 shadow-xs cursor-pointer transition-all"
+            >
+              <CreditCard className="w-4 h-4" />
+              <span>Pay Now ({currentOrder.totalAmount})</span>
+            </button>
+          ) : isOrderCompleted ? (
             <div className="px-5 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm">
               <CheckCircle2 className="w-4 h-4" />
               <span>All Milestones Approved</span>
@@ -831,6 +879,21 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
           )}
         </div>
       </div>
+
+      {payModalOpen && (
+        <StripePaymentModal
+          isOpen={payModalOpen}
+          onClose={() => setPayModalOpen(false)}
+          orderId={currentOrder.id}
+          orderNumber={currentOrder.orderNumber}
+          amount={Number(currentOrder.grandTotal || currentOrder.totalAmount?.replace(/[^0-9.]/g, "") || 0)}
+          onSuccess={() => {
+            toast.success("Payment secured in escrow vault! Order is now active.");
+            setLocalOrderStatus("ACTIVE");
+            setPayModalOpen(false);
+          }}
+        />
+      )}
     </div>
   );
 }
