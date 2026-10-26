@@ -12,7 +12,7 @@ export default function VendorRootLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#F8F9FD] flex">
+    <div className="min-h-screen bg-[#0B0C0E] text-[#F3F4F6] flex font-sans dashboard-theme">
       {/* Vendor Sidebar */}
       <VendorSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
