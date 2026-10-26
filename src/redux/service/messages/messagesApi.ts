@@ -45,6 +45,27 @@ export const messagesApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["messages"],
     }),
+    getOrderMessages: builder.query<any, { orderId: string; page?: number; limit?: number; before?: string }>({
+      query: ({ orderId, ...params }) => ({
+        url: `/orders/${orderId}/messages`,
+        method: "GET",
+        params,
+      }),
+      providesTags: (_res, _err, { orderId }) => [{ type: "messages", id: `order-${orderId}` }],
+    }),
+    sendOrderMessage: builder.mutation<any, { orderId: string; content?: string; attachments?: string[] }>({
+      query: ({ orderId, ...body }) => ({
+        url: `/orders/${orderId}/messages`,
+        method: "POST",
+        body,
+      }),
+    }),
+    markOrderMessagesRead: builder.mutation<any, { orderId: string }>({
+      query: ({ orderId }) => ({
+        url: `/orders/${orderId}/messages/read`,
+        method: "PATCH",
+      }),
+    }),
   }),
 });
 
@@ -54,4 +75,8 @@ export const {
   useLazyGetConversationMessagesQuery,
   useSendMessageMutation,
   useStartConversationMutation,
+  useGetOrderMessagesQuery,
+  useLazyGetOrderMessagesQuery,
+  useSendOrderMessageMutation,
+  useMarkOrderMessagesReadMutation,
 } = messagesApi;
