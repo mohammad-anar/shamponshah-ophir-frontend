@@ -37,6 +37,7 @@ import {
   useGetVendorBySlugQuery,
   useSaveVendorMutation,
 } from "@/redux/service/vendors/vendorsApi";
+import { useTrackView } from "@/lib/tracking";
 
 export default function VendorProfilePage() {
   const params = useParams();
@@ -54,6 +55,9 @@ export default function VendorProfilePage() {
     liveVendor ||
     VENDORS.find((v) => v.id === vendorId || (v as any).slug === vendorId) ||
     VENDORS[0];
+
+  // Track profile view with deduplication
+  useTrackView("VENDOR", liveVendor?.id || vendorId);
 
   const [activeTab, setActiveTab] = useState("overview");
   const [isWishlisted, setIsWishlisted] = useState(false);
