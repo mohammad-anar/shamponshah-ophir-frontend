@@ -146,6 +146,77 @@ export const paymentsApi = baseApi.injectEndpoints({
       }),
       providesTags: ["payments"],
     }),
+    createOrderPaymentIntent: builder.mutation<
+      {
+        clientSecret: string;
+        paymentIntentId: string;
+        orderId: string;
+        orderNumber?: string;
+        amount: number;
+        platformFee: number;
+        vendorNet: number;
+        paymentStatus: string;
+      },
+      { orderId: string; idempotencyKey?: string }
+    >({
+      query: (body) => ({
+        url: "/payments/order-intent",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["payments", "orders"],
+    }),
+    confirmOrderPayment: builder.mutation<
+      {
+        success: boolean;
+        orderId: string;
+        orderNumber?: string;
+        status: string;
+        paymentStatus: string;
+        amount: number;
+        platformFee: number;
+        vendorNet: number;
+      },
+      { orderId: string; paymentIntentId: string; idempotencyKey?: string }
+    >({
+      query: (body) => ({
+        url: "/payments/confirm-order-payment",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["payments", "orders"],
+    }),
+    getVendorWallet: builder.query<
+      {
+        walletId: string;
+        vendorProfileId: string;
+        pendingAmount: number;
+        pendingForReleaseAmount: number;
+        availableAmount: number;
+        totalEarned: number;
+        totalWithdrawn: number;
+        ledgerEntries: Array<{
+          id: string;
+          orderId?: string | null;
+          orderNumber?: string | null;
+          type: string;
+          gross: number;
+          platformFee: number;
+          vendorNet: number;
+          status: string;
+          clearingEndsAt?: string | null;
+          description?: string | null;
+          createdAt: string;
+        }>;
+      },
+      void
+    >({
+      query: () => ({
+        url: "/payments/vendor/wallet",
+        method: "GET",
+      }),
+      providesTags: ["payments", "orders"],
+    }),
   }),
 });
 
@@ -169,4 +240,7 @@ export const {
   useCreateDisputeMutation,
   useGetClientDisputesQuery,
   useGetVendorDisputesQuery,
+  useCreateOrderPaymentIntentMutation,
+  useConfirmOrderPaymentMutation,
+  useGetVendorWalletQuery,
 } = paymentsApi;
