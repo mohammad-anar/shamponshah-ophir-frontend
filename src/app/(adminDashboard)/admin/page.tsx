@@ -417,46 +417,83 @@ export default function AdminOperationsOverview() {
             <h3 className="text-base font-bold text-[#0F0C3B] mb-3">Alerts & Escalations</h3>
 
             <div className="space-y-2.5">
-              {/* Alert 1 */}
-              <div className="p-3 rounded-lg bg-amber-50/50 border border-amber-200/80 flex items-start justify-between gap-3">
-                <div className="flex items-start gap-2.5">
-                  <div className="p-1.5 rounded-md bg-amber-100 text-amber-800 mt-0.5">
-                    <Building2 className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-[#0F0C3B]">3 vendor payout accounts need re-verification</h4>
-                    <p className="text-[11px] text-slate-500 mt-0.5">Stripe escrow KYC flag on accounts scheduled &gt;$10k</p>
-                  </div>
-                </div>
-                <Link
-                  href="/admin/payouts"
-                  className="text-xs font-semibold text-amber-900 bg-amber-100 hover:bg-amber-200 px-2.5 py-1 rounded transition-colors whitespace-nowrap"
-                >
-                  Review →
-                </Link>
-              </div>
-
-              {/* Alert 2 */}
-              <div className="p-3 rounded-lg bg-red-50/50 border border-red-200/80 flex items-start justify-between gap-3">
-                <div className="flex items-start gap-2.5">
-                  <div className="p-1.5 rounded-md bg-red-100 text-red-800 mt-0.5">
-                    <ShieldAlert className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-1.5">
-                      <h4 className="text-xs font-bold text-red-900">1 dispute is past its 3-day SLA</h4>
-                      <span className="text-[9px] font-bold bg-red-600 text-white px-1.5 py-0.2 rounded uppercase">Overdue</span>
+              {/* Alert: Pending Gigs Moderation */}
+              {Number(stats.pendingGigs || 0) > 0 && (
+                <div className="p-3 rounded-lg bg-amber-50/70 border border-amber-300 flex items-start justify-between gap-3">
+                  <div className="flex items-start gap-2.5">
+                    <div className="p-1.5 rounded-md bg-amber-200 text-amber-900 mt-0.5">
+                      <Clock className="w-4 h-4" />
                     </div>
-                    <p className="text-[11px] text-slate-500 mt-0.5">Case #DS-1049 (Windy City Sound vs Marcus - $2,400 hold)</p>
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        <h4 className="text-xs font-bold text-amber-950">
+                          {stats.pendingGigs} service {stats.pendingGigs === 1 ? "gig" : "gigs"} pending verification
+                        </h4>
+                        <span className="text-[9px] font-bold bg-amber-500 text-slate-950 px-1.5 py-0.2 rounded uppercase">Verification Queue</span>
+                      </div>
+                      <p className="text-[11px] text-amber-800 mt-0.5">Vendor service submissions waiting for admin approval before going live</p>
+                    </div>
                   </div>
+                  <Link
+                    href="/admin/gigs/pending"
+                    className="text-xs font-bold text-slate-950 bg-amber-400 hover:bg-amber-500 px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
+                  >
+                    Audit &amp; Approve →
+                  </Link>
                 </div>
-                <Link
-                  href="/admin/disputes"
-                  className="text-xs font-semibold text-white bg-red-600 hover:bg-red-700 px-2.5 py-1 rounded transition-colors whitespace-nowrap"
-                >
-                  Review →
-                </Link>
-              </div>
+              )}
+
+              {/* Alert: Service Reports */}
+              {Number(stats.pendingReports || 0) > 0 && (
+                <div className="p-3 rounded-lg bg-rose-50/70 border border-rose-300 flex items-start justify-between gap-3">
+                  <div className="flex items-start gap-2.5">
+                    <div className="p-1.5 rounded-md bg-rose-100 text-rose-800 mt-0.5">
+                      <AlertTriangle className="w-4 h-4 text-rose-600" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        <h4 className="text-xs font-bold text-rose-950">
+                          {stats.pendingReports} urgent user service {stats.pendingReports === 1 ? "report" : "reports"}
+                        </h4>
+                        <span className="text-[9px] font-bold bg-rose-600 text-white px-1.5 py-0.2 rounded uppercase">Safety</span>
+                      </div>
+                      <p className="text-[11px] text-rose-800 mt-0.5">User complaints alleging misleading pricing, policy breaches, or fraud</p>
+                    </div>
+                  </div>
+                  <Link
+                    href="/admin/reports"
+                    className="text-xs font-bold text-white bg-rose-600 hover:bg-rose-700 px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
+                  >
+                    Review Reports →
+                  </Link>
+                </div>
+              )}
+
+              {/* Alert: Open Disputes */}
+              {Number(stats.openDisputes || 0) > 0 && (
+                <div className="p-3 rounded-lg bg-red-50/50 border border-red-200/80 flex items-start justify-between gap-3">
+                  <div className="flex items-start gap-2.5">
+                    <div className="p-1.5 rounded-md bg-red-100 text-red-800 mt-0.5">
+                      <ShieldAlert className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-1.5">
+                        <h4 className="text-xs font-bold text-red-900">
+                          {stats.openDisputes} order {stats.openDisputes === 1 ? "dispute" : "disputes"} open
+                        </h4>
+                        <span className="text-[9px] font-bold bg-red-600 text-white px-1.5 py-0.2 rounded uppercase">Escrow SLA</span>
+                      </div>
+                      <p className="text-[11px] text-slate-500 mt-0.5">Disputed milestone orders requiring admin decision and Stripe refund</p>
+                    </div>
+                  </div>
+                  <Link
+                    href="/admin/disputes"
+                    className="text-xs font-semibold text-white bg-red-600 hover:bg-red-700 px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
+                  >
+                    Resolve Disputes →
+                  </Link>
+                </div>
+              )}
 
               {/* Alert 3 */}
               <div className="p-3 rounded-lg bg-slate-50 border border-slate-200 flex items-start justify-between gap-3">
@@ -465,8 +502,10 @@ export default function AdminOperationsOverview() {
                     <Users className="w-4 h-4" />
                   </div>
                   <div>
-                    <h4 className="text-xs font-bold text-[#0F0C3B]">12 vendor applications pending over 48 hours</h4>
-                    <p className="text-[11px] text-slate-500 mt-0.5">Chicago and Atlanta regional queues awaiting background check</p>
+                    <h4 className="text-xs font-bold text-[#0F0C3B]">
+                      {stats.pendingApprovals ?? 12} vendor applications pending
+                    </h4>
+                    <p className="text-[11px] text-slate-500 mt-0.5">Regional vendor onboarding queues awaiting document audit</p>
                   </div>
                 </div>
                 <Link
@@ -521,20 +560,29 @@ export default function AdminOperationsOverview() {
 
         <div className="flex items-center gap-2.5 flex-wrap w-full md:w-auto">
           <Link
-            href="/admin/vendor-approvals"
-            className="px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold transition-colors shadow-xs"
+            href="/admin/gigs/pending"
+            className="px-3.5 py-2 rounded-lg bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-extrabold transition-colors shadow-xs"
           >
-            Review vendor approvals (12)
+            Review Pending Gigs ({stats.pendingGigs || 0})
+          </Link>
+          <Link
+            href="/admin/reports"
+            className="px-3.5 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition-colors shadow-xs"
+          >
+            Safety Reports ({stats.pendingReports || 0})
           </Link>
           <Link
             href="/admin/disputes"
             className="px-3.5 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-colors"
           >
-            View open disputes (4)
+            Open Disputes ({stats.openDisputes || 0})
           </Link>
-          <button className="px-3.5 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-colors">
-            Export finance report (.csv)
-          </button>
+          <Link
+            href="/admin/vendor-approvals"
+            className="px-3.5 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-colors"
+          >
+            Approvals ({stats.pendingApprovals || 0})
+          </Link>
         </div>
       </div>
     </div>
