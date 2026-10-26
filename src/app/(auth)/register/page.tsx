@@ -1,3 +1,4 @@
+import React, { Suspense } from "react";
 import type { Metadata } from "next";
 import { constructMetadata } from "@/lib/seo";
 import RegisterClient from "@/components/pages/auth/RegisterClient";
@@ -10,5 +11,9 @@ export const metadata: Metadata = constructMetadata({
 });
 
 export default function RegisterPage() {
-  return <RegisterClient />;
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#0B0C0E]" />}>
+      <RegisterClient />
+    </Suspense>
+  );
 }
