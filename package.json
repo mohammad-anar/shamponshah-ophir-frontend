@@ -12,6 +12,8 @@
     "@ant-design/icons": "^6.0.0",
     "@hookform/resolvers": "^3.9.1",
     "@reduxjs/toolkit": "^2.4.0",
+    "@stripe/react-stripe-js": "^7.0.0",
+    "@stripe/stripe-js": "^10.1.0",
     "antd": "^5.27.4",
     "clsx": "^2.1.1",
     "crypto-js": "^4.2.0",
