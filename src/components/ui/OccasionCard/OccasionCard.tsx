@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Occasion } from "@/data/mockData";
+import { Occasion } from "@/types/vendor.types";
 import { ArrowUpRight } from "lucide-react";
 
 interface OccasionCardProps {
