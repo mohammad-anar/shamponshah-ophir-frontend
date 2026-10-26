@@ -16,8 +16,8 @@ import {
   DollarSign,
   ArrowRight,
   Plus,
+  Loader2,
 } from "lucide-react";
-import { VENDORS } from "@/data/mockData";
 import { useGetPublicGigsQuery } from "@/redux/service/gigs/gigsApi";
 import { useGetCategoriesQuery } from "@/redux/service/categories/categoriesApi";
 import AddToFamilyHubModal from "@/components/shared/AddToFamilyHubModal";
@@ -116,35 +116,6 @@ export default function ServicesCatalogPage() {
         });
       });
     }
-
-    // Curated catalog from VENDORS mock data
-    VENDORS.forEach((v) => {
-      v.packages.forEach((pkg, idx) => {
-        list.push({
-          id: `${v.id}-pkg-${idx}`,
-          realId: `${v.id}-pkg-${idx}`,
-          vendorProfileId: v.id,
-          packageId: pkg.id,
-          title: `${v.name} — ${pkg.title}`,
-          category: v.categoryLabel || "Vendor Service",
-          tags: [],
-          description: pkg.description || v.bio,
-          startingPrice: pkg.price,
-          image: v.galleryImages[idx % v.galleryImages.length] || v.heroImage || v.avatar,
-          vendorName: v.name,
-          vendorAvatar: v.avatar,
-          rating: v.rating,
-          reviewCount: v.reviewCount,
-          tier: v.guildTier,
-          location: v.location,
-          features: pkg.features || [
-            `${pkg.hours} continuous coverage`,
-            `Guaranteed ${pkg.turnaround}`,
-            "Escrow Milestone Safety",
-          ],
-        });
-      });
-    });
 
     return list;
   }, [dbGigs]);
@@ -319,28 +290,41 @@ export default function ServicesCatalogPage() {
           </div>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {paginatedServices.map((service) => (
-            <TrackedServiceCard
-              key={service.id}
-              service={service}
-              onOpenHub={(s) => setSelectedServiceForHub(s)}
-            />
-          ))}
-        </div>
+        {/* Services Grid or Loading */}
+        {isGigsLoading ? (
+          <div className="py-24 flex flex-col items-center justify-center space-y-4">
+            <Loader2 className="w-8 h-8 text-[#DFB76C] animate-spin" />
+            <p className="text-xs text-slate-400 uppercase tracking-widest font-semibold">
+              Loading ceremonial artisan services...
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {paginatedServices.map((service) => (
+                <TrackedServiceCard
+                  key={service.id}
+                  service={service}
+                  onOpenHub={(s) => setSelectedServiceForHub(s)}
+                />
+              ))}
+            </div>
 
-        {/* Pagination Controls */}
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={(page) => {
-            setCurrentPage(page);
-            window.scrollTo({ top: 340, behavior: "smooth" });
-          }}
-        />
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={(page) => {
+                  setCurrentPage(page);
+                  window.scrollTo({ top: 340, behavior: "smooth" });
+                }}
+              />
+            )}
+          </>
+        )}
 
-        {filteredServices.length === 0 && (
+        {!isGigsLoading && filteredServices.length === 0 && (
           <div className="p-16 text-center bg-[#121418] rounded-none border border-[#26282E] shadow-xl max-w-lg mx-auto my-12 space-y-3">
             <Search className="w-10 h-10 text-slate-600 mx-auto" />
             <h3 className="text-base font-bold text-white font-serif">No matching services found</h3>
