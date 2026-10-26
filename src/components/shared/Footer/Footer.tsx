@@ -74,10 +74,10 @@ export default function Footer() {
 
             <div className="flex items-center gap-2">
               <Link 
-                href="/register?role=vendor" 
+                href="/signup?role=vendor" 
                 className="px-4 py-2.5 rounded-none bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-wider transition-all"
               >
-                Register as Vendor
+                Become a Vendor
               </Link>
               <Link 
                 href="/vendors" 
@@ -200,8 +200,8 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/register?role=vendor" className="hover:text-[#DFB76C] transition-colors">
-                  Vendor Registration
+                <Link href="/signup?role=vendor" className="hover:text-[#DFB76C] transition-colors">
+                  Become a Vendor
                 </Link>
               </li>
               <li>
@@ -210,7 +210,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/register?role=vendor" className="hover:text-[#DFB76C] transition-colors">
+                <Link href="/signup?role=vendor" className="hover:text-[#DFB76C] transition-colors">
                   Artisan Portfolio Studio
                 </Link>
               </li>
