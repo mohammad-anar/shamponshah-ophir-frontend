@@ -108,15 +108,15 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
       )}
 
       <aside className={cn(
-        "fixed top-0 bottom-0 left-0 z-50 w-60 bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0",
+        "fixed top-0 bottom-0 left-0 z-50 w-60 bg-[#0B0C0E] border-r border-[#26282E] flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         {/* Brand */}
-        <div className="h-16 flex items-center justify-between px-5 border-b border-slate-100">
+        <div className="h-16 flex items-center justify-between px-5 border-b border-[#26282E] bg-[#0B0C0E]">
           <Logo href="/user" />
           <button 
             onClick={onClose}
-            className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+            className="lg:hidden p-1.5 rounded-none text-slate-400 hover:text-white hover:bg-[#16181F]"
           >
             <X className="w-5 h-5" />
           </button>
@@ -126,10 +126,10 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
         <div className="flex-1 overflow-y-auto px-3 py-4 space-y-5 custom-scrollbar">
           {navSections.map((sec) => (
             <div key={sec.title}>
-              <p className="px-3 text-[10px] font-bold text-slate-400 tracking-wider mb-1.5 uppercase">
+              <p className="px-3 text-[10px] font-bold text-[#DFB76C] tracking-[0.2em] mb-1.5 uppercase font-sans">
                 {sec.title}
               </p>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 {sec.items.map((item) => {
                   const isActive = pathname === item.href || (item.href !== "/user" && pathname.startsWith(item.href));
                   const Icon = item.icon;
@@ -139,27 +139,27 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
                       href={item.href}
                       onClick={onClose}
                       className={cn(
-                        "flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold transition-all",
+                        "flex items-center justify-between px-3 py-2 rounded-none text-xs font-medium transition-all",
                         isActive
-                          ? "bg-[#EDE9FE] text-[#0F0C3B]"
+                          ? "bg-[#16181F] text-[#DFB76C] border-l-2 border-[#DFB76C]"
                           : item.highlight
-                            ? "text-brand-primary hover:bg-indigo-50 font-bold"
-                            : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                            ? "text-[#DFB76C] hover:bg-[#121418] hover:text-[#ECC870] font-semibold"
+                            : "text-slate-400 hover:bg-[#121418] hover:text-[#F3F4F6]"
                       )}
                     >
                       <div className="flex items-center gap-2.5">
-                        <Icon className={cn("w-4 h-4", isActive ? "text-brand-primary" : item.highlight ? "text-brand-primary" : "text-slate-400")} />
+                        <Icon className={cn("w-4 h-4", isActive ? "text-[#DFB76C]" : item.highlight ? "text-[#DFB76C]" : "text-slate-500")} />
                         <span>{item.label}</span>
                       </div>
 
                       {item.badge && (
-                        <span className="px-1.5 py-0.2 rounded-full text-[10px] font-bold bg-[#0F0C3B] text-white">
+                        <span className="px-1.5 py-0.5 rounded-none text-[10px] font-bold bg-[#DFB76C] text-[#0B0C0E]">
                           {item.badge}
                         </span>
                       )}
 
                       {item.dot && (
-                        <span className="w-2 h-2 rounded-full bg-amber-500" />
+                        <span className="w-2 h-2 rounded-none bg-[#DFB76C]" />
                       )}
                     </Link>
                   );
