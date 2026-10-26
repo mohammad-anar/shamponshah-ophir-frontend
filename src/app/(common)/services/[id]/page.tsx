@@ -29,6 +29,7 @@ import { toast } from "sonner";
 import { VENDORS } from "@/data/mockData";
 import { useGetGigBySlugQuery, useReportGigMutation } from "@/redux/service/gigs/gigsApi";
 import AddToFamilyHubModal from "@/components/shared/AddToFamilyHubModal";
+import { useTrackView } from "@/lib/tracking";
 
 interface ServiceDetailPageProps {
   params: Promise<{ id: string }>;
@@ -57,6 +58,9 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
   const [reporterEmail, setReporterEmail] = useState("");
 
   const liveGig = gigResp?.data || gigResp;
+
+  // Track gig detail page view with session deduplication
+  useTrackView("GIG", liveGig?.id || serviceId);
 
   const handleSubmitReport = async () => {
     if (!reportDescription.trim()) {
