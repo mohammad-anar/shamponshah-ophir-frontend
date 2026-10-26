@@ -256,6 +256,13 @@ export default function ForPc() {
           ) : (
             <>
               <Link
+                href="/signup?role=vendor"
+                className="px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-semibold text-slate-300 hover:text-[#DFB76C] transition-colors"
+              >
+                Become a Vendor
+              </Link>
+
+              <Link
                 href="/login"
                 className="px-3 py-2 text-xs uppercase tracking-[0.18em] font-semibold text-slate-300 hover:text-[#DFB76C] transition-colors"
               >
@@ -263,7 +270,7 @@ export default function ForPc() {
               </Link>
 
               <Link
-                href="/register"
+                href="/signup?role=client"
                 className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#0B0C0E] bg-[#DFB76C] hover:bg-[#ECC870] rounded-none transition-all shadow-md"
               >
                 Register
