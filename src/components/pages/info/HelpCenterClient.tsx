@@ -48,7 +48,7 @@ export default function HelpCenterPage() {
   ];
 
   return (
-    <div className="w-full bg-[#FAF9F6] min-h-screen py-10 lg:py-16 space-y-16">
+    <div className="w-full bg-[#0B0C0E] text-[#F3F4F6] min-h-screen py-10 lg:py-16 space-y-16 font-sans selection:bg-[#DFB76C] selection:text-[#0B0C0E]">
       {/* Search Hero */}
       <section className="max-w-4xl mx-auto px-6 text-center space-y-6">
         <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EEF2FF] text-[#3730A3] text-xs font-bold uppercase tracking-wider">
