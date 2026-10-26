@@ -16,7 +16,7 @@ import {
   X,
   Loader2,
 } from "lucide-react";
-import { VENDORS, Vendor } from "@/data/mockData";
+import type { Vendor } from "@/types/vendor.types";
 import VendorCard from "@/components/ui/VendorCard/VendorCard";
 import Pagination from "@/components/ui/Pagination/Pagination";
 import { cn } from "@/lib/utils";
@@ -80,13 +80,7 @@ export default function VendorsDirectoryPage() {
       : Array.isArray(apiResponse)
       ? apiResponse
       : [];
-    if (!liveVendors || liveVendors.length === 0) {
-      return VENDORS;
-    }
-    // Merge live vendors with mock data, ensuring no duplicate IDs
-    const liveIds = new Set(liveVendors.map((v) => v.id));
-    const uniqueMocks = VENDORS.filter((v) => !liveIds.has(v.id));
-    return [...liveVendors, ...uniqueMocks];
+    return liveVendors;
   }, [apiResponse]);
 
   const cities = [
@@ -252,6 +246,10 @@ export default function VendorsDirectoryPage() {
 
           <button
             type="button"
+            onClick={() => {
+              const el = document.getElementById("artisan-results");
+              if (el) el.scrollIntoView({ behavior: "smooth" });
+            }}
             className="w-full h-full min-h-[50px] px-6 bg-[#DFB76C] hover:bg-[#ECC870] active:scale-98 text-[#0B0C0E] text-xs font-bold uppercase tracking-widest rounded-none shadow-gold-glow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <Search className="w-4 h-4" />
@@ -363,7 +361,7 @@ export default function VendorsDirectoryPage() {
         </div>
 
         {/* Results Metadata Bar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
+        <div id="artisan-results" className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-sm font-bold text-slate-200">
               Showing {filteredVendors.length > 0 ? `${startIndex}–${endIndex}` : 0} of {filteredVendors.length} verified artisans
@@ -403,8 +401,15 @@ export default function VendorsDirectoryPage() {
           </div>
         </div>
 
-        {/* Vendors Grid */}
-        {filteredVendors.length > 0 ? (
+        {/* Vendors Grid or Loading */}
+        {isVendorsLoading ? (
+          <div className="w-full py-24 bg-[#121418] rounded-none border border-[#26282E] text-center space-y-4 flex flex-col items-center justify-center">
+            <Loader2 className="w-8 h-8 text-[#DFB76C] animate-spin" />
+            <p className="text-xs text-slate-400 uppercase tracking-widest font-semibold">
+              Loading verified cultural artisans...
+            </p>
+          </div>
+        ) : filteredVendors.length > 0 ? (
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {paginatedVendors.map((vendor: any) => (
@@ -413,15 +418,17 @@ export default function VendorsDirectoryPage() {
             </div>
 
             {/* Pagination Controls */}
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={(page) => {
-                setCurrentPage(page);
-                window.scrollTo({ top: 350, behavior: "smooth" });
-              }}
-              theme="indigo"
-            />
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={(page) => {
+                  setCurrentPage(page);
+                  window.scrollTo({ top: 350, behavior: "smooth" });
+                }}
+                theme="indigo"
+              />
+            )}
           </div>
         ) : (
           <div className="w-full py-16 bg-[#121418] rounded-none border border-[#26282E] text-center space-y-4">
