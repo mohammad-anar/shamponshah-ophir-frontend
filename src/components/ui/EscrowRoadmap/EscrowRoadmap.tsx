@@ -16,58 +16,53 @@ import {
 export default function EscrowRoadmap() {
   const steps = [
     {
-      num: "STEP 01",
+      num: "01",
       title: "Paid & Held",
-      desc: "Funds locked in FDIC-insured vault. Vendor is alerted that milestone is secured.",
+      desc: "Funds locked in FDIC-insured trust vaults. Artisan is verified and milestone is secured.",
       icon: Lock,
-      color: "bg-purple-100 text-purple-700",
     },
     {
-      num: "STEP 02",
-      title: "In Progress",
-      desc: "Vendor arrives, sets up, and executes event deliverables per contract.",
+      num: "02",
+      title: "Execution",
+      desc: "Master artisan arrives, setups scenography, and executes ceremonial deliverables.",
       icon: CalendarCheck,
-      color: "bg-amber-100 text-amber-700",
     },
     {
-      num: "STEP 03",
-      title: "Delivered",
-      desc: "Final media files, raw photos, or catering wrap-up submitted for review.",
+      num: "03",
+      title: "Delivery",
+      desc: "Final deliverables, raw assets, or banquet sign-offs are submitted for inspection.",
       icon: PackageCheck,
-      color: "bg-blue-100 text-blue-700",
     },
     {
-      num: "STEP 04",
-      title: "Client Sign–Off",
-      desc: "You inspect and approve the completed service. Request revisions if needed.",
+      num: "04",
+      title: "Client Approval",
+      desc: "You review and sign off on completed services with complete autonomy and peace of mind.",
       icon: CheckCircle2,
-      color: "bg-orange-100 text-orange-700",
     },
     {
-      num: "STEP 05",
+      num: "05",
       title: "Funds Released",
-      desc: "Ophir Reserve immediately disburses 100% of vendor fee. Zero late payment disputes.",
+      desc: "Ophir Reserve releases 100% of fees to artisan. Zero disputes, zero transaction friction.",
       icon: Banknote,
-      color: "bg-emerald-100 text-emerald-700",
     },
   ];
 
   return (
-    <section className="w-full py-16 lg:py-24 bg-white border-y border-[#EAE6DF]">
+    <section className="w-full py-16 lg:py-24 bg-[#0B0C0E] border-y border-[#26282E]">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10 space-y-12">
         {/* Header */}
         <div className="max-w-2xl space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF2FF] text-[#3730A3] text-xs font-bold uppercase tracking-wider">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#3730A3]" />
-            <span>Utsob Escrow Vault Protocol</span>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#121418] text-[#DFB76C] border border-[#DFB76C]/30 text-xs font-bold uppercase tracking-wider">
+            <ShieldCheck className="w-3.5 h-3.5 text-[#DFB76C]" />
+            <span>Ophir Escrow Vault Protocol</span>
           </div>
 
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-obsidian tracking-tight">
-            How your money stays 100% safe
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight">
+            How Your Investment Remains 100% Safe
           </h2>
 
-          <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-            Unlike traditional vendor hiring where cash or unbacked deposits carry full risk, Ophir Reserve locks funds in a segregated, FDIC-insured trust account until you sign off.
+          <p className="text-[#CBD5E1] text-sm sm:text-base leading-relaxed font-light">
+            Unlike legacy unbacked deposits, Ophir Reserve locks contracted funds in segregated, FDIC-insured depository accounts released strictly upon your sign-off.
           </p>
         </div>
 
@@ -78,29 +73,29 @@ export default function EscrowRoadmap() {
             return (
               <div
                 key={idx}
-                className="relative bg-[#FAF9F6] rounded-2xl p-5 sm:p-6 border border-[#EAE6DF] hover:border-gold-400 hover:shadow-luxury transition-all space-y-4 flex flex-col justify-between"
+                className="relative bg-[#121418] p-5 sm:p-6 border border-[#26282E] hover:border-[#DFB76C]/60 transition-all space-y-4 flex flex-col justify-between"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className={`w-10 h-10 rounded-xl ${step.color} flex items-center justify-center shadow-2xs`}>
-                      <Icon className="w-5 h-5" />
+                    <div className="w-10 h-10 bg-[#16181F] border border-[#26282E] text-[#DFB76C] flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-[#DFB76C]" />
                     </div>
-                    <span className="text-[11px] font-bold text-slate-400 tracking-wider">
+                    <span className="text-[11px] font-bold text-[#DFB76C] tracking-widest uppercase">
                       {step.num}
                     </span>
                   </div>
 
-                  <h3 className="font-serif font-bold text-base sm:text-lg text-obsidian">
+                  <h3 className="font-serif font-light text-base sm:text-lg text-white">
                     {step.title}
                   </h3>
 
-                  <p className="text-xs text-slate-500 leading-relaxed">
+                  <p className="text-xs text-[#CBD5E1] leading-relaxed font-light">
                     {step.desc}
                   </p>
                 </div>
 
-                <div className="pt-2 border-t border-[#EAE6DF]/60 text-[10px] font-semibold text-emerald-700 flex items-center gap-1">
-                  <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                <div className="pt-2 border-t border-[#26282E] text-[10px] font-semibold text-emerald-400 flex items-center gap-1 uppercase tracking-wider">
+                  <CheckCircle2 className="w-3 h-3 text-emerald-400" />
                   <span>Vault Guaranteed</span>
                 </div>
               </div>
@@ -109,24 +104,24 @@ export default function EscrowRoadmap() {
         </div>
 
         {/* Bottom Guarantee Strip */}
-        <div className="p-4 sm:p-5 rounded-2xl bg-[#0F1228] text-white flex flex-col sm:flex-row items-center justify-between gap-4 shadow-luxury">
+        <div className="p-5 bg-[#121418] border border-[#26282E] text-white flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-gold-500/20 text-gold-400 border border-gold-500/30 flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 bg-[#16181F] text-[#DFB76C] border border-[#26282E] flex items-center justify-center flex-shrink-0">
               <Scale className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-serif font-bold text-sm text-white">
+              <h4 className="font-serif font-light text-base text-white">
                 Independent Mediation Council
               </h4>
-              <p className="text-xs text-slate-300">
-                Full money-back refund guarantee if a creator fails to show or breaches contracted terms.
+              <p className="text-xs text-[#CBD5E1] font-light">
+                Full 100% money-back escrow refund guarantee if an artisan fails to perform contracted milestone services.
               </p>
             </div>
           </div>
 
           <Link
             href="/help-center"
-            className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-xl border border-white/20 transition-all flex items-center gap-1.5 whitespace-nowrap"
+            className="px-5 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer shadow-md"
           >
             <span>Read Escrow Terms</span>
             <ArrowRight className="w-3.5 h-3.5" />
