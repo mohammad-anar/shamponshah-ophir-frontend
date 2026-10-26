@@ -26,7 +26,6 @@ import {
   AlertTriangle,
 } from "lucide-react";
 import { toast } from "sonner";
-import { VENDORS } from "@/data/mockData";
 import { useGetGigBySlugQuery, useReportGigMutation } from "@/redux/service/gigs/gigsApi";
 import AddToFamilyHubModal from "@/components/shared/AddToFamilyHubModal";
 import { useTrackView } from "@/lib/tracking";
@@ -150,42 +149,39 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
       };
     }
 
-    // Mock match
-    // Check if ID matches vendor ID or vendor-pkg format
-    const vendorMatch = VENDORS.find(
-      (v) => v.id === serviceId || serviceId.startsWith(v.id)
-    ) || VENDORS[0];
-
-    const pkgIdx = serviceId.includes("-pkg-")
-      ? parseInt(serviceId.split("-pkg-")[1], 10) || 0
-      : 0;
-
-    return {
-      id: serviceId,
-      realId: serviceId,
-      title: `${vendorMatch.name} — ${vendorMatch.packages[pkgIdx]?.title || vendorMatch.title}`,
-      description: vendorMatch.bio,
-      category: vendorMatch.categoryLabel,
-      vendorId: vendorMatch.id,
-      vendorName: vendorMatch.name,
-      vendorAvatar: vendorMatch.avatar,
-      vendorTier: vendorMatch.guildTier,
-      location: vendorMatch.location,
-      rating: vendorMatch.rating,
-      reviewCount: vendorMatch.reviewCount,
-      images: [
-        vendorMatch.heroImage,
-        ...vendorMatch.galleryImages,
-      ],
-      packages: vendorMatch.packages,
-      reviews: vendorMatch.reviewsList.map((r) => ({
-        author: r.author,
-        rating: r.rating,
-        text: r.text,
-        date: r.date || "2 weeks ago",
-      })),
-    };
+    return null;
   }, [liveGig, serviceId]);
+
+  if (isGigLoading) {
+    return (
+      <div className="min-h-[75vh] bg-[#0B0C0E] flex flex-col items-center justify-center space-y-4">
+        <Loader2 className="w-10 h-10 text-[#DFB76C] animate-spin" />
+        <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">
+          Loading ceremonial artisan service details...
+        </p>
+      </div>
+    );
+  }
+
+  if (!service) {
+    return (
+      <div className="min-h-[75vh] bg-[#0B0C0E] flex flex-col items-center justify-center p-6 text-center space-y-4">
+        <div className="w-14 h-14 rounded-none bg-[#121418] border border-[#26282E] flex items-center justify-center text-[#DFB76C]">
+          <AlertTriangle className="w-7 h-7" />
+        </div>
+        <h1 className="font-serif text-3xl font-light text-white">Ceremonial Service Not Found</h1>
+        <p className="text-xs text-slate-400 max-w-md">
+          The service you are looking for may have been archived, completed, or the URL might be invalid.
+        </p>
+        <Link
+          href="/services"
+          className="mt-2 px-6 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-widest shadow-gold-glow-sm"
+        >
+          Browse Service Directory
+        </Link>
+      </div>
+    );
+  }
 
   const activePackage = service.packages[selectedPackageIndex] || service.packages[0];
 
