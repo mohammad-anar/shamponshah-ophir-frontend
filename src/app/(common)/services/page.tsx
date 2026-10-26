@@ -175,7 +175,7 @@ export default function ServicesCatalogPage() {
   const endIndex = Math.min(currentPage * PAGE_SIZE, filteredServices.length);
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] pb-24">
+    <div className="min-h-screen bg-[#0B0C0E] text-[#F3F4F6] pb-24 font-sans">
       {/* Add To Family Hub Modal */}
       {selectedServiceForHub && (
         <AddToFamilyHubModal
@@ -193,37 +193,37 @@ export default function ServicesCatalogPage() {
       )}
 
       {/* Hero Header */}
-      <div className="bg-[#0F0C3B] text-white pt-16 pb-14 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      <div className="bg-[#0B0C0E] border-b border-[#26282E] text-white pt-16 pb-14 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         {/* Glow accents */}
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-10 w-80 h-80 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#DFB76C]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-10 w-80 h-80 bg-[#B8934A]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto space-y-6 relative z-10">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-amber-300 text-xs font-semibold tracking-wide">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-none bg-[#121418] border border-[#DFB76C]/30 text-[#DFB76C] text-xs font-semibold uppercase tracking-widest">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Curated Vendor Marketplace • 100% Escrow Safeguarded</span>
+            <span>The Reserve Collection • 100% Escrow Safeguarded</span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight max-w-3xl leading-tight font-serif">
-            Book Verified Vendors & Services for Every Life Milestone
+          <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight max-w-3xl leading-tight font-serif text-white">
+            Curated Artisans & Ceremonial Mastercraft
           </h1>
 
-          <p className="text-slate-300 text-sm sm:text-base max-w-2xl leading-relaxed">
-            Choose exceptional event photographers, live musicians, gourmet caterers, and floral designers. 
-            Recommend services to your Family Hub or book directly with milestone-protected payments.
+          <p className="text-slate-400 text-sm sm:text-base max-w-2xl leading-relaxed">
+            Discover verified culinary masters, ancestral attire weavers, ceremonial musicians, and fine-art cinematographers. 
+            Recommend services to your Collaborative Hub or reserve with milestone-protected payments.
           </p>
 
           {/* Search Bar */}
           <div className="pt-2 max-w-3xl">
-            <div className="bg-white rounded-2xl p-2 shadow-2xl flex flex-col sm:flex-row items-center gap-2">
-              <div className="flex items-center gap-3 px-3 py-2 w-full text-slate-700">
-                <Search className="w-5 h-5 text-slate-400 shrink-0" />
+            <div className="bg-[#121418] rounded-none p-2 border border-[#26282E] shadow-2xl flex flex-col sm:flex-row items-center gap-2">
+              <div className="flex items-center gap-3 px-3 py-2 w-full text-slate-300">
+                <Search className="w-5 h-5 text-slate-500 shrink-0" />
                 <input
                   type="text"
-                  placeholder="Search cinematography, jazz bands, floral arches, private chefs..."
+                  placeholder="Search ceremony, kaiseki, flamenco, fine-art attire..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full text-sm text-[#0F0C3B] focus:outline-none placeholder:text-slate-400"
+                  className="w-full text-sm bg-transparent text-slate-200 focus:outline-none placeholder:text-slate-500"
                 />
               </div>
 
@@ -231,7 +231,7 @@ export default function ServicesCatalogPage() {
                 <select
                   value={priceFilter}
                   onChange={(e: any) => setPriceFilter(e.target.value)}
-                  className="px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer"
+                  className="px-3 py-2 rounded-none bg-[#0B0C0E] border border-[#26282E] text-xs font-semibold text-slate-300 focus:outline-none cursor-pointer"
                 >
                   <option value="all">Any Price</option>
                   <option value="under1000">Under $1,000</option>
@@ -241,7 +241,7 @@ export default function ServicesCatalogPage() {
 
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="px-5 py-2.5 rounded-xl bg-[#0F0C3B] text-white text-xs font-bold hover:bg-[#1C1656] transition-all shrink-0 cursor-pointer"
+                  className="px-5 py-2.5 rounded-none bg-[#DFB76C] text-[#0B0C0E] text-xs font-bold uppercase tracking-widest hover:bg-[#ECC870] transition-all shrink-0 cursor-pointer shadow-gold-glow-sm"
                 >
                   Explore
                 </button>
@@ -252,19 +252,19 @@ export default function ServicesCatalogPage() {
       </div>
 
       {/* Main Catalog Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10 pb-16 relative z-10">
         {/* Category Pills Bar */}
-        <div className="bg-white rounded-2xl p-3 shadow-md border border-slate-200/80 flex items-center gap-2 overflow-x-auto scrollbar-none">
+        <div className="bg-[#121418] rounded-none p-3 shadow-md border border-[#26282E] flex items-center gap-2 overflow-x-auto scrollbar-none">
           {apiCategories.map((cat) => {
             const isActive = selectedCategory === cat;
             return (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
+                className={`px-4 py-2 rounded-none text-xs font-bold uppercase tracking-wider whitespace-nowrap transition-all cursor-pointer border ${
                   isActive
-                    ? "bg-[#0F0C3B] text-white shadow-xs"
-                    : "bg-slate-50 text-slate-600 hover:bg-slate-100"
+                    ? "bg-[#DFB76C] text-[#0B0C0E] border-[#DFB76C] shadow-gold-glow-sm"
+                    : "bg-[#0B0C0E] text-slate-400 border-[#26282E] hover:text-[#DFB76C] hover:border-[#DFB76C]/40"
                 }`}
               >
                 {cat}
@@ -274,14 +274,14 @@ export default function ServicesCatalogPage() {
         </div>
 
         {/* Results Counter & Fast Info */}
-        <div className="flex items-center justify-between mt-8 mb-6 text-xs text-slate-500">
+        <div className="flex items-center justify-between mt-8 mb-6 text-xs text-slate-400">
           <p>
-            Showing <strong className="text-[#0F0C3B] font-bold">{filteredServices.length > 0 ? `${startIndex}–${endIndex}` : 0}</strong> of{" "}
-            <strong className="text-[#0F0C3B] font-bold">{filteredServices.length}</strong> available vendor services
+            Showing <strong className="text-[#DFB76C] font-bold">{filteredServices.length > 0 ? `${startIndex}–${endIndex}` : 0}</strong> of{" "}
+            <strong className="text-[#DFB76C] font-bold">{filteredServices.length}</strong> available ceremonial services
           </p>
           <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1.5 font-medium text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-              <ShieldCheck className="w-3.5 h-3.5" />
+            <span className="flex items-center gap-1.5 font-medium text-[#DFB76C] bg-[#121418] px-2.5 py-1 rounded-none border border-[#DFB76C]/30 uppercase tracking-wider text-[11px]">
+              <ShieldCheck className="w-3.5 h-3.5 text-[#DFB76C]" />
               Escrow Protection Included
             </span>
           </div>
@@ -292,25 +292,25 @@ export default function ServicesCatalogPage() {
           {paginatedServices.map((service) => (
             <div
               key={service.id}
-              className="bg-white rounded-3xl overflow-hidden border border-slate-200/90 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
+              className="bg-[#121418] rounded-none overflow-hidden border border-[#26282E] hover:border-[#DFB76C]/60 shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
             >
               {/* Image & Badges */}
-              <div className="relative h-56 w-full overflow-hidden bg-slate-100">
+              <div className="relative h-56 w-full overflow-hidden bg-[#0B0C0E]">
                 <Image
                   src={service.image}
                   alt={service.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C0E] via-transparent to-black/30" />
 
                 {/* Top Floating Badges */}
                 <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-extrabold text-[#0F0C3B] uppercase tracking-wider shadow-sm">
+                  <span className="px-2.5 py-1 rounded-none bg-[#0B0C0E]/85 backdrop-blur-md text-[10px] font-bold text-[#DFB76C] uppercase tracking-widest border border-[#DFB76C]/30 shadow-sm">
                     {service.category}
                   </span>
-                  <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-950 text-[10px] font-extrabold flex items-center gap-1 shadow-sm">
-                    <Star className="w-3 h-3 fill-slate-950" />
+                  <span className="px-2 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] border border-[#26282E] text-[10px] font-bold flex items-center gap-1 shadow-sm">
+                    <Star className="w-3 h-3 fill-[#DFB76C] text-[#DFB76C]" />
                     {service.rating} ({service.reviewCount})
                   </span>
                 </div>
@@ -318,11 +318,11 @@ export default function ServicesCatalogPage() {
                 {/* Bottom Floating Price */}
                 <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between text-white">
                   <div>
-                    <span className="text-[10px] uppercase font-semibold text-slate-300 block">Starting at</span>
-                    <span className="text-2xl font-black font-serif">${service.startingPrice.toLocaleString()}</span>
+                    <span className="text-[9px] uppercase tracking-widest text-slate-400 block font-bold">Starting at</span>
+                    <span className="text-2xl font-bold font-mono text-[#DFB76C]">${service.startingPrice.toLocaleString()}</span>
                   </div>
-                  <span className="text-[11px] font-semibold text-slate-300 flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-amber-400" />
+                  <span className="text-[11px] font-medium text-slate-300 flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-[#DFB76C]" />
                     {service.location}
                   </span>
                 </div>
@@ -333,7 +333,7 @@ export default function ServicesCatalogPage() {
                 <div>
                   {/* Vendor Info */}
                   <div className="flex items-center gap-2.5 mb-2.5">
-                    <div className="relative w-7 h-7 rounded-full overflow-hidden ring-1 ring-slate-200 shrink-0">
+                    <div className="relative w-7 h-7 rounded-none overflow-hidden border border-[#26282E] shrink-0 bg-[#0B0C0E]">
                       <Image
                         src={service.vendorAvatar}
                         alt={service.vendorName}
@@ -341,27 +341,27 @@ export default function ServicesCatalogPage() {
                         className="object-cover"
                       />
                     </div>
-                    <span className="text-xs font-bold text-slate-700 truncate">{service.vendorName}</span>
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded">
+                    <span className="text-xs font-bold text-slate-300 truncate">{service.vendorName}</span>
+                    <span className="text-[10px] font-bold px-1.5 py-0.5 bg-[#1A1D24] text-[#DFB76C] border border-[#DFB76C]/30 rounded-none uppercase tracking-wider">
                       {service.tier}
                     </span>
                   </div>
 
                   {/* Title & Description */}
-                  <Link href={`/services/${service.id}`} className="block group-hover:text-brand-primary transition-colors">
-                    <h3 className="font-serif font-bold text-base text-[#0F0C3B] line-clamp-1">
+                  <Link href={`/services/${service.id}`} className="block group-hover:text-[#DFB76C] transition-colors">
+                    <h3 className="font-serif font-bold text-base text-white group-hover:text-[#DFB76C] transition-colors line-clamp-1">
                       {service.title}
                     </h3>
                   </Link>
-                  <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
                     {service.description}
                   </p>
 
                   {/* Feature Bullets */}
-                  <div className="mt-3.5 space-y-1.5 pt-3 border-t border-slate-100">
+                  <div className="mt-3.5 space-y-1.5 pt-3 border-t border-[#26282E]">
                     {service.features.slice(0, 3).map((f: string, i: number) => (
-                      <div key={i} className="flex items-center gap-2 text-[11px] text-slate-600">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                      <div key={i} className="flex items-center gap-2 text-[11px] text-slate-300">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#DFB76C] shrink-0" />
                         <span className="truncate">{f}</span>
                       </div>
                     ))}
@@ -369,11 +369,11 @@ export default function ServicesCatalogPage() {
                 </div>
 
                 {/* Card CTA Actions */}
-                <div className="pt-3 border-t border-slate-100 space-y-2">
+                <div className="pt-3 border-t border-[#26282E] space-y-2">
                   <div className="grid grid-cols-2 gap-2">
                     <Link
                       href={`/services/${service.id}`}
-                      className="px-3 py-2 rounded-xl bg-slate-50 hover:bg-slate-100 text-[#0F0C3B] text-xs font-bold text-center border border-slate-200 transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                      className="px-3 py-2 rounded-none bg-[#1A1D24] hover:bg-[#22252F] text-slate-200 text-xs font-bold text-center border border-[#26282E] hover:border-[#DFB76C]/40 transition-colors flex items-center justify-center gap-1 cursor-pointer"
                     >
                       <span>View Details</span>
                       <ChevronRight className="w-3.5 h-3.5" />
@@ -381,7 +381,7 @@ export default function ServicesCatalogPage() {
 
                     <Link
                       href={`/checkout?vendorId=${service.vendorProfileId}&packageId=${service.packageId || ""}`}
-                      className="px-3 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-[#0F0C3B] text-xs font-extrabold text-center shadow-xs transition-all flex items-center justify-center gap-1 cursor-pointer"
+                      className="px-3 py-2 rounded-none bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-wider text-center shadow-gold-glow-sm transition-all flex items-center justify-center gap-1 cursor-pointer"
                     >
                       <span>Book Now</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -391,9 +391,9 @@ export default function ServicesCatalogPage() {
                   {/* Recommend to Family Hub Button */}
                   <button
                     onClick={() => setSelectedServiceForHub(service)}
-                    className="w-full py-2 px-3 rounded-xl border border-indigo-200 bg-indigo-50/70 hover:bg-indigo-100/80 text-brand-primary text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                    className="w-full py-2 px-3 rounded-none border border-[#26282E] bg-[#1A1D24] hover:bg-[#22252F] hover:border-[#DFB76C]/40 text-[#DFB76C] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                   >
-                    <Users2 className="w-3.5 h-3.5 text-brand-primary" />
+                    <Users2 className="w-3.5 h-3.5 text-[#DFB76C]" />
                     <span>Recommend to Family Hub</span>
                   </button>
                 </div>
@@ -413,10 +413,10 @@ export default function ServicesCatalogPage() {
         />
 
         {filteredServices.length === 0 && (
-          <div className="p-16 text-center bg-white rounded-3xl border border-slate-200 shadow-xs max-w-lg mx-auto my-12 space-y-3">
-            <Search className="w-10 h-10 text-slate-300 mx-auto" />
-            <h3 className="text-base font-bold text-[#0F0C3B]">No matching services found</h3>
-            <p className="text-xs text-slate-500">
+          <div className="p-16 text-center bg-[#121418] rounded-none border border-[#26282E] shadow-xl max-w-lg mx-auto my-12 space-y-3">
+            <Search className="w-10 h-10 text-slate-600 mx-auto" />
+            <h3 className="text-base font-bold text-white font-serif">No matching services found</h3>
+            <p className="text-xs text-slate-400">
               Try adjusting your keyword search or selecting a different category filter.
             </p>
             <button
@@ -425,7 +425,7 @@ export default function ServicesCatalogPage() {
                 setSearchQuery("");
                 setPriceFilter("all");
               }}
-              className="mt-2 px-4 py-2 rounded-xl bg-[#0F0C3B] text-white text-xs font-bold cursor-pointer"
+              className="mt-2 px-4 py-2 rounded-none bg-[#DFB76C] text-[#0B0C0E] text-xs font-bold uppercase tracking-widest cursor-pointer shadow-gold-glow-sm"
             >
               Reset Filters
             </button>
