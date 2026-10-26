@@ -2,220 +2,165 @@
 
 import { useState } from "react";
 import { 
-  Layers, 
   Search, 
   Plus, 
   Edit3, 
   Trash2, 
-  CheckCircle2, 
-  Percent, 
-  Sparkles, 
   FolderTree,
   Eye,
   EyeOff,
-  ShoppingBag,
   X,
   Save,
-  Tag
+  Loader2,
+  AlertCircle
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-
-interface Category {
-  id: string;
-  name: string;
-  slug: string;
-  icon: string;
-  takeRate: number; // e.g. 5%
-  subcategories: string[];
-  activeVendors: number;
-  totalGigs: number;
-  featured: boolean;
-  status: "Active" | "Archived";
-}
-
-const initialCategories: Category[] = [
-  {
-    id: "cat-1",
-    name: "Music & Entertainment",
-    slug: "music-entertainment",
-    icon: "🎵",
-    takeRate: 5.0,
-    subcategories: ["Live Bands", "Wedding DJs", "Acoustic Soloists", "String Quartets", "Saxophonists", "Comedians"],
-    activeVendors: 142,
-    totalGigs: 380,
-    featured: true,
-    status: "Active",
-  },
-  {
-    id: "cat-2",
-    name: "Photography & Cinema",
-    slug: "photography-cinema",
-    icon: "📸",
-    takeRate: 5.0,
-    subcategories: ["Drone Aerial Video", "Wedding Photography", "Cinematic Film", "360 Photo Booths", "Portrait Sessions"],
-    activeVendors: 198,
-    totalGigs: 512,
-    featured: true,
-    status: "Active",
-  },
-  {
-    id: "cat-3",
-    name: "Catering & Bar Service",
-    slug: "catering-bar",
-    icon: "🍸",
-    takeRate: 5.0,
-    subcategories: ["Cocktail Mixologists", "Gourmet Food Trucks", "Plated Dinner Catering", "Vendor Dessert Bars", "Grazing Tables"],
-    activeVendors: 95,
-    totalGigs: 230,
-    featured: true,
-    status: "Active",
-  },
-  {
-    id: "cat-4",
-    name: "Decor & Floral Design",
-    slug: "decor-florals",
-    icon: "🌸",
-    takeRate: 5.0,
-    subcategories: ["Floral Arches & Centerpieces", "Luxury Drapery", "Balloon Installations", "LED Neon Signage", "Tablescape Styling"],
-    activeVendors: 114,
-    totalGigs: 290,
-    featured: false,
-    status: "Active",
-  },
-  {
-    id: "cat-5",
-    name: "Event Planning & Coordination",
-    slug: "planning-coordination",
-    icon: "📋",
-    takeRate: 5.0,
-    subcategories: ["Full-Service Wedding Planner", "Day-Of Coordinator", "Corporate Summit Logistics", "Birthday Party Host"],
-    activeVendors: 76,
-    totalGigs: 165,
-    featured: true,
-    status: "Active",
-  },
-  {
-    id: "cat-6",
-    name: "Venues & Spaces",
-    slug: "venues-spaces",
-    icon: "🏰",
-    takeRate: 3.5,
-    subcategories: ["Rooftop Terraces", "Historic Mansions", "Rustic Barns", "Waterfront Pavilions", "Industrial Lofts"],
-    activeVendors: 42,
-    totalGigs: 88,
-    featured: false,
-    status: "Active",
-  },
-];
-
 import { 
-  useGetCategoriesQuery, 
+  useGetAdminCategoriesQuery, 
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
 } from "@/redux/service/categories/categoriesApi";
 
-export default function AdminCategoriesPage() {
-  const { data: apiCategories, refetch } = useGetCategoriesQuery();
-  const [createCategoryMutation] = useCreateCategoryMutation();
-  const [updateCategoryMutation] = useUpdateCategoryMutation();
-  const [deleteCategoryMutation] = useDeleteCategoryMutation();
+interface CategoryItem {
+  id: string;
+  name: string;
+  slug: string;
+  icon?: string | null;
+  image?: string | null;
+  description?: string | null;
+  order?: number;
+  sortOrder?: number;
+  isActive: boolean;
+  subcategories: string[];
+  activeVendors: number;
+  totalGigs: number;
+  totalJobs: number;
+}
 
-  const categories: Category[] = (apiCategories && apiCategories.length > 0)
+export default function AdminCategoriesPage() {
+  const { data: apiCategories, isLoading, isError, refetch } = useGetAdminCategoriesQuery();
+  const [createCategoryMutation, { isLoading: isCreating }] = useCreateCategoryMutation();
+  const [updateCategoryMutation, { isLoading: isUpdating }] = useUpdateCategoryMutation();
+  const [deleteCategoryMutation, { isLoading: isDeleting }] = useDeleteCategoryMutation();
+
+  const categories: CategoryItem[] = (apiCategories && Array.isArray(apiCategories))
     ? apiCategories.map((c: any) => ({
         id: c.id,
         name: c.name,
         slug: c.slug,
         icon: c.icon || "✨",
-        takeRate: 5.0,
-        subcategories: (c.subCategories || c.subcategories)?.map((s: any) => typeof s === "string" ? s : s.name) || [],
-        activeVendors: c._count?.vendorCategories || c._count?.gigs || 12,
-        totalGigs: c._count?.gigs || 24,
-        featured: true,
-        status: (c.isActive !== false ? "Active" : "Archived") as "Active" | "Archived",
+        image: c.image || null,
+        description: c.description || "",
+        order: c.order ?? c.sortOrder ?? 0,
+        sortOrder: c.sortOrder ?? c.order ?? 0,
+        isActive: c.isActive !== false,
+        subcategories: (c.children || c.subCategories || [])?.map((s: any) => typeof s === "string" ? s : s.name) || [],
+        activeVendors: c._count?.vendorCategories || 0,
+        totalGigs: c._count?.gigs || 0,
+        totalJobs: c._count?.jobs || 0,
       }))
-    : initialCategories;
+    : [];
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const [editingCategory, setEditingCategory] = useState<CategoryItem | null>(null);
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
   const [newCatName, setNewCatName] = useState("");
   const [newCatIcon, setNewCatIcon] = useState("✨");
-  const [newCatTakeRate, setNewCatTakeRate] = useState(5);
-  const [newSubcats, setNewSubcats] = useState("");
+  const [newCatImage, setNewCatImage] = useState("");
+  const [newCatDesc, setNewCatDesc] = useState("");
+  const [newCatOrder, setNewCatOrder] = useState(0);
 
   const filtered = categories.filter((c) => 
     c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    c.slug.toLowerCase().includes(searchQuery.toLowerCase()) ||
     c.subcategories.some((s) => s.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  const handleToggleStatus = async (id: string, currentStatus: string) => {
+  const handleToggleStatus = async (id: string, currentStatus: boolean) => {
     try {
       await updateCategoryMutation({
         id,
-        data: { isActive: currentStatus !== "Active" },
+        data: { isActive: !currentStatus },
       }).unwrap();
       refetch();
-      toast.success("Category visibility updated.");
-    } catch {
-      toast.success("Category status toggled.");
+      toast.success(!currentStatus ? "Category activated." : "Category deactivated/archived.");
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to update category status.");
     }
-  };
-
-  const handleToggleFeatured = (id: string) => {
-    toast.success("Category featured status toggled.");
   };
 
   const handleAddCategory = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newCatName.trim()) return;
+    if (!newCatName.trim()) {
+      toast.error("Category title is required.");
+      return;
+    }
+    const slug = newCatName.toLowerCase().trim().replace(/[^a-z0-9]+/g, "-");
     try {
       await createCategoryMutation({
-        name: newCatName,
-        slug: newCatName.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
-        icon: newCatIcon,
-        description: `All services related to ${newCatName}`,
+        name: newCatName.trim(),
+        slug,
+        icon: newCatIcon.trim() || "✨",
+        image: newCatImage.trim() || undefined,
+        description: newCatDesc.trim() || `All services related to ${newCatName.trim()}`,
+        order: Number(newCatOrder) || 0,
+        sortOrder: Number(newCatOrder) || 0,
       }).unwrap();
       refetch();
-      toast.success(`Category "${newCatName}" added successfully.`);
-    } catch {
-      toast.success(`Category "${newCatName}" created.`);
+      toast.success(`Category "${newCatName.trim()}" created successfully.`);
+      setIsNewModalOpen(false);
+      setNewCatName("");
+      setNewCatIcon("✨");
+      setNewCatImage("");
+      setNewCatDesc("");
+      setNewCatOrder(0);
+    } catch (err: any) {
+      toast.error(err?.data?.message || `Failed to create category "${newCatName}".`);
     }
-    setIsNewModalOpen(false);
-    setNewCatName("");
-    setNewSubcats("");
   };
 
   const handleSaveEdit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingCategory) return;
+    if (!editingCategory.name.trim()) {
+      toast.error("Category title cannot be empty.");
+      return;
+    }
     try {
       await updateCategoryMutation({
         id: editingCategory.id,
         data: {
-          name: editingCategory.name,
-          icon: editingCategory.icon,
+          name: editingCategory.name.trim(),
+          slug: editingCategory.slug.trim(),
+          icon: editingCategory.icon?.trim() || "✨",
+          image: editingCategory.image?.trim() || undefined,
+          description: editingCategory.description?.trim(),
+          order: Number(editingCategory.order) || 0,
+          sortOrder: Number(editingCategory.order) || 0,
+          isActive: editingCategory.isActive,
         },
       }).unwrap();
       refetch();
       toast.success(`Category "${editingCategory.name}" updated successfully.`);
-    } catch {
-      toast.success(`Category "${editingCategory.name}" updated.`);
+      setEditingCategory(null);
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to update category.");
     }
-    setEditingCategory(null);
   };
 
-  const handleDeleteCategory = async (id: string) => {
+  const handleDeleteCategory = async (cat: CategoryItem) => {
+    if (!confirm(`Are you sure you want to delete category "${cat.name}"?`)) return;
     try {
-      await deleteCategoryMutation(id).unwrap();
+      await deleteCategoryMutation(cat.id).unwrap();
       refetch();
-      toast.success("Category archived successfully.");
-    } catch {
-      toast.success("Category archived.");
+      toast.success(`Category "${cat.name}" deleted successfully.`);
+    } catch (err: any) {
+      const errMsg = err?.data?.message || err?.message || "Cannot delete category.";
+      toast.error(errMsg);
     }
   };
-
 
   return (
     <div className="space-y-6 pb-16">
@@ -227,18 +172,18 @@ export default function AdminCategoriesPage() {
               Taxonomy &amp; Category Architecture
             </h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#EDE9FE] text-[#0F0C3B] border border-indigo-200">
-              {categories.length} Active Clusters
+              {categories.length} Categories
             </span>
           </div>
           <p className="text-xs text-slate-500 mt-1">
-            Manage marketplace categories, sub-skills, default buyer take rates, and featured search promotions
+            Manage marketplace service categories, active/inactive visibility, and taxonomy hierarchy
           </p>
         </div>
 
         <div className="flex items-center gap-3">
           <button 
             onClick={() => setIsNewModalOpen(true)}
-            className="px-4 py-2 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2"
+            className="px-4 py-2 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer"
           >
             <Plus className="w-4 h-4 text-amber-300" /> Add New Category
           </button>
@@ -259,113 +204,173 @@ export default function AdminCategoriesPage() {
         </div>
 
         <div className="flex items-center gap-2 text-xs text-slate-500">
-          <span>Global Baseline Take Rate:</span>
+          <span>Marketplace Commission:</span>
           <span className="font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-            5.0% Buyer + 10.0% Vendor
+            15% Platform Fee
           </span>
         </div>
       </div>
 
-      {/* Categories Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-xs">
-        {filtered.map((cat) => (
-          <div 
-            key={cat.id}
-            className="bg-white border border-slate-200 hover:border-brand-primary/40 rounded-3xl p-5 flex flex-col justify-between space-y-4 shadow-xs hover:shadow-lg transition-all"
+      {/* Loading state */}
+      {isLoading && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3, 4, 5, 6].map((n) => (
+            <div key={n} className="bg-white border border-slate-200 rounded-3xl p-5 space-y-4 animate-pulse">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-2xl bg-slate-100" />
+                <div className="space-y-1.5 flex-1">
+                  <div className="h-4 bg-slate-100 rounded-md w-3/4" />
+                  <div className="h-3 bg-slate-50 rounded-md w-1/2" />
+                </div>
+              </div>
+              <div className="h-12 bg-slate-50 rounded-2xl" />
+              <div className="h-4 bg-slate-100 rounded-md w-1/3" />
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Error state */}
+      {!isLoading && isError && (
+        <div className="bg-rose-50 border border-rose-200 rounded-3xl p-8 text-center text-rose-700 space-y-3">
+          <AlertCircle className="w-8 h-8 text-rose-500 mx-auto" />
+          <p className="font-bold text-sm">Failed to load marketplace categories</p>
+          <button 
+            onClick={() => refetch()}
+            className="px-4 py-2 bg-rose-600 text-white rounded-xl text-xs font-bold hover:bg-rose-700 transition"
           >
-            <div>
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-11 h-11 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-xl shadow-xs">
-                    {cat.icon}
+            Retry Connection
+          </button>
+        </div>
+      )}
+
+      {/* Empty State */}
+      {!isLoading && !isError && categories.length === 0 && (
+        <div className="bg-white border border-slate-200 rounded-3xl p-12 text-center text-slate-500 space-y-4">
+          <div className="w-16 h-16 rounded-3xl bg-indigo-50 border border-indigo-100 flex items-center justify-center mx-auto text-indigo-600">
+            <FolderTree className="w-8 h-8" />
+          </div>
+          <div className="max-w-md mx-auto space-y-1">
+            <h3 className="text-base font-black text-[#0F0C3B]">No Categories Created Yet</h3>
+            <p className="text-xs text-slate-500">
+              Create the initial service categories so vendors can register gigs and clients can submit targeted jobs.
+            </p>
+          </div>
+          <button
+            onClick={() => setIsNewModalOpen(true)}
+            className="px-5 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition shadow-sm inline-flex items-center gap-2"
+          >
+            <Plus className="w-4 h-4 text-amber-300" /> Create First Category
+          </button>
+        </div>
+      )}
+
+      {/* Categories Grid */}
+      {!isLoading && !isError && categories.length > 0 && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-xs">
+          {filtered.map((cat) => (
+            <div 
+              key={cat.id}
+              className={cn(
+                "bg-white border rounded-3xl p-5 flex flex-col justify-between space-y-4 shadow-xs hover:shadow-lg transition-all",
+                cat.isActive ? "border-slate-200 hover:border-brand-primary/40" : "border-slate-200 bg-slate-50/60 opacity-80"
+              )}
+            >
+              <div>
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-xl shadow-xs">
+                      {cat.icon || "✨"}
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-black text-[#0F0C3B] flex items-center gap-1.5">
+                        {cat.name}
+                      </h3>
+                      <p className="text-[11px] font-mono text-slate-400">/{cat.slug}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1">
+                    <button 
+                      onClick={() => handleToggleStatus(cat.id, cat.isActive)}
+                      className={cn(
+                        "p-1.5 rounded-xl transition-colors cursor-pointer",
+                        cat.isActive ? "bg-emerald-50 text-emerald-700 hover:bg-emerald-100" : "bg-slate-200 text-slate-600 hover:bg-slate-300"
+                      )}
+                      title={cat.isActive ? "Deactivate (Hide from Vendor & Search)" : "Activate Category"}
+                    >
+                      {cat.isActive ? <Eye className="w-3.5 h-3.5 text-emerald-600" /> : <EyeOff className="w-3.5 h-3.5 text-slate-500" />}
+                    </button>
+                  </div>
+                </div>
+
+                {cat.description && (
+                  <p className="text-xs text-slate-600 mt-2 line-clamp-2">
+                    {cat.description}
+                  </p>
+                )}
+
+                {/* Stats Grid */}
+                <div className="grid grid-cols-3 gap-2 mt-4 bg-[#F8F9FD] p-2.5 rounded-2xl border border-slate-100 text-center">
+                  <div>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase">Live Gigs</p>
+                    <p className="text-xs font-black text-[#0F0C3B] mt-0.5">{cat.totalGigs}</p>
                   </div>
                   <div>
-                    <h3 className="text-sm font-black text-[#0F0C3B] flex items-center gap-1.5">
-                      {cat.name}
-                    </h3>
-                    <p className="text-[11px] font-mono text-slate-400">/{cat.slug}</p>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase">Open Jobs</p>
+                    <p className="text-xs font-black text-[#0F0C3B] mt-0.5">{cat.totalJobs}</p>
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-bold text-slate-400 uppercase">Order Priority</p>
+                    <p className="text-xs font-black text-brand-primary mt-0.5 font-mono">{cat.order}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-1">
-                  <button 
-                    onClick={() => handleToggleFeatured(cat.id)}
-                    className={cn(
-                      "p-1.5 rounded-xl transition-colors",
-                      cat.featured ? "bg-amber-100 text-amber-800 border border-amber-200" : "bg-slate-100 text-slate-400 hover:text-slate-700"
-                    )}
-                    title={cat.featured ? "Featured on Homepage" : "Set Featured"}
-                  >
-                    <Sparkles className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
-                  </button>
-
-                  <button 
-                    onClick={() => handleToggleStatus(cat.id, cat.status)}
-                    className="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 bg-slate-100"
-                    title={cat.status === "Active" ? "Archive" : "Activate"}
-                  >
-                    {cat.status === "Active" ? <Eye className="w-3.5 h-3.5 text-brand-primary" /> : <EyeOff className="w-3.5 h-3.5 text-rose-500" />}
-                  </button>
-                </div>
+                {/* Subcategories tags */}
+                {cat.subcategories.length > 0 && (
+                  <div className="mt-4 space-y-1.5">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      Subcategories ({cat.subcategories.length})
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {cat.subcategories.map((sub, i) => (
+                        <span key={i} className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-[11px] font-semibold">
+                          {sub}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* Stats Grid */}
-              <div className="grid grid-cols-3 gap-2 mt-4 bg-[#F8F9FD] p-2.5 rounded-2xl border border-slate-100 text-center">
-                <div>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase">Vendors</p>
-                  <p className="text-xs font-black text-[#0F0C3B] mt-0.5">{cat.activeVendors}</p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase">Live Gigs</p>
-                  <p className="text-xs font-black text-[#0F0C3B] mt-0.5">{cat.totalGigs}</p>
-                </div>
-                <div>
-                  <p className="text-[10px] font-bold text-slate-400 uppercase">Take Rate</p>
-                  <p className="text-xs font-black text-brand-primary mt-0.5 font-mono">{cat.takeRate}%</p>
-                </div>
-              </div>
-
-              {/* Subcategories tags */}
-              <div className="mt-4 space-y-1.5">
-                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                  Subcategories ({cat.subcategories.length})
-                </p>
-                <div className="flex flex-wrap gap-1.5">
-                  {cat.subcategories.map((sub, i) => (
-                    <span key={i} className="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 text-[11px] font-semibold">
-                      {sub}
-                    </span>
-                  ))}
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span className={cn(
+                  "px-2.5 py-0.5 rounded-full text-[10px] font-bold",
+                  cat.isActive ? "bg-emerald-100 text-emerald-800 border border-emerald-200" : "bg-slate-200 text-slate-700 border border-slate-300"
+                )}>
+                  {cat.isActive ? "Active" : "Inactive"}
+                </span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setEditingCategory(cat)}
+                    className="text-xs text-[#0F0C3B] hover:text-brand-primary font-bold flex items-center gap-1 transition-colors cursor-pointer"
+                  >
+                    <Edit3 className="w-3.5 h-3.5 text-brand-primary" /> Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteCategory(cat)}
+                    disabled={isDeleting}
+                    className="text-xs text-rose-500 hover:text-rose-700 font-bold flex items-center gap-1 transition-colors cursor-pointer disabled:opacity-50"
+                    title={cat.totalGigs > 0 || cat.totalJobs > 0 ? "Cannot delete category in use (deactivate instead)" : "Delete category"}
+                  >
+                    <Trash2 className="w-3.5 h-3.5" /> Delete
+                  </button>
                 </div>
               </div>
             </div>
-
-            <div className="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-              <span className={cn(
-                "px-2.5 py-0.5 rounded-full text-[10px] font-bold",
-                cat.status === "Active" ? "bg-emerald-100 text-emerald-800 border border-emerald-200" : "bg-slate-100 text-slate-600 border border-slate-200"
-              )}>
-                {cat.status}
-              </span>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setEditingCategory(cat)}
-                  className="text-xs text-[#0F0C3B] hover:text-brand-primary font-bold flex items-center gap-1 transition-colors"
-                >
-                  <Edit3 className="w-3.5 h-3.5 text-brand-primary" /> Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteCategory(cat.id)}
-                  className="text-xs text-rose-500 hover:text-rose-700 font-bold flex items-center gap-1 transition-colors"
-                >
-                  <Trash2 className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Add New Category Modal */}
       {isNewModalOpen && (
@@ -373,11 +378,11 @@ export default function AdminCategoriesPage() {
           <div className="bg-white border border-slate-200 rounded-3xl max-w-lg w-full p-6 space-y-4 text-slate-800 shadow-2xl animate-in fade-in text-xs">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <h2 className="text-base font-black text-[#0F0C3B] flex items-center gap-2">
-                <FolderTree className="w-5 h-5 text-brand-primary" /> Create New Taxonomy Category
+                <FolderTree className="w-5 h-5 text-brand-primary" /> Create New Service Category
               </h2>
               <button 
                 onClick={() => setIsNewModalOpen(false)} 
-                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -398,49 +403,63 @@ export default function AdminCategoriesPage() {
                   <label className="block text-slate-700 font-bold mb-1">Category Title</label>
                   <input
                     type="text"
-                    placeholder="e.g. Luxury Transportation"
+                    placeholder="e.g. Photography & Cinema"
                     value={newCatName}
                     onChange={(e) => setNewCatName(e.target.value)}
                     className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-bold focus:outline-none focus:border-brand-primary"
+                    required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Subcategories (comma separated)</label>
+                <label className="block text-slate-700 font-bold mb-1">Description</label>
                 <textarea
-                  rows={3}
-                  placeholder="Limousine Service, Vintage Cars, Party Buses, Helicopter Charter"
-                  value={newSubcats}
-                  onChange={(e) => setNewSubcats(e.target.value)}
+                  rows={2}
+                  placeholder="Professional photography, videography, and drone event coverage..."
+                  value={newCatDesc}
+                  onChange={(e) => setNewCatDesc(e.target.value)}
                   className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-brand-primary resize-none"
                 />
               </div>
 
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">Platform Buyer Fee (%)</label>
-                <input
-                  type="number"
-                  step="0.5"
-                  value={newCatTakeRate}
-                  onChange={(e) => setNewCatTakeRate(Number(e.target.value))}
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-mono font-bold focus:outline-none focus:border-brand-primary"
-                />
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-slate-700 font-bold mb-1">Banner Image URL (optional)</label>
+                  <input
+                    type="url"
+                    placeholder="https://images.unsplash.com/..."
+                    value={newCatImage}
+                    onChange={(e) => setNewCatImage(e.target.value)}
+                    className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-brand-primary"
+                  />
+                </div>
+                <div>
+                  <label className="block text-slate-700 font-bold mb-1">Display Sort Order</label>
+                  <input
+                    type="number"
+                    value={newCatOrder}
+                    onChange={(e) => setNewCatOrder(Number(e.target.value))}
+                    className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-mono font-bold focus:outline-none focus:border-brand-primary"
+                  />
+                </div>
               </div>
 
               <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => setIsNewModalOpen(false)}
-                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors"
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+                  disabled={isCreating}
+                  className="px-5 py-2 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 >
-                  <Plus className="w-3.5 h-3.5 text-amber-300" /> Create Category
+                  {isCreating ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5 text-amber-300" />}
+                  Create Category
                 </button>
               </div>
             </form>
@@ -458,7 +477,7 @@ export default function AdminCategoriesPage() {
               </h2>
               <button 
                 onClick={() => setEditingCategory(null)} 
-                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -470,7 +489,7 @@ export default function AdminCategoriesPage() {
                   <label className="block text-slate-700 font-bold mb-1">Icon</label>
                   <input
                     type="text"
-                    value={editingCategory.icon}
+                    value={editingCategory.icon || "✨"}
                     onChange={(e) => setEditingCategory({ ...editingCategory, icon: e.target.value })}
                     className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2 text-center text-lg focus:outline-none focus:border-brand-primary"
                   />
@@ -482,47 +501,81 @@ export default function AdminCategoriesPage() {
                     value={editingCategory.name}
                     onChange={(e) => setEditingCategory({ ...editingCategory, name: e.target.value })}
                     className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-bold focus:outline-none focus:border-brand-primary"
+                    required
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Subcategories (comma separated)</label>
-                <textarea
-                  rows={3}
-                  value={editingCategory.subcategories.join(", ")}
-                  onChange={(e) => setEditingCategory({ 
-                    ...editingCategory, 
-                    subcategories: e.target.value.split(",").map(s => s.trim()).filter(Boolean) 
-                  })}
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-brand-primary resize-none"
+                <label className="block text-slate-700 font-bold mb-1">Slug</label>
+                <input
+                  type="text"
+                  value={editingCategory.slug}
+                  onChange={(e) => setEditingCategory({ ...editingCategory, slug: e.target.value })}
+                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-mono text-xs focus:outline-none focus:border-brand-primary"
+                  required
                 />
               </div>
 
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Platform Buyer Fee (%)</label>
-                <input
-                  type="number"
-                  step="0.5"
-                  value={editingCategory.takeRate}
-                  onChange={(e) => setEditingCategory({ ...editingCategory, takeRate: Number(e.target.value) })}
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-mono font-bold focus:outline-none focus:border-brand-primary"
+                <label className="block text-slate-700 font-bold mb-1">Description</label>
+                <textarea
+                  rows={2}
+                  value={editingCategory.description || ""}
+                  onChange={(e) => setEditingCategory({ ...editingCategory, description: e.target.value })}
+                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-brand-primary resize-none"
                 />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-slate-700 font-bold mb-1">Banner Image URL</label>
+                  <input
+                    type="url"
+                    value={editingCategory.image || ""}
+                    onChange={(e) => setEditingCategory({ ...editingCategory, image: e.target.value })}
+                    className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-brand-primary"
+                  />
+                </div>
+                <div>
+                  <label className="block text-slate-700 font-bold mb-1">Sort Order</label>
+                  <input
+                    type="number"
+                    value={editingCategory.order ?? 0}
+                    onChange={(e) => setEditingCategory({ ...editingCategory, order: Number(e.target.value) })}
+                    className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-mono font-bold focus:outline-none focus:border-brand-primary"
+                  />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 pt-1">
+                <input
+                  type="checkbox"
+                  id="categoryActiveToggle"
+                  checked={editingCategory.isActive}
+                  onChange={(e) => setEditingCategory({ ...editingCategory, isActive: e.target.checked })}
+                  className="w-4 h-4 rounded text-brand-primary focus:ring-brand-primary cursor-pointer"
+                />
+                <label htmlFor="categoryActiveToggle" className="text-xs font-bold text-slate-700 cursor-pointer">
+                  Active (Visible to vendors and clients)
+                </label>
               </div>
 
               <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
                 <button
                   type="button"
                   onClick={() => setEditingCategory(null)}
-                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors"
+                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+                  disabled={isUpdating}
+                  className="px-5 py-2 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 >
-                  <Save className="w-3.5 h-3.5 text-amber-300" /> Save Changes
+                  {isUpdating ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Save className="w-3.5 h-3.5 text-amber-300" />}
+                  Save Changes
                 </button>
               </div>
             </form>
