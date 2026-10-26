@@ -23,6 +23,7 @@ import {
   Image as ImageIcon,
   RotateCcw,
   Check,
+  DollarSign,
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -31,6 +32,9 @@ import {
   useGetOrderByIdQuery,
   useSubmitMilestoneDeliveryMutation,
   useDeliverOrderMutation,
+  useRespondCancellationMutation,
+  useRespondPartialRefundMutation,
+  useEscalateOrderToAdminMutation,
 } from "@/redux/service/orders/ordersApi";
 
 export default function VendorOrderDetailPage() {
@@ -44,12 +48,22 @@ export default function VendorOrderDetailPage() {
 
   const [submitMilestone, { isLoading: isSubmitting }] = useSubmitMilestoneDeliveryMutation();
   const [deliverOrder, { isLoading: isDeliveringFull }] = useDeliverOrderMutation();
+  const [respondCancellation, { isLoading: isRespondingCancel }] = useRespondCancellationMutation();
+  const [respondPartialRefund, { isLoading: isRespondingRefund }] = useRespondPartialRefundMutation();
+  const [escalateOrderToAdmin, { isLoading: isEscalating }] = useEscalateOrderToAdminMutation();
 
   const [selectedMilestone, setSelectedMilestone] = useState<any>(null);
   const [proofNotes, setProofNotes] = useState("");
   const [proofUrl, setProofUrl] = useState("");
   const [deliveryFiles, setDeliveryFiles] = useState<File[]>([]);
   const [isFullOrderDelivery, setIsFullOrderDelivery] = useState(false);
+
+  // Vendor response notes and escalation modal
+  const [cancelResponseNote, setCancelResponseNote] = useState("");
+  const [partialRefundResponseNote, setPartialRefundResponseNote] = useState("");
+  const [escalateModalOpen, setEscalateModalOpen] = useState(false);
+  const [escalateReason, setEscalateReason] = useState("Dispute or settlement disagreement with client");
+  const [escalateNotes, setEscalateNotes] = useState("");
 
   useEffect(() => {
     const handleStatusUpdate = () => {
@@ -180,6 +194,79 @@ export default function VendorOrderDetailPage() {
     }
   };
 
+  const handleRespondCancel = async (action: "ACCEPT" | "REJECT") => {
+    try {
+      await respondCancellation({
+        orderId: order.id,
+        action,
+        responseNote: cancelResponseNote,
+      }).unwrap();
+
+      if (action === "ACCEPT") {
+        toast.success("Cancellation Accepted", {
+          description: "Order has been cancelled. Full refund has been sent to client via Stripe.",
+        });
+      } else {
+        toast.info("Cancellation Declined", {
+          description: "Client has been notified. You or the client may escalate to Admin if not resolved.",
+        });
+      }
+      setCancelResponseNote("");
+      refetch();
+    } catch (err: any) {
+      toast.error(err?.data?.message || `Failed to ${action.toLowerCase()} cancellation`);
+    }
+  };
+
+  const handleRespondPartialRefund = async (action: "ACCEPT" | "REJECT") => {
+    try {
+      await respondPartialRefund({
+        orderId: order.id,
+        action,
+        responseNote: partialRefundResponseNote,
+      }).unwrap();
+
+      if (action === "ACCEPT") {
+        toast.success("Partial Refund Accepted", {
+          description: "Refund portion returned to client via Stripe. Remaining balance settled (15% fee, 85% vendor payout).",
+        });
+      } else {
+        toast.info("Partial Refund Declined", {
+          description: "Client has been notified.",
+        });
+      }
+      setPartialRefundResponseNote("");
+      refetch();
+    } catch (err: any) {
+      toast.error(err?.data?.message || `Failed to ${action.toLowerCase()} partial refund`);
+    }
+  };
+
+  const handleConfirmEscalation = async () => {
+    try {
+      await escalateOrderToAdmin({
+        orderId: order.id,
+        reason: escalateReason,
+        notes: escalateNotes,
+      }).unwrap();
+
+      toast.success("Order Escalated to Admin", {
+        description: "Platform Admin has joined to mediate this contract based on chat, deliverables, and proof.",
+      });
+      setEscalateModalOpen(false);
+      refetch();
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to escalate to admin");
+    }
+  };
+
+  // Financial calculations for partial refund breakdown
+  const grandTotalNum = Number(order.grandTotal || order.subtotal || 0);
+  const partialRefundAmountNum = Number(order.partialRefundAmount || 0);
+  const remainingAfterPartialRefund = Math.max(0, grandTotalNum - partialRefundAmountNum);
+  const partialFee = remainingAfterPartialRefund * 0.15;
+  const partialVendorNet = remainingAfterPartialRefund * 0.85;
+
   return (
     <div className="space-y-6 pb-16">
       {/* Top Breadcrumb & Actions Bar */}
@@ -213,6 +300,16 @@ export default function VendorOrderDetailPage() {
             <span>Chat with Client</span>
           </Link>
 
+          {!order.escalatedToAdmin && (order.cancelStatus === "REQUESTED" || order.cancelStatus === "REJECTED" || order.refundStatus === "REQUESTED" || order.refundStatus === "REJECTED" || order.status === "DISPUTED") && (
+            <button
+              onClick={() => setEscalateModalOpen(true)}
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 rounded-xl text-xs font-bold shadow-xs transition-all cursor-pointer"
+            >
+              <AlertTriangle className="w-3.5 h-3.5 text-rose-600" />
+              <span>Escalate to Admin</span>
+            </button>
+          )}
+
           {isCompleted ? (
             <div className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-xl text-xs font-bold">
               <CheckCircle2 className="w-4 h-4 text-emerald-600" />
@@ -237,6 +334,285 @@ export default function VendorOrderDetailPage() {
           )}
         </div>
       </div>
+
+      {/* Escalated to Admin Notice */}
+      {order.escalatedToAdmin && (
+        <div className="p-5 rounded-2xl border-2 border-rose-400 bg-rose-50 text-rose-900 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-start gap-3.5">
+            <div className="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0">
+              <AlertTriangle className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="font-extrabold text-[#0F0C3B] text-sm sm:text-base">
+                  Case Escalated to Admin for Official Mediation
+                </h3>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-200 text-rose-900 uppercase">
+                  Escalated by {order.escalatedBy || "Party"}
+                </span>
+              </div>
+              <p className="text-xs text-rose-800 mt-1">
+                An administrator has joined this order. The admin will review chat messages, contract delivery files, and submitted evidence to issue a binding determination.
+              </p>
+              {order.escalationReason && (
+                <p className="text-xs text-slate-700 mt-1.5 italic bg-white/80 p-2.5 rounded-lg border border-rose-200">
+                  Escalation statement: "{order.escalationReason}"
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Admin Resolution Decision Banner */}
+      {order.adminResolution && (
+        <div className="p-5 rounded-2xl border-2 border-indigo-300 bg-indigo-50/90 text-indigo-950 shadow-sm flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0">
+            <CheckCircle2 className="w-5 h-5" />
+          </div>
+          <div className="text-xs space-y-1">
+            <div className="flex items-center gap-2">
+              <strong className="font-extrabold text-sm text-indigo-950">Admin Arbitration Judgment</strong>
+              <span className="px-2 py-0.5 rounded-md bg-indigo-200 text-indigo-900 font-bold text-[10px]">
+                {order.adminResolution}
+              </span>
+            </div>
+            <p className="text-indigo-800">
+              Arbitrated by Platform Admin on {order.adminResolvedAt ? new Date(order.adminResolvedAt).toLocaleString() : "recently"}.
+              {order.refundedAmount && ` Total refunded to client: $${Number(order.refundedAmount).toFixed(2)}.`}
+            </p>
+            {order.deliveryNotes && (
+              <p className="text-indigo-900/90 italic mt-1 bg-white p-2.5 rounded-xl border border-indigo-100">
+                "{order.deliveryNotes}"
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Completed with Partial Refund Notice */}
+      {order.status === "COMPLETED_WITH_PARTIAL_REFUND" && (
+        <div className="p-5 rounded-2xl border-2 border-purple-300 bg-purple-50 text-purple-950 shadow-sm flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0">
+            <DollarSign className="w-5 h-5" />
+          </div>
+          <div className="text-xs space-y-1">
+            <h3 className="font-extrabold text-purple-950 text-sm">Order Completed with Partial Refund</h3>
+            <p className="text-purple-800">
+              A partial refund of <strong className="font-mono text-purple-900">${Number(order.refundedAmount || order.partialRefundAmount || 0).toFixed(2)}</strong> was returned to the client via Stripe.
+              The remaining balance was settled with your wallet (15% platform fee deducted, 85% vendor payout).
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Cancellation Request Review Banner (Active Request by Client) */}
+      {order.cancelStatus === "REQUESTED" && (
+        <div className="p-5 rounded-2xl border-2 border-amber-400 bg-amber-50 text-amber-950 shadow-sm space-y-3.5">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0">
+              <AlertTriangle className="w-5 h-5" />
+            </div>
+            <div className="flex-1 text-xs space-y-1">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="font-extrabold text-[#0F0C3B] text-sm">
+                  Client Submitted Cancellation &amp; Refund Request
+                </h3>
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-200 text-amber-900">
+                  Action Required
+                </span>
+              </div>
+              <p className="text-slate-700">
+                Client requested to cancel this order with reason:
+              </p>
+              <div className="p-2.5 bg-white rounded-xl border border-amber-200 font-semibold text-slate-800">
+                "{order.cancelReason}"
+                {order.cancelNotes && <span className="block font-normal text-slate-600 mt-1">{order.cancelNotes}</span>}
+              </div>
+
+              {Array.isArray(order.cancelProofUrls) && order.cancelProofUrls.length > 0 && (
+                <div className="mt-2 space-y-1">
+                  <span className="text-[11px] font-bold text-slate-600">Client Submitted Evidence / Proof:</span>
+                  <div className="flex flex-wrap gap-2">
+                    {order.cancelProofUrls.map((url: string, i: number) => (
+                      <a
+                        key={i}
+                        href={url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 bg-white hover:bg-slate-50 border border-amber-300 rounded-lg text-indigo-600 font-bold text-[11px]"
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        <span>Proof Attachment #{i + 1}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="space-y-2 pt-1 border-t border-amber-200">
+            <label className="text-[11px] font-bold text-slate-700 block">
+              Response Note / Rejection Reason (Optional):
+            </label>
+            <input
+              type="text"
+              value={cancelResponseNote}
+              onChange={(e) => setCancelResponseNote(e.target.value)}
+              placeholder="e.g. Work is already prepared and non-refundable, or accepting full refund..."
+              className="w-full p-2.5 bg-white rounded-xl border border-amber-300 text-xs focus:ring-2 focus:ring-amber-500"
+            />
+
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() => handleRespondCancel("ACCEPT")}
+                disabled={isRespondingCancel}
+                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              >
+                <Check className="w-4 h-4" />
+                <span>Accept Cancellation &amp; Refund Client</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleRespondCancel("REJECT")}
+                disabled={isRespondingCancel}
+                className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              >
+                <span>Decline Cancellation</span>
+              </button>
+
+              {!order.escalatedToAdmin && (
+                <button
+                  type="button"
+                  onClick={() => setEscalateModalOpen(true)}
+                  className="px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ml-auto"
+                >
+                  <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Escalate to Admin</span>
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Partial Refund Request Review Banner */}
+      {order.refundStatus === "REQUESTED" && (
+        <div className="p-5 rounded-2xl border-2 border-purple-400 bg-purple-50 text-purple-950 shadow-sm space-y-4">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0">
+              <DollarSign className="w-5 h-5" />
+            </div>
+            <div className="flex-1 text-xs space-y-1.5">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="font-extrabold text-[#0F0C3B] text-sm">
+                  Client Requested Partial Refund (${partialRefundAmountNum.toFixed(2)})
+                </h3>
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-200 text-purple-900">
+                  Action Required
+                </span>
+              </div>
+              <p className="text-slate-700">
+                Reason: "{order.refundReason}"
+                {order.refundNotes && <span className="block text-slate-600 mt-0.5">{order.refundNotes}</span>}
+              </p>
+
+              {Array.isArray(order.refundProofUrls) && order.refundProofUrls.length > 0 && (
+                <div className="mt-1 flex flex-wrap gap-2">
+                  {order.refundProofUrls.map((url: string, i: number) => (
+                    <a
+                      key={i}
+                      href={url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 bg-white hover:bg-slate-50 border border-purple-300 rounded-lg text-purple-700 font-bold text-[11px]"
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                      <span>Proof Attachment #{i + 1}</span>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Transparent Settlement Split Breakdown */}
+          <div className="p-3.5 bg-white rounded-xl border border-purple-200 text-xs space-y-2">
+            <div className="font-bold text-slate-800 flex items-center justify-between">
+              <span>Settlement Breakdown If You Accept:</span>
+              <span className="text-[10px] text-purple-700 bg-purple-100 font-bold px-2 py-0.5 rounded">
+                COMPLETED_WITH_PARTIAL_REFUND
+              </span>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center pt-1">
+              <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">
+                <span className="text-[10px] text-slate-500 block">Contract Total</span>
+                <strong className="text-sm font-bold text-[#0F0C3B]">${grandTotalNum.toFixed(2)}</strong>
+              </div>
+              <div className="p-2 rounded-lg bg-rose-50 border border-rose-100 text-rose-700">
+                <span className="text-[10px] text-rose-600 block">Refund to Client</span>
+                <strong className="text-sm font-bold">-${partialRefundAmountNum.toFixed(2)}</strong>
+              </div>
+              <div className="p-2 rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-700">
+                <span className="text-[10px] text-indigo-600 block">15% Platform Fee</span>
+                <strong className="text-sm font-bold">-${partialFee.toFixed(2)}</strong>
+              </div>
+              <div className="p-2 rounded-lg bg-emerald-50 border border-emerald-100 text-emerald-700">
+                <span className="text-[10px] text-emerald-600 block">Your Net Payout (85%)</span>
+                <strong className="text-sm font-bold">+${partialVendorNet.toFixed(2)}</strong>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-2 pt-1 border-t border-purple-200">
+            <label className="text-[11px] font-bold text-slate-700 block">
+              Response Note (Optional):
+            </label>
+            <input
+              type="text"
+              value={partialRefundResponseNote}
+              onChange={(e) => setPartialRefundResponseNote(e.target.value)}
+              placeholder="e.g. Accepted with revised scope, or declined..."
+              className="w-full p-2.5 bg-white rounded-xl border border-purple-300 text-xs focus:ring-2 focus:ring-purple-500"
+            />
+
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              <button
+                type="button"
+                onClick={() => handleRespondPartialRefund("ACCEPT")}
+                disabled={isRespondingRefund}
+                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              >
+                <Check className="w-4 h-4" />
+                <span>Accept Partial Refund &amp; Settle Payout</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => handleRespondPartialRefund("REJECT")}
+                disabled={isRespondingRefund}
+                className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              >
+                <span>Decline Partial Refund</span>
+              </button>
+
+              {!order.escalatedToAdmin && (
+                <button
+                  type="button"
+                  onClick={() => setEscalateModalOpen(true)}
+                  className="px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ml-auto"
+                >
+                  <AlertTriangle className="w-3.5 h-3.5 text-purple-600" />
+                  <span>Escalate to Admin</span>
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -620,6 +996,84 @@ export default function VendorOrderDetailPage() {
                     ? (hasPendingApproval ? "Deliver Again" : "Submit Deliverable")
                     : (selectedMilestone?.status === "PENDING_RELEASE" ? "Deliver Again" : "Submit Deliverable")}
                 </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Escalate to Admin Modal */}
+      {escalateModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-100">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-bold text-[#0F0C3B] text-base">Escalate Order to Admin</h3>
+                <p className="text-xs text-slate-500">
+                  Request official mediation and arbitration from Platform Administrators
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-3.5 text-xs">
+              <div>
+                <label className="font-bold text-slate-700 block mb-1">
+                  Reason for Escalation <span className="text-rose-500">*</span>
+                </label>
+                <select
+                  value={escalateReason}
+                  onChange={(e) => setEscalateReason(e.target.value)}
+                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-rose-500 bg-white"
+                >
+                  <option value="Client requested unreasonable cancellation">Client requested unreasonable cancellation</option>
+                  <option value="Partial refund terms disagreement">Partial refund terms disagreement</option>
+                  <option value="Dispute unresolved with client">Dispute unresolved with client</option>
+                  <option value="Work completed according to specification but disputed">Work completed according to specification but disputed</option>
+                  <option value="Communication breakdown or policy violation">Communication breakdown or policy violation</option>
+                  <option value="Other grievance">Other grievance</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="font-bold text-slate-700 block mb-1">
+                  Vendor Statement / Case Explanation (Optional)
+                </label>
+                <textarea
+                  value={escalateNotes}
+                  onChange={(e) => setEscalateNotes(e.target.value)}
+                  placeholder="Detail your completed milestones, communication attempts, and grounds for dispute rejection or release..."
+                  rows={3}
+                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-rose-500"
+                />
+              </div>
+
+              <div className="p-3 rounded-xl bg-rose-50/70 border border-rose-200 text-[11px] text-rose-900 space-y-1">
+                <span className="font-bold block">Mediation Process:</span>
+                <p>
+                  A platform admin will review all delivery proofs, messages, and contract requirements, then issue a binding judgment: cancel and full refund, partial refund, or dispute rejection with payout release.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setEscalateModalOpen(false)}
+                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmEscalation}
+                disabled={isEscalating}
+                className="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
+              >
+                {isEscalating ? <Loader2 className="w-4 h-4 animate-spin" /> : <AlertTriangle className="w-4 h-4" />}
+                <span>Confirm Escalation</span>
               </button>
             </div>
           </div>
