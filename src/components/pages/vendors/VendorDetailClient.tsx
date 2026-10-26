@@ -105,38 +105,38 @@ export default function VendorProfilePage() {
     { id: "overview", label: "Overview" },
     {
       id: "packages",
-      label: `Services (${servicesList.length > 0 ? servicesList.length : packagesList.length})`,
+      label: `Services & Offerings (${servicesList.length > 0 ? servicesList.length : packagesList.length})`,
     },
     { id: "portfolio", label: `Portfolio (${galleryList.length})` },
     { id: "reviews", label: `Reviews (${reviewsList.length || vendor.reviewCount || 0})` },
-    { id: "about", label: "About & Equipment" },
+    { id: "about", label: "About & Standards" },
   ];
 
   return (
-    <div className="w-full bg-[#FAF9F6] min-h-screen pb-20">
+    <div className="w-full bg-[#0B0C0E] text-[#F3F4F6] min-h-screen pb-20 font-sans selection:bg-[#DFB76C] selection:text-[#0B0C0E]">
       {/* Top Hero Banner Image */}
-      <div className="relative w-full h-64 sm:h-80 lg:h-96 bg-slate-900 overflow-hidden">
+      <div className="relative w-full h-64 sm:h-80 lg:h-96 bg-[#121418] overflow-hidden border-b border-[#26282E]">
         <Image
           src={vendor.heroImage || "https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1600&q=80"}
           alt={vendor.name}
           fill
           priority
-          className="object-cover opacity-85 transition-transform duration-700 hover:scale-102"
+          className="object-cover opacity-70 filter brightness-[0.75] contrast-[1.05] transition-transform duration-700 hover:scale-102"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0F19] via-transparent to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C0E] via-[#0B0C0E]/40 to-black/40" />
 
-        <div className="absolute bottom-4 right-6 text-white text-xs bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/20 shadow-sm flex items-center gap-1.5">
-          <MapPin className="w-3.5 h-3.5 text-rose-400" />
+        <div className="absolute bottom-4 right-6 text-slate-300 text-xs bg-[#0B0C0E]/80 backdrop-blur-md px-3.5 py-1.5 rounded-none border border-[#26282E] shadow-sm flex items-center gap-1.5">
+          <MapPin className="w-3.5 h-3.5 text-[#DFB76C]" />
           <span>{vendor.location}</span>
         </div>
       </div>
 
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10 -mt-16 sm:-mt-20 relative z-10 space-y-8">
         {/* Header Profile Header Card */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-luxury border border-[#EAE6DF] space-y-6">
+        <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-4 border-white shadow-md bg-slate-100 flex-shrink-0">
+              <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-none overflow-hidden border-2 border-[#DFB76C] shadow-lg bg-[#0B0C0E] shrink-0">
                 <Image
                   src={vendor.avatar || "https://images.unsplash.com/photo-1583394293214-28ded15ee548?auto=format&fit=crop&w=400&q=80"}
                   alt={vendor.name}
@@ -146,30 +146,30 @@ export default function VendorProfilePage() {
               </div>
 
               <div className="space-y-1.5">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h1 className="font-serif text-2xl sm:text-3xl font-bold text-obsidian tracking-tight">
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <h1 className="font-serif text-2xl sm:text-3xl font-light text-[#F3F4F6] tracking-tight">
                     {vendor.name}
                   </h1>
-                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#EEF2FF] text-[#3730A3] text-xs font-bold border border-indigo-200">
-                    <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" />
-                    <span>{vendor.guildTierLabel || "Elite Level"}</span>
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] text-[11px] font-bold uppercase tracking-widest border border-[#DFB76C]/30">
+                    <ShieldCheck className="w-3.5 h-3.5 text-[#DFB76C]" />
+                    <span>{vendor.guildTierLabel || "Elite Reserve Artisan"}</span>
                   </span>
                 </div>
 
-                <p className="text-xs sm:text-sm text-slate-600 max-w-xl leading-relaxed">
+                <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
                   {vendor.title}
                 </p>
 
-                <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 pt-1">
+                <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 pt-1">
                   <span className="flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                    <MapPin className="w-3.5 h-3.5 text-[#DFB76C]" />
                     {vendor.location}
                   </span>
                   <span>•</span>
                   <span>Member since {memberYear}</span>
                   <span>•</span>
-                  <span className="text-emerald-600 font-medium">
-                    Typically responds in {vendor.responseSpeed || "within 1 hour"}
+                  <span className="text-emerald-400 font-medium">
+                    Typically responds {vendor.responseSpeed || "within 1 hour"}
                   </span>
                 </div>
               </div>
@@ -188,22 +188,22 @@ export default function VendorProfilePage() {
                   });
                   setIsFamilyModalOpen(true);
                 }}
-                className="px-4 py-2.5 bg-indigo-50 hover:bg-indigo-100 text-brand-primary text-xs font-bold rounded-xl transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                className="px-4 py-2.5 bg-[#16181F] hover:bg-[#1F222B] text-[#DFB76C] text-xs font-semibold rounded-none border border-[#26282E] hover:border-[#DFB76C]/60 transition-colors flex items-center gap-1.5 cursor-pointer"
               >
-                <Users2 className="w-3.5 h-3.5" />
-                <span>Add to Family Hub</span>
+                <Users2 className="w-3.5 h-3.5 text-[#DFB76C]" />
+                <span>Collaborative Hub</span>
               </button>
 
               <button
                 onClick={() => handleBookPackage(packagesList[0]?.id || "default")}
-                className="px-4 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white text-xs font-bold rounded-xl shadow-sm transition-all cursor-pointer"
+                className="px-5 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-wider rounded-none shadow-md transition-all cursor-pointer"
               >
                 Reserve Consultation
               </button>
 
               <button
                 onClick={handleShare}
-                className="p-2.5 bg-[#F4F2EE] hover:bg-[#EAE6DF] rounded-xl text-slate-700 transition-colors cursor-pointer"
+                className="p-2.5 bg-[#16181F] hover:bg-[#1F222B] border border-[#26282E] rounded-none text-slate-300 hover:text-[#DFB76C] transition-colors cursor-pointer"
                 aria-label="Share"
               >
                 <Share2 className="w-4 h-4" />
@@ -220,7 +220,7 @@ export default function VendorProfilePage() {
                     toast.success(nextState ? "Saved to favorites!" : "Removed from favorites");
                   }
                 }}
-                className="p-2.5 bg-[#F4F2EE] hover:bg-[#EAE6DF] rounded-xl text-slate-700 hover:text-red-500 transition-colors cursor-pointer"
+                className="p-2.5 bg-[#16181F] hover:bg-[#1F222B] border border-[#26282E] rounded-none text-slate-300 hover:text-red-400 transition-colors cursor-pointer"
                 aria-label="Favorite"
               >
                 <Heart className={cn("w-4 h-4", isWishlisted && "fill-red-500 text-red-500")} />
@@ -229,73 +229,73 @@ export default function VendorProfilePage() {
           </div>
 
           {/* 5 Stats Metrics Ribbon */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 pt-6 border-t border-[#EAE6DF]">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 pt-6 border-t border-[#26282E]">
             <div className="space-y-0.5">
-              <div className="text-[11px] text-slate-400 font-medium uppercase tracking-wider">
+              <div className="text-[10px] text-[#DFB76C] font-bold uppercase tracking-[0.2em]">
                 ORDERS COMPLETED
               </div>
-              <div className="font-serif text-xl sm:text-2xl font-bold text-obsidian">
+              <div className="font-serif text-xl sm:text-2xl font-light text-white">
                 {vendor.ordersCompleted || 35}
               </div>
-              <div className="text-[11px] text-slate-500">Milestone gala events</div>
+              <div className="text-[11px] text-slate-400">Milestone ceremonies</div>
             </div>
 
             <div className="space-y-0.5">
-              <div className="text-[11px] text-slate-400 font-medium uppercase tracking-wider">
+              <div className="text-[10px] text-[#DFB76C] font-bold uppercase tracking-[0.2em]">
                 CLIENT RATING
               </div>
-              <div className="font-serif text-xl sm:text-2xl font-bold text-amber-600 flex items-center gap-1">
-                <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+              <div className="font-serif text-xl sm:text-2xl font-light text-[#DFB76C] flex items-center gap-1.5">
+                <Star className="w-4 h-4 fill-[#DFB76C] text-[#DFB76C]" />
                 <span>{vendor.rating ? Number(vendor.rating).toFixed(1) : "5.0"} / 5.0</span>
               </div>
-              <div className="text-[11px] text-slate-500">
-                {reviewsList.length || vendor.reviewCount || 1} verified reviews
+              <div className="text-[11px] text-slate-400">
+                {reviewsList.length || vendor.reviewCount || 1} verified ceremonies
               </div>
             </div>
 
             <div className="space-y-0.5">
-              <div className="text-[11px] text-slate-400 font-medium uppercase tracking-wider">
+              <div className="text-[10px] text-[#DFB76C] font-bold uppercase tracking-[0.2em]">
                 RESPONSE TIME
               </div>
-              <div className="font-serif text-xl sm:text-2xl font-bold text-obsidian">
-                {vendor.responseSpeed || "within 1 hour"}
+              <div className="font-serif text-xl sm:text-2xl font-light text-white">
+                {vendor.responseSpeed || "Within 1 hour"}
               </div>
-              <div className="text-[11px] text-emerald-600 font-medium">Instant alert dispatch</div>
+              <div className="text-[11px] text-emerald-400 font-medium">Instant alert dispatch</div>
             </div>
 
             <div className="space-y-0.5">
-              <div className="text-[11px] text-slate-400 font-medium uppercase tracking-wider">
+              <div className="text-[10px] text-[#DFB76C] font-bold uppercase tracking-[0.2em]">
                 ON-TIME DELIVERY
               </div>
-              <div className="font-serif text-xl sm:text-2xl font-bold text-obsidian">
+              <div className="font-serif text-xl sm:text-2xl font-light text-white">
                 {vendor.onTimeDelivery || "99%"}
               </div>
-              <div className="text-[11px] text-slate-500">Punctual arrival guarantee</div>
+              <div className="text-[11px] text-slate-400">Punctual arrival guarantee</div>
             </div>
 
             <div className="space-y-0.5">
-              <div className="text-[11px] text-slate-400 font-medium uppercase tracking-wider">
-                REPEAT CLIENTS
+              <div className="text-[10px] text-[#DFB76C] font-bold uppercase tracking-[0.2em]">
+                REPEAT PATRONAGE
               </div>
-              <div className="font-serif text-xl sm:text-2xl font-bold text-obsidian">
+              <div className="font-serif text-xl sm:text-2xl font-light text-white">
                 {vendor.repeatClients || "85%"}
               </div>
-              <div className="text-[11px] text-slate-500">Milestone celebrations</div>
+              <div className="text-[11px] text-slate-400">Ceremonial patrons</div>
             </div>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex items-center gap-2 border-b border-[#EAE6DF] overflow-x-auto pb-1 scrollbar-none">
+        <div className="flex items-center gap-2 border-b border-[#26282E] overflow-x-auto pb-1 scrollbar-none">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={cn(
-                "px-5 py-3 text-xs sm:text-sm font-bold border-b-2 whitespace-nowrap transition-all cursor-pointer",
+                "px-5 py-3 text-xs sm:text-sm font-semibold border-b-2 whitespace-nowrap transition-all cursor-pointer rounded-none uppercase tracking-wider",
                 activeTab === tab.id
-                  ? "border-[#0F0C3B] text-[#0F0C3B]"
-                  : "border-transparent text-slate-500 hover:text-obsidian"
+                  ? "border-[#DFB76C] text-[#DFB76C] font-bold"
+                  : "border-transparent text-slate-400 hover:text-white"
               )}
             >
               {tab.label}
@@ -311,360 +311,171 @@ export default function VendorProfilePage() {
             {activeTab === "overview" && (
               <>
                 {/* About & Ethos Card */}
-                <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-luxury border border-[#EAE6DF] space-y-6">
+                <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
                   <div className="flex items-center justify-between">
-                    <h2 className="font-serif text-2xl font-bold text-obsidian">
+                    <h2 className="font-serif text-2xl font-light text-white">
                       About {vendor.name}
                     </h2>
-                    <span className="text-xs font-semibold px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200 flex items-center gap-1">
-                      <ShieldCheck className="w-3.5 h-3.5" />
-                      <span>Ophir Vetted Vendor</span>
+                    <span className="text-xs font-semibold px-3 py-1 bg-[#0B0C0E] text-[#DFB76C] rounded-none border border-[#DFB76C]/30 flex items-center gap-1.5 uppercase tracking-wider">
+                      <ShieldCheck className="w-3.5 h-3.5 text-[#DFB76C]" />
+                      <span>Verified Artisan</span>
                     </span>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
                     {vendor.bio ||
-                      "Michelin-trained culinary team creating tailored 3-course plated dining and elevated cocktail hour grazing for luxury weddings and corporate galas."}
+                      "Dedicated cultural master and culinary artisan creating tailored ceremonial experiences and authentic heritage presentations for milestone galas and sacred weddings."}
                   </p>
 
                   {/* Guarantees Box */}
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-[#EAE6DF]">
-                    <div className="p-3.5 rounded-xl bg-[#FAF9F6] border border-[#EAE6DF] space-y-1">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-obsidian">
-                        <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-[#26282E]">
+                    <div className="p-3.5 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-1">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-white">
+                        <ShieldCheck className="w-4 h-4 text-emerald-400" />
                         <span>Licensed & Insured</span>
                       </div>
-                      <div className="text-[11px] text-slate-500">$2M Commercial Policy</div>
+                      <div className="text-[11px] text-slate-400">$2M Commercial Policy</div>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-[#FAF9F6] border border-[#EAE6DF] space-y-1">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-obsidian">
-                        <CheckCircle2 className="w-4 h-4 text-blue-600" />
+                    <div className="p-3.5 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-1">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-white">
+                        <CheckCircle2 className="w-4 h-4 text-[#DFB76C]" />
                         <span>Verified Identity</span>
                       </div>
-                      <div className="text-[11px] text-slate-500">Background Checked</div>
+                      <div className="text-[11px] text-slate-400">Background Checked</div>
                     </div>
 
-                    <div className="p-3.5 rounded-xl bg-[#FAF9F6] border border-[#EAE6DF] space-y-1">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-obsidian">
-                        <Lock className="w-4 h-4 text-amber-600" />
-                        <span>Ophir Escrow</span>
+                    <div className="p-3.5 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-1">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-white">
+                        <Lock className="w-4 h-4 text-[#DFB76C]" />
+                        <span>100% Escrow Safeguard</span>
                       </div>
-                      <div className="text-[11px] text-slate-500">100% Release Certainty</div>
+                      <div className="text-[11px] text-slate-400">Milestone-Released Funds</div>
                     </div>
                   </div>
                 </div>
 
-                {/* Popular Packages & Rates Section Preview */}
-                <div className="space-y-5">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h2 className="font-serif text-2xl font-bold text-obsidian">
-                        Featured Packages & Rates
+                {/* Popular Services Showcase */}
+                {packagesList.length > 0 && (
+                  <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
+                    <div className="flex items-center justify-between">
+                      <h2 className="font-serif text-2xl font-light text-white">
+                        Featured Offerings & Packages
                       </h2>
-                      <p className="text-xs text-slate-500">
-                        All bookings secured via Ophir Escrow Milestone Vault
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => setActiveTab("packages")}
-                      className="text-xs font-bold text-brand-primary hover:underline flex items-center gap-1 cursor-pointer"
-                    >
-                      <span>
-                        View All Services ({servicesList.length > 0 ? servicesList.length : packagesList.length})
-                      </span>
-                      <ChevronRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-
-                  <div className="space-y-4">
-                    {packagesList.map((pkg: any) => (
-                      <div
-                        key={pkg.id}
-                        className={cn(
-                          "bg-white rounded-3xl p-6 sm:p-7 shadow-luxury border transition-all space-y-4",
-                          pkg.isPopular ? "border-brand-primary ring-1 ring-brand-primary" : "border-[#EAE6DF]"
-                        )}
+                      <button
+                        onClick={() => setActiveTab("packages")}
+                        className="text-xs font-semibold uppercase tracking-wider text-[#DFB76C] hover:text-[#ECC870] flex items-center gap-1 cursor-pointer"
                       >
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                          <div className="space-y-1">
-                            {pkg.isPopular && (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
-                                <Sparkles className="w-3 h-3" /> Popular Choice
+                        <span>View All ({packagesList.length})</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {packagesList.slice(0, 4).map((pkg: any) => (
+                        <div
+                          key={pkg.id}
+                          className="p-5 rounded-none bg-[#16181F] border border-[#26282E] hover:border-[#DFB76C]/60 transition-all flex flex-col justify-between space-y-4"
+                        >
+                          <div className="space-y-1.5">
+                            <div className="flex items-center justify-between">
+                              <h3 className="font-serif font-light text-base text-white">
+                                {pkg.title}
+                              </h3>
+                              <span className="font-serif text-lg font-bold text-[#DFB76C]">
+                                ${Number(pkg.price).toLocaleString()}
                               </span>
-                            )}
-                            <h3 className="font-serif text-xl font-bold text-obsidian">
-                              {pkg.title}
-                            </h3>
+                            </div>
+                            <p className="text-xs text-slate-400 line-clamp-2 font-light">
+                              {pkg.description}
+                            </p>
                           </div>
 
-                          <div className="text-left sm:text-right">
-                            <span className="font-serif text-2xl sm:text-3xl font-bold text-obsidian block">
-                              ${Number(pkg.price).toLocaleString()}
-                            </span>
-                            <span className="text-[11px] text-slate-400">Fixed rate</span>
-                          </div>
-                        </div>
-
-                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                          {pkg.description}
-                        </p>
-
-                        {/* Features list */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-700">
-                          <div className="flex items-center gap-1.5">
-                            <Clock className="w-3.5 h-3.5 text-slate-400" />
-                            <span>{pkg.hours || "4-6 hours"}</span>
-                          </div>
-                          <div className="flex items-center gap-1.5">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                            <span>{pkg.turnaround || "24-48 hours delivery"}</span>
-                          </div>
-                          <div className="flex items-center gap-1.5 font-semibold text-brand-primary sm:col-span-2">
-                            <ShieldCheck className="w-3.5 h-3.5 text-brand-primary" />
-                            <span>{pkg.escrowSplit || "50% Milestone Deposit • 50% Final Release"}</span>
-                          </div>
-                        </div>
-
-                        {/* Reserve CTA */}
-                        <div className="pt-3 border-t border-[#EAE6DF] flex items-center justify-between gap-3">
-                          <span className="text-xs text-slate-400">100% Escrow Protected</span>
-
-                          <div className="flex items-center gap-2">
+                          <div className="pt-2 border-t border-[#26282E] flex items-center justify-between gap-2">
                             <button
                               onClick={() => handleAddPackageToHub(pkg)}
-                              className="px-3.5 py-2 bg-indigo-50 hover:bg-indigo-100 text-brand-primary text-xs font-bold rounded-xl transition-colors flex items-center gap-1 cursor-pointer"
+                              className="px-2.5 py-1.5 rounded-none border border-[#26282E] text-slate-300 hover:text-[#DFB76C] text-[11px] font-semibold transition-colors flex items-center gap-1 cursor-pointer"
                             >
-                              <Users2 className="w-3.5 h-3.5" />
-                              <span>Add to Hub</span>
+                              <Users2 className="w-3 h-3 text-[#DFB76C]" />
+                              <span>Hub</span>
                             </button>
-
                             <button
                               onClick={() => handleBookPackage(pkg.id)}
-                              className="px-4 py-2 bg-[#4F46E5] hover:bg-[#4338CA] text-white text-xs font-semibold rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
+                              className="px-3.5 py-1.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-wider rounded-none shadow-sm transition-all cursor-pointer"
                             >
-                              <span>Reserve Package</span>
-                              <ArrowRight className="w-3.5 h-3.5" />
+                              Reserve
                             </button>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Portfolio Gallery Highlights Preview */}
-                <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-luxury border border-[#EAE6DF] space-y-6">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h2 className="font-serif text-2xl font-bold text-obsidian">
-                        Portfolio Highlights
-                      </h2>
-                      <p className="text-xs text-slate-500">
-                        Recent culinary setups, banquets, and celebration service
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => setActiveTab("portfolio")}
-                      className="text-xs font-bold text-brand-primary hover:underline flex items-center gap-1 cursor-pointer"
-                    >
-                      <span>View All ({galleryList.length})</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5">
-                    {galleryList.slice(0, 6).map((img, idx) => (
-                      <div
-                        key={idx}
-                        className="relative aspect-4/3 rounded-2xl overflow-hidden shadow-xs border border-[#EAE6DF] group cursor-pointer"
-                        onClick={() => setActiveLightboxImg(img)}
-                      >
-                        <Image
-                          src={img}
-                          alt="Portfolio photo"
-                          fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
-                          <Eye className="w-5 h-5" />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Verified Client Reviews Preview */}
-                <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-luxury border border-[#EAE6DF] space-y-6">
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                    <div>
-                      <h2 className="font-serif text-2xl font-bold text-obsidian">
-                        Verified Client Reviews
-                      </h2>
-                      <p className="text-xs text-slate-500">
-                        Authenticated bookings confirmed via Ophir milestone payouts
-                      </p>
-                    </div>
-
-                    <div className="flex items-center gap-1.5 text-amber-500 font-bold text-lg">
-                      <Star className="w-5 h-5 fill-amber-400 text-amber-400" />
-                      <span>{vendor.rating ? Number(vendor.rating).toFixed(1) : "5.0"}</span>
-                      <span className="text-xs text-slate-400 font-normal">
-                        ({reviewsList.length || 1} verified)
-                      </span>
+                      ))}
                     </div>
                   </div>
-
-                  <div className="space-y-6">
-                    {reviewsList.slice(0, 3).map((rev: any, idx: number) => (
-                      <div key={idx} className="space-y-3 pb-6 border-b border-[#EAE6DF] last:border-0 last:pb-0">
-                        <div className="flex items-center justify-between">
-                          <div className="space-y-0.5">
-                            <h4 className="font-serif font-bold text-sm text-obsidian">
-                              {rev.author}
-                            </h4>
-                            <span className="text-[11px] text-slate-400">{rev.event} • {rev.date}</span>
-                          </div>
-                          <div className="flex text-amber-400">
-                            {[...Array(rev.rating || 5)].map((_, i) => (
-                              <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-                            ))}
-                          </div>
-                        </div>
-
-                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed italic">
-                          &ldquo;{rev.text}&rdquo;
-                        </p>
-
-                        {rev.reply && (
-                          <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600 space-y-1">
-                            <span className="font-bold text-obsidian flex items-center gap-1">
-                              <span>Reply from {rev.reply.author}:</span>
-                            </span>
-                            <p className="italic text-slate-600">{rev.reply.text}</p>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                )}
               </>
             )}
 
-            {/* 2. SERVICES (PACKAGES) TAB */}
+            {/* 2. SERVICES & PACKAGES TAB */}
             {activeTab === "packages" && (
               <div className="space-y-6">
-                <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-luxury border border-[#EAE6DF] space-y-3">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <h2 className="font-serif text-2xl font-bold text-obsidian">
-                        Vendor Services & Event Packages
-                      </h2>
-                      <p className="text-xs sm:text-sm text-slate-500 mt-1">
-                        All bookings run strictly via the Ophir Escrow Milestone Vault with 100% fund safety.
-                      </p>
-                    </div>
-                    <span className="px-3 py-1 bg-indigo-50 text-brand-primary text-xs font-bold rounded-full">
-                      {servicesList.length > 0 ? servicesList.length : packagesList.length} Options Available
-                    </span>
-                  </div>
-                </div>
-
-                {/* If servicesList exists (multiple culinary services) */}
                 {servicesList.length > 0 ? (
                   <div className="space-y-6">
-                    {servicesList.map((service: any) => (
+                    {servicesList.map((svc: any) => (
                       <div
-                        key={service.id}
-                        className="bg-white rounded-3xl p-6 sm:p-8 shadow-luxury border border-[#EAE6DF] space-y-6"
+                        key={svc.id}
+                        className="bg-[#121418] rounded-none p-6 sm:p-7 shadow-2xl border border-[#26282E] space-y-4"
                       >
-                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                          <div className="space-y-2">
-                            <div className="flex flex-wrap items-center gap-2">
-                              <h3 className="font-serif text-xl sm:text-2xl font-bold text-obsidian">
-                                {service.title}
-                              </h3>
-                            </div>
-                            <p className="text-xs sm:text-sm text-slate-600 max-w-2xl leading-relaxed">
-                              {service.description}
-                            </p>
-                            {service.tags && service.tags.length > 0 && (
-                              <div className="flex flex-wrap gap-1.5 pt-1">
-                                {service.tags.map((tag: string, tIdx: number) => (
-                                  <span
-                                    key={tIdx}
-                                    className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-[11px] font-medium"
-                                  >
-                                    #{tag}
-                                  </span>
-                                ))}
-                              </div>
-                            )}
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                          <div className="space-y-1">
+                            <span className="text-[10px] font-bold text-[#DFB76C] uppercase tracking-[0.2em]">
+                              {svc.category || "Service Tier"}
+                            </span>
+                            <h3 className="font-serif text-xl sm:text-2xl font-light text-white">
+                              {svc.title}
+                            </h3>
                           </div>
-
-                          <div className="text-left sm:text-right flex-shrink-0">
-                            <span className="text-[10px] uppercase font-bold text-slate-400 block">
-                              STARTING FROM
+                          <div className="text-left sm:text-right">
+                            <span className="font-serif text-2xl font-bold text-[#DFB76C] block">
+                              ${Number(svc.startingPrice || 0).toLocaleString()}
                             </span>
-                            <span className="font-serif text-2xl sm:text-3xl font-bold text-obsidian">
-                              ${Number(service.startingPrice || 750).toLocaleString()}
-                            </span>
+                            <span className="text-[11px] text-slate-400">Starting price</span>
                           </div>
                         </div>
 
-                        {/* Package Tiers within Service */}
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-[#EAE6DF]">
-                          {(service.packages || []).map((pkg: any) => (
+                        <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+                          {svc.description}
+                        </p>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
+                          {(svc.packages || []).map((pkg: any) => (
                             <div
                               key={pkg.id}
-                              className={cn(
-                                "p-5 rounded-2xl border transition-all flex flex-col justify-between space-y-4",
-                                pkg.isPopular
-                                  ? "bg-indigo-50/40 border-brand-primary ring-1 ring-brand-primary"
-                                  : "bg-[#FAF9F6] border-[#EAE6DF]"
-                              )}
+                              className="p-4 rounded-none bg-[#16181F] border border-[#26282E] space-y-3 flex flex-col justify-between"
                             >
                               <div className="space-y-2">
                                 <div className="flex items-center justify-between">
-                                  <h4 className="font-serif font-bold text-base text-obsidian">
-                                    {pkg.title}
-                                  </h4>
-                                  {pkg.isPopular && (
-                                    <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 text-[10px] font-bold rounded-full">
-                                      Popular
-                                    </span>
-                                  )}
+                                  <span className="text-xs font-bold text-white uppercase tracking-wider">
+                                    {pkg.name || pkg.title}
+                                  </span>
+                                  <span className="font-serif text-base font-bold text-[#DFB76C]">
+                                    ${Number(pkg.price).toLocaleString()}
+                                  </span>
                                 </div>
-                                <div className="font-serif text-2xl font-bold text-obsidian">
-                                  ${Number(pkg.price).toLocaleString()}
-                                </div>
-                                <p className="text-xs text-slate-500 leading-relaxed">
+                                <p className="text-[11px] text-slate-400 leading-relaxed font-light">
                                   {pkg.description}
                                 </p>
-
-                                <div className="space-y-1.5 pt-2 text-xs text-slate-600">
-                                  <div className="flex items-center gap-1.5">
-                                    <Clock className="w-3.5 h-3.5 text-slate-400" />
-                                    <span>{pkg.hours || "4-6 Hours"}</span>
-                                  </div>
-                                  <div className="flex items-center gap-1.5">
-                                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                                    <span>{pkg.turnaround || "24-48 Hours"}</span>
-                                  </div>
-                                </div>
                               </div>
 
-                              <div className="space-y-2 pt-2 border-t border-slate-200/60">
+                              <div className="space-y-2 pt-2 border-t border-[#26282E]">
                                 <button
                                   onClick={() => handleBookPackage(pkg.id)}
-                                  className="w-full py-2 bg-[#4F46E5] hover:bg-[#4338CA] text-white text-xs font-semibold rounded-xl shadow-xs transition-all flex items-center justify-center gap-1 cursor-pointer"
+                                  className="w-full py-2 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-wider rounded-none shadow-xs transition-all flex items-center justify-center gap-1 cursor-pointer"
                                 >
                                   <span>Reserve Tier</span>
                                   <ArrowRight className="w-3 h-3" />
                                 </button>
                                 <button
                                   onClick={() => handleAddPackageToHub(pkg)}
-                                  className="w-full py-1.5 bg-white hover:bg-slate-100 text-brand-primary text-xs font-bold rounded-xl border border-slate-200 transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                                  className="w-full py-1.5 bg-[#0B0C0E] hover:bg-[#121418] text-[#DFB76C] text-xs font-bold rounded-none border border-[#26282E] transition-colors flex items-center justify-center gap-1 cursor-pointer"
                                 >
                                   <Users2 className="w-3 h-3" />
                                   <span>Add to Hub</span>
@@ -683,47 +494,47 @@ export default function VendorProfilePage() {
                       <div
                         key={pkg.id}
                         className={cn(
-                          "bg-white rounded-3xl p-6 sm:p-7 shadow-luxury border transition-all space-y-4",
-                          pkg.isPopular ? "border-brand-primary ring-1 ring-brand-primary" : "border-[#EAE6DF]"
+                          "bg-[#121418] rounded-none p-6 sm:p-7 shadow-2xl border transition-all space-y-4",
+                          pkg.isPopular ? "border-[#DFB76C] ring-1 ring-[#DFB76C]/40" : "border-[#26282E]"
                         )}
                       >
                         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                           <div className="space-y-1">
                             {pkg.isPopular && (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] text-[10px] font-bold uppercase tracking-widest border border-[#DFB76C]/30">
                                 <Sparkles className="w-3 h-3" /> Popular Choice
                               </span>
                             )}
-                            <h3 className="font-serif text-xl font-bold text-obsidian">
+                            <h3 className="font-serif text-xl font-light text-white">
                               {pkg.title}
                             </h3>
                           </div>
 
                           <div className="text-left sm:text-right">
-                            <span className="font-serif text-2xl sm:text-3xl font-bold text-obsidian block">
+                            <span className="font-serif text-2xl sm:text-3xl font-bold text-[#DFB76C] block">
                               ${Number(pkg.price).toLocaleString()}
                             </span>
                             <span className="text-[11px] text-slate-400">Fixed rate</span>
                           </div>
                         </div>
 
-                        <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
                           {pkg.description}
                         </p>
 
-                        <div className="pt-3 border-t border-[#EAE6DF] flex items-center justify-between gap-3">
+                        <div className="pt-3 border-t border-[#26282E] flex items-center justify-between gap-3">
                           <span className="text-xs text-slate-400">100% Escrow Protected</span>
                           <div className="flex items-center gap-2">
                             <button
                               onClick={() => handleAddPackageToHub(pkg)}
-                              className="px-3.5 py-2 bg-indigo-50 hover:bg-indigo-100 text-brand-primary text-xs font-bold rounded-xl transition-colors flex items-center gap-1 cursor-pointer"
+                              className="px-3.5 py-2 bg-[#16181F] hover:bg-[#1F222B] text-[#DFB76C] text-xs font-bold rounded-none border border-[#26282E] transition-colors flex items-center gap-1 cursor-pointer"
                             >
                               <Users2 className="w-3.5 h-3.5" />
                               <span>Add to Hub</span>
                             </button>
                             <button
                               onClick={() => handleBookPackage(pkg.id)}
-                              className="px-4 py-2 bg-[#4F46E5] hover:bg-[#4338CA] text-white text-xs font-semibold rounded-xl shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
+                              className="px-4 py-2 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-wider rounded-none shadow-xs transition-all flex items-center gap-1.5 cursor-pointer"
                             >
                               <span>Reserve Package</span>
                               <ArrowRight className="w-3.5 h-3.5" />
@@ -739,18 +550,18 @@ export default function VendorProfilePage() {
 
             {/* 3. PORTFOLIO TAB */}
             {activeTab === "portfolio" && (
-              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-luxury border border-[#EAE6DF] space-y-6">
+              <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                   <div>
-                    <h2 className="font-serif text-2xl font-bold text-obsidian">
+                    <h2 className="font-serif text-2xl font-light text-white">
                       Portfolio & Showcase Gallery
                     </h2>
-                    <p className="text-xs text-slate-500">
-                      Verified culinary presentations, private dinners, and gala setups
+                    <p className="text-xs text-slate-400 font-light">
+                      Verified ceremonial presentations, milestone galas, and fine-art moments
                     </p>
                   </div>
-                  <span className="text-xs text-slate-400 font-medium">
-                    {galleryList.length} High-Resolution Photos
+                  <span className="text-xs text-[#DFB76C] font-semibold uppercase tracking-wider">
+                    {galleryList.length} High-Resolution Captures
                   </span>
                 </div>
 
@@ -758,18 +569,18 @@ export default function VendorProfilePage() {
                   {galleryList.map((img, idx) => (
                     <div
                       key={idx}
-                      className="relative aspect-4/3 rounded-2xl overflow-hidden shadow-xs border border-[#EAE6DF] group cursor-pointer bg-slate-100"
+                      className="relative aspect-4/3 rounded-none overflow-hidden shadow-xs border border-[#26282E] group cursor-pointer bg-[#0B0C0E]"
                       onClick={() => setActiveLightboxImg(img)}
                     >
                       <Image
                         src={img}
                         alt={`Portfolio piece ${idx + 1}`}
                         fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105 filter brightness-90 group-hover:brightness-100"
                       />
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-3 text-center">
-                        <Eye className="w-6 h-6 mb-1" />
-                        <span className="text-xs font-bold">Enlarge View</span>
+                      <div className="absolute inset-0 bg-[#0B0C0E]/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-3 text-center">
+                        <Eye className="w-6 h-6 mb-1 text-[#DFB76C]" />
+                        <span className="text-xs font-bold uppercase tracking-widest text-[#DFB76C]">Enlarge View</span>
                       </div>
                     </div>
                   ))}
@@ -779,24 +590,24 @@ export default function VendorProfilePage() {
 
             {/* 4. REVIEWS TAB */}
             {activeTab === "reviews" && (
-              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-luxury border border-[#EAE6DF] space-y-6">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-[#EAE6DF]">
+              <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-[#26282E]">
                   <div>
-                    <h2 className="font-serif text-2xl font-bold text-obsidian">
+                    <h2 className="font-serif text-2xl font-light text-white">
                       Verified Client Reviews
                     </h2>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-slate-400 font-light">
                       Reviews authenticated via completed Ophir Escrow milestone releases
                     </p>
                   </div>
 
-                  <div className="flex items-center gap-3 bg-amber-50/70 border border-amber-200 px-4 py-2.5 rounded-2xl">
-                    <Star className="w-6 h-6 fill-amber-500 text-amber-500" />
+                  <div className="flex items-center gap-3 bg-[#16181F] border border-[#26282E] px-4 py-2.5 rounded-none">
+                    <Star className="w-6 h-6 fill-[#DFB76C] text-[#DFB76C]" />
                     <div>
-                      <div className="font-serif text-xl font-bold text-amber-900 leading-tight">
+                      <div className="font-serif text-xl font-bold text-white leading-tight">
                         {vendor.rating ? Number(vendor.rating).toFixed(1) : "5.0"} / 5.0
                       </div>
-                      <div className="text-[11px] text-amber-700">
+                      <div className="text-[11px] text-slate-400">
                         {reviewsList.length || 1} verified client {reviewsList.length === 1 ? "review" : "reviews"}
                       </div>
                     </div>
@@ -804,34 +615,34 @@ export default function VendorProfilePage() {
                 </div>
 
                 {/* Reviews Listing */}
-                <div className="space-y-6">
+                <div className="space-y-4">
                   {reviewsList.length > 0 ? (
                     reviewsList.map((rev: any, idx: number) => (
                       <div
                         key={idx}
-                        className="p-5 rounded-2xl bg-[#FAF9F6] border border-[#EAE6DF] space-y-3"
+                        className="p-5 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-3"
                       >
                         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-indigo-100 text-brand-primary font-bold flex items-center justify-center text-sm border border-indigo-200">
+                            <div className="w-10 h-10 rounded-none bg-[#1A1D24] text-[#DFB76C] font-bold flex items-center justify-center text-sm border border-[#26282E]">
                               {rev.author ? rev.author.charAt(0) : "C"}
                             </div>
                             <div>
-                              <div className="font-serif font-bold text-sm text-obsidian flex items-center gap-1.5">
+                              <div className="font-serif font-bold text-sm text-white flex items-center gap-1.5">
                                 <span>{rev.author}</span>
-                                <span className="inline-flex items-center gap-0.5 text-[10px] text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 font-semibold">
+                                <span className="inline-flex items-center gap-0.5 text-[10px] text-emerald-400 bg-[#0D211A] px-2 py-0.5 rounded-none border border-emerald-500/30 font-semibold">
                                   <ShieldCheck className="w-3 h-3" />
                                   <span>Verified Host</span>
                                 </span>
                               </div>
-                              <span className="text-[11px] text-slate-500">{rev.event}</span>
+                              <span className="text-[11px] text-slate-400">{rev.event}</span>
                             </div>
                           </div>
 
                           <div className="flex items-center gap-2">
-                            <div className="flex text-amber-400">
+                            <div className="flex text-[#DFB76C]">
                               {[...Array(rev.rating || 5)].map((_, i) => (
-                                <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                                <Star key={i} className="w-4 h-4 fill-[#DFB76C] text-[#DFB76C]" />
                               ))}
                             </div>
                             {rev.date && (
@@ -840,24 +651,24 @@ export default function VendorProfilePage() {
                           </div>
                         </div>
 
-                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed italic pl-1">
+                        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed italic pl-1 font-light">
                           &ldquo;{rev.text}&rdquo;
                         </p>
 
                         {rev.reply && (
-                          <div className="mt-3 p-3.5 bg-white rounded-xl border border-[#EAE6DF] text-xs text-slate-600 space-y-1">
-                            <div className="font-bold text-obsidian flex items-center gap-1.5">
-                              <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" />
+                          <div className="mt-3 p-3.5 bg-[#121418] rounded-none border border-[#26282E] text-xs text-slate-300 space-y-1">
+                            <div className="font-bold text-[#DFB76C] flex items-center gap-1.5">
+                              <ShieldCheck className="w-3.5 h-3.5 text-[#DFB76C]" />
                               <span>Vendor Response ({rev.reply.author}):</span>
                             </div>
-                            <p className="text-slate-600 italic">{rev.reply.text}</p>
+                            <p className="text-slate-400 italic">{rev.reply.text}</p>
                           </div>
                         )}
                       </div>
                     ))
                   ) : (
                     <div className="text-center py-10 space-y-2">
-                      <p className="text-sm font-semibold text-slate-700">
+                      <p className="text-sm font-semibold text-slate-300">
                         All past events completed with full escrow release satisfaction.
                       </p>
                       <p className="text-xs text-slate-500">
@@ -869,75 +680,74 @@ export default function VendorProfilePage() {
               </div>
             )}
 
-            {/* 5. ABOUT & EQUIPMENT TAB */}
+            {/* 5. ABOUT & STANDARDS TAB */}
             {activeTab === "about" && (
               <div className="space-y-6">
-                {/* Detailed Ethos */}
-                <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-luxury border border-[#EAE6DF] space-y-6">
-                  <h2 className="font-serif text-2xl font-bold text-obsidian">
+                <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
+                  <h2 className="font-serif text-2xl font-light text-white">
                     About {vendor.name}
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
                     {vendor.bio ||
-                      "Michelin-trained culinary team creating tailored 3-course plated dining and elevated cocktail hour grazing for luxury weddings and corporate galas."}
+                      "Dedicated cultural master and culinary artisan creating tailored ceremonial experiences and authentic heritage presentations for milestone galas and sacred weddings."}
                   </p>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[#EAE6DF]">
-                    <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#EAE6DF] space-y-2">
-                      <div className="flex items-center gap-2 text-sm font-bold text-obsidian">
-                        <UtensilsCrossed className="w-4 h-4 text-brand-primary" />
-                        <span>Culinary Philosophy</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[#26282E]">
+                    <div className="p-4 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-2">
+                      <div className="flex items-center gap-2 text-sm font-bold text-[#DFB76C]">
+                        <UtensilsCrossed className="w-4 h-4 text-[#DFB76C]" />
+                        <span>Artisanal Philosophy</span>
                       </div>
-                      <p className="text-xs text-slate-500 leading-relaxed">
-                        Seasonal farm-to-table sourcing, handcrafted scratch preparation, and dietary customization including vegan, gluten-free, and kosher-style accommodations.
+                      <p className="text-xs text-slate-400 leading-relaxed font-light">
+                        Authentic heritage sourcing, handcrafted custom arrangements, and cultural reverence for traditional customs.
                       </p>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#EAE6DF] space-y-2">
-                      <div className="flex items-center gap-2 text-sm font-bold text-obsidian">
-                        <Truck className="w-4 h-4 text-emerald-600" />
-                        <span>Logistics & On-Site Prep</span>
+                    <div className="p-4 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-2">
+                      <div className="flex items-center gap-2 text-sm font-bold text-emerald-400">
+                        <Truck className="w-4 h-4 text-emerald-400" />
+                        <span>Logistics & On-Site Protocol</span>
                       </div>
-                      <p className="text-xs text-slate-500 leading-relaxed">
-                        Temperature-controlled mobile transport, insulated warming and cooling cambros, and full breakdown leaving the host venue spotless.
+                      <p className="text-xs text-slate-400 leading-relaxed font-light">
+                        White-glove delivery, dedicated ceremonial sound or culinary staging, and full venue breakdown.
                       </p>
                     </div>
                   </div>
                 </div>
 
                 {/* Professional Standards & Certifications */}
-                <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-luxury border border-[#EAE6DF] space-y-6">
-                  <h3 className="font-serif text-xl font-bold text-obsidian">
+                <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
+                  <h3 className="font-serif text-xl font-light text-white">
                     Standards, Insurance & Escrow Guarantees
                   </h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#EAE6DF] space-y-1.5">
-                      <div className="flex items-center gap-2 text-xs font-bold text-obsidian">
-                        <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                    <div className="p-4 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-1.5">
+                      <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
+                        <ShieldCheck className="w-4 h-4 text-emerald-400" />
                         <span>$2,000,000 Insurance</span>
                       </div>
-                      <p className="text-[11px] text-slate-500 leading-relaxed">
-                        Full Commercial General Liability policy. Certificates of Insurance (COI) issued directly to event venues.
+                      <p className="text-[11px] text-slate-400 leading-relaxed font-light">
+                        Full Commercial General Liability policy. COI issued directly to event venues.
                       </p>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#EAE6DF] space-y-1.5">
-                      <div className="flex items-center gap-2 text-xs font-bold text-obsidian">
-                        <Award className="w-4 h-4 text-blue-600" />
-                        <span>Food Handler Certified</span>
+                    <div className="p-4 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-1.5">
+                      <div className="flex items-center gap-2 text-xs font-bold text-[#DFB76C]">
+                        <Award className="w-4 h-4 text-[#DFB76C]" />
+                        <span>Certified Mastercraft</span>
                       </div>
-                      <p className="text-[11px] text-slate-500 leading-relaxed">
-                        ServSafe certified managers and licensed commercial kitchen prep protocols with strict allergen separation.
+                      <p className="text-[11px] text-slate-400 leading-relaxed font-light">
+                        Vetted credentials and certified professional expertise in ceremonial traditions.
                       </p>
                     </div>
 
-                    <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#EAE6DF] space-y-1.5">
-                      <div className="flex items-center gap-2 text-xs font-bold text-obsidian">
-                        <Lock className="w-4 h-4 text-amber-600" />
+                    <div className="p-4 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-1.5">
+                      <div className="flex items-center gap-2 text-xs font-bold text-[#DFB76C]">
+                        <Lock className="w-4 h-4 text-[#DFB76C]" />
                         <span>Ophir Escrow Vault</span>
                       </div>
-                      <p className="text-[11px] text-slate-500 leading-relaxed">
+                      <p className="text-[11px] text-slate-400 leading-relaxed font-light">
                         100% deposit protection. Payouts are held in escrow and released solely upon client milestone approval.
                       </p>
                     </div>
@@ -945,23 +755,23 @@ export default function VendorProfilePage() {
                 </div>
 
                 {/* Service Territory & Operations */}
-                <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-luxury border border-[#EAE6DF] space-y-4">
-                  <h3 className="font-serif text-xl font-bold text-obsidian">
+                <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-4">
+                  <h3 className="font-serif text-xl font-light text-white">
                     Service Radius & Operations
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-600">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-300">
                     <div className="flex items-start gap-2.5">
-                      <MapPin className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
+                      <MapPin className="w-4 h-4 text-[#DFB76C] mt-0.5 shrink-0" />
                       <div>
-                        <span className="font-bold text-obsidian block">Base Location</span>
-                        <span>{vendor.location} (Servicing up to {vendor.serviceRadius || 50} miles)</span>
+                        <span className="font-bold text-white block">Base Location</span>
+                        <span className="text-slate-400">{vendor.location} (Servicing up to {vendor.serviceRadius || 50} miles)</span>
                       </div>
                     </div>
                     <div className="flex items-start gap-2.5">
-                      <Clock className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" />
+                      <Clock className="w-4 h-4 text-[#DFB76C] mt-0.5 shrink-0" />
                       <div>
-                        <span className="font-bold text-obsidian block">Response Speed</span>
-                        <span>{vendor.responseSpeed || "Within 1 hour"} with priority milestone dispatch</span>
+                        <span className="font-bold text-white block">Response Speed</span>
+                        <span className="text-slate-400">{vendor.responseSpeed || "Within 1 hour"} with priority dispatch</span>
                       </div>
                     </div>
                   </div>
@@ -972,13 +782,13 @@ export default function VendorProfilePage() {
 
           {/* Right Column (4 cols): Sticky Escrow Booking Widget */}
           <div className="lg:col-span-4 sticky top-24 space-y-6">
-            <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-luxury-lg border border-[#EAE6DF] space-y-6">
+            <div className="bg-[#121418] rounded-none p-6 sm:p-7 shadow-2xl border border-[#26282E] space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
+                  <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#DFB76C] block">
                     SERVICES STARTING FROM
                   </span>
-                  <span className="font-serif text-3xl font-bold text-obsidian">
+                  <span className="font-serif text-3xl font-bold text-white">
                     ${Number(vendor.startingPrice || 750).toLocaleString()}
                   </span>
                 </div>
@@ -986,13 +796,13 @@ export default function VendorProfilePage() {
               </div>
 
               {/* 100% Escrow Callout */}
-              <div className="p-3.5 rounded-2xl bg-[#EDE9FE] border border-indigo-200 space-y-1">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-brand-primary">
+              <div className="p-3.5 rounded-none bg-[#0D211A] border border-emerald-500/30 space-y-1 text-emerald-300">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400">
                   <ShieldCheck className="w-4 h-4" />
                   <span>100% Escrow Protected</span>
                 </div>
-                <p className="text-[11px] text-slate-600 leading-relaxed">
-                  Funds are held in FDIC-insured depository accounts and cleared strictly upon your signed milestone approval.
+                <p className="text-[11px] text-emerald-400/80 leading-relaxed font-light">
+                  Funds remain locked in FDIC-insured depository accounts and cleared strictly upon your signed milestone approval.
                 </p>
               </div>
 
@@ -1009,31 +819,31 @@ export default function VendorProfilePage() {
                     });
                     setIsFamilyModalOpen(true);
                   }}
-                  className="w-full h-11 bg-indigo-50 hover:bg-indigo-100 text-brand-primary font-bold text-xs rounded-xl transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full h-11 bg-[#16181F] hover:bg-[#1F222B] text-[#DFB76C] font-semibold text-xs rounded-none border border-[#26282E] hover:border-[#DFB76C]/60 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <Users2 className="w-4 h-4" />
-                  <span>Add to Family Hub Shortlist</span>
+                  <Users2 className="w-4 h-4 text-[#DFB76C]" />
+                  <span>Collaborative Hub Shortlist</span>
                 </button>
 
                 <button
                   onClick={() => handleBookPackage(packagesList[0]?.id || "default")}
-                  className="w-full h-12 bg-[#4F46E5] hover:bg-[#4338CA] active:scale-99 text-white font-semibold text-sm rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full h-12 bg-[#DFB76C] hover:bg-[#ECC870] active:scale-99 text-[#0B0C0E] font-bold text-xs uppercase tracking-wider rounded-none shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <Lock className="w-4 h-4 text-amber-400" />
-                  <span>Reserve Package via Escrow</span>
+                  <Lock className="w-4 h-4 text-[#0B0C0E]" />
+                  <span>Reserve Consultation via Escrow</span>
                 </button>
               </div>
 
-              <div className="pt-2 border-t border-[#EAE6DF] space-y-2 text-center">
-                <span className="text-[11px] text-slate-400 block">
-                  Have special dietary or setup requirements?
+              <div className="pt-2 border-t border-[#26282E] space-y-2 text-center">
+                <span className="text-[11px] text-slate-400 block font-light">
+                  Have bespoke ceremony requirements?
                 </span>
                 <Link
                   href={`/user/messages?vendorId=${vendor.id}`}
-                  className="text-xs font-bold text-brand-primary hover:underline inline-flex items-center gap-1"
+                  className="text-xs font-bold text-[#DFB76C] hover:text-[#ECC870] inline-flex items-center gap-1.5 uppercase tracking-wider"
                 >
                   <Mail className="w-3.5 h-3.5" />
-                  <span>Direct Message Vendor</span>
+                  <span>Direct Message Artisan</span>
                 </Link>
               </div>
             </div>
@@ -1044,11 +854,11 @@ export default function VendorProfilePage() {
       {/* Lightbox Modal for Portfolio */}
       {activeLightboxImg && (
         <div
-          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
           onClick={() => setActiveLightboxImg(null)}
         >
           <div
-            className="relative max-w-4xl max-h-[85vh] w-full h-[65vh] bg-black rounded-2xl overflow-hidden border border-white/20 shadow-2xl"
+            className="relative max-w-4xl max-h-[85vh] w-full h-[65vh] bg-[#0B0C0E] rounded-none overflow-hidden border border-[#26282E] shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
@@ -1059,9 +869,9 @@ export default function VendorProfilePage() {
             />
             <button
               onClick={() => setActiveLightboxImg(null)}
-              className="absolute top-4 right-4 p-2 bg-black/70 hover:bg-black text-white rounded-full transition-colors cursor-pointer"
+              className="absolute top-4 right-4 p-2 bg-[#121418] hover:bg-[#1A1D24] text-white border border-[#26282E] rounded-none transition-colors cursor-pointer"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5 text-[#DFB76C]" />
             </button>
           </div>
         </div>
