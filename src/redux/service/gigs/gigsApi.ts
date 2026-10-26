@@ -10,6 +10,8 @@ export const gigsApi = baseApi.injectEndpoints({
       categoryId?: string;
       minPrice?: number;
       maxPrice?: number;
+      seed?: string;
+      sortBy?: string;
     } | void>({
       query: (params) => ({
         url: "/gigs",
