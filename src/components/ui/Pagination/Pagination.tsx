@@ -55,10 +55,7 @@ export default function Pagination({
 
   const pages = getPageNumbers();
 
-  const activeBg =
-    theme === "indigo"
-      ? "bg-[#4F46E5] text-white border-[#4F46E5] shadow-sm"
-      : "bg-[#0F0C3B] text-white border-[#0F0C3B] shadow-sm";
+  const activeBg = "bg-[#DFB76C] text-[#0B0C0E] border-[#DFB76C] shadow-gold-glow-sm font-bold";
 
   return (
     <nav
@@ -72,10 +69,10 @@ export default function Pagination({
         onClick={() => onPageChange(Math.max(1, currentPage - 1))}
         disabled={currentPage === 1}
         className={cn(
-          "inline-flex items-center gap-1 px-3.5 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer",
+          "inline-flex items-center gap-1 px-3.5 py-2 rounded-none text-xs font-bold border transition-all cursor-pointer",
           currentPage === 1
-            ? "border-slate-200 bg-slate-50 text-slate-300 cursor-not-allowed"
-            : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300 shadow-2xs"
+            ? "border-[#26282E] bg-[#0E1013] text-slate-600 cursor-not-allowed"
+            : "border-[#26282E] bg-[#121418] text-slate-300 hover:bg-[#1A1D24] hover:border-[#DFB76C]/40"
         )}
       >
         <ChevronLeft className="w-4 h-4" />
@@ -89,7 +86,7 @@ export default function Pagination({
             return (
               <span
                 key={`ellipsis-${idx}`}
-                className="w-9 h-9 flex items-center justify-center text-xs font-bold text-slate-400 select-none"
+                className="w-9 h-9 flex items-center justify-center text-xs font-bold text-slate-500 select-none"
               >
                 ...
               </span>
@@ -105,10 +102,10 @@ export default function Pagination({
               type="button"
               onClick={() => onPageChange(pageNum)}
               className={cn(
-                "w-9 h-9 rounded-xl text-xs font-bold border transition-all flex items-center justify-center cursor-pointer",
+                "w-9 h-9 rounded-none text-xs font-bold border transition-all flex items-center justify-center cursor-pointer",
                 isActive
                   ? activeBg
-                  : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300 shadow-2xs"
+                  : "border-[#26282E] bg-[#121418] text-slate-300 hover:bg-[#1A1D24] hover:border-[#DFB76C]/40"
               )}
             >
               {pageNum}
@@ -123,10 +120,10 @@ export default function Pagination({
         onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
         disabled={currentPage === totalPages}
         className={cn(
-          "inline-flex items-center gap-1 px-3.5 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer",
+          "inline-flex items-center gap-1 px-3.5 py-2 rounded-none text-xs font-bold border transition-all cursor-pointer",
           currentPage === totalPages
-            ? "border-slate-200 bg-slate-50 text-slate-300 cursor-not-allowed"
-            : "border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:border-slate-300 shadow-2xs"
+            ? "border-[#26282E] bg-[#0E1013] text-slate-600 cursor-not-allowed"
+            : "border-[#26282E] bg-[#121418] text-slate-300 hover:bg-[#1A1D24] hover:border-[#DFB76C]/40"
         )}
       >
         <span className="hidden sm:inline">Next</span>
