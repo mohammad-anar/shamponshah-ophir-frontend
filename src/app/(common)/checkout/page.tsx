@@ -141,7 +141,7 @@ export default function CheckoutBookingPage() {
   };
 
   return (
-    <div className="w-full bg-[#FAF9F6] min-h-screen py-10 lg:py-16">
+    <div className="w-full bg-[#0B0C0E] text-[#F3F4F6] min-h-screen py-10 lg:py-16 font-sans selection:bg-[#DFB76C] selection:text-[#0B0C0E]">
       <Script src="https://js.stripe.com/v3/" strategy="afterInteractive" />
       <div className="max-w-[1280px] mx-auto px-6 lg:px-10 space-y-8">
         {/* Step Indicator */}
