@@ -583,7 +583,11 @@ export default function EditGigPage() {
               <div className="mt-2.5 flex items-center gap-2">
                 <button
                   type="button"
-                  className="px-3 py-1.5 rounded-lg bg-[#0F0C3B] text-white text-[10px] font-bold shadow-xs hover:bg-[#18124E]"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    fileInputRef.current?.click();
+                  }}
+                  className="px-3 py-1.5 rounded-lg bg-[#0F0C3B] text-white text-[10px] font-bold shadow-xs hover:bg-[#18124E] cursor-pointer"
                 >
                   Choose From Computer
                 </button>
