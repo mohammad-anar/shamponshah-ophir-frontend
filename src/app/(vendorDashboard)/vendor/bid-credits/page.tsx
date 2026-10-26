@@ -10,30 +10,24 @@ import {
   useGetBidCreditPackagesQuery,
 } from "@/redux/service/payments/paymentsApi";
 
-const defaultCreditPacks = [
-  { id: "pack-1", credits: 10, price: "$15.00", popular: false, costPer: "$1.50 / credit", discount: undefined },
-  { id: "pack-2", credits: 25, price: "$30.00", popular: true, costPer: "$1.20 / credit", discount: "Save 20%" },
-  { id: "pack-3", credits: 60, price: "$60.00", popular: false, costPer: "$1.00 / credit", discount: "Best Value (Save 33%)" },
-];
-
 export default function VendorBidCreditsPage() {
   const { data: creditsData, isLoading: isCreditsLoading } = useGetBidCreditsQuery();
   const { data: packagesData, isLoading: isPackagesLoading } = useGetBidCreditPackagesQuery();
   const [purchaseCredits, { isLoading: isPurchasing }] = usePurchaseBidCreditsMutation();
   const [purchasingCreditAmount, setPurchasingCreditAmount] = useState<number | null>(null);
 
-  const balance = creditsData?.data?.bidCredits ?? creditsData?.bidCredits ?? 16;
+  const balance = creditsData?.data?.bidCredits ?? creditsData?.bidCredits ?? 0;
 
   // Unpack dynamic credit packages
   const rawPackages = (packagesData as any)?.data || (Array.isArray(packagesData) ? packagesData : []);
-  const creditPacks = rawPackages.length > 0 ? rawPackages.map((p: any) => ({
+  const creditPacks = rawPackages.map((p: any) => ({
     id: p.id,
     credits: p.credits,
     price: `$${Number(p.price).toFixed(2)}`,
     popular: p.isPopular || p.credits === 25,
     costPer: `$${(Number(p.price) / p.credits).toFixed(2)} / credit`,
-    discount: p.discountBadge || (p.credits >= 60 ? "Save 33%" : p.credits >= 25 ? "Save 20%" : undefined)
-  })) : defaultCreditPacks;
+    discount: p.discountBadge || (p.credits >= 60 ? "Save 33%" : p.credits >= 25 ? "Save 20%" : undefined),
+  }));
 
   const handlePurchase = async (credits: number) => {
     setPurchasingCreditAmount(credits);
@@ -43,8 +37,8 @@ export default function VendorBidCreditsPage() {
         paymentMethodId: "pm_card_default",
       }).unwrap();
       toast.success(`Purchased ${credits} Bid Credits successfully!`);
-    } catch {
-      toast.success(`Purchased ${credits} Bid Credits! Balance updated.`);
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to purchase bid credits. Please try again.");
     } finally {
       setPurchasingCreditAmount(null);
     }
