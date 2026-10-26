@@ -22,6 +22,7 @@ import Pagination from "@/components/ui/Pagination/Pagination";
 import { cn } from "@/lib/utils";
 import { useGetVendorsQuery } from "@/redux/service/vendors/vendorsApi";
 import { useGetCategoriesQuery } from "@/redux/service/categories/categoriesApi";
+import { applySessionSeededRanking } from "@/lib/ranking.engine";
 
 const PAGE_SIZE = 12;
 
@@ -44,6 +45,19 @@ export default function VendorsDirectoryPage() {
     setCurrentPage(1);
   }, [selectedService, selectedCity, selectedTier, minRating, searchQuery, sortBy]);
 
+  const [sessionSeed, setSessionSeed] = useState<string>("default_session_seed");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      let seed = sessionStorage.getItem("ophir_browse_seed");
+      if (!seed) {
+        seed = "seed_" + Math.random().toString(36).substring(2, 10);
+        sessionStorage.setItem("ophir_browse_seed", seed);
+      }
+      setSessionSeed(seed);
+    }
+  }, []);
+
   // RTK Query hooks
   const { data: categoriesData } = useGetCategoriesQuery();
   const { data: apiResponse, isLoading: isVendorsLoading } = useGetVendorsQuery({
@@ -51,6 +65,8 @@ export default function VendorsDirectoryPage() {
     city: selectedCity !== "All Cities" ? selectedCity : undefined,
     tier: selectedTier !== "all" ? selectedTier : undefined,
     search: searchQuery.trim() || undefined,
+    seed: sessionSeed,
+    sortBy: sortBy !== "recommended" ? sortBy : undefined,
     limit: 50,
   });
 
@@ -87,7 +103,7 @@ export default function VendorsDirectoryPage() {
   ];
 
   const filteredVendors = useMemo(() => {
-    return allVendors.filter((v) => {
+    const baseFiltered = allVendors.filter((v: any) => {
       // Service match
       if (selectedService !== "all" && selectedService !== "All Services") {
         if (
@@ -122,18 +138,38 @@ export default function VendorsDirectoryPage() {
         const q = searchQuery.toLowerCase();
         const matchesName = v.name.toLowerCase().includes(q);
         const matchesTitle = v.title.toLowerCase().includes(q);
-        const matchesTags = v.tags.some((t) => t.toLowerCase().includes(q));
+        const matchesTags = Array.isArray(v.tags) && v.tags.some((t: string) => t.toLowerCase().includes(q));
         if (!matchesName && !matchesTitle && !matchesTags) return false;
       }
 
       return true;
-    }).sort((a, b) => {
-      if (sortBy === "price-low") return a.startingPrice - b.startingPrice;
-      if (sortBy === "price-high") return b.startingPrice - a.startingPrice;
-      if (sortBy === "rating") return b.rating - a.rating;
-      return b.reviewCount - a.reviewCount;
     });
-  }, [selectedService, selectedCity, selectedTier, minRating, searchQuery, sortBy]);
+
+    if (sortBy === "price-low") {
+      return [...baseFiltered].sort((a: any, b: any) => a.startingPrice - b.startingPrice);
+    }
+    if (sortBy === "price-high") {
+      return [...baseFiltered].sort((a: any, b: any) => b.startingPrice - a.startingPrice);
+    }
+    if (sortBy === "rating") {
+      return [...baseFiltered].sort((a: any, b: any) => b.rating - a.rating);
+    }
+
+    // Default view: Deterministic session-seeded fair ranking
+    return applySessionSeededRanking(
+      baseFiltered,
+      (v: any) => ({
+        id: v.id,
+        deliveryRate: v.onTimeDeliveryPct ?? 98,
+        cancelRatio: 2,
+        tier: v.guildTier || v.tier || "PRO",
+        rating: v.rating ?? 4.9,
+        ordersCompleted: v.ordersCompleted ?? v.reviewCount ?? 0,
+      }),
+      sessionSeed,
+      24,
+    );
+  }, [allVendors, selectedService, selectedCity, selectedTier, minRating, searchQuery, sortBy, sessionSeed]);
 
   const totalPages = Math.ceil(filteredVendors.length / PAGE_SIZE) || 1;
   const paginatedVendors = useMemo(() => {
@@ -371,7 +407,7 @@ export default function VendorsDirectoryPage() {
         {filteredVendors.length > 0 ? (
           <div className="space-y-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {paginatedVendors.map((vendor) => (
+              {paginatedVendors.map((vendor: any) => (
                 <VendorCard key={vendor.id} vendor={vendor} />
               ))}
             </div>
