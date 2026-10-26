@@ -88,20 +88,50 @@ export const ORDER_STATE_MACHINE_TABLE: StateTransitionRule[] = [
   {
     from: 'DISPUTED',
     to: 'REFUNDED',
-    allowedRoles: ['ADMIN'],
-    description: 'Admin resolved dispute in client favor (funds refunded to client)',
+    allowedRoles: ['ADMIN', 'VENDOR'],
+    description: 'Admin or Vendor resolved dispute in client favor (funds refunded to client)',
   },
   {
     from: 'DISPUTED',
     to: 'COMPLETED_WITH_PARTIAL_REFUND',
-    allowedRoles: ['ADMIN'],
-    description: 'Admin resolved dispute with partial payout and partial refund',
+    allowedRoles: ['ADMIN', 'VENDOR'],
+    description: 'Admin or Vendor resolved dispute with partial payout and partial refund',
   },
   {
     from: 'DISPUTED',
     to: 'CANCELLED',
-    allowedRoles: ['ADMIN'],
-    description: 'Admin cancelled order during dispute review',
+    allowedRoles: ['ADMIN', 'VENDOR'],
+    description: 'Admin or Vendor cancelled order during dispute review',
+  },
+  {
+    from: 'ACTIVE',
+    to: 'COMPLETED_WITH_PARTIAL_REFUND',
+    allowedRoles: ['VENDOR', 'ADMIN'],
+    description: 'Vendor or Admin accepted partial refund agreement on active order',
+  },
+  {
+    from: 'DELIVERED',
+    to: 'COMPLETED_WITH_PARTIAL_REFUND',
+    allowedRoles: ['VENDOR', 'ADMIN'],
+    description: 'Vendor or Admin accepted partial refund settlement on delivered order',
+  },
+  {
+    from: 'REVISION_REQUESTED',
+    to: 'COMPLETED_WITH_PARTIAL_REFUND',
+    allowedRoles: ['VENDOR', 'ADMIN'],
+    description: 'Vendor or Admin accepted partial refund during revisions',
+  },
+  {
+    from: 'DELIVERED',
+    to: 'CANCELLED',
+    allowedRoles: ['VENDOR', 'ADMIN'],
+    description: 'Vendor accepted cancellation or Admin cancelled delivered order',
+  },
+  {
+    from: 'REVISION_REQUESTED',
+    to: 'CANCELLED',
+    allowedRoles: ['VENDOR', 'ADMIN'],
+    description: 'Vendor accepted cancellation or Admin cancelled during revisions',
   },
 ];
 
