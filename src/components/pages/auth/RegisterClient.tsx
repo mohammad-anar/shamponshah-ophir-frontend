@@ -84,11 +84,11 @@ export default function RegisterPage() {
         localStorage.setItem("token", res.accessToken);
       }
 
-      toast.success("Account created successfully!");
-
       if (isVendor) {
-        router.push("/vendor");
+        toast.success("Vendor registered! Please verify your email to activate your account.");
+        router.push(`/verify-email?email=${encodeURIComponent(email)}&role=vendor`);
       } else {
+        toast.success("Account created successfully!");
         router.push("/user");
       }
     } catch (err: any) {
@@ -123,7 +123,7 @@ export default function RegisterPage() {
                 </h1>
                 <p className="text-slate-500 text-xs sm:text-sm">
                   {role === "vendor"
-                    ? "Apply to showcase your creative portfolio and secure direct milestone bookings."
+                    ? "Register your vendor studio to showcase your creative portfolio and secure direct milestone bookings."
                     : "Sign up to post event RFPs and reserve verified vendors."}
                 </p>
               </div>
