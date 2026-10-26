@@ -29,15 +29,6 @@ interface GalleryImage {
   isUploading?: boolean;
 }
 
-const DEFAULT_CATEGORIES = [
-  { id: "dj-live-music", name: "DJ & Live Music" },
-  { id: "photography-film", name: "Photography & Film" },
-  { id: "floral-balloon-decor", name: "Floral & Balloon Decor" },
-  { id: "catering-bakery", name: "Catering & Bakery" },
-  { id: "event-planning", name: "Event Planning & Decor" },
-  { id: "lighting-sound", name: "Lighting & Sound Rig" },
-];
-
 export default function CreateGigPage() {
   const router = useRouter();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -45,14 +36,13 @@ export default function CreateGigPage() {
   // API mutations & queries
   const [createGig, { isLoading: isCreatingGig }] = useCreateGigMutation();
   const [uploadFile] = useUploadFileMutation();
-  const { data: categoriesResponse } = useGetCategoriesQuery();
+  const { data: categoriesResponse, isLoading: isLoadingCategories } = useGetCategoriesQuery();
 
-  const categories =
-    Array.isArray(categoriesResponse) && categoriesResponse.length > 0
-      ? categoriesResponse
-      : Array.isArray(categoriesResponse?.data) && categoriesResponse.data.length > 0
-      ? categoriesResponse.data
-      : DEFAULT_CATEGORIES;
+  const categories = Array.isArray(categoriesResponse)
+    ? categoriesResponse
+    : Array.isArray(categoriesResponse?.data)
+    ? categoriesResponse.data
+    : [];
 
   // Wizard State (Simplified to 4 essential steps)
   const [step, setStep] = useState(1);
@@ -62,7 +52,14 @@ export default function CreateGigPage() {
     "DJ and host your birthday party with music, lights and games"
   );
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
-  const [selectedCategoryName, setSelectedCategoryName] = useState("DJ & Live Music");
+  const [selectedCategoryName, setSelectedCategoryName] = useState("");
+
+  // Sync selected category when categories load
+  if (categories.length > 0 && !selectedCategoryId) {
+    setSelectedCategoryId(categories[0].id);
+    setSelectedCategoryName(categories[0].name);
+  }
+
   const [tags, setTags] = useState<string[]>([
     "Birthday DJ",
     "Interactive Emcee",
@@ -217,6 +214,10 @@ export default function CreateGigPage() {
         toast.error("Please enter a title for your service.");
         return;
       }
+      if (!selectedCategoryId) {
+        toast.error("Please select an active service category. Categories are administered by platform admin.");
+        return;
+      }
       setStep(2);
       return;
     }
@@ -255,9 +256,15 @@ export default function CreateGigPage() {
 
       const imageUrls = galleryImages.map((img) => img.url).filter(Boolean);
 
+      if (!selectedCategoryId) {
+        toast.error("A valid service category is required to publish this gig.");
+        return;
+      }
+
       const payload: any = {
         title: gigTitle.trim(),
         description: description.trim(),
+        categoryId: selectedCategoryId,
         category: selectedCategoryName,
         tags,
         images: imageUrls,
@@ -410,26 +417,36 @@ export default function CreateGigPage() {
               {/* Service Category */}
               <div>
                 <label className="block font-bold text-[#0F0C3B] mb-1">Service Category *</label>
-                <select
-                  value={selectedCategoryId || selectedCategoryName}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    const found = categories.find((c: any) => c.id === val || c.name === val);
-                    if (found) {
-                      setSelectedCategoryId(found.id);
-                      setSelectedCategoryName(found.name);
-                    } else {
-                      setSelectedCategoryName(val);
-                    }
-                  }}
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl px-3 py-2.5 text-xs text-[#0F0C3B] font-medium focus:outline-none focus:border-brand-primary cursor-pointer"
-                >
-                  {categories.map((c: any) => (
-                    <option key={c.id || c.name} value={c.id || c.name}>
-                      {c.name}
-                    </option>
-                  ))}
-                </select>
+                {isLoadingCategories ? (
+                  <div className="flex items-center gap-2 text-xs text-slate-500 py-2">
+                    <Loader2 className="w-3.5 h-3.5 animate-spin text-brand-primary" /> Loading categories...
+                  </div>
+                ) : categories.length === 0 ? (
+                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-xs">
+                    No service categories configured yet. An administrator must create categories before gigs can be published.
+                  </div>
+                ) : (
+                  <select
+                    value={selectedCategoryId}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const found = categories.find((c: any) => c.id === val || c.name === val);
+                      if (found) {
+                        setSelectedCategoryId(found.id);
+                        setSelectedCategoryName(found.name);
+                      }
+                    }}
+                    className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl px-3 py-2.5 text-xs text-[#0F0C3B] font-medium focus:outline-none focus:border-brand-primary cursor-pointer"
+                    required
+                  >
+                    <option value="" disabled>-- Select a Category --</option>
+                    {categories.map((c: any) => (
+                      <option key={c.id} value={c.id}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
               </div>
 
               {/* Search Tags */}
