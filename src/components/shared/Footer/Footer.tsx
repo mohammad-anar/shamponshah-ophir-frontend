@@ -30,14 +30,14 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full bg-[#FAF9F6] border-t border-[#EAE6DF] pt-16 pb-12 text-slate-700">
+    <footer className="w-full bg-[#0B0C0E] border-t border-[#26282E] pt-16 pb-12 text-slate-400">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
         {/* Brand Header with Logo & Newsletter */}
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-12 border-b border-[#EAE6DF]">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-12 border-b border-[#26282E]">
           <div className="space-y-2">
             <Logo size="lg" />
-            <p className="text-xs text-slate-500 max-w-md">
-              The modern milestone &amp; escrow marketplace for milestone events, verified vendors, and family collaborative planning.
+            <p className="text-xs text-slate-400 max-w-md mt-2">
+              The premier milestone enclave connecting distinguished patrons with vetted cultural artisans under 100% escrow milestone protection.
             </p>
           </div>
 
@@ -46,28 +46,28 @@ export default function Footer() {
             {!subscribed ? (
               <form onSubmit={handleNewsletterSubmit} className="flex items-center gap-2">
                 <div className="relative">
-                  <Mail className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <Mail className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
                   <input
                     type="email"
                     required
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
                     placeholder="Enter email for private drops..."
-                    className="h-9 pl-8 pr-3 text-xs bg-white border border-[#EAE6DF] rounded-xl focus:outline-none focus:border-brand-primary w-56 text-slate-800"
+                    className="h-10 pl-8 pr-3 text-xs bg-[#121418] border border-[#262930] rounded-none focus:outline-none focus:border-[#DFB76C] w-56 text-slate-200"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={isSubscribing}
-                  className="h-9 px-3.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                  className="h-10 px-4 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-none text-xs font-bold uppercase tracking-wider transition-all shadow-gold-glow-sm flex items-center gap-1 cursor-pointer disabled:opacity-50"
                 >
                   {isSubscribing ? <Loader2 className="w-3 h-3 animate-spin" /> : <Send className="w-3 h-3" />}
                   <span>Join</span>
                 </button>
               </form>
             ) : (
-              <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
-                <CheckCircle2 className="w-3.5 h-3.5" />
+              <div className="flex items-center gap-1.5 text-xs font-bold text-[#DFB76C] bg-[#1A1D24] px-3 py-2 rounded-none border border-[#DFB76C]/30">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#DFB76C]" />
                 <span>Subscribed to Ophir Reserve</span>
               </div>
             )}
@@ -75,50 +75,50 @@ export default function Footer() {
             <div className="flex items-center gap-2">
               <Link 
                 href="/become-a-vendor" 
-                className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-xs"
+                className="px-4 py-2.5 rounded-none bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-wider transition-all"
               >
-                Apply as Vendor
+                Apply as Artisan
               </Link>
               <Link 
                 href="/vendors" 
-                className="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-[#0F0C3B] text-xs font-bold border border-slate-200 transition-all shadow-2xs"
+                className="px-4 py-2.5 rounded-none bg-[#121418] hover:bg-[#1A1D24] text-slate-200 text-xs font-bold uppercase tracking-wider border border-[#262930] transition-all"
               >
-                Directory
+                Artisans
               </Link>
             </div>
           </div>
         </div>
 
         {/* Main Footer Link Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 xl:gap-10 py-14 border-b border-[#EAE6DF]">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 xl:gap-10 py-14 border-b border-[#26282E]">
           {/* Col 1: Occasions */}
           <div>
-            <h4 className="font-serif text-base font-bold text-obsidian tracking-tight mb-4">
+            <h4 className="font-serif text-sm font-bold text-[#DFB76C] uppercase tracking-wider mb-4">
               Occasions
             </h4>
-            <ul className="space-y-2.5 text-xs xl:text-sm">
+            <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/vendors?occasion=weddings" className="hover:text-obsidian hover:underline transition-colors">
+                <Link href="/vendors?occasion=weddings" className="hover:text-[#DFB76C] transition-colors">
                   Grand Weddings & Receptions
                 </Link>
               </li>
               <li>
-                <Link href="/vendors?occasion=cultural" className="hover:text-obsidian hover:underline transition-colors">
+                <Link href="/vendors?occasion=cultural" className="hover:text-[#DFB76C] transition-colors">
                   Holud, Mehendi & Sangeet
                 </Link>
               </li>
               <li>
-                <Link href="/vendors?occasion=galas" className="hover:text-obsidian hover:underline transition-colors">
+                <Link href="/vendors?occasion=galas" className="hover:text-[#DFB76C] transition-colors">
                   Cultural Galas & Soirées
                 </Link>
               </li>
               <li>
-                <Link href="/vendors?occasion=birthdays" className="hover:text-obsidian hover:underline transition-colors">
+                <Link href="/vendors?occasion=birthdays" className="hover:text-[#DFB76C] transition-colors">
                   Milestone Birthdays & Anniversaries
                 </Link>
               </li>
               <li>
-                <Link href="/vendors?occasion=corporate" className="hover:text-obsidian hover:underline transition-colors">
+                <Link href="/vendors?occasion=corporate" className="hover:text-[#DFB76C] transition-colors">
                   Executive Banquets & Summits
                 </Link>
               </li>
@@ -127,32 +127,32 @@ export default function Footer() {
 
           {/* Col 2: Services */}
           <div>
-            <h4 className="font-serif text-base font-bold text-obsidian tracking-tight mb-4">
+            <h4 className="font-serif text-sm font-bold text-[#DFB76C] uppercase tracking-wider mb-4">
               Services
             </h4>
-            <ul className="space-y-2.5 text-xs xl:text-sm">
+            <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/vendors?category=catering" className="hover:text-obsidian hover:underline transition-colors">
+                <Link href="/vendors?category=catering" className="hover:text-[#DFB76C] transition-colors">
                   Artisanal & Heritage Catering
                 </Link>
               </li>
               <li>
-                <Link href="/vendors?category=floral" className="hover:text-obsidian hover:underline transition-colors">
+                <Link href="/vendors?category=floral" className="hover:text-[#DFB76C] transition-colors">
                   Floral Architecture & Scenography
                 </Link>
               </li>
               <li>
-                <Link href="/vendors?category=photo" className="hover:text-obsidian hover:underline transition-colors">
+                <Link href="/vendors?category=photo" className="hover:text-[#DFB76C] transition-colors">
                   Fine-Art Cinematography & Photo
                 </Link>
               </li>
               <li>
-                <Link href="/vendors?category=lighting" className="hover:text-obsidian hover:underline transition-colors">
+                <Link href="/vendors?category=lighting" className="hover:text-[#DFB76C] transition-colors">
                   Ambient Stage Lighting & Sound
                 </Link>
               </li>
               <li>
-                <Link href="/vendors?category=music" className="hover:text-obsidian hover:underline transition-colors">
+                <Link href="/vendors?category=music" className="hover:text-[#DFB76C] transition-colors">
                   Live Symphony & Cultural Artists
                 </Link>
               </li>
@@ -161,111 +161,91 @@ export default function Footer() {
 
           {/* Col 3: For Clients */}
           <div>
-            <h4 className="font-serif text-base font-bold text-obsidian tracking-tight mb-4">
+            <h4 className="font-serif text-sm font-bold text-[#DFB76C] uppercase tracking-wider mb-4">
               For Clients
             </h4>
-            <ul className="space-y-2.5 text-xs xl:text-sm">
+            <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/vendors?action=post-job" className="hover:text-obsidian hover:underline transition-colors">
-                  Post a Celebration Job
+                <Link href="/vendors?action=post-job" className="hover:text-[#DFB76C] transition-colors">
+                  Plan a Celebration
                 </Link>
               </li>
               <li>
-                <Link href="/vendors" className="hover:text-obsidian hover:underline transition-colors">
-                  Browse Verified Vendors
+                <Link href="/vendors" className="hover:text-[#DFB76C] transition-colors">
+                  Explore Premier Artisans
                 </Link>
               </li>
               <li>
-                <Link href="/how-it-works" className="hover:text-obsidian hover:underline transition-colors">
+                <Link href="/how-it-works" className="hover:text-[#DFB76C] transition-colors">
                   Escrow Vault Protection
                 </Link>
               </li>
               <li>
-                <Link href="/how-it-works" className="hover:text-obsidian hover:underline transition-colors">
+                <Link href="/how-it-works" className="hover:text-[#DFB76C] transition-colors">
                   Custom Milestone Contracts
                 </Link>
               </li>
               <li>
-                <Link href="/contact-us" className="hover:text-obsidian hover:underline transition-colors">
-                  Client Concierge Service
-                </Link>
-              </li>
-              <li>
-                <Link href="/vendors" className="hover:text-obsidian hover:underline transition-colors">
-                  Event Budget Calculator
+                <Link href="/contact-us" className="hover:text-[#DFB76C] transition-colors">
+                  Concierge Desk
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 4: For Vendors */}
+          {/* Col 4: For Artisans */}
           <div>
-            <h4 className="font-serif text-base font-bold text-obsidian tracking-tight mb-4">
-              For Vendors
+            <h4 className="font-serif text-sm font-bold text-[#DFB76C] uppercase tracking-wider mb-4">
+              For Artisans
             </h4>
-            <ul className="space-y-2.5 text-xs xl:text-sm">
+            <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/become-a-vendor" className="hover:text-obsidian hover:underline transition-colors">
-                  Apply for Vendor Status
+                <Link href="/become-a-vendor" className="hover:text-[#DFB76C] transition-colors">
+                  Apply for Reserve Status
                 </Link>
               </li>
               <li>
-                <Link href="/become-a-vendor" className="hover:text-obsidian hover:underline transition-colors">
-                  Guaranteed Payout Terms
+                <Link href="/become-a-vendor" className="hover:text-[#DFB76C] transition-colors">
+                  Guaranteed Escrow Payouts
                 </Link>
               </li>
               <li>
-                <Link href="/become-a-vendor" className="hover:text-obsidian hover:underline transition-colors">
-                  Portfolio Showcase Studio
+                <Link href="/become-a-vendor" className="hover:text-[#DFB76C] transition-colors">
+                  Artisan Portfolio Studio
                 </Link>
               </li>
               <li>
-                <Link href="/become-a-vendor" className="hover:text-obsidian hover:underline transition-colors">
-                  Vendor Guild Badge Criteria
-                </Link>
-              </li>
-              <li>
-                <Link href="/help-center" className="hover:text-obsidian hover:underline transition-colors">
-                  Community Standards
-                </Link>
-              </li>
-              <li>
-                <Link href="/login" className="hover:text-obsidian hover:underline transition-colors">
-                  Merchant Studio Login
+                <Link href="/login" className="hover:text-[#DFB76C] transition-colors">
+                  Artisan Portal Login
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Col 5: Company */}
+          {/* Col 5: Reserve */}
           <div>
-            <h4 className="font-serif text-base font-bold text-obsidian tracking-tight mb-4">
-              Company
+            <h4 className="font-serif text-sm font-bold text-[#DFB76C] uppercase tracking-wider mb-4">
+              Reserve
             </h4>
-            <ul className="space-y-2.5 text-xs xl:text-sm">
+            <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/about-us" className="hover:text-obsidian hover:underline transition-colors">
-                  Our Editorial Ethos
+                <Link href="/about-us" className="hover:text-[#DFB76C] transition-colors">
+                  The Reserve Ethos
                 </Link>
               </li>
               <li>
-                <Link href="/about-us" className="hover:text-obsidian hover:underline transition-colors">
-                  Cultural Heritage Story
+                <Link href="/about-us" className="hover:text-[#DFB76C] transition-colors">
+                  Heritage Lineages
                 </Link>
               </li>
               <li>
-                <Link href="/about-us" className="hover:text-obsidian hover:underline transition-colors">
-                  Press & Features
+                <Link href="/about-us" className="hover:text-[#DFB76C] transition-colors">
+                  Private Curations
                 </Link>
               </li>
               <li>
-                <Link href="/about-us" className="hover:text-obsidian hover:underline transition-colors">
-                  Careers <span className="text-[10px] text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded-full font-medium ml-1">Hiring</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact-us" className="hover:text-obsidian hover:underline transition-colors">
-                  Contact Hospitality Desk
+                <Link href="/contact-us" className="hover:text-[#DFB76C] transition-colors">
+                  Private Enquiries
                 </Link>
               </li>
             </ul>
@@ -273,29 +253,29 @@ export default function Footer() {
 
           {/* Col 6: Trust & Security Box */}
           <div className="space-y-4">
-            <h4 className="font-serif text-base font-bold text-obsidian tracking-tight mb-4">
+            <h4 className="font-serif text-sm font-bold text-[#DFB76C] uppercase tracking-wider mb-4">
               Trust & Security
             </h4>
 
             {/* Escrow Badge Card */}
-            <div className="p-3.5 bg-white rounded-xl border border-[#EAE6DF] shadow-xs space-y-1.5">
-              <div className="flex items-center gap-2 text-obsidian font-bold text-xs">
-                <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+            <div className="p-3.5 bg-[#121418] rounded-none border border-[#26282E] space-y-1.5">
+              <div className="flex items-center gap-2 text-white font-bold text-xs">
+                <ShieldCheck className="w-4 h-4 text-[#DFB76C] flex-shrink-0" />
                 <span>100% Escrow Protection</span>
               </div>
-              <p className="text-[11px] text-slate-500 leading-relaxed">
-                Funds stay secured in segregated FDIC-insured depository accounts and clear exclusively upon client milestone release.
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Funds remain secured in segregated accounts and disburse exclusively upon client ceremonial milestone approval.
               </p>
             </div>
 
             {/* Encryption Card */}
-            <div className="p-3.5 bg-white rounded-xl border border-[#EAE6DF] shadow-xs space-y-1.5">
-              <div className="flex items-center gap-2 text-obsidian font-bold text-xs">
-                <Lock className="w-4 h-4 text-amber-600 flex-shrink-0" />
-                <span>256-bit Vault Security</span>
+            <div className="p-3.5 bg-[#121418] rounded-none border border-[#26282E] space-y-1.5">
+              <div className="flex items-center gap-2 text-white font-bold text-xs">
+                <Lock className="w-4 h-4 text-[#DFB76C] flex-shrink-0" />
+                <span>Private Vault Security</span>
               </div>
-              <p className="text-[11px] text-slate-500 leading-relaxed">
-                Military-grade transport encryption and multi-signature release for vendor disbursements.
+              <p className="text-[11px] text-slate-400 leading-relaxed">
+                Institutional-grade encryption and multi-signature authorization for all transactions.
               </p>
             </div>
           </div>
@@ -304,29 +284,29 @@ export default function Footer() {
         {/* Bottom Legal & Selector Bar */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-500">
           <div className="flex flex-wrap items-center gap-4">
-            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-[#EAE6DF] rounded-lg hover:border-slate-400 text-slate-700 transition-colors">
-              <Globe className="w-3.5 h-3.5 text-slate-500" />
+            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#121418] border border-[#26282E] rounded-none hover:border-[#DFB76C]/40 text-slate-300 transition-colors">
+              <Globe className="w-3.5 h-3.5 text-[#DFB76C]" />
               <span>{language}</span>
             </button>
 
-            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-white border border-[#EAE6DF] rounded-lg hover:border-slate-400 text-slate-700 transition-colors">
-              <DollarSign className="w-3.5 h-3.5 text-slate-500" />
+            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#121418] border border-[#26282E] rounded-none hover:border-[#DFB76C]/40 text-slate-300 transition-colors">
+              <DollarSign className="w-3.5 h-3.5 text-[#DFB76C]" />
               <span>{currency}</span>
             </button>
 
-            <Link href="/terms" className="hover:underline hover:text-obsidian">
+            <Link href="/terms" className="hover:underline hover:text-[#DFB76C]">
               Terms of Service
             </Link>
-            <Link href="/terms" className="hover:underline hover:text-obsidian">
+            <Link href="/terms" className="hover:underline hover:text-[#DFB76C]">
               Privacy Policy
             </Link>
-            <Link href="/help-center" className="hover:underline hover:text-obsidian">
+            <Link href="/help-center" className="hover:underline hover:text-[#DFB76C]">
               Escrow Governance
             </Link>
           </div>
 
           <div className="text-center md:text-right">
-            <p>© {new Date().getFullYear()} Ophir Technologies Inc. All rights reserved.</p>
+            <p className="tracking-wide">© {new Date().getFullYear()} Ophir Reserve Technologies Inc. All rights reserved.</p>
           </div>
         </div>
       </div>
