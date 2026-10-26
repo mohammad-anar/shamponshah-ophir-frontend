@@ -25,6 +25,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useCreateJobMutation } from "@/redux/service/jobs/jobsApi";
 import { useGetMeQuery } from "@/redux/service/auth/authApi";
+import { useGetCategoriesQuery } from "@/redux/service/categories/categoriesApi";
 
 const occasions = [
   { id: "wedding", label: "Wedding", icon: "💍" },
@@ -55,6 +56,13 @@ export default function PostJobWizardPage() {
   const [step, setStep] = useState(1);
   const [createJob, { isLoading: isCreatingJob }] = useCreateJobMutation();
   const { data: meData, isLoading: isMeLoading } = useGetMeQuery();
+  const { data: apiCategories, isLoading: isLoadingCats } = useGetCategoriesQuery();
+
+  const categories = Array.isArray(apiCategories)
+    ? apiCategories
+    : Array.isArray(apiCategories?.data)
+    ? apiCategories.data
+    : [];
 
   const me = (meData as any)?.data || meData;
 
@@ -79,6 +87,8 @@ export default function PostJobWizardPage() {
 
   // Form State
   const [occasion, setOccasion] = useState("wedding");
+  const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  const [selectedCategoryName, setSelectedCategoryName] = useState("");
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [title, setTitle] = useState("");
   const [postToFamily, setPostToFamily] = useState(true);
@@ -119,8 +129,8 @@ export default function PostJobWizardPage() {
         toast.error("Please enter a title for your job request.");
         return;
       }
-      if (selectedServices.length === 0) {
-        toast.error("Please select at least one service category.");
+      if (!selectedCategoryId && selectedServices.length === 0) {
+        toast.error("Please select a target service category.");
         return;
       }
     } else if (step === 2) {
@@ -161,7 +171,8 @@ export default function PostJobWizardPage() {
         await createJob({
           title: title.trim(),
           description: description.trim(),
-          category: selectedServices[0] || "General",
+          categoryId: selectedCategoryId || undefined,
+          category: selectedCategoryName || selectedServices[0] || "General",
           occasion,
           budgetMin: parseFloat(budgetMin) || 0,
           budgetMax: parseFloat(budgetMax) || 0,
@@ -286,33 +297,54 @@ export default function PostJobWizardPage() {
                 </div>
               </div>
 
-              {/* Services Required Pills */}
+              {/* Categories / Services Required */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="font-bold text-[#0F0C3B]">Services required (Select all that apply) *</label>
+                  <label className="font-bold text-[#0F0C3B]">Select Service Category *</label>
                   <span className="text-slate-400 font-semibold">{selectedServices.length} chosen</span>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {serviceOptions.map((svc) => {
-                    const isSelected = selectedServices.includes(svc);
-                    return (
-                      <button
-                        key={svc}
-                        type="button"
-                        onClick={() => toggleService(svc)}
-                        className={cn(
-                          "px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5",
-                          isSelected
-                            ? "bg-[#0F0C3B] text-white shadow-xs"
-                            : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                        )}
-                      >
-                        {isSelected && <Check className="w-3 h-3 text-emerald-400" />}
-                        <span>{svc}</span>
-                      </button>
-                    );
-                  })}
-                </div>
+                {isLoadingCats ? (
+                  <div className="flex items-center gap-2 text-xs text-slate-500 py-2">
+                    <Loader2 className="w-3.5 h-3.5 animate-spin text-brand-primary" /> Loading categories...
+                  </div>
+                ) : categories.length === 0 ? (
+                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-xs">
+                    No categories registered yet. Please inform the administrator to configure categories.
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {categories.map((cat: any) => {
+                      const isSelected = selectedCategoryId === cat.id || selectedServices.includes(cat.name);
+                      return (
+                        <button
+                          key={cat.id}
+                          type="button"
+                          onClick={() => {
+                            if (isSelected) {
+                              setSelectedCategoryId("");
+                              setSelectedCategoryName("");
+                              setSelectedServices(selectedServices.filter((s) => s !== cat.name));
+                            } else {
+                              setSelectedCategoryId(cat.id);
+                              setSelectedCategoryName(cat.name);
+                              setSelectedServices([cat.name]);
+                            }
+                          }}
+                          className={cn(
+                            "px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
+                            isSelected
+                              ? "bg-[#0F0C3B] text-white shadow-xs"
+                              : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                          )}
+                        >
+                          {isSelected && <Check className="w-3 h-3 text-emerald-400" />}
+                          <span>{cat.icon || "✨"}</span>
+                          <span>{cat.name}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
 
               {/* Job Title */}
