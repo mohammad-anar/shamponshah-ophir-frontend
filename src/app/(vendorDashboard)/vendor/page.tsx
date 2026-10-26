@@ -221,6 +221,40 @@ export default function VendorDashboardOverview() {
         </div>
       </div>
 
+      {/* Profile Completion Prompt Banner (Shown for newly registered or incomplete vendor profiles) */}
+      {(!vendorProfile?.bio || !vendorProfile?.avatarUrl || !vendorProfile?.stripeAccountId) && (
+        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#0F0C3B] to-[#1E1854] text-white shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4 border border-[#2D266E]">
+          <div className="space-y-1.5 max-w-xl">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400/20 text-[#DFB76C] text-[10px] font-extrabold uppercase tracking-wider border border-[#DFB76C]/30">
+              <Sparkles className="w-3 h-3 text-[#DFB76C]" />
+              <span>Complete Your Artisan Studio Profile</span>
+            </div>
+            <h3 className="font-bold text-base sm:text-lg text-white">
+              Unlock Direct Milestone Inquiries &amp; Escrow Bookings
+            </h3>
+            <p className="text-xs text-slate-300 leading-relaxed">
+              Add your craft biography, portfolio showcase, service category, and connect Stripe payout setup to boost your ranking and start receiving client milestone bookings.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2.5 flex-shrink-0">
+            <Link
+              href="/vendor/profile"
+              className="px-4 py-2.5 rounded-xl bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+            >
+              <span>Complete Profile</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+            <Link
+              href="/vendor/payout-settings"
+              className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold border border-white/20 transition-all"
+            >
+              Payout Setup
+            </Link>
+          </div>
+        </div>
+      )}
+
       {/* Response Rate Alert Banner */}
       <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
         <div className="flex items-center gap-3">
