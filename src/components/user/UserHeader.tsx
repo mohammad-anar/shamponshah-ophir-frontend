@@ -67,23 +67,23 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-30 h-16 bg-white border-b border-slate-200 px-4 md:px-8 flex items-center justify-between">
+    <header className="sticky top-0 z-30 h-16 bg-[#0B0C0E] border-b border-[#26282E] px-4 md:px-8 flex items-center justify-between">
       {/* Left section: mobile hamburger & search */}
       <div className="flex items-center gap-3 flex-1 max-w-lg">
         <button
           onClick={onMenuToggle}
-          className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+          className="lg:hidden p-2 rounded-none text-slate-400 hover:bg-[#16181F] hover:text-white"
           aria-label="Toggle navigation"
         >
           <Menu className="w-5 h-5" />
         </button>
 
         <div className="relative w-full">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search vendors, gigs, family services..."
-            className="w-full bg-[#F8F9FD] border border-slate-200 rounded-lg pl-9 pr-4 py-2 text-xs text-[#0F0C3B] placeholder-slate-400 focus:outline-none focus:border-brand-primary focus:bg-white transition-all shadow-xs"
+            className="w-full bg-[#121418] border border-[#26282E] rounded-none pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C] transition-all"
           />
         </div>
       </div>
@@ -94,9 +94,9 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
         <div className="relative hidden sm:block">
           <Link
             href="/user/family-hub"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-2xs"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-none border border-[#26282E] bg-[#121418] text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-[#DFB76C] hover:border-[#DFB76C]/60 transition-colors"
           >
-            <Users2 className="w-3.5 h-3.5 text-brand-primary" />
+            <Users2 className="w-3.5 h-3.5 text-[#DFB76C]" />
             <span className="max-w-[150px] truncate">{activeHubName}</span>
           </Link>
         </div>
@@ -104,12 +104,12 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
         {/* Notifications */}
         <Link 
           href="/user/notifications"
-          className="relative p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors"
+          className="relative p-2 rounded-none text-slate-400 hover:text-white hover:bg-[#16181F] transition-colors"
           title="Notifications"
         >
           <Bell className="w-4 h-4" />
           {unreadNotifs > 0 && (
-            <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-full bg-amber-500 text-[10px] font-bold text-white flex items-center justify-center border border-white">
+            <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-none bg-[#DFB76C] text-[10px] font-bold text-[#0B0C0E] flex items-center justify-center">
               {unreadNotifs}
             </span>
           )}
@@ -118,12 +118,12 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
         {/* Messages */}
         <Link 
           href="/user/messages"
-          className="relative p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors hidden sm:block"
+          className="relative p-2 rounded-none text-slate-400 hover:text-white hover:bg-[#16181F] transition-colors hidden sm:block"
           title="Messages"
         >
           <MessageSquare className="w-4 h-4" />
           {unreadMessages > 0 && (
-            <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-full bg-indigo-600 text-[10px] font-bold text-white flex items-center justify-center border border-white">
+            <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-none bg-[#DFB76C] text-[10px] font-bold text-[#0B0C0E] flex items-center justify-center">
               {unreadMessages}
             </span>
           )}
@@ -133,36 +133,36 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
         <div className="relative">
           <button
             onClick={() => setShowProfile(!showProfile)}
-            className="flex items-center gap-2 pl-2 py-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+            className="flex items-center gap-2 pl-2 py-1 rounded-none hover:bg-[#16181F] transition-colors cursor-pointer"
           >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
+            <div className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] flex items-center justify-center font-bold text-xs">
               {initials}
             </div>
-            <span className="hidden md:block text-xs font-bold text-[#0F0C3B]">
+            <span className="hidden md:block text-xs font-bold text-white">
               {userName}
             </span>
             <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden md:block" />
           </button>
 
           {showProfile && (
-            <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 text-xs">
-              <div className="px-3 py-2 border-b border-slate-100">
-                <p className="font-bold text-[#0F0C3B] truncate">{userName}</p>
-                <p className="text-[11px] text-slate-500 truncate">{userEmail}</p>
+            <div className="absolute right-0 mt-2 w-52 bg-[#121418] rounded-none shadow-2xl border border-[#26282E] py-1.5 z-50 text-xs animate-in fade-in">
+              <div className="px-3 py-2 border-b border-[#26282E]">
+                <p className="font-bold text-white font-serif truncate">{userName}</p>
+                <p className="text-[11px] text-slate-400 truncate">{userEmail}</p>
               </div>
-              <Link href="/vendor" className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">
+              <Link href="/vendor" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-slate-300 hover:bg-[#16181F] hover:text-[#DFB76C]">
                 <ExternalLink className="w-3.5 h-3.5 text-slate-400" /> Switch to Seller Mode
               </Link>
-              <Link href="/admin" className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">
+              <Link href="/admin" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-slate-300 hover:bg-[#16181F] hover:text-[#DFB76C]">
                 <ExternalLink className="w-3.5 h-3.5 text-slate-400" /> Admin Console
               </Link>
-              <Link href="/user/settings" className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">
+              <Link href="/user/settings" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-slate-300 hover:bg-[#16181F] hover:text-[#DFB76C]">
                 <Settings className="w-3.5 h-3.5 text-slate-400" /> Account Settings
               </Link>
-              <div className="border-t border-slate-100 my-1" />
+              <div className="border-t border-[#26282E] my-1" />
               <button
                 onClick={handleSignOut}
-                className="w-full flex items-center gap-2 px-3 py-2 text-red-600 hover:bg-red-50 cursor-pointer text-left"
+                className="w-full flex items-center gap-2 px-3 py-2 text-rose-400 hover:bg-rose-950/30 cursor-pointer text-left font-semibold"
               >
                 <LogOut className="w-3.5 h-3.5" /> Sign Out
               </button>
