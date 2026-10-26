@@ -22,6 +22,7 @@ import { useGetPublicGigsQuery } from "@/redux/service/gigs/gigsApi";
 import { useGetCategoriesQuery } from "@/redux/service/categories/categoriesApi";
 import AddToFamilyHubModal from "@/components/shared/AddToFamilyHubModal";
 import Pagination from "@/components/ui/Pagination/Pagination";
+import { useTrackImpression, trackClick } from "@/lib/tracking";
 
 const PAGE_SIZE = 9;
 
@@ -290,115 +291,11 @@ export default function ServicesCatalogPage() {
         {/* Services Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {paginatedServices.map((service) => (
-            <div
+            <TrackedServiceCard
               key={service.id}
-              className="bg-[#121418] rounded-none overflow-hidden border border-[#26282E] hover:border-[#DFB76C]/60 shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
-            >
-              {/* Image & Badges */}
-              <div className="relative h-56 w-full overflow-hidden bg-[#0B0C0E]">
-                <Image
-                  src={service.image}
-                  alt={service.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C0E] via-transparent to-black/30" />
-
-                {/* Top Floating Badges */}
-                <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                  <span className="px-2.5 py-1 rounded-none bg-[#0B0C0E]/85 backdrop-blur-md text-[10px] font-bold text-[#DFB76C] uppercase tracking-widest border border-[#DFB76C]/30 shadow-sm">
-                    {service.category}
-                  </span>
-                  <span className="px-2 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] border border-[#26282E] text-[10px] font-bold flex items-center gap-1 shadow-sm">
-                    <Star className="w-3 h-3 fill-[#DFB76C] text-[#DFB76C]" />
-                    {service.rating} ({service.reviewCount})
-                  </span>
-                </div>
-
-                {/* Bottom Floating Price */}
-                <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between text-white">
-                  <div>
-                    <span className="text-[9px] uppercase tracking-widest text-slate-400 block font-bold">Starting at</span>
-                    <span className="text-2xl font-bold font-mono text-[#DFB76C]">${service.startingPrice.toLocaleString()}</span>
-                  </div>
-                  <span className="text-[11px] font-medium text-slate-300 flex items-center gap-1">
-                    <MapPin className="w-3.5 h-3.5 text-[#DFB76C]" />
-                    {service.location}
-                  </span>
-                </div>
-              </div>
-
-              {/* Card Body */}
-              <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
-                <div>
-                  {/* Vendor Info */}
-                  <div className="flex items-center gap-2.5 mb-2.5">
-                    <div className="relative w-7 h-7 rounded-none overflow-hidden border border-[#26282E] shrink-0 bg-[#0B0C0E]">
-                      <Image
-                        src={service.vendorAvatar}
-                        alt={service.vendorName}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <span className="text-xs font-bold text-slate-300 truncate">{service.vendorName}</span>
-                    <span className="text-[10px] font-bold px-1.5 py-0.5 bg-[#1A1D24] text-[#DFB76C] border border-[#DFB76C]/30 rounded-none uppercase tracking-wider">
-                      {service.tier}
-                    </span>
-                  </div>
-
-                  {/* Title & Description */}
-                  <Link href={`/services/${service.id}`} className="block group-hover:text-[#DFB76C] transition-colors">
-                    <h3 className="font-serif font-bold text-base text-white group-hover:text-[#DFB76C] transition-colors line-clamp-1">
-                      {service.title}
-                    </h3>
-                  </Link>
-                  <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
-                    {service.description}
-                  </p>
-
-                  {/* Feature Bullets */}
-                  <div className="mt-3.5 space-y-1.5 pt-3 border-t border-[#26282E]">
-                    {service.features.slice(0, 3).map((f: string, i: number) => (
-                      <div key={i} className="flex items-center gap-2 text-[11px] text-slate-300">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-[#DFB76C] shrink-0" />
-                        <span className="truncate">{f}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Card CTA Actions */}
-                <div className="pt-3 border-t border-[#26282E] space-y-2">
-                  <div className="grid grid-cols-2 gap-2">
-                    <Link
-                      href={`/services/${service.id}`}
-                      className="px-3 py-2 rounded-none bg-[#1A1D24] hover:bg-[#22252F] text-slate-200 text-xs font-bold text-center border border-[#26282E] hover:border-[#DFB76C]/40 transition-colors flex items-center justify-center gap-1 cursor-pointer"
-                    >
-                      <span>View Details</span>
-                      <ChevronRight className="w-3.5 h-3.5" />
-                    </Link>
-
-                    <Link
-                      href={`/checkout?vendorId=${service.vendorProfileId}&packageId=${service.packageId || ""}`}
-                      className="px-3 py-2 rounded-none bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-wider text-center shadow-gold-glow-sm transition-all flex items-center justify-center gap-1 cursor-pointer"
-                    >
-                      <span>Book Now</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-
-                  {/* Recommend to Family Hub Button */}
-                  <button
-                    onClick={() => setSelectedServiceForHub(service)}
-                    className="w-full py-2 px-3 rounded-none border border-[#26282E] bg-[#1A1D24] hover:bg-[#22252F] hover:border-[#DFB76C]/40 text-[#DFB76C] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-                  >
-                    <Users2 className="w-3.5 h-3.5 text-[#DFB76C]" />
-                    <span>Recommend to Family Hub</span>
-                  </button>
-                </div>
-              </div>
-            </div>
+              service={service}
+              onOpenHub={(s) => setSelectedServiceForHub(s)}
+            />
           ))}
         </div>
 
@@ -431,6 +328,140 @@ export default function ServicesCatalogPage() {
             </button>
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+function TrackedServiceCard({
+  service,
+  onOpenHub,
+}: {
+  service: any;
+  onOpenHub: (service: any) => void;
+}) {
+  const cardRef = useTrackImpression("GIG", service.realId || service.id);
+
+  return (
+    <div
+      ref={cardRef}
+      className="bg-[#121418] rounded-none overflow-hidden border border-[#26282E] hover:border-[#DFB76C]/60 shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1"
+    >
+      {/* Image & Badges */}
+      <div className="relative h-56 w-full overflow-hidden bg-[#0B0C0E]">
+        <Link
+          href={`/services/${service.id}`}
+          onClick={() => trackClick("GIG", service.realId || service.id)}
+          className="absolute inset-0 z-0"
+        >
+          <Image
+            src={service.image}
+            alt={service.title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        </Link>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C0E] via-transparent to-black/30 pointer-events-none" />
+
+        {/* Top Floating Badges */}
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
+          <span className="px-2.5 py-1 rounded-none bg-[#0B0C0E]/85 backdrop-blur-md text-[10px] font-bold text-[#DFB76C] uppercase tracking-widest border border-[#DFB76C]/30 shadow-sm pointer-events-auto">
+            {service.category}
+          </span>
+          <span className="px-2 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] border border-[#26282E] text-[10px] font-bold flex items-center gap-1 shadow-sm pointer-events-auto">
+            <Star className="w-3 h-3 fill-[#DFB76C] text-[#DFB76C]" />
+            {service.rating} ({service.reviewCount})
+          </span>
+        </div>
+
+        {/* Bottom Floating Price */}
+        <div className="absolute bottom-3 left-3 right-3 flex items-end justify-between text-white pointer-events-none">
+          <div>
+            <span className="text-[9px] uppercase tracking-widest text-slate-400 block font-bold">Starting at</span>
+            <span className="text-2xl font-bold font-mono text-[#DFB76C]">${service.startingPrice.toLocaleString()}</span>
+          </div>
+          <span className="text-[11px] font-medium text-slate-300 flex items-center gap-1">
+            <MapPin className="w-3.5 h-3.5 text-[#DFB76C]" />
+            {service.location}
+          </span>
+        </div>
+      </div>
+
+      {/* Card Body */}
+      <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+        <div>
+          {/* Vendor Info */}
+          <div className="flex items-center gap-2.5 mb-2.5">
+            <div className="relative w-7 h-7 rounded-none overflow-hidden border border-[#26282E] shrink-0 bg-[#0B0C0E]">
+              <Image
+                src={service.vendorAvatar}
+                alt={service.vendorName}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <span className="text-xs font-bold text-slate-300 truncate">{service.vendorName}</span>
+            <span className="text-[10px] font-bold px-1.5 py-0.5 bg-[#1A1D24] text-[#DFB76C] border border-[#DFB76C]/30 rounded-none uppercase tracking-wider">
+              {service.tier}
+            </span>
+          </div>
+
+          {/* Title & Description */}
+          <Link
+            href={`/services/${service.id}`}
+            onClick={() => trackClick("GIG", service.realId || service.id)}
+            className="block group-hover:text-[#DFB76C] transition-colors"
+          >
+            <h3 className="font-serif font-bold text-base text-white group-hover:text-[#DFB76C] transition-colors line-clamp-1">
+              {service.title}
+            </h3>
+          </Link>
+          <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+            {service.description}
+          </p>
+
+          {/* Feature Bullets */}
+          <div className="mt-3.5 space-y-1.5 pt-3 border-t border-[#26282E]">
+            {service.features.slice(0, 3).map((f: string, i: number) => (
+              <div key={i} className="flex items-center gap-2 text-[11px] text-slate-300">
+                <CheckCircle2 className="w-3.5 h-3.5 text-[#DFB76C] shrink-0" />
+                <span className="truncate">{f}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Card CTA Actions */}
+        <div className="pt-3 border-t border-[#26282E] space-y-2">
+          <div className="grid grid-cols-2 gap-2">
+            <Link
+              href={`/services/${service.id}`}
+              onClick={() => trackClick("GIG", service.realId || service.id)}
+              className="px-3 py-2 rounded-none bg-[#1A1D24] hover:bg-[#22252F] text-slate-200 text-xs font-bold text-center border border-[#26282E] hover:border-[#DFB76C]/40 transition-colors flex items-center justify-center gap-1 cursor-pointer"
+            >
+              <span>View Details</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+
+            <Link
+              href={`/checkout?vendorId=${service.vendorProfileId}&packageId=${service.packageId || ""}`}
+              onClick={() => trackClick("GIG", service.realId || service.id, { action: "book_now" })}
+              className="px-3 py-2 rounded-none bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-wider text-center shadow-gold-glow-sm transition-all flex items-center justify-center gap-1 cursor-pointer"
+            >
+              <span>Book Now</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </Link>
+          </div>
+
+          {/* Recommend to Family Hub Button */}
+          <button
+            onClick={() => onOpenHub(service)}
+            className="w-full py-2 px-3 rounded-none border border-[#26282E] bg-[#1A1D24] hover:bg-[#22252F] hover:border-[#DFB76C]/40 text-[#DFB76C] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+          >
+            <Users2 className="w-3.5 h-3.5 text-[#DFB76C]" />
+            <span>Recommend to Family Hub</span>
+          </button>
+        </div>
       </div>
     </div>
   );
