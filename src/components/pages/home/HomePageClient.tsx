@@ -335,10 +335,10 @@ export default function HomePage() {
 
             <div className="pt-3 flex flex-wrap items-center gap-4">
               <Link
-                href="/register?role=vendor"
+                href="/signup?role=vendor"
                 className="px-7 py-3 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 shadow-md"
               >
-                Register as Vendor
+                Become a Vendor
               </Link>
               <Link
                 href="/services"
