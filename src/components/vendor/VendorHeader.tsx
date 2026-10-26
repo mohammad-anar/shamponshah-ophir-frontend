@@ -50,23 +50,23 @@ export default function VendorHeader({ onMenuToggle }: VendorHeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-30 h-16 bg-white border-b border-slate-200 px-4 md:px-8 flex items-center justify-between">
+    <header className="sticky top-0 z-30 h-16 bg-[#0B0C0E] border-b border-[#26282E] px-4 md:px-8 flex items-center justify-between">
       {/* Left section: mobile toggle & search */}
       <div className="flex items-center gap-3 flex-1 max-w-lg">
         <button
           onClick={onMenuToggle}
-          className="lg:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100"
+          className="lg:hidden p-2 rounded-none text-slate-400 hover:bg-[#16181F] hover:text-white"
           aria-label="Toggle navigation"
         >
           <Menu className="w-5 h-5" />
         </button>
 
         <div className="relative w-full">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search orders, jobs, messages..."
-            className="w-full bg-[#F8F9FD] border border-slate-200 rounded-lg pl-9 pr-4 py-2 text-xs text-[#0F0C3B] placeholder-slate-400 focus:outline-none focus:border-brand-primary focus:bg-white transition-all shadow-xs"
+            className="w-full bg-[#121418] border border-[#26282E] rounded-none pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C] transition-all"
           />
         </div>
       </div>
@@ -76,30 +76,30 @@ export default function VendorHeader({ onMenuToggle }: VendorHeaderProps) {
         {/* Switch to Buying Button */}
         <Link
           href="/user"
-          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-xs"
+          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-none border border-[#26282E] bg-[#121418] text-xs font-semibold uppercase tracking-wider text-slate-300 hover:text-[#DFB76C] hover:border-[#DFB76C]/60 transition-colors"
         >
-          <ArrowLeftRight className="w-3.5 h-3.5 text-slate-400" />
+          <ArrowLeftRight className="w-3.5 h-3.5 text-[#DFB76C]" />
           <span>Switch to Buying</span>
         </Link>
 
         {/* Tier Badge */}
         <Link
           href="/vendor/levels"
-          className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 text-amber-900 border border-amber-200 text-[11px] font-bold hover:bg-amber-100 transition-colors"
+          className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-none bg-[#1A1D24] text-[#DFB76C] border border-[#DFB76C]/30 text-[11px] font-bold uppercase tracking-wider hover:bg-[#20242D] transition-colors"
         >
-          <Award className="w-3.5 h-3.5 text-amber-600" />
+          <Award className="w-3.5 h-3.5 text-[#DFB76C]" />
           <span>{tier}</span>
         </Link>
 
         {/* Notifications */}
         <Link
           href="/vendor/notifications"
-          className="relative p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors"
+          className="relative p-2 rounded-none text-slate-400 hover:text-white hover:bg-[#16181F] transition-colors"
           title="Notifications"
         >
           <Bell className="w-4 h-4" />
           {unreadCount > 0 && (
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-amber-500 border-2 border-white animate-pulse" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-none bg-[#DFB76C] animate-pulse" />
           )}
         </Link>
 
@@ -107,37 +107,37 @@ export default function VendorHeader({ onMenuToggle }: VendorHeaderProps) {
         <div className="relative">
           <button
             onClick={() => setShowProfile(!showProfile)}
-            className="flex items-center gap-2 pl-2 py-1 rounded-lg hover:bg-slate-100 transition-colors cursor-pointer"
+            className="flex items-center gap-2 pl-2 py-1 rounded-none hover:bg-[#16181F] transition-colors cursor-pointer"
           >
-            <div className="w-8 h-8 rounded-full bg-[#0F0C3B] text-white flex items-center justify-center font-bold text-xs shadow-xs">
+            <div className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] flex items-center justify-center font-bold text-xs">
               {initials}
             </div>
             <div className="hidden lg:flex flex-col text-left leading-tight">
-              <span className="text-xs font-bold text-[#0F0C3B]">{vendorName}</span>
-              <span className="text-[10px] text-slate-500">{businessName}</span>
+              <span className="text-xs font-bold text-white">{vendorName}</span>
+              <span className="text-[10px] text-slate-400">{businessName}</span>
             </div>
             <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden lg:block" />
           </button>
 
           {showProfile && (
-            <div className="absolute right-0 mt-2 w-52 bg-white rounded-xl shadow-xl border border-slate-200 py-1.5 z-50 text-xs animate-in fade-in">
-              <div className="px-3 py-2 border-b border-slate-100">
-                <p className="font-bold text-[#0F0C3B]">{vendorName}</p>
-                <p className="text-[11px] text-slate-500">{businessName}</p>
+            <div className="absolute right-0 mt-2 w-52 bg-[#121418] rounded-none shadow-2xl border border-[#26282E] py-1.5 z-50 text-xs animate-in fade-in">
+              <div className="px-3 py-2 border-b border-[#26282E]">
+                <p className="font-bold text-white font-serif">{vendorName}</p>
+                <p className="text-[11px] text-slate-400">{businessName}</p>
               </div>
-              <Link href="/vendor/profile" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">
+              <Link href="/vendor/profile" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-slate-300 hover:bg-[#16181F] hover:text-[#DFB76C]">
                 <User className="w-3.5 h-3.5 text-slate-400" /> Public Profile
               </Link>
-              <Link href="/user" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">
+              <Link href="/user" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-slate-300 hover:bg-[#16181F] hover:text-[#DFB76C]">
                 <ExternalLink className="w-3.5 h-3.5 text-slate-400" /> Client View
               </Link>
-              <Link href="/vendor/payout-settings" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-slate-700 hover:bg-slate-50">
+              <Link href="/vendor/payout-settings" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-slate-300 hover:bg-[#16181F] hover:text-[#DFB76C]">
                 <Settings className="w-3.5 h-3.5 text-slate-400" /> Payout Settings
               </Link>
-              <div className="border-t border-slate-100 my-1" />
+              <div className="border-t border-[#26282E] my-1" />
               <button 
                 onClick={handleSignOut} 
-                className="w-full text-left flex items-center gap-2 px-3 py-2 text-rose-600 hover:bg-rose-50 cursor-pointer font-semibold"
+                className="w-full text-left flex items-center gap-2 px-3 py-2 text-rose-400 hover:bg-rose-950/30 cursor-pointer font-semibold"
               >
                 <LogOut className="w-3.5 h-3.5" /> Sign Out
               </button>
