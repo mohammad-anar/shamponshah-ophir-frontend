@@ -291,7 +291,9 @@ export default function CreateGigPage() {
 
       await createGig(payload).unwrap();
 
-      toast.success("Gig Published! Your service is now live on the marketplace.");
+      toast.success("Gig Submitted for Review!", {
+        description: "Your listing status is Pending Verification. It will go live once reviewed and approved by Admin.",
+      });
       router.push("/vendor/gigs");
     } catch (err: any) {
       const msg =
