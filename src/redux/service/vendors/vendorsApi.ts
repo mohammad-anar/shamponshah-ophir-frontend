@@ -11,6 +11,8 @@ export const vendorsApi = baseApi.injectEndpoints({
       search?: string;
       page?: number;
       limit?: number;
+      seed?: string;
+      sortBy?: string;
     } | void>({
       query: (params) => ({
         url: "/vendors",
