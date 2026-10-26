@@ -50,9 +50,26 @@ export const ordersApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["orders"],
     }),
-    deliverOrder: builder.mutation<any, { orderId: string; notes?: string; proofUrl?: string }>({
+    deliverOrder: builder.mutation<any, { orderId: string; data?: any; notes?: string; proofUrl?: string }>({
+      query: ({ orderId, data, notes, proofUrl }) => {
+        let body = data;
+        if (!body) {
+          const formData = new FormData();
+          if (notes) formData.append("notes", notes);
+          if (proofUrl) formData.append("proofUrl", proofUrl);
+          body = formData;
+        }
+        return {
+          url: `/orders/${orderId}/deliver`,
+          method: "POST",
+          body,
+        };
+      },
+      invalidatesTags: ["orders"],
+    }),
+    requestRevision: builder.mutation<any, { orderId: string; reason: string; notes?: string }>({
       query: ({ orderId, ...body }) => ({
-        url: `/orders/${orderId}/deliver`,
+        url: `/orders/${orderId}/request-revision`,
         method: "POST",
         body,
       }),
@@ -134,6 +151,14 @@ export const ordersApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["orders", "payments"],
     }),
+    transitionOrder: builder.mutation<any, { orderId: string; status: string; reason?: string }>({
+      query: ({ orderId, ...body }) => ({
+        url: `/orders/${orderId}/transition`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["orders", "payments"],
+    }),
   }),
 });
 
@@ -145,6 +170,7 @@ export const {
   useApproveMilestoneMutation,
   useSubmitMilestoneDeliveryMutation,
   useDeliverOrderMutation,
+  useRequestRevisionMutation,
   useAcceptDeliveryMutation,
   useDeclineDeliveryMutation,
   useGetPaymentLedgerQuery,
@@ -155,6 +181,7 @@ export const {
   useRespondToDisputeMutation,
   useAcceptDisputeRefundMutation,
   useCancelOrderMutation,
+  useTransitionOrderMutation,
 } = ordersApi;
 
 
