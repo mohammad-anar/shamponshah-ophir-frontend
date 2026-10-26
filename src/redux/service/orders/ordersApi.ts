@@ -159,6 +159,61 @@ export const ordersApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["orders", "payments"],
     }),
+    requestCancellation: builder.mutation<any, { orderId: string; reason: string; notes?: string; proofUrls?: string[] }>({
+      query: ({ orderId, ...body }) => ({
+        url: `/orders/${orderId}/request-cancel`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["orders", "payments"],
+    }),
+    respondCancellation: builder.mutation<any, { orderId: string; action: "ACCEPT" | "REJECT"; note?: string; responseNote?: string }>({
+      query: ({ orderId, ...body }) => ({
+        url: `/orders/${orderId}/respond-cancel`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["orders", "payments"],
+    }),
+    requestPartialRefund: builder.mutation<any, { orderId: string; amount: number; reason: string; notes?: string; proofUrls?: string[] }>({
+      query: ({ orderId, ...body }) => ({
+        url: `/orders/${orderId}/request-partial-refund`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["orders", "payments"],
+    }),
+    respondPartialRefund: builder.mutation<any, { orderId: string; action: "ACCEPT" | "REJECT"; note?: string; responseNote?: string }>({
+      query: ({ orderId, ...body }) => ({
+        url: `/orders/${orderId}/respond-partial-refund`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["orders", "payments"],
+    }),
+    escalateOrderToAdmin: builder.mutation<any, { orderId: string; reason: string; notes?: string }>({
+      query: ({ orderId, ...body }) => ({
+        url: `/orders/${orderId}/escalate`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["orders"],
+    }),
+    adminResolveOrderDispute: builder.mutation<any, { orderId: string; decision: "CANCEL_FULL_REFUND" | "PARTIAL_REFUND" | "REJECT_DISPUTE_RELEASE_VENDOR"; partialRefundAmount?: number; resolutionNotes: string }>({
+      query: ({ orderId, ...body }) => ({
+        url: `/orders/${orderId}/admin-resolve`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["orders", "payments"],
+    }),
+    getAdminDisputesAndEscalations: builder.query<any, void>({
+      query: () => ({
+        url: "/orders/admin/disputes-and-escalations",
+        method: "GET",
+      }),
+      providesTags: ["orders"],
+    }),
   }),
 });
 
@@ -182,6 +237,13 @@ export const {
   useAcceptDisputeRefundMutation,
   useCancelOrderMutation,
   useTransitionOrderMutation,
+  useRequestCancellationMutation,
+  useRespondCancellationMutation,
+  useRequestPartialRefundMutation,
+  useRespondPartialRefundMutation,
+  useEscalateOrderToAdminMutation,
+  useAdminResolveOrderDisputeMutation,
+  useGetAdminDisputesAndEscalationsQuery,
 } = ordersApi;
 
 
