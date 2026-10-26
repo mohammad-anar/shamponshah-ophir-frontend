@@ -101,7 +101,7 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["admin", "reviews"],
     }),
-    getAllGigs: builder.query<any, { page?: number; limit?: number } | void>({
+    getAllGigs: builder.query<any, { page?: number; limit?: number; search?: string; status?: string } | void>({
       query: (params) => ({
         url: "/admin/gigs",
         method: "GET",
@@ -109,13 +109,85 @@ export const adminApi = baseApi.injectEndpoints({
       }),
       providesTags: ["admin", "gigs"],
     }),
-    updateGigStatus: builder.mutation<any, { id: string; status: string }>({
-      query: ({ id, status }) => ({
-        url: `/admin/gigs/${id}/status`,
-        method: "PATCH",
-        body: { status },
+    getPendingGigs: builder.query<any, { page?: number; limit?: number; search?: string } | void>({
+      query: (params) => ({
+        url: "/admin/gigs/pending",
+        method: "GET",
+        params: params || undefined,
+      }),
+      providesTags: ["admin", "gigs"],
+    }),
+    approveGig: builder.mutation<any, { id: string; adminNotes?: string }>({
+      query: ({ id, ...body }) => ({
+        url: `/admin/gigs/${id}/approve`,
+        method: "POST",
+        body,
       }),
       invalidatesTags: ["admin", "gigs"],
+    }),
+    rejectGig: builder.mutation<any, { id: string; reason: string; adminNotes?: string }>({
+      query: ({ id, ...body }) => ({
+        url: `/admin/gigs/${id}/reject`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["admin", "gigs"],
+    }),
+    suspendGig: builder.mutation<any, { id: string; reason?: string }>({
+      query: ({ id, ...body }) => ({
+        url: `/admin/gigs/${id}/suspend`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["admin", "gigs"],
+    }),
+    updateGigStatus: builder.mutation<any, { id: string; status: string; reason?: string; adminNotes?: string }>({
+      query: ({ id, ...body }) => ({
+        url: `/admin/gigs/${id}/status`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["admin", "gigs"],
+    }),
+    getAllReports: builder.query<any, { page?: number; limit?: number; search?: string; status?: string } | void>({
+      query: (params) => ({
+        url: "/admin/reports",
+        method: "GET",
+        params: params || undefined,
+      }),
+      providesTags: ["admin", "gigs"],
+    }),
+    moderateReport: builder.mutation<any, { id: string; action: "SUSPEND_GIG" | "DISMISS" | "RESOLVE"; adminNotes?: string }>({
+      query: ({ id, ...body }) => ({
+        url: `/admin/reports/${id}/action`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["admin", "gigs"],
+    }),
+    getAllTransactions: builder.query<any, { page?: number; limit?: number; search?: string; status?: string; type?: string } | void>({
+      query: (params) => ({
+        url: "/admin/transactions",
+        method: "GET",
+        params: params || undefined,
+      }),
+      providesTags: ["admin", "orders"],
+    }),
+    getAllWallets: builder.query<any, { page?: number; limit?: number; search?: string } | void>({
+      query: (params) => ({
+        url: "/admin/wallets",
+        method: "GET",
+        params: params || undefined,
+      }),
+      providesTags: ["admin", "vendors"],
+    }),
+    getAllOffers: builder.query<any, { page?: number; limit?: number; search?: string; status?: string } | void>({
+      query: (params) => ({
+        url: "/admin/offers",
+        method: "GET",
+        params: params || undefined,
+      }),
+      providesTags: ["admin", "jobs"],
     }),
     getAllJobs: builder.query<any, { page?: number; limit?: number } | void>({
       query: (params) => ({
@@ -224,7 +296,16 @@ export const {
   useGetReviewsReportsQuery,
   useModerateReviewMutation,
   useGetAllGigsQuery,
+  useGetPendingGigsQuery,
+  useApproveGigMutation,
+  useRejectGigMutation,
+  useSuspendGigMutation,
   useUpdateGigStatusMutation,
+  useGetAllReportsQuery,
+  useModerateReportMutation,
+  useGetAllTransactionsQuery,
+  useGetAllWalletsQuery,
+  useGetAllOffersQuery,
   useGetAllJobsQuery,
   useGetAdminSettingsQuery,
   useUpdateAdminSettingsMutation,
