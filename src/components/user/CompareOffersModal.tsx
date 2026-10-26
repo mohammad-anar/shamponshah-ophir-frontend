@@ -31,6 +31,7 @@ import {
   useGetJobOffersQuery,
   useCancelJobMutation,
 } from "@/redux/service/jobs/jobsApi";
+import { useGetPaymentMethodsQuery } from "@/redux/service/payments/paymentsApi";
 
 export interface OfferCandidate {
   id: string;
@@ -89,6 +90,8 @@ export default function CompareOffersModal({
 
   const [acceptOfferMutation, { isLoading: isAccepting }] = useAcceptOfferMutation();
   const [cancelJobMutation, { isLoading: isCancelling }] = useCancelJobMutation();
+  const { data: methodsData } = useGetPaymentMethodsQuery();
+  const savedMethods = Array.isArray(methodsData?.data) ? methodsData.data : Array.isArray(methodsData) ? methodsData : [];
   const [selectedOfferId, setSelectedOfferId] = useState<string | null>(null);
   const [showCancelConfirm, setShowCancelConfirm] = useState(false);
 
@@ -193,25 +196,39 @@ export default function CompareOffersModal({
     setSelectedOfferId(c.id);
     const effectiveJobId = activeJob.id || targetJobId;
 
+    if (!savedMethods.length) {
+      toast.error("A saved payment method is required before accepting an offer.", {
+        description: "Your card will be charged immediately and held in escrow vault upon acceptance.",
+      });
+      router.push("/user/payments");
+      return;
+    }
+
     if (effectiveJobId && c.id && !c.id.startsWith("offer-")) {
       try {
-        await acceptOfferMutation({ jobId: effectiveJobId, offerId: c.id }).unwrap();
+        const defaultMethod = savedMethods.find((m: any) => m.isDefault) || savedMethods[0];
+        const res = await acceptOfferMutation({
+          jobId: effectiveJobId,
+          offerId: c.id,
+          paymentMethodId: defaultMethod?.stripePaymentMethodId,
+        }).unwrap();
+
         toast.success(
-          `Proposal from ${c.name} accepted.`,
-          { description: "The order is pending until you pay its first milestone." }
+          `Proposal from ${c.name} accepted & funded!`,
+          { description: "Total payment is secured in escrow vault. Order is now ACTIVE." }
         );
         if (refetch) await refetch();
         if (onAcceptOffer) onAcceptOffer(c.name, c.totalPay);
         onClose();
-        router.push("/user/orders");
+        router.push(res.orderId ? `/user/orders/${res.orderId}` : "/user/orders");
         return;
       } catch (err: any) {
-        toast.error(err?.data?.message || "Failed to accept proposal");
+        toast.error(err?.data?.message || err?.message || "Payment charge failed. Offer was not accepted.");
         return;
       }
     }
 
-    toast.success(`Proposal from ${c.name} accepted! Other offers declined.`);
+    toast.success(`Proposal from ${c.name} accepted! Other offers marked not selected.`);
     if (onAcceptOffer) onAcceptOffer(c.name, c.totalPay);
     onClose();
     router.push("/user/orders");
