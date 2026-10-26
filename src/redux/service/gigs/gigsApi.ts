@@ -63,6 +63,14 @@ export const gigsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["gigs"],
     }),
+    reportGig: builder.mutation<any, { gigId: string; reason: string; description: string; reporterName?: string; reporterEmail?: string }>({
+      query: ({ gigId, ...body }) => ({
+        url: `/gigs/${gigId}/report`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["admin"],
+    }),
   }),
 });
 
@@ -74,4 +82,5 @@ export const {
   useUpdateGigMutation,
   useDeleteGigMutation,
   useCreateGigPackageMutation,
+  useReportGigMutation,
 } = gigsApi;
