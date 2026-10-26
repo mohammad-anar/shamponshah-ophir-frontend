@@ -43,6 +43,9 @@ import {
   useAcceptDeliveryMutation,
   useDeclineDeliveryMutation,
   useRequestRevisionMutation,
+  useRequestCancellationMutation,
+  useRequestPartialRefundMutation,
+  useEscalateOrderToAdminMutation,
 } from "@/redux/service/orders/ordersApi";
 
 export default function UserOrderDetailPage() {
@@ -61,6 +64,9 @@ export default function UserOrderDetailPage() {
   const [acceptDeliveryMutation, { isLoading: isAcceptingDelivery }] = useAcceptDeliveryMutation();
   const [declineDeliveryMutation, { isLoading: isDecliningDelivery }] = useDeclineDeliveryMutation();
   const [requestRevisionMutation, { isLoading: isRequestingRevision }] = useRequestRevisionMutation();
+  const [requestCancellation, { isLoading: isRequestingCancel }] = useRequestCancellationMutation();
+  const [requestPartialRefund, { isLoading: isRequestingPartialRefund }] = useRequestPartialRefundMutation();
+  const [escalateOrderToAdmin, { isLoading: isEscalating }] = useEscalateOrderToAdminMutation();
 
   // Modals & form state
   const [payModalOpen, setPayModalOpen] = useState(false);
@@ -68,6 +74,17 @@ export default function UserOrderDetailPage() {
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
   const [cancelReason, setCancelReason] = useState("Event rescheduled or cancelled");
   const [cancelNotes, setCancelNotes] = useState("");
+  const [cancelProof, setCancelProof] = useState("");
+
+  const [partialRefundModalOpen, setPartialRefundModalOpen] = useState(false);
+  const [partialRefundAmount, setPartialRefundAmount] = useState("");
+  const [partialRefundReason, setPartialRefundReason] = useState("Service scope reduced or partially deficient");
+  const [partialRefundNotes, setPartialRefundNotes] = useState("");
+  const [partialRefundProof, setPartialRefundProof] = useState("");
+
+  const [escalateModalOpen, setEscalateModalOpen] = useState(false);
+  const [escalateReason, setEscalateReason] = useState("Dispute unresolved with vendor");
+  const [escalateNotes, setEscalateNotes] = useState("");
 
   // Decline / Revision modal state
   const [declineModalOpen, setDeclineModalOpen] = useState(false);
@@ -255,19 +272,69 @@ export default function UserOrderDetailPage() {
 
   const handleConfirmCancel = async () => {
     try {
-      await cancelOrderMutation({
+      await requestCancellation({
         orderId: order.id,
         reason: cancelReason,
         notes: cancelNotes,
+        proofUrls: cancelProof.trim() ? [cancelProof.trim()] : [],
       }).unwrap();
 
-      toast.success("Order Cancellation Submitted", {
-        description: "Unreleased funds will be refunded according to policy.",
+      toast.success("Cancellation request submitted to Vendor and Admin", {
+        description: "Vendor will review your reason and proof. You may escalate if needed.",
       });
       setCancelModalOpen(false);
       refetch();
     } catch (err: any) {
-      toast.error(err?.data?.message || "Failed to cancel order");
+      toast.error(err?.data?.message || "Failed to submit cancellation request");
+    }
+  };
+
+  const handleConfirmPartialRefund = async () => {
+    const amt = Number(partialRefundAmount);
+    if (!amt || amt <= 0) {
+      toast.error("Please enter a valid refund amount");
+      return;
+    }
+    const orderTotal = Number(order.grandTotal || 0);
+    if (amt >= orderTotal) {
+      toast.error(`Partial refund must be less than order total ($${orderTotal}). For full refund, request cancellation.`);
+      return;
+    }
+
+    try {
+      await requestPartialRefund({
+        orderId: order.id,
+        amount: amt,
+        reason: partialRefundReason,
+        notes: partialRefundNotes,
+        proofUrls: partialRefundProof.trim() ? [partialRefundProof.trim()] : [],
+      }).unwrap();
+
+      toast.success("Partial refund request submitted!", {
+        description: `Vendor will review your request for $${amt.toFixed(2)}. If accepted, the refund is sent to your card, and remaining balance settled.`,
+      });
+      setPartialRefundModalOpen(false);
+      refetch();
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to submit partial refund request");
+    }
+  };
+
+  const handleConfirmEscalation = async () => {
+    try {
+      await escalateOrderToAdmin({
+        orderId: order.id,
+        reason: escalateReason,
+        notes: escalateNotes,
+      }).unwrap();
+
+      toast.success("Case Escalated to Admin", {
+        description: "An administrator has joined this order and will arbitrate based on chat, deliverables, and submitted proof.",
+      });
+      setEscalateModalOpen(false);
+      refetch();
+    } catch (err: any) {
+      toast.error(err?.data?.message || "Failed to escalate case to admin");
     }
   };
 
@@ -349,21 +416,197 @@ export default function UserOrderDetailPage() {
           {!isCompleted && !isCancelled && (
             <>
               <button
+                onClick={() => setPartialRefundModalOpen(true)}
+                className="px-3 py-2 rounded-xl border border-purple-200 bg-purple-50/70 hover:bg-purple-100 text-purple-700 text-xs font-semibold transition-colors cursor-pointer"
+              >
+                Request Partial Refund
+              </button>
+              <button
                 onClick={() => setDisputeModalOpen(true)}
-                className="px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 text-xs font-semibold transition-colors"
+                className="px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 text-xs font-semibold transition-colors cursor-pointer"
               >
                 Dispute
               </button>
               <button
                 onClick={() => setCancelModalOpen(true)}
-                className="px-3 py-2 rounded-xl border border-rose-200 bg-rose-50/50 hover:bg-rose-50 text-rose-600 text-xs font-semibold transition-colors"
+                className="px-3 py-2 rounded-xl border border-rose-200 bg-rose-50/50 hover:bg-rose-50 text-rose-600 text-xs font-semibold transition-colors cursor-pointer"
               >
                 Cancel Order
               </button>
             </>
           )}
+
+          {(order.cancelStatus === "REJECTED" || order.refundStatus === "REJECTED" || order.status === "DISPUTED") && !order.escalatedToAdmin && (
+            <button
+              onClick={() => setEscalateModalOpen(true)}
+              className="px-3.5 py-2 rounded-xl border border-rose-300 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+            >
+              <AlertTriangle className="w-3.5 h-3.5" />
+              <span>Escalate to Admin</span>
+            </button>
+          )}
         </div>
       </div>
+
+      {/* Escalated to Admin Notice */}
+      {order.escalatedToAdmin && (
+        <div className="p-5 rounded-2xl border-2 border-rose-400 bg-rose-50 text-rose-900 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-start gap-3.5">
+            <div className="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0">
+              <AlertTriangle className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h3 className="font-extrabold text-[#0F0C3B] text-sm sm:text-base">
+                  Case Escalated to Admin for Official Mediation
+                </h3>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-200 text-rose-900 uppercase">
+                  Escalated by {order.escalatedBy || "Party"}
+                </span>
+              </div>
+              <p className="text-xs text-rose-800 mt-1">
+                An administrator has joined this order. The admin is reviewing chat history, contract deliverables, and submitted proof to arbitrate a binding resolution.
+              </p>
+              {order.escalationReason && (
+                <p className="text-xs text-slate-700 mt-1 italic bg-white/70 p-2 rounded-lg border border-rose-200">
+                  Escalation reason: {order.escalationReason}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Admin Resolution Decision Banner */}
+      {order.adminResolution && (
+        <div className="p-5 rounded-2xl border-2 border-indigo-300 bg-indigo-50/90 text-indigo-950 shadow-sm flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0">
+            <CheckCircle2 className="w-5 h-5" />
+          </div>
+          <div className="text-xs space-y-1">
+            <div className="flex items-center gap-2">
+              <strong className="font-extrabold text-sm text-indigo-950">Admin Arbitration Judgment</strong>
+              <span className="px-2 py-0.5 rounded-md bg-indigo-200 text-indigo-900 font-bold text-[10px]">
+                {order.adminResolution}
+              </span>
+            </div>
+            <p className="text-indigo-800">
+              The case was arbitrated by Platform Admin on {order.adminResolvedAt ? new Date(order.adminResolvedAt).toLocaleString() : "recently"}.
+              {order.refundedAmount && ` Total refunded: $${Number(order.refundedAmount).toFixed(2)}.`}
+            </p>
+            {order.deliveryNotes && (
+              <p className="text-indigo-900/90 italic mt-1 bg-white p-2.5 rounded-xl border border-indigo-100">
+                {order.deliveryNotes}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Completed with Partial Refund Notice */}
+      {order.status === "COMPLETED_WITH_PARTIAL_REFUND" && (
+        <div className="p-5 rounded-2xl border-2 border-purple-300 bg-purple-50 text-purple-950 shadow-sm flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0">
+            <DollarSign className="w-5 h-5" />
+          </div>
+          <div className="text-xs space-y-1">
+            <h3 className="font-extrabold text-purple-950 text-sm">Order Completed with Partial Refund</h3>
+            <p className="text-purple-800">
+              A partial refund of <strong className="font-mono text-purple-900">${Number(order.refundedAmount || order.partialRefundAmount || 0).toFixed(2)}</strong> has been returned to your payment method via Stripe. The remaining balance was settled with the vendor.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Cancellation Request Status Banner */}
+      {order.cancelStatus === "REQUESTED" && (
+        <div className="p-5 rounded-2xl border-2 border-amber-400 bg-amber-50 text-amber-950 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <div className="text-xs space-y-1">
+              <strong className="font-bold text-sm block">Cancellation Request Pending Vendor Review</strong>
+              <p className="text-amber-900">
+                Reason: "{order.cancelReason}". Visible on Vendor and Admin dashboards.
+              </p>
+            </div>
+          </div>
+          {!order.escalatedToAdmin && (
+            <button
+              onClick={() => setEscalateModalOpen(true)}
+              className="px-3.5 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold shrink-0 transition-colors cursor-pointer"
+            >
+              Escalate to Admin
+            </button>
+          )}
+        </div>
+      )}
+
+      {order.cancelStatus === "REJECTED" && (
+        <div className="p-5 rounded-2xl border-2 border-rose-300 bg-rose-50 text-rose-950 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+            <div className="text-xs space-y-1">
+              <strong className="font-bold text-sm block">Cancellation Request Declined by Vendor</strong>
+              <p className="text-rose-900">
+                Vendor Note: "{order.cancelResponseNote || "Declined"}". You may escalate this order to Admin for binding mediation.
+              </p>
+            </div>
+          </div>
+          {!order.escalatedToAdmin && (
+            <button
+              onClick={() => setEscalateModalOpen(true)}
+              className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shrink-0 transition-colors shadow-xs cursor-pointer"
+            >
+              Escalate Case to Admin
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Partial Refund Request Status Banner */}
+      {order.refundStatus === "REQUESTED" && (
+        <div className="p-5 rounded-2xl border-2 border-purple-300 bg-purple-50 text-purple-950 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <DollarSign className="w-5 h-5 text-purple-600 shrink-0 mt-0.5" />
+            <div className="text-xs space-y-1">
+              <strong className="font-bold text-sm block">Partial Refund Request Pending (${Number(order.partialRefundAmount || 0).toFixed(2)})</strong>
+              <p className="text-purple-900">
+                Reason: "{order.refundReason}". If accepted by vendor, the refund portion will be returned to your payment method, and remainder settled.
+              </p>
+            </div>
+          </div>
+          {!order.escalatedToAdmin && (
+            <button
+              onClick={() => setEscalateModalOpen(true)}
+              className="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold shrink-0 transition-colors cursor-pointer"
+            >
+              Escalate to Admin
+            </button>
+          )}
+        </div>
+      )}
+
+      {order.refundStatus === "REJECTED" && (
+        <div className="p-5 rounded-2xl border-2 border-rose-300 bg-rose-50 text-rose-950 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+            <div className="text-xs space-y-1">
+              <strong className="font-bold text-sm block">Partial Refund Request Declined by Vendor</strong>
+              <p className="text-rose-900">
+                Vendor Note: "{order.refundResponseNote || "Declined"}". You can escalate to Admin for mediation.
+              </p>
+            </div>
+          </div>
+          {!order.escalatedToAdmin && (
+            <button
+              onClick={() => setEscalateModalOpen(true)}
+              className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold shrink-0 transition-colors shadow-xs cursor-pointer"
+            >
+              Escalate Case to Admin
+            </button>
+          )}
+        </div>
+      )}
 
       {/* Pending Payment Notice */}
       {order.status === "PENDING_PAYMENT" && (() => {
@@ -1159,7 +1402,7 @@ export default function UserOrderDetailPage() {
         </div>
       )}
 
-      {/* Cancel Order Modal */}
+      {/* Cancel Order Request Modal */}
       {cancelModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-100">
@@ -1168,33 +1411,49 @@ export default function UserOrderDetailPage() {
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-[#0F0C3B] text-base">Cancel Order</h3>
-                <p className="text-xs text-slate-500">Order #{order.id}</p>
+                <h3 className="font-bold text-[#0F0C3B] text-base">Request Cancellation</h3>
+                <p className="text-xs text-slate-500">Order #{order.orderNumber || order.id}</p>
               </div>
             </div>
 
+            <p className="text-xs text-slate-600">
+              Your cancellation request and proof will be visible on both Vendor and Admin dashboards.
+            </p>
+
             <div className="space-y-3 text-xs">
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Reason for cancellation</label>
+                <label className="font-bold text-slate-700 block mb-1">Reason for cancellation *</label>
                 <select
                   value={cancelReason}
                   onChange={(e) => setCancelReason(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs"
+                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs bg-white"
                 >
                   <option value="Event rescheduled or cancelled">Event rescheduled or cancelled</option>
-                  <option value="Vendor unresponsive">Vendor unresponsive</option>
+                  <option value="Vendor unresponsive or late">Vendor unresponsive or late</option>
                   <option value="Mutual agreement to cancel">Mutual agreement to cancel</option>
+                  <option value="Deliverables deficient or unsuitable">Deliverables deficient or unsuitable</option>
                   <option value="Other">Other</option>
                 </select>
               </div>
 
               <div>
-                <label className="font-bold text-slate-700 block mb-1">Additional Notes</label>
+                <label className="font-bold text-slate-700 block mb-1">Explanation Notes</label>
                 <textarea
                   value={cancelNotes}
                   onChange={(e) => setCancelNotes(e.target.value)}
                   placeholder="Explain why you wish to cancel this contract..."
                   rows={3}
+                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-brand-primary"
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-slate-700 block mb-1">Proof URL / Image Link (Optional)</label>
+                <input
+                  type="url"
+                  value={cancelProof}
+                  onChange={(e) => setCancelProof(e.target.value)}
+                  placeholder="https://example.com/evidence-document.png"
                   className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-brand-primary"
                 />
               </div>
@@ -1204,17 +1463,183 @@ export default function UserOrderDetailPage() {
               <button
                 type="button"
                 onClick={() => setCancelModalOpen(false)}
-                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50"
+                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer"
               >
                 Keep Order
               </button>
               <button
                 type="button"
                 onClick={handleConfirmCancel}
-                disabled={isCancelling}
-                className="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
+                disabled={isRequestingCancel || isCancelling}
+                className="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
               >
-                {isCancelling ? <Loader2 className="w-4 h-4 animate-spin" /> : "Confirm Cancellation"}
+                {isRequestingCancel || isCancelling ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  "Submit Cancellation"
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Partial Refund Request Modal */}
+      {partialRefundModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-100">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+                <DollarSign className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-bold text-[#0F0C3B] text-base">Request Partial Refund</h3>
+                <p className="text-xs text-slate-500">Order total: ${Number(order.grandTotal || 0).toFixed(2)}</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-600 bg-purple-50 p-3 rounded-xl border border-purple-100">
+              If accepted by vendor, the requested amount will be refunded directly to your card via Stripe. The remaining balance (minus 15% platform fee) will be paid to the vendor.
+            </p>
+
+            <div className="space-y-3 text-xs">
+              <div>
+                <label className="font-bold text-slate-700 block mb-1">Refund Amount ($ USD) *</label>
+                <div className="relative">
+                  <DollarSign className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="number"
+                    min="1"
+                    max={Number(order.grandTotal || 0) - 1}
+                    step="0.01"
+                    value={partialRefundAmount}
+                    onChange={(e) => setPartialRefundAmount(e.target.value)}
+                    placeholder={`e.g. ${(Number(order.grandTotal || 0) * 0.3).toFixed(2)}`}
+                    className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-slate-200 text-xs font-mono font-bold focus:ring-2 focus:ring-purple-500"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="font-bold text-slate-700 block mb-1">Reason for partial refund *</label>
+                <select
+                  value={partialRefundReason}
+                  onChange={(e) => setPartialRefundReason(e.target.value)}
+                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs bg-white"
+                >
+                  <option value="Service scope reduced or partially deficient">Service scope reduced or partially deficient</option>
+                  <option value="Deliverables partially delivered">Deliverables partially delivered</option>
+                  <option value="Quality discrepancy on secondary item">Quality discrepancy on secondary item</option>
+                  <option value="Mutual compromise with vendor">Mutual compromise with vendor</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="font-bold text-slate-700 block mb-1">Explanation Notes</label>
+                <textarea
+                  value={partialRefundNotes}
+                  onChange={(e) => setPartialRefundNotes(e.target.value)}
+                  placeholder="Detail the partial delivery or shortfall..."
+                  rows={2}
+                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+
+              <div>
+                <label className="font-bold text-slate-700 block mb-1">Proof URL / Document Link (Optional)</label>
+                <input
+                  type="url"
+                  value={partialRefundProof}
+                  onChange={(e) => setPartialRefundProof(e.target.value)}
+                  placeholder="https://example.com/partial-work-proof.jpg"
+                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setPartialRefundModalOpen(false)}
+                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmPartialRefund}
+                disabled={isRequestingPartialRefund}
+                className="flex-1 py-2.5 bg-purple-600 hover:bg-purple-700 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+              >
+                {isRequestingPartialRefund ? <Loader2 className="w-4 h-4 animate-spin" /> : "Submit Request"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Escalate to Admin Modal */}
+      {escalateModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-100">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center">
+                <AlertTriangle className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="font-bold text-[#0F0C3B] text-base">Escalate Case to Admin</h3>
+                <p className="text-xs text-slate-500">Order #{order.orderNumber || order.id}</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-600">
+              Escalating hands the case to Platform Admin for final arbitration. Admin will review chat history, uploaded deliverables, and submitted proof to make a binding judgment.
+            </p>
+
+            <div className="space-y-3 text-xs">
+              <div>
+                <label className="font-bold text-slate-700 block mb-1">Escalation Reason *</label>
+                <select
+                  value={escalateReason}
+                  onChange={(e) => setEscalateReason(e.target.value)}
+                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs bg-white"
+                >
+                  <option value="Vendor rejected cancellation request">Vendor rejected cancellation request</option>
+                  <option value="Vendor rejected partial refund request">Vendor rejected partial refund request</option>
+                  <option value="Unresolved dispute after communication">Unresolved dispute after communication</option>
+                  <option value="Violation of platform terms or delivery contract">Violation of platform terms or delivery contract</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="font-bold text-slate-700 block mb-1">Additional Context for Admin</label>
+                <textarea
+                  value={escalateNotes}
+                  onChange={(e) => setEscalateNotes(e.target.value)}
+                  placeholder="Provide any summary notes for the admin mediator..."
+                  rows={3}
+                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-rose-500"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setEscalateModalOpen(false)}
+                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 cursor-pointer"
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                onClick={handleConfirmEscalation}
+                disabled={isEscalating}
+                className="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+              >
+                {isEscalating ? <Loader2 className="w-4 h-4 animate-spin" /> : "Confirm Escalation"}
               </button>
             </div>
           </div>
