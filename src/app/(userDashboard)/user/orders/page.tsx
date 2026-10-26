@@ -2,15 +2,18 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ShoppingBag, Lock, ShieldCheck, CheckCircle2, ChevronRight, Download, Loader2, UploadCloud } from "lucide-react";
+import { ShoppingBag, Lock, ShieldCheck, CheckCircle2, ChevronRight, Download, Loader2, UploadCloud, CreditCard } from "lucide-react";
+import { toast } from "sonner";
 import OrderDetailDrawer from "@/components/user/OrderDetailDrawer";
+import StripePaymentModal from "@/components/payment/StripePaymentModal";
 import { cn } from "@/lib/utils";
 import { useGetClientOrdersQuery } from "@/redux/service/orders/ordersApi";
 
 export default function UserOrdersPage() {
   const [selectedOrder, setSelectedOrder] = useState<any>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { data: apiOrdersData, isLoading } = useGetClientOrdersQuery();
+  const [payingOrder, setPayingOrder] = useState<any>(null);
+  const { data: apiOrdersData, isLoading, refetch } = useGetClientOrdersQuery();
 
   const liveOrders = Array.isArray(apiOrdersData) ? apiOrdersData : (apiOrdersData?.data?.orders || apiOrdersData?.orders || apiOrdersData?.data || []);
   const displayOrders = liveOrders;
@@ -110,8 +113,13 @@ export default function UserOrdersPage() {
             let milestoneBadgeClass = "bg-slate-100 text-slate-700";
 
             if (ord.status === "PENDING_PAYMENT") {
-              milestoneStatusText = "Payment Required · Order Not Started";
-              milestoneBadgeClass = "bg-amber-50 text-amber-800 border border-amber-200";
+              const createdAtMs = ord.createdAt ? new Date(ord.createdAt).getTime() : Date.now();
+              const hoursLeft = Math.max(0, Math.ceil((createdAtMs + 24 * 60 * 60 * 1000 - Date.now()) / (1000 * 60 * 60)));
+              milestoneStatusText = `Unpaid · Auto-cancels in ${hoursLeft}h`;
+              milestoneBadgeClass = "bg-amber-50 text-amber-800 border border-amber-300 font-semibold";
+            } else if (ord.status === "CANCELLED") {
+              milestoneStatusText = "Cancelled / Expired (24h)";
+              milestoneBadgeClass = "bg-rose-50 text-rose-700 border border-rose-200";
             } else if (ord.status === "COMPLETED" && scheduledMs > 0) {
               milestoneStatusText = `Approved · ${scheduledMs} Transfer${scheduledMs === 1 ? "" : "s"} in 7-day hold`;
               milestoneBadgeClass = "bg-blue-50 text-blue-800 border border-blue-200";
@@ -130,7 +138,7 @@ export default function UserOrdersPage() {
             } else if (totalMs > 1) {
               milestoneStatusText = `0/${totalMs} Milestones Paid`;
               milestoneBadgeClass = "bg-slate-100 text-slate-700 border border-slate-200";
-            } else if (ord.status === "CONFIRMED" || ord.status === "IN_PROGRESS") {
+            } else if (ord.status === "CONFIRMED" || ord.status === "IN_PROGRESS" || ord.status === "ACTIVE") {
               milestoneStatusText = "In Progress • Payment Secured";
               milestoneBadgeClass = "bg-emerald-50 text-emerald-800 border border-emerald-200/60";
             }
@@ -173,12 +181,18 @@ export default function UserOrdersPage() {
                     </span>
                   </div>
 
-                      {ord.status === "PENDING_PAYMENT" && (
-                    <Link
-                      href={`/checkout?orderId=${encodeURIComponent(ord.id)}`}
-                      onClick={(e) => e.stopPropagation()}
-                      className="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-2xs"
-                    >Pay first milestone</Link>
+                  {ord.status === "PENDING_PAYMENT" && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setPayingOrder(ord);
+                      }}
+                      className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-xs flex items-center gap-1.5 cursor-pointer transition-all"
+                    >
+                      <CreditCard className="w-3.5 h-3.5" />
+                      <span>Pay Now</span>
+                    </button>
                   )}
 
                   {pendingReleaseMs > 0 && (
@@ -201,6 +215,21 @@ export default function UserOrdersPage() {
           })
         )}
       </div>
+
+      {payingOrder && (
+        <StripePaymentModal
+          isOpen={!!payingOrder}
+          onClose={() => setPayingOrder(null)}
+          orderId={payingOrder.id}
+          orderNumber={payingOrder.orderNumber}
+          amount={Number(payingOrder.grandTotal || payingOrder.totalAmount?.replace(/[^0-9.]/g, "") || payingOrder.subtotal || 0)}
+          onSuccess={() => {
+            toast.success("Payment secured in escrow vault! Order is now active.");
+            setPayingOrder(null);
+            refetch();
+          }}
+        />
+      )}
     </div>
   );
 }
