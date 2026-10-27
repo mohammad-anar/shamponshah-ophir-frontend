@@ -149,7 +149,7 @@ export default function UserSettingsPage() {
         <form onSubmit={handleSave} className="bg-surface border border-border rounded-2xl p-5 space-y-4 shadow-xs">
           <div className="flex items-center gap-3 border-b border-border pb-4">
             <div className="relative">
-              <div className="relative w-14 h-14 overflow-hidden rounded-full bg-gradient-to-tr from-purple-500 to-brand text-foreground flex items-center justify-center font-bold text-lg shadow-sm">
+              <div className="relative w-14 h-14 overflow-hidden rounded-full bg-gradient-to-tr from-brand to-brand text-foreground flex items-center justify-center font-bold text-lg shadow-sm">
                 {avatarUrl ? <img src={avatarUrl} alt="Profile" className="absolute inset-0 h-full w-full object-cover" /> : (name.split(" ").map((n) => n[0]).join("").slice(0, 2) || "")}
               </div>
             </div>
