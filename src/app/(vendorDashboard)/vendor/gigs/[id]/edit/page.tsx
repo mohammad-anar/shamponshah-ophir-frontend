@@ -495,7 +495,7 @@ export default function EditGigPage() {
                 <p className="text-[10px] text-foreground-muted">2 hours core coverage</p>
               </div>
 
-              <div className="p-3.5 rounded-xl border border-info/30 bg-info-soft/40 space-y-2 ring-2 ring-indigo-50">
+              <div className="p-3.5 rounded-xl border border-info/30 bg-info-soft/40 space-y-2 ring-2 ring-info/20">
                 <span className="font-bold text-foreground block">Standard (Popular)</span>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 font-bold text-foreground-muted">$</span>
@@ -648,7 +648,7 @@ export default function EditGigPage() {
                       <button
                         type="button"
                         onClick={() => removeImage(img.id)}
-                        className="absolute top-1 right-1 w-6 h-6 rounded-full bg-red-600 text-foreground flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-xs hover:bg-red-700 cursor-pointer"
+                        className="absolute top-1 right-1 w-6 h-6 rounded-full bg-danger text-foreground flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-xs hover:bg-danger cursor-pointer"
                         title="Remove photo"
                       >
                         <Trash2 className="w-3 h-3" />
