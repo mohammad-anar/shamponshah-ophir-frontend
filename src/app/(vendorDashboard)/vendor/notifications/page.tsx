@@ -164,9 +164,9 @@ export default function VendorNotificationsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">Vendor Notifications</h1>
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">Vendor Notifications</h1>
             {unreadCount > 0 && (
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#0F0C3B] text-foreground">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand text-foreground">
                 {unreadCount} Unread
               </span>
             )}
@@ -179,7 +179,7 @@ export default function VendorNotificationsPage() {
         {unreadCount > 0 && (
           <button
             onClick={handleMarkAllAsRead}
-            className="px-3.5 py-2 bg-surface-sunken hover:bg-slate-200 text-[#0F0C3B] rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
+            className="px-3.5 py-2 bg-surface-sunken hover:bg-surface-sunken text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
           >
             <CheckCheck className="w-4 h-4 text-brand-primary" /> Mark All as Read
           </button>
@@ -194,7 +194,7 @@ export default function VendorNotificationsPage() {
             onClick={() => setFilterType(tab)}
             className={`px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all ${
               filterType === tab
-                ? "bg-[#0F0C3B] text-foreground shadow-xs"
+                ? "bg-brand text-foreground shadow-xs"
                 : "bg-surface text-foreground-secondary border border-border hover:bg-surface-elevated"
             }`}
           >
@@ -217,7 +217,7 @@ export default function VendorNotificationsPage() {
         ) : filtered.length === 0 ? (
           <div className="bg-surface rounded-2xl border border-border p-12 text-center text-foreground-muted text-xs">
             <Bell className="w-8 h-8 text-foreground-secondary mx-auto mb-2" />
-            <p className="font-bold text-[#0F0C3B]">You&apos;re all caught up!</p>
+            <p className="font-bold text-foreground">You&apos;re all caught up!</p>
             <p className="text-foreground-muted mt-0.5">No notifications matching selected filter.</p>
           </div>
         ) : (
@@ -228,7 +228,7 @@ export default function VendorNotificationsPage() {
               className={`p-4 rounded-2xl border transition-all flex items-start gap-4 cursor-pointer ${
                 n.read
                   ? "bg-surface border-border shadow-2xs opacity-80"
-                  : "bg-indigo-50/40 border-indigo-200 shadow-xs"
+                  : "bg-info-soft/40 border-info/30 shadow-xs"
               }`}
             >
               <div className="w-10 h-10 rounded-xl bg-surface border border-border shadow-2xs flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -238,7 +238,7 @@ export default function VendorNotificationsPage() {
               <div className="flex-1 space-y-1">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <h3 className="text-xs font-bold text-[#0F0C3B]">{n.title}</h3>
+                    <h3 className="text-xs font-bold text-foreground">{n.title}</h3>
                     {!n.read && (
                       <span className="w-2 h-2 rounded-full bg-brand-primary flex-shrink-0" />
                     )}
@@ -253,7 +253,7 @@ export default function VendorNotificationsPage() {
                 <div className="flex items-center gap-3 pt-2">
                   <Link
                     href={n.actionUrl}
-                    className="text-[11px] font-bold text-brand-primary hover:text-indigo-900 flex items-center gap-1"
+                    className="text-[11px] font-bold text-brand-primary hover:text-info flex items-center gap-1"
                   >
                     {n.actionLabel} <ChevronRight className="w-3 h-3" />
                   </Link>
@@ -263,7 +263,7 @@ export default function VendorNotificationsPage() {
                       e.stopPropagation();
                       handleDelete(n.id);
                     }}
-                    className="text-[11px] text-foreground-muted hover:text-rose-600 transition-colors"
+                    className="text-[11px] text-foreground-muted hover:text-danger transition-colors"
                   >
                     Dismiss
                   </button>
