@@ -275,18 +275,18 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-black/50 backdrop-blur-xs flex justify-end">
+    <div className="fixed inset-0 z-50 overflow-hidden bg-background/50 backdrop-blur-xs flex justify-end">
       {/* Decline / Request Revision Modal */}
       {declineModalOpen && (
-        <div className="fixed inset-0 z-70 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-70 flex items-center justify-center p-4 bg-background/60 backdrop-blur-xs animate-in fade-in duration-200">
           <div className="bg-surface w-full max-w-md rounded-2xl p-6 shadow-2xl border border-border space-y-4">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-warning-soft text-warning flex items-center justify-center shrink-0">
                   <RotateCcw className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-[#0F0C3B]">Decline &amp; Request Revision</h3>
+                  <h3 className="text-base font-bold text-foreground">Decline &amp; Request Revision</h3>
                   <p className="text-xs text-foreground-muted">
                     {selectedDeclineMilestone
                       ? selectedDeclineMilestone.name
@@ -351,7 +351,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                 type="button"
                 onClick={handleConfirmDecline}
                 disabled={isDecliningDelivery}
-                className="px-4 py-2 rounded-xl bg-warning-solid text-on-brand hover:bg-amber-700 text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 rounded-xl bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {isDecliningDelivery ? (
                   <>
@@ -372,15 +372,15 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
 
       {/* Cancel Order Confirmation Modal */}
       {cancelModalOpen && (
-        <div className="fixed inset-0 z-70 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-70 flex items-center justify-center p-4 bg-background/60 backdrop-blur-xs animate-in fade-in duration-200">
           <div className="bg-surface w-full max-w-md rounded-2xl p-6 shadow-2xl border border-border space-y-4">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-danger-soft text-danger flex items-center justify-center shrink-0">
                   <AlertTriangle className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-[#0F0C3B]">Cancel Order</h3>
+                  <h3 className="text-base font-bold text-foreground">Cancel Order</h3>
                   <p className="text-xs text-foreground-muted">Order #{currentOrder.orderNumber || currentOrder.id}</p>
                 </div>
               </div>
@@ -396,16 +396,16 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
 
             {/* Escrow & Milestone Retention Breakdown */}
             <div className="p-4 rounded-xl bg-surface-elevated border border-border space-y-2 text-xs">
-              <span className="font-bold text-[#0F0C3B] block mb-1">Cancellation Settlement Policy:</span>
+              <span className="font-bold text-foreground block mb-1">Cancellation Settlement Policy:</span>
 
-              <div className="flex items-center justify-between text-emerald-800 bg-emerald-50/80 p-2 rounded-lg border border-emerald-200/60">
+              <div className="flex items-center justify-between text-success bg-success-soft/80 p-2 rounded-lg border border-success/30/60">
                 <span className="font-medium">
                   {releasedMilestones.length} Completed Milestone(s):
                 </span>
                 <span className="font-bold">Retained by Vendor</span>
               </div>
 
-              <div className="flex items-center justify-between text-indigo-900 bg-indigo-50/80 p-2 rounded-lg border border-indigo-200/60">
+              <div className="flex items-center justify-between text-info bg-info-soft/80 p-2 rounded-lg border border-info/30/60">
                 <span className="font-medium">
                   {unreleasedMilestones.length} Uncompleted Milestone(s):
                 </span>
@@ -424,7 +424,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                 <select
                   value={cancelReason}
                   onChange={(e) => setCancelReason(e.target.value)}
-                  className="w-full px-3 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-rose-500 font-medium bg-surface"
+                  className="w-full px-3 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-danger font-medium bg-surface"
                 >
                   <option value="Event rescheduled or cancelled">Event rescheduled or cancelled</option>
                   <option value="Mutual agreement with vendor">Mutual agreement with vendor</option>
@@ -441,7 +441,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                   value={cancelNotes}
                   onChange={(e) => setCancelNotes(e.target.value)}
                   placeholder="Provide context for the vendor and Ophir support..."
-                  className="w-full px-3 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-rose-500 font-medium"
+                  className="w-full px-3 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-danger font-medium"
                 />
               </div>
             </div>
@@ -460,7 +460,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                 type="button"
                 onClick={handleConfirmCancelOrder}
                 disabled={isCancelling}
-                className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-5 py-2.5 rounded-xl bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {isCancelling ? (
                   <>
@@ -482,29 +482,29 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
       {/* Main Drawer Container */}
       <div className="w-full max-w-2xl bg-surface h-full shadow-2xl flex flex-col justify-between animate-in slide-in-from-right duration-300">
         {/* Drawer Header */}
-        <div className="p-6 border-b border-border bg-[#F8F9FD] flex items-center justify-between">
+        <div className="p-6 border-b border-border bg-surface-elevated flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold text-foreground-muted">Order #{currentOrder.orderNumber || currentOrder.id}</span>
               <span className={cn(
                 "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide",
                 isPendingPayment
-                  ? "bg-amber-100 text-amber-800"
+                  ? "bg-warning-soft text-warning"
                   : isOrderCompleted
-                  ? "bg-emerald-100 text-emerald-800"
+                  ? "bg-success-soft text-success"
                   : isOrderCancelled
-                  ? "bg-rose-100 text-rose-800"
-                  : "bg-indigo-100 text-indigo-800"
+                  ? "bg-danger-soft text-danger"
+                  : "bg-info-soft text-info"
               )}>
                 {isPendingPayment ? "Payment Required" : isOrderCompleted ? "Fulfillment Complete" : isOrderCancelled ? "Cancelled" : "Active Order"}
               </span>
             </div>
-            <h2 className="text-lg font-bold text-[#0F0C3B] mt-1">{currentOrder.serviceTitle}</h2>
+            <h2 className="text-lg font-bold text-foreground mt-1">{currentOrder.serviceTitle}</h2>
           </div>
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-foreground-muted hover:text-foreground-secondary hover:bg-slate-200/60 transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-foreground-muted hover:text-foreground-secondary hover:bg-surface-sunken/60 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -517,15 +517,15 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
             const createdAtMs = currentOrder.createdAt ? new Date(currentOrder.createdAt).getTime() : Date.now();
             const hoursRemaining = Math.max(0, Math.ceil((createdAtMs + 24 * 60 * 60 * 1000 - Date.now()) / (1000 * 60 * 60)));
             return (
-              <div className="p-4 rounded-xl bg-amber-50 border border-amber-300 shadow-2xs space-y-3">
+              <div className="p-4 rounded-xl bg-warning-soft border border-warning/30 shadow-2xs space-y-3">
                 <div className="flex items-start gap-3">
                   <div className="w-8 h-8 rounded-lg bg-warning-solid text-on-brand text-foreground flex items-center justify-center shrink-0 mt-0.5">
                     <DollarSign className="w-4 h-4" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h4 className="font-bold text-xs text-[#0F0C3B]">Payment Required to Activate Order</h4>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-200 text-amber-900 animate-pulse">
+                      <h4 className="font-bold text-xs text-foreground">Payment Required to Activate Order</h4>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-warning-soft text-warning animate-pulse">
                         Auto-cancels in {hoursRemaining}h if unpaid
                       </span>
                     </div>
@@ -547,11 +547,11 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
           })()}
           {/* Cancelled Banner */}
           {isOrderCancelled && (
-            <div className="p-4 rounded-xl bg-rose-50 border border-rose-200 flex items-start gap-3 text-rose-950">
-              <Ban className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+            <div className="p-4 rounded-xl bg-danger-soft border border-danger/30 flex items-start gap-3 text-rose-950">
+              <Ban className="w-5 h-5 text-danger shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-bold text-xs">Order Cancelled</h4>
-                <p className="text-[11px] text-rose-800 leading-relaxed mt-0.5">
+                <p className="text-[11px] text-danger leading-relaxed mt-0.5">
                   This engagement was cancelled. Completed milestones have been retained by the vendor for services rendered, and uncompleted milestones have been refunded to your account.
                 </p>
               </div>
@@ -560,11 +560,11 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
 
           {/* Completed Banner */}
           {isOrderCompleted && !isOrderCancelled && (
-            <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 flex items-start gap-3 text-emerald-950">
+            <div className="p-4 rounded-xl bg-success-soft border border-success/30 flex items-start gap-3 text-success">
               <CheckCircle2 className="w-5 h-5 text-success shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-bold text-xs">All Milestones Fully Disbursed &amp; Order Complete</h4>
-                <p className="text-[11px] text-emerald-800 leading-relaxed mt-0.5">
+                <p className="text-[11px] text-success leading-relaxed mt-0.5">
                   Congratulations! All deliverables have been approved and total funds disbursed to {currentOrder.vendorName}.
                 </p>
               </div>
@@ -573,15 +573,15 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
 
           {/* Pending Delivery Action Required Banner */}
           {hasPendingDelivery && !isOrderCancelled && !isOrderCompleted && (
-            <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-300 shadow-2xs space-y-3">
+            <div className="p-4 rounded-xl bg-warning-soft/80 border border-warning/30 shadow-2xs space-y-3">
               <div className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-lg bg-warning-solid text-on-brand text-foreground flex items-center justify-center shrink-0 mt-0.5">
                   <UploadCloud className="w-4 h-4" />
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h4 className="font-bold text-xs text-[#0F0C3B]">Vendor Submitted Delivery</h4>
-                    <span className="px-2 py-0.5 rounded text-[9px] font-bold bg-amber-200 text-amber-900 animate-pulse">
+                    <h4 className="font-bold text-xs text-foreground">Vendor Submitted Delivery</h4>
+                    <span className="px-2 py-0.5 rounded text-[9px] font-bold bg-warning-soft text-warning animate-pulse">
                       Review Needed
                     </span>
                   </div>
@@ -589,8 +589,8 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                     The vendor has delivered the work for your review. Accept to release payment or decline to request revisions.
                   </p>
                   {currentOrder.deliveryNotes && (
-                    <div className="mt-2 p-2.5 bg-surface/90 rounded-lg border border-amber-200/80 text-[11px] text-foreground-secondary">
-                      <span className="font-bold text-[#0F0C3B] block">Delivery Notes:</span>
+                    <div className="mt-2 p-2.5 bg-surface/90 rounded-lg border border-warning/30/80 text-[11px] text-foreground-secondary">
+                      <span className="font-bold text-foreground block">Delivery Notes:</span>
                       <p className="italic mt-0.5">{currentOrder.deliveryNotes}</p>
                     </div>
                   )}
@@ -602,7 +602,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                   type="button"
                   onClick={handleAcceptAllDelivery}
                   disabled={isAcceptingDelivery}
-                  className="px-3.5 py-2 bg-success-solid text-white hover:bg-emerald-700 text-foreground rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  className="px-3.5 py-2 bg-success-solid text-foreground hover:bg-success-solid text-white text-foreground rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 >
                   {isAcceptingDelivery ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -616,7 +616,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                   type="button"
                   onClick={() => handleOpenDeclineModal(null)}
                   disabled={isDecliningDelivery}
-                  className="px-3.5 py-2 bg-surface hover:bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                  className="px-3.5 py-2 bg-surface hover:bg-danger-soft border border-danger/30 text-danger rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   <span>Decline / Request Revision</span>
@@ -629,13 +629,13 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             <div className="p-3.5 rounded-xl border border-border bg-surface">
               <span className="text-[10px] uppercase font-bold text-foreground-muted block">Total Value</span>
-              <span className="text-base font-extrabold text-[#0F0C3B] mt-0.5 block">{currentOrder.totalAmount}</span>
+              <span className="text-base font-extrabold text-foreground mt-0.5 block">{currentOrder.totalAmount}</span>
             </div>
 
             <div className="p-3.5 rounded-xl border border-border bg-surface flex flex-col justify-between">
               <div>
                 <span className="text-[10px] uppercase font-bold text-foreground-muted block">Assigned Vendor</span>
-                <span className="text-xs font-bold text-[#0F0C3B] mt-0.5 block truncate">{currentOrder.vendorName}</span>
+                <span className="text-xs font-bold text-foreground mt-0.5 block truncate">{currentOrder.vendorName}</span>
               </div>
               <Link
                 href={`/user/messages?userId=${currentOrder.vendorProfile?.userId || currentOrder.vendorProfileId || currentOrder.vendorUserId || ''}&orderId=${currentOrder.id}&vendorName=${encodeURIComponent(currentOrder.vendorName || '')}`}
@@ -656,7 +656,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
 
           {/* Event Details Card */}
           <div className="p-4 rounded-xl border border-border bg-surface space-y-3">
-            <h4 className="font-bold text-[#0F0C3B] text-xs uppercase tracking-wider">Celebration Details</h4>
+            <h4 className="font-bold text-foreground text-xs uppercase tracking-wider">Celebration Details</h4>
             
             <div className="space-y-2 text-xs">
               <div className="flex items-start gap-2.5 text-foreground-secondary">
@@ -681,7 +681,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <div>
-                <h4 className="font-bold text-[#0F0C3B] text-sm">Milestone schedule</h4>
+                <h4 className="font-bold text-foreground text-sm">Milestone schedule</h4>
                 <p className="text-[11px] text-foreground-muted mt-0.5">
                   Payment and transfer status for each milestone.
                 </p>
@@ -702,19 +702,19 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                     className={cn(
                       "p-4 rounded-xl border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3",
                       isPaidOrReleased
-                        ? "bg-emerald-50/40 border-emerald-200/70"
+                        ? "bg-success-soft/40 border-success/30/70"
                         : isRefunded
                         ? "bg-surface-elevated/70 border-border opacity-75"
-                        : "bg-surface border-border hover:border-indigo-200"
+                        : "bg-surface border-border hover:border-info/30"
                     )}
                   >
                     <div className="flex items-start gap-3">
                       <div className={cn(
                         "w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5",
                         isPaidOrReleased
-                          ? "bg-success-solid text-white text-foreground"
+                          ? "bg-success-solid text-foreground text-foreground"
                           : isRefunded
-                          ? "bg-slate-200 text-foreground-muted"
+                          ? "bg-surface-sunken text-foreground-muted"
                           : "bg-surface-sunken text-foreground-secondary"
                       )}>
                         {isPaidOrReleased ? (
@@ -728,14 +728,14 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
 
                       <div>
                         <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-bold text-[#0F0C3B] text-xs block">{ms.name}</span>
+                          <span className="font-bold text-foreground text-xs block">{ms.name}</span>
                           <span className={cn(
                             "px-2 py-0.5 rounded text-[10px] font-bold uppercase",
                             isPaidOrReleased
-                              ? "bg-emerald-100 text-emerald-800"
+                              ? "bg-success-soft text-success"
                               : isRefunded
-                              ? "bg-slate-200 text-foreground-secondary"
-                              : "bg-amber-100 text-amber-900"
+                              ? "bg-surface-sunken text-foreground-secondary"
+                              : "bg-warning-soft text-warning"
                           )}>
                             {isPaidOrReleased
                               ? "Transferred to vendor"
@@ -766,14 +766,14 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                     <div className="flex items-center justify-between sm:justify-end gap-3 self-end sm:self-auto w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-border">
                       <div className="text-left sm:text-right">
                         <span className="text-[10px] uppercase font-bold text-foreground-muted block">Milestone Value</span>
-                        <span className={cn("font-extrabold text-sm block", isRefunded ? "line-through text-foreground-muted" : "text-[#0F0C3B]")}>
+                        <span className={cn("font-extrabold text-sm block", isRefunded ? "line-through text-foreground-muted" : "text-foreground")}>
                           {ms.amount}
                         </span>
                       </div>
 
                       {/* Milestone-wise Action Button */}
                       {isPaidOrReleased ? (
-                        <div className="px-3 py-1.5 rounded-xl bg-emerald-100 text-emerald-800 text-[11px] font-bold flex items-center gap-1">
+                        <div className="px-3 py-1.5 rounded-xl bg-success-soft text-success text-[11px] font-bold flex items-center gap-1">
                           <CheckCircle2 className="w-3.5 h-3.5" />
                           <span>Paid</span>
                         </div>
@@ -788,7 +788,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                             type="button"
                             disabled={isApproving}
                             onClick={() => handleApproveMilestone(ms)}
-                            className="px-3 py-1.5 rounded-xl bg-success-solid text-white hover:bg-emerald-700 text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                            className="px-3 py-1.5 rounded-xl bg-success-solid text-foreground hover:bg-success-solid text-white text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                           >
                             <CheckCircle2 className="w-3.5 h-3.5" />
                             <span>{isApproving ? "Approving…" : "Approve delivery"}</span>
@@ -797,7 +797,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                             <button
                               type="button"
                               onClick={() => handleOpenDeclineModal(ms)}
-                              className="px-2.5 py-1.5 rounded-xl bg-surface hover:bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold transition-all flex items-center gap-1 cursor-pointer"
+                              className="px-2.5 py-1.5 rounded-xl bg-surface hover:bg-danger-soft text-danger border border-danger/30 text-xs font-bold transition-all flex items-center gap-1 cursor-pointer"
                               title="Decline this milestone and request revision"
                             >
                               <RotateCcw className="w-3 h-3" />
@@ -817,13 +817,13 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
           <div className="p-4 rounded-xl bg-surface-elevated border border-border space-y-2 text-xs">
             <div className="flex justify-between text-foreground-secondary">
               <span>Agreed Offer Price</span>
-              <span className="font-semibold text-[#0F0C3B]">{currentOrder.totalAmount}</span>
+              <span className="font-semibold text-foreground">{currentOrder.totalAmount}</span>
             </div>
             <div className="flex justify-between text-foreground-secondary">
               <span>Service Fee</span>
-              <span className="font-semibold text-[#0F0C3B]">Included</span>
+              <span className="font-semibold text-foreground">Included</span>
             </div>
-            <div className="pt-2 border-t border-border flex justify-between font-bold text-[#0F0C3B] text-sm">
+            <div className="pt-2 border-t border-border flex justify-between font-bold text-foreground text-sm">
               <span>Total Contracted</span>
               <span>{currentOrder.totalAmount}</span>
             </div>
@@ -845,7 +845,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
               <button
                 type="button"
                 onClick={() => setCancelModalOpen(true)}
-                className="px-3.5 py-2 rounded-xl border border-rose-200 text-rose-700 hover:bg-rose-50 hover:border-rose-300 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+                className="px-3.5 py-2 rounded-xl border border-danger/30 text-danger hover:bg-danger-soft hover:border-danger/30 text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
               >
                 <Ban className="w-3.5 h-3.5" />
                 <span>Cancel Order</span>
@@ -863,12 +863,12 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
               <span>Pay Now ({currentOrder.totalAmount})</span>
             </button>
           ) : isOrderCompleted ? (
-            <div className="px-5 py-2.5 rounded-xl bg-success-solid text-white text-foreground text-xs font-bold flex items-center gap-1.5 shadow-sm">
+            <div className="px-5 py-2.5 rounded-xl bg-success-solid text-foreground text-foreground text-xs font-bold flex items-center gap-1.5 shadow-sm">
               <CheckCircle2 className="w-4 h-4" />
               <span>All Milestones Approved</span>
             </div>
           ) : isOrderCancelled ? (
-            <div className="px-4 py-2 rounded-xl bg-rose-100 text-rose-800 text-xs font-bold flex items-center gap-1.5">
+            <div className="px-4 py-2 rounded-xl bg-danger-soft text-danger text-xs font-bold flex items-center gap-1.5">
               <Ban className="w-3.5 h-3.5" />
               <span>Order Cancelled</span>
             </div>
