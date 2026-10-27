@@ -311,20 +311,20 @@ export default function FamilyHubPage() {
     <div className="space-y-8 pb-16">
       {/* Delete Confirmation Modal (Custom UI, replacing browser confirm) */}
       {itemToDelete && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-3xl max-w-md w-full p-6 space-y-5 border border-border shadow-2xl animate-in fade-in">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center text-rose-600 shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-danger-soft border border-rose-100 flex items-center justify-center text-danger shrink-0">
                 <Trash2 className="w-6 h-6" />
               </div>
               <div>
-                <h3 className="font-serif font-bold text-base text-[#0F0C3B]">Remove Recommendation</h3>
+                <h3 className="font-serif font-bold text-base text-foreground">Remove Recommendation</h3>
                 <p className="text-xs text-foreground-muted">Remove from family collaboration board</p>
               </div>
             </div>
 
             <p className="text-xs text-foreground-secondary leading-relaxed bg-surface-elevated p-3.5 rounded-2xl border border-border">
-              Are you sure you want to remove <strong className="text-[#0F0C3B]">&ldquo;{itemToDelete.title}&rdquo;</strong> from your Family Hub? Other family members will no longer be able to vote or review this recommendation.
+              Are you sure you want to remove <strong className="text-foreground">&ldquo;{itemToDelete.title}&rdquo;</strong> from your Family Hub? Other family members will no longer be able to vote or review this recommendation.
             </p>
 
             <div className="flex items-center justify-end gap-2.5 pt-2">
@@ -332,7 +332,7 @@ export default function FamilyHubPage() {
                 type="button"
                 disabled={isDeletingItem}
                 onClick={() => setItemToDelete(null)}
-                className="px-4 py-2.5 rounded-xl bg-surface-sunken hover:bg-slate-200 text-foreground-secondary text-xs font-bold transition-colors cursor-pointer"
+                className="px-4 py-2.5 rounded-xl bg-surface-sunken hover:bg-surface-sunken text-foreground-secondary text-xs font-bold transition-colors cursor-pointer"
               >
                 Cancel
               </button>
@@ -340,7 +340,7 @@ export default function FamilyHubPage() {
                 type="button"
                 disabled={isDeletingItem}
                 onClick={handleConfirmDelete}
-                className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                className="px-5 py-2.5 rounded-xl bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {isDeletingItem ? (
                   <span>Removing...</span>
@@ -358,15 +358,15 @@ export default function FamilyHubPage() {
 
       {/* Invite Member Modal */}
       {inviteModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-3xl max-w-md w-full p-6 space-y-5 border border-border shadow-2xl animate-in fade-in">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="p-2 rounded-xl bg-indigo-50 text-brand-primary">
+                <div className="p-2 rounded-xl bg-info-soft text-brand-primary">
                   <UserPlus className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-serif font-bold text-base text-[#0F0C3B]">Invite Family Member</h3>
+                  <h3 className="font-serif font-bold text-base text-foreground">Invite Family Member</h3>
                   <p className="text-xs text-foreground-muted">Collaborate & vote on services together</p>
                 </div>
               </div>
@@ -405,14 +405,14 @@ export default function FamilyHubPage() {
                 <button
                   type="button"
                   onClick={() => setInviteModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-surface-sunken hover:bg-slate-200 text-foreground-secondary font-bold transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-surface-sunken hover:bg-surface-sunken text-foreground-secondary font-bold transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isInviting}
-                  className="px-5 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  className="px-5 py-2 rounded-xl bg-brand hover:bg-surface-sunken text-foreground font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 >
                   <span>Send Invite</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -425,15 +425,15 @@ export default function FamilyHubPage() {
 
       {/* Recommend Service Modal */}
       {recommendModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-3xl max-w-lg w-full p-6 space-y-5 border border-border shadow-2xl animate-in fade-in">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="p-2 rounded-xl bg-amber-50 text-amber-600">
+                <div className="p-2 rounded-xl bg-warning-soft text-warning">
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-serif font-bold text-base text-[#0F0C3B]">Recommend a Service</h3>
+                  <h3 className="font-serif font-bold text-base text-foreground">Recommend a Service</h3>
                   <p className="text-xs text-foreground-muted">Suggest an vendor service for the family to review</p>
                 </div>
               </div>
@@ -536,8 +536,8 @@ export default function FamilyHubPage() {
                   (selectedGigId && (s.gigId === selectedGigId || s.id === selectedGigId)) ||
                   (customTitle.trim() && s.title?.toLowerCase().trim() === customTitle.toLowerCase().trim())
               ) && (
-                <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0" />
+                <div className="p-3 rounded-xl bg-warning-soft border border-warning/30 text-warning text-xs flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-warning shrink-0" />
                   <span>This service is already in your Family Hub. Each service can only be added once.</span>
                 </div>
               )}
@@ -546,7 +546,7 @@ export default function FamilyHubPage() {
                 <button
                   type="button"
                   onClick={() => setRecommendModalOpen(false)}
-                  className="px-4 py-2 rounded-xl bg-surface-sunken hover:bg-slate-200 text-foreground-secondary font-bold transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-surface-sunken hover:bg-surface-sunken text-foreground-secondary font-bold transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -567,7 +567,7 @@ export default function FamilyHubPage() {
                         (customTitle.trim() && s.title?.toLowerCase().trim() === customTitle.toLowerCase().trim())
                     )
                       ? "bg-warning-solid text-on-brand cursor-not-allowed"
-                      : "bg-[#0F0C3B] hover:bg-[#18124E]"
+                      : "bg-brand hover:bg-surface-sunken"
                   }`}
                 >
                   <span>
@@ -591,7 +591,7 @@ export default function FamilyHubPage() {
       <div className="bg-surface rounded-3xl p-6 sm:p-8 border border-border/90 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="px-3 py-0.5 rounded-full bg-indigo-50 border border-indigo-200 text-brand-primary text-[10px] font-extrabold uppercase tracking-wider">
+            <span className="px-3 py-0.5 rounded-full bg-info-soft border border-info/30 text-brand-primary text-[10px] font-extrabold uppercase tracking-wider">
               Family Collaboration Hub
             </span>
             <span className="text-xs text-foreground-muted font-medium">
@@ -599,7 +599,7 @@ export default function FamilyHubPage() {
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-[#0F0C3B] font-serif tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-foreground font-serif tracking-tight">
             {workspaceTitle}
           </h1>
 
@@ -612,7 +612,7 @@ export default function FamilyHubPage() {
         <div className="flex items-center gap-3 flex-wrap">
           <button
             onClick={() => setInviteModalOpen(true)}
-            className="px-4 py-2.5 rounded-xl bg-surface border border-border hover:bg-surface-elevated text-[#0F0C3B] text-xs font-bold transition-all shadow-2xs flex items-center gap-2 cursor-pointer"
+            className="px-4 py-2.5 rounded-xl bg-surface border border-border hover:bg-surface-elevated text-foreground text-xs font-bold transition-all shadow-2xs flex items-center gap-2 cursor-pointer"
           >
             <UserPlus className="w-4 h-4 text-brand-primary" />
             <span>Invite Member</span>
@@ -620,9 +620,9 @@ export default function FamilyHubPage() {
 
           <button
             onClick={() => setRecommendModalOpen(true)}
-            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-[#0F0C3B] text-xs font-extrabold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand to-brand-active hover:from-brand hover:to-brand-active text-foreground text-xs font-extrabold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
           >
-            <Plus className="w-4 h-4 text-[#0F0C3B]" />
+            <Plus className="w-4 h-4 text-foreground" />
             <span>Recommend a Service</span>
           </button>
         </div>
@@ -636,14 +636,14 @@ export default function FamilyHubPage() {
               <div
                 key={m.id}
                 title={`${m.name} (${m.role})`}
-                className="inline-block h-8 w-8 rounded-full ring-2 ring-white bg-[#0F0C3B] text-foreground text-[11px] font-bold flex items-center justify-center"
+                className="inline-block h-8 w-8 rounded-full ring-2 ring-white bg-brand text-foreground text-[11px] font-bold flex items-center justify-center"
               >
                 {m.avatar}
               </div>
             ))}
           </div>
           <span className="text-xs text-foreground-secondary font-medium">
-            <strong className="text-[#0F0C3B]">{members.length} member{members.length === 1 ? "" : "s"}</strong> active in this workspace
+            <strong className="text-foreground">{members.length} member{members.length === 1 ? "" : "s"}</strong> active in this workspace
           </span>
         </div>
 
@@ -664,7 +664,7 @@ export default function FamilyHubPage() {
             onClick={() => setFilterTab("all")}
             className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               filterTab === "all"
-                ? "bg-surface text-[#0F0C3B] shadow-xs"
+                ? "bg-surface text-foreground shadow-xs"
                 : "text-foreground-muted hover:text-foreground"
             }`}
           >
@@ -674,7 +674,7 @@ export default function FamilyHubPage() {
             onClick={() => setFilterTab("shortlisted")}
             className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               filterTab === "shortlisted"
-                ? "bg-surface text-[#0F0C3B] shadow-xs"
+                ? "bg-surface text-foreground shadow-xs"
                 : "text-foreground-muted hover:text-foreground"
             }`}
           >
@@ -684,7 +684,7 @@ export default function FamilyHubPage() {
             onClick={() => setFilterTab("booked")}
             className={`px-4 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
               filterTab === "booked"
-                ? "bg-surface text-[#0F0C3B] shadow-xs"
+                ? "bg-surface text-foreground shadow-xs"
                 : "text-foreground-muted hover:text-foreground"
             }`}
           >
@@ -724,19 +724,19 @@ export default function FamilyHubPage() {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/20" />
 
                   {/* Top Floating Badges */}
                   <div className="absolute top-3 left-3 right-3 flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full bg-surface/95 backdrop-blur-md text-[10px] font-extrabold text-[#0F0C3B] uppercase tracking-wider shadow-sm">
+                    <span className="px-3 py-1 rounded-full bg-surface/95 backdrop-blur-md text-[10px] font-extrabold text-foreground uppercase tracking-wider shadow-sm">
                       {service.category}
                     </span>
 
                     <span
                       className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold shadow-sm ${
                         isBooked
-                          ? "bg-success-solid text-white text-foreground"
-                          : "bg-warning-solid text-on-brand text-slate-950"
+                          ? "bg-success-solid text-foreground text-foreground"
+                          : "bg-warning-solid text-on-brand text-on-brand"
                       }`}
                     >
                       {isBooked ? "Booked" : "Recommended"}
@@ -761,7 +761,7 @@ export default function FamilyHubPage() {
                   <div>
                     {/* Vendor Subtitle */}
                     <div className="flex items-center justify-between text-xs text-foreground-muted mb-2">
-                      <div className="flex items-center gap-1.5 font-semibold text-[#0F0C3B]">
+                      <div className="flex items-center gap-1.5 font-semibold text-foreground">
                         <span>{service.vendorName}</span>
                         <span className="text-[10px] px-1 bg-surface-sunken text-foreground-secondary rounded">
                           {service.vendorTier}
@@ -774,12 +774,12 @@ export default function FamilyHubPage() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="font-serif font-bold text-base text-[#0F0C3B] group-hover:text-brand-primary transition-colors line-clamp-1">
+                    <h3 className="font-serif font-bold text-base text-foreground group-hover:text-brand-primary transition-colors line-clamp-1">
                       {service.title}
                     </h3>
 
                     {/* Recommendation Note Box */}
-                    <div className="mt-3 p-3 rounded-2xl bg-indigo-50/60 border border-indigo-100 space-y-1 text-xs">
+                    <div className="mt-3 p-3 rounded-2xl bg-info-soft/60 border border-info/30 space-y-1 text-xs">
                       <div className="flex items-center justify-between">
                         <span className="text-[10px] font-bold text-brand-primary flex items-center gap-1">
                           <Users2 className="w-3 h-3" />
@@ -819,7 +819,7 @@ export default function FamilyHubPage() {
                       {!isBooked && (
                         <button
                           onClick={(e) => handleDeleteClick(e, service.boardItemId, service.title)}
-                          className="p-2 rounded-xl text-foreground-muted hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer"
+                          className="p-2 rounded-xl text-foreground-muted hover:text-danger hover:bg-danger-soft transition-colors cursor-pointer"
                           title="Remove Recommendation"
                         >
                           <Trash2 className="w-4 h-4" />
@@ -832,7 +832,7 @@ export default function FamilyHubPage() {
                       <Link
                         href={`/services/${service.gigId || service.id}`}
                         onClick={(e) => e.stopPropagation()}
-                        className="py-2 px-3 rounded-xl bg-surface-elevated hover:bg-surface-sunken text-[#0F0C3B] text-xs font-bold text-center border border-border transition-colors flex items-center justify-center gap-1"
+                        className="py-2 px-3 rounded-xl bg-surface-elevated hover:bg-surface-sunken text-foreground text-xs font-bold text-center border border-border transition-colors flex items-center justify-center gap-1"
                       >
                         <span>View Details</span>
                         <ChevronRight className="w-3.5 h-3.5" />
@@ -841,7 +841,7 @@ export default function FamilyHubPage() {
                       {checkoutHref ? <Link
                         href={checkoutHref}
                         onClick={(e) => e.stopPropagation()}
-                        className="py-2 px-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-[#0F0C3B] text-xs font-extrabold text-center shadow-xs transition-all flex items-center justify-center gap-1"
+                        className="py-2 px-3 rounded-xl bg-gradient-to-r from-brand to-brand-active hover:from-brand hover:to-brand-active text-foreground text-xs font-extrabold text-center shadow-xs transition-all flex items-center justify-center gap-1"
                       ><span>Book Service</span><ArrowRight className="w-3.5 h-3.5" /></Link> : <span title="This service has no available paid package" className="py-2 px-3 rounded-xl bg-surface-sunken text-foreground-muted text-xs font-bold text-center">Package unavailable</span>}
                     </div>
                   </div>
@@ -853,11 +853,11 @@ export default function FamilyHubPage() {
       ) : (
         /* Clean Empty State when 0 services exist */
         <div className="p-16 text-center bg-surface rounded-3xl border border-border shadow-xs max-w-lg mx-auto my-12 space-y-4">
-          <div className="w-14 h-14 rounded-3xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-brand-primary mx-auto">
+          <div className="w-14 h-14 rounded-3xl bg-info-soft border border-info/30 flex items-center justify-center text-brand-primary mx-auto">
             <ShoppingBag className="w-7 h-7 text-brand-primary" />
           </div>
           <div>
-            <h3 className="text-lg font-serif font-bold text-[#0F0C3B]">No Service Recommendations Yet</h3>
+            <h3 className="text-lg font-serif font-bold text-foreground">No Service Recommendations Yet</h3>
             <p className="text-xs text-foreground-muted mt-1 max-w-sm mx-auto leading-relaxed">
               Collaborate with your family! Recommend vendor services like cinematography, live music, floral design, or catering to review and book together.
             </p>
@@ -865,14 +865,14 @@ export default function FamilyHubPage() {
           <div className="flex items-center justify-center gap-3 pt-2">
             <button
               onClick={() => setRecommendModalOpen(true)}
-              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-[#0F0C3B] text-xs font-bold shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
+              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand to-brand-active text-foreground text-xs font-bold shadow-xs transition-all cursor-pointer flex items-center gap-1.5"
             >
-              <Plus className="w-3.5 h-3.5 text-[#0F0C3B]" />
+              <Plus className="w-3.5 h-3.5 text-foreground" />
               <span>Recommend a Service</span>
             </button>
             <Link
               href="/services"
-              className="px-4 py-2.5 rounded-xl bg-surface-sunken hover:bg-slate-200 text-foreground-secondary text-xs font-bold transition-colors"
+              className="px-4 py-2.5 rounded-xl bg-surface-sunken hover:bg-surface-sunken text-foreground-secondary text-xs font-bold transition-colors"
             >
               Browse Catalog
             </Link>
