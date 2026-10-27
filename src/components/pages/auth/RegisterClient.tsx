@@ -427,13 +427,13 @@ export default function RegisterClient() {
 
                   {/* Duplicate Email Error Callout */}
                   {duplicateEmailError && (
-                    <div className="p-3.5 rounded-xl bg-danger-soft border border-danger/30 text-red-800 text-xs flex items-start gap-2.5 animate-in fade-in duration-200">
-                      <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
+                    <div className="p-3.5 rounded-xl bg-danger-soft border border-danger/30 text-danger text-xs flex items-start gap-2.5 animate-in fade-in duration-200">
+                      <AlertCircle className="w-4 h-4 text-danger flex-shrink-0 mt-0.5" />
                       <div className="space-y-1">
-                        <p className="font-semibold text-red-900">{duplicateEmailError}</p>
-                        <p className="text-[11px] text-red-700">
+                        <p className="font-semibold text-danger">{duplicateEmailError}</p>
+                        <p className="text-[11px] text-danger">
                           Already have an account?{" "}
-                          <Link href="/login" className="font-bold underline text-red-900 hover:text-black">
+                          <Link href="/login" className="font-bold underline text-danger hover:text-foreground">
                             Log in here
                           </Link>
                         </p>
@@ -463,7 +463,7 @@ export default function RegisterClient() {
                       }}
                       className="h-10 px-3 flex items-center justify-center gap-2 bg-surface-elevated hover:bg-surface-elevated border border-border text-foreground text-xs font-semibold rounded-xl transition-all shadow-2xs cursor-pointer"
                     >
-                      <FaApple className="w-4 h-4 text-base text-black" />
+                      <FaApple className="w-4 h-4 text-base text-foreground" />
                       <span>Apple</span>
                     </button>
                   </div>
@@ -566,7 +566,7 @@ export default function RegisterClient() {
                           className={cn(
                             "w-full h-11 px-3.5 pl-9 pr-10 text-sm bg-surface-elevated text-obsidian border rounded-xl focus:bg-surface focus:outline-none transition-all",
                             isEmailValid
-                              ? "border-success/30 focus:border-emerald-600"
+                              ? "border-success/30 focus:border-success"
                               : "border-border focus:border-border"
                           )}
                         />
@@ -675,9 +675,9 @@ export default function RegisterClient() {
                           className={cn(
                             "w-full h-11 px-3.5 pl-9 pr-10 text-sm bg-surface-elevated text-obsidian border rounded-xl focus:bg-surface focus:outline-none transition-all",
                             passwordsMatch
-                              ? "border-success/30 focus:border-emerald-600"
+                              ? "border-success/30 focus:border-success"
                               : passwordsMismatch
-                              ? "border-red-400 focus:border-red-500"
+                              ? "border-danger focus:border-danger"
                               : "border-border focus:border-border"
                           )}
                         />
@@ -698,7 +698,7 @@ export default function RegisterClient() {
                         </p>
                       )}
                       {passwordsMismatch && (
-                        <p className="text-[11px] text-red-600 font-medium flex items-center gap-1 pt-0.5">
+                        <p className="text-[11px] text-danger font-medium flex items-center gap-1 pt-0.5">
                           <AlertCircle className="w-3 h-3" />
                           <span>Passwords do not match</span>
                         </p>
