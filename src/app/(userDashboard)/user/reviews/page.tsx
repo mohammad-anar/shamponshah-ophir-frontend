@@ -139,8 +139,8 @@ export default function UserReviewsPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">Reviews & Testimonials</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#EDE9FE] text-[#0F0C3B]">
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">Reviews & Testimonials</h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-soft text-foreground">
               Verified Feedback
             </span>
           </div>
@@ -152,11 +152,11 @@ export default function UserReviewsPage() {
 
       {/* Pending Reviews Queue */}
       {pending.length > 0 && (
-        <div className="bg-gradient-to-r from-indigo-50/80 to-purple-50/80 border border-indigo-100 rounded-2xl p-5 space-y-3">
+        <div className="bg-gradient-to-r from-indigo-50/80 to-purple-50/80 border border-info/30 rounded-2xl p-5 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-brand-primary" />
-              <h2 className="text-sm font-bold text-[#0F0C3B]">Pending Reviews ({pending.length})</h2>
+              <h2 className="text-sm font-bold text-foreground">Pending Reviews ({pending.length})</h2>
             </div>
             <span className="text-[11px] text-foreground-muted font-semibold">Earn 100 Ophir Reward Points</span>
           </div>
@@ -165,14 +165,14 @@ export default function UserReviewsPage() {
             {pending.map((p) => (
               <div 
                 key={p.id}
-                className="bg-surface p-4 rounded-xl border border-indigo-100 shadow-xs flex items-center justify-between gap-3"
+                className="bg-surface p-4 rounded-xl border border-info/30 shadow-xs flex items-center justify-between gap-3"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#0F0C3B] text-foreground flex items-center justify-center font-bold text-xs">
+                  <div className="w-10 h-10 rounded-full bg-brand text-foreground flex items-center justify-center font-bold text-xs">
                     {p.avatar}
                   </div>
                   <div>
-                    <h3 className="text-xs font-bold text-[#0F0C3B]">{p.vendorName}</h3>
+                    <h3 className="text-xs font-bold text-foreground">{p.vendorName}</h3>
                     <p className="text-[11px] text-foreground-muted truncate max-w-[200px]">{p.serviceTitle}</p>
                     <p className="text-[10px] text-foreground-muted">Completed on {p.completedDate}</p>
                   </div>
@@ -192,18 +192,18 @@ export default function UserReviewsPage() {
 
       {/* Submitted Reviews List */}
       <div className="bg-surface border border-border rounded-2xl p-5 space-y-4 shadow-xs">
-        <h2 className="text-sm font-bold text-[#0F0C3B]">Your Past Reviews ({submitted.length})</h2>
+        <h2 className="text-sm font-bold text-foreground">Your Past Reviews ({submitted.length})</h2>
 
         <div className="divide-y divide-border space-y-4">
           {submitted.map((rev) => (
             <div key={rev.id} className="pt-4 first:pt-0 space-y-3">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#0F0C3B] text-foreground flex items-center justify-center font-bold text-xs">
+                  <div className="w-10 h-10 rounded-full bg-brand text-foreground flex items-center justify-center font-bold text-xs">
                     {rev.avatar}
                   </div>
                   <div>
-                    <h3 className="text-xs font-bold text-[#0F0C3B]">{rev.vendorName}</h3>
+                    <h3 className="text-xs font-bold text-foreground">{rev.vendorName}</h3>
                     <p className="text-[11px] text-foreground-muted">{rev.serviceTitle}</p>
                   </div>
                 </div>
@@ -227,7 +227,7 @@ export default function UserReviewsPage() {
 
               {/* Vendor Public Reply if any */}
               {rev.responseFromVendor && (
-                <div className="ml-13 p-3 bg-[#F8F9FD] border border-border rounded-xl space-y-1">
+                <div className="ml-13 p-3 bg-surface-elevated border border-border rounded-xl space-y-1">
                   <div className="flex items-center gap-1.5 text-[11px] font-bold text-brand-primary">
                     <MessageSquare className="w-3.5 h-3.5" /> Response from {rev.vendorName}
                   </div>
@@ -243,11 +243,11 @@ export default function UserReviewsPage() {
 
       {/* Write Review Modal */}
       {selectedPending && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-2xl max-w-lg w-full p-6 space-y-5 shadow-2xl border border-border">
             <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
-                <h2 className="text-sm font-bold text-[#0F0C3B]">Rate & Review Vendor</h2>
+                <h2 className="text-sm font-bold text-foreground">Rate & Review Vendor</h2>
                 <p className="text-xs text-foreground-muted">{selectedPending.vendorName} &bull; {selectedPending.serviceTitle}</p>
               </div>
               <button onClick={() => setSelectedPending(null)} className="text-foreground-muted hover:text-foreground-secondary">
@@ -290,7 +290,7 @@ export default function UserReviewsPage() {
                   placeholder="Share details about punctuality, quality of performance, professionalism, communication..."
                   value={reviewComment}
                   onChange={(e) => setReviewComment(e.target.value)}
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-3 text-foreground focus:outline-none focus:border-brand-primary resize-none"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-3 text-foreground focus:outline-none focus:border-brand-primary resize-none"
                 />
               </div>
 
@@ -298,7 +298,7 @@ export default function UserReviewsPage() {
                 <button
                   type="button"
                   onClick={() => setSelectedPending(null)}
-                  className="px-4 py-2 bg-surface-sunken hover:bg-slate-200 text-foreground-secondary rounded-xl font-bold"
+                  className="px-4 py-2 bg-surface-sunken hover:bg-surface-sunken text-foreground-secondary rounded-xl font-bold"
                 >
                   Cancel
                 </button>
