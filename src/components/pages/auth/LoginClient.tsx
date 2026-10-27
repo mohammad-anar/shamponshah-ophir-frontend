@@ -150,31 +150,31 @@ export default function LoginPage() {
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-6xl">
           {/* Left: Sign In Form Card */}
           <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-center">
-            <div className="w-full max-w-md mx-auto bg-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-luxury border border-[#EAE6DF] space-y-6">
+            <div className="w-full max-w-md mx-auto bg-[#121418] rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl border border-[#26282E] space-y-6 text-white">
               {/* Vault Header Pill */}
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF2FF] text-[#3730A3] text-xs font-semibold uppercase tracking-wider">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#3730A3]" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1A1D24] border border-[#DFB76C]/40 text-[#DFB76C] text-xs font-semibold uppercase tracking-wider">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#DFB76C]" />
                 <span>OPHIR RESERVE SECURED</span>
               </div>
 
               {/* Title & Description */}
               <div className="space-y-1">
-                <h1 className="font-serif text-3xl sm:text-4xl font-bold text-obsidian tracking-tight">
+                <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white tracking-tight">
                   Welcome back
                 </h1>
-                <p className="text-slate-500 text-xs sm:text-sm">
+                <p className="text-slate-400 text-xs sm:text-sm">
                   Sign in or use 1-click demo login to access your role dashboard.
                 </p>
               </div>
 
               {/* Quick 1-Click Demo Login Box */}
-              <div className="p-3.5 rounded-2xl bg-gradient-to-br from-[#FBF9F5] to-[#F5F2EB] border border-[#E2DDD3] space-y-2.5 shadow-2xs">
+              <div className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-2.5 shadow-md">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-slate-800">
-                    <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-slate-200">
+                    <Sparkles className="w-3.5 h-3.5 text-[#DFB76C]" />
                     <span>Instant Demo Login (Seed Users)</span>
                   </div>
-                  <span className="text-[10px] text-slate-500 font-mono">Ophir1234!</span>
+                  <span className="text-[10px] text-slate-400 font-mono">Ophir1234!</span>
                 </div>
 
                 <div className="grid grid-cols-1 gap-2">
@@ -183,25 +183,25 @@ export default function LoginPage() {
                     type="button"
                     disabled={isLoading || !!demoLoadingRole}
                     onClick={() => handleDirectDemoLogin("CLIENT")}
-                    className="w-full px-3 py-2.5 rounded-xl border border-indigo-200 bg-white hover:bg-indigo-50/60 active:scale-99 transition-all text-left flex items-center justify-between group shadow-2xs cursor-pointer"
+                    className="w-full px-3 py-2.5 rounded-xl border border-indigo-500/30 bg-[#1A1D24] hover:bg-indigo-950/40 active:scale-99 transition-all text-left flex items-center justify-between group shadow-sm cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                      <div className="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                         {demoLoadingRole === "CLIENT" ? (
-                          <Loader2 className="w-4 h-4 animate-spin text-indigo-700" />
+                          <Loader2 className="w-4 h-4 animate-spin text-indigo-400" />
                         ) : (
                           <User className="w-4 h-4" />
                         )}
                       </div>
                       <div className="truncate">
-                        <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                        <div className="text-xs font-bold text-white flex items-center gap-1.5">
                           <span>Login as Client</span>
-                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-indigo-100 text-indigo-700">/user</span>
+                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-indigo-500/20 text-indigo-300">/user</span>
                         </div>
-                        <div className="text-[11px] text-slate-500 truncate">sarah@ophir.com (Sarah Jenkins)</div>
+                        <div className="text-[11px] text-slate-400 truncate">sarah@ophir.com (Sarah Jenkins)</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-indigo-600 group-hover:translate-x-0.5 transition-all flex-shrink-0 ml-1" />
+                    <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition-all flex-shrink-0 ml-1" />
                   </button>
 
                   {/* Demo Vendor Button */}
@@ -209,25 +209,25 @@ export default function LoginPage() {
                     type="button"
                     disabled={isLoading || !!demoLoadingRole}
                     onClick={() => handleDirectDemoLogin("VENDOR")}
-                    className="w-full px-3 py-2.5 rounded-xl border border-emerald-200 bg-white hover:bg-emerald-50/60 active:scale-99 transition-all text-left flex items-center justify-between group shadow-2xs cursor-pointer"
+                    className="w-full px-3 py-2.5 rounded-xl border border-emerald-500/30 bg-[#1A1D24] hover:bg-emerald-950/40 active:scale-99 transition-all text-left flex items-center justify-between group shadow-sm cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                      <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                         {demoLoadingRole === "VENDOR" ? (
-                          <Loader2 className="w-4 h-4 animate-spin text-emerald-700" />
+                          <Loader2 className="w-4 h-4 animate-spin text-emerald-400" />
                         ) : (
                           <Store className="w-4 h-4" />
                         )}
                       </div>
                       <div className="truncate">
-                        <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                        <div className="text-xs font-bold text-white flex items-center gap-1.5">
                           <span>Login as Vendor</span>
-                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-emerald-100 text-emerald-700">/vendor</span>
+                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-emerald-500/20 text-emerald-300">/vendor</span>
                         </div>
-                        <div className="text-[11px] text-slate-500 truncate">luminary@ophir.com (Luminary Studios)</div>
+                        <div className="text-[11px] text-slate-400 truncate">luminary@ophir.com (Luminary Studios)</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all flex-shrink-0 ml-1" />
+                    <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all flex-shrink-0 ml-1" />
                   </button>
 
                   {/* Demo Admin Button */}
@@ -235,44 +235,44 @@ export default function LoginPage() {
                     type="button"
                     disabled={isLoading || !!demoLoadingRole}
                     onClick={() => handleDirectDemoLogin("ADMIN")}
-                    className="w-full px-3 py-2.5 rounded-xl border border-purple-200 bg-white hover:bg-purple-50/60 active:scale-99 transition-all text-left flex items-center justify-between group shadow-2xs cursor-pointer"
+                    className="w-full px-3 py-2.5 rounded-xl border border-amber-500/30 bg-[#1A1D24] hover:bg-amber-950/40 active:scale-99 transition-all text-left flex items-center justify-between group shadow-sm cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="w-8 h-8 rounded-lg bg-purple-100 text-purple-700 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                      <div className="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                         {demoLoadingRole === "ADMIN" ? (
-                          <Loader2 className="w-4 h-4 animate-spin text-purple-700" />
+                          <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
                         ) : (
                           <Shield className="w-4 h-4" />
                         )}
                       </div>
                       <div className="truncate">
-                        <div className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                        <div className="text-xs font-bold text-white flex items-center gap-1.5">
                           <span>Login as Admin</span>
-                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-purple-100 text-purple-700">/admin</span>
+                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-amber-500/20 text-amber-300">/admin</span>
                         </div>
-                        <div className="text-[11px] text-slate-500 truncate">admin@ophir.com (Operations Director)</div>
+                        <div className="text-[11px] text-slate-400 truncate">admin@ophir.com (Operations Director)</div>
                       </div>
                     </div>
-                    <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-purple-600 group-hover:translate-x-0.5 transition-all flex-shrink-0 ml-1" />
+                    <ArrowRight className="w-4 h-4 text-slate-500 group-hover:text-amber-400 group-hover:translate-x-0.5 transition-all flex-shrink-0 ml-1" />
                   </button>
                 </div>
               </div>
 
               {/* Unverified Account Warning & Resend Option */}
               {unverifiedUser && (
-                <div className="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 text-xs space-y-3 shadow-xs">
+                <div className="p-4 rounded-2xl bg-amber-950/40 border border-amber-500/40 text-amber-200 text-xs space-y-3 shadow-xs">
                   <div className="flex items-start gap-2.5">
-                    <AlertCircle className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+                    <AlertCircle className="w-5 h-5 text-[#DFB76C] flex-shrink-0 mt-0.5" />
                     <div className="space-y-1">
-                      <h4 className="font-bold text-amber-950 text-sm">
+                      <h4 className="font-bold text-amber-300 text-sm">
                         {unverifiedUser.role?.toUpperCase() === "VENDOR" ? "Vendor Email Verification Required" : "Email Verification Required"}
                       </h4>
-                      <p className="text-amber-800 text-xs leading-relaxed">
-                        Your account email (<span className="font-semibold">{unverifiedUser.email}</span>) is not verified. Please verify your email with the 6-digit code to activate your account.
+                      <p className="text-amber-200/90 text-xs leading-relaxed">
+                        Your account email (<span className="font-semibold text-white">{unverifiedUser.email}</span>) is not verified. Please verify your email with the 6-digit code to activate your account.
                       </p>
                     </div>
                   </div>
-                  <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-amber-200">
+                  <div className="flex flex-wrap items-center gap-2 pt-1 border-t border-amber-500/20">
                     <button
                       type="button"
                       disabled={isResendingVerification}
@@ -284,13 +284,13 @@ export default function LoginPage() {
                           toast.error(err?.data?.message || "Failed to resend verification email.");
                         }
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white font-semibold text-xs transition-colors shadow-2xs disabled:opacity-50 cursor-pointer"
+                      className="px-3 py-1.5 rounded-lg bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] font-bold text-xs transition-colors shadow-xs disabled:opacity-50 cursor-pointer"
                     >
                       {isResendingVerification ? "Sending..." : "Resend Verification Email"}
                     </button>
                     <Link
                       href={`/verify-email?email=${encodeURIComponent(unverifiedUser.email)}&role=${unverifiedUser.role?.toLowerCase() || "client"}`}
-                      className="px-3 py-1.5 rounded-lg bg-white border border-amber-300 hover:bg-amber-50 text-amber-900 font-semibold text-xs transition-colors"
+                      className="px-3 py-1.5 rounded-lg bg-[#1A1D24] border border-[#26282E] hover:border-[#DFB76C] text-[#DFB76C] font-semibold text-xs transition-colors"
                     >
                       Enter 6-Digit Code
                     </Link>
@@ -300,10 +300,10 @@ export default function LoginPage() {
 
               {/* Error Callout Toggleable */}
               {hasError && (
-                <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-start gap-2.5">
-                  <AlertCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                <div className="p-3.5 rounded-xl bg-rose-950/40 border border-rose-500/40 text-rose-300 text-xs flex items-start gap-2.5">
+                  <AlertCircle className="w-4 h-4 text-rose-400 mt-0.5 flex-shrink-0" />
                   <div>
-                    <span className="font-medium">Incorrect email or password.</span> Try again or reset your password.
+                    <span className="font-medium text-white">Incorrect email or password.</span> Try again or reset your password.
                   </div>
                 </div>
               )}
@@ -316,10 +316,10 @@ export default function LoginPage() {
                     toast.info("Connecting to Google authentication...");
                     setTimeout(() => router.push("/"), 1200);
                   }}
-                  className="w-full h-11 px-4 flex items-center justify-center gap-3 bg-[#F8F7F4] hover:bg-[#F2EFE8] border border-[#E2DDD3] text-slate-800 text-xs sm:text-sm font-semibold rounded-xl transition-all shadow-2xs"
+                  className="w-full h-11 px-4 flex items-center justify-center gap-3 bg-[#16181F] hover:bg-[#1E222B] border border-[#26282E] hover:border-[#DFB76C]/50 text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition-all shadow-sm cursor-pointer"
                 >
                   <FcGoogle className="w-4 h-4 text-lg" />
-                  <span>Continue with Google</span>
+                  <span className="text-slate-200 font-medium">Continue with Google</span>
                 </button>
 
                 <button
@@ -328,17 +328,17 @@ export default function LoginPage() {
                     toast.info("Connecting to Apple authentication...");
                     setTimeout(() => router.push("/"), 1200);
                   }}
-                  className="w-full h-11 px-4 flex items-center justify-center gap-3 bg-[#F8F7F4] hover:bg-[#F2EFE8] border border-[#E2DDD3] text-slate-800 text-xs sm:text-sm font-semibold rounded-xl transition-all shadow-2xs"
+                  className="w-full h-11 px-4 flex items-center justify-center gap-3 bg-[#16181F] hover:bg-[#1E222B] border border-[#26282E] hover:border-[#DFB76C]/50 text-slate-200 text-xs sm:text-sm font-semibold rounded-xl transition-all shadow-sm cursor-pointer"
                 >
-                  <FaApple className="w-4 h-4 text-lg text-black" />
-                  <span>Continue with Apple</span>
+                  <FaApple className="w-4 h-4 text-lg text-white" />
+                  <span className="text-slate-200 font-medium">Continue with Apple</span>
                 </button>
               </div>
 
               {/* Divider */}
               <div className="relative flex items-center justify-center">
-                <div className="w-full border-t border-[#EAE6DF]" />
-                <span className="absolute bg-white px-3 text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                <div className="w-full border-t border-[#26282E]" />
+                <span className="absolute bg-[#121418] px-3 text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
                   OR
                 </span>
               </div>
@@ -348,7 +348,7 @@ export default function LoginPage() {
                 {!isPhoneMode ? (
                   <>
                     <div className="space-y-1.5">
-                      <label className="block text-xs font-semibold text-slate-700">
+                      <label className="block text-xs font-semibold text-slate-300">
                         Email address
                       </label>
                       <div className="relative">
@@ -358,14 +358,14 @@ export default function LoginPage() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="name@example.com"
-                          className="w-full h-11 px-3.5 pr-10 text-sm bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-white focus:border-gold-500 focus:outline-none transition-all"
+                          className="w-full h-11 px-3.5 pr-10 text-sm bg-[#16181F] text-white border border-[#26282E] rounded-xl focus:bg-[#1A1D24] focus:border-[#DFB76C] focus:outline-none transition-all placeholder:text-slate-500"
                         />
-                        <Mail className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                        <Mail className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                       </div>
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="block text-xs font-semibold text-slate-700">
+                      <label className="block text-xs font-semibold text-slate-300">
                         Password
                       </label>
                       <div className="relative">
@@ -375,21 +375,21 @@ export default function LoginPage() {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="••••••••••••"
-                          className="w-full h-11 px-3.5 pr-10 text-sm bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-white focus:border-gold-500 focus:outline-none transition-all"
+                          className="w-full h-11 px-3.5 pr-10 text-sm bg-[#16181F] text-white border border-[#26282E] rounded-xl focus:bg-[#1A1D24] focus:border-[#DFB76C] focus:outline-none transition-all placeholder:text-slate-500"
                         />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-obsidian"
+                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#DFB76C] cursor-pointer"
                         >
-                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4 text-slate-600" />}
+                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4 text-slate-400" />}
                         </button>
                       </div>
                     </div>
                   </>
                 ) : (
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-semibold text-slate-700">
+                    <label className="block text-xs font-semibold text-slate-300">
                       Mobile Phone Number
                     </label>
                     <div className="relative">
@@ -399,9 +399,9 @@ export default function LoginPage() {
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         placeholder="+1 (555) 000-0000"
-                        className="w-full h-11 px-3.5 pr-10 text-sm bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-white focus:border-gold-500 focus:outline-none transition-all"
+                        className="w-full h-11 px-3.5 pr-10 text-sm bg-[#16181F] text-white border border-[#26282E] rounded-xl focus:bg-[#1A1D24] focus:border-[#DFB76C] focus:outline-none transition-all placeholder:text-slate-500"
                       />
-                      <Smartphone className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                      <Smartphone className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
                     </div>
                     <p className="text-[11px] text-slate-400">
                       We will send a single-use login passcode via SMS.
@@ -411,19 +411,19 @@ export default function LoginPage() {
 
                 {/* Remember Me & Forgot Password */}
                 <div className="flex items-center justify-between text-xs pt-1">
-                  <label className="flex items-center gap-2 cursor-pointer text-slate-600 select-none">
+                  <label className="flex items-center gap-2 cursor-pointer text-slate-400 select-none">
                     <input
                       type="checkbox"
                       checked={rememberMe}
                       onChange={(e) => setRememberMe(e.target.checked)}
-                      className="w-4 h-4 rounded border-slate-300 text-[#0F1228] focus:ring-0 cursor-pointer"
+                      className="w-4 h-4 rounded border-[#26282E] bg-[#16181F] text-[#DFB76C] focus:ring-0 cursor-pointer"
                     />
                     <span>Remember me</span>
                   </label>
 
                   <Link
                     href="/forgot-password"
-                    className="font-semibold text-[#0F1228] hover:text-gold-600 hover:underline transition-colors"
+                    className="font-semibold text-[#DFB76C] hover:text-[#ECC870] hover:underline transition-colors"
                   >
                     Forgot password?
                   </Link>
@@ -433,10 +433,10 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full h-12 flex items-center justify-center gap-2 bg-[#4F46E5] hover:bg-[#4338CA] active:scale-99 text-white font-semibold rounded-xl shadow-md transition-all mt-2"
+                  className="w-full h-12 flex items-center justify-center gap-2 bg-[#DFB76C] hover:bg-[#ECC870] active:scale-99 text-[#0B0C0E] font-bold rounded-xl shadow-md transition-all mt-2 cursor-pointer"
                 >
                   {isLoading ? (
-                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <div className="w-5 h-5 border-2 border-[#0B0C0E]/30 border-t-[#0B0C0E] rounded-full animate-spin" />
                   ) : (
                     <>
                       <span>Sign in</span>
@@ -449,18 +449,18 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setIsPhoneMode(!isPhoneMode)}
-                  className="w-full text-center py-1 text-xs font-semibold text-[#0F1228] hover:underline"
+                  className="w-full text-center py-1 text-xs font-semibold text-[#DFB76C] hover:underline cursor-pointer"
                 >
                   {isPhoneMode ? "Sign in with email and password" : "Sign in with a phone code"}
                 </button>
               </form>
 
               {/* Bottom Join CTA */}
-              <div className="pt-2 text-center text-xs text-slate-600 border-t border-[#EAE6DF]">
+              <div className="pt-2 text-center text-xs text-slate-400 border-t border-[#26282E]">
                 <span>New to Ophir Reserve? </span>
                 <Link
                   href="/register/select-role"
-                  className="font-bold text-[#0F1228] hover:text-gold-600 hover:underline"
+                  className="font-bold text-[#DFB76C] hover:text-[#ECC870] hover:underline"
                 >
                   Join now
                 </Link>
