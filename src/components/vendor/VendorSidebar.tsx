@@ -65,7 +65,7 @@ export default function VendorSidebar({ isOpen, onClose }: VendorSidebarProps) {
           href: "/vendor/orders", 
           icon: ShoppingBag, 
           badge: activeOrdersCount > 0 ? String(activeOrdersCount) : undefined, 
-          badgeColor: "bg-indigo-100 text-indigo-800" 
+          badgeColor: "bg-info-soft text-info" 
         },
         { 
           label: "Messages", 
@@ -103,20 +103,20 @@ export default function VendorSidebar({ isOpen, onClose }: VendorSidebarProps) {
       {isOpen && (
         <div
           onClick={onClose}
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden backdrop-blur-xs transition-opacity"
+          className="fixed inset-0 bg-background/50 z-40 lg:hidden backdrop-blur-xs transition-opacity"
         />
       )}
 
       <aside className={cn(
-        "fixed top-0 bottom-0 left-0 z-50 w-60 bg-[#0B0C0E] border-r border-[#26282E] flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0",
+        "fixed top-0 bottom-0 left-0 z-50 w-60 bg-background border-r border-border flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         {/* Brand header */}
-        <div className="h-16 flex items-center justify-between px-5 border-b border-[#26282E] bg-[#0B0C0E]">
+        <div className="h-16 flex items-center justify-between px-5 border-b border-border bg-background">
           <Logo variant="vendor" href="/vendor" />
           <button
             onClick={onClose}
-            className="lg:hidden p-1.5 rounded-none text-foreground-muted hover:text-foreground hover:bg-[#16181F]"
+            className="lg:hidden p-1.5 rounded-none text-foreground-muted hover:text-foreground hover:bg-surface-elevated"
           >
             <X className="w-5 h-5" />
           </button>
@@ -126,7 +126,7 @@ export default function VendorSidebar({ isOpen, onClose }: VendorSidebarProps) {
         <div className="flex-1 overflow-y-auto px-3 py-4 space-y-5 custom-scrollbar">
           {navSections.map((sec) => (
             <div key={sec.title}>
-              <p className="px-3 text-[10px] font-bold text-[#DFB76C] tracking-[0.2em] mb-1.5 uppercase font-sans">
+              <p className="px-3 text-[10px] font-bold text-brand tracking-[0.2em] mb-1.5 uppercase font-sans">
                 {sec.title}
               </p>
               <div className="space-y-1">
@@ -141,17 +141,17 @@ export default function VendorSidebar({ isOpen, onClose }: VendorSidebarProps) {
                       className={cn(
                         "flex items-center justify-between px-3 py-2 rounded-none text-xs font-medium transition-all",
                         isActive
-                          ? "bg-[#16181F] text-[#DFB76C] border-l-2 border-[#DFB76C]"
-                          : "text-foreground-muted hover:bg-[#121418] hover:text-[#F3F4F6]"
+                          ? "bg-surface-elevated text-brand border-l-2 border-border-brand"
+                          : "text-foreground-muted hover:bg-surface hover:text-foreground"
                       )}
                     >
                       <div className="flex items-center gap-2.5">
-                        <Icon className={cn("w-4 h-4", isActive ? "text-[#DFB76C]" : "text-foreground-muted")} />
+                        <Icon className={cn("w-4 h-4", isActive ? "text-brand" : "text-foreground-muted")} />
                         <span>{item.label}</span>
                       </div>
 
                       {item.badge && (
-                        <span className="px-1.5 py-0.5 rounded-none text-[10px] font-bold bg-[#DFB76C] text-[#0B0C0E]">
+                        <span className="px-1.5 py-0.5 rounded-none text-[10px] font-bold bg-brand text-on-brand">
                           {item.badge}
                         </span>
                       )}
@@ -164,10 +164,10 @@ export default function VendorSidebar({ isOpen, onClose }: VendorSidebarProps) {
         </div>
 
         {/* Bottom Payout Guarantee Banner */}
-        <div className="p-3.5 border-t border-[#26282E] bg-[#121418] text-[11px] text-foreground-secondary flex items-start gap-2.5">
-          <ShieldCheck className="w-4 h-4 text-[#DFB76C] mt-0.5 flex-shrink-0" />
+        <div className="p-3.5 border-t border-border bg-surface text-[11px] text-foreground-secondary flex items-start gap-2.5">
+          <ShieldCheck className="w-4 h-4 text-brand mt-0.5 flex-shrink-0" />
           <div>
-            <p className="font-bold text-[#F3F4F6] font-serif">Keep 100% of your price</p>
+            <p className="font-bold text-foreground font-serif">Keep 100% of your price</p>
             <p className="text-[10px] text-foreground-muted">Clients pay 5% platform fee</p>
           </div>
         </div>
