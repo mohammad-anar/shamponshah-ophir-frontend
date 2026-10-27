@@ -43,7 +43,7 @@ export default function AdminOperationsOverview() {
         <div>
           <div className="flex items-center gap-2.5">
             <h1 className="text-2xl font-bold text-foreground">Operations overview</h1>
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40 tracking-wider">
+            <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-surface-sunken text-brand border border-border-brand/40 tracking-wider">
               LIVE POD 01
             </span>
           </div>
@@ -59,12 +59,12 @@ export default function AdminOperationsOverview() {
               value={timeRange}
               onChange={(e) => setTimeRange(e.target.value)}
               aria-label="Select report time range"
-              className="appearance-none bg-[#16181F] border border-[#26282E] text-foreground text-xs font-semibold rounded-lg pl-8 pr-7 py-2 hover:border-[#DFB76C] focus:outline-none focus:border-[#DFB76C] shadow-xs cursor-pointer"
+              className="appearance-none bg-surface-elevated border border-border text-foreground text-xs font-semibold rounded-lg pl-8 pr-7 py-2 hover:border-border-brand focus:outline-none focus:border-border-brand shadow-xs cursor-pointer"
             >
-              <option className="bg-[#16181F] text-foreground">Last 7 days</option>
-              <option className="bg-[#16181F] text-foreground">Last 30 days</option>
-              <option className="bg-[#16181F] text-foreground">This Quarter (Q4)</option>
-              <option className="bg-[#16181F] text-foreground">Year to Date</option>
+              <option className="bg-surface-elevated text-foreground">Last 7 days</option>
+              <option className="bg-surface-elevated text-foreground">Last 30 days</option>
+              <option className="bg-surface-elevated text-foreground">This Quarter (Q4)</option>
+              <option className="bg-surface-elevated text-foreground">Year to Date</option>
             </select>
             <Calendar className="w-3.5 h-3.5 text-foreground-muted absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
@@ -72,14 +72,14 @@ export default function AdminOperationsOverview() {
           {/* Sync Button */}
           <button
             onClick={handleSync}
-            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#16181F] border border-[#26282E] text-xs font-medium text-foreground-secondary hover:text-foreground hover:bg-[#1A1D24] shadow-xs transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-elevated border border-border text-xs font-medium text-foreground-secondary hover:text-foreground hover:bg-surface-sunken shadow-xs transition-colors cursor-pointer"
           >
-            <RefreshCw className={cn("w-3.5 h-3.5 text-foreground-muted", isFetching && "animate-spin text-[#DFB76C]")} />
+            <RefreshCw className={cn("w-3.5 h-3.5 text-foreground-muted", isFetching && "animate-spin text-brand")} />
             <span className="hidden md:inline">Synced 1m ago</span>
           </button>
 
           {/* Export Report CTA */}
-          <button className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold shadow-sm transition-colors cursor-pointer">
+          <button className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-brand hover:bg-brand-hover text-on-brand text-xs font-bold shadow-sm transition-colors cursor-pointer">
             <Download className="w-3.5 h-3.5" />
             <span>Export Report</span>
           </button>
@@ -89,10 +89,10 @@ export default function AdminOperationsOverview() {
       {/* 8 Metric KPI Cards Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Metric 1: GMV */}
-        <div className="bg-[#121418] p-4 rounded-xl border border-[#26282E] shadow-sm hover:border-border-brand/40 transition-all">
+        <div className="bg-surface p-4 rounded-xl border border-border shadow-sm hover:border-border-brand/40 transition-all">
           <div className="flex items-center justify-between text-foreground-muted mb-2">
             <span className="text-[11px] font-bold tracking-wider uppercase text-foreground-muted">Gross Merchandise Volume</span>
-            <span className="p-1.5 rounded-lg bg-[#16181F] text-[#DFB76C] border border-[#26282E]">
+            <span className="p-1.5 rounded-lg bg-surface-elevated text-brand border border-border">
               <DollarSign className="w-4 h-4" />
             </span>
           </div>
@@ -108,10 +108,10 @@ export default function AdminOperationsOverview() {
         </div>
 
         {/* Metric 2: Platform Revenue */}
-        <div className="bg-[#121418] p-4 rounded-xl border border-[#26282E] shadow-sm hover:border-border-brand/40 transition-all">
+        <div className="bg-surface p-4 rounded-xl border border-border shadow-sm hover:border-border-brand/40 transition-all">
           <div className="flex items-center justify-between text-foreground-muted mb-2">
             <span className="text-[11px] font-bold tracking-wider uppercase text-foreground-muted">Platform Fee Revenue</span>
-            <span className="p-1.5 rounded-lg bg-[#16181F] text-[#DFB76C] border border-[#26282E]">
+            <span className="p-1.5 rounded-lg bg-surface-elevated text-brand border border-border">
               <CreditCard className="w-4 h-4" />
             </span>
           </div>
@@ -127,10 +127,10 @@ export default function AdminOperationsOverview() {
         </div>
 
         {/* Metric 3: Active Clients */}
-        <div className="bg-[#121418] p-4 rounded-xl border border-[#26282E] shadow-sm hover:border-border-brand/40 transition-all">
+        <div className="bg-surface p-4 rounded-xl border border-border shadow-sm hover:border-border-brand/40 transition-all">
           <div className="flex items-center justify-between text-foreground-muted mb-2">
             <span className="text-[11px] font-bold tracking-wider uppercase text-foreground-muted">Active Clients</span>
-            <span className="p-1.5 rounded-lg bg-[#16181F] text-purple-400 border border-[#26282E]">
+            <span className="p-1.5 rounded-lg bg-surface-elevated text-info border border-border">
               <Users className="w-4 h-4" />
             </span>
           </div>
@@ -146,10 +146,10 @@ export default function AdminOperationsOverview() {
         </div>
 
         {/* Metric 4: Active Vendors */}
-        <div className="bg-[#121418] p-4 rounded-xl border border-[#26282E] shadow-sm hover:border-border-brand/40 transition-all">
+        <div className="bg-surface p-4 rounded-xl border border-border shadow-sm hover:border-border-brand/40 transition-all">
           <div className="flex items-center justify-between text-foreground-muted mb-2">
             <span className="text-[11px] font-bold tracking-wider uppercase text-foreground-muted">Active Vendors</span>
-            <span className="p-1.5 rounded-lg bg-[#16181F] text-warning border border-[#26282E]">
+            <span className="p-1.5 rounded-lg bg-surface-elevated text-warning border border-border">
               <Building2 className="w-4 h-4" />
             </span>
           </div>
@@ -165,10 +165,10 @@ export default function AdminOperationsOverview() {
         </div>
 
         {/* Metric 5: Open Client RFPs */}
-        <div className="bg-[#121418] p-4 rounded-xl border border-[#26282E] shadow-sm hover:border-border-brand/40 transition-all">
+        <div className="bg-surface p-4 rounded-xl border border-border shadow-sm hover:border-border-brand/40 transition-all">
           <div className="flex items-center justify-between text-foreground-muted mb-2">
             <span className="text-[11px] font-bold tracking-wider uppercase text-foreground-muted">Open Client RFPs</span>
-            <span className="p-1.5 rounded-lg bg-[#16181F] text-[#DFB76C] border border-[#26282E]">
+            <span className="p-1.5 rounded-lg bg-surface-elevated text-brand border border-border">
               <Briefcase className="w-4 h-4" />
             </span>
           </div>
@@ -182,13 +182,13 @@ export default function AdminOperationsOverview() {
         </div>
 
         {/* Metric 6: Orders in Escrow */}
-        <div className="bg-[#121418] p-4 rounded-xl border border-[#26282E] shadow-sm hover:border-border-brand/40 transition-all">
+        <div className="bg-surface p-4 rounded-xl border border-border shadow-sm hover:border-border-brand/40 transition-all">
           <div className="flex items-center justify-between text-foreground-muted mb-2">
             <div className="flex items-center gap-1.5">
               <span className="text-[11px] font-bold tracking-wider uppercase text-foreground-muted">Orders in Escrow</span>
-              <span className="text-[9px] font-bold bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40 px-1.5 py-0.2 rounded">Secured</span>
+              <span className="text-[9px] font-bold bg-surface-sunken text-brand border border-border-brand/40 px-1.5 py-0.2 rounded">Secured</span>
             </div>
-            <span className="p-1.5 rounded-lg bg-[#16181F] text-success border border-[#26282E]">
+            <span className="p-1.5 rounded-lg bg-surface-elevated text-success border border-border">
               <ShieldCheck className="w-4 h-4" />
             </span>
           </div>
@@ -201,10 +201,10 @@ export default function AdminOperationsOverview() {
         </div>
 
         {/* Metric 7: Pending Payouts */}
-        <div className="bg-[#121418] p-4 rounded-xl border border-[#26282E] shadow-sm hover:border-border-brand/40 transition-all">
+        <div className="bg-surface p-4 rounded-xl border border-border shadow-sm hover:border-border-brand/40 transition-all">
           <div className="flex items-center justify-between text-foreground-muted mb-2">
             <span className="text-[11px] font-bold tracking-wider uppercase text-foreground-muted">Pending Payouts</span>
-            <span className="p-1.5 rounded-lg bg-[#16181F] text-[#DFB76C] border border-[#26282E]">
+            <span className="p-1.5 rounded-lg bg-surface-elevated text-brand border border-border">
               <CreditCard className="w-4 h-4" />
             </span>
           </div>
@@ -217,13 +217,13 @@ export default function AdminOperationsOverview() {
         </div>
 
         {/* Metric 8: Open Disputes */}
-        <div className="bg-[#121418] p-4 rounded-xl border border-danger/30 shadow-sm hover:border-danger/30 transition-all">
+        <div className="bg-surface p-4 rounded-xl border border-danger/30 shadow-sm hover:border-danger/30 transition-all">
           <div className="flex items-center justify-between text-foreground-muted mb-2">
             <div className="flex items-center gap-1.5">
               <span className="text-[11px] font-bold tracking-wider uppercase text-foreground-muted">Open Disputes</span>
-              <span className="text-[9px] font-bold bg-rose-950 text-danger border border-rose-800/40 px-1.5 py-0.2 rounded">Priority</span>
+              <span className="text-[9px] font-bold bg-rose-950 text-danger border border-danger/30/40 px-1.5 py-0.2 rounded">Priority</span>
             </div>
-            <span className="p-1.5 rounded-lg bg-[#16181F] text-danger border border-[#26282E]">
+            <span className="p-1.5 rounded-lg bg-surface-elevated text-danger border border-border">
               <Scale className="w-4 h-4" />
             </span>
           </div>
@@ -238,14 +238,14 @@ export default function AdminOperationsOverview() {
       {/* Main Charts & Velocity Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* GMV by Month Bar Chart (2 columns) */}
-        <div className="lg:col-span-2 bg-[#121418] rounded-xl border border-[#26282E] p-5 shadow-sm flex flex-col justify-between">
+        <div className="lg:col-span-2 bg-surface rounded-xl border border-border p-5 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
               <div>
                 <p className="text-[11px] font-bold tracking-wider uppercase text-foreground-muted">Performance Trajectory</p>
                 <div className="flex items-baseline gap-2 mt-0.5">
                   <h2 className="text-lg font-bold text-foreground">GMV by Month</h2>
-                  <span className="text-xl font-extrabold text-[#DFB76C]">$284.6k</span>
+                  <span className="text-xl font-extrabold text-brand">$284.6k</span>
                   <span className="text-xs font-semibold text-success">— Target: $249.6k (+14.0% ahead of pace)</span>
                 </div>
               </div>
@@ -253,18 +253,18 @@ export default function AdminOperationsOverview() {
               {/* Legend */}
               <div className="flex items-center gap-3 text-xs text-foreground-secondary">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-xs bg-[#DFB76C]" />
+                  <span className="w-2.5 h-2.5 rounded-xs bg-brand" />
                   <span>Booked Gigs</span>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-xs bg-[#1E222B] border border-[#26282E]" />
+                  <span className="w-2.5 h-2.5 rounded-xs bg-surface-sunken border border-border" />
                   <span>Custom Job Offers</span>
                 </div>
               </div>
             </div>
 
             {/* Simulated Stacked Bar Chart */}
-            <div className="mt-8 mb-4 h-48 flex items-end justify-between gap-3 px-2 border-b border-[#26282E] pb-2">
+            <div className="mt-8 mb-4 h-48 flex items-end justify-between gap-3 px-2 border-b border-border pb-2">
               {[
                 { month: "May", gigs: 60, offers: 25, total: "$182k" },
                 { month: "Jun", gigs: 75, offers: 32, total: "$210k" },
@@ -276,7 +276,7 @@ export default function AdminOperationsOverview() {
                 <div key={item.month} className="flex-1 flex flex-col items-center gap-1.5 group">
                   <span className={cn(
                     "text-[10px] font-semibold transition-opacity opacity-75 group-hover:opacity-100",
-                    item.isCurrent ? "text-[#DFB76C] font-bold" : "text-foreground-muted"
+                    item.isCurrent ? "text-brand font-bold" : "text-foreground-muted"
                   )}>
                     {item.total}
                   </span>
@@ -284,12 +284,12 @@ export default function AdminOperationsOverview() {
                     {/* Custom Offers Bar */}
                     <div 
                       style={{ height: `${item.offers}px` }} 
-                      className={cn("w-full transition-all duration-300 group-hover:brightness-125", item.isCurrent ? "bg-[#DFB76C]" : "bg-[#DFB76C]/60")} 
+                      className={cn("w-full transition-all duration-300 group-hover:brightness-125", item.isCurrent ? "bg-brand" : "bg-brand/60")} 
                     />
                     {/* Booked Gigs Bar */}
                     <div 
                       style={{ height: `${item.gigs}px` }} 
-                      className={cn("w-full transition-all duration-300 group-hover:brightness-125", item.isCurrent ? "bg-[#1A1D24]" : "bg-[#16181F]")} 
+                      className={cn("w-full transition-all duration-300 group-hover:brightness-125", item.isCurrent ? "bg-surface-sunken" : "bg-surface-elevated")} 
                     />
                   </div>
                   <span className={cn(
@@ -303,23 +303,23 @@ export default function AdminOperationsOverview() {
             </div>
           </div>
 
-          <div className="pt-3 border-t border-[#26282E] flex items-center justify-between text-xs">
+          <div className="pt-3 border-t border-border flex items-center justify-between text-xs">
             <span className="text-foreground-muted flex items-center gap-1.5">
               <TrendingUp className="w-4 h-4 text-success" />
               Current run rate indicates Q4 projection of <strong className="text-foreground">$890,000+ GMV</strong>
             </span>
-            <Link href="/admin/fees-reports" className="font-semibold text-[#DFB76C] hover:underline flex items-center gap-1">
+            <Link href="/admin/fees-reports" className="font-semibold text-brand hover:underline flex items-center gap-1">
               View breakdown details <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>
 
         {/* Network Velocity (1 column) */}
-        <div className="bg-[#121418] rounded-xl border border-[#26282E] p-5 shadow-sm flex flex-col justify-between">
+        <div className="bg-surface rounded-xl border border-border p-5 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3">
               <p className="text-[11px] font-bold tracking-wider uppercase text-foreground-muted">Network Velocity</p>
-              <span className="text-[10px] font-bold bg-[#16181F] text-[#DFB76C] border border-[#26282E] px-2 py-0.5 rounded">4 Weeks</span>
+              <span className="text-[10px] font-bold bg-surface-elevated text-brand border border-border px-2 py-0.5 rounded">4 Weeks</span>
             </div>
 
             <h3 className="text-base font-bold text-foreground">New Signups</h3>
@@ -329,7 +329,7 @@ export default function AdminOperationsOverview() {
                 <span className="text-xs text-foreground-muted ml-1">● Clients</span>
               </div>
               <div>
-                <span className="text-xl font-extrabold text-[#DFB76C]">+72</span>
+                <span className="text-xl font-extrabold text-brand">+72</span>
                 <span className="text-xs text-foreground-muted ml-1">● Vendors</span>
               </div>
             </div>
@@ -347,8 +347,8 @@ export default function AdminOperationsOverview() {
                     <span className="font-medium text-foreground-secondary">{row.week}</span>
                     <span className="text-foreground-muted">{row.clients} Clients • {row.vendors} Vendors</span>
                   </div>
-                  <div className="h-2 w-full bg-[#16181F] rounded-full overflow-hidden flex border border-[#26282E]">
-                    <div style={{ width: `${row.pct}%` }} className="bg-[#DFB76C]" />
+                  <div className="h-2 w-full bg-surface-elevated rounded-full overflow-hidden flex border border-border">
+                    <div style={{ width: `${row.pct}%` }} className="bg-brand" />
                     <div style={{ width: `${100 - row.pct}%` }} className="bg-slate-700" />
                   </div>
                 </div>
@@ -356,9 +356,9 @@ export default function AdminOperationsOverview() {
             </div>
           </div>
 
-          <div className="mt-4 p-3 rounded-lg bg-[#16181F] border border-[#26282E] flex items-center justify-between text-xs">
+          <div className="mt-4 p-3 rounded-lg bg-surface-elevated border border-border flex items-center justify-between text-xs">
             <span className="text-foreground-secondary font-medium">Supply liquidity index: <strong className="text-foreground">Optimal</strong></span>
-            <span className="font-bold text-[#DFB76C] bg-[#121418] px-2 py-0.5 rounded border border-[#26282E]">96.4% match</span>
+            <span className="font-bold text-brand bg-surface px-2 py-0.5 rounded border border-border">96.4% match</span>
           </div>
         </div>
       </div>
@@ -366,7 +366,7 @@ export default function AdminOperationsOverview() {
       {/* Orders by Occasion & Alerts / Escalations */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Category Distribution: Orders by Occasion */}
-        <div className="bg-[#121418] rounded-xl border border-[#26282E] p-5 shadow-sm flex flex-col justify-between">
+        <div className="bg-surface rounded-xl border border-border p-5 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-2">
               <p className="text-[11px] font-bold tracking-wider uppercase text-foreground-muted">Category Distribution</p>
@@ -376,11 +376,11 @@ export default function AdminOperationsOverview() {
 
             <div className="space-y-4 text-xs">
               {[
-                { name: "Weddings & Receptions", pct: 42, rev: "$119,532", count: "142 orders", color: "bg-[#DFB76C]" },
+                { name: "Weddings & Receptions", pct: 42, rev: "$119,532", count: "142 orders", color: "bg-brand" },
                 { name: "Birthdays & Milestones", pct: 28, rev: "$79,688", count: "210 orders", color: "bg-warning-solid text-on-brand" },
                 { name: "Corporate & Galas", pct: 16, rev: "$45,536", count: "58 orders", color: "bg-indigo-400" },
                 { name: "Baby Showers & Holuds", pct: 9, rev: "$25,614", count: "84 orders", color: "bg-purple-400" },
-                { name: "Quinceañeras & Anniversaries", pct: 5, rev: "$14,230", count: "36 orders", color: "bg-emerald-400" },
+                { name: "Quinceañeras & Anniversaries", pct: 5, rev: "$14,230", count: "36 orders", color: "bg-success-solid text-white" },
               ].map((cat) => (
                 <div key={cat.name} className="space-y-1.5">
                   <div className="flex items-center justify-between">
@@ -393,7 +393,7 @@ export default function AdminOperationsOverview() {
                       <span className="text-foreground-muted">{cat.rev} • {cat.count}</span>
                     </div>
                   </div>
-                  <div className="h-1.5 w-full bg-[#16181F] rounded-full overflow-hidden border border-[#26282E]">
+                  <div className="h-1.5 w-full bg-surface-elevated rounded-full overflow-hidden border border-border">
                     <div style={{ width: `${cat.pct}%` }} className={cn("h-full rounded-full", cat.color)} />
                   </div>
                 </div>
@@ -401,18 +401,18 @@ export default function AdminOperationsOverview() {
             </div>
           </div>
 
-          <div className="mt-6 pt-3 border-t border-[#26282E] flex items-center justify-between text-xs">
+          <div className="mt-6 pt-3 border-t border-border flex items-center justify-between text-xs">
             <span className="text-foreground-muted font-medium">Average Ticket: <strong className="text-foreground">$536.98 per event</strong></span>
-            <button className="font-semibold text-[#DFB76C] hover:underline cursor-pointer">Export by Category →</button>
+            <button className="font-semibold text-brand hover:underline cursor-pointer">Export by Category →</button>
           </div>
         </div>
 
         {/* Action Required: Alerts & Escalations */}
-        <div className="bg-[#121418] rounded-xl border border-[#26282E] p-5 shadow-sm flex flex-col justify-between">
+        <div className="bg-surface rounded-xl border border-border p-5 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-2">
               <p className="text-[11px] font-bold tracking-wider uppercase text-foreground-muted">Action Required</p>
-              <span className="text-[10px] font-bold bg-rose-950 text-rose-300 border border-rose-800/40 px-2 py-0.5 rounded-full">4 Pending Actions</span>
+              <span className="text-[10px] font-bold bg-rose-950 text-danger border border-danger/30/40 px-2 py-0.5 rounded-full">4 Pending Actions</span>
             </div>
             <h3 className="text-base font-bold text-foreground mb-3">Alerts & Escalations</h3>
 
@@ -426,17 +426,17 @@ export default function AdminOperationsOverview() {
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <h4 className="text-xs font-bold text-amber-200">
+                        <h4 className="text-xs font-bold text-warning">
                           {stats.pendingGigs} service {stats.pendingGigs === 1 ? "gig" : "gigs"} pending verification
                         </h4>
-                        <span className="text-[9px] font-bold bg-warning-solid text-on-brand text-slate-950 px-1.5 py-0.2 rounded uppercase">Verification Queue</span>
+                        <span className="text-[9px] font-bold bg-warning-solid text-on-brand text-on-brand px-1.5 py-0.2 rounded uppercase">Verification Queue</span>
                       </div>
                       <p className="text-[11px] text-warning/80 mt-0.5">Vendor service submissions waiting for admin approval before going live</p>
                     </div>
                   </div>
                   <Link
                     href="/admin/gigs/pending"
-                    className="text-xs font-bold text-slate-950 bg-amber-400 hover:bg-amber-300 px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
+                    className="text-xs font-bold text-on-brand bg-warning-solid text-on-brand hover:bg-amber-300 px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
                   >
                     Audit &amp; Approve →
                   </Link>
@@ -445,9 +445,9 @@ export default function AdminOperationsOverview() {
 
               {/* Alert: Service Reports */}
               {Number(stats.pendingReports || 0) > 0 && (
-                <div className="p-3 rounded-lg bg-danger-soft text-danger border border-rose-800/50 flex items-start justify-between gap-3">
+                <div className="p-3 rounded-lg bg-danger-soft text-danger border border-danger/30/50 flex items-start justify-between gap-3">
                   <div className="flex items-start gap-2.5">
-                    <div className="p-1.5 rounded-md bg-rose-900/60 text-rose-300 mt-0.5">
+                    <div className="p-1.5 rounded-md bg-rose-900/60 text-danger mt-0.5">
                       <AlertTriangle className="w-4 h-4 text-danger" />
                     </div>
                     <div>
@@ -455,14 +455,14 @@ export default function AdminOperationsOverview() {
                         <h4 className="text-xs font-bold text-rose-200">
                           {stats.pendingReports} urgent user service {stats.pendingReports === 1 ? "report" : "reports"}
                         </h4>
-                        <span className="text-[9px] font-bold bg-rose-600 text-foreground px-1.5 py-0.2 rounded uppercase">Safety</span>
+                        <span className="text-[9px] font-bold bg-danger-solid text-white text-foreground px-1.5 py-0.2 rounded uppercase">Safety</span>
                       </div>
-                      <p className="text-[11px] text-rose-300/80 mt-0.5">User complaints alleging misleading pricing, policy breaches, or fraud</p>
+                      <p className="text-[11px] text-danger/80 mt-0.5">User complaints alleging misleading pricing, policy breaches, or fraud</p>
                     </div>
                   </div>
                   <Link
                     href="/admin/reports"
-                    className="text-xs font-bold text-foreground bg-rose-600 hover:bg-danger-solid text-white px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
+                    className="text-xs font-bold text-foreground bg-danger-solid text-white hover:bg-danger-solid text-foreground px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
                   >
                     Review Reports →
                   </Link>
@@ -473,7 +473,7 @@ export default function AdminOperationsOverview() {
               {Number(stats.openDisputes || 0) > 0 && (
                 <div className="p-3 rounded-lg bg-danger-soft text-danger border border-red-800/50 flex items-start justify-between gap-3">
                   <div className="flex items-start gap-2.5">
-                    <div className="p-1.5 rounded-md bg-red-900/60 text-red-300 mt-0.5">
+                    <div className="p-1.5 rounded-md bg-red-900/60 text-danger mt-0.5">
                       <ShieldAlert className="w-4 h-4" />
                     </div>
                     <div>
@@ -488,7 +488,7 @@ export default function AdminOperationsOverview() {
                   </div>
                   <Link
                     href="/admin/disputes"
-                    className="text-xs font-semibold text-foreground bg-red-600 hover:bg-danger-solid text-white px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
+                    className="text-xs font-semibold text-foreground bg-red-600 hover:bg-danger-solid text-foreground px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
                   >
                     Resolve Disputes →
                   </Link>
@@ -496,9 +496,9 @@ export default function AdminOperationsOverview() {
               )}
 
               {/* Alert 3 */}
-              <div className="p-3 rounded-lg bg-[#16181F] border border-[#26282E] flex items-start justify-between gap-3">
+              <div className="p-3 rounded-lg bg-surface-elevated border border-border flex items-start justify-between gap-3">
                 <div className="flex items-start gap-2.5">
-                  <div className="p-1.5 rounded-md bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40 mt-0.5">
+                  <div className="p-1.5 rounded-md bg-surface-sunken text-brand border border-border-brand/40 mt-0.5">
                     <Users className="w-4 h-4" />
                   </div>
                   <div>
@@ -510,16 +510,16 @@ export default function AdminOperationsOverview() {
                 </div>
                 <Link
                   href="/admin/vendor-approvals"
-                  className="text-xs font-semibold text-foreground bg-[#1A1D24] border border-[#26282E] hover:border-[#DFB76C] hover:text-[#DFB76C] px-2.5 py-1 rounded transition-colors whitespace-nowrap"
+                  className="text-xs font-semibold text-foreground bg-surface-sunken border border-border hover:border-border-brand hover:text-brand px-2.5 py-1 rounded transition-colors whitespace-nowrap"
                 >
                   Review →
                 </Link>
               </div>
 
               {/* Alert 4 */}
-              <div className="p-3 rounded-lg bg-[#16181F] border border-[#26282E] flex items-start justify-between gap-3">
+              <div className="p-3 rounded-lg bg-surface-elevated border border-border flex items-start justify-between gap-3">
                 <div className="flex items-start gap-2.5">
-                  <div className="p-1.5 rounded-md bg-[#1A1D24] text-warning border border-warning/30 mt-0.5">
+                  <div className="p-1.5 rounded-md bg-surface-sunken text-warning border border-warning/30 mt-0.5">
                     <ShieldCheck className="w-4 h-4" />
                   </div>
                   <div>
@@ -529,7 +529,7 @@ export default function AdminOperationsOverview() {
                 </div>
                 <Link
                   href="/admin/orders"
-                  className="text-xs font-semibold text-foreground bg-[#1A1D24] border border-[#26282E] hover:border-[#DFB76C] hover:text-[#DFB76C] px-2.5 py-1 rounded transition-colors whitespace-nowrap"
+                  className="text-xs font-semibold text-foreground bg-surface-sunken border border-border hover:border-border-brand hover:text-brand px-2.5 py-1 rounded transition-colors whitespace-nowrap"
                 >
                   Review →
                 </Link>
@@ -537,9 +537,9 @@ export default function AdminOperationsOverview() {
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-[#26282E] flex items-center justify-between text-xs">
+          <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-xs">
             <span className="text-foreground-muted text-[11px]">Automatic triage running • Next scan in 4 mins</span>
-            <Link href="/admin/settings" className="font-semibold text-[#DFB76C] hover:underline">
+            <Link href="/admin/settings" className="font-semibold text-brand hover:underline">
               Manage alert rules →
             </Link>
           </div>
@@ -547,10 +547,10 @@ export default function AdminOperationsOverview() {
       </div>
 
       {/* Bottom Action Bar */}
-      <div className="bg-[#121418] text-foreground p-4 sm:p-5 rounded-xl border border-[#26282E] flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
+      <div className="bg-surface text-foreground p-4 sm:p-5 rounded-xl border border-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-xl">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-[#1A1D24] border border-border-brand/40 flex items-center justify-center flex-shrink-0">
-            <CheckCircle2 className="w-5 h-5 text-[#DFB76C]" />
+          <div className="w-10 h-10 rounded-lg bg-surface-sunken border border-border-brand/40 flex items-center justify-center flex-shrink-0">
+            <CheckCircle2 className="w-5 h-5 text-brand" />
           </div>
           <div>
             <h4 className="text-sm font-bold text-foreground">Quick Operations Actions</h4>
@@ -561,25 +561,25 @@ export default function AdminOperationsOverview() {
         <div className="flex items-center gap-2.5 flex-wrap w-full md:w-auto">
           <Link
             href="/admin/gigs/pending"
-            className="px-3.5 py-2 rounded-lg bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-extrabold transition-colors shadow-xs"
+            className="px-3.5 py-2 rounded-lg bg-warning-solid text-on-brand hover:bg-amber-300 text-on-brand text-xs font-extrabold transition-colors shadow-xs"
           >
             Review Pending Gigs ({stats.pendingGigs || 0})
           </Link>
           <Link
             href="/admin/reports"
-            className="px-3.5 py-2 rounded-lg bg-rose-600 hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-colors shadow-xs"
+            className="px-3.5 py-2 rounded-lg bg-danger-solid text-white hover:bg-danger-solid text-foreground text-foreground text-xs font-bold transition-colors shadow-xs"
           >
             Safety Reports ({stats.pendingReports || 0})
           </Link>
           <Link
             href="/admin/disputes"
-            className="px-3.5 py-2 rounded-lg bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground text-xs font-bold transition-colors"
+            className="px-3.5 py-2 rounded-lg bg-surface-elevated hover:bg-surface-sunken border border-border text-foreground text-xs font-bold transition-colors"
           >
             Open Disputes ({stats.openDisputes || 0})
           </Link>
           <Link
             href="/admin/vendor-approvals"
-            className="px-3.5 py-2 rounded-lg bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground text-xs font-bold transition-colors"
+            className="px-3.5 py-2 rounded-lg bg-surface-elevated hover:bg-surface-sunken border border-border text-foreground text-xs font-bold transition-colors"
           >
             Approvals ({stats.pendingApprovals || 0})
           </Link>
