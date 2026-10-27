@@ -30,7 +30,7 @@ export default function AuthSideHero({
   stats,
 }: AuthSideHeroProps) {
   return (
-    <div className="relative hidden lg:flex flex-col justify-between w-full h-full min-h-[680px] p-8 xl:p-12 rounded-[28px] overflow-hidden shadow-2xl bg-[#090C19] text-foreground">
+    <div className="relative hidden lg:flex flex-col justify-between w-full h-full min-h-[680px] p-8 xl:p-12 rounded-none overflow-hidden shadow-2xl bg-background text-foreground">
       {/* Background Ambience Image with Rich Gradient Overlays */}
       <div 
         className="absolute inset-0 bg-cover bg-center mix-blend-luminosity opacity-40 scale-105 transition-transform duration-1000"
@@ -39,18 +39,18 @@ export default function AuthSideHero({
         }}
       />
       {/* Deep Midnight Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#080B14] via-[#0C1022]/85 to-[#080B14]/70" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-gold-500/15 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-surface/85 to-background/70" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-brand/15 via-transparent to-transparent" />
 
       {/* Top Badges */}
       <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface/10 backdrop-blur-md border border-white/15 text-xs font-medium text-amber-200">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface/10 backdrop-blur-md border border-border-strong/15 text-xs font-medium text-warning">
           <ShieldCheck className="w-3.5 h-3.5 text-warning" />
           <span>{badge}</span>
         </div>
 
         {vaultScore && (
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-gold/30 text-xs font-semibold text-gold-300">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-background/40 backdrop-blur-md border border-gold/30 text-xs font-semibold text-gold-300">
             <Star className="w-3.5 h-3.5 text-warning fill-amber-400" />
             <span>{vaultScore}</span>
           </div>
@@ -86,7 +86,7 @@ export default function AuthSideHero({
       </div>
 
       {/* Bottom Testimonial Box */}
-      <div className="relative z-10 p-5 rounded-2xl bg-surface/[0.08] backdrop-blur-xl border border-white/15 shadow-xl space-y-3">
+      <div className="relative z-10 p-5 rounded-2xl bg-surface/[0.08] backdrop-blur-xl border border-border-strong/15 shadow-xl space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             {[...Array(5)].map((_, i) => (
