@@ -352,7 +352,7 @@ export default function VendorProfileEditorPage() {
       {/* Profile Header & Visual Assets */}
       <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-xs">
         {/* Banner Cover Image */}
-        <div className="relative h-48 bg-gradient-to-r from-brand to-indigo-900 overflow-hidden group">
+        <div className="relative h-48 bg-gradient-to-r from-brand to-info overflow-hidden group">
           {heroImageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -573,7 +573,7 @@ export default function VendorProfileEditorPage() {
                   <button
                     type="button"
                     onClick={() => handleDeletePhoto(item.id)}
-                    className="self-end p-1.5 rounded-full bg-background/60 text-foreground hover:bg-danger-solid text-white transition-colors cursor-pointer shadow-xs"
+                    className="self-end p-1.5 rounded-full bg-background/60 text-foreground hover:bg-danger-solid text-foreground transition-colors cursor-pointer shadow-xs"
                     title="Remove photo"
                   >
                     <Trash2 className="w-3 h-3" />
