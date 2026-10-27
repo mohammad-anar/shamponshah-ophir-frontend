@@ -4,27 +4,67 @@
 
 @layer base {
   :root {
-    --background: #0B0C0E;
-    --foreground: #F3F4F6;
-    --surface: #121418;
-    --surface-card: #16181F;
-    --border-subtle: #262930;
-    
-    /* Ophir Reserve Gold & Obsidian Theme Tokens */
-    --color-brand-dark: #0B0C0E;
-    --color-brand-navy: #121418;
-    --color-brand-primary: #DFB76C;
-    --color-brand-lavender: #22252D;
-    --color-brand-mist: #16181F;
-    
-    /* Escrow & Trust */
-    --color-escrow-badge: #1A1D24;
-    --color-escrow-text: #DFB76C;
+    /* === SEMANTIC RGB TOKENS (Single Source of Truth) === */
+    /* Surfaces */
+    --background: 11 12 14;          /* #0B0C0E - Obsidian Black page canvas */
+    --surface: 18 20 24;             /* #121418 - Deep Charcoal primary card & table surface */
+    --surface-elevated: 22 24 31;    /* #16181F - Elevated Modal/Drawer/Dropdown */
+    --surface-sunken: 26 29 36;      /* #1A1D24 - Recessed panels, badge backgrounds */
+    --overlay: 5 6 7;                /* #050607 - Backdrop overlay */
+
+    /* Borders */
+    --border: 38 40 46;              /* #26282E - Architectural subtle border */
+    --border-strong: 51 55 66;       /* #333742 - Stronger card border */
+    --border-brand: 223 183 108;     /* #DFB76C - Gold accent border */
+
+    /* Typography */
+    --foreground: 243 244 246;       /* #F3F4F6 - High contrast primary text */
+    --foreground-secondary: 226 232 240; /* #E2E8F0 - Secondary readable text */
+    --foreground-muted: 203 213 225; /* #CBD5E1 - Silver muted text */
+    --foreground-disabled: 100 116 139;  /* #64748B - Disabled state text */
+
+    /* Brand - Regal Champagne Gold */
+    --brand: 223 183 108;            /* #DFB76C */
+    --brand-hover: 236 200 112;      /* #ECC870 */
+    --brand-active: 184 147 74;      /* #B8934A */
+    --brand-soft: 34 32 24;          /* #222018 */
+    --on-brand: 11 12 14;            /* #0B0C0E - Dark text on gold */
+
+    /* Status System (Pairs: solid, soft-bg, and text) */
+    --success: 52 211 153;           /* #34D399 - Emerald text */
+    --success-solid: 16 185 129;     /* #10B981 - Emerald solid */
+    --success-soft: 13 33 26;        /* #0D211A - Soft emerald background */
+    --on-success: 255 255 255;
+
+    --warning: 251 191 36;           /* #FBBF24 - Amber text */
+    --warning-solid: 245 158 11;     /* #F59E0B - Amber solid */
+    --warning-soft: 38 29 12;        /* #261D0C - Soft amber background */
+    --on-warning: 11 12 14;
+
+    --danger: 248 113 113;           /* #F87171 - Red text */
+    --danger-solid: 239 68 68;       /* #EF4444 - Red solid */
+    --danger-soft: 38 16 16;         /* #261010 - Soft red background */
+    --on-danger: 255 255 255;
+
+    --info: 96 165 250;              /* #60A5FA - Blue text */
+    --info-solid: 59 130 246;        /* #3B82F6 - Blue solid */
+    --info-soft: 15 26 44;           /* #0F1A2C - Soft blue background */
+    --on-info: 255 255 255;
+
+    /* Forms */
+    --input-bg: 11 12 14;            /* #0B0C0E */
+    --input-border: 38 40 46;        /* #26282E */
+    --input-placeholder: 148 163 184;/* #94A3B8 */
+    --focus-ring: 223 183 108;       /* #DFB76C */
+  }
+
+  html {
+    color-scheme: dark;
   }
 
   body {
-    background-color: var(--background);
-    color: var(--foreground);
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
     font-family: var(--font-jakarta), var(--font-inter), system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
@@ -36,48 +76,68 @@
     letter-spacing: -0.01em;
     font-weight: 700;
   }
+
+  ::selection {
+    background-color: rgba(var(--brand), 0.3);
+    color: rgb(var(--brand));
+  }
+
+  /* Autofill Dark Protection */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus, 
+  textarea:-webkit-autofill {
+    -webkit-text-fill-color: rgb(var(--foreground)) !important;
+    -webkit-box-shadow: 0 0 0px 1000px rgb(var(--input-bg)) inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--focus-ring));
+    outline-offset: 1px;
+  }
 }
 
 /* Utilities & Components */
 @layer utilities {
   .text-gold-gradient {
-    background: linear-gradient(135deg, #ECC870 0%, #DFB76C 50%, #B8934A 100%);
+    background: linear-gradient(135deg, rgb(var(--brand-hover)) 0%, rgb(var(--brand)) 50%, rgb(var(--brand-active)) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .text-purple-gradient {
-    background: linear-gradient(135deg, #ECC870 0%, #DFB76C 50%, #B8934A 100%);
+    background: linear-gradient(135deg, rgb(var(--brand-hover)) 0%, rgb(var(--brand)) 50%, rgb(var(--brand-active)) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
   .bg-hero-gradient {
-    background: linear-gradient(180deg, #121418 0%, #0B0C0E 100%);
+    background: linear-gradient(180deg, rgb(var(--surface)) 0%, rgb(var(--background)) 100%);
   }
 
   .glass-card {
-    background: rgba(18, 20, 24, 0.85);
+    background: rgba(var(--surface), 0.85);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(var(--border), 0.8);
   }
 
   .glass-dark-card {
-    background: rgba(11, 12, 14, 0.90);
+    background: rgba(var(--background), 0.90);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(223, 183, 108, 0.2);
+    border: 1px solid rgba(var(--brand), 0.2);
   }
 
   .gold-border-glow {
-    border: 1px solid rgba(223, 183, 108, 0.4);
-    box-shadow: 0 0 15px rgba(223, 183, 108, 0.15);
+    border: 1px solid rgba(var(--brand), 0.4);
+    box-shadow: 0 0 15px rgba(var(--brand), 0.15);
   }
 
   .purple-border-glow {
-    border: 1px solid rgba(223, 183, 108, 0.4);
-    box-shadow: 0 0 15px rgba(223, 183, 108, 0.15);
+    border: 1px solid rgba(var(--brand), 0.4);
+    box-shadow: 0 0 15px rgba(var(--brand), 0.15);
   }
 
   /* Hide number input spinners */
@@ -97,249 +157,58 @@
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0B0C0E;
+  background: rgb(var(--background));
 }
 ::-webkit-scrollbar-thumb {
-  background: #262930;
+  background: rgb(var(--border));
   border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #DFB76C;
+  background: rgb(var(--brand));
 }
 
 /* =========================================================================
-   UNIVERSAL OPHIR RESERVE LUXURY UNIFIED THEME
-   Obsidian Noir, Champagne Gold, Deep Charcoal Surfaces & High-Contrast Typography
-   Zero white sections, zero light-gray shades, razor-sharp architectural edges
+   TEMPORARY TRANSITIONAL OVERRIDE BLOCK (Phase A-I)
+   Will be removed completely in Phase J once all components use tokens
    ========================================================================= */
-
-/* 1. Sharp architectural edges across all components, cards, buttons, badges, modals */
-*,
-::before,
-::after {
-  border-radius: 0px !important;
-}
-
-/* 2. Global background harmonization - NO white or light gray sections anywhere */
-.bg-\[\#FAF9F6\],
-.bg-\[\#F8F9FD\],
-.bg-\[\#F7F5EE\],
-.bg-\[\#F9F8F5\],
-.bg-\[\#F5F2EB\],
-.bg-\[\#FBF9F5\],
-.bg-\[\#F8F7F4\],
-.bg-slate-50,
-.bg-gray-50,
-.bg-zinc-50,
-.bg-neutral-50,
-[class*="bg-slate-50"],
-[class*="bg-gray-50"],
-[class*="bg-zinc-50"],
-[class*="bg-neutral-50"] {
-  background-color: #16181F !important;
-  color: #F3F4F6 !important;
-  border-color: #26282E !important;
-}
-
-/* 3. Deep Charcoal Luxury Card & Modal surfaces (NEVER white shade) */
 .bg-white,
 [class*="bg-white"] {
-  background-color: #121418 !important;
-  color: #F3F4F6 !important;
-  border-color: #26282E !important;
+  background-color: rgb(var(--surface)) !important;
+  color: rgb(var(--foreground)) !important;
+  border-color: rgb(var(--border)) !important;
 }
 
-/* 4. Secondary surfaces, badges, and recessed containers */
-.bg-\[\#F4F2EE\],
-.bg-\[\#EAE6DF\],
+.bg-slate-50,
+.bg-gray-50,
 .bg-slate-100,
-.bg-slate-200,
 .bg-gray-100,
-.bg-gray-200,
-.bg-zinc-100,
-.bg-neutral-100,
+[class*="bg-slate-50"],
+[class*="bg-gray-50"],
 [class*="bg-slate-100"],
-[class*="bg-slate-200"],
-[class*="bg-gray-100"],
-[class*="bg-gray-200"],
-[class*="bg-zinc-100"],
-[class*="bg-neutral-100"] {
-  background-color: #16181F !important;
-  color: #E2E8F0 !important;
-  border-color: #26282E !important;
+[class*="bg-gray-100"] {
+  background-color: rgb(var(--surface-elevated)) !important;
+  color: rgb(var(--foreground)) !important;
+  border-color: rgb(var(--border)) !important;
 }
 
-/* 5. Architectural Subtle Borders */
-.border-\[\#EAE6DF\],
-.border-\[\#E2DDD3\],
 .border-slate-200,
 .border-slate-100,
-.border-slate-300,
 .border-gray-200,
-.border-gray-100,
-.border-zinc-200,
-.border-neutral-200,
-[class*="border-slate-100"],
-[class*="border-slate-200"],
-[class*="border-gray-100"],
-[class*="border-gray-200"] {
-  border-color: #26282E !important;
+.border-gray-100 {
+  border-color: rgb(var(--border)) !important;
 }
 
-/* 6. High-Contrast Typography - Guarantee readable text on deep gray surfaces */
-.text-obsidian,
-.text-\[\#0F0C3B\],
-.text-\[\#0F1228\],
+.text-black,
 .text-slate-900,
 .text-gray-900,
 .text-slate-800,
-.text-gray-800,
-.text-black {
-  color: #F3F4F6 !important;
+.text-gray-800 {
+  color: rgb(var(--foreground)) !important;
 }
 
-.text-slate-700,
-.text-slate-600,
-.text-gray-700,
-.text-gray-600 {
-  color: #E2E8F0 !important;
-}
-
-/* High-contrast silver for secondary/muted text - NEVER faint dark gray */
 .text-slate-500,
 .text-slate-400,
 .text-gray-500,
 .text-gray-400 {
-  color: #CBD5E1 !important;
+  color: rgb(var(--foreground-muted)) !important;
 }
-
-.text-slate-300,
-.text-slate-200,
-.text-slate-100 {
-  color: #FFFFFF !important;
-}
-
-/* 7. Hover states for lists and buttons */
-.hover\:bg-slate-50:hover,
-.hover\:bg-slate-100:hover,
-.hover\:bg-slate-200:hover,
-.hover\:bg-gray-50:hover,
-.hover\:bg-gray-100:hover {
-  background-color: #1F222B !important;
-  color: #DFB76C !important;
-}
-
-/* 8. Primary Action Buttons: Champagne Gold */
-.bg-\[\#0F0C3B\],
-.bg-\[\#0F1228\],
-.bg-\[\#4F46E5\],
-.bg-\[\#4338CA\],
-.bg-indigo-600 {
-  background-color: #DFB76C !important;
-  color: #0B0C0E !important;
-  font-weight: 700 !important;
-  border-color: #DFB76C !important;
-}
-
-.bg-\[\#0F0C3B\]:hover,
-.bg-\[\#0F1228\]:hover,
-.bg-\[\#4F46E5\]:hover,
-.bg-\[\#4338CA\]:hover,
-.bg-indigo-600:hover {
-  background-color: #ECC870 !important;
-  color: #0B0C0E !important;
-}
-
-/* 9. Secondary badges & chips */
-.bg-indigo-50,
-.bg-purple-50,
-.bg-\[\#EDE9FE\],
-.bg-\[\#EEF2FF\],
-.bg-\[\#FEF3C7\],
-.bg-amber-50,
-.bg-amber-100,
-.bg-purple-100,
-.bg-blue-100,
-.bg-orange-100 {
-  background-color: #1A1D24 !important;
-  color: #DFB76C !important;
-  border: 1px solid rgba(223, 183, 108, 0.3) !important;
-}
-
-.text-\[\#3730A3\],
-.text-\[\#92400E\],
-.text-brand-primary,
-.text-indigo-600,
-.text-gold-500,
-.text-gold-400 {
-  color: #DFB76C !important;
-}
-
-/* 10. Input & form controls */
-input:not([type="checkbox"]):not([type="radio"]),
-select,
-textarea {
-  background-color: #0B0C0E !important;
-  border: 1px solid #26282E !important;
-  color: #FFFFFF !important;
-  border-radius: 0px !important;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  border-color: #DFB76C !important;
-  box-shadow: 0 0 0 1px #DFB76C !important;
-  outline: none !important;
-}
-
-input::placeholder,
-textarea::placeholder {
-  color: #94A3B8 !important;
-}
-
-/* 11. Tables */
-table {
-  background-color: #121418 !important;
-  color: #F3F4F6 !important;
-  border-collapse: collapse !important;
-}
-
-thead,
-th {
-  background-color: #16181F !important;
-  color: #DFB76C !important;
-  border-bottom: 1px solid #26282E !important;
-  font-weight: 600 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.1em !important;
-}
-
-td {
-  border-bottom: 1px solid #26282E !important;
-  color: #CBD5E1 !important;
-}
-
-tr:hover td {
-  background-color: #1A1D24 !important;
-}
-
-/* 12. Modals, Dialogs, Drawers & Popovers */
-[role="dialog"],
-.ant-modal-content,
-.ant-drawer-content,
-[class*="rounded-3xl"],
-[class*="rounded-2xl"],
-[class*="rounded-xl"] {
-  border-radius: 0px !important;
-}
-
-[role="dialog"],
-.ant-modal-content,
-.ant-drawer-content {
-  background-color: #121418 !important;
-  color: #F3F4F6 !important;
-  border: 1px solid #26282E !important;
-}
-
-
