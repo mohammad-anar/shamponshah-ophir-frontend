@@ -517,33 +517,33 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
         <div className="flex items-center gap-3">
           <Link
             href="/admin/gigs"
-            className="p-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 transition-colors shadow-2xs flex items-center justify-center"
+            className="p-2.5 rounded-xl bg-[#16181F] border border-[#26282E] hover:bg-[#1A1D24] text-slate-300 transition-colors shadow-2xs flex items-center justify-center"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">
+              <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">
                 Gig Audit &amp; Moderation
               </h1>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-[#EDE9FE] text-[#0F0C3B] border border-indigo-200">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-[#16181F] text-[#DFB76C] border border-[#26282E]">
                 #{gig.id}
               </span>
               <span
                 className={cn(
                   "px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase",
                   gig.status === "ACTIVE"
-                    ? "bg-emerald-100 text-emerald-800 border border-emerald-200"
+                    ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
                     : gig.status === "PENDING_REVIEW"
-                    ? "bg-amber-100 text-amber-800 border border-amber-200"
-                    : "bg-rose-100 text-rose-800 border border-rose-200"
+                    ? "bg-amber-500/15 text-amber-400 border border-amber-500/30"
+                    : "bg-rose-500/15 text-rose-400 border border-rose-500/30"
                 )}
               >
                 {gig.status.replace("_", " ")}
               </span>
             </div>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Category: <span className="font-semibold text-slate-700">{gig.category}</span> &bull; Subcategory: <span className="font-semibold text-slate-700">{gig.subcategory}</span>
+            <p className="text-xs text-slate-400 mt-0.5">
+              Category: <span className="font-semibold text-slate-200">{gig.category}</span> &bull; Subcategory: <span className="font-semibold text-slate-200">{gig.subcategory}</span>
             </p>
           </div>
         </div>
@@ -553,7 +553,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           <Link
             href={`/vendors/${gig.vendor.id}`}
             target="_blank"
-            className="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-2 rounded-xl bg-[#16181F] hover:bg-[#1A1D24] text-slate-300 hover:text-white border border-[#26282E] text-xs font-bold transition-colors flex items-center gap-1.5"
           >
             <ExternalLink className="w-3.5 h-3.5" /> Public View
           </Link>
@@ -563,18 +563,18 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
             className={cn(
               "px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border",
               gig.isFeatured
-                ? "bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100"
-                : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                ? "bg-amber-500/15 text-amber-400 border-amber-500/30 hover:bg-amber-500/25"
+                : "bg-[#16181F] text-slate-300 border-[#26282E] hover:bg-[#1A1D24] hover:text-white"
             )}
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+            <Sparkles className="w-3.5 h-3.5 text-[#DFB76C] fill-[#DFB76C]" />
             <span>{gig.isFeatured ? "Featured Active" : "Set Featured"}</span>
           </button>
 
           {gig.status !== "ACTIVE" && (
             <button
               onClick={() => handleStatusChange("ACTIVE")}
-              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
             >
               <CheckCircle2 className="w-4 h-4" /> Approve &amp; Activate
             </button>
@@ -583,7 +583,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           {gig.status !== "PENDING_REVIEW" && (
             <button
               onClick={() => handleStatusChange("PENDING_REVIEW")}
-              className="px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-500 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
             >
               <AlertTriangle className="w-4 h-4" /> Request Revision
             </button>
@@ -592,7 +592,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           {gig.status !== "SUSPENDED" && (
             <button
               onClick={() => handleStatusChange("SUSPENDED")}
-              className="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
             >
               <XCircle className="w-4 h-4" /> Suspend
             </button>
@@ -607,7 +607,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
         <div className="lg:col-span-2 space-y-6">
           
           {/* Hero Media & Title Card */}
-          <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-xs">
+          <div className="bg-[#121418] rounded-3xl border border-[#26282E] overflow-hidden shadow-xs">
             {/* Banner Cover */}
             <div className="relative h-64 md:h-80 w-full bg-slate-900 overflow-hidden">
               <img
@@ -615,30 +615,30 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
                 alt={gig.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C0E] via-black/40 to-transparent" />
 
               <div className="absolute top-4 left-4 flex gap-2">
-                <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[11px] font-bold border border-white/20">
+                <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-white text-[11px] font-bold border border-white/20">
                   {gig.category}
                 </span>
                 {gig.isFeatured && (
-                  <span className="px-3 py-1 rounded-full bg-amber-500 text-white text-[11px] font-bold shadow-sm flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 fill-white" /> Featured Homepage
+                  <span className="px-3 py-1 rounded-full bg-[#DFB76C] text-[#0B0C0E] text-[11px] font-bold shadow-sm flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 fill-[#0B0C0E]" /> Featured Homepage
                   </span>
                 )}
               </div>
 
               {/* Title & Stats Overlay */}
               <div className="absolute bottom-4 left-4 right-4 text-white space-y-2">
-                <h2 className="text-lg md:text-2xl font-black drop-shadow-sm leading-tight">
+                <h2 className="text-lg md:text-2xl font-black drop-shadow-sm leading-tight text-white">
                   {gig.title}
                 </h2>
                 
-                <div className="flex items-center gap-4 flex-wrap text-xs text-slate-200">
-                  <div className="flex items-center gap-1 text-amber-300 font-bold">
-                    <Star className="w-3.5 h-3.5 fill-amber-300" />
+                <div className="flex items-center gap-4 flex-wrap text-xs text-slate-300">
+                  <div className="flex items-center gap-1 text-[#DFB76C] font-bold">
+                    <Star className="w-3.5 h-3.5 fill-[#DFB76C]" />
                     <span>{gig.rating}</span>
-                    <span className="text-slate-300 font-normal">({gig.reviewsCount} reviews)</span>
+                    <span className="text-slate-400 font-normal">({gig.reviewsCount} reviews)</span>
                   </div>
                   <span>&bull;</span>
                   <span>{gig.totalOrders} Orders Completed</span>
@@ -652,15 +652,15 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
 
             {/* Gallery Thumbnails */}
             {gig.media.gallery.length > 0 && (
-              <div className="p-4 bg-slate-50 border-t border-slate-200 flex items-center gap-3 overflow-x-auto">
+              <div className="p-4 bg-[#16181F] border-t border-[#26282E] flex items-center gap-3 overflow-x-auto">
                 <span className="text-[10px] font-bold uppercase text-slate-400 whitespace-nowrap">
                   Gallery Assets ({gig.media.gallery.length + 1}):
                 </span>
-                <div className="w-16 h-12 rounded-lg overflow-hidden border-2 border-brand-primary flex-shrink-0 cursor-pointer">
+                <div className="w-16 h-12 rounded-lg overflow-hidden border-2 border-[#DFB76C] flex-shrink-0 cursor-pointer">
                   <img src={gig.media.cover} alt="Cover" className="w-full h-full object-cover" />
                 </div>
                 {gig.media.gallery.map((img, i) => (
-                  <div key={i} className="w-16 h-12 rounded-lg overflow-hidden border border-slate-200 flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity">
+                  <div key={i} className="w-16 h-12 rounded-lg overflow-hidden border border-[#26282E] flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity">
                     <img src={img} alt={`Gallery ${i}`} className="w-full h-full object-cover" />
                   </div>
                 ))}
@@ -670,10 +670,10 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
             {/* Gig Description & Occasion Tags */}
             <div className="p-6 space-y-4">
               <div>
-                <h3 className="text-sm font-bold text-[#0F0C3B] uppercase tracking-wider mb-2">
+                <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-2">
                   Service Description &amp; Scope
                 </h3>
-                <p className="text-slate-700 leading-relaxed text-xs">
+                <p className="text-slate-300 leading-relaxed text-xs">
                   {gig.description}
                 </p>
               </div>
@@ -686,7 +686,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
                   {gig.occasions.map((occ, i) => (
                     <span
                       key={i}
-                      className="px-2.5 py-1 bg-slate-100 text-[#0F0C3B] rounded-lg text-[11px] font-semibold"
+                      className="px-2.5 py-1 bg-[#1A1D24] text-[#DFB76C] border border-[#26282E] rounded-lg text-[11px] font-semibold"
                     >
                       {occ}
                     </span>
@@ -697,19 +697,19 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           </div>
 
           {/* 3-Tier Pricing Packages Matrix */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-4">
+          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-6 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-base font-black text-[#0F0C3B] flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-brand-primary" /> Service Pricing Packages &amp; Deliverables
+                <h3 className="text-base font-black text-white flex items-center gap-2">
+                  <Layers className="w-4 h-4 text-[#DFB76C]" /> Service Pricing Packages &amp; Deliverables
                 </h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-slate-400">
                   Inspect the structured package tiers submitted by the vendor for marketplace compliance.
                 </p>
               </div>
 
               {/* Tier Switcher Buttons */}
-              <div className="flex items-center bg-slate-100 p-1 rounded-xl">
+              <div className="flex items-center bg-[#16181F] p-1 rounded-xl border border-[#26282E]">
                 {(["basic", "standard", "premium"] as const).map((tier) => (
                   <button
                     key={tier}
@@ -717,8 +717,8 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
                     className={cn(
                       "px-3 py-1.5 rounded-lg font-bold text-xs capitalize transition-all",
                       selectedTier === tier
-                        ? "bg-[#0F0C3B] text-white shadow-2xs"
-                        : "text-slate-600 hover:text-slate-900"
+                        ? "bg-[#DFB76C] text-[#0B0C0E] shadow-2xs font-extrabold"
+                        : "text-slate-400 hover:text-white"
                     )}
                   >
                     {tier} (${gig.packages[tier].price})
@@ -731,32 +731,32 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
             {(() => {
               const activePkg = gig.packages[selectedTier];
               return (
-                <div className="p-5 rounded-2xl bg-[#F8F9FD] border border-slate-200 space-y-4">
+                <div className="p-5 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-4">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-indigo-100 text-[#0F0C3B]">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#DFB76C]/15 text-[#DFB76C] border border-[#DFB76C]/30">
                         {selectedTier} Tier
                       </span>
-                      <h4 className="text-base font-bold text-[#0F0C3B] mt-1">{activePkg.name}</h4>
-                      <p className="text-slate-600 text-xs mt-0.5">{activePkg.description}</p>
+                      <h4 className="text-base font-bold text-white mt-1">{activePkg.name}</h4>
+                      <p className="text-slate-300 text-xs mt-0.5">{activePkg.description}</p>
                     </div>
 
                     <div className="text-right">
                       <span className="text-[10px] font-bold text-slate-400 uppercase block">Client Price</span>
-                      <span className="text-2xl font-black text-[#0F0C3B] font-mono">${activePkg.price}</span>
-                      <span className="text-[10px] text-slate-500 block">{activePkg.deliveryTime}</span>
+                      <span className="text-2xl font-black text-[#DFB76C] font-mono">${activePkg.price}</span>
+                      <span className="text-[10px] text-slate-400 block">{activePkg.deliveryTime}</span>
                     </div>
                   </div>
 
-                  <div className="pt-3 border-t border-slate-200">
+                  <div className="pt-3 border-t border-[#26282E]">
                     <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
                       Included Deliverables &amp; Equipment
                     </span>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       {activePkg.features.map((feat, i) => (
-                        <div key={i} className="flex items-center gap-2 p-2.5 rounded-xl bg-white border border-slate-200/80">
-                          <Check className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
-                          <span className="text-slate-700 font-medium">{feat}</span>
+                        <div key={i} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#121418] border border-[#26282E]">
+                          <Check className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
+                          <span className="text-slate-200 font-medium">{feat}</span>
                         </div>
                       ))}
                     </div>
@@ -767,36 +767,36 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           </div>
 
           {/* Analytics & Conversion Performance */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-4">
-            <h3 className="text-base font-black text-[#0F0C3B] flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-emerald-600" /> Listing Performance Metrics
+          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-6 shadow-xs space-y-4">
+            <h3 className="text-base font-black text-white flex items-center gap-2">
+              <TrendingUp className="w-4 h-4 text-[#DFB76C]" /> Listing Performance Metrics
             </h3>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E]">
                 <span className="text-slate-400 text-[10px] uppercase font-bold block">Marketplace Views</span>
-                <span className="text-lg font-black text-[#0F0C3B] mt-1 block">{gig.viewsCount.toLocaleString()}</span>
-                <span className="text-[10px] text-emerald-600 font-bold">+12% this month</span>
+                <span className="text-lg font-black text-white mt-1 block">{gig.viewsCount.toLocaleString()}</span>
+                <span className="text-[10px] text-emerald-400 font-bold">+12% this month</span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E]">
                 <span className="text-slate-400 text-[10px] uppercase font-bold block">Conversion Rate</span>
-                <span className="text-lg font-black text-brand-primary mt-1 block">{gig.conversionRate}</span>
-                <span className="text-[10px] text-slate-500">Industry avg: 8.5%</span>
+                <span className="text-lg font-black text-[#DFB76C] mt-1 block">{gig.conversionRate}</span>
+                <span className="text-[10px] text-slate-400">Industry avg: 8.5%</span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E]">
                 <span className="text-slate-400 text-[10px] uppercase font-bold block">Completed Orders</span>
-                <span className="text-lg font-black text-[#0F0C3B] mt-1 block">{gig.totalOrders}</span>
-                <span className="text-[10px] text-slate-500">0 Disputes logged</span>
+                <span className="text-lg font-black text-white mt-1 block">{gig.totalOrders}</span>
+                <span className="text-[10px] text-slate-400">0 Disputes logged</span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-100">
+              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E]">
                 <span className="text-slate-400 text-[10px] uppercase font-bold block">Gross Payouts</span>
-                <span className="text-lg font-black text-emerald-600 font-mono mt-1 block">
+                <span className="text-lg font-black text-emerald-400 font-mono mt-1 block">
                   ${(gig.totalRevenue * (1 - gig.commissionRate / 100)).toLocaleString()}
                 </span>
-                <span className="text-[10px] text-slate-500">Net after {gig.commissionRate}% fee</span>
+                <span className="text-[10px] text-slate-400">Net after {gig.commissionRate}% fee</span>
               </div>
             </div>
           </div>
@@ -806,47 +806,47 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
         <div className="space-y-6">
 
           {/* Vendor Profile Card */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs space-y-4">
+          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-5 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                 Listed By Vendor
               </span>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-brand-primary border border-indigo-100">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#DFB76C]/15 text-[#DFB76C] border border-[#DFB76C]/30">
                 {gig.vendor.tier}
               </span>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-brand-primary shadow-xs">
+              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#DFB76C] shadow-xs">
                 <img src={gig.vendor.avatar} alt={gig.vendor.name} className="w-full h-full object-cover" />
               </div>
               <div>
-                <h4 className="font-bold text-[#0F0C3B] text-sm flex items-center gap-1">
+                <h4 className="font-bold text-white text-sm flex items-center gap-1">
                   {gig.vendor.name}
-                  {gig.vendor.identityVerified && <ShieldCheck className="w-4 h-4 text-emerald-500" />}
+                  {gig.vendor.identityVerified && <ShieldCheck className="w-4 h-4 text-emerald-400" />}
                 </h4>
-                <p className="text-slate-600 text-xs">{gig.vendor.businessName}</p>
+                <p className="text-slate-300 text-xs">{gig.vendor.businessName}</p>
                 <span className="text-[10px] text-slate-400">Member since {gig.vendor.memberSince} &bull; {gig.vendor.location}</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-slate-100 text-center">
-              <div className="p-2 bg-slate-50 rounded-xl">
+            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#26282E] text-center">
+              <div className="p-2 bg-[#16181F] border border-[#26282E] rounded-xl">
                 <span className="text-[10px] text-slate-400 uppercase font-bold block">Rating</span>
-                <span className="font-bold text-[#0F0C3B] text-xs flex items-center justify-center gap-1">
-                  <Star className="w-3 h-3 text-amber-500 fill-amber-500" /> {gig.vendor.rating}
+                <span className="font-bold text-white text-xs flex items-center justify-center gap-1">
+                  <Star className="w-3 h-3 text-[#DFB76C] fill-[#DFB76C]" /> {gig.vendor.rating}
                 </span>
               </div>
-              <div className="p-2 bg-slate-50 rounded-xl">
+              <div className="p-2 bg-[#16181F] border border-[#26282E] rounded-xl">
                 <span className="text-[10px] text-slate-400 uppercase font-bold block">Completed</span>
-                <span className="font-bold text-[#0F0C3B] text-xs">{gig.vendor.completedOrders} Gigs</span>
+                <span className="font-bold text-white text-xs">{gig.vendor.completedOrders} Gigs</span>
               </div>
             </div>
 
             <div className="pt-2">
               <Link
                 href={`/admin/vendor-approvals`}
-                className="w-full py-2 bg-slate-100 hover:bg-slate-200 text-[#0F0C3B] rounded-xl font-bold text-center block transition-colors"
+                className="w-full py-2 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-slate-200 hover:text-white rounded-xl font-bold text-center block transition-colors"
               >
                 Inspect Vendor Credentials &rarr;
               </Link>
@@ -854,41 +854,41 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           </div>
 
           {/* Insurance & Safety Compliance Audit */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs space-y-3.5">
-            <h4 className="font-bold text-[#0F0C3B] text-sm flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" /> Insurance &amp; Compliance Audit
+          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-5 shadow-xs space-y-3.5">
+            <h4 className="font-bold text-white text-sm flex items-center gap-1.5">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" /> Insurance &amp; Compliance Audit
             </h4>
 
             <div className="space-y-2">
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+              <div className="p-3 rounded-xl bg-[#16181F] border border-[#26282E] space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-slate-700">Commercial Liability</span>
+                  <span className="font-semibold text-slate-200">Commercial Liability</span>
                   <span className={cn(
                     "px-2 py-0.5 rounded text-[10px] font-bold",
-                    gig.compliance.insuranceStatus === "VERIFIED" ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"
+                    gig.compliance.insuranceStatus === "VERIFIED" ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30" : "bg-amber-500/15 text-amber-400 border border-amber-500/30"
                   )}>
                     {gig.compliance.insuranceStatus}
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-500">{gig.compliance.insuranceType}</p>
-                <span className="text-[10px] text-slate-400 block">Valid thru: {gig.compliance.insuranceExpiry}</span>
+                <p className="text-[11px] text-slate-400">{gig.compliance.insuranceType}</p>
+                <span className="text-[10px] text-slate-500 block">Valid thru: {gig.compliance.insuranceExpiry}</span>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+              <div className="p-3 rounded-xl bg-[#16181F] border border-[#26282E] space-y-1">
                 <div className="flex items-center justify-between">
-                  <span className="font-semibold text-slate-700">Background Screening</span>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                  <span className="font-semibold text-slate-200">Background Screening</span>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
                     {gig.compliance.backgroundCheck}
                   </span>
                 </div>
                 <p className="text-[10px] text-slate-400">Identity and criminal background verified via Checkr.</p>
               </div>
 
-              <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
-                <span className="font-semibold text-slate-700 block">Certifications On File:</span>
+              <div className="p-3 rounded-xl bg-[#16181F] border border-[#26282E] space-y-1">
+                <span className="font-semibold text-slate-200 block">Certifications On File:</span>
                 <div className="flex flex-wrap gap-1">
                   {gig.compliance.certifications.map((c, i) => (
-                    <span key={i} className="px-2 py-0.5 bg-white rounded border border-slate-200 text-[10px] font-medium text-slate-700">
+                    <span key={i} className="px-2 py-0.5 bg-[#121418] rounded border border-[#26282E] text-[10px] font-medium text-slate-300">
                       {c}
                     </span>
                   ))}
@@ -898,12 +898,12 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           </div>
 
           {/* Platform Commission & Escrow Settings */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs space-y-3.5">
-            <h4 className="font-bold text-[#0F0C3B] text-sm flex items-center gap-1.5">
-              <Percent className="w-4 h-4 text-brand-primary" /> Platform Fee &amp; Commission Override
+          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-5 shadow-xs space-y-3.5">
+            <h4 className="font-bold text-white text-sm flex items-center gap-1.5">
+              <Percent className="w-4 h-4 text-[#DFB76C]" /> Platform Fee &amp; Commission Override
             </h4>
 
-            <p className="text-slate-500 text-[11px]">
+            <p className="text-slate-400 text-[11px]">
               Set custom commission deduction for this specific gig listing (Marketplace default is 10%).
             </p>
 
@@ -915,7 +915,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
                   max="50"
                   value={commissionInput}
                   onChange={(e) => setCommissionInput(Number(e.target.value))}
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl px-3 py-2 text-xs font-bold text-[#0F0C3B] focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-[#16181F] border border-[#26282E] rounded-xl px-3 py-2 text-xs font-bold text-white focus:outline-none focus:border-[#DFB76C]"
                 />
                 <span className="absolute right-3 top-2 text-slate-400 font-bold">%</span>
               </div>
@@ -923,7 +923,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
               <button
                 type="button"
                 onClick={handleSaveCommission}
-                className="px-4 py-2 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl font-bold transition-colors text-xs"
+                className="px-4 py-2 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl font-bold transition-colors text-xs"
               >
                 Save
               </button>
@@ -931,10 +931,10 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           </div>
 
           {/* Admin Audit Log & Internal Notes */}
-          <div className="bg-white rounded-3xl border border-slate-200 p-5 shadow-xs space-y-3.5">
+          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-5 shadow-xs space-y-3.5">
             <div className="flex items-center justify-between">
-              <h4 className="font-bold text-[#0F0C3B] text-sm flex items-center gap-1.5">
-                <MessageSquare className="w-4 h-4 text-brand-primary" /> Admin Audit Log &amp; Notes
+              <h4 className="font-bold text-white text-sm flex items-center gap-1.5">
+                <MessageSquare className="w-4 h-4 text-[#DFB76C]" /> Admin Audit Log &amp; Notes
               </h4>
               <span className="text-slate-400 text-[10px] font-bold">{gig.adminNotes.length} notes</span>
             </div>
@@ -942,28 +942,28 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
             {/* Note items */}
             <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
               {gig.adminNotes.map((note) => (
-                <div key={note.id} className="p-3 bg-slate-50 rounded-xl border border-slate-100 space-y-1">
+                <div key={note.id} className="p-3 bg-[#16181F] rounded-xl border border-[#26282E] space-y-1">
                   <div className="flex items-center justify-between text-[10px]">
-                    <span className="font-bold text-[#0F0C3B]">{note.author}</span>
+                    <span className="font-bold text-white">{note.author}</span>
                     <span className="text-slate-400">{note.date}</span>
                   </div>
-                  <p className="text-slate-700 text-[11px] leading-relaxed">{note.text}</p>
+                  <p className="text-slate-300 text-[11px] leading-relaxed">{note.text}</p>
                 </div>
               ))}
             </div>
 
             {/* Append Note Form */}
-            <form onSubmit={handleAddNote} className="space-y-2 pt-2 border-t border-slate-100">
+            <form onSubmit={handleAddNote} className="space-y-2 pt-2 border-t border-[#26282E]">
               <textarea
                 rows={2}
                 placeholder="Add internal moderation note..."
                 value={newNote}
                 onChange={(e) => setNewNote(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-xs text-slate-800 focus:outline-none focus:border-brand-primary"
+                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
               />
               <button
                 type="submit"
-                className="w-full py-2 bg-slate-100 hover:bg-slate-200 text-[#0F0C3B] rounded-xl font-bold transition-colors flex items-center justify-center gap-1.5 text-xs"
+                className="w-full py-2 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-slate-200 hover:text-white rounded-xl font-bold transition-colors flex items-center justify-center gap-1.5 text-xs"
               >
                 <Send className="w-3.5 h-3.5" /> Append Note
               </button>
