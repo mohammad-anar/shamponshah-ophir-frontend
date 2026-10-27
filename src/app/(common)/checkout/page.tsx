@@ -215,13 +215,13 @@ export default function CheckoutBookingPage() {
   };
 
   return (
-    <div className="w-full bg-[#0B0C0E] text-[#F3F4F6] min-h-screen py-10 lg:py-16 font-sans selection:bg-[#DFB76C] selection:text-[#0B0C0E]">
+    <div className="w-full bg-background text-foreground min-h-screen py-10 lg:py-16 font-sans selection:bg-brand selection:text-on-brand">
       <Script src="https://js.stripe.com/v3/" strategy="afterInteractive" />
       <div className="max-w-[1280px] mx-auto px-6 lg:px-10 space-y-8">
         {/* Step Indicator */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#EAE6DF]/15">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border/15">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF2FF] text-[#3730A3] text-xs font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-sunken text-brand text-xs font-bold uppercase tracking-wider">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>Stripe Connect Escrow Checkout</span>
             </div>
@@ -247,9 +247,9 @@ export default function CheckoutBookingPage() {
             {/* Left Column (7 cols): Package breakdown, Addons, Milestone Release Roadmap */}
             <div className="lg:col-span-7 space-y-6">
               {/* Vendor & Package Card */}
-              <div className="bg-[#12141A] rounded-3xl p-6 sm:p-7 shadow-luxury border border-border space-y-5">
+              <div className="bg-surface-sunken rounded-3xl p-6 sm:p-7 shadow-luxury border border-border space-y-5">
                 <div className="flex items-center gap-4">
-                  <div className="relative w-14 h-14 rounded-2xl overflow-hidden shadow-xs border-2 border-border-strong bg-slate-800 flex-shrink-0">
+                  <div className="relative w-14 h-14 rounded-2xl overflow-hidden shadow-xs border-2 border-border-strong bg-surface-sunken flex-shrink-0">
                     <Image
                       src={vendor.avatar || "/placeholder-avatar.png"}
                       alt={vendor.name}
@@ -267,7 +267,7 @@ export default function CheckoutBookingPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 bg-[#181B24] rounded-2xl border border-border text-xs">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 bg-surface-sunken rounded-2xl border border-border text-xs">
                   <div>
                     <span className="text-foreground-muted block text-[10px] uppercase font-bold">EVENT DATE</span>
                     <input
@@ -289,7 +289,7 @@ export default function CheckoutBookingPage() {
               </div>
 
               {/* Milestone payment terms */}
-              <div className="bg-[#12141A] rounded-3xl p-6 sm:p-7 shadow-luxury border border-border space-y-4">
+              <div className="bg-surface-sunken rounded-3xl p-6 sm:p-7 shadow-luxury border border-border space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="font-serif font-bold text-lg text-foreground">
                     Milestone Security & Protection
@@ -298,7 +298,7 @@ export default function CheckoutBookingPage() {
                     Approval required
                   </span>
                 </div>
-                <div className="p-4 rounded-2xl bg-[#181B24] border border-border space-y-2 text-sm text-foreground-secondary">
+                <div className="p-4 rounded-2xl bg-surface-sunken border border-border space-y-2 text-sm text-foreground-secondary">
                   <p className="font-semibold text-foreground">
                     Escrow Deposit Today: ${grandTotal.toFixed(2)} held safely in vault
                   </p>
@@ -311,7 +311,7 @@ export default function CheckoutBookingPage() {
 
             {/* Right Column (5 cols): Order Summary & Interactive Payment Inputs */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="bg-[#12141A] rounded-3xl p-6 sm:p-7 shadow-luxury-lg border border-border space-y-6">
+              <div className="bg-surface-sunken rounded-3xl p-6 sm:p-7 shadow-luxury-lg border border-border space-y-6">
                 <h3 className="font-serif font-bold text-xl text-foreground">
                   Payment & Escrow Authorization
                 </h3>
@@ -338,7 +338,7 @@ export default function CheckoutBookingPage() {
                       ${grandTotal.toFixed(2)}
                     </span>
                   </div>
-                  <span className="text-[10px] font-bold text-emerald-300 bg-success-soft text-success border border-success/30 px-2.5 py-1 rounded-full">
+                  <span className="text-[10px] font-bold text-success bg-success-soft text-success border border-success/30 px-2.5 py-1 rounded-full">
                     Protected in Vault
                   </span>
                 </div>
@@ -355,14 +355,14 @@ export default function CheckoutBookingPage() {
                   </div>
 
                   {/* Tabs: Card vs Saved Methods */}
-                  <div className="grid grid-cols-2 gap-2 p-1 bg-[#181B24] rounded-xl border border-border text-xs">
+                  <div className="grid grid-cols-2 gap-2 p-1 bg-surface-sunken rounded-xl border border-border text-xs">
                     <button
                       type="button"
                       onClick={() => setPaymentMode("card")}
                       className={cn(
                         "py-2 px-3 rounded-lg font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer",
                         paymentMode === "card"
-                          ? "bg-warning-solid text-on-brand text-slate-950 shadow-sm"
+                          ? "bg-warning-solid text-on-brand text-on-brand shadow-sm"
                           : "text-foreground-muted hover:text-foreground"
                       )}
                     >
@@ -376,7 +376,7 @@ export default function CheckoutBookingPage() {
                       className={cn(
                         "py-2 px-3 rounded-lg font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed",
                         paymentMode === "saved"
-                          ? "bg-warning-solid text-on-brand text-slate-950 shadow-sm"
+                          ? "bg-warning-solid text-on-brand text-on-brand shadow-sm"
                           : "text-foreground-muted hover:text-foreground"
                       )}
                     >
@@ -386,7 +386,7 @@ export default function CheckoutBookingPage() {
 
                   {/* Direct Card Input Fields */}
                   {paymentMode === "card" && (
-                    <div className="p-4 rounded-2xl bg-[#181B24] border border-border space-y-3.5">
+                    <div className="p-4 rounded-2xl bg-surface-sunken border border-border space-y-3.5">
                       {/* Cardholder Name */}
                       <div>
                         <label className="block text-[11px] font-bold text-foreground-secondary mb-1">
@@ -397,7 +397,7 @@ export default function CheckoutBookingPage() {
                           value={cardholderName}
                           onChange={(e) => setCardholderName(e.target.value)}
                           placeholder="Full name on card"
-                          className="w-full bg-[#12141A] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-amber-400"
+                          className="w-full bg-surface-sunken border border-border-strong/15 rounded-xl px-3.5 py-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-warning/30"
                         />
                       </div>
 
@@ -418,7 +418,7 @@ export default function CheckoutBookingPage() {
                             onChange={handleCardNumberChange}
                             maxLength={19}
                             placeholder="1234 5678 9012 3456"
-                            className="w-full bg-[#12141A] border border-white/15 rounded-xl pl-9 pr-3.5 py-2.5 text-xs font-mono font-bold text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-amber-400 tracking-wider"
+                            className="w-full bg-surface-sunken border border-border-strong/15 rounded-xl pl-9 pr-3.5 py-2.5 text-xs font-mono font-bold text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-warning/30 tracking-wider"
                           />
                           <CreditCard className="w-4 h-4 text-foreground-muted absolute left-3 top-3 pointer-events-none" />
                         </div>
@@ -436,7 +436,7 @@ export default function CheckoutBookingPage() {
                             onChange={handleExpiryChange}
                             maxLength={5}
                             placeholder="MM/YY"
-                            className="w-full bg-[#12141A] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs font-mono text-center font-bold text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-amber-400"
+                            className="w-full bg-surface-sunken border border-border-strong/15 rounded-xl px-3.5 py-2.5 text-xs font-mono text-center font-bold text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-warning/30"
                           />
                         </div>
                         <div>
@@ -450,7 +450,7 @@ export default function CheckoutBookingPage() {
                               onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, "").slice(0, 4))}
                               maxLength={4}
                               placeholder="CVC"
-                              className="w-full bg-[#12141A] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs font-mono text-center font-bold text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-amber-400 tracking-widest"
+                              className="w-full bg-surface-sunken border border-border-strong/15 rounded-xl px-3.5 py-2.5 text-xs font-mono text-center font-bold text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-warning/30 tracking-widest"
                             />
                             <Lock className="w-3 h-3 text-foreground-muted absolute right-3 top-3.5 pointer-events-none" />
                           </div>
@@ -485,12 +485,12 @@ export default function CheckoutBookingPage() {
                           className={cn(
                             "p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all text-xs",
                             selectedSavedCardId === (pm.stripePaymentMethodId || pm.id)
-                              ? "border-amber-400 bg-warning-solid text-on-brand/10 shadow-xs"
-                              : "border-border bg-[#181B24] hover:border-border-strong"
+                              ? "border-warning/30 bg-warning-solid text-on-brand/10 shadow-xs"
+                              : "border-border bg-surface-sunken hover:border-border-strong"
                           )}
                         >
                           <div className="flex items-center gap-2.5">
-                            <span className="px-2 py-0.5 bg-slate-800 text-warning rounded text-[10px] font-bold uppercase border border-border">
+                            <span className="px-2 py-0.5 bg-surface-sunken text-warning rounded text-[10px] font-bold uppercase border border-border">
                               {pm.brand || "Card"}
                             </span>
                             <span className="font-mono font-bold text-foreground">
@@ -502,9 +502,9 @@ export default function CheckoutBookingPage() {
                               </span>
                             )}
                           </div>
-                          <div className="w-4 h-4 rounded-full border border-white/30 flex items-center justify-center">
+                          <div className="w-4 h-4 rounded-full border border-border-strong/30 flex items-center justify-center">
                             {selectedSavedCardId === (pm.stripePaymentMethodId || pm.id) && (
-                              <div className="w-2 h-2 rounded-full bg-amber-400" />
+                              <div className="w-2 h-2 rounded-full bg-warning-solid text-on-brand" />
                             )}
                           </div>
                         </div>
@@ -517,7 +517,7 @@ export default function CheckoutBookingPage() {
                 <button
                   type="submit"
                   disabled={isProcessing}
-                  className="w-full h-14 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 hover:from-amber-600 hover:to-amber-700 active:scale-99 disabled:opacity-50 disabled:cursor-not-allowed text-slate-950 font-bold text-sm rounded-xl shadow-xl shadow-amber-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer mt-4"
+                  className="w-full h-14 bg-gradient-to-r from-brand via-brand to-brand-active hover:from-brand hover:to-brand-active active:scale-99 disabled:opacity-50 disabled:cursor-not-allowed text-on-brand font-bold text-sm rounded-xl shadow-xl shadow-gold-glow-sm transition-all flex items-center justify-center gap-2 cursor-pointer mt-4"
                 >
                   {isProcessing ? (
                     <>
@@ -526,7 +526,7 @@ export default function CheckoutBookingPage() {
                     </>
                   ) : (
                     <>
-                      <Lock className="w-4 h-4 text-slate-950" />
+                      <Lock className="w-4 h-4 text-on-brand" />
                       <span>Confirm &amp; Deposit ${grandTotal.toFixed(2)} in Escrow</span>
                     </>
                   )}
@@ -579,7 +579,7 @@ export default function CheckoutBookingPage() {
           </form>
         ) : (
           /* Confirmation Success Screen */
-          <div className="max-w-2xl mx-auto bg-[#12141A] rounded-3xl p-8 sm:p-12 shadow-luxury-lg border border-success/30 text-center space-y-6 animate-in zoom-in-95 duration-300">
+          <div className="max-w-2xl mx-auto bg-surface-sunken rounded-3xl p-8 sm:p-12 shadow-luxury-lg border border-success/30 text-center space-y-6 animate-in zoom-in-95 duration-300">
             <div className="w-16 h-16 rounded-3xl bg-success-solid text-foreground/20 text-success border border-success/30 flex items-center justify-center mx-auto shadow-sm">
               <CheckCircle2 className="w-8 h-8" />
             </div>
@@ -596,7 +596,7 @@ export default function CheckoutBookingPage() {
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#181B24] border border-border text-xs text-left space-y-2.5">
+            <div className="p-5 rounded-2xl bg-surface-sunken border border-border text-xs text-left space-y-2.5">
               <div className="flex justify-between">
                 <span className="text-foreground-muted">Vendor:</span>
                 <span className="font-bold text-foreground">{vendor.name}</span>
@@ -614,7 +614,7 @@ export default function CheckoutBookingPage() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <Link
                 href="/user/orders"
-                className="w-full sm:w-auto px-6 py-3 bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-slate-950 font-bold text-xs rounded-xl shadow-xs transition-colors"
+                className="w-full sm:w-auto px-6 py-3 bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-on-brand font-bold text-xs rounded-xl shadow-xs transition-colors"
               >
                 View my orders
               </Link>
