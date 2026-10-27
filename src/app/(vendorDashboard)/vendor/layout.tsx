@@ -33,7 +33,7 @@ export default function VendorRootLayout({
   const isUnverifiedVendor = user && user.role === "VENDOR" && user.isEmailVerified === false;
 
   return (
-    <div className="min-h-screen bg-[#0B0C0E] text-[#F3F4F6] flex font-sans dashboard-theme">
+    <div className="min-h-screen bg-background text-foreground flex font-sans dashboard-theme">
       {/* Vendor Sidebar */}
       <VendorSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
@@ -43,7 +43,7 @@ export default function VendorRootLayout({
 
         {/* Unverified Vendor Warning Banner */}
         {isUnverifiedVendor && (
-          <div className="bg-warning-solid text-on-brand/10 border-b border-warning/30 px-4 py-3 sm:px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-amber-200">
+          <div className="bg-warning-solid text-on-brand/10 border-b border-warning/30 px-4 py-3 sm:px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-warning">
             <div className="flex items-center gap-2.5">
               <AlertTriangle className="w-5 h-5 text-warning shrink-0" />
               <div className="text-xs sm:text-sm">
