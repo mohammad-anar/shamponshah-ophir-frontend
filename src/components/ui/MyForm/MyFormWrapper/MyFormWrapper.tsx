@@ -40,24 +40,25 @@ const MyFormWrapper = ({
       theme={{
         components: {
           Select: {
-            hoverBorderColor: "#9B5983",
-            activeBorderColor: "#9B5983",
+            hoverBorderColor: "#DFB76C",
+            activeBorderColor: "#DFB76C",
+            colorBorder: "#26282E",
           },
           Input: {
-            hoverBorderColor: "#9B5983",
-            activeBorderColor: "#9B5983",
+            hoverBorderColor: "#DFB76C",
+            activeBorderColor: "#DFB76C",
+            colorBorder: "#26282E",
           },
           Checkbox: {
-            colorBorder: "#7F56D9",
-            colorPrimary: "#7F56D9",
-            colorPrimaryHover: "#7F56D9",
+            colorBorder: "#26282E",
+            colorPrimary: "#DFB76C",
+            colorPrimaryHover: "#ECC870",
           },
           DatePicker: {
-            colorPrimary: "#7F56D9",
-            colorPrimaryHover: "#7F56D9",
-            colorBorder: "#7F56D9",
-            colorText: "#7F56D9",
-            colorTextDisabled: "#7F56D9",
+            colorPrimary: "#DFB76C",
+            colorPrimaryHover: "#ECC870",
+            colorBorder: "#26282E",
+            colorText: "#F3F4F6",
           },
         },
       }}
