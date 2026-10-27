@@ -133,12 +133,12 @@ function CheckoutFormInner({
   // ── Success State Screen ──────────────────────────────────
   if (isSuccess && successDetails) {
     return (
-      <div className="bg-[#0b0a17] border border-success/30 rounded-2xl p-6 sm:p-8 text-center text-foreground relative overflow-hidden shadow-2xl">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-success-solid text-white/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="bg-background border border-success/30 rounded-2xl p-6 sm:p-8 text-center text-foreground relative overflow-hidden shadow-2xl">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-success-solid text-foreground/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-warning-solid text-on-brand/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col items-center">
-          <div className="w-16 h-16 rounded-2xl bg-success-solid text-white/20 border border-success/30 flex items-center justify-center mb-4 text-success shadow-lg shadow-emerald-500/20">
+          <div className="w-16 h-16 rounded-2xl bg-success-solid text-foreground/20 border border-success/30 flex items-center justify-center mb-4 text-success shadow-lg shadow-emerald-500/20">
             <ShieldCheck className="w-9 h-9" />
           </div>
 
@@ -153,14 +153,14 @@ function CheckoutFormInner({
             Your payment is held in Ophir's escrow vault and will only be released after you approve the completed delivery.
           </p>
 
-          <div className="w-full max-w-md bg-[#131127] border border-border rounded-xl p-4 my-6 text-left space-y-2.5 text-xs">
+          <div className="w-full max-w-md bg-surface-elevated border border-border rounded-xl p-4 my-6 text-left space-y-2.5 text-xs">
             <div className="flex justify-between items-center pb-2 border-b border-border">
               <span className="text-foreground-muted font-medium">Order Number:</span>
               <span className="font-mono font-bold text-warning">{successDetails.orderNumber}</span>
             </div>
             <div className="flex justify-between items-center pb-2 border-b border-border">
               <span className="text-foreground-muted font-medium">Order Status:</span>
-              <span className="px-2 py-0.5 rounded-md bg-info-solid text-white/20 text-indigo-300 font-bold uppercase tracking-wider text-[10px]">
+              <span className="px-2 py-0.5 rounded-md bg-info-solid text-foreground/20 text-info font-bold uppercase tracking-wider text-[10px]">
                 ACTIVE
               </span>
             </div>
@@ -181,7 +181,7 @@ function CheckoutFormInner({
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md">
             <Link
               href={`/user/orders/${orderId}`}
-              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-bold text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-brand to-brand-active hover:from-brand hover:to-brand-active text-on-brand font-bold text-xs uppercase tracking-wider transition-all shadow-lg flex items-center justify-center gap-2"
             >
               View Order Progress <ArrowRight className="w-4 h-4" />
             </Link>
@@ -194,7 +194,7 @@ function CheckoutFormInner({
   // ── Payment Form ──────────────────────────────────────────
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="bg-[#131127] border border-border rounded-xl p-4 space-y-2 text-xs text-foreground">
+      <div className="bg-surface-elevated border border-border rounded-xl p-4 space-y-2 text-xs text-foreground">
         <div className="flex items-center justify-between text-foreground-secondary">
           <span>Order Reference</span>
           <span className="font-mono font-bold text-warning">#{orderNumber || orderId.slice(0, 8)}</span>
@@ -213,7 +213,7 @@ function CheckoutFormInner({
         </div>
       </div>
 
-      <div className="bg-[#131127] border border-border rounded-xl p-4">
+      <div className="bg-surface-elevated border border-border rounded-xl p-4">
         <PaymentElement
           options={{
             layout: "tabs",
@@ -231,7 +231,7 @@ function CheckoutFormInner({
       <button
         type="submit"
         disabled={isSubmitting || !stripe || !elements}
-        className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-950 font-bold text-xs uppercase tracking-wider transition-all shadow-xl shadow-amber-500/20 flex items-center justify-center gap-2 cursor-pointer"
+        className="w-full py-3.5 px-6 rounded-xl bg-gradient-to-r from-brand via-brand to-brand-active hover:from-brand hover:to-brand-active disabled:opacity-50 disabled:cursor-not-allowed text-on-brand font-bold text-xs uppercase tracking-wider transition-all shadow-xl shadow-gold-glow-sm flex items-center justify-center gap-2 cursor-pointer"
       >
         {isSubmitting ? (
           <>
@@ -352,7 +352,7 @@ export default function CustomStripePaymentForm({
 
   if (!stripePublicKey) {
     return (
-      <div className="p-6 rounded-2xl bg-warning-soft text-warning border border-warning/30 text-amber-200 text-xs">
+      <div className="p-6 rounded-2xl bg-warning-soft text-warning border border-warning/30 text-warning text-xs">
         Stripe publishable key is not configured in the environment. Please set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY.
       </div>
     );
@@ -360,7 +360,7 @@ export default function CustomStripePaymentForm({
 
   if (isLoading) {
     return (
-      <div className="p-10 rounded-2xl bg-[#0f0e21] border border-border flex flex-col items-center justify-center gap-3 text-foreground-muted text-xs">
+      <div className="p-10 rounded-2xl bg-surface border border-border flex flex-col items-center justify-center gap-3 text-foreground-muted text-xs">
         <Loader2 className="w-8 h-8 animate-spin text-warning" />
         <span>Initializing secure escrow payment vault...</span>
       </div>
@@ -370,7 +370,7 @@ export default function CustomStripePaymentForm({
   if (loadError) {
     return (
       <div className="p-6 rounded-2xl bg-danger-soft text-danger border border-danger/30 text-red-200 text-xs space-y-3">
-        <div className="flex items-center gap-2 font-bold text-red-300">
+        <div className="flex items-center gap-2 font-bold text-danger">
           <AlertCircle className="w-4 h-4 text-danger" />
           <span>Payment Error</span>
         </div>
