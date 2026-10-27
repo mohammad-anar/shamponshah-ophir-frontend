@@ -152,7 +152,7 @@ export default function UserReviewsPage() {
 
       {/* Pending Reviews Queue */}
       {pending.length > 0 && (
-        <div className="bg-gradient-to-r from-indigo-50/80 to-purple-50/80 border border-info/30 rounded-2xl p-5 space-y-3">
+        <div className="bg-gradient-to-r from-surface-elevated to-surface border border-info/30 rounded-2xl p-5 space-y-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-brand-primary" />
@@ -180,7 +180,7 @@ export default function UserReviewsPage() {
 
                 <button
                   onClick={() => setSelectedPending(p)}
-                  className="px-3.5 py-1.5 bg-brand-primary hover:bg-indigo-700 text-foreground rounded-lg text-xs font-bold transition-all shadow-xs flex-shrink-0"
+                  className="px-3.5 py-1.5 bg-brand-primary hover:bg-info text-foreground rounded-lg text-xs font-bold transition-all shadow-xs flex-shrink-0"
                 >
                   Write Review
                 </button>
@@ -304,7 +304,7 @@ export default function UserReviewsPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-brand-primary hover:bg-indigo-700 text-foreground rounded-xl font-bold"
+                  className="px-5 py-2 bg-brand-primary hover:bg-info text-foreground rounded-xl font-bold"
                 >
                   Publish Verified Review
                 </button>
