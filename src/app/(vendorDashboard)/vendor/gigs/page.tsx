@@ -126,11 +126,11 @@ export default function VendorGigsPage() {
                   <div className="absolute top-3 left-3">
                     {gig.status === "PENDING_VERIFICATION" ? (
                       <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-warning-solid text-on-brand text-on-brand shadow-sm flex items-center gap-1 animate-pulse">
-                        <span className="w-1.5 h-1.5 rounded-full bg-slate-950" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-surface-sunken" />
                         Pending Verification
                       </span>
                     ) : gig.status === "REJECTED" ? (
-                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-danger-solid text-white text-foreground shadow-sm flex items-center gap-1">
+                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-danger-solid text-foreground text-foreground shadow-sm flex items-center gap-1">
                         Rejected
                       </span>
                     ) : gig.status === "SUSPENDED" ? (
@@ -139,7 +139,7 @@ export default function VendorGigsPage() {
                       </span>
                     ) : gig.status === "ACTIVE" ? (
                       <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-success-solid text-foreground text-foreground shadow-sm flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-200" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-success/30" />
                         Active
                       </span>
                     ) : (
@@ -154,7 +154,7 @@ export default function VendorGigsPage() {
                       onClick={(e) => handleDelete(gig.id, e)}
                       disabled={isDeleting}
                       title="Archive Gig"
-                      className="w-7 h-7 rounded-full bg-surface/80 hover:bg-red-600 hover:text-foreground backdrop-blur-xs text-foreground-secondary flex items-center justify-center transition-colors shadow-xs"
+                      className="w-7 h-7 rounded-full bg-surface/80 hover:bg-danger hover:text-foreground backdrop-blur-xs text-foreground-secondary flex items-center justify-center transition-colors shadow-xs"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
