@@ -27,9 +27,9 @@ export default function CookieBanner() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 max-w-md w-[calc(100%-2rem)] z-50 bg-surface/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-luxury-lg border border-[#EAE6DF] animate-in slide-in-from-bottom-5 duration-300">
+    <div className="fixed bottom-4 right-4 max-w-md w-[calc(100%-2rem)] z-50 bg-surface/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-luxury-lg border border-border animate-in slide-in-from-bottom-5 duration-300">
       <div className="flex items-start gap-3">
-        <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0 mt-0.5">
+        <div className="w-8 h-8 rounded-xl bg-warning-soft text-warning flex items-center justify-center flex-shrink-0 mt-0.5">
           <Cookie className="w-4 h-4" />
         </div>
 
@@ -54,14 +54,14 @@ export default function CookieBanner() {
           <div className="flex items-center gap-2 pt-1">
             <button
               onClick={handleAccept}
-              className="px-3.5 py-1.5 bg-[#0F1228] hover:bg-[#1A1F40] text-foreground text-xs font-semibold rounded-lg shadow-xs transition-all"
+              className="px-3.5 py-1.5 bg-brand hover:bg-brand-hover text-on-brand text-xs font-semibold rounded-none shadow-xs transition-all cursor-pointer"
             >
               Accept all cookies
             </button>
 
             <button
               onClick={handleCustomize}
-              className="px-3.5 py-1.5 bg-[#F4F2EE] hover:bg-[#EAE6DF] text-foreground-secondary text-xs font-medium rounded-lg transition-colors"
+              className="px-3.5 py-1.5 bg-surface-sunken hover:bg-surface-elevated text-foreground-secondary text-xs font-medium rounded-none transition-colors border border-border cursor-pointer"
             >
               Customize preferences
             </button>
