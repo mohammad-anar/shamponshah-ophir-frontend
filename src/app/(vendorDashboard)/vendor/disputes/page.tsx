@@ -285,7 +285,7 @@ export default function VendorDisputesPage() {
                   {/* Client Reason */}
                   <div className="space-y-1.5 text-xs">
                     <span className="text-foreground-muted font-bold block">Client Claim / Dispute Reason:</span>
-                    <div className="p-3 bg-danger-soft/60 border border-rose-100 rounded-xl text-rose-950 leading-relaxed font-medium">
+                    <div className="p-3 bg-danger-soft/60 border border-danger/30 rounded-xl text-danger leading-relaxed font-medium">
                       "{d.reason}"
                     </div>
                   </div>
@@ -300,7 +300,7 @@ export default function VendorDisputesPage() {
 
                   {/* Resolution Notes if Resolved */}
                   {d.resolution && (
-                    <div className="p-3 bg-success-soft border border-emerald-100 rounded-xl text-xs space-y-1">
+                    <div className="p-3 bg-success-soft border border-success/30 rounded-xl text-xs space-y-1">
                       <span className="font-bold text-success block">Resolution Outcome:</span>
                       <p className="text-success">{d.resolution}</p>
                     </div>
@@ -407,7 +407,7 @@ export default function VendorDisputesPage() {
                   value={responseText}
                   onChange={(e) => setResponseText(e.target.value)}
                   placeholder="Detail the services delivered, milestones completed, agreement terms, or any communication with the client..."
-                  className="w-full bg-surface-elevated border border-border rounded-xl p-3 text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-indigo-600 focus:bg-surface transition-all"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-3 text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-info focus:bg-surface transition-all"
                 />
               </div>
 
@@ -420,7 +420,7 @@ export default function VendorDisputesPage() {
                   value={evidenceUrl}
                   onChange={(e) => setEvidenceUrl(e.target.value)}
                   placeholder="https://drive.google.com/... or photo/contract link"
-                  className="w-full bg-surface-elevated border border-border rounded-xl px-3 py-2 text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-indigo-600 focus:bg-surface transition-all"
+                  className="w-full bg-surface-elevated border border-border rounded-xl px-3 py-2 text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-info focus:bg-surface transition-all"
                 />
                 <span className="text-[11px] text-foreground-muted">
                   Provide a link to delivery files, event photos, logs, or signed agreements for mediator review.
@@ -481,7 +481,7 @@ export default function VendorDisputesPage() {
                 type="button"
                 disabled={isAccepting}
                 onClick={handleConfirmRefund}
-                className="px-5 py-2.5 rounded-xl bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 disabled:opacity-50"
+                className="px-5 py-2.5 rounded-xl bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 disabled:opacity-50"
               >
                 {isAccepting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                 <span>Yes, Authorize Refund</span>
