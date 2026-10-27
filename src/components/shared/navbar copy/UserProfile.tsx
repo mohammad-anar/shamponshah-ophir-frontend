@@ -48,7 +48,7 @@ const User = () => {
           <Dropdown menu={{ items }} trigger={["click"]}>
             <Avatar
               size={40}
-              className="hover:!border hover:!border-white duration-300  cursor-pointer"
+              className="hover:!border hover:!border-border-strong duration-300  cursor-pointer"
               icon={<UserOutlined />}
             />
           </Dropdown>
