@@ -26,12 +26,12 @@ export default function ErrorPage({
       </div>
 
       <div className="max-w-lg mx-auto text-center space-y-6 my-auto py-12">
-        <div className="w-16 h-16 rounded-3xl bg-danger-soft text-red-700 flex items-center justify-center mx-auto shadow-xs">
+        <div className="w-16 h-16 rounded-3xl bg-danger-soft text-danger flex items-center justify-center mx-auto shadow-xs">
           <AlertCircle className="w-8 h-8" />
         </div>
 
         <div className="space-y-2">
-          <span className="text-xs font-bold uppercase tracking-widest text-red-700 bg-danger-soft px-3 py-1 rounded-full border border-danger/30">
+          <span className="text-xs font-bold uppercase tracking-widest text-danger bg-danger-soft px-3 py-1 rounded-full border border-danger/30">
             SYSTEM NOTICE 500
           </span>
           <h1 className="font-serif text-4xl sm:text-5xl font-extrabold text-obsidian tracking-tight">
