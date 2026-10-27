@@ -148,8 +148,8 @@ export default function VendorOffersPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">My Submitted Offers &amp; Bids</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#EDE9FE] text-[#0F0C3B]">
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">My Submitted Offers &amp; Bids</h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-soft text-foreground">
               {offers.length} Tracked
             </span>
           </div>
@@ -160,7 +160,7 @@ export default function VendorOffersPage() {
 
         <Link
           href="/vendor/find-jobs"
-          className="px-4 py-2.5 bg-[#0F0C3B] hover:bg-[#18124E] text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start md:self-auto"
+          className="px-4 py-2.5 bg-brand hover:bg-surface-sunken text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start md:self-auto"
         >
           <Search className="w-4 h-4 text-warning" /> Browse Live Jobs
         </Link>
@@ -175,7 +175,7 @@ export default function VendorOffersPage() {
             placeholder="Search proposals, clients..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#F8F9FD] border border-border rounded-lg pl-9 pr-3 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-brand-primary"
+            className="w-full bg-surface-elevated border border-border rounded-lg pl-9 pr-3 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-brand-primary"
           />
         </div>
 
@@ -183,7 +183,7 @@ export default function VendorOffersPage() {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="bg-[#F8F9FD] border border-border rounded-lg px-3 py-2 text-xs font-semibold text-foreground-secondary focus:outline-none"
+            className="bg-surface-elevated border border-border rounded-lg px-3 py-2 text-xs font-semibold text-foreground-secondary focus:outline-none"
           >
             <option value="All">All Statuses</option>
             <option value="Under Review">Under Review</option>
@@ -204,7 +204,7 @@ export default function VendorOffersPage() {
         ) : filtered.length === 0 ? (
           <div className="bg-surface rounded-2xl border border-border p-12 text-center text-foreground-muted text-xs">
             <FileCheck className="w-8 h-8 text-foreground-secondary mx-auto mb-2" />
-            <p className="font-bold text-[#0F0C3B]">No proposals found</p>
+            <p className="font-bold text-foreground">No proposals found</p>
             <p className="text-foreground-muted mt-0.5">Submit offers on verified client celebration posts</p>
           </div>
         ) : (
@@ -222,13 +222,13 @@ export default function VendorOffersPage() {
 
                 <div className="flex items-center gap-2">
                   {o.status === "Under Review" && (
-                    <span className="text-[11px] font-bold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200 flex items-center gap-1">
+                    <span className="text-[11px] font-bold text-warning bg-warning-soft px-2.5 py-0.5 rounded-full border border-warning/30 flex items-center gap-1">
                       <Clock className="w-3.5 h-3.5" /> {o.expiresIn}
                     </span>
                   )}
                   <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
-                    o.status === "Under Review" ? "bg-amber-50 text-amber-700 border border-amber-200" :
-                    o.status === "Accepted" ? "bg-emerald-50 text-emerald-700 border border-emerald-200" :
+                    o.status === "Under Review" ? "bg-warning-soft text-warning border border-warning/30" :
+                    o.status === "Accepted" ? "bg-success-soft text-success border border-success/30" :
                     "bg-surface-sunken text-foreground-muted"
                   }`}>
                     {o.status}
@@ -238,10 +238,10 @@ export default function VendorOffersPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="md:col-span-2 space-y-2">
-                  <h3 className="text-sm font-bold text-[#0F0C3B]">{o.jobTitle}</h3>
+                  <h3 className="text-sm font-bold text-foreground">{o.jobTitle}</h3>
                   <div className="flex items-center gap-4 text-xs text-foreground-muted flex-wrap">
                     <div className="flex items-center gap-1.5">
-                      <div className="w-5 h-5 rounded-full bg-purple-600 text-foreground flex items-center justify-center font-bold text-[9px]">
+                      <div className="w-5 h-5 rounded-full bg-brand text-on-brand text-foreground flex items-center justify-center font-bold text-[9px]">
                         {o.clientAvatar}
                       </div>
                       <span className="font-bold text-foreground-secondary">{o.clientName}</span>
@@ -255,15 +255,15 @@ export default function VendorOffersPage() {
                     <span>{o.location}</span>
                   </div>
 
-                  <p className="text-xs text-foreground-secondary leading-relaxed bg-[#F8F9FD] p-3 rounded-xl border border-border mt-2">
+                  <p className="text-xs text-foreground-secondary leading-relaxed bg-surface-elevated p-3 rounded-xl border border-border mt-2">
                     &ldquo;{o.coverNote}&rdquo;
                   </p>
                 </div>
 
-                <div className="bg-[#F8F9FD] p-4 rounded-xl border border-border flex flex-col justify-between space-y-3">
+                <div className="bg-surface-elevated p-4 rounded-xl border border-border flex flex-col justify-between space-y-3">
                   <div>
                     <span className="text-[10px] text-foreground-muted uppercase font-bold tracking-wider">Total Proposed Price</span>
-                    <p className="text-xl font-black text-[#0F0C3B] mt-0.5">
+                    <p className="text-xl font-black text-foreground mt-0.5">
                       ${o.price.toLocaleString()}
                     </p>
                     <p className="text-[11px] text-success font-bold mt-1">
@@ -275,13 +275,13 @@ export default function VendorOffersPage() {
                   <div className="grid grid-cols-2 gap-2">
                     <Link
                       href="/vendor/messages"
-                      className="w-full py-2 bg-surface hover:bg-surface-elevated border border-border text-[#0F0C3B] rounded-lg text-xs font-bold text-center flex items-center justify-center gap-1"
+                      className="w-full py-2 bg-surface hover:bg-surface-elevated border border-border text-foreground rounded-lg text-xs font-bold text-center flex items-center justify-center gap-1"
                     >
                       <MessageSquare className="w-3.5 h-3.5" /> Chat
                     </Link>
                     <button
                       onClick={() => setSelectedOffer(o)}
-                      className="w-full py-2 bg-[#0F0C3B] hover:bg-[#18124E] text-foreground rounded-lg text-xs font-bold text-center cursor-pointer"
+                      className="w-full py-2 bg-brand hover:bg-surface-sunken text-foreground rounded-lg text-xs font-bold text-center cursor-pointer"
                     >
                       Details
                     </button>
@@ -290,7 +290,7 @@ export default function VendorOffersPage() {
                   {(o.status === "Under Review" || o.rawStatus === "PENDING") && (
                     <button
                       onClick={() => handleWithdraw(o.id)}
-                      className="w-full py-1.5 text-rose-600 hover:bg-rose-50 rounded-lg text-[11px] font-bold text-center flex items-center justify-center gap-1 transition-colors cursor-pointer"
+                      className="w-full py-1.5 text-danger hover:bg-danger-soft rounded-lg text-[11px] font-bold text-center flex items-center justify-center gap-1 transition-colors cursor-pointer"
                     >
                       <Trash2 className="w-3 h-3" /> Withdraw Proposal
                     </button>
@@ -304,12 +304,12 @@ export default function VendorOffersPage() {
 
       {/* Offer Details Modal */}
       {selectedOffer && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-border animate-in fade-in">
             <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
                 <span className="font-mono text-xs font-bold text-brand-primary">{selectedOffer.offerCode}</span>
-                <h2 className="text-sm font-bold text-[#0F0C3B]">{selectedOffer.jobTitle}</h2>
+                <h2 className="text-sm font-bold text-foreground">{selectedOffer.jobTitle}</h2>
               </div>
               <button onClick={() => setSelectedOffer(null)} className="text-foreground-muted hover:text-foreground-secondary">
                 &times;
@@ -317,7 +317,7 @@ export default function VendorOffersPage() {
             </div>
 
             <div className="space-y-3 text-xs">
-              <div className="p-3 bg-[#F8F9FD] rounded-xl space-y-1">
+              <div className="p-3 bg-surface-elevated rounded-xl space-y-1">
                 <span className="text-[10px] text-foreground-muted uppercase font-bold">Client &amp; Event Date</span>
                 <p className="font-bold text-foreground">{selectedOffer.clientName} &bull; {selectedOffer.eventDate}</p>
               </div>
@@ -329,10 +329,10 @@ export default function VendorOffersPage() {
                 </p>
               </div>
 
-              <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-100 flex items-center justify-between">
+              <div className="p-3 bg-success-soft rounded-xl border border-emerald-100 flex items-center justify-between">
                 <div>
-                  <span className="text-[10px] text-emerald-800 font-bold uppercase">Payout Guarantee</span>
-                  <p className="text-sm font-black text-emerald-900">${selectedOffer.price.toLocaleString()} Net Payout</p>
+                  <span className="text-[10px] text-success font-bold uppercase">Payout Guarantee</span>
+                  <p className="text-sm font-black text-success">${selectedOffer.price.toLocaleString()} Net Payout</p>
                 </div>
                 <ShieldCheck className="w-5 h-5 text-success" />
               </div>
@@ -342,7 +342,7 @@ export default function VendorOffersPage() {
               {(selectedOffer.status === "Under Review" || selectedOffer.rawStatus === "PENDING") ? (
                 <button
                   onClick={() => handleWithdraw(selectedOffer.id)}
-                  className="px-3.5 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-colors"
+                  className="px-3.5 py-2 bg-danger-soft hover:bg-danger-soft text-danger rounded-xl font-bold text-xs flex items-center gap-1.5 transition-colors"
                 >
                   <Trash2 className="w-3.5 h-3.5" /> Retract Proposal
                 </button>
@@ -350,7 +350,7 @@ export default function VendorOffersPage() {
 
               <button
                 onClick={() => setSelectedOffer(null)}
-                className="px-4 py-2 bg-surface-sunken hover:bg-slate-200 text-foreground-secondary rounded-xl font-bold text-xs"
+                className="px-4 py-2 bg-surface-sunken hover:bg-surface-sunken text-foreground-secondary rounded-xl font-bold text-xs"
               >
                 Close
               </button>
