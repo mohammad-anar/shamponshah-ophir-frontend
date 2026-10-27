@@ -40,6 +40,11 @@ const cormorant = Cormorant_Garamond({
 
 export const metadata: Metadata = constructMetadata();
 
+export const viewport = {
+  themeColor: "#0B0C0E",
+  colorScheme: "dark" as const,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -49,7 +54,7 @@ export default function RootLayout({
     <html lang="en" className={`${jakarta.variable} ${inter.variable} ${cinzel.variable} ${cormorant.variable}`}>
       <body
         suppressHydrationWarning={true}
-        className="font-sans antialiased bg-[#0B0C0E] text-[#F3F4F6] selection:bg-[#DFB76C]/30 selection:text-[#DFB76C]"
+        className="font-sans antialiased bg-background text-foreground selection:bg-brand/30 selection:text-brand"
       >
         <NextUiProvider>
           <ReduxProvider>
