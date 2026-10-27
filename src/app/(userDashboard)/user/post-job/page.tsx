@@ -388,7 +388,7 @@ export default function PostJobWizardPage() {
                     onChange={(e) => setPostToFamily(e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-border-strong after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface after:border-border after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand"></div>
+                  <div className="w-9 h-5 bg-surface-elevated peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-border-strong after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface after:border-border after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand"></div>
                 </label>
               </div>
             </div>
@@ -668,7 +668,7 @@ export default function PostJobWizardPage() {
               {/* Host avatar */}
               <div className="pt-3 border-t border-border flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-600 to-brand text-foreground flex items-center justify-center font-bold text-[10px]">
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-brand to-brand text-foreground flex items-center justify-center font-bold text-[10px]">
                     {hostInitials}
                   </div>
                   <div>
