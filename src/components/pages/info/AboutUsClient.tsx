@@ -6,11 +6,11 @@ import { Sparkles, ShieldCheck, Heart, Award } from "lucide-react";
 
 export default function AboutUsPage() {
   return (
-    <div className="w-full bg-[#0B0C0E] text-[#F3F4F6] min-h-screen py-10 lg:py-16 space-y-16 font-sans selection:bg-[#DFB76C] selection:text-[#0B0C0E]">
+    <div className="w-full bg-background text-foreground min-h-screen py-10 lg:py-16 space-y-16 font-sans selection:bg-brand selection:text-on-brand">
       {/* Hero Section */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-10">
         <div className="max-w-3xl mx-auto text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-none bg-[#1A1D24] text-[#DFB76C] text-xs font-bold uppercase tracking-widest border border-border-brand/40">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-none bg-surface-sunken text-brand text-xs font-bold uppercase tracking-widest border border-border-brand/40">
             <Sparkles className="w-3.5 h-3.5" />
             <span>OUR MISSION & ETHOS</span>
           </div>
@@ -28,7 +28,7 @@ export default function AboutUsPage() {
       {/* Big Visual Grid */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          <div className="lg:col-span-6 relative h-[420px] rounded-none overflow-hidden shadow-2xl border border-[#26282E] bg-[#121418]">
+          <div className="lg:col-span-6 relative h-[420px] rounded-none overflow-hidden shadow-2xl border border-border bg-surface">
             <Image
               src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop"
               alt="Cultural Gathering"
@@ -49,15 +49,15 @@ export default function AboutUsPage() {
             </p>
 
             <div className="grid grid-cols-3 gap-4 pt-2">
-              <div className="p-4 bg-[#121418] rounded-none border border-[#26282E]">
-                <span className="font-serif text-2xl font-light text-[#DFB76C] block">18,400+</span>
+              <div className="p-4 bg-surface rounded-none border border-border">
+                <span className="font-serif text-2xl font-light text-brand block">18,400+</span>
                 <span className="text-xs text-foreground-muted">Celebrations</span>
               </div>
-              <div className="p-4 bg-[#121418] rounded-none border border-[#26282E]">
+              <div className="p-4 bg-surface rounded-none border border-border">
                 <span className="font-serif text-2xl font-light text-success block">$48M+</span>
                 <span className="text-xs text-foreground-muted">Vault Secured</span>
               </div>
-              <div className="p-4 bg-[#121418] rounded-none border border-[#26282E]">
+              <div className="p-4 bg-surface rounded-none border border-border">
                 <span className="font-serif text-2xl font-light text-foreground block">50 States</span>
                 <span className="text-xs text-foreground-muted">Coverage</span>
               </div>
@@ -69,8 +69,8 @@ export default function AboutUsPage() {
       {/* Core Values */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-8 bg-[#121418] rounded-none border border-[#26282E] shadow-sm space-y-3">
-            <div className="w-10 h-10 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] flex items-center justify-center">
+          <div className="p-8 bg-surface rounded-none border border-border shadow-sm space-y-3">
+            <div className="w-10 h-10 rounded-none bg-surface-sunken border border-border text-brand flex items-center justify-center">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <h3 className="font-serif font-light text-lg text-foreground">Radical Transparency</h3>
@@ -79,8 +79,8 @@ export default function AboutUsPage() {
             </p>
           </div>
 
-          <div className="p-8 bg-[#121418] rounded-none border border-[#26282E] shadow-sm space-y-3">
-            <div className="w-10 h-10 rounded-none bg-[#1A1D24] border border-[#26282E] text-danger flex items-center justify-center">
+          <div className="p-8 bg-surface rounded-none border border-border shadow-sm space-y-3">
+            <div className="w-10 h-10 rounded-none bg-surface-sunken border border-border text-danger flex items-center justify-center">
               <Heart className="w-5 h-5" />
             </div>
             <h3 className="font-serif font-light text-lg text-foreground">Cultural Authenticity</h3>
@@ -89,8 +89,8 @@ export default function AboutUsPage() {
             </p>
           </div>
 
-          <div className="p-8 bg-[#121418] rounded-none border border-[#26282E] shadow-sm space-y-3">
-            <div className="w-10 h-10 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] flex items-center justify-center">
+          <div className="p-8 bg-surface rounded-none border border-border shadow-sm space-y-3">
+            <div className="w-10 h-10 rounded-none bg-surface-sunken border border-border text-brand flex items-center justify-center">
               <Award className="w-5 h-5" />
             </div>
             <h3 className="font-serif font-light text-lg text-foreground">Vendor Meritocracy</h3>
