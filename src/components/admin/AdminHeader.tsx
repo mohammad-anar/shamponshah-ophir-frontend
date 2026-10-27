@@ -99,12 +99,12 @@ export default function AdminHeader({
   }
 
   return (
-    <header className="sticky top-0 z-30 h-16 bg-[#121418]/95 backdrop-blur-md border-b border-[#26282E] px-4 md:px-8 flex items-center justify-between text-foreground">
+    <header className="sticky top-0 z-30 h-16 bg-surface/95 backdrop-blur-md border-b border-border px-4 md:px-8 flex items-center justify-between text-foreground">
       {/* Left section: mobile hamburger & breadcrumbs */}
       <div className="flex items-center gap-3">
         <button
           onClick={onMenuToggle}
-          className="lg:hidden p-2 rounded-lg text-foreground-muted hover:text-foreground hover:bg-[#16181F]"
+          className="lg:hidden p-2 rounded-lg text-foreground-muted hover:text-foreground hover:bg-surface-elevated"
           aria-label="Toggle navigation"
         >
           <Menu className="w-5 h-5" />
@@ -116,11 +116,11 @@ export default function AdminHeader({
             <div key={idx} className="flex items-center gap-1.5">
               {idx > 0 && <span className="text-foreground-secondary">/</span>}
               {crumb.href ? (
-                <Link href={crumb.href} className="text-foreground-muted hover:text-[#DFB76C] transition-colors">
+                <Link href={crumb.href} className="text-foreground-muted hover:text-brand transition-colors">
                   {crumb.label}
                 </Link>
               ) : (
-                <span className="text-[#DFB76C] font-bold bg-[#1A1D24] px-2 py-0.5 rounded-md border border-border-brand/40">
+                <span className="text-brand font-bold bg-surface-sunken px-2 py-0.5 rounded-md border border-border-brand/40">
                   {crumb.label}
                 </span>
               )}
@@ -136,9 +136,9 @@ export default function AdminHeader({
           <input
             type="text"
             placeholder="Search users, orders, vendors, disputes..."
-            className="w-full bg-[#16181F] border border-[#26282E] rounded-lg pl-9 pr-14 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C] focus:bg-[#1A1D24] transition-all shadow-sm"
+            className="w-full bg-surface-elevated border border-border rounded-lg pl-9 pr-14 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand focus:bg-surface-sunken transition-all shadow-sm"
           />
-          <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-medium text-foreground-muted bg-[#121418] border border-[#26282E] rounded shadow-xs">
+          <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-medium text-foreground-muted bg-surface border border-border rounded shadow-xs">
             <Command className="w-2.5 h-2.5" /> K
           </kbd>
         </div>
@@ -147,10 +147,10 @@ export default function AdminHeader({
       {/* Right controls */}
       <div className="flex items-center gap-3 md:gap-4">
         {/* System Health Status */}
-        <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-success-soft text-success border border-emerald-800/40 text-success text-[11px] font-semibold">
+        <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-success-soft text-success border border-success/30/40 text-success text-[11px] font-semibold">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-success-solid text-white"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-solid text-white opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-success-solid text-foreground"></span>
           </span>
           <div className="flex flex-col leading-tight">
             <span>System Operational</span>
@@ -159,8 +159,8 @@ export default function AdminHeader({
         </div>
 
         {/* Live Pod Pill */}
-        <div className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#1A1D24] text-[#DFB76C] text-[10px] font-bold tracking-wider uppercase border border-border-brand/40">
-          <Activity className="w-3 h-3 text-[#DFB76C]" />
+        <div className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-surface-sunken text-brand text-[10px] font-bold tracking-wider uppercase border border-border-brand/40">
+          <Activity className="w-3 h-3 text-brand" />
           <span>LIVE POD 01</span>
         </div>
 
@@ -168,32 +168,32 @@ export default function AdminHeader({
         <div className="relative">
           <button
             onClick={() => setShowNotifications(!showNotifications)}
-            className="relative p-2 rounded-lg text-foreground-muted hover:text-foreground hover:bg-[#16181F] transition-colors"
+            className="relative p-2 rounded-lg text-foreground-muted hover:text-foreground hover:bg-surface-elevated transition-colors"
           >
             <Bell className="w-4 h-4" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#DFB76C] border-2 border-[#121418]" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-brand border-2 border-border" />
           </button>
 
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-80 bg-[#121418] rounded-xl shadow-2xl border border-[#26282E] py-3 z-50 animate-in fade-in slide-in-from-top-2 text-foreground">
-              <div className="px-4 pb-2 border-b border-[#26282E] flex items-center justify-between">
+            <div className="absolute right-0 mt-2 w-80 bg-surface rounded-xl shadow-2xl border border-border py-3 z-50 animate-in fade-in slide-in-from-top-2 text-foreground">
+              <div className="px-4 pb-2 border-b border-border flex items-center justify-between">
                 <span className="text-xs font-bold text-foreground">Action Alerts</span>
-                <span className="text-[10px] font-semibold bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40 px-2 py-0.5 rounded-full">4 Pending</span>
+                <span className="text-[10px] font-semibold bg-surface-sunken text-brand border border-border-brand/40 px-2 py-0.5 rounded-full">4 Pending</span>
               </div>
-              <div className="divide-y divide-[#26282E] text-xs">
-                <div className="p-3 hover:bg-[#16181F] transition-colors">
+              <div className="divide-y divide-border text-xs">
+                <div className="p-3 hover:bg-surface-elevated transition-colors">
                   <p className="font-semibold text-danger flex items-center gap-1">
                     <ShieldAlert className="w-3.5 h-3.5" /> 1 Dispute Past 3-Day SLA
                   </p>
                   <p className="text-[11px] text-foreground-muted mt-0.5">Case #DS-1049 (Windy City Sound - $2,400 hold)</p>
                 </div>
-                <div className="p-3 hover:bg-[#16181F] transition-colors">
+                <div className="p-3 hover:bg-surface-elevated transition-colors">
                   <p className="font-semibold text-foreground">12 Vendor Applications Pending &gt;48h</p>
                   <p className="text-[11px] text-foreground-muted mt-0.5">Chicago & Atlanta regional queues awaiting check</p>
                 </div>
               </div>
-              <div className="px-4 pt-2 border-t border-[#26282E] text-center">
-                <Link href="/admin/disputes" className="text-[11px] font-semibold text-[#DFB76C] hover:underline">
+              <div className="px-4 pt-2 border-t border-border text-center">
+                <Link href="/admin/disputes" className="text-[11px] font-semibold text-brand hover:underline">
                   View All Escalations →
                 </Link>
               </div>
@@ -205,9 +205,9 @@ export default function AdminHeader({
         <div className="relative">
           <button
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className="flex items-center gap-2.5 pl-2 py-1 rounded-lg hover:bg-[#16181F] transition-colors"
+            className="flex items-center gap-2.5 pl-2 py-1 rounded-lg hover:bg-surface-elevated transition-colors"
           >
-            <div className="w-8 h-8 rounded-full bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40 flex items-center justify-center font-bold text-xs shadow-sm">
+            <div className="w-8 h-8 rounded-full bg-surface-sunken text-brand border border-border-brand/40 flex items-center justify-center font-bold text-xs shadow-sm">
               {initials}
             </div>
             <div className="hidden lg:flex flex-col text-left leading-tight">
@@ -218,21 +218,21 @@ export default function AdminHeader({
           </button>
 
           {showUserMenu && (
-            <div className="absolute right-0 mt-2 w-52 bg-[#121418] rounded-xl shadow-2xl border border-[#26282E] py-1.5 z-50 text-xs text-foreground">
-              <div className="px-3 py-2 border-b border-[#26282E] lg:hidden">
+            <div className="absolute right-0 mt-2 w-52 bg-surface rounded-xl shadow-2xl border border-border py-1.5 z-50 text-xs text-foreground">
+              <div className="px-3 py-2 border-b border-border lg:hidden">
                 <p className="font-bold text-foreground">{userName}</p>
                 <p className="text-[11px] text-foreground-muted">{userRole}</p>
               </div>
-              <Link href="/user" className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-[#16181F] hover:text-foreground">
-                <ExternalLink className="w-3.5 h-3.5 text-[#DFB76C]" /> Switch to Client View
+              <Link href="/user" className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-surface-elevated hover:text-foreground">
+                <ExternalLink className="w-3.5 h-3.5 text-brand" /> Switch to Client View
               </Link>
-              <Link href="/vendor" className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-[#16181F] hover:text-foreground">
-                <ExternalLink className="w-3.5 h-3.5 text-[#DFB76C]" /> Switch to Vendor View
+              <Link href="/vendor" className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-surface-elevated hover:text-foreground">
+                <ExternalLink className="w-3.5 h-3.5 text-brand" /> Switch to Vendor View
               </Link>
-              <Link href="/admin/settings" className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-[#16181F] hover:text-foreground">
+              <Link href="/admin/settings" className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-surface-elevated hover:text-foreground">
                 <Settings className="w-3.5 h-3.5 text-foreground-muted" /> Admin Settings
               </Link>
-              <div className="border-t border-[#26282E] my-1" />
+              <div className="border-t border-border my-1" />
               <button 
                 onClick={handleSignOut}
                 className="w-full flex items-center gap-2 px-3 py-2 text-danger hover:bg-danger-soft text-danger text-left cursor-pointer"
