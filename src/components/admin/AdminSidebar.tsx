@@ -54,7 +54,7 @@ const navSections: NavSection[] = [
     items: [
       { label: "Overview", href: "/admin", icon: LayoutDashboard },
       { label: "Users", href: "/admin/users", icon: Users },
-      { label: "Vendor Approvals", href: "/admin/vendor-approvals", icon: UserCheck, badge: "0", badgeColor: "bg-amber-500 text-[#0F0C3B]" },
+      { label: "Vendor Approvals", href: "/admin/vendor-approvals", icon: UserCheck, badge: "0", badgeColor: "bg-amber-500 text-[#0B0C0E]" },
       { label: "Pending Gigs", href: "/admin/gigs/pending", icon: Clock, badge: "0", badgeColor: "bg-amber-400 text-slate-950" },
       { label: "Gigs Catalog", href: "/admin/gigs", icon: ShoppingBag },
       { label: "Jobs & Bids", href: "/admin/jobs", icon: Briefcase },
