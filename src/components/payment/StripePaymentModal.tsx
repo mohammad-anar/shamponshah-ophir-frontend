@@ -26,27 +26,27 @@ export default function StripePaymentModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
       <div
-        className="relative w-full max-w-lg bg-[#0c0a1a] border border-amber-500/20 rounded-2xl shadow-2xl p-6 sm:p-7 text-white overflow-hidden my-8"
+        className="relative w-full max-w-lg bg-[#0c0a1a] border border-warning/30 rounded-2xl shadow-2xl p-6 sm:p-7 text-foreground overflow-hidden my-8"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Glow Effects */}
-        <div className="absolute top-0 right-1/4 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-40 h-40 bg-warning-solid text-on-brand/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-40 h-40 bg-info-solid text-white/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Modal Header */}
-        <div className="relative z-10 flex items-start justify-between pb-4 border-b border-white/10 mb-5">
+        <div className="relative z-10 flex items-start justify-between pb-4 border-b border-border mb-5">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400">
+            <div className="w-10 h-10 rounded-xl bg-warning-solid text-on-brand/15 border border-warning/30 flex items-center justify-center text-warning">
               <Lock className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-base text-white">Escrow Payment Vault</h3>
-              <p className="text-xs text-slate-400">Separate Charges &amp; Transfers on Stripe Connect</p>
+              <h3 className="font-bold text-base text-foreground">Escrow Payment Vault</h3>
+              <p className="text-xs text-foreground-muted">Separate Charges &amp; Transfers on Stripe Connect</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            className="p-1.5 rounded-lg text-foreground-muted hover:text-foreground hover:bg-surface/10 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
