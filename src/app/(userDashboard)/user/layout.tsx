@@ -12,7 +12,7 @@ export default function UserRootLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-[#0B0C0E] text-[#F3F4F6] flex font-sans dashboard-theme">
+    <div className="min-h-screen bg-background text-foreground flex font-sans dashboard-theme">
       {/* Client Sidebar */}
       <UserSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
