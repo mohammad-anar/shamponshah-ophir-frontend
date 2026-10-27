@@ -245,9 +245,9 @@ export default function AdminReviewsReportsPage() {
               refetch();
               toast.success("Reviews ledger refreshed with live data.");
             }}
-            className="px-3.5 py-2 rounded-xl bg-[#16181F] border border-[#26282E] text-xs font-bold text-foreground-secondary hover:text-foreground hover:bg-[#1A1D24] flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+            className="px-3.5 py-2 rounded-xl bg-surface-elevated border border-border text-xs font-bold text-foreground-secondary hover:text-foreground hover:bg-surface-sunken flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
           >
-            <RefreshCw className="w-3.5 h-3.5 text-[#DFB76C]" />
+            <RefreshCw className="w-3.5 h-3.5 text-brand" />
             <span>Sync Live Feed</span>
           </button>
         </div>
@@ -255,49 +255,49 @@ export default function AdminReviewsReportsPage() {
 
       {/* Top Stat Overview Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
-        <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-xs">
+        <div className="bg-surface p-5 rounded-3xl border border-border shadow-xs">
           <span className="text-[10px] uppercase font-bold text-foreground-muted block">Total Reviews</span>
           <div className="flex items-baseline gap-2 mt-1">
             <span className="text-2xl font-black text-foreground font-mono">{reviewsList.length}</span>
-            <span className="text-xs font-bold text-success bg-success-solid text-white/15 border border-success/30 px-1.5 py-0.2 rounded">100% Verified</span>
+            <span className="text-xs font-bold text-success bg-success-solid text-foreground/15 border border-success/30 px-1.5 py-0.2 rounded">100% Verified</span>
           </div>
           <p className="text-[11px] text-foreground-muted mt-1">Post-event milestone ratings</p>
         </div>
 
-        <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-xs">
+        <div className="bg-surface p-5 rounded-3xl border border-border shadow-xs">
           <span className="text-[10px] uppercase font-bold text-foreground-muted block">Platform Avg Score</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-[#DFB76C] font-mono">4.92 / 5.0</span>
+            <span className="text-2xl font-black text-brand font-mono">4.92 / 5.0</span>
             <span className="text-xs font-bold text-warning bg-warning-solid text-on-brand/15 border border-warning/30 px-1.5 py-0.2 rounded">★ Top Tier</span>
           </div>
           <p className="text-[11px] text-foreground-muted mt-1">Calculated across 840+ gigs</p>
         </div>
 
-        <div className="bg-[#121418] p-5 rounded-3xl border border-danger/30 shadow-xs">
+        <div className="bg-surface p-5 rounded-3xl border border-danger/30 shadow-xs">
           <span className="text-[10px] uppercase font-bold text-danger block">Under Investigation</span>
           <div className="flex items-baseline gap-2 mt-1">
             <span className="text-2xl font-black text-danger font-mono">
               {reviewsList.filter(r => r.status === "FLAGGED_DISPUTE" || r.status === "UNDER_MODERATION").length}
             </span>
-            <span className="text-xs font-bold text-danger bg-danger-solid text-white/15 border border-danger/30 px-1.5 py-0.2 rounded">Action Required</span>
+            <span className="text-xs font-bold text-danger bg-danger-solid text-foreground/15 border border-danger/30 px-1.5 py-0.2 rounded">Action Required</span>
           </div>
           <p className="text-[11px] text-foreground-muted mt-1">Dispute holdbacks &amp; appeals</p>
         </div>
 
-        <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-xs">
+        <div className="bg-surface p-5 rounded-3xl border border-border shadow-xs">
           <span className="text-[10px] uppercase font-bold text-foreground-muted block">Featured Pinned</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-[#DFB76C] font-mono">
+            <span className="text-2xl font-black text-brand font-mono">
               {reviewsList.filter(r => r.isPinned).length}
             </span>
-            <span className="text-xs font-bold text-[#DFB76C] bg-[#DFB76C]/15 border border-border-brand/40 px-1.5 py-0.2 rounded">Homepage</span>
+            <span className="text-xs font-bold text-brand bg-brand/15 border border-border-brand/40 px-1.5 py-0.2 rounded">Homepage</span>
           </div>
           <p className="text-[11px] text-foreground-muted mt-1">Showcased on main landing page</p>
         </div>
       </div>
 
       {/* Filter & Search Bar */}
-      <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
+      <div className="bg-surface rounded-3xl border border-border p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
         {/* Status Tabs */}
         <div className="flex items-center gap-1.5 flex-wrap">
           {[
@@ -313,8 +313,8 @@ export default function AdminReviewsReportsPage() {
               className={cn(
                 "px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer",
                 activeFilter === tab.key
-                  ? "bg-[#DFB76C] text-[#0B0C0E] shadow-xs font-bold"
-                  : "bg-[#16181F] text-foreground-muted hover:text-foreground hover:bg-[#1A1D24] border border-[#26282E]"
+                  ? "bg-brand text-on-brand shadow-xs font-bold"
+                  : "bg-surface-elevated text-foreground-muted hover:text-foreground hover:bg-surface-sunken border border-border"
               )}
             >
               {tab.label}
@@ -324,12 +324,12 @@ export default function AdminReviewsReportsPage() {
 
         {/* Rating Stars Filter & Search Input */}
         <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
-          <div className="flex items-center bg-[#16181F] p-1 rounded-xl border border-[#26282E]">
+          <div className="flex items-center bg-surface-elevated p-1 rounded-xl border border-border">
             <button
               onClick={() => setRatingFilter("ALL")}
               className={cn(
                 "px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer",
-                ratingFilter === "ALL" ? "bg-[#DFB76C] text-[#0B0C0E] font-bold shadow-2xs" : "text-foreground-muted hover:text-foreground"
+                ratingFilter === "ALL" ? "bg-brand text-on-brand font-bold shadow-2xs" : "text-foreground-muted hover:text-foreground"
               )}
             >
               All ★
@@ -340,11 +340,11 @@ export default function AdminReviewsReportsPage() {
                 onClick={() => setRatingFilter(r)}
                 className={cn(
                   "px-2 py-1 rounded-lg font-bold text-[11px] flex items-center gap-0.5 transition-all cursor-pointer",
-                  ratingFilter === r ? "bg-[#DFB76C] text-[#0B0C0E] shadow-2xs font-black" : "text-foreground-muted hover:text-[#DFB76C]"
+                  ratingFilter === r ? "bg-brand text-on-brand shadow-2xs font-black" : "text-foreground-muted hover:text-brand"
                 )}
               >
                 <span>{r}</span>
-                <Star className="w-2.5 h-2.5 fill-[#DFB76C] text-[#DFB76C]" />
+                <Star className="w-2.5 h-2.5 fill-brand text-brand" />
               </button>
             ))}
           </div>
@@ -356,7 +356,7 @@ export default function AdminReviewsReportsPage() {
               placeholder="Search feedback, clients, vendors..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
+              className="w-full pl-9 pr-3 py-1.5 bg-surface-elevated border border-border rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand"
             />
           </div>
         </div>
@@ -365,7 +365,7 @@ export default function AdminReviewsReportsPage() {
       {/* Reviews List Cards */}
       <div className="space-y-4 text-xs">
         {filteredReviews.length === 0 ? (
-          <div className="bg-[#121418] rounded-3xl border border-dashed border-[#26282E] p-12 text-center space-y-2">
+          <div className="bg-surface rounded-3xl border border-dashed border-border p-12 text-center space-y-2">
             <MessageSquare className="w-8 h-8 text-foreground-muted mx-auto" />
             <p className="font-bold text-foreground-secondary text-sm">No reviews match your current filter criteria</p>
             <p className="text-foreground-muted text-xs">Try selecting a different status tab or clearing your search term.</p>
@@ -376,20 +376,20 @@ export default function AdminReviewsReportsPage() {
               key={rev.id}
               className={cn(
                 "rounded-3xl border transition-all p-5 shadow-xs space-y-4",
-                rev.isPinned ? "bg-[#121418] border-border-brand/40 ring-1 ring-[#DFB76C]/20" : rev.status === "FLAGGED_DISPUTE" ? "bg-[#121418] border-danger/30 ring-1 ring-rose-500/20" : "bg-[#121418] border-[#26282E] hover:border-slate-700"
+                rev.isPinned ? "bg-surface border-border-brand/40 ring-1 ring-focus-ring/20" : rev.status === "FLAGGED_DISPUTE" ? "bg-surface border-danger/30 ring-1 ring-danger/20" : "bg-surface border-border hover:border-slate-700"
               )}
             >
               {/* Top Row: User details, Vendor details, Date & Status */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#16181F] border border-[#26282E] text-[#DFB76C] flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-xs">
+                  <div className="w-10 h-10 rounded-full bg-surface-elevated border border-border text-brand flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-xs">
                     {rev.clientAvatar}
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-bold text-foreground text-sm">{rev.client}</span>
                       <span className="text-foreground-muted font-normal">reviewed</span>
-                      <span className="font-bold text-[#DFB76C] bg-[#16181F] px-2 py-0.5 rounded-lg border border-[#26282E]">
+                      <span className="font-bold text-brand bg-surface-elevated px-2 py-0.5 rounded-lg border border-border">
                         {rev.vendor}
                       </span>
                     </div>
@@ -404,10 +404,10 @@ export default function AdminReviewsReportsPage() {
                   
                   <span className={cn(
                     "px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase",
-                    rev.status === "VERIFIED_PURCHASE" && "bg-success-solid text-white/15 text-success border border-success/30",
-                    rev.status === "FLAGGED_DISPUTE" && "bg-danger-solid text-white/15 text-danger border border-danger/30",
+                    rev.status === "VERIFIED_PURCHASE" && "bg-success-solid text-foreground/15 text-success border border-success/30",
+                    rev.status === "FLAGGED_DISPUTE" && "bg-danger-solid text-foreground/15 text-danger border border-danger/30",
                     rev.status === "UNDER_MODERATION" && "bg-warning-solid text-on-brand/15 text-warning border border-warning/30",
-                    rev.status === "HIDDEN" && "bg-slate-500/15 text-foreground-muted border border-slate-500/30",
+                    rev.status === "HIDDEN" && "bg-surface-sunken/15 text-foreground-muted border border-border-strong/30",
                   )}>
                     {rev.status.replace(/_/g, " ")}
                   </span>
@@ -417,31 +417,31 @@ export default function AdminReviewsReportsPage() {
               {/* Star Rating & Comment Box */}
               <div className="space-y-2">
                 <div className="flex items-center gap-1.5">
-                  <div className="flex text-[#DFB76C]">
+                  <div className="flex text-brand">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className={`w-4 h-4 ${i < rev.rating ? "fill-[#DFB76C] text-[#DFB76C]" : "text-foreground-secondary"}`}
+                        className={`w-4 h-4 ${i < rev.rating ? "fill-brand text-brand" : "text-foreground-secondary"}`}
                       />
                     ))}
                   </div>
                   <span className="font-black text-foreground text-xs">{rev.rating}.0 out of 5.0</span>
                   
                   {rev.isPinned && (
-                    <span className="ml-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#DFB76C]/15 text-[#DFB76C] border border-border-brand/40 flex items-center gap-1">
-                      <Sparkles className="w-3 h-3 text-[#DFB76C] fill-[#DFB76C]" /> Featured Pinned
+                    <span className="ml-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-brand/15 text-brand border border-border-brand/40 flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-brand fill-brand" /> Featured Pinned
                     </span>
                   )}
                 </div>
 
-                <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] text-foreground-secondary text-xs leading-relaxed">
+                <div className="p-4 rounded-2xl bg-surface-elevated border border-border text-foreground-secondary text-xs leading-relaxed">
                   &ldquo;{rev.comment}&rdquo;
                 </div>
               </div>
 
               {/* Flag / Dispute Notice if applicable */}
               {rev.flagReason && (
-                <div className="p-3 bg-danger-solid text-white/10 rounded-xl border border-danger/30 text-rose-300 text-xs flex items-start gap-2">
+                <div className="p-3 bg-danger-solid text-foreground/10 rounded-xl border border-danger/30 text-danger text-xs flex items-start gap-2">
                   <AlertTriangle className="w-4 h-4 text-danger flex-shrink-0 mt-0.5" />
                   <div>
                     <span className="font-bold block text-danger">Moderation Notice:</span>
@@ -452,9 +452,9 @@ export default function AdminReviewsReportsPage() {
 
               {/* Vendor Public Reply if present */}
               {rev.vendorReply && (
-                <div className="p-3 bg-[#16181F] rounded-xl border border-[#26282E] space-y-1">
+                <div className="p-3 bg-surface-elevated rounded-xl border border-border space-y-1">
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="font-bold text-[#DFB76C]">Vendor Official Response:</span>
+                    <span className="font-bold text-brand">Vendor Official Response:</span>
                     <span className="text-foreground-muted">{rev.vendorReply.date}</span>
                   </div>
                   <p className="text-foreground-secondary italic text-[11px]">&ldquo;{rev.vendorReply.text}&rdquo;</p>
@@ -462,7 +462,7 @@ export default function AdminReviewsReportsPage() {
               )}
 
               {/* Bottom Interactive Actions Toolbar */}
-              <div className="pt-3 border-t border-[#26282E] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="pt-3 border-t border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-2 flex-wrap">
                   {/* Pin / Unpin Button */}
                   <button
@@ -470,20 +470,20 @@ export default function AdminReviewsReportsPage() {
                     className={cn(
                       "px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border shadow-2xs cursor-pointer",
                       rev.isPinned
-                        ? "bg-[#DFB76C] text-[#0B0C0E] border-[#DFB76C] font-extrabold"
-                        : "bg-[#16181F] text-foreground-secondary border-[#26282E] hover:bg-[#1A1D24] hover:text-foreground"
+                        ? "bg-brand text-on-brand border-border-brand font-extrabold"
+                        : "bg-surface-elevated text-foreground-secondary border-border hover:bg-surface-sunken hover:text-foreground"
                     )}
                   >
-                    <Pin className={cn("w-3.5 h-3.5", rev.isPinned && "fill-[#0B0C0E]")} />
+                    <Pin className={cn("w-3.5 h-3.5", rev.isPinned && "fill-background")} />
                     <span>{rev.isPinned ? "Pinned on Hero" : "Pin as Testimonial"}</span>
                   </button>
 
                   {/* Audit / Notes Modal Button */}
                   <button
                     onClick={() => setSelectedReview(rev)}
-                    className="px-3 py-1.5 rounded-xl bg-[#16181F] hover:bg-[#1A1D24] text-foreground-secondary hover:text-foreground border border-[#26282E] text-xs font-bold transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                    className="px-3 py-1.5 rounded-xl bg-surface-elevated hover:bg-surface-sunken text-foreground-secondary hover:text-foreground border border-border text-xs font-bold transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
                   >
-                    <Eye className="w-3.5 h-3.5 text-[#DFB76C]" />
+                    <Eye className="w-3.5 h-3.5 text-brand" />
                     <span>Audit &amp; Notes ({rev.adminNotes?.length || 0})</span>
                   </button>
                 </div>
@@ -493,7 +493,7 @@ export default function AdminReviewsReportsPage() {
                   {rev.status !== "VERIFIED_PURCHASE" && (
                     <button
                       onClick={() => handleStatusChange(rev.id, "VERIFIED_PURCHASE")}
-                      className="px-3 py-1.5 bg-success-solid text-white hover:bg-success-solid text-white text-foreground rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
+                      className="px-3 py-1.5 bg-success-solid text-foreground hover:bg-success-solid text-foreground text-foreground rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>Approve &amp; Publish</span>
@@ -513,7 +513,7 @@ export default function AdminReviewsReportsPage() {
                   {rev.status !== "HIDDEN" && (
                     <button
                       onClick={() => handleStatusChange(rev.id, "HIDDEN")}
-                      className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] text-foreground-secondary hover:text-foreground border border-[#26282E] rounded-xl text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
+                      className="px-3 py-1.5 bg-surface-elevated hover:bg-surface-sunken text-foreground-secondary hover:text-foreground border border-border rounded-xl text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
                     >
                       <EyeOff className="w-3.5 h-3.5" />
                       <span>Hide</span>
@@ -522,7 +522,7 @@ export default function AdminReviewsReportsPage() {
 
                   <button
                     onClick={() => handleDeleteReview(rev.id)}
-                    className="px-2.5 py-1.5 bg-danger-solid text-white/15 hover:bg-danger-solid text-white/25 text-danger border border-danger/30 rounded-xl text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
+                    className="px-2.5 py-1.5 bg-danger-solid text-foreground/15 hover:bg-danger-solid text-foreground/25 text-danger border border-danger/30 rounded-xl text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
                     title="Permanently remove review"
                   >
                     <Trash2 className="w-3.5 h-3.5 text-danger" />
@@ -536,13 +536,13 @@ export default function AdminReviewsReportsPage() {
 
       {/* Review Inspection & Audit Modal */}
       {selectedReview && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-[#121418] rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden border border-[#26282E] animate-in fade-in flex flex-col text-xs">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-background/80 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-surface rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden border border-border animate-in fade-in flex flex-col text-xs">
             
             {/* Modal Header */}
-            <div className="p-5 bg-[#16181F] border-b border-[#26282E] text-foreground flex items-center justify-between">
+            <div className="p-5 bg-surface-elevated border-b border-border text-foreground flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono font-bold bg-[#121418] text-[#DFB76C] px-2.5 py-0.5 rounded-full border border-[#26282E]">
+                <span className="text-[10px] font-mono font-bold bg-surface text-brand px-2.5 py-0.5 rounded-full border border-border">
                   #{selectedReview.id} &bull; Order #{selectedReview.orderId}
                 </span>
                 <h3 className="text-base font-black text-foreground mt-1">Review Audit &amp; Investigation</h3>
@@ -550,7 +550,7 @@ export default function AdminReviewsReportsPage() {
 
               <button
                 onClick={() => setSelectedReview(null)}
-                className="w-8 h-8 rounded-full bg-[#121418] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-muted hover:text-foreground flex items-center justify-center transition-colors cursor-pointer"
+                className="w-8 h-8 rounded-full bg-surface hover:bg-surface-sunken border border-border text-foreground-muted hover:text-foreground flex items-center justify-center transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -561,21 +561,21 @@ export default function AdminReviewsReportsPage() {
               
               {/* Buyer & Vendor Summary */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-1">
+                <div className="p-3.5 rounded-2xl bg-surface-elevated border border-border space-y-1">
                   <span className="text-[10px] font-bold text-foreground-muted uppercase block">Client Author</span>
                   <p className="font-bold text-foreground">{selectedReview.client}</p>
                   <p className="text-[10px] text-foreground-muted font-mono">{selectedReview.clientEmail}</p>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-1">
+                <div className="p-3.5 rounded-2xl bg-surface-elevated border border-border space-y-1">
                   <span className="text-[10px] font-bold text-foreground-muted uppercase block">Vendor Reviewed</span>
                   <p className="font-bold text-foreground">{selectedReview.vendor}</p>
-                  <p className="text-[10px] text-[#DFB76C]">Booking Verified</p>
+                  <p className="text-[10px] text-brand">Booking Verified</p>
                 </div>
               </div>
 
               {/* Review Comment Quote */}
-              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-2">
+              <div className="p-4 rounded-2xl bg-surface-elevated border border-border space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">
                     Published Rating ({selectedReview.rating}.0 / 5.0)
@@ -590,13 +590,13 @@ export default function AdminReviewsReportsPage() {
               {/* Moderation Notes Log */}
               <div className="space-y-3">
                 <h4 className="font-bold text-foreground text-xs uppercase tracking-wider flex items-center gap-1.5">
-                  <MessageSquare className="w-3.5 h-3.5 text-[#DFB76C]" /> Internal Moderation Notes
+                  <MessageSquare className="w-3.5 h-3.5 text-brand" /> Internal Moderation Notes
                 </h4>
 
                 {selectedReview.adminNotes && selectedReview.adminNotes.length > 0 ? (
                   <div className="space-y-2">
                     {selectedReview.adminNotes.map((note, i) => (
-                      <div key={i} className="p-2.5 bg-[#16181F] rounded-xl border border-[#26282E] text-foreground-secondary text-xs">
+                      <div key={i} className="p-2.5 bg-surface-elevated rounded-xl border border-border text-foreground-secondary text-xs">
                         {note}
                       </div>
                     ))}
@@ -606,17 +606,17 @@ export default function AdminReviewsReportsPage() {
                 )}
 
                 {/* Add Note Form */}
-                <form onSubmit={handleAddNote} className="flex items-center gap-2 pt-2 border-t border-[#26282E]">
+                <form onSubmit={handleAddNote} className="flex items-center gap-2 pt-2 border-t border-border">
                   <input
                     type="text"
                     placeholder="Add audit note or escalation details..."
                     value={adminNoteInput}
                     onChange={(e) => setAdminNoteInput(e.target.value)}
-                    className="flex-1 bg-[#16181F] border border-[#26282E] rounded-xl px-3 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
+                    className="flex-1 bg-surface-elevated border border-border rounded-xl px-3 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand"
                   />
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
+                    className="px-4 py-2 bg-brand hover:bg-brand-hover text-on-brand rounded-xl font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
                   >
                     <Send className="w-3.5 h-3.5" /> Log Note
                   </button>
@@ -626,7 +626,7 @@ export default function AdminReviewsReportsPage() {
             </div>
 
             {/* Modal Footer Controls */}
-            <div className="p-4 bg-[#16181F] border-t border-[#26282E] flex items-center justify-between">
+            <div className="p-4 bg-surface-elevated border-t border-border flex items-center justify-between">
               <button
                 onClick={() => setSelectedReview(null)}
                 className="px-4 py-2 text-xs font-semibold text-foreground-muted hover:text-foreground cursor-pointer"
@@ -637,9 +637,9 @@ export default function AdminReviewsReportsPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => handleTogglePin(selectedReview.id)}
-                  className="px-3.5 py-2 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer"
+                  className="px-3.5 py-2 bg-brand hover:bg-brand-hover text-on-brand rounded-xl font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer"
                 >
-                  <Pin className="w-3.5 h-3.5 fill-[#0B0C0E]" />
+                  <Pin className="w-3.5 h-3.5 fill-background" />
                   <span>{selectedReview.isPinned ? "Unpin" : "Pin Hero"}</span>
                 </button>
 
@@ -648,7 +648,7 @@ export default function AdminReviewsReportsPage() {
                     handleStatusChange(selectedReview.id, "VERIFIED_PURCHASE");
                     setSelectedReview(null);
                   }}
-                  className="px-4 py-2 bg-success-solid text-white hover:bg-success-solid text-white text-foreground rounded-xl font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer"
+                  className="px-4 py-2 bg-success-solid text-foreground hover:bg-success-solid text-foreground text-foreground rounded-xl font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer"
                 >
                   <CheckCircle2 className="w-3.5 h-3.5" /> Approve
                 </button>
