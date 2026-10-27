@@ -63,7 +63,7 @@ export default function ForPc() {
   };
 
   return (
-    <header className="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-[#26282E] shadow-2xl transition-all">
+    <header className="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border shadow-2xl transition-all">
       <div className="max-w-[1440px] mx-auto px-6 h-[72px] flex items-center justify-between gap-4">
         {/* Brand Logo & Global Search */}
         <div className="flex items-center gap-6">
@@ -71,7 +71,7 @@ export default function ForPc() {
 
           <div ref={searchContainerRef} className="relative w-64 xl:w-80">
             <form onSubmit={handleSearchSubmit} className="relative w-full">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#DFB76C]" />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-brand" />
               <input
                 type="text"
                 value={searchQuery}
@@ -86,7 +86,7 @@ export default function ForPc() {
                   if (e.key === "Escape") setIsSearchOpen(false);
                 }}
                 placeholder="Search artisans, traditions, services..."
-                className="w-full h-9 pl-9 pr-9 text-xs bg-[#121418] hover:bg-[#16181F] focus:bg-[#121418] text-foreground placeholder:text-[#94A3B8] rounded-none border border-[#26282E] focus:border-[#DFB76C] focus:outline-none transition-all"
+                className="w-full h-9 pl-9 pr-9 text-xs bg-surface hover:bg-surface-elevated focus:bg-surface text-foreground placeholder:text-foreground-muted rounded-none border border-border focus:border-border-brand focus:outline-none transition-all"
               />
               {searchQuery && (
                 <button
@@ -105,13 +105,13 @@ export default function ForPc() {
             {/* Dropdown with max height = 1/3 of screen */}
             {isSearchOpen && searchQuery.trim().length > 0 && (
               <div 
-                className="absolute top-full left-0 right-0 mt-2 bg-[#121418] rounded-none shadow-2xl border border-[#26282E] z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150"
+                className="absolute top-full left-0 right-0 mt-2 bg-surface rounded-none shadow-2xl border border-border z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150"
               >
                 {/* Header */}
-                <div className="px-3.5 py-2 bg-[#0B0C0E] border-b border-[#26282E] flex items-center justify-between text-[11px] font-semibold text-foreground-muted uppercase tracking-wider">
+                <div className="px-3.5 py-2 bg-background border-b border-border flex items-center justify-between text-[11px] font-semibold text-foreground-muted uppercase tracking-wider">
                   <span>Matching Artisans & Services</span>
                   {isSearchingGigs && (
-                    <span className="flex items-center gap-1 text-[#DFB76C]">
+                    <span className="flex items-center gap-1 text-brand">
                       <Loader2 className="w-3 h-3 animate-spin" /> Searching...
                     </span>
                   )}
@@ -119,7 +119,7 @@ export default function ForPc() {
 
                 {/* Scrollable list with max height 1/3 of viewport */}
                 <div 
-                  className="overflow-y-auto divide-y divide-[#1A1D24]"
+                  className="overflow-y-auto divide-y divide-surface-sunken"
                   style={{ maxHeight: "33.33vh" }}
                 >
                   {matchingServices.length > 0 ? (
@@ -138,16 +138,16 @@ export default function ForPc() {
                           onClick={() => {
                             setIsSearchOpen(false);
                           }}
-                          className="p-3 block hover:bg-[#1A1D24] transition-colors group cursor-pointer"
+                          className="p-3 block hover:bg-surface-sunken transition-colors group cursor-pointer"
                         >
                           <div className="flex items-start justify-between gap-2">
                             <div className="min-w-0 flex-1">
-                              <p className="text-xs font-bold text-foreground-secondary group-hover:text-[#DFB76C] transition-colors line-clamp-1 font-serif">
+                              <p className="text-xs font-bold text-foreground-secondary group-hover:text-brand transition-colors line-clamp-1 font-serif">
                                 {service.title}
                               </p>
                               <div className="flex items-center gap-2 mt-1 text-[11px] text-foreground-muted">
                                 {service.category?.name && (
-                                  <span className="inline-block px-1.5 py-0.5 rounded-none bg-[#1E222A] text-[#DFB76C] font-medium text-[10px] uppercase tracking-wider">
+                                  <span className="inline-block px-1.5 py-0.5 rounded-none bg-surface-sunken text-brand font-medium text-[10px] uppercase tracking-wider">
                                     {service.category.name}
                                   </span>
                                 )}
@@ -159,7 +159,7 @@ export default function ForPc() {
                             {price && (
                               <div className="text-right flex-shrink-0">
                                 <span className="text-[10px] text-foreground-muted block font-medium uppercase tracking-wider">Starts at</span>
-                                <span className="text-xs font-bold text-[#DFB76C] font-mono">${price}</span>
+                                <span className="text-xs font-bold text-brand font-mono">${price}</span>
                               </div>
                             )}
                           </div>
@@ -177,7 +177,7 @@ export default function ForPc() {
                 <Link
                   href={`/vendors?q=${encodeURIComponent(searchQuery.trim())}`}
                   onClick={() => setIsSearchOpen(false)}
-                  className="block px-3.5 py-2.5 bg-[#0B0C0E] hover:bg-[#16181F] text-xs font-bold text-[#DFB76C] text-center border-t border-[#26282E] transition-colors uppercase tracking-widest"
+                  className="block px-3.5 py-2.5 bg-background hover:bg-surface-elevated text-xs font-bold text-brand text-center border-t border-border transition-colors uppercase tracking-widest"
                 >
                   View all results for &quot;{searchQuery}&quot; &rarr;
                 </Link>
@@ -193,8 +193,8 @@ export default function ForPc() {
             className={cn(
               "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium transition-colors",
               pathname.startsWith("/services")
-                ? "text-[#DFB76C] font-bold"
-                : "text-foreground-secondary hover:text-[#DFB76C]"
+                ? "text-brand font-bold"
+                : "text-foreground-secondary hover:text-brand"
             )}
           >
             Services
@@ -205,8 +205,8 @@ export default function ForPc() {
             className={cn(
               "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium transition-colors",
               pathname.startsWith("/vendors")
-                ? "text-[#DFB76C] font-bold"
-                : "text-foreground-secondary hover:text-[#DFB76C]"
+                ? "text-brand font-bold"
+                : "text-foreground-secondary hover:text-brand"
             )}
           >
             Artisans
@@ -215,8 +215,8 @@ export default function ForPc() {
           <Link
             href="/how-it-works"
             className={cn(
-              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium text-foreground-secondary hover:text-[#DFB76C] transition-colors",
-              pathname === "/how-it-works" && "text-[#DFB76C] font-bold"
+              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium text-foreground-secondary hover:text-brand transition-colors",
+              pathname === "/how-it-works" && "text-brand font-bold"
             )}
           >
             Process
@@ -225,8 +225,8 @@ export default function ForPc() {
           <Link
             href="/help-center"
             className={cn(
-              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium text-foreground-secondary hover:text-[#DFB76C] transition-colors",
-              pathname === "/help-center" && "text-[#DFB76C] font-bold"
+              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium text-foreground-secondary hover:text-brand transition-colors",
+              pathname === "/help-center" && "text-brand font-bold"
             )}
           >
             Vault
@@ -239,7 +239,7 @@ export default function ForPc() {
             <>
               <Link
                 href={dashboardLink}
-                className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#DFB76C] bg-[#121418] hover:bg-[#1A1D24] border border-[#26282E] rounded-none transition-all"
+                className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand bg-surface hover:bg-surface-sunken border border-border rounded-none transition-all"
               >
                 Dashboard
               </Link>
@@ -247,7 +247,7 @@ export default function ForPc() {
               <Link
                 href={dashboardLink}
                 aria-label="Account Profile"
-                className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#26282E] hover:border-[#DFB76C] text-[#DFB76C] flex items-center justify-center font-bold text-xs transition-colors"
+                className="w-8 h-8 rounded-none bg-surface-sunken border border-border hover:border-border-brand text-brand flex items-center justify-center font-bold text-xs transition-colors"
                 title={user?.name || user?.email || "Account Profile"}
               >
                 {userInitials || <User className="w-4 h-4" />}
@@ -257,21 +257,21 @@ export default function ForPc() {
             <>
               <Link
                 href="/signup?role=vendor"
-                className="px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-semibold text-foreground-secondary hover:text-[#DFB76C] transition-colors"
+                className="px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-semibold text-foreground-secondary hover:text-brand transition-colors"
               >
                 Become a Vendor
               </Link>
 
               <Link
                 href="/login"
-                className="px-3 py-2 text-xs uppercase tracking-[0.18em] font-semibold text-foreground-secondary hover:text-[#DFB76C] transition-colors"
+                className="px-3 py-2 text-xs uppercase tracking-[0.18em] font-semibold text-foreground-secondary hover:text-brand transition-colors"
               >
                 Sign In
               </Link>
 
               <Link
                 href="/signup?role=client"
-                className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-[#0B0C0E] bg-[#DFB76C] hover:bg-[#ECC870] rounded-none transition-all shadow-md"
+                className="px-4 py-2 text-xs font-bold uppercase tracking-widest text-on-brand bg-brand hover:bg-brand-hover rounded-none transition-all shadow-md"
               >
                 Register
               </Link>
