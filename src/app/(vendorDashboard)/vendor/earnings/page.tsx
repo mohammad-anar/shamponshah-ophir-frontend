@@ -130,7 +130,7 @@ export default function VendorEarningsPage() {
   };
 
   return (
-    <div className="space-y-6 pb-16 text-slate-100">
+    <div className="space-y-6 pb-16 text-foreground">
       <WithdrawFundsDrawer
         isOpen={withdrawOpen}
         onClose={() => setWithdrawOpen(false)}
@@ -138,7 +138,7 @@ export default function VendorEarningsPage() {
       />
 
       {/* Top Banner & Action */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-gradient-to-r from-background via-surface to-[#0d0c1e] border border-border shadow-2xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-gradient-to-r from-background via-surface to-background border border-border shadow-2xl">
         <div>
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-md bg-warning-solid text-on-brand/15 border border-warning/30 text-warning font-bold text-[10px] uppercase tracking-wider">
@@ -307,7 +307,7 @@ export default function VendorEarningsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs">
               <thead>
-                <tr className="border-b border-border bg-[#14122d] text-foreground-muted uppercase text-[10px] tracking-wider">
+                <tr className="border-b border-border bg-surface-elevated text-foreground-muted uppercase text-[10px] tracking-wider">
                   <th className="py-3 px-4 font-semibold">Date &amp; Time</th>
                   <th className="py-3 px-4 font-semibold">Order #</th>
                   <th className="py-3 px-4 font-semibold">Description</th>
@@ -318,7 +318,7 @@ export default function VendorEarningsPage() {
                   <th className="py-3 px-4 font-semibold text-center">Clearing Window</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/5 font-sans">
+              <tbody className="divide-y divide-border/40 font-sans">
                 {filteredLedger.map((entry) => (
                   <tr key={entry.id} className="hover:bg-surface/[0.02] transition-colors">
                     <td className="py-3.5 px-4 text-foreground-muted whitespace-nowrap">
