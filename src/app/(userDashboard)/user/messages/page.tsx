@@ -513,45 +513,45 @@ function MessagesContent() {
   );
 
   return (
-    <div className="h-[calc(100vh-8.5rem)] flex flex-col md:flex-row bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+    <div className="h-[calc(100vh-8.5rem)] flex flex-col md:flex-row bg-[#121418] border border-[#26282E] rounded-2xl shadow-xl overflow-hidden">
       {/* Left Sidebar: Conversations List */}
-      <div className="w-full md:w-80 lg:w-96 border-r border-slate-200 flex flex-col bg-[#F8F9FD]">
+      <div className="w-full md:w-80 lg:w-96 border-r border-[#26282E] flex flex-col bg-[#121418]">
         {/* Header Search */}
-        <div className="p-4 border-b border-slate-200 bg-white">
+        <div className="p-4 border-b border-[#26282E] bg-[#121418]">
           <div className="flex items-center justify-between mb-3">
-            <h1 className="text-base font-bold text-[#0F0C3B]">Messages</h1>
+            <h1 className="text-base font-bold text-white">Messages</h1>
             <div className="flex items-center gap-1.5">
               <span className={`w-2 h-2 rounded-full ${socketConnected ? "bg-emerald-500 animate-pulse" : "bg-amber-400"}`} />
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                 {socketConnected ? "Live Socket" : "Connecting"}
               </span>
             </div>
           </div>
 
           <div className="relative">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search vendor or message..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#F8F9FD] border border-slate-200 rounded-lg pl-9 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-primary focus:bg-white transition-all"
+              className="w-full bg-[#16181F] border border-[#26282E] rounded-lg pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C] focus:bg-[#1A1D24] transition-all"
             />
           </div>
         </div>
 
         {/* Conversation Items */}
-        <div className="flex-1 overflow-y-auto divide-y divide-slate-100 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto divide-y divide-[#26282E] custom-scrollbar">
           {filteredConversations.length === 0 ? (
             <div className="p-8 text-center text-xs text-slate-400 space-y-2">
-              <MessageSquare className="w-8 h-8 text-slate-300 mx-auto" />
-              <p className="font-bold text-slate-600">No Conversations Yet</p>
-              <p className="text-[11px] text-slate-400 max-w-[200px] mx-auto">
+              <MessageSquare className="w-8 h-8 text-slate-500 mx-auto" />
+              <p className="font-bold text-slate-300">No Conversations Yet</p>
+              <p className="text-[11px] text-slate-500 max-w-[200px] mx-auto">
                 Select a service from your Orders or browse vendors to initiate chat.
               </p>
               <Link
                 href="/user/orders"
-                className="inline-block mt-2 px-3 py-1.5 rounded-lg bg-indigo-50 text-brand-primary text-xs font-bold hover:bg-indigo-100 transition-colors"
+                className="inline-block mt-2 px-3 py-1.5 rounded-lg bg-[#16181F] border border-[#26282E] text-[#DFB76C] text-xs font-bold hover:bg-[#1E222B] transition-colors"
               >
                 Go to Orders
               </Link>
@@ -566,12 +566,12 @@ function MessagesContent() {
                   onClick={() => setSelectedConvId(conv.id)}
                   className={`p-3.5 flex items-start gap-3 cursor-pointer transition-all ${
                     isActive
-                      ? "bg-white border-l-4 border-l-brand-primary shadow-xs"
-                      : "hover:bg-slate-100/60"
+                      ? "bg-[#1A1D24] border-l-4 border-l-[#DFB76C] shadow-xs"
+                      : "hover:bg-[#16181F] bg-[#121418]"
                   }`}
                 >
                   <div className="relative flex-shrink-0">
-                    <div className="w-11 h-11 rounded-full bg-slate-200 flex items-center justify-center font-bold text-xs text-slate-700 shadow-xs overflow-hidden">
+                    <div className="w-11 h-11 rounded-full bg-slate-800 border border-[#26282E] flex items-center justify-center font-bold text-xs text-white shadow-xs overflow-hidden">
                       {conv.vendorAvatar.startsWith("http") ? (
                         <img src={conv.vendorAvatar} alt={conv.vendorName} className="w-full h-full object-cover" />
                       ) : (
@@ -579,22 +579,22 @@ function MessagesContent() {
                       )}
                     </div>
                     {conv.online && (
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-white absolute bottom-0 right-0" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-[#121418] absolute bottom-0 right-0" />
                     )}
                   </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xs font-bold text-[#0F0C3B] truncate">{conv.vendorName}</h3>
+                      <h3 className="text-xs font-bold text-white truncate">{conv.vendorName}</h3>
                       <span className="text-[10px] text-slate-400 font-medium">{conv.lastTime}</span>
                     </div>
 
-                    <p className="text-[11px] text-slate-500 truncate mt-0.5 font-medium">{conv.serviceCategory}</p>
-                    <p className="text-xs text-slate-600 truncate mt-1">{conv.lastMessage}</p>
+                    <p className="text-[11px] text-[#DFB76C] truncate mt-0.5 font-medium">{conv.serviceCategory}</p>
+                    <p className="text-xs text-slate-300 truncate mt-1">{conv.lastMessage}</p>
 
                     {conv.orderStatus && (
-                      <div className="mt-2 pt-1 border-t border-slate-100/50">
-                        <span className="text-[10px] text-indigo-700 font-bold truncate block">
+                      <div className="mt-2 pt-1 border-t border-[#26282E]">
+                        <span className="text-[10px] text-[#DFB76C] font-bold truncate block">
                           {conv.orderStatus}
                         </span>
                       </div>
@@ -608,14 +608,14 @@ function MessagesContent() {
       </div>
 
       {/* Right Side: Active Chat Studio */}
-      <div className="flex-1 flex flex-col bg-white">
+      <div className="flex-1 flex flex-col bg-[#0B0C0E]">
         {activeConv ? (
           <>
             {/* Top Active Chat Header */}
-            <div className="p-4 border-b border-slate-200 flex items-center justify-between bg-white">
+            <div className="p-4 border-b border-[#26282E] flex items-center justify-between bg-[#121418]">
               <div className="flex items-center gap-3">
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-full bg-[#0F0C3B] text-white flex items-center justify-center font-bold text-sm shadow-xs overflow-hidden">
+                  <div className="w-10 h-10 rounded-full bg-[#1A1D24] border border-[#26282E] text-white flex items-center justify-center font-bold text-sm shadow-xs overflow-hidden">
                     {activeConv.vendorAvatar.startsWith("http") ? (
                       <img src={activeConv.vendorAvatar} alt={activeConv.vendorName} className="w-full h-full object-cover" />
                     ) : (
@@ -623,39 +623,39 @@ function MessagesContent() {
                     )}
                   </div>
                   {activeConv.online && (
-                    <span className="w-3 h-3 rounded-full bg-emerald-500 border-2 border-white absolute bottom-0 right-0" />
+                    <span className="w-3 h-3 rounded-full bg-emerald-500 border-2 border-[#121418] absolute bottom-0 right-0" />
                   )}
                 </div>
 
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 className="text-sm font-bold text-[#0F0C3B]">{activeConv.vendorName}</h2>
-                    <div className="flex items-center text-amber-500 text-xs font-bold">
+                    <h2 className="text-sm font-bold text-white">{activeConv.vendorName}</h2>
+                    <div className="flex items-center text-amber-400 text-xs font-bold">
                       <Star className="w-3 h-3 fill-amber-400" />
                       <span className="ml-1">{activeConv.rating}</span>
                     </div>
                   </div>
-                  <p className="text-xs text-slate-500 flex items-center gap-1.5">
+                  <p className="text-xs text-slate-400 flex items-center gap-1.5">
                     <span>{activeConv.serviceCategory}</span>
                     <span>&bull;</span>
-                    <span className="text-emerald-600 font-medium">Ophir Verified Vendor</span>
+                    <span className="text-[#DFB76C] font-medium">Ophir Verified Vendor</span>
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center gap-2.5">
-                <button className="p-2 rounded-lg border border-slate-200 text-slate-600 hover:bg-slate-50">
+                <button className="p-2 rounded-lg border border-[#26282E] text-slate-400 hover:text-white hover:bg-[#16181F]">
                   <MoreVertical className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
             {/* Security Banner */}
-            <div className="px-4 py-2 bg-[#F8F9FD] border-b border-slate-100 flex items-center justify-between text-xs text-slate-600">
+            <div className="px-4 py-2 bg-[#16181F] border-b border-[#26282E] flex items-center justify-between text-xs text-slate-300">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-brand-primary flex-shrink-0" />
+                <ShieldCheck className="w-4 h-4 text-[#DFB76C] flex-shrink-0" />
                 <span>
-                  Direct conversation with <strong>{activeConv.vendorName}</strong>. Protected by Ophir Payment Protection.
+                  Direct conversation with <strong className="text-white">{activeConv.vendorName}</strong>. Protected by Ophir Payment Protection.
                 </span>
               </div>
               <span className="text-[11px] text-slate-400 font-mono hidden sm:inline">Encrypted Channel</span>
@@ -665,12 +665,12 @@ function MessagesContent() {
             <div
               ref={chatContainerRef}
               onScroll={handleScroll}
-              className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 custom-scrollbar bg-[#FAFBFF]"
+              className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4 custom-scrollbar bg-[#0B0C0E]"
             >
               {/* Older messages loading indicator */}
               {isLoadingOlder && (
-                <div className="py-2 flex items-center justify-center gap-2 text-xs text-slate-500 font-medium">
-                  <Loader2 className="w-4 h-4 animate-spin text-brand-primary" />
+                <div className="py-2 flex items-center justify-center gap-2 text-xs text-slate-400 font-medium">
+                  <Loader2 className="w-4 h-4 animate-spin text-[#DFB76C]" />
                   <span>Loading previous messages...</span>
                 </div>
               )}
@@ -679,7 +679,7 @@ function MessagesContent() {
                 <div className="text-center py-1">
                   <button
                     onClick={handleScroll}
-                    className="text-[11px] font-semibold text-brand-primary hover:underline bg-indigo-50/80 px-3 py-1 rounded-full border border-indigo-100"
+                    className="text-[11px] font-semibold text-[#DFB76C] hover:underline bg-[#16181F] px-3 py-1 rounded-full border border-[#26282E]"
                   >
                     Scroll up to load previous messages
                   </button>
@@ -688,9 +688,9 @@ function MessagesContent() {
 
               {messages.length === 0 ? (
                 <div className="text-center py-12 text-slate-400 space-y-2">
-                  <MessageSquare className="w-10 h-10 text-slate-300 mx-auto" />
-                  <p className="text-xs font-bold text-slate-600">No Messages in this Conversation Yet</p>
-                  <p className="text-[11px] text-slate-400">
+                  <MessageSquare className="w-10 h-10 text-slate-500 mx-auto" />
+                  <p className="text-xs font-bold text-slate-300">No Messages in this Conversation Yet</p>
+                  <p className="text-[11px] text-slate-500">
                     Send your first message below to collaborate directly with {activeConv.vendorName}.
                   </p>
                 </div>
@@ -716,7 +716,7 @@ function MessagesContent() {
                         )}
                       >
                         {!isUser && (
-                          <div className="w-7 h-7 rounded-full bg-[#0F0C3B] text-white flex items-center justify-center font-bold text-[10px] shrink-0 mb-1 overflow-hidden">
+                          <div className="w-7 h-7 rounded-full bg-[#1A1D24] border border-[#26282E] text-white flex items-center justify-center font-bold text-[10px] shrink-0 mb-1 overflow-hidden">
                             {activeConv.vendorAvatar.startsWith("http") ? (
                               <img src={activeConv.vendorAvatar} alt={activeConv.vendorName} className="w-full h-full object-cover" />
                             ) : (
@@ -729,8 +729,8 @@ function MessagesContent() {
                           className={cn(
                             "p-3.5 rounded-2xl text-xs space-y-1 shadow-xs",
                             isUser
-                              ? "bg-[#0F0C3B] text-white rounded-br-xs ml-auto"
-                              : "bg-white text-slate-800 border border-slate-200/80 rounded-bl-xs mr-auto"
+                              ? "bg-[#1E222B] text-white border border-[#DFB76C]/30 rounded-br-xs ml-auto"
+                              : "bg-[#16181F] text-slate-200 border border-[#26282E] rounded-bl-xs mr-auto"
                           )}
                         >
                           <p className="leading-relaxed whitespace-pre-wrap">{m.text}</p>
@@ -743,7 +743,7 @@ function MessagesContent() {
                           isUser ? "justify-end text-right" : "justify-start text-left"
                         )}
                       >
-                        {m.time} {isUser && <CheckCheck className="w-3 h-3 text-brand-primary" />}
+                        {m.time} {isUser && <CheckCheck className="w-3 h-3 text-[#DFB76C]" />}
                       </span>
                     </div>
                   );
@@ -753,9 +753,9 @@ function MessagesContent() {
             </div>
 
             {/* Bottom Message Input Box */}
-            <form onSubmit={handleSendMessage} className="p-3 md:p-4 border-t border-slate-200 bg-white">
+            <form onSubmit={handleSendMessage} className="p-3 md:p-4 border-t border-[#26282E] bg-[#121418]">
               {showEmojiPicker && (
-                <div className="flex items-center gap-2 mb-2 p-2 bg-[#F8F9FD] border border-slate-200 rounded-xl overflow-x-auto">
+                <div className="flex items-center gap-2 mb-2 p-2 bg-[#16181F] border border-[#26282E] rounded-xl overflow-x-auto">
                   {["🥂", "✨", "🎉", "💍", "💐", "🙏", "😊", "❤️"].map((emoji) => (
                     <button
                       key={emoji}
@@ -784,10 +784,10 @@ function MessagesContent() {
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isUploadingAttachment}
                   title="Attach photo or document"
-                  className="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 cursor-pointer disabled:opacity-50"
+                  className="p-2 text-slate-400 hover:text-[#DFB76C] rounded-lg hover:bg-[#16181F] cursor-pointer disabled:opacity-50"
                 >
                   {isUploadingAttachment ? (
-                    <Loader2 className="w-4 h-4 animate-spin text-brand-primary" />
+                    <Loader2 className="w-4 h-4 animate-spin text-[#DFB76C]" />
                   ) : (
                     <Paperclip className="w-4 h-4" />
                   )}
@@ -798,14 +798,14 @@ function MessagesContent() {
                   placeholder={`Type message to ${activeConv.vendorName}...`}
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  className="flex-1 bg-[#F8F9FD] border border-slate-200 rounded-xl px-4 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-primary focus:bg-white transition-all shadow-xs"
+                  className="flex-1 bg-[#16181F] border border-[#26282E] rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C] focus:bg-[#1A1D24] transition-all shadow-xs"
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                   title="Insert celebratory emoji"
-                  className="p-2 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 hidden sm:block cursor-pointer"
+                  className="p-2 text-slate-400 hover:text-[#DFB76C] rounded-lg hover:bg-[#16181F] hidden sm:block cursor-pointer"
                 >
                   <Smile className="w-4 h-4" />
                 </button>
@@ -813,7 +813,7 @@ function MessagesContent() {
                 <button
                   type="submit"
                   disabled={!inputMessage.trim()}
-                  className="px-4 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] disabled:opacity-50 text-[#0B0C0E] rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
                 >
                   <Send className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">Send</span>
@@ -822,13 +822,13 @@ function MessagesContent() {
             </form>
           </>
         ) : (
-          <div className="flex-1 flex flex-col items-center justify-center p-8 text-center text-slate-400 space-y-3">
-            <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center">
-              <MessageSquare className="w-8 h-8 text-slate-400" />
+          <div className="flex-1 flex flex-col items-center justify-center p-8 text-center text-slate-400 space-y-3 bg-[#0B0C0E]">
+            <div className="w-16 h-16 rounded-full bg-[#16181F] border border-[#26282E] flex items-center justify-center">
+              <MessageSquare className="w-8 h-8 text-[#DFB76C]" />
             </div>
             <div>
-              <h2 className="text-base font-bold text-[#0F0C3B]">Select a conversation</h2>
-              <p className="text-xs text-slate-500 max-w-sm mt-1">
+              <h2 className="text-base font-bold text-white">Select a conversation</h2>
+              <p className="text-xs text-slate-400 max-w-sm mt-1">
                 Choose an vendor from the list on the left to start collaborating on your event.
               </p>
             </div>
