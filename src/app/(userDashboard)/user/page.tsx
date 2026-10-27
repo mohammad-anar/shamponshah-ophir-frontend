@@ -205,13 +205,13 @@ export default function ClientDashboardOverview() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <span className="text-[11px] font-bold text-[#DFB76C] tracking-wider uppercase flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-[#DFB76C] animate-pulse" />
+          <span className="text-[11px] font-bold text-brand tracking-wider uppercase flex items-center gap-1.5">
+            <span className="w-2 h-2 rounded-full bg-brand animate-pulse" />
             CLIENT COMMAND &bull; SERVICES & ESCROW
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold text-foreground mt-1 flex items-center gap-2 font-serif">
             Welcome back, {userName}
-            {isOverviewLoading && <Loader2 className="w-5 h-5 text-[#DFB76C] animate-spin" />}
+            {isOverviewLoading && <Loader2 className="w-5 h-5 text-brand animate-spin" />}
           </h1>
           <p className="text-xs text-foreground-muted mt-1">
             Book vendor services, collaborate with your Family Hub, and release milestone funds with 100% escrow protection.
@@ -221,16 +221,16 @@ export default function ClientDashboardOverview() {
         <div className="flex items-center gap-3 flex-wrap">
           <Link
             href="/services"
-            className="px-4 py-2 rounded-xl bg-[#16181F] border border-[#26282E] text-xs font-bold text-foreground hover:bg-[#1E222B] hover:border-border-brand/40 shadow-xs flex items-center gap-1.5 transition-all"
+            className="px-4 py-2 rounded-xl bg-surface-elevated border border-border text-xs font-bold text-foreground hover:bg-surface-sunken hover:border-border-brand/40 shadow-xs flex items-center gap-1.5 transition-all"
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#DFB76C]" />
+            <Sparkles className="w-3.5 h-3.5 text-brand" />
             <span>Browse Services</span>
           </Link>
           <Link
             href="/user/post-job"
-            className="px-4 py-2 rounded-xl bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-brand hover:bg-brand-hover text-on-brand text-xs font-bold shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
           >
-            <PlusCircle className="w-3.5 h-3.5 text-[#0B0C0E]" />
+            <PlusCircle className="w-3.5 h-3.5 text-on-brand" />
             <span>Post a Job RFP</span>
           </Link>
         </div>
@@ -239,8 +239,8 @@ export default function ClientDashboardOverview() {
       {/* Hero: Active Services Command & Next Steps */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         {/* Active Bookings & Escrow Hero Card (7 cols) */}
-        <div className="lg:col-span-7 bg-[#121418] rounded-3xl p-6 sm:p-7 border border-[#26282E] shadow-xl flex flex-col justify-between relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-bl from-[#DFB76C]/10 via-indigo-950/20 to-transparent rounded-full blur-3xl pointer-events-none" />
+        <div className="lg:col-span-7 bg-surface rounded-3xl p-6 sm:p-7 border border-border shadow-xl flex flex-col justify-between relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-bl from-brand/10 via-indigo-950/20 to-transparent rounded-full blur-3xl pointer-events-none" />
 
           <div>
             <div className="flex items-center justify-between gap-2 mb-3">
@@ -248,7 +248,7 @@ export default function ClientDashboardOverview() {
                 <ShieldCheck className="w-3.5 h-3.5 text-success" />
                 Escrow Custody Active
               </span>
-              <span className="px-3 py-1 rounded-full bg-[#1A1D24] border border-border-brand/40 text-[#DFB76C] text-[10px] font-extrabold shadow-2xs">
+              <span className="px-3 py-1 rounded-full bg-surface-sunken border border-border-brand/40 text-brand text-[10px] font-extrabold shadow-2xs">
                 {rawActiveOrders.length} Active Booking{rawActiveOrders.length === 1 ? "" : "s"}
               </span>
             </div>
@@ -265,52 +265,52 @@ export default function ClientDashboardOverview() {
             </p>
 
             {/* Quick Metrics Bar */}
-            <div className="grid grid-cols-3 gap-2.5 mt-5 py-3 border-y border-[#26282E] text-xs">
-              <div className="p-2.5 rounded-xl bg-[#16181F] border border-[#26282E]">
+            <div className="grid grid-cols-3 gap-2.5 mt-5 py-3 border-y border-border text-xs">
+              <div className="p-2.5 rounded-xl bg-surface-elevated border border-border">
                 <span className="text-[10px] font-bold text-foreground-muted uppercase block">Escrow Custody</span>
-                <span className="font-extrabold text-[#DFB76C] text-base">${escrowAmount.toLocaleString()}</span>
+                <span className="font-extrabold text-brand text-base">${escrowAmount.toLocaleString()}</span>
               </div>
-              <div className="p-2.5 rounded-xl bg-[#16181F] border border-[#26282E]">
+              <div className="p-2.5 rounded-xl bg-surface-elevated border border-border">
                 <span className="text-[10px] font-bold text-foreground-muted uppercase block">Completed Orders</span>
                 <span className="font-extrabold text-success text-base">{completedOrdersCount}</span>
               </div>
-              <div className="p-2.5 rounded-xl bg-[#16181F] border border-[#26282E]">
+              <div className="p-2.5 rounded-xl bg-surface-elevated border border-border">
                 <span className="text-[10px] font-bold text-foreground-muted uppercase block">Total Spent</span>
                 <span className="font-extrabold text-foreground text-base">${totalSpent.toLocaleString()}</span>
               </div>
             </div>
           </div>
 
-          <div className="mt-6 pt-3 border-t border-[#26282E] flex items-center justify-between flex-wrap gap-3 text-xs">
+          <div className="mt-6 pt-3 border-t border-border flex items-center justify-between flex-wrap gap-3 text-xs">
             <div className="flex items-center gap-3">
               <Link
                 href="/services"
-                className="px-4 py-2 rounded-xl bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-brand hover:bg-brand-hover text-on-brand font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
               >
                 <span>Browse Services</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
               <Link
                 href="/user/family-hub"
-                className="text-foreground-muted hover:text-[#DFB76C] font-semibold transition-colors cursor-pointer text-xs flex items-center gap-1"
+                className="text-foreground-muted hover:text-brand font-semibold transition-colors cursor-pointer text-xs flex items-center gap-1"
               >
-                <Users2 className="w-3.5 h-3.5 text-[#DFB76C]" />
+                <Users2 className="w-3.5 h-3.5 text-brand" />
                 <span>Family Collaboration Hub</span>
                 <ChevronRight className="w-3 h-3 text-foreground-muted" />
               </Link>
             </div>
-            <Link href="/user/orders" className="text-xs font-bold text-[#DFB76C] hover:underline">
+            <Link href="/user/orders" className="text-xs font-bold text-brand hover:underline">
               View All Orders &rarr;
             </Link>
           </div>
         </div>
 
         {/* Next Steps Card (5 cols) */}
-        <div className="lg:col-span-5 bg-[#121418] rounded-3xl p-6 border border-[#26282E] shadow-xl flex flex-col justify-between">
+        <div className="lg:col-span-5 bg-surface rounded-3xl p-6 border border-border shadow-xl flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4 text-[#DFB76C]" />
+                <CheckCircle2 className="w-4 h-4 text-brand" />
                 <h3 className="font-bold text-foreground text-sm">Actionable Next Steps</h3>
               </div>
               <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-warning-soft text-warning text-warning border border-warning/30">
@@ -323,10 +323,10 @@ export default function ClientDashboardOverview() {
                 nextSteps.map((step) => (
                   <div
                     key={step.id}
-                    className="p-3 rounded-2xl bg-[#16181F] border border-[#26282E] flex items-center justify-between gap-2"
+                    className="p-3 rounded-2xl bg-surface-elevated border border-border flex items-center justify-between gap-2"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="w-7 h-7 rounded-lg bg-info-soft text-info text-indigo-300 flex items-center justify-center font-bold text-xs shrink-0">
+                      <div className="w-7 h-7 rounded-lg bg-info-soft text-info text-info flex items-center justify-center font-bold text-xs shrink-0">
                         {step.icon}
                       </div>
                       <div className="min-w-0">
@@ -338,9 +338,9 @@ export default function ClientDashboardOverview() {
                       onClick={step.action}
                       className={cn(
                         "px-3 py-1.5 rounded-lg font-bold text-[11px] transition-colors shadow-xs shrink-0 cursor-pointer",
-                        step.btnVariant === "primary" && "bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E]",
+                        step.btnVariant === "primary" && "bg-brand hover:bg-brand-hover text-on-brand",
                         step.btnVariant === "amber" && "bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-foreground",
-                        step.btnVariant === "neutral" && "bg-[#1A1D24] border border-[#26282E] text-foreground-secondary hover:bg-[#222630]"
+                        step.btnVariant === "neutral" && "bg-surface-sunken border border-border text-foreground-secondary hover:bg-surface-sunken"
                       )}
                     >
                       {step.actionText}
@@ -348,7 +348,7 @@ export default function ClientDashboardOverview() {
                   </div>
                 ))
               ) : (
-                <div className="p-6 rounded-2xl bg-[#16181F] border border-[#26282E] text-center space-y-1">
+                <div className="p-6 rounded-2xl bg-surface-elevated border border-border text-center space-y-1">
                   <CheckCircle2 className="w-6 h-6 text-success mx-auto" />
                   <p className="text-xs font-bold text-foreground">All caught up!</p>
                   <p className="text-[10px] text-foreground-muted">All milestones and vendor schedules are up to date.</p>
@@ -357,12 +357,12 @@ export default function ClientDashboardOverview() {
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-[#26282E] flex items-center justify-between text-[11px] text-foreground-muted">
+          <div className="mt-4 pt-3 border-t border-border flex items-center justify-between text-[11px] text-foreground-muted">
             <span className="flex items-center gap-1 font-semibold text-success">
               <ShieldCheck className="w-3.5 h-3.5" />
               Escrow Auto-Protection Active
             </span>
-            <Link href="/services" className="font-semibold text-[#DFB76C] hover:underline">
+            <Link href="/services" className="font-semibold text-brand hover:underline">
               Browse Catalog &rarr;
             </Link>
           </div>
@@ -372,16 +372,16 @@ export default function ClientDashboardOverview() {
       {/* 2-Column Split: Active Orders & Open Jobs */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Active Orders */}
-        <div className="bg-[#121418] rounded-3xl p-6 border border-[#26282E] shadow-xl flex flex-col justify-between">
+        <div className="bg-surface rounded-3xl p-6 border border-border shadow-xl flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
                 <h3 className="font-serif font-bold text-foreground text-base">Active Service Orders</h3>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-info-soft text-info text-indigo-300 border border-info/30">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-info-soft text-info text-info border border-info/30">
                   {rawActiveOrders.length}
                 </span>
               </div>
-              <Link href="/user/orders" className="text-xs font-bold text-[#DFB76C] hover:underline flex items-center gap-1">
+              <Link href="/user/orders" className="text-xs font-bold text-brand hover:underline flex items-center gap-1">
                 View all orders <ChevronRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -404,14 +404,14 @@ export default function ClientDashboardOverview() {
                     <div
                       key={ord.id}
                       onClick={() => handleOpenOrder(ord)}
-                      className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] hover:border-border-brand/40 transition-all cursor-pointer flex flex-col gap-2"
+                      className="p-3.5 rounded-2xl bg-surface-elevated border border-border hover:border-border-brand/40 transition-all cursor-pointer flex flex-col gap-2"
                     >
                       <div className="flex items-center justify-between">
                         <div className="min-w-0">
                           <h4 className="font-bold text-foreground truncate">{title}</h4>
                           <p className="text-[10px] text-foreground-muted">Vendor: {vendor}</p>
                         </div>
-                        <span className="font-black text-[#DFB76C]">${total}</span>
+                        <span className="font-black text-brand">${total}</span>
                       </div>
 
                       <div className="space-y-1">
@@ -421,7 +421,7 @@ export default function ClientDashboardOverview() {
                         </div>
                         <div className="h-1.5 w-full bg-[#26282E] rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-success-solid text-white rounded-full transition-all"
+                            className="h-full bg-success-solid text-foreground rounded-full transition-all"
                             style={{ width: `${progressPct}%` }}
                           />
                         </div>
@@ -430,13 +430,13 @@ export default function ClientDashboardOverview() {
                   );
                 })
               ) : (
-                <div className="p-8 rounded-2xl bg-[#16181F] border border-[#26282E] text-center space-y-2">
+                <div className="p-8 rounded-2xl bg-surface-elevated border border-border text-center space-y-2">
                   <ShoppingBag className="w-8 h-8 text-foreground-muted mx-auto" />
                   <p className="text-xs font-bold text-foreground">No active service orders</p>
                   <p className="text-[11px] text-foreground-muted">Browse vendor services or post an RFP to get started.</p>
                   <Link
                     href="/services"
-                    className="inline-block mt-2 px-4 py-2 rounded-xl bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold transition-all cursor-pointer"
+                    className="inline-block mt-2 px-4 py-2 rounded-xl bg-brand hover:bg-brand-hover text-on-brand text-xs font-bold transition-all cursor-pointer"
                   >
                     Browse Services
                   </Link>
@@ -447,7 +447,7 @@ export default function ClientDashboardOverview() {
         </div>
 
         {/* Open Jobs / RFPs */}
-        <div className="bg-[#121418] rounded-3xl p-6 border border-[#26282E] shadow-xl flex flex-col justify-between">
+        <div className="bg-surface rounded-3xl p-6 border border-border shadow-xl flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
@@ -456,7 +456,7 @@ export default function ClientDashboardOverview() {
                   {rawOpenJobs.length}
                 </span>
               </div>
-              <Link href="/user/jobs" className="text-xs font-bold text-[#DFB76C] hover:underline flex items-center gap-1">
+              <Link href="/user/jobs" className="text-xs font-bold text-brand hover:underline flex items-center gap-1">
                 View all jobs <ChevronRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -471,7 +471,7 @@ export default function ClientDashboardOverview() {
                   return (
                     <div
                       key={job.id}
-                      className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] flex items-center justify-between gap-3"
+                      className="p-3.5 rounded-2xl bg-surface-elevated border border-border flex items-center justify-between gap-3"
                     >
                       <div className="min-w-0">
                         <h4 className="font-bold text-foreground truncate">{job.title}</h4>
@@ -484,7 +484,7 @@ export default function ClientDashboardOverview() {
                         {offersCount > 0 ? (
                           <button
                             onClick={() => handleOpenCompare(job)}
-                            className="px-3 py-1.5 rounded-xl bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] font-bold text-xs transition-colors cursor-pointer"
+                            className="px-3 py-1.5 rounded-xl bg-brand hover:bg-brand-hover text-on-brand font-bold text-xs transition-colors cursor-pointer"
                           >
                             Review ({offersCount})
                           </button>
@@ -503,13 +503,13 @@ export default function ClientDashboardOverview() {
                   );
                 })
               ) : (
-                <div className="p-8 rounded-2xl bg-[#16181F] border border-[#26282E] text-center space-y-2">
+                <div className="p-8 rounded-2xl bg-surface-elevated border border-border text-center space-y-2">
                   <PlusCircle className="w-8 h-8 text-foreground-muted mx-auto" />
                   <p className="text-xs font-bold text-foreground">No open jobs posted</p>
                   <p className="text-[11px] text-foreground-muted">Post a custom RFP to receive bids from top vendors.</p>
                   <Link
                     href="/user/post-job"
-                    className="inline-block mt-2 px-4 py-2 rounded-xl bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold transition-all cursor-pointer"
+                    className="inline-block mt-2 px-4 py-2 rounded-xl bg-brand hover:bg-brand-hover text-on-brand text-xs font-bold transition-all cursor-pointer"
                   >
                     Post an RFP
                   </Link>
