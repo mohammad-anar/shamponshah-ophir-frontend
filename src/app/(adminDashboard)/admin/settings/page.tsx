@@ -84,7 +84,7 @@ export default function AdminSettingsPage() {
         <div>
           <div className="flex items-center gap-2.5">
             <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">System &amp; Platform Governance</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#DFB76C]/15 text-[#DFB76C] border border-border-brand/40">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand/15 text-brand border border-border-brand/40">
               v2.4.0 Engine
             </span>
           </div>
@@ -95,14 +95,14 @@ export default function AdminSettingsPage() {
 
         <button 
           onClick={handleSave}
-          className="px-5 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start md:self-auto cursor-pointer"
+          className="px-5 py-2.5 bg-brand hover:bg-brand-hover text-on-brand rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start md:self-auto cursor-pointer"
         >
-          <Save className="w-4 h-4 text-[#0B0C0E]" /> Save System Config
+          <Save className="w-4 h-4 text-on-brand" /> Save System Config
         </button>
       </div>
 
       {savedSuccess && (
-        <div className="p-4 bg-success-solid text-white/15 border border-success/30 rounded-2xl text-success text-xs font-bold flex items-center gap-2 animate-in fade-in">
+        <div className="p-4 bg-success-solid text-foreground/15 border border-success/30 rounded-2xl text-success text-xs font-bold flex items-center gap-2 animate-in fade-in">
           <CheckCircle2 className="w-4 h-4 text-success" /> Platform configuration successfully synced to cloud edge.
         </div>
       )}
@@ -110,9 +110,9 @@ export default function AdminSettingsPage() {
       {/* Grid of Sections */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Escrow & Financial Take Rates */}
-        <div className="bg-[#121418] border border-[#26282E] rounded-3xl p-5 space-y-4 shadow-xs">
-          <div className="flex items-center gap-2.5 border-b border-[#26282E] pb-3">
-            <div className="p-2 rounded-xl bg-success-solid text-white/15 text-success border border-success/30">
+        <div className="bg-surface border border-border rounded-3xl p-5 space-y-4 shadow-xs">
+          <div className="flex items-center gap-2.5 border-b border-border pb-3">
+            <div className="p-2 rounded-xl bg-success-solid text-foreground/15 text-success border border-success/30">
               <DollarSign className="w-4 h-4" />
             </div>
             <div>
@@ -124,14 +124,14 @@ export default function AdminSettingsPage() {
           <div className="space-y-3.5 text-xs">
             <div>
               <label className="block text-foreground-muted font-bold mb-1">
-                Client Service Fee (%) <span className="text-[10px] text-[#DFB76C]">(Currently 5%)</span>
+                Client Service Fee (%) <span className="text-[10px] text-brand">(Currently 5%)</span>
               </label>
               <input
                 type="number"
                 step="0.1"
                 value={buyerFee}
                 onChange={(e) => setBuyerFee(Number(e.target.value))}
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none focus:border-[#DFB76C]"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none focus:border-border-brand"
               />
               <p className="text-[10px] text-foreground-muted mt-1">Charged directly to buyers at escrow checkout.</p>
             </div>
@@ -145,7 +145,7 @@ export default function AdminSettingsPage() {
                 step="0.1"
                 value={vendorFee}
                 onChange={(e) => setVendorFee(Number(e.target.value))}
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none focus:border-[#DFB76C]"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none focus:border-border-brand"
               />
               <p className="text-[10px] text-foreground-muted mt-1">Vendors retain 100% of quote amount.</p>
             </div>
@@ -157,7 +157,7 @@ export default function AdminSettingsPage() {
                   type="number"
                   value={payoutHoldDays}
                   onChange={(e) => setPayoutHoldDays(Number(e.target.value))}
-                  className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none focus:border-[#DFB76C]"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none focus:border-border-brand"
                 />
               </div>
               <div>
@@ -166,7 +166,7 @@ export default function AdminSettingsPage() {
                   type="number"
                   value={disputeTimeoutHours}
                   onChange={(e) => setDisputeTimeoutHours(Number(e.target.value))}
-                  className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none focus:border-[#DFB76C]"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none focus:border-border-brand"
                 />
               </div>
             </div>
@@ -174,9 +174,9 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Vendor Onboarding & Verification Rules */}
-        <div className="bg-[#121418] border border-[#26282E] rounded-3xl p-5 space-y-4 shadow-xs">
-          <div className="flex items-center gap-2.5 border-b border-[#26282E] pb-3">
-            <div className="p-2 rounded-xl bg-[#16181F] text-[#DFB76C] border border-[#26282E]">
+        <div className="bg-surface border border-border rounded-3xl p-5 space-y-4 shadow-xs">
+          <div className="flex items-center gap-2.5 border-b border-border pb-3">
+            <div className="p-2 rounded-xl bg-surface-elevated text-brand border border-border">
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div>
@@ -186,7 +186,7 @@ export default function AdminSettingsPage() {
           </div>
 
           <div className="space-y-3 text-xs">
-            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-border-brand/40 transition-colors">
+            <label className="flex items-center justify-between p-3 rounded-2xl bg-surface-elevated border border-border cursor-pointer hover:border-border-brand/40 transition-colors">
               <div>
                 <p className="font-bold text-foreground">Government ID Verification (Persona)</p>
                 <p className="text-[11px] text-foreground-muted">Require automated passport/DL scan before first payout</p>
@@ -199,7 +199,7 @@ export default function AdminSettingsPage() {
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-border-brand/40 transition-colors">
+            <label className="flex items-center justify-between p-3 rounded-2xl bg-surface-elevated border border-border cursor-pointer hover:border-border-brand/40 transition-colors">
               <div>
                 <p className="font-bold text-foreground">COI Liability Insurance Requirement</p>
                 <p className="text-[11px] text-foreground-muted">Mandatory for Venue &amp; Catering vendor tiers</p>
@@ -212,7 +212,7 @@ export default function AdminSettingsPage() {
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-border-brand/40 transition-colors">
+            <label className="flex items-center justify-between p-3 rounded-2xl bg-surface-elevated border border-border cursor-pointer hover:border-border-brand/40 transition-colors">
               <div>
                 <p className="font-bold text-foreground">Auto-Publish Gigs for Top Rated</p>
                 <p className="text-[11px] text-foreground-muted">Bypass manual gig moderation for verified 4.8+ sellers</p>
@@ -228,9 +228,9 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Security & API Integrations */}
-        <div className="bg-[#121418] border border-[#26282E] rounded-3xl p-5 space-y-4 shadow-xs">
-          <div className="flex items-center gap-2.5 border-b border-[#26282E] pb-3">
-            <div className="p-2 rounded-xl bg-info-solid text-white/15 text-info border border-info/30">
+        <div className="bg-surface border border-border rounded-3xl p-5 space-y-4 shadow-xs">
+          <div className="flex items-center gap-2.5 border-b border-border pb-3">
+            <div className="p-2 rounded-xl bg-info-solid text-foreground/15 text-info border border-info/30">
               <Key className="w-4 h-4" />
             </div>
             <div>
@@ -246,7 +246,7 @@ export default function AdminSettingsPage() {
                 type="password"
                 defaultValue="acct_1NZxxxx9988219"
                 readOnly
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-foreground-muted font-mono text-xs focus:outline-none"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground-muted font-mono text-xs focus:outline-none"
               />
             </div>
 
@@ -256,13 +256,13 @@ export default function AdminSettingsPage() {
                 type="password"
                 defaultValue="whsec_0982348a098fa890sd"
                 readOnly
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-foreground-muted font-mono text-xs focus:outline-none"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground-muted font-mono text-xs focus:outline-none"
               />
             </div>
 
-            <div className="p-3 bg-[#16181F] rounded-2xl border border-[#26282E] flex items-center justify-between">
+            <div className="p-3 bg-surface-elevated rounded-2xl border border-border flex items-center justify-between">
               <span className="text-foreground-secondary font-semibold">Stripe Webhook Sync</span>
-              <span className="px-2.5 py-0.5 rounded-full bg-success-solid text-white/15 text-success text-[10px] font-bold border border-success/30">
+              <span className="px-2.5 py-0.5 rounded-full bg-success-solid text-foreground/15 text-success text-[10px] font-bold border border-success/30">
                 Operational (200 OK)
               </span>
             </div>
@@ -270,8 +270,8 @@ export default function AdminSettingsPage() {
         </div>
 
         {/* Administrative Notifications & Escalation */}
-        <div className="bg-[#121418] border border-[#26282E] rounded-3xl p-5 space-y-4 shadow-xs">
-          <div className="flex items-center gap-2.5 border-b border-[#26282E] pb-3">
+        <div className="bg-surface border border-border rounded-3xl p-5 space-y-4 shadow-xs">
+          <div className="flex items-center gap-2.5 border-b border-border pb-3">
             <div className="p-2 rounded-xl bg-warning-solid text-on-brand/15 text-warning border border-warning/30">
               <Bell className="w-4 h-4" />
             </div>
@@ -282,7 +282,7 @@ export default function AdminSettingsPage() {
           </div>
 
           <div className="space-y-3 text-xs">
-            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-border-brand/40 transition-colors">
+            <label className="flex items-center justify-between p-3 rounded-2xl bg-surface-elevated border border-border cursor-pointer hover:border-border-brand/40 transition-colors">
               <div>
                 <p className="font-bold text-foreground">Dispute Escalation Push Notifications</p>
                 <p className="text-[11px] text-foreground-muted">Notify legal admin team if dispute remains unresolved &gt;48h</p>
@@ -295,7 +295,7 @@ export default function AdminSettingsPage() {
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-border-brand/40 transition-colors">
+            <label className="flex items-center justify-between p-3 rounded-2xl bg-surface-elevated border border-border cursor-pointer hover:border-border-brand/40 transition-colors">
               <div>
                 <p className="font-bold text-foreground">Slack Ops Webhook (#ophir-alerts)</p>
                 <p className="text-[11px] text-foreground-muted">Real-time alerts for refunds &gt;$1,000</p>
