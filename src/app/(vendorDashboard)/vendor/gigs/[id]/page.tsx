@@ -152,7 +152,7 @@ export default function VendorGigDetailPage() {
 
         <div className="bg-surface p-4 rounded-2xl border border-border shadow-xs space-y-1">
           <span className="text-[10px] uppercase font-bold text-foreground-muted flex items-center gap-1">
-            <Eye className="w-3 h-3 text-indigo-500" /> Marketplace Views
+            <Eye className="w-3 h-3 text-info" /> Marketplace Views
           </span>
           <p className="text-xl font-black text-foreground">
             {gig.viewCount || gig.views || 0}
