@@ -444,7 +444,7 @@ export default function SendOfferModal({
                 <ShieldCheck className="w-5 h-5 text-success shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-bold text-xs text-success">Full Payment Escrow Protection</h4>
-                  <p className="text-[11px] text-emerald-200/80 leading-relaxed mt-0.5">
+                  <p className="text-[11px] text-success/80 leading-relaxed mt-0.5">
                     Client deposits <strong>${offerPrice}</strong> into Ophir Vault Escrow upon accepting this proposal. The full 100% amount will be released to you when the order is marked completed and delivered.
                   </p>
                 </div>
