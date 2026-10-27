@@ -144,7 +144,7 @@ export default function UserReviewsPage() {
               Verified Feedback
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Rate completed event services and help the Ophir community discover trustworthy vendors.
           </p>
         </div>
@@ -158,29 +158,29 @@ export default function UserReviewsPage() {
               <Sparkles className="w-4 h-4 text-brand-primary" />
               <h2 className="text-sm font-bold text-[#0F0C3B]">Pending Reviews ({pending.length})</h2>
             </div>
-            <span className="text-[11px] text-slate-500 font-semibold">Earn 100 Ophir Reward Points</span>
+            <span className="text-[11px] text-foreground-muted font-semibold">Earn 100 Ophir Reward Points</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {pending.map((p) => (
               <div 
                 key={p.id}
-                className="bg-white p-4 rounded-xl border border-indigo-100 shadow-xs flex items-center justify-between gap-3"
+                className="bg-surface p-4 rounded-xl border border-indigo-100 shadow-xs flex items-center justify-between gap-3"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#0F0C3B] text-white flex items-center justify-center font-bold text-xs">
+                  <div className="w-10 h-10 rounded-full bg-[#0F0C3B] text-foreground flex items-center justify-center font-bold text-xs">
                     {p.avatar}
                   </div>
                   <div>
                     <h3 className="text-xs font-bold text-[#0F0C3B]">{p.vendorName}</h3>
-                    <p className="text-[11px] text-slate-500 truncate max-w-[200px]">{p.serviceTitle}</p>
-                    <p className="text-[10px] text-slate-400">Completed on {p.completedDate}</p>
+                    <p className="text-[11px] text-foreground-muted truncate max-w-[200px]">{p.serviceTitle}</p>
+                    <p className="text-[10px] text-foreground-muted">Completed on {p.completedDate}</p>
                   </div>
                 </div>
 
                 <button
                   onClick={() => setSelectedPending(p)}
-                  className="px-3.5 py-1.5 bg-brand-primary hover:bg-indigo-700 text-white rounded-lg text-xs font-bold transition-all shadow-xs flex-shrink-0"
+                  className="px-3.5 py-1.5 bg-brand-primary hover:bg-indigo-700 text-foreground rounded-lg text-xs font-bold transition-all shadow-xs flex-shrink-0"
                 >
                   Write Review
                 </button>
@@ -191,47 +191,47 @@ export default function UserReviewsPage() {
       )}
 
       {/* Submitted Reviews List */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-xs">
+      <div className="bg-surface border border-border rounded-2xl p-5 space-y-4 shadow-xs">
         <h2 className="text-sm font-bold text-[#0F0C3B]">Your Past Reviews ({submitted.length})</h2>
 
-        <div className="divide-y divide-slate-100 space-y-4">
+        <div className="divide-y divide-border space-y-4">
           {submitted.map((rev) => (
             <div key={rev.id} className="pt-4 first:pt-0 space-y-3">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#0F0C3B] text-white flex items-center justify-center font-bold text-xs">
+                  <div className="w-10 h-10 rounded-full bg-[#0F0C3B] text-foreground flex items-center justify-center font-bold text-xs">
                     {rev.avatar}
                   </div>
                   <div>
                     <h3 className="text-xs font-bold text-[#0F0C3B]">{rev.vendorName}</h3>
-                    <p className="text-[11px] text-slate-500">{rev.serviceTitle}</p>
+                    <p className="text-[11px] text-foreground-muted">{rev.serviceTitle}</p>
                   </div>
                 </div>
 
                 <div className="flex flex-col items-end">
-                  <div className="flex items-center text-amber-400">
+                  <div className="flex items-center text-warning">
                     {[1, 2, 3, 4, 5].map((s) => (
                       <Star
                         key={s}
-                        className={`w-4 h-4 ${s <= rev.rating ? "fill-amber-400" : "text-slate-200"}`}
+                        className={`w-4 h-4 ${s <= rev.rating ? "fill-amber-400" : "text-foreground-secondary"}`}
                       />
                     ))}
                   </div>
-                  <span className="text-[10px] text-slate-400 mt-0.5">{rev.date}</span>
+                  <span className="text-[10px] text-foreground-muted mt-0.5">{rev.date}</span>
                 </div>
               </div>
 
-              <p className="text-xs text-slate-700 leading-relaxed pl-13">
+              <p className="text-xs text-foreground-secondary leading-relaxed pl-13">
                 "{rev.comment}"
               </p>
 
               {/* Vendor Public Reply if any */}
               {rev.responseFromVendor && (
-                <div className="ml-13 p-3 bg-[#F8F9FD] border border-slate-200 rounded-xl space-y-1">
+                <div className="ml-13 p-3 bg-[#F8F9FD] border border-border rounded-xl space-y-1">
                   <div className="flex items-center gap-1.5 text-[11px] font-bold text-brand-primary">
                     <MessageSquare className="w-3.5 h-3.5" /> Response from {rev.vendorName}
                   </div>
-                  <p className="text-xs text-slate-600 italic">
+                  <p className="text-xs text-foreground-secondary italic">
                     "{rev.responseFromVendor}"
                   </p>
                 </div>
@@ -244,13 +244,13 @@ export default function UserReviewsPage() {
       {/* Write Review Modal */}
       {selectedPending && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-5 shadow-2xl border border-slate-100">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="bg-surface rounded-2xl max-w-lg w-full p-6 space-y-5 shadow-2xl border border-border">
+            <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
                 <h2 className="text-sm font-bold text-[#0F0C3B]">Rate & Review Vendor</h2>
-                <p className="text-xs text-slate-500">{selectedPending.vendorName} &bull; {selectedPending.serviceTitle}</p>
+                <p className="text-xs text-foreground-muted">{selectedPending.vendorName} &bull; {selectedPending.serviceTitle}</p>
               </div>
-              <button onClick={() => setSelectedPending(null)} className="text-slate-400 hover:text-slate-600">
+              <button onClick={() => setSelectedPending(null)} className="text-foreground-muted hover:text-foreground-secondary">
                 &times;
               </button>
             </div>
@@ -258,7 +258,7 @@ export default function UserReviewsPage() {
             <form onSubmit={handleSubmitReview} className="space-y-4 text-xs">
               {/* Star Rating Select */}
               <div className="text-center py-2 space-y-2">
-                <span className="text-xs font-bold text-slate-700 block">Overall Experience Rating</span>
+                <span className="text-xs font-bold text-foreground-secondary block">Overall Experience Rating</span>
                 <div className="flex items-center justify-center gap-2">
                   {[1, 2, 3, 4, 5].map((star) => (
                     <button
@@ -267,11 +267,11 @@ export default function UserReviewsPage() {
                       onMouseEnter={() => setHoverRating(star)}
                       onMouseLeave={() => setHoverRating(0)}
                       onClick={() => setRating(star)}
-                      className="p-1 text-amber-400 transition-transform hover:scale-110"
+                      className="p-1 text-warning transition-transform hover:scale-110"
                     >
                       <Star
                         className={`w-7 h-7 ${
-                          (hoverRating || rating) >= star ? "fill-amber-400" : "text-slate-200"
+                          (hoverRating || rating) >= star ? "fill-amber-400" : "text-foreground-secondary"
                         }`}
                       />
                     </button>
@@ -283,28 +283,28 @@ export default function UserReviewsPage() {
               </div>
 
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Your Detailed Feedback</label>
+                <label className="block text-foreground-secondary font-bold mb-1">Your Detailed Feedback</label>
                 <textarea
                   rows={4}
                   required
                   placeholder="Share details about punctuality, quality of performance, professionalism, communication..."
                   value={reviewComment}
                   onChange={(e) => setReviewComment(e.target.value)}
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-3 text-slate-800 focus:outline-none focus:border-brand-primary resize-none"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-3 text-foreground focus:outline-none focus:border-brand-primary resize-none"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-border">
                 <button
                   type="button"
                   onClick={() => setSelectedPending(null)}
-                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold"
+                  className="px-4 py-2 bg-surface-sunken hover:bg-slate-200 text-foreground-secondary rounded-xl font-bold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-brand-primary hover:bg-indigo-700 text-white rounded-xl font-bold"
+                  className="px-5 py-2 bg-brand-primary hover:bg-indigo-700 text-foreground rounded-xl font-bold"
                 >
                   Publish Verified Review
                 </button>

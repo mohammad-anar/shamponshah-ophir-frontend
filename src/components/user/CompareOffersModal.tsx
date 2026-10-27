@@ -236,15 +236,15 @@ export default function CompareOffersModal({
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5">
-      <div className="bg-white rounded-3xl max-w-5xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-200">
+      <div className="bg-surface rounded-3xl max-w-5xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden border border-border animate-in fade-in zoom-in-95 duration-200">
         {/* Modal Header */}
-        <div className="px-6 py-4.5 border-b border-slate-200 flex items-center justify-between bg-gradient-to-r from-slate-50 via-white to-indigo-50/30">
+        <div className="px-6 py-4.5 border-b border-border flex items-center justify-between bg-gradient-to-r from-slate-50 via-white to-indigo-50/30">
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">
+              <span className="text-xs font-bold text-foreground-muted uppercase tracking-wider">
                 Proposals &amp; Bids
               </span>
-              <span className="text-slate-300">•</span>
+              <span className="text-foreground-secondary">•</span>
               <h2 className="text-sm sm:text-base text-[#0F0C3B] font-extrabold truncate max-w-lg">
                 {activeJob?.title || "Celebration RFP"}
               </h2>
@@ -252,15 +252,15 @@ export default function CompareOffersModal({
                 {candidates.length} Proposal{candidates.length === 1 ? "" : "s"}
               </span>
             </div>
-            <p className="text-xs text-slate-500 mt-1 flex items-center gap-1.5 flex-wrap">
-              <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+            <p className="text-xs text-foreground-muted mt-1 flex items-center gap-1.5 flex-wrap">
+              <ShieldCheck className="w-4 h-4 text-success shrink-0" />
               <span>Protected by Ophir Vault Escrow Protocol • 100% milestone delivery guarantee</span>
             </p>
           </div>
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-foreground-muted hover:text-foreground-secondary hover:bg-surface-sunken transition-colors cursor-pointer"
             aria-label="Close modal"
           >
             <X className="w-5 h-5" />
@@ -271,28 +271,28 @@ export default function CompareOffersModal({
         <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-5 text-xs bg-[#F8F9FD]/60">
           {/* Job Target Budget & Spec Strip */}
           {activeJob && (
-            <div className="p-4 rounded-2xl bg-white border border-slate-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+            <div className="p-4 rounded-2xl bg-surface border border-border shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
               <div className="space-y-1">
-                <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">
+                <span className="text-[10px] uppercase font-bold tracking-wider text-foreground-muted">
                   RFP Specification
                 </span>
                 <h3 className="text-sm font-bold text-[#0F0C3B]">{activeJob.title}</h3>
                 {activeJob.description && (
-                  <p className="text-xs text-slate-500 line-clamp-2 max-w-2xl leading-relaxed">
+                  <p className="text-xs text-foreground-muted line-clamp-2 max-w-2xl leading-relaxed">
                     {activeJob.description}
                   </p>
                 )}
               </div>
 
-              <div className="flex items-center gap-5 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+              <div className="flex items-center gap-5 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-border">
                 {activeJob.location && (
-                  <div className="flex items-center gap-1 text-xs text-slate-600 font-medium">
-                    <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                  <div className="flex items-center gap-1 text-xs text-foreground-secondary font-medium">
+                    <MapPin className="w-3.5 h-3.5 text-foreground-muted" />
                     <span>{activeJob.location}</span>
                   </div>
                 )}
                 <div className="text-right">
-                  <span className="text-[10px] uppercase font-bold text-slate-400 block">
+                  <span className="text-[10px] uppercase font-bold text-foreground-muted block">
                     Target Budget
                   </span>
                   <span className="text-base font-extrabold text-[#0F0C3B]">
@@ -305,19 +305,19 @@ export default function CompareOffersModal({
           )}
 
           {isOffersLoading ? (
-            <div className="py-20 flex flex-col items-center justify-center space-y-3 bg-white rounded-2xl border border-slate-200">
-              <Loader2 className="w-8 h-8 text-indigo-600 animate-spin" />
-              <p className="text-xs font-semibold text-slate-600">
+            <div className="py-20 flex flex-col items-center justify-center space-y-3 bg-surface rounded-2xl border border-border">
+              <Loader2 className="w-8 h-8 text-info animate-spin" />
+              <p className="text-xs font-semibold text-foreground-secondary">
                 Loading real vendor proposals from Ophir Network...
               </p>
             </div>
           ) : candidates.length === 0 ? (
-            <div className="py-16 text-center space-y-3 bg-white rounded-2xl border border-slate-200">
+            <div className="py-16 text-center space-y-3 bg-surface rounded-2xl border border-border">
               <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-brand-primary flex items-center justify-center mx-auto text-2xl font-bold">
                 📋
               </div>
               <h3 className="text-base font-bold text-[#0F0C3B]">No proposals submitted yet</h3>
-              <p className="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
+              <p className="text-xs text-foreground-muted max-w-md mx-auto leading-relaxed">
                 Your RFP is currently open. Vendors are reviewing your celebration specifications and will submit customized proposals with transparent milestone splits shortly.
               </p>
             </div>
@@ -336,21 +336,21 @@ export default function CompareOffersModal({
                   <div
                     key={c.id}
                     className={cn(
-                      "w-full bg-white rounded-2xl border transition-all p-5 sm:p-6 shadow-xs relative flex flex-col justify-between space-y-5",
+                      "w-full bg-surface rounded-2xl border transition-all p-5 sm:p-6 shadow-xs relative flex flex-col justify-between space-y-5",
                       isAccepted
                         ? "border-emerald-400 ring-2 ring-emerald-100 bg-emerald-50/20"
                         : isRejected || isOtherAccepted
-                        ? "border-slate-200 bg-slate-50/60 opacity-75"
+                        ? "border-border bg-surface-elevated/60 opacity-75"
                         : c.bestValue
                         ? "border-indigo-300 ring-1 ring-indigo-100 hover:border-indigo-400"
-                        : "border-slate-200 hover:border-slate-300"
+                        : "border-border hover:border-border"
                     )}
                   >
                     {/* Top Row: Best Value Tag + Status */}
                     <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
                       {/* Left: Vendor Profile */}
                       <div className="flex items-start gap-3.5">
-                        <div className="w-12 h-12 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 shrink-0 flex items-center justify-center relative shadow-xs">
+                        <div className="w-12 h-12 rounded-2xl overflow-hidden bg-surface-sunken border border-border shrink-0 flex items-center justify-center relative shadow-xs">
                           {c.avatarUrl ? (
                             // eslint-disable-next-line @next/next/no-img-element
                             <img
@@ -367,7 +367,7 @@ export default function CompareOffersModal({
 
                         <div>
                           <div className="flex items-center gap-2 flex-wrap">
-                            <h3 className="font-extrabold text-[#0F0C3B] text-base hover:text-indigo-600 transition-colors flex items-center gap-1.5">
+                            <h3 className="font-extrabold text-[#0F0C3B] text-base hover:text-info transition-colors flex items-center gap-1.5">
                               {c.name}
                               {c.identityVerified && (
                                 <BadgeCheck className="w-4 h-4 text-blue-500 shrink-0" />
@@ -376,35 +376,35 @@ export default function CompareOffersModal({
 
                             {c.bestValue && !isAccepted && !isRejected && (
                               <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-100 text-emerald-800 flex items-center gap-1">
-                                <Sparkles className="w-3 h-3 text-emerald-600" /> Best Value
+                                <Sparkles className="w-3 h-3 text-success" /> Best Value
                               </span>
                             )}
 
                             {isAccepted && (
-                              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-emerald-600 text-white flex items-center gap-1 shadow-xs">
+                              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-success-solid text-white text-foreground flex items-center gap-1 shadow-xs">
                                 <Check className="w-3 h-3" /> Awarded &amp; Contract Active
                               </span>
                             )}
 
                             {(isRejected || isOtherAccepted) && (
-                              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-slate-200 text-slate-600">
+                              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase bg-slate-200 text-foreground-secondary">
                                 Declined
                               </span>
                             )}
                           </div>
 
-                          <div className="flex items-center gap-2 text-xs text-slate-500 mt-1 flex-wrap">
-                            <span className="flex items-center gap-1 text-slate-600 font-medium">
-                              <MapPin className="w-3 h-3 text-slate-400" />
+                          <div className="flex items-center gap-2 text-xs text-foreground-muted mt-1 flex-wrap">
+                            <span className="flex items-center gap-1 text-foreground-secondary font-medium">
+                              <MapPin className="w-3 h-3 text-foreground-muted" />
                               {c.location}
                             </span>
-                            <span className="text-slate-300">•</span>
+                            <span className="text-foreground-secondary">•</span>
                             <div className="flex items-center gap-1 text-amber-700 font-bold">
-                              <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                              <Star className="w-3.5 h-3.5 text-warning fill-amber-500" />
                               <span>{c.rating}</span>
-                              <span className="text-slate-400 font-normal">({c.reviewsCount} reviews)</span>
+                              <span className="text-foreground-muted font-normal">({c.reviewsCount} reviews)</span>
                             </div>
-                            <span className="text-slate-300">•</span>
+                            <span className="text-foreground-secondary">•</span>
                             <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">
                               {c.badge}
                             </span>
@@ -413,8 +413,8 @@ export default function CompareOffersModal({
                       </div>
 
                       {/* Right: Price & Escrow Total */}
-                      <div className="text-left sm:text-right shrink-0 bg-slate-50 sm:bg-transparent p-3 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-slate-100">
-                        <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider block">
+                      <div className="text-left sm:text-right shrink-0 bg-surface-elevated sm:bg-transparent p-3 sm:p-0 rounded-xl sm:rounded-none border sm:border-0 border-border">
+                        <span className="text-[10px] uppercase font-bold text-foreground-muted tracking-wider block">
                           Total Escrow Deposit
                         </span>
                         <div className="flex items-baseline sm:justify-end gap-1.5 mt-0.5">
@@ -431,7 +431,7 @@ export default function CompareOffersModal({
                             {c.totalPay}
                           </span>
                         </div>
-                        <span className="text-[11px] text-slate-400 block mt-0.5">
+                        <span className="text-[11px] text-foreground-muted block mt-0.5">
                           {c.baseOffer} vendor quote + {c.escrowFee} vault escrow fee (5%)
                         </span>
                       </div>
@@ -439,8 +439,8 @@ export default function CompareOffersModal({
 
                     {/* Middle Row: Vendor Pitch Note */}
                     {c.message && (
-                      <div className="p-3.5 rounded-xl bg-slate-50/80 border border-slate-100 text-xs text-slate-700 italic leading-relaxed">
-                        <span className="font-bold not-italic text-slate-800 block mb-0.5 text-[11px] uppercase tracking-wider">
+                      <div className="p-3.5 rounded-xl bg-surface-elevated/80 border border-border text-xs text-foreground-secondary italic leading-relaxed">
+                        <span className="font-bold not-italic text-foreground block mb-0.5 text-[11px] uppercase tracking-wider">
                           Vendor Proposal Pitch:
                         </span>
                         &ldquo;{c.message}&rdquo;
@@ -450,18 +450,18 @@ export default function CompareOffersModal({
                     {/* Specifications & Deliverables Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
                       {/* Schedule */}
-                      <div className="p-3 rounded-xl border border-slate-200/80 bg-white space-y-1">
-                        <div className="flex items-center gap-1.5 text-slate-400 font-bold text-[10px] uppercase tracking-wider">
-                          <Clock className="w-3.5 h-3.5 text-indigo-600" />
+                      <div className="p-3 rounded-xl border border-border/80 bg-surface space-y-1">
+                        <div className="flex items-center gap-1.5 text-foreground-muted font-bold text-[10px] uppercase tracking-wider">
+                          <Clock className="w-3.5 h-3.5 text-info" />
                           <span>Coverage Schedule</span>
                         </div>
                         <p className="font-bold text-[#0F0C3B] text-xs">{c.hours}</p>
                       </div>
 
                       {/* Escrow Split */}
-                      <div className="p-3 rounded-xl border border-slate-200/80 bg-white space-y-1">
-                        <div className="flex items-center gap-1.5 text-slate-400 font-bold text-[10px] uppercase tracking-wider">
-                          <Layers className="w-3.5 h-3.5 text-indigo-600" />
+                      <div className="p-3 rounded-xl border border-border/80 bg-surface space-y-1">
+                        <div className="flex items-center gap-1.5 text-foreground-muted font-bold text-[10px] uppercase tracking-wider">
+                          <Layers className="w-3.5 h-3.5 text-info" />
                           <span>Payment Structure</span>
                         </div>
                         <p className="font-bold text-[#0F0C3B] text-xs">
@@ -474,28 +474,28 @@ export default function CompareOffersModal({
                       </div>
 
                       {/* Deliverables */}
-                      <div className="p-3 rounded-xl border border-slate-200/80 bg-white space-y-1">
-                        <div className="flex items-center gap-1.5 text-slate-400 font-bold text-[10px] uppercase tracking-wider">
-                          <FileText className="w-3.5 h-3.5 text-indigo-600" />
+                      <div className="p-3 rounded-xl border border-border/80 bg-surface space-y-1">
+                        <div className="flex items-center gap-1.5 text-foreground-muted font-bold text-[10px] uppercase tracking-wider">
+                          <FileText className="w-3.5 h-3.5 text-info" />
                           <span>Deliverables</span>
                         </div>
-                        <p className="font-medium text-slate-700 text-xs truncate" title={c.deliverables}>
+                        <p className="font-medium text-foreground-secondary text-xs truncate" title={c.deliverables}>
                           {c.deliverables}
                         </p>
                       </div>
                     </div>
 
                     {/* Bottom Action Bar */}
-                    <div className="pt-3.5 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                      <div className="flex items-center gap-2 text-[11px] text-slate-500">
-                        <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <div className="pt-3.5 border-t border-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                      <div className="flex items-center gap-2 text-[11px] text-foreground-muted">
+                        <ShieldCheck className="w-4 h-4 text-success shrink-0" />
                         <span>Milestone guarantee: Funds remain in Ophir Vault Escrow until final sign-off.</span>
                       </div>
 
                       <div>
                         {isAccepted ? (
                           <div className="flex items-center gap-2 flex-wrap">
-                            <div className="px-4 py-2 rounded-xl bg-emerald-600 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs">
+                            <div className="px-4 py-2 rounded-xl bg-success-solid text-white text-foreground font-bold text-xs flex items-center justify-center gap-1.5 shadow-xs">
                               <CheckCircle2 className="w-4 h-4" />
                               <span>Proposal Accepted</span>
                             </div>
@@ -505,14 +505,14 @@ export default function CompareOffersModal({
                                 onClose();
                                 router.push("/user/orders");
                               }}
-                              className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white font-bold text-xs transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer"
+                              className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground font-bold text-xs transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer"
                             >
                               <span>View Order &amp; Milestones</span>
-                              <ArrowRight className="w-3.5 h-3.5 text-amber-300" />
+                              <ArrowRight className="w-3.5 h-3.5 text-warning" />
                             </button>
                           </div>
                         ) : isRejected || isOtherAccepted ? (
-                          <div className="px-4 py-2 rounded-xl bg-slate-100 text-slate-400 font-medium text-xs flex items-center justify-center gap-1.5">
+                          <div className="px-4 py-2 rounded-xl bg-surface-sunken text-foreground-muted font-medium text-xs flex items-center justify-center gap-1.5">
                             <XCircle className="w-4 h-4" />
                             <span>Declined</span>
                           </div>
@@ -520,7 +520,7 @@ export default function CompareOffersModal({
                           <div className="flex items-center gap-2 flex-wrap">
                             <Link
                               href={`/user/messages?userId=${c.vendorUserId || ''}&vendorName=${encodeURIComponent(c.name)}&category=${encodeURIComponent(activeJob?.title || '')}`}
-                              className="px-3.5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs transition-colors flex items-center justify-center gap-1.5 shadow-2xs"
+                              className="px-3.5 py-2.5 rounded-xl border border-border hover:bg-surface-elevated text-foreground-secondary font-bold text-xs transition-colors flex items-center justify-center gap-1.5 shadow-2xs"
                               title="Chat with Vendor via Socket.IO"
                             >
                               <MessageSquare className="w-3.5 h-3.5 text-brand-primary" />
@@ -533,18 +533,18 @@ export default function CompareOffersModal({
                               className={cn(
                                 "w-full sm:w-auto px-6 py-2.5 rounded-xl font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer disabled:opacity-50",
                                 c.bestValue
-                                  ? "bg-[#0F0C3B] hover:bg-[#18124E] text-white hover:shadow-md"
-                                  : "bg-[#0F0C3B] hover:bg-[#18124E] text-white"
+                                  ? "bg-[#0F0C3B] hover:bg-[#18124E] text-foreground hover:shadow-md"
+                                  : "bg-[#0F0C3B] hover:bg-[#18124E] text-foreground"
                               )}
                             >
                               {isCurrentlyAccepting ? (
                                 <>
-                                  <Loader2 className="w-4 h-4 animate-spin text-amber-300" />
+                                  <Loader2 className="w-4 h-4 animate-spin text-warning" />
                                   <span>Securing Escrow Contract...</span>
                                 </>
                               ) : (
                                 <>
-                                  <Check className="w-4 h-4 text-emerald-400" />
+                                  <Check className="w-4 h-4 text-success" />
                                   <span>Accept Proposal ({c.totalPay})</span>
                                   <ChevronRight className="w-3.5 h-3.5" />
                                 </>
@@ -562,10 +562,10 @@ export default function CompareOffersModal({
         </div>
 
         {/* Modal Footer */}
-        <div className="px-6 py-3.5 border-t border-slate-200 bg-white flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+        <div className="px-6 py-3.5 border-t border-border bg-surface flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-foreground-muted">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-slate-700">Need changes before accepting?</span>
-            <span className="text-slate-400">You can message vendors directly from your inbox.</span>
+            <span className="font-semibold text-foreground-secondary">Need changes before accepting?</span>
+            <span className="text-foreground-muted">You can message vendors directly from your inbox.</span>
           </div>
 
           <div className="flex items-center gap-2 self-end sm:self-auto">
@@ -582,7 +582,7 @@ export default function CompareOffersModal({
 
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-surface-sunken hover:bg-slate-200 text-foreground-secondary font-bold text-xs transition-colors cursor-pointer"
             >
               Close
             </button>
@@ -592,14 +592,14 @@ export default function CompareOffersModal({
         {/* Cancellation Confirmation Dialog */}
         {showCancelConfirm && (
           <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-150">
-            <div className="bg-white w-full max-w-sm rounded-2xl p-6 shadow-2xl border border-slate-200 space-y-4">
+            <div className="bg-surface w-full max-w-sm rounded-2xl p-6 shadow-2xl border border-border space-y-4">
               <div className="flex items-start gap-3">
                 <div className="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
                   <AlertTriangle className="w-5 h-5" />
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-[#0F0C3B]">Cancel this Job RFP?</h4>
-                  <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                  <p className="text-xs text-foreground-muted mt-1 leading-relaxed">
                     No offer has been accepted yet. Cancelling will withdraw all {candidates.length} active vendor proposal(s) and close this listing.
                   </p>
                 </div>
@@ -610,7 +610,7 @@ export default function CompareOffersModal({
                   type="button"
                   onClick={() => setShowCancelConfirm(false)}
                   disabled={isCancelling}
-                  className="px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-xl text-xs font-semibold text-foreground-secondary hover:bg-surface-sunken transition-colors cursor-pointer"
                 >
                   Keep Job
                 </button>
@@ -618,7 +618,7 @@ export default function CompareOffersModal({
                   type="button"
                   onClick={handleCancelJob}
                   disabled={isCancelling}
-                  className="px-4 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  className="px-4 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 >
                   {isCancelling ? (
                     <>

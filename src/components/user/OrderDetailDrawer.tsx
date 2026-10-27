@@ -279,7 +279,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
       {/* Decline / Request Revision Modal */}
       {declineModalOpen && (
         <div className="fixed inset-0 z-70 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl border border-slate-200 space-y-4">
+          <div className="bg-surface w-full max-w-md rounded-2xl p-6 shadow-2xl border border-border space-y-4">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-2.5">
                 <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0">
@@ -287,7 +287,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-[#0F0C3B]">Decline &amp; Request Revision</h3>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-foreground-muted">
                     {selectedDeclineMilestone
                       ? selectedDeclineMilestone.name
                       : `Order #${currentOrder.orderNumber || currentOrder.id}`}
@@ -298,23 +298,23 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
               <button
                 type="button"
                 onClick={() => setDeclineModalOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 cursor-pointer"
+                className="p-1 rounded-lg text-foreground-muted hover:text-foreground-secondary hover:bg-surface-sunken cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <p className="text-xs text-slate-600">
+            <p className="text-xs text-foreground-secondary">
               Declining will inform the vendor that work needs adjustments. They will be notified to review your feedback and deliver again.
             </p>
 
             <div className="space-y-3">
               <div>
-                <label className="text-[11px] font-bold text-slate-700 block mb-1">Reason for Decline / Revision *</label>
+                <label className="text-[11px] font-bold text-foreground-secondary block mb-1">Reason for Decline / Revision *</label>
                 <select
                   value={declineReason}
                   onChange={(e) => setDeclineReason(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-500 font-medium bg-white"
+                  className="w-full px-3 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-500 font-medium bg-surface"
                 >
                   <option value="Deliverables do not match contract requirements">Deliverables do not match contract requirements</option>
                   <option value="Missing files, photos, or physical items">Missing files, photos, or physical items</option>
@@ -325,7 +325,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
               </div>
 
               <div>
-                <label className="text-[11px] font-bold text-slate-700 block mb-1">
+                <label className="text-[11px] font-bold text-foreground-secondary block mb-1">
                   Specific Revision Instructions (Recommended)
                 </label>
                 <textarea
@@ -333,7 +333,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                   value={declineNotes}
                   onChange={(e) => setDeclineNotes(e.target.value)}
                   placeholder="Explain clearly what the vendor needs to revise, change, or provide..."
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-500 font-medium"
+                  className="w-full px-3 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-500 font-medium"
                 />
               </div>
             </div>
@@ -342,7 +342,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
               <button
                 type="button"
                 onClick={() => setDeclineModalOpen(false)}
-                className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800 cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold text-foreground-secondary hover:text-foreground cursor-pointer"
               >
                 Keep Delivery
               </button>
@@ -351,7 +351,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                 type="button"
                 onClick={handleConfirmDecline}
                 disabled={isDecliningDelivery}
-                className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 rounded-xl bg-warning-solid text-on-brand hover:bg-amber-700 text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {isDecliningDelivery ? (
                   <>
@@ -373,7 +373,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
       {/* Cancel Order Confirmation Modal */}
       {cancelModalOpen && (
         <div className="fixed inset-0 z-70 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl border border-slate-200 space-y-4">
+          <div className="bg-surface w-full max-w-md rounded-2xl p-6 shadow-2xl border border-border space-y-4">
             <div className="flex items-start justify-between">
               <div className="flex items-center gap-2.5">
                 <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
@@ -381,21 +381,21 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-[#0F0C3B]">Cancel Order</h3>
-                  <p className="text-xs text-slate-500">Order #{currentOrder.orderNumber || currentOrder.id}</p>
+                  <p className="text-xs text-foreground-muted">Order #{currentOrder.orderNumber || currentOrder.id}</p>
                 </div>
               </div>
 
               <button
                 type="button"
                 onClick={() => setCancelModalOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 cursor-pointer"
+                className="p-1 rounded-lg text-foreground-muted hover:text-foreground-secondary hover:bg-surface-sunken cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Escrow & Milestone Retention Breakdown */}
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
+            <div className="p-4 rounded-xl bg-surface-elevated border border-border space-y-2 text-xs">
               <span className="font-bold text-[#0F0C3B] block mb-1">Cancellation Settlement Policy:</span>
 
               <div className="flex items-center justify-between text-emerald-800 bg-emerald-50/80 p-2 rounded-lg border border-emerald-200/60">
@@ -412,7 +412,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                   <span className="font-bold">Refunded to original payment method</span>
               </div>
 
-              <p className="text-[11px] text-slate-500 pt-1">
+              <p className="text-[11px] text-foreground-muted pt-1">
                 Completed work already transferred is retained by the vendor. The platform cancels pending transfers and requests refunds for paid milestones that have not been transferred.
               </p>
             </div>
@@ -420,11 +420,11 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
             {/* Reason selector */}
             <div className="space-y-3">
               <div>
-                <label className="text-[11px] font-bold text-slate-700 block mb-1">Reason for Cancellation *</label>
+                <label className="text-[11px] font-bold text-foreground-secondary block mb-1">Reason for Cancellation *</label>
                 <select
                   value={cancelReason}
                   onChange={(e) => setCancelReason(e.target.value)}
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-rose-500 font-medium bg-white"
+                  className="w-full px-3 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-rose-500 font-medium bg-surface"
                 >
                   <option value="Event rescheduled or cancelled">Event rescheduled or cancelled</option>
                   <option value="Mutual agreement with vendor">Mutual agreement with vendor</option>
@@ -435,13 +435,13 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
               </div>
 
               <div>
-                <label className="text-[11px] font-bold text-slate-700 block mb-1">Additional Notes (Optional)</label>
+                <label className="text-[11px] font-bold text-foreground-secondary block mb-1">Additional Notes (Optional)</label>
                 <textarea
                   rows={2}
                   value={cancelNotes}
                   onChange={(e) => setCancelNotes(e.target.value)}
                   placeholder="Provide context for the vendor and Ophir support..."
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-rose-500 font-medium"
+                  className="w-full px-3 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-rose-500 font-medium"
                 />
               </div>
             </div>
@@ -451,7 +451,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
               <button
                 type="button"
                 onClick={() => setCancelModalOpen(false)}
-                className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800 cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold text-foreground-secondary hover:text-foreground cursor-pointer"
               >
                 Keep Order Active
               </button>
@@ -460,7 +460,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                 type="button"
                 onClick={handleConfirmCancelOrder}
                 disabled={isCancelling}
-                className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {isCancelling ? (
                   <>
@@ -480,12 +480,12 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
       )}
 
       {/* Main Drawer Container */}
-      <div className="w-full max-w-2xl bg-white h-full shadow-2xl flex flex-col justify-between animate-in slide-in-from-right duration-300">
+      <div className="w-full max-w-2xl bg-surface h-full shadow-2xl flex flex-col justify-between animate-in slide-in-from-right duration-300">
         {/* Drawer Header */}
-        <div className="p-6 border-b border-slate-200 bg-[#F8F9FD] flex items-center justify-between">
+        <div className="p-6 border-b border-border bg-[#F8F9FD] flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-slate-500">Order #{currentOrder.orderNumber || currentOrder.id}</span>
+              <span className="text-xs font-bold text-foreground-muted">Order #{currentOrder.orderNumber || currentOrder.id}</span>
               <span className={cn(
                 "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide",
                 isPendingPayment
@@ -504,7 +504,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
 
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer"
+            className="p-2 rounded-xl text-foreground-muted hover:text-foreground-secondary hover:bg-slate-200/60 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -519,7 +519,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
             return (
               <div className="p-4 rounded-xl bg-amber-50 border border-amber-300 shadow-2xs space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0 mt-0.5">
+                  <div className="w-8 h-8 rounded-lg bg-warning-solid text-on-brand text-foreground flex items-center justify-center shrink-0 mt-0.5">
                     <DollarSign className="w-4 h-4" />
                   </div>
                   <div className="flex-1">
@@ -529,7 +529,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                         Auto-cancels in {hoursRemaining}h if unpaid
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-600 leading-relaxed mt-0.5">
+                    <p className="text-[11px] text-foreground-secondary leading-relaxed mt-0.5">
                       This direct gig booking is currently unpaid. Funds will be held securely in the Stripe Escrow Vault until completion.
                     </p>
                   </div>
@@ -537,7 +537,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                 <button
                   type="button"
                   onClick={() => setPayModalOpen(true)}
-                  className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-xs flex items-center justify-center gap-2 cursor-pointer transition-all"
+                  className="w-full py-2.5 rounded-xl bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-foreground font-bold text-xs shadow-xs flex items-center justify-center gap-2 cursor-pointer transition-all"
                 >
                   <CreditCard className="w-4 h-4" />
                   <span>Pay Now ({currentOrder.totalAmount})</span>
@@ -561,7 +561,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
           {/* Completed Banner */}
           {isOrderCompleted && !isOrderCancelled && (
             <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 flex items-start gap-3 text-emerald-950">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
+              <CheckCircle2 className="w-5 h-5 text-success shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-bold text-xs">All Milestones Fully Disbursed &amp; Order Complete</h4>
                 <p className="text-[11px] text-emerald-800 leading-relaxed mt-0.5">
@@ -575,7 +575,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
           {hasPendingDelivery && !isOrderCancelled && !isOrderCompleted && (
             <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-300 shadow-2xs space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg bg-amber-500 text-white flex items-center justify-center shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-lg bg-warning-solid text-on-brand text-foreground flex items-center justify-center shrink-0 mt-0.5">
                   <UploadCloud className="w-4 h-4" />
                 </div>
                 <div>
@@ -585,11 +585,11 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                       Review Needed
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-600 mt-0.5">
+                  <p className="text-[11px] text-foreground-secondary mt-0.5">
                     The vendor has delivered the work for your review. Accept to release payment or decline to request revisions.
                   </p>
                   {currentOrder.deliveryNotes && (
-                    <div className="mt-2 p-2.5 bg-white/90 rounded-lg border border-amber-200/80 text-[11px] text-slate-700">
+                    <div className="mt-2 p-2.5 bg-surface/90 rounded-lg border border-amber-200/80 text-[11px] text-foreground-secondary">
                       <span className="font-bold text-[#0F0C3B] block">Delivery Notes:</span>
                       <p className="italic mt-0.5">{currentOrder.deliveryNotes}</p>
                     </div>
@@ -602,7 +602,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                   type="button"
                   onClick={handleAcceptAllDelivery}
                   disabled={isAcceptingDelivery}
-                  className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  className="px-3.5 py-2 bg-success-solid text-white hover:bg-emerald-700 text-foreground rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 >
                   {isAcceptingDelivery ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -616,7 +616,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                   type="button"
                   onClick={() => handleOpenDeclineModal(null)}
                   disabled={isDecliningDelivery}
-                  className="px-3.5 py-2 bg-white hover:bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                  className="px-3.5 py-2 bg-surface hover:bg-rose-50 border border-rose-200 text-rose-700 rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                   <span>Decline / Request Revision</span>
@@ -627,14 +627,14 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
 
           {/* Quick Stats Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <div className="p-3.5 rounded-xl border border-slate-200 bg-white">
-              <span className="text-[10px] uppercase font-bold text-slate-400 block">Total Value</span>
+            <div className="p-3.5 rounded-xl border border-border bg-surface">
+              <span className="text-[10px] uppercase font-bold text-foreground-muted block">Total Value</span>
               <span className="text-base font-extrabold text-[#0F0C3B] mt-0.5 block">{currentOrder.totalAmount}</span>
             </div>
 
-            <div className="p-3.5 rounded-xl border border-slate-200 bg-white flex flex-col justify-between">
+            <div className="p-3.5 rounded-xl border border-border bg-surface flex flex-col justify-between">
               <div>
-                <span className="text-[10px] uppercase font-bold text-slate-400 block">Assigned Vendor</span>
+                <span className="text-[10px] uppercase font-bold text-foreground-muted block">Assigned Vendor</span>
                 <span className="text-xs font-bold text-[#0F0C3B] mt-0.5 block truncate">{currentOrder.vendorName}</span>
               </div>
               <Link
@@ -646,32 +646,32 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
               </Link>
             </div>
 
-            <div className="p-3.5 rounded-xl border border-slate-200 bg-white col-span-2 sm:col-span-1">
-              <span className="text-[10px] uppercase font-bold text-slate-400 block">Payment Protection</span>
-              <span className="text-xs font-bold text-emerald-600 mt-0.5 flex items-center gap-1">
+            <div className="p-3.5 rounded-xl border border-border bg-surface col-span-2 sm:col-span-1">
+              <span className="text-[10px] uppercase font-bold text-foreground-muted block">Payment Protection</span>
+              <span className="text-xs font-bold text-success mt-0.5 flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5" /> Stripe Connect payments
               </span>
             </div>
           </div>
 
           {/* Event Details Card */}
-          <div className="p-4 rounded-xl border border-slate-200 bg-white space-y-3">
+          <div className="p-4 rounded-xl border border-border bg-surface space-y-3">
             <h4 className="font-bold text-[#0F0C3B] text-xs uppercase tracking-wider">Celebration Details</h4>
             
             <div className="space-y-2 text-xs">
-              <div className="flex items-start gap-2.5 text-slate-600">
-                <Calendar className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2.5 text-foreground-secondary">
+                <Calendar className="w-4 h-4 text-info shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-semibold text-slate-800">Event Date:</span>
-                  <p className="text-slate-600">{currentOrder.eventDate}</p>
+                  <span className="font-semibold text-foreground">Event Date:</span>
+                  <p className="text-foreground-secondary">{currentOrder.eventDate}</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-2.5 text-slate-600">
-                <MapPin className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2.5 text-foreground-secondary">
+                <MapPin className="w-4 h-4 text-info shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-semibold text-slate-800">Location:</span>
-                  <p className="text-slate-600">{currentOrder.location}</p>
+                  <span className="font-semibold text-foreground">Location:</span>
+                  <p className="text-foreground-secondary">{currentOrder.location}</p>
                 </div>
               </div>
             </div>
@@ -682,11 +682,11 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
             <div className="flex items-center justify-between">
               <div>
                 <h4 className="font-bold text-[#0F0C3B] text-sm">Milestone schedule</h4>
-                <p className="text-[11px] text-slate-500 mt-0.5">
+                <p className="text-[11px] text-foreground-muted mt-0.5">
                   Payment and transfer status for each milestone.
                 </p>
               </div>
-              <span className="text-slate-500 font-semibold">{milestonesList.length} Milestones</span>
+              <span className="text-foreground-muted font-semibold">{milestonesList.length} Milestones</span>
             </div>
 
             <div className="space-y-3">
@@ -704,23 +704,23 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                       isPaidOrReleased
                         ? "bg-emerald-50/40 border-emerald-200/70"
                         : isRefunded
-                        ? "bg-slate-50/70 border-slate-200 opacity-75"
-                        : "bg-white border-slate-200 hover:border-indigo-200"
+                        ? "bg-surface-elevated/70 border-border opacity-75"
+                        : "bg-surface border-border hover:border-indigo-200"
                     )}
                   >
                     <div className="flex items-start gap-3">
                       <div className={cn(
                         "w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs shrink-0 mt-0.5",
                         isPaidOrReleased
-                          ? "bg-emerald-600 text-white"
+                          ? "bg-success-solid text-white text-foreground"
                           : isRefunded
-                          ? "bg-slate-200 text-slate-500"
-                          : "bg-slate-100 text-slate-600"
+                          ? "bg-slate-200 text-foreground-muted"
+                          : "bg-surface-sunken text-foreground-secondary"
                       )}>
                         {isPaidOrReleased ? (
                           <Check className="w-3.5 h-3.5" />
                         ) : isRefunded ? (
-                          <RotateCcw className="w-3.5 h-3.5 text-slate-500" />
+                          <RotateCcw className="w-3.5 h-3.5 text-foreground-muted" />
                         ) : (
                           idx + 1
                         )}
@@ -734,7 +734,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                             isPaidOrReleased
                               ? "bg-emerald-100 text-emerald-800"
                               : isRefunded
-                              ? "bg-slate-200 text-slate-700"
+                              ? "bg-slate-200 text-foreground-secondary"
                               : "bg-amber-100 text-amber-900"
                           )}>
                             {isPaidOrReleased
@@ -749,7 +749,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                           </span>
                         </div>
 
-                        <span className="text-[11px] text-slate-500 mt-0.5 block">
+                        <span className="text-[11px] text-foreground-muted mt-0.5 block">
                           {isPaidOrReleased
                             ? "Stripe transfer created; bank payout timing depends on Stripe."
                             : isScheduled
@@ -763,10 +763,10 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between sm:justify-end gap-3 self-end sm:self-auto w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+                    <div className="flex items-center justify-between sm:justify-end gap-3 self-end sm:self-auto w-full sm:w-auto pt-2 sm:pt-0 border-t sm:border-t-0 border-border">
                       <div className="text-left sm:text-right">
-                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Milestone Value</span>
-                        <span className={cn("font-extrabold text-sm block", isRefunded ? "line-through text-slate-400" : "text-[#0F0C3B]")}>
+                        <span className="text-[10px] uppercase font-bold text-foreground-muted block">Milestone Value</span>
+                        <span className={cn("font-extrabold text-sm block", isRefunded ? "line-through text-foreground-muted" : "text-[#0F0C3B]")}>
                           {ms.amount}
                         </span>
                       </div>
@@ -778,7 +778,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                           <span>Paid</span>
                         </div>
                       ) : isRefunded ? (
-                        <div className="px-3 py-1.5 rounded-xl bg-slate-100 text-slate-500 text-[11px] font-semibold flex items-center gap-1">
+                        <div className="px-3 py-1.5 rounded-xl bg-surface-sunken text-foreground-muted text-[11px] font-semibold flex items-center gap-1">
                           <RotateCcw className="w-3.5 h-3.5" />
                           <span>Refunded</span>
                         </div>
@@ -788,7 +788,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                             type="button"
                             disabled={isApproving}
                             onClick={() => handleApproveMilestone(ms)}
-                            className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                            className="px-3 py-1.5 rounded-xl bg-success-solid text-white hover:bg-emerald-700 text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                           >
                             <CheckCircle2 className="w-3.5 h-3.5" />
                             <span>{isApproving ? "Approving…" : "Approve delivery"}</span>
@@ -797,7 +797,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                             <button
                               type="button"
                               onClick={() => handleOpenDeclineModal(ms)}
-                              className="px-2.5 py-1.5 rounded-xl bg-white hover:bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold transition-all flex items-center gap-1 cursor-pointer"
+                              className="px-2.5 py-1.5 rounded-xl bg-surface hover:bg-rose-50 text-rose-700 border border-rose-200 text-xs font-bold transition-all flex items-center gap-1 cursor-pointer"
                               title="Decline this milestone and request revision"
                             >
                               <RotateCcw className="w-3 h-3" />
@@ -814,16 +814,16 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
           </div>
 
           {/* Payment Summary */}
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-2 text-xs">
-            <div className="flex justify-between text-slate-600">
+          <div className="p-4 rounded-xl bg-surface-elevated border border-border space-y-2 text-xs">
+            <div className="flex justify-between text-foreground-secondary">
               <span>Agreed Offer Price</span>
               <span className="font-semibold text-[#0F0C3B]">{currentOrder.totalAmount}</span>
             </div>
-            <div className="flex justify-between text-slate-600">
+            <div className="flex justify-between text-foreground-secondary">
               <span>Service Fee</span>
               <span className="font-semibold text-[#0F0C3B]">Included</span>
             </div>
-            <div className="pt-2 border-t border-slate-200 flex justify-between font-bold text-[#0F0C3B] text-sm">
+            <div className="pt-2 border-t border-border flex justify-between font-bold text-[#0F0C3B] text-sm">
               <span>Total Contracted</span>
               <span>{currentOrder.totalAmount}</span>
             </div>
@@ -831,11 +831,11 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
         </div>
 
         {/* Drawer Action Bar */}
-        <div className="p-5 border-t border-slate-200 bg-white flex items-center justify-between gap-3">
+        <div className="p-5 border-t border-border bg-surface flex items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
-              className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 cursor-pointer"
+              className="px-4 py-2 text-xs font-semibold text-foreground-secondary hover:text-foreground cursor-pointer"
             >
               Close
             </button>
@@ -857,13 +857,13 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
             <button
               type="button"
               onClick={() => setPayModalOpen(true)}
-              className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold flex items-center gap-2 shadow-xs cursor-pointer transition-all"
+              className="px-5 py-2.5 rounded-xl bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-foreground text-xs font-bold flex items-center gap-2 shadow-xs cursor-pointer transition-all"
             >
               <CreditCard className="w-4 h-4" />
               <span>Pay Now ({currentOrder.totalAmount})</span>
             </button>
           ) : isOrderCompleted ? (
-            <div className="px-5 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm">
+            <div className="px-5 py-2.5 rounded-xl bg-success-solid text-white text-foreground text-xs font-bold flex items-center gap-1.5 shadow-sm">
               <CheckCircle2 className="w-4 h-4" />
               <span>All Milestones Approved</span>
             </div>
@@ -873,7 +873,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
               <span>Order Cancelled</span>
             </div>
           ) : (
-            <div className="text-xs text-slate-500 font-medium">
+            <div className="text-xs text-foreground-muted font-medium">
               Click &ldquo;Approve &amp; Pay&rdquo; on any milestone to release milestone payment.
             </div>
           )}

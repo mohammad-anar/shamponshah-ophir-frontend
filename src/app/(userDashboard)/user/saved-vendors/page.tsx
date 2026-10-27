@@ -111,7 +111,7 @@ export default function UserSavedVendorsPage() {
               {vendors.length} Saved
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Your personal shortlist of vetted professionals. Compare vendor services, check reviews, and book directly.
           </p>
         </div>
@@ -127,15 +127,15 @@ export default function UserSavedVendorsPage() {
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
+      <div className="bg-surface border border-border rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xs">
         <div className="relative w-full sm:w-80">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-foreground-muted absolute left-3 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search saved vendors or specialties..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-primary"
+            className="w-full bg-[#F8F9FD] border border-border rounded-xl pl-9 pr-3 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-brand-primary"
           />
         </div>
 
@@ -143,7 +143,7 @@ export default function UserSavedVendorsPage() {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="bg-[#F8F9FD] border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer"
+            className="bg-[#F8F9FD] border border-border rounded-xl px-3 py-2 text-xs font-semibold text-foreground-secondary focus:outline-none cursor-pointer"
           >
             {availableCategories.map((c) => (
               <option key={c} value={c}>
@@ -156,9 +156,9 @@ export default function UserSavedVendorsPage() {
 
       {/* Loading State */}
       {isLoading ? (
-        <div className="bg-white border border-slate-200 rounded-3xl p-16 text-center space-y-3">
+        <div className="bg-surface border border-border rounded-3xl p-16 text-center space-y-3">
           <Loader2 className="w-8 h-8 animate-spin text-brand-primary mx-auto" />
-          <p className="text-xs text-slate-500 font-medium">Loading your saved vendors...</p>
+          <p className="text-xs text-foreground-muted font-medium">Loading your saved vendors...</p>
         </div>
       ) : filtered.length > 0 ? (
         /* Real Saved Vendors Grid */
@@ -166,11 +166,11 @@ export default function UserSavedVendorsPage() {
           {filtered.map((v) => (
             <div
               key={v.id}
-              className="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
+              className="bg-surface border border-border rounded-3xl overflow-hidden shadow-xs hover:shadow-md transition-all flex flex-col justify-between group"
             >
               <div>
                 {/* Image Banner */}
-                <div className="relative h-48 w-full bg-slate-100 overflow-hidden">
+                <div className="relative h-48 w-full bg-surface-sunken overflow-hidden">
                   <img
                     src={v.image}
                     alt={v.name}
@@ -182,7 +182,7 @@ export default function UserSavedVendorsPage() {
                     <button
                       onClick={() => handleRemove(v.id, v.name)}
                       disabled={isRemoving}
-                      className="p-2 rounded-xl bg-white/90 hover:bg-white text-slate-600 hover:text-rose-600 shadow-xs transition-colors cursor-pointer"
+                      className="p-2 rounded-xl bg-surface/90 hover:bg-surface text-foreground-secondary hover:text-rose-600 shadow-xs transition-colors cursor-pointer"
                       title="Remove from saved"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -190,7 +190,7 @@ export default function UserSavedVendorsPage() {
                   </div>
 
                   <div className="absolute bottom-3 left-3">
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#0F0C3B]/90 text-white backdrop-blur-xs shadow-xs">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#0F0C3B]/90 text-foreground backdrop-blur-xs shadow-xs">
                       {v.tier}
                     </span>
                   </div>
@@ -206,30 +206,30 @@ export default function UserSavedVendorsPage() {
                       <p className="text-xs text-brand-primary font-semibold mt-0.5">{v.category}</p>
                     </div>
 
-                    <div className="flex items-center text-amber-500 text-xs font-black bg-amber-50 px-2.5 py-1 rounded-xl border border-amber-200">
+                    <div className="flex items-center text-warning text-xs font-black bg-amber-50 px-2.5 py-1 rounded-xl border border-amber-200">
                       <Star className="w-3.5 h-3.5 fill-amber-400" />
                       <span className="ml-1">{v.rating}</span>
-                      <span className="text-slate-400 font-normal ml-0.5">({v.reviewsCount})</span>
+                      <span className="text-foreground-muted font-normal ml-0.5">({v.reviewsCount})</span>
                     </div>
                   </div>
 
-                  <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-foreground-secondary line-clamp-2 leading-relaxed">
                     {v.specialty}
                   </p>
 
-                  <div className="flex items-center gap-1.5 text-xs text-slate-500">
-                    <MapPin className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
+                  <div className="flex items-center gap-1.5 text-xs text-foreground-muted">
+                    <MapPin className="w-3.5 h-3.5 text-foreground-muted flex-shrink-0" />
                     <span className="truncate">{v.location}</span>
                   </div>
 
-                  <div className="p-3 bg-[#F8F9FD] rounded-2xl border border-slate-100 flex items-center justify-between">
+                  <div className="p-3 bg-[#F8F9FD] rounded-2xl border border-border flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] text-slate-400 uppercase font-bold tracking-wider">Starting Rate</span>
+                      <span className="text-[10px] text-foreground-muted uppercase font-bold tracking-wider">Starting Rate</span>
                       <p className="text-sm font-black text-[#0F0C3B]">
-                        ${v.startingPrice.toLocaleString()} <span className="text-xs font-normal text-slate-500">/ {v.priceUnit}</span>
+                        ${v.startingPrice.toLocaleString()} <span className="text-xs font-normal text-foreground-muted">/ {v.priceUnit}</span>
                       </p>
                     </div>
-                    <div className="flex items-center gap-1 text-emerald-600 text-xs font-bold">
+                    <div className="flex items-center gap-1 text-success text-xs font-bold">
                       <ShieldCheck className="w-4 h-4" />
                       <span>Verified Escrow</span>
                     </div>
@@ -241,13 +241,13 @@ export default function UserSavedVendorsPage() {
               <div className="p-5 pt-0 grid grid-cols-2 gap-3">
                 <Link
                   href="/user/messages"
-                  className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-[#0F0C3B] rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5"
+                  className="w-full py-2.5 bg-surface-sunken hover:bg-slate-200 text-[#0F0C3B] rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5"
                 >
                   <MessageSquare className="w-3.5 h-3.5" /> Message
                 </Link>
                 <Link
                   href={`/vendors/${v.slug || v.id}`}
-                  className="w-full py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 shadow-xs"
+                  className="w-full py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-foreground rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 shadow-xs"
                 >
                   View Profile <ChevronRight className="w-3.5 h-3.5" />
                 </Link>
@@ -257,27 +257,27 @@ export default function UserSavedVendorsPage() {
         </div>
       ) : (
         /* Clean Real Empty State */
-        <div className="bg-white border border-slate-200 rounded-3xl p-14 text-center space-y-4 max-w-lg mx-auto shadow-xs">
+        <div className="bg-surface border border-border rounded-3xl p-14 text-center space-y-4 max-w-lg mx-auto shadow-xs">
           <div className="w-14 h-14 rounded-3xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-brand-primary mx-auto">
             <Bookmark className="w-7 h-7 text-brand-primary" />
           </div>
           <div>
             <h3 className="text-lg font-serif font-bold text-[#0F0C3B]">No Saved Vendors Yet</h3>
-            <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto leading-relaxed">
+            <p className="text-xs text-foreground-muted mt-1 max-w-sm mx-auto leading-relaxed">
               You haven&apos;t shortlisted any vendors yet. Browse through verified event professionals and click the bookmark or heart icon to save your favorites here.
             </p>
           </div>
           <div className="pt-2 flex items-center justify-center gap-3">
             <Link
               href="/services"
-              className="px-5 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold shadow-xs transition-all flex items-center gap-2"
+              className="px-5 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-foreground rounded-xl text-xs font-bold shadow-xs transition-all flex items-center gap-2"
             >
               <span>Explore Services</span>
               <ChevronRight className="w-4 h-4" />
             </Link>
             <Link
               href="/vendors"
-              className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all"
+              className="px-4 py-2.5 bg-surface-sunken hover:bg-slate-200 text-foreground-secondary rounded-xl text-xs font-bold transition-all"
             >
               Browse Vendors
             </Link>

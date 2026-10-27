@@ -67,7 +67,7 @@ export default function UserOrdersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-[#0F0C3B]">My Orders</h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Track active milestones, review vendor deliveries, and approve milestone payments
           </p>
         </div>
@@ -75,22 +75,22 @@ export default function UserOrdersPage() {
 
       <div className="space-y-3">
         {isLoading ? (
-          <div className="py-10 flex items-center justify-center text-slate-400 gap-2 text-xs">
+          <div className="py-10 flex items-center justify-center text-foreground-muted gap-2 text-xs">
             <Loader2 className="w-4 h-4 animate-spin text-brand-primary" />
             <span>Loading orders...</span>
           </div>
         ) : displayOrders.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-500 space-y-3">
-            <ShoppingBag className="w-10 h-10 text-slate-300 mx-auto" />
+          <div className="bg-surface rounded-2xl border border-border p-12 text-center text-foreground-muted space-y-3">
+            <ShoppingBag className="w-10 h-10 text-foreground-secondary mx-auto" />
             <h3 className="font-bold text-[#0F0C3B] text-base">No orders yet</h3>
-            <p className="text-xs text-slate-400 max-w-sm mx-auto">
+            <p className="text-xs text-foreground-muted max-w-sm mx-auto">
               You haven't booked any vendor services yet. Browse our verified artisans or save services in your Family Hub to get started.
             </p>
             <div className="flex items-center justify-center gap-3 pt-2">
-              <Link href="/services" className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white text-xs font-bold transition-all shadow-xs">
+              <Link href="/services" className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold transition-all shadow-xs">
                 Browse Services
               </Link>
-              <Link href="/user/family-hub" className="px-4 py-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-bold transition-all">
+              <Link href="/user/family-hub" className="px-4 py-2 rounded-xl border border-border hover:bg-surface-elevated text-foreground-secondary text-xs font-bold transition-all">
                 Family Hub
               </Link>
             </div>
@@ -110,7 +110,7 @@ export default function UserOrdersPage() {
             const scheduledMs = milestones.filter((m: any) => m.status === "APPROVED_PENDING_RELEASE").length;
 
             let milestoneStatusText = "Pending Payment";
-            let milestoneBadgeClass = "bg-slate-100 text-slate-700";
+            let milestoneBadgeClass = "bg-surface-sunken text-foreground-secondary";
 
             if (ord.status === "PENDING_PAYMENT") {
               const createdAtMs = ord.createdAt ? new Date(ord.createdAt).getTime() : Date.now();
@@ -137,7 +137,7 @@ export default function UserOrdersPage() {
               milestoneBadgeClass = "bg-indigo-50 text-indigo-700 border border-indigo-100";
             } else if (totalMs > 1) {
               milestoneStatusText = `0/${totalMs} Milestones Paid`;
-              milestoneBadgeClass = "bg-slate-100 text-slate-700 border border-slate-200";
+              milestoneBadgeClass = "bg-surface-sunken text-foreground-secondary border border-border";
             } else if (ord.status === "CONFIRMED" || ord.status === "IN_PROGRESS" || ord.status === "ACTIVE") {
               milestoneStatusText = "In Progress • Payment Secured";
               milestoneBadgeClass = "bg-emerald-50 text-emerald-800 border border-emerald-200/60";
@@ -153,7 +153,7 @@ export default function UserOrdersPage() {
               <div
                 key={ord.id}
                 onClick={() => handleOpenOrder(ord)}
-                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs hover:border-indigo-300 hover:shadow-sm transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs"
+                className="bg-surface p-5 rounded-2xl border border-border shadow-xs hover:border-indigo-300 hover:shadow-sm transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-11 h-11 rounded-xl bg-indigo-50 text-brand-primary flex items-center justify-center font-bold text-lg flex-shrink-0">
@@ -166,7 +166,7 @@ export default function UserOrdersPage() {
                         #{ord.id}
                       </span>
                     </div>
-                    <p className="text-slate-500 mt-0.5">{vendorName} • {dateStr}</p>
+                    <p className="text-foreground-muted mt-0.5">{vendorName} • {dateStr}</p>
                     <span className="text-[11px] font-semibold text-brand-primary mt-1 block">
                       {ord.currentMilestone || milestoneSubtitle}
                     </span>
@@ -188,7 +188,7 @@ export default function UserOrdersPage() {
                         e.stopPropagation();
                         setPayingOrder(ord);
                       }}
-                      className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-xs flex items-center gap-1.5 cursor-pointer transition-all"
+                      className="px-3.5 py-1.5 rounded-xl bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-foreground font-bold text-xs shadow-xs flex items-center gap-1.5 cursor-pointer transition-all"
                     >
                       <CreditCard className="w-3.5 h-3.5" />
                       <span>Pay Now</span>
@@ -200,7 +200,7 @@ export default function UserOrdersPage() {
                       <button
                         type="button"
                         onClick={() => handleOpenOrder(ord)}
-                        className="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-2xs flex items-center gap-1 cursor-pointer"
+                        className="px-3 py-1.5 rounded-xl bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-foreground font-bold text-xs shadow-2xs flex items-center gap-1 cursor-pointer"
                       >
                         <UploadCloud className="w-3.5 h-3.5" />
                         <span>Review &amp; Action</span>
@@ -208,7 +208,7 @@ export default function UserOrdersPage() {
                     </div>
                   )}
 
-                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                  <ChevronRight className="w-4 h-4 text-foreground-muted" />
                 </div>
               </div>
             );

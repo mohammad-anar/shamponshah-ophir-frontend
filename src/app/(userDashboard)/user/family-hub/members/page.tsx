@@ -160,7 +160,7 @@ export default function FamilyHubMembersPage() {
       <div className="flex items-center justify-between">
         <Link
           href="/user/family-hub"
-          className="inline-flex items-center gap-1 text-xs font-bold text-slate-500 hover:text-[#0F0C3B]"
+          className="inline-flex items-center gap-1 text-xs font-bold text-foreground-muted hover:text-[#0F0C3B]"
         >
           <ChevronLeft className="w-4 h-4" /> Back to Family Decision Board
         </Link>
@@ -175,28 +175,28 @@ export default function FamilyHubMembersPage() {
               {members.length} Members
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Manage who can vote on vendor shortlist offers, co-fund escrow milestones, and post wedding ideas.
           </p>
         </div>
 
         <button
           onClick={() => setShowInviteModal(true)}
-          className="px-4 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start md:self-auto"
+          className="px-4 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start md:self-auto"
         >
           <UserPlus className="w-4 h-4" /> Invite Family Member
         </button>
       </div>
 
       {/* Members Table Card */}
-      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs">
-        <div className="p-4 border-b border-slate-100 flex items-center justify-between">
+      <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-xs">
+        <div className="p-4 border-b border-border flex items-center justify-between">
           <h2 className="text-sm font-bold text-[#0F0C3B]">Collaborator Access & Spending Matrix</h2>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-[#F8F9FD] border-b border-slate-100 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
+            <thead className="bg-[#F8F9FD] border-b border-border text-foreground-muted font-bold uppercase tracking-wider text-[10px]">
               <tr>
                 <th className="py-3 px-4">Member</th>
                 <th className="py-3 px-4">Role & Permissions</th>
@@ -207,20 +207,20 @@ export default function FamilyHubMembersPage() {
                 <th className="py-3 px-4 text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 font-medium">
+            <tbody className="divide-y divide-border font-medium">
               {members.map((m) => (
-                <tr key={m.id} className="hover:bg-slate-50/60 transition-colors">
+                <tr key={m.id} className="hover:bg-surface-elevated/60 transition-colors">
                   <td className="py-3.5 px-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-9 h-9 rounded-full bg-[#0F0C3B] text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                      <div className="w-9 h-9 rounded-full bg-[#0F0C3B] text-foreground flex items-center justify-center font-bold text-xs shadow-xs">
                         {m.avatar}
                       </div>
                       <div>
                         <div className="font-bold text-[#0F0C3B] flex items-center gap-1.5">
                           {m.name}
-                          {m.role === "Host / Admin" && <Crown className="w-3.5 h-3.5 text-amber-500" />}
+                          {m.role === "Host / Admin" && <Crown className="w-3.5 h-3.5 text-warning" />}
                         </div>
-                        <div className="text-[11px] text-slate-400">{m.email}</div>
+                        <div className="text-[11px] text-foreground-muted">{m.email}</div>
                       </div>
                     </div>
                   </td>
@@ -233,21 +233,21 @@ export default function FamilyHubMembersPage() {
 
                   <td className="py-3.5 px-4">
                     {m.canVote ? (
-                      <span className="inline-flex items-center gap-1 text-emerald-600 font-bold">
+                      <span className="inline-flex items-center gap-1 text-success font-bold">
                         <Check className="w-3.5 h-3.5" /> Can Vote
                       </span>
                     ) : (
-                      <span className="text-slate-400">View Only</span>
+                      <span className="text-foreground-muted">View Only</span>
                     )}
                   </td>
 
                   <td className="py-3.5 px-4">
                     {m.canFundEscrow ? (
-                      <span className="inline-flex items-center gap-1 text-emerald-600 font-bold">
+                      <span className="inline-flex items-center gap-1 text-success font-bold">
                         <DollarSign className="w-3.5 h-3.5" /> Authorized
                       </span>
                     ) : (
-                      <span className="text-slate-400">Restricted</span>
+                      <span className="text-foreground-muted">Restricted</span>
                     )}
                   </td>
 
@@ -269,7 +269,7 @@ export default function FamilyHubMembersPage() {
                     {m.role !== "Host / Admin" && (
                       <button
                         onClick={() => handleRemoveMember(m.id)}
-                        className="p-1.5 text-slate-400 hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors"
+                        className="p-1.5 text-foreground-muted hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors"
                         title="Remove member"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -286,35 +286,35 @@ export default function FamilyHubMembersPage() {
       {/* Invite Modal */}
       {showInviteModal && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-100">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="bg-surface rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-border">
+            <div className="flex items-center justify-between border-b border-border pb-3">
               <h2 className="text-sm font-bold text-[#0F0C3B] flex items-center gap-2">
                 <UserPlus className="w-4 h-4 text-brand-primary" /> Invite Family Planner
               </h2>
-              <button onClick={() => setShowInviteModal(false)} className="text-slate-400 hover:text-slate-600">
+              <button onClick={() => setShowInviteModal(false)} className="text-foreground-muted hover:text-foreground-secondary">
                 &times;
               </button>
             </div>
 
             <form onSubmit={handleSendInvite} className="space-y-3.5 text-xs">
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Email Address</label>
+                <label className="block text-foreground-secondary font-bold mb-1">Email Address</label>
                 <input
                   type="email"
                   required
                   placeholder="e.g. auntie.claire@gmail.com"
                   value={inviteEmail}
                   onChange={(e) => setInviteEmail(e.target.value)}
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary"
                 />
               </div>
 
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Role & Permissions</label>
+                <label className="block text-foreground-secondary font-bold mb-1">Role & Permissions</label>
                 <select
                   value={inviteRole}
                   onChange={(e) => setInviteRole(e.target.value as any)}
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none"
                 >
                   <option value="Co-Planner">Co-Planner (Can vote & add vendors)</option>
                   <option value="Family Contributor">Family Contributor (Can pledge funds & vote)</option>
@@ -326,17 +326,17 @@ export default function FamilyHubMembersPage() {
                 Invited members will receive an email with a secure link to join your <strong>Emily & David's Golden Ophir</strong> planning hub.
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-border">
                 <button
                   type="button"
                   onClick={() => setShowInviteModal(false)}
-                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold"
+                  className="px-4 py-2 bg-surface-sunken hover:bg-slate-200 text-foreground-secondary rounded-xl font-bold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl font-bold flex items-center gap-1.5"
+                  className="px-4 py-2 bg-[#0F0C3B] hover:bg-indigo-900 text-foreground rounded-xl font-bold flex items-center gap-1.5"
                 >
                   <Mail className="w-3.5 h-3.5" /> Send Invitation
                 </button>

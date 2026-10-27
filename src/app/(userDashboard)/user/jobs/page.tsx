@@ -198,18 +198,18 @@ export default function UserJobsPage() {
       {/* Edit Job Modal */}
       {jobToEdit && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200 overflow-y-auto">
-          <div className="bg-white w-full max-w-xl rounded-2xl p-6 shadow-2xl border border-slate-200 space-y-4 my-8">
-            <div className="flex items-start justify-between border-b border-slate-100 pb-3">
+          <div className="bg-surface w-full max-w-xl rounded-2xl p-6 shadow-2xl border border-border space-y-4 my-8">
+            <div className="flex items-start justify-between border-b border-border pb-3">
               <div>
                 <h3 className="text-base font-bold text-[#0F0C3B]">Edit Job RFP</h3>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className="text-xs text-foreground-muted mt-0.5">
                   Update celebration requirements before accepting bids
                 </p>
               </div>
               <button
                 type="button"
                 onClick={() => setJobToEdit(null)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 cursor-pointer"
+                className="p-1 rounded-lg text-foreground-muted hover:text-foreground-secondary hover:bg-surface-sunken cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -217,24 +217,24 @@ export default function UserJobsPage() {
 
             <form onSubmit={handleSaveEdit} className="space-y-3.5 text-xs">
               <div>
-                <label className="text-[11px] font-bold text-slate-700 block mb-1">Job Title *</label>
+                <label className="text-[11px] font-bold text-foreground-secondary block mb-1">Job Title *</label>
                 <input
                   type="text"
                   required
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
                   placeholder="e.g. Vintage Jazz Band & Saxophonist"
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[11px] font-bold text-slate-700 block mb-1">Occasion</label>
+                  <label className="text-[11px] font-bold text-foreground-secondary block mb-1">Occasion</label>
                   <select
                     value={editOccasion}
                     onChange={(e) => setEditOccasion(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500 capitalize"
+                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500 capitalize"
                   >
                     {occasionOptions.map((occ) => (
                       <option key={occ.id} value={occ.id}>
@@ -245,99 +245,99 @@ export default function UserJobsPage() {
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-bold text-slate-700 block mb-1">Target Event Date</label>
+                  <label className="text-[11px] font-bold text-foreground-secondary block mb-1">Target Event Date</label>
                   <input
                     type="date"
                     value={editEventDate}
                     onChange={(e) => setEditEventDate(e.target.value)}
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[11px] font-bold text-slate-700 block mb-1">Location / Venue</label>
+                  <label className="text-[11px] font-bold text-foreground-secondary block mb-1">Location / Venue</label>
                   <input
                     type="text"
                     value={editLocation}
                     onChange={(e) => setEditLocation(e.target.value)}
                     placeholder="e.g. Chicago, IL"
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-bold text-slate-700 block mb-1">Guest Count</label>
+                  <label className="text-[11px] font-bold text-foreground-secondary block mb-1">Guest Count</label>
                   <input
                     type="number"
                     value={editGuestCount}
                     onChange={(e) => setEditGuestCount(e.target.value)}
                     placeholder="e.g. 100"
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-[11px] font-bold text-slate-700 block mb-1">Min Budget ($)</label>
+                  <label className="text-[11px] font-bold text-foreground-secondary block mb-1">Min Budget ($)</label>
                   <input
                     type="number"
                     value={editBudgetMin}
                     onChange={(e) => setEditBudgetMin(e.target.value)}
                     placeholder="50"
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
 
                 <div>
-                  <label className="text-[11px] font-bold text-slate-700 block mb-1">Max Budget ($)</label>
+                  <label className="text-[11px] font-bold text-foreground-secondary block mb-1">Max Budget ($)</label>
                   <input
                     type="number"
                     value={editBudgetMax}
                     onChange={(e) => setEditBudgetMax(e.target.value)}
                     placeholder="500"
-                    className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-[11px] font-bold text-slate-700 block mb-1">Celebration Requirements &amp; Scope</label>
+                <label className="text-[11px] font-bold text-foreground-secondary block mb-1">Celebration Requirements &amp; Scope</label>
                 <textarea
                   rows={3}
                   value={editDescription}
                   onChange={(e) => setEditDescription(e.target.value)}
                   placeholder="Describe your vision, timeline, and deliverables..."
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
                 />
               </div>
 
               <div>
-                <label className="text-[11px] font-bold text-slate-700 block mb-1">Special Requests (Optional)</label>
+                <label className="text-[11px] font-bold text-foreground-secondary block mb-1">Special Requests (Optional)</label>
                 <input
                   type="text"
                   value={editSpecialRequests}
                   onChange={(e) => setEditSpecialRequests(e.target.value)}
                   placeholder="e.g. Requires wireless lavalier microphones"
-                  className="w-full px-3 py-2 border border-slate-200 rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-slate-100">
+              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-border">
                 <button
                   type="button"
                   onClick={() => setJobToEdit(null)}
                   disabled={isUpdating}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-foreground-secondary hover:bg-surface-sunken transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isUpdating}
-                  className="px-5 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  className="px-5 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 >
                   {isUpdating ? (
                     <>
@@ -346,7 +346,7 @@ export default function UserJobsPage() {
                     </>
                   ) : (
                     <>
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <Check className="w-3.5 h-3.5 text-success" />
                       <span>Save Changes</span>
                     </>
                   )}
@@ -360,24 +360,24 @@ export default function UserJobsPage() {
       {/* Delete Confirmation Modal */}
       {jobToDelete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl border border-slate-200 space-y-4">
+          <div className="bg-surface w-full max-w-md rounded-2xl p-6 shadow-2xl border border-border space-y-4">
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
                 <Trash2 className="w-5 h-5" />
               </div>
               <div className="flex-1">
                 <h3 className="text-base font-bold text-[#0F0C3B]">Delete Job RFP?</h3>
-                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                <p className="text-xs text-foreground-muted mt-1 leading-relaxed">
                   Are you sure you want to permanently delete{" "}
-                  <span className="font-semibold text-slate-700">&ldquo;{jobToDelete.title}&rdquo;</span>?
+                  <span className="font-semibold text-foreground-secondary">&ldquo;{jobToDelete.title}&rdquo;</span>?
                   This action cannot be undone. The RFP and all submitted bids will be completely removed.
                 </p>
               </div>
             </div>
 
-            <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 text-[11px] text-slate-600 space-y-1">
-              <div className="flex items-center gap-1.5 font-semibold text-slate-700">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <div className="p-3 bg-surface-elevated rounded-xl border border-border text-[11px] text-foreground-secondary space-y-1">
+              <div className="flex items-center gap-1.5 font-semibold text-foreground-secondary">
+                <ShieldCheck className="w-3.5 h-3.5 text-success" />
                 <span>Zero Escrow Commitment</span>
               </div>
               <p>
@@ -390,7 +390,7 @@ export default function UserJobsPage() {
                 type="button"
                 onClick={() => setJobToDelete(null)}
                 disabled={isDeleting}
-                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-foreground-secondary hover:bg-surface-sunken transition-colors cursor-pointer"
               >
                 Keep Job
               </button>
@@ -398,7 +398,7 @@ export default function UserJobsPage() {
                 type="button"
                 onClick={handleConfirmDelete}
                 disabled={isDeleting}
-                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {isDeleting ? (
                   <>
@@ -420,24 +420,24 @@ export default function UserJobsPage() {
       {/* Confirmation Modal for Job Cancellation */}
       {jobToCancel && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
-          <div className="bg-white w-full max-w-md rounded-2xl p-6 shadow-2xl border border-slate-200 space-y-4">
+          <div className="bg-surface w-full max-w-md rounded-2xl p-6 shadow-2xl border border-border space-y-4">
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div className="flex-1">
                 <h3 className="text-base font-bold text-[#0F0C3B]">Cancel Job RFP?</h3>
-                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
+                <p className="text-xs text-foreground-muted mt-1 leading-relaxed">
                   Are you sure you want to cancel{" "}
-                  <span className="font-semibold text-slate-700">&ldquo;{jobToCancel.title}&rdquo;</span>?
+                  <span className="font-semibold text-foreground-secondary">&ldquo;{jobToCancel.title}&rdquo;</span>?
                   All active vendor bids will be automatically withdrawn.
                 </p>
               </div>
             </div>
 
-            <div className="p-3 bg-slate-50 rounded-xl border border-slate-100 text-[11px] text-slate-600 space-y-1">
-              <div className="flex items-center gap-1.5 font-semibold text-slate-700">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <div className="p-3 bg-surface-elevated rounded-xl border border-border text-[11px] text-foreground-secondary space-y-1">
+              <div className="flex items-center gap-1.5 font-semibold text-foreground-secondary">
+                <ShieldCheck className="w-3.5 h-3.5 text-success" />
                 <span>Escrow Policy Guarantee</span>
               </div>
               <p>
@@ -450,7 +450,7 @@ export default function UserJobsPage() {
                 type="button"
                 onClick={() => setJobToCancel(null)}
                 disabled={isCancelling}
-                className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:bg-slate-100 transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-xl text-xs font-semibold text-foreground-secondary hover:bg-surface-sunken transition-colors cursor-pointer"
               >
                 Keep RFP Open
               </button>
@@ -458,7 +458,7 @@ export default function UserJobsPage() {
                 type="button"
                 onClick={handleConfirmCancel}
                 disabled={isCancelling}
-                className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 rounded-xl bg-warning-solid text-on-brand hover:bg-amber-700 text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {isCancelling ? (
                   <>
@@ -481,31 +481,31 @@ export default function UserJobsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-[#0F0C3B]">My Jobs &amp; RFPs</h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Compare received vendor proposals, review equipment checklists, or edit and delete open celebration requests
           </p>
         </div>
 
         <Link
           href="/user/post-job"
-          className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 self-start cursor-pointer"
+          className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 self-start cursor-pointer"
         >
           <Plus className="w-3.5 h-3.5" /> Post Another Job
         </Link>
       </div>
 
       {/* Filter Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-2 text-xs overflow-x-auto">
+      <div className="flex items-center gap-2 border-b border-border pb-2 text-xs overflow-x-auto">
         <button
           onClick={() => setActiveTab("ALL")}
           className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
             activeTab === "ALL"
-              ? "bg-[#0F0C3B] text-white shadow-xs"
-              : "text-slate-600 hover:bg-slate-100"
+              ? "bg-[#0F0C3B] text-foreground shadow-xs"
+              : "text-foreground-secondary hover:bg-surface-sunken"
           }`}
         >
           <span>All RFPs</span>
-          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-slate-200/60 text-slate-700">
+          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-slate-200/60 text-foreground-secondary">
             {allJobs.length}
           </span>
         </button>
@@ -514,8 +514,8 @@ export default function UserJobsPage() {
           onClick={() => setActiveTab("OPEN")}
           className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
             activeTab === "OPEN"
-              ? "bg-[#0F0C3B] text-white shadow-xs"
-              : "text-slate-600 hover:bg-slate-100"
+              ? "bg-[#0F0C3B] text-foreground shadow-xs"
+              : "text-foreground-secondary hover:bg-surface-sunken"
           }`}
         >
           <span>Bidding Open</span>
@@ -528,8 +528,8 @@ export default function UserJobsPage() {
           onClick={() => setActiveTab("AWARDED")}
           className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
             activeTab === "AWARDED"
-              ? "bg-[#0F0C3B] text-white shadow-xs"
-              : "text-slate-600 hover:bg-slate-100"
+              ? "bg-[#0F0C3B] text-foreground shadow-xs"
+              : "text-foreground-secondary hover:bg-surface-sunken"
           }`}
         >
           <span>Awarded</span>
@@ -542,8 +542,8 @@ export default function UserJobsPage() {
           onClick={() => setActiveTab("CANCELLED")}
           className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
             activeTab === "CANCELLED"
-              ? "bg-[#0F0C3B] text-white shadow-xs"
-              : "text-slate-600 hover:bg-slate-100"
+              ? "bg-[#0F0C3B] text-foreground shadow-xs"
+              : "text-foreground-secondary hover:bg-surface-sunken"
           }`}
         >
           <span>Cancelled</span>
@@ -556,7 +556,7 @@ export default function UserJobsPage() {
       {/* Jobs List */}
       <div className="space-y-4">
         {isLoading ? (
-          <div className="py-10 flex items-center justify-center text-slate-400 gap-2 text-xs">
+          <div className="py-10 flex items-center justify-center text-foreground-muted gap-2 text-xs">
             <Loader2 className="w-4 h-4 animate-spin text-brand-primary" />
             <span>Loading celebration RFPs...</span>
           </div>
@@ -574,10 +574,10 @@ export default function UserJobsPage() {
             return (
               <div
                 key={job.id}
-                className={`bg-white rounded-2xl p-6 border shadow-xs space-y-4 text-xs transition-all ${
+                className={`bg-surface rounded-2xl p-6 border shadow-xs space-y-4 text-xs transition-all ${
                   isCancelled
-                    ? "border-slate-200/60 opacity-80 bg-slate-50/40"
-                    : "border-slate-200"
+                    ? "border-border/60 opacity-80 bg-surface-elevated/40"
+                    : "border-border"
                 }`}
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -605,32 +605,32 @@ export default function UserJobsPage() {
 
                       {hasAcceptedOffer && (
                         <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 flex items-center gap-1">
-                          <Check className="w-3 h-3 text-emerald-600" /> Offer Accepted
+                          <Check className="w-3 h-3 text-success" /> Offer Accepted
                         </span>
                       )}
 
                       {job.category && (
-                        <span className="text-[11px] text-slate-400 capitalize">
+                        <span className="text-[11px] text-foreground-muted capitalize">
                           • {(job.category.name || job.category).toLowerCase().replace(/_/g, " ")}
                         </span>
                       )}
                     </div>
                     <h3 className="text-base font-bold text-[#0F0C3B] mt-1.5">{job.title}</h3>
-                    <p className="text-slate-500 mt-0.5">
+                    <p className="text-foreground-muted mt-0.5">
                       Target: {job.eventDate ? new Date(job.eventDate).toLocaleDateString() : "TBD"} • {job.location || "USA"} • {job.guestCount || 0} guests
                     </p>
                   </div>
 
                   <div className="text-left sm:text-right">
-                    <span className="text-[10px] uppercase font-bold text-slate-400 block">Target Budget</span>
+                    <span className="text-[10px] uppercase font-bold text-foreground-muted block">Target Budget</span>
                     <span className="text-lg font-extrabold text-[#0F0C3B]">
                       ${Number(job.budgetMin || 0).toLocaleString()} - ${Number(job.budgetMax || 0).toLocaleString()}
                     </span>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <div className="text-slate-600 font-medium">
+                <div className="p-4 rounded-xl bg-surface-elevated border border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="text-foreground-secondary font-medium">
                     {isCancelled ? (
                       <span className="text-rose-600 font-medium flex items-center gap-1.5">
                         <XCircle className="w-4 h-4 shrink-0" />
@@ -638,7 +638,7 @@ export default function UserJobsPage() {
                       </span>
                     ) : hasAcceptedOffer ? (
                       <span className="text-purple-700 font-medium flex items-center gap-1.5">
-                        <ShieldCheck className="w-4 h-4 shrink-0 text-emerald-600" />
+                        <ShieldCheck className="w-4 h-4 shrink-0 text-success" />
                         Vendor proposal accepted! Escrow contract is active.
                       </span>
                     ) : job.offers?.length ? (
@@ -654,10 +654,10 @@ export default function UserJobsPage() {
                       <button
                         type="button"
                         onClick={() => handleOpenEdit(job)}
-                        className="px-3 py-2 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold text-xs transition-colors shadow-xs flex items-center gap-1.5 cursor-pointer"
+                        className="px-3 py-2 rounded-xl border border-border hover:bg-surface-sunken text-foreground-secondary font-bold text-xs transition-colors shadow-xs flex items-center gap-1.5 cursor-pointer"
                         title="Edit this RFP requirements"
                       >
-                        <Pencil className="w-3.5 h-3.5 text-slate-500" />
+                        <Pencil className="w-3.5 h-3.5 text-foreground-muted" />
                         <span>Edit</span>
                       </button>
                     )}
@@ -681,17 +681,17 @@ export default function UserJobsPage() {
                         <button
                           type="button"
                           onClick={() => handleOpenCompare(job)}
-                          className="px-3.5 py-2 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold text-xs transition-colors shadow-xs flex items-center gap-1.5 cursor-pointer"
+                          className="px-3.5 py-2 rounded-xl border border-border hover:bg-surface-sunken text-foreground-secondary font-bold text-xs transition-colors shadow-xs flex items-center gap-1.5 cursor-pointer"
                         >
-                          <FileText className="w-3.5 h-3.5 text-slate-500" />
+                          <FileText className="w-3.5 h-3.5 text-foreground-muted" />
                           <span>View Accepted Proposal</span>
                         </button>
 
                         <Link
                           href="/user/orders"
-                          className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer"
+                          className="px-4 py-2 rounded-xl bg-success-solid text-white hover:bg-emerald-700 text-foreground font-bold text-xs transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer"
                         >
-                          <ShieldCheck className="w-3.5 h-3.5 text-white" />
+                          <ShieldCheck className="w-3.5 h-3.5 text-foreground" />
                           <span>View Order &amp; Milestones</span>
                           <ChevronRight className="w-3.5 h-3.5" />
                         </Link>
@@ -699,9 +699,9 @@ export default function UserJobsPage() {
                     ) : !isCancelled ? (
                       <button
                         onClick={() => handleOpenCompare(job)}
-                        className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white font-bold text-xs transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer"
+                        className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground font-bold text-xs transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer"
                       >
-                        <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                        <Sparkles className="w-3.5 h-3.5 text-warning" />
                         <span>Compare Offers</span>
                         <ChevronRight className="w-3.5 h-3.5" />
                       </button>
@@ -713,7 +713,7 @@ export default function UserJobsPage() {
           })
         ) : (
           /* Clean Empty State */
-          <div className="bg-white rounded-2xl p-12 border border-dashed border-slate-200 text-center space-y-3">
+          <div className="bg-surface rounded-2xl p-12 border border-dashed border-border text-center space-y-3">
             <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-brand-primary flex items-center justify-center mx-auto text-2xl font-bold">
               <Briefcase className="w-7 h-7 text-brand-primary" />
             </div>
@@ -722,13 +722,13 @@ export default function UserJobsPage() {
                 ? "No celebration RFPs found"
                 : `No ${activeTab.toLowerCase()} RFPs`}
             </h3>
-            <p className="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
+            <p className="text-xs text-foreground-muted max-w-md mx-auto leading-relaxed">
               Post your event requirements to receive customized bids with transparent milestone pricing and 100% escrow protection.
             </p>
             <div className="pt-2">
               <Link
                 href="/user/post-job"
-                className="px-5 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white text-xs font-bold transition-all shadow-sm inline-flex items-center gap-1.5"
+                className="px-5 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold transition-all shadow-sm inline-flex items-center gap-1.5"
               >
                 <Plus className="w-3.5 h-3.5" /> Post Your First RFP
               </Link>

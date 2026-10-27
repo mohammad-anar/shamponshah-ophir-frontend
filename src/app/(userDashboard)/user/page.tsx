@@ -209,11 +209,11 @@ export default function ClientDashboardOverview() {
             <span className="w-2 h-2 rounded-full bg-[#DFB76C] animate-pulse" />
             CLIENT COMMAND &bull; SERVICES & ESCROW
           </span>
-          <h1 className="text-2xl sm:text-3xl font-bold text-white mt-1 flex items-center gap-2 font-serif">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mt-1 flex items-center gap-2 font-serif">
             Welcome back, {userName}
             {isOverviewLoading && <Loader2 className="w-5 h-5 text-[#DFB76C] animate-spin" />}
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Book vendor services, collaborate with your Family Hub, and release milestone funds with 100% escrow protection.
           </p>
         </div>
@@ -221,7 +221,7 @@ export default function ClientDashboardOverview() {
         <div className="flex items-center gap-3 flex-wrap">
           <Link
             href="/services"
-            className="px-4 py-2 rounded-xl bg-[#16181F] border border-[#26282E] text-xs font-bold text-white hover:bg-[#1E222B] hover:border-[#DFB76C]/40 shadow-xs flex items-center gap-1.5 transition-all"
+            className="px-4 py-2 rounded-xl bg-[#16181F] border border-[#26282E] text-xs font-bold text-foreground hover:bg-[#1E222B] hover:border-border-brand/40 shadow-xs flex items-center gap-1.5 transition-all"
           >
             <Sparkles className="w-3.5 h-3.5 text-[#DFB76C]" />
             <span>Browse Services</span>
@@ -244,21 +244,21 @@ export default function ClientDashboardOverview() {
 
           <div>
             <div className="flex items-center justify-between gap-2 mb-3">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/60 text-emerald-400 text-[10px] font-bold tracking-wider uppercase border border-emerald-500/30 shadow-2xs">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success-soft text-success text-success text-[10px] font-bold tracking-wider uppercase border border-success/30 shadow-2xs">
+                <ShieldCheck className="w-3.5 h-3.5 text-success" />
                 Escrow Custody Active
               </span>
-              <span className="px-3 py-1 rounded-full bg-[#1A1D24] border border-[#DFB76C]/40 text-[#DFB76C] text-[10px] font-extrabold shadow-2xs">
+              <span className="px-3 py-1 rounded-full bg-[#1A1D24] border border-border-brand/40 text-[#DFB76C] text-[10px] font-extrabold shadow-2xs">
                 {rawActiveOrders.length} Active Booking{rawActiveOrders.length === 1 ? "" : "s"}
               </span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-serif">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight font-serif">
               {rawActiveOrders.length > 0
                 ? `${rawActiveOrders.length} Vendor Service${rawActiveOrders.length === 1 ? "" : "s"} In Progress`
                 : "Ready to Book Your Next Vendor Service"}
             </h2>
-            <p className="text-xs text-slate-400 mt-1 font-medium">
+            <p className="text-xs text-foreground-muted mt-1 font-medium">
               {rawActiveOrders.length > 0
                 ? "Milestone payments are locked securely in escrow until you inspect and accept deliverables."
                 : "Explore top-rated verified cinematographers, musicians, caterers, and floral designers."}
@@ -267,16 +267,16 @@ export default function ClientDashboardOverview() {
             {/* Quick Metrics Bar */}
             <div className="grid grid-cols-3 gap-2.5 mt-5 py-3 border-y border-[#26282E] text-xs">
               <div className="p-2.5 rounded-xl bg-[#16181F] border border-[#26282E]">
-                <span className="text-[10px] font-bold text-slate-400 uppercase block">Escrow Custody</span>
+                <span className="text-[10px] font-bold text-foreground-muted uppercase block">Escrow Custody</span>
                 <span className="font-extrabold text-[#DFB76C] text-base">${escrowAmount.toLocaleString()}</span>
               </div>
               <div className="p-2.5 rounded-xl bg-[#16181F] border border-[#26282E]">
-                <span className="text-[10px] font-bold text-slate-400 uppercase block">Completed Orders</span>
-                <span className="font-extrabold text-emerald-400 text-base">{completedOrdersCount}</span>
+                <span className="text-[10px] font-bold text-foreground-muted uppercase block">Completed Orders</span>
+                <span className="font-extrabold text-success text-base">{completedOrdersCount}</span>
               </div>
               <div className="p-2.5 rounded-xl bg-[#16181F] border border-[#26282E]">
-                <span className="text-[10px] font-bold text-slate-400 uppercase block">Total Spent</span>
-                <span className="font-extrabold text-white text-base">${totalSpent.toLocaleString()}</span>
+                <span className="text-[10px] font-bold text-foreground-muted uppercase block">Total Spent</span>
+                <span className="font-extrabold text-foreground text-base">${totalSpent.toLocaleString()}</span>
               </div>
             </div>
           </div>
@@ -292,11 +292,11 @@ export default function ClientDashboardOverview() {
               </Link>
               <Link
                 href="/user/family-hub"
-                className="text-slate-400 hover:text-[#DFB76C] font-semibold transition-colors cursor-pointer text-xs flex items-center gap-1"
+                className="text-foreground-muted hover:text-[#DFB76C] font-semibold transition-colors cursor-pointer text-xs flex items-center gap-1"
               >
                 <Users2 className="w-3.5 h-3.5 text-[#DFB76C]" />
                 <span>Family Collaboration Hub</span>
-                <ChevronRight className="w-3 h-3 text-slate-500" />
+                <ChevronRight className="w-3 h-3 text-foreground-muted" />
               </Link>
             </div>
             <Link href="/user/orders" className="text-xs font-bold text-[#DFB76C] hover:underline">
@@ -311,9 +311,9 @@ export default function ClientDashboardOverview() {
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#DFB76C]" />
-                <h3 className="font-bold text-white text-sm">Actionable Next Steps</h3>
+                <h3 className="font-bold text-foreground text-sm">Actionable Next Steps</h3>
               </div>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-950/60 text-amber-300 border border-amber-500/30">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-warning-soft text-warning text-warning border border-warning/30">
                 {nextSteps.length} need attention
               </span>
             </div>
@@ -326,12 +326,12 @@ export default function ClientDashboardOverview() {
                     className="p-3 rounded-2xl bg-[#16181F] border border-[#26282E] flex items-center justify-between gap-2"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="w-7 h-7 rounded-lg bg-indigo-950/60 text-indigo-300 flex items-center justify-center font-bold text-xs shrink-0">
+                      <div className="w-7 h-7 rounded-lg bg-info-soft text-info text-indigo-300 flex items-center justify-center font-bold text-xs shrink-0">
                         {step.icon}
                       </div>
                       <div className="min-w-0">
-                        <h4 className="font-bold text-white line-clamp-1">{step.title}</h4>
-                        <p className="text-[10px] text-slate-400 line-clamp-1">{step.subtitle}</p>
+                        <h4 className="font-bold text-foreground line-clamp-1">{step.title}</h4>
+                        <p className="text-[10px] text-foreground-muted line-clamp-1">{step.subtitle}</p>
                       </div>
                     </div>
                     <button
@@ -339,8 +339,8 @@ export default function ClientDashboardOverview() {
                       className={cn(
                         "px-3 py-1.5 rounded-lg font-bold text-[11px] transition-colors shadow-xs shrink-0 cursor-pointer",
                         step.btnVariant === "primary" && "bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E]",
-                        step.btnVariant === "amber" && "bg-amber-600 hover:bg-amber-500 text-white",
-                        step.btnVariant === "neutral" && "bg-[#1A1D24] border border-[#26282E] text-slate-200 hover:bg-[#222630]"
+                        step.btnVariant === "amber" && "bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-foreground",
+                        step.btnVariant === "neutral" && "bg-[#1A1D24] border border-[#26282E] text-foreground-secondary hover:bg-[#222630]"
                       )}
                     >
                       {step.actionText}
@@ -349,16 +349,16 @@ export default function ClientDashboardOverview() {
                 ))
               ) : (
                 <div className="p-6 rounded-2xl bg-[#16181F] border border-[#26282E] text-center space-y-1">
-                  <CheckCircle2 className="w-6 h-6 text-emerald-400 mx-auto" />
-                  <p className="text-xs font-bold text-white">All caught up!</p>
-                  <p className="text-[10px] text-slate-400">All milestones and vendor schedules are up to date.</p>
+                  <CheckCircle2 className="w-6 h-6 text-success mx-auto" />
+                  <p className="text-xs font-bold text-foreground">All caught up!</p>
+                  <p className="text-[10px] text-foreground-muted">All milestones and vendor schedules are up to date.</p>
                 </div>
               )}
             </div>
           </div>
 
-          <div className="mt-4 pt-3 border-t border-[#26282E] flex items-center justify-between text-[11px] text-slate-400">
-            <span className="flex items-center gap-1 font-semibold text-emerald-400">
+          <div className="mt-4 pt-3 border-t border-[#26282E] flex items-center justify-between text-[11px] text-foreground-muted">
+            <span className="flex items-center gap-1 font-semibold text-success">
               <ShieldCheck className="w-3.5 h-3.5" />
               Escrow Auto-Protection Active
             </span>
@@ -376,8 +376,8 @@ export default function ClientDashboardOverview() {
           <div>
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
-                <h3 className="font-serif font-bold text-white text-base">Active Service Orders</h3>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-950/60 text-indigo-300 border border-indigo-500/30">
+                <h3 className="font-serif font-bold text-foreground text-base">Active Service Orders</h3>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-info-soft text-info text-indigo-300 border border-info/30">
                   {rawActiveOrders.length}
                 </span>
               </div>
@@ -385,7 +385,7 @@ export default function ClientDashboardOverview() {
                 View all orders <ChevronRight className="w-3.5 h-3.5" />
               </Link>
             </div>
-            <p className="text-[11px] text-slate-400 mb-4">Live contracts backed by Ophir Escrow Vault</p>
+            <p className="text-[11px] text-foreground-muted mb-4">Live contracts backed by Ophir Escrow Vault</p>
 
             <div className="space-y-3 text-xs">
               {rawActiveOrders.length > 0 ? (
@@ -404,24 +404,24 @@ export default function ClientDashboardOverview() {
                     <div
                       key={ord.id}
                       onClick={() => handleOpenOrder(ord)}
-                      className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] hover:border-[#DFB76C]/40 transition-all cursor-pointer flex flex-col gap-2"
+                      className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] hover:border-border-brand/40 transition-all cursor-pointer flex flex-col gap-2"
                     >
                       <div className="flex items-center justify-between">
                         <div className="min-w-0">
-                          <h4 className="font-bold text-white truncate">{title}</h4>
-                          <p className="text-[10px] text-slate-400">Vendor: {vendor}</p>
+                          <h4 className="font-bold text-foreground truncate">{title}</h4>
+                          <p className="text-[10px] text-foreground-muted">Vendor: {vendor}</p>
                         </div>
                         <span className="font-black text-[#DFB76C]">${total}</span>
                       </div>
 
                       <div className="space-y-1">
-                        <div className="flex items-center justify-between text-[10px] text-slate-400">
+                        <div className="flex items-center justify-between text-[10px] text-foreground-muted">
                           <span>Milestones: {paidMilestones} of {totalMilestones} released</span>
-                          <span className="font-bold text-emerald-400">{progressPct}%</span>
+                          <span className="font-bold text-success">{progressPct}%</span>
                         </div>
                         <div className="h-1.5 w-full bg-[#26282E] rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-emerald-500 rounded-full transition-all"
+                            className="h-full bg-success-solid text-white rounded-full transition-all"
                             style={{ width: `${progressPct}%` }}
                           />
                         </div>
@@ -431,9 +431,9 @@ export default function ClientDashboardOverview() {
                 })
               ) : (
                 <div className="p-8 rounded-2xl bg-[#16181F] border border-[#26282E] text-center space-y-2">
-                  <ShoppingBag className="w-8 h-8 text-slate-500 mx-auto" />
-                  <p className="text-xs font-bold text-white">No active service orders</p>
-                  <p className="text-[11px] text-slate-400">Browse vendor services or post an RFP to get started.</p>
+                  <ShoppingBag className="w-8 h-8 text-foreground-muted mx-auto" />
+                  <p className="text-xs font-bold text-foreground">No active service orders</p>
+                  <p className="text-[11px] text-foreground-muted">Browse vendor services or post an RFP to get started.</p>
                   <Link
                     href="/services"
                     className="inline-block mt-2 px-4 py-2 rounded-xl bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold transition-all cursor-pointer"
@@ -451,8 +451,8 @@ export default function ClientDashboardOverview() {
           <div>
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
-                <h3 className="font-serif font-bold text-white text-base">Open Jobs & RFPs</h3>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-950/60 text-amber-300 border border-amber-500/30">
+                <h3 className="font-serif font-bold text-foreground text-base">Open Jobs & RFPs</h3>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-warning-soft text-warning text-warning border border-warning/30">
                   {rawOpenJobs.length}
                 </span>
               </div>
@@ -460,7 +460,7 @@ export default function ClientDashboardOverview() {
                 View all jobs <ChevronRight className="w-3.5 h-3.5" />
               </Link>
             </div>
-            <p className="text-[11px] text-slate-400 mb-4">Competitive proposals submitted by verified vendors</p>
+            <p className="text-[11px] text-foreground-muted mb-4">Competitive proposals submitted by verified vendors</p>
 
             <div className="space-y-3 text-xs">
               {rawOpenJobs.length > 0 ? (
@@ -474,8 +474,8 @@ export default function ClientDashboardOverview() {
                       className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] flex items-center justify-between gap-3"
                     >
                       <div className="min-w-0">
-                        <h4 className="font-bold text-white truncate">{job.title}</h4>
-                        <p className="text-[10px] text-slate-400">
+                        <h4 className="font-bold text-foreground truncate">{job.title}</h4>
+                        <p className="text-[10px] text-foreground-muted">
                           Budget: {budgetStr} &bull; {offersCount} proposal{offersCount === 1 ? "" : "s"}
                         </p>
                       </div>
@@ -489,11 +489,11 @@ export default function ClientDashboardOverview() {
                             Review ({offersCount})
                           </button>
                         ) : (
-                          <span className="text-[11px] text-slate-400 italic">Awaiting bids</span>
+                          <span className="text-[11px] text-foreground-muted italic">Awaiting bids</span>
                         )}
                         <button
                           onClick={() => handleCancelJob(job.id, job.title)}
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-rose-400 transition-colors cursor-pointer"
+                          className="p-1.5 rounded-lg text-foreground-muted hover:text-danger transition-colors cursor-pointer"
                           title="Cancel Job"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -504,9 +504,9 @@ export default function ClientDashboardOverview() {
                 })
               ) : (
                 <div className="p-8 rounded-2xl bg-[#16181F] border border-[#26282E] text-center space-y-2">
-                  <PlusCircle className="w-8 h-8 text-slate-500 mx-auto" />
-                  <p className="text-xs font-bold text-white">No open jobs posted</p>
-                  <p className="text-[11px] text-slate-400">Post a custom RFP to receive bids from top vendors.</p>
+                  <PlusCircle className="w-8 h-8 text-foreground-muted mx-auto" />
+                  <p className="text-xs font-bold text-foreground">No open jobs posted</p>
+                  <p className="text-[11px] text-foreground-muted">Post a custom RFP to receive bids from top vendors.</p>
                   <Link
                     href="/user/post-job"
                     className="inline-block mt-2 px-4 py-2 rounded-xl bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold transition-all cursor-pointer"

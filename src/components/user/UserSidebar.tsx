@@ -116,7 +116,7 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
           <Logo href="/user" />
           <button 
             onClick={onClose}
-            className="lg:hidden p-1.5 rounded-none text-slate-400 hover:text-white hover:bg-[#16181F]"
+            className="lg:hidden p-1.5 rounded-none text-foreground-muted hover:text-foreground hover:bg-[#16181F]"
           >
             <X className="w-5 h-5" />
           </button>
@@ -144,11 +144,11 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
                           ? "bg-[#16181F] text-[#DFB76C] border-l-2 border-[#DFB76C]"
                           : item.highlight
                             ? "text-[#DFB76C] hover:bg-[#121418] hover:text-[#ECC870] font-semibold"
-                            : "text-slate-400 hover:bg-[#121418] hover:text-[#F3F4F6]"
+                            : "text-foreground-muted hover:bg-[#121418] hover:text-[#F3F4F6]"
                       )}
                     >
                       <div className="flex items-center gap-2.5">
-                        <Icon className={cn("w-4 h-4", isActive ? "text-[#DFB76C]" : item.highlight ? "text-[#DFB76C]" : "text-slate-500")} />
+                        <Icon className={cn("w-4 h-4", isActive ? "text-[#DFB76C]" : item.highlight ? "text-[#DFB76C]" : "text-foreground-muted")} />
                         <span>{item.label}</span>
                       </div>
 

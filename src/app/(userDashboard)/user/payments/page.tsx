@@ -110,27 +110,27 @@ export default function UserPaymentsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
         <h1 className="text-2xl font-bold text-[#0F0C3B]">Payments &amp; Billing History</h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Review milestone charges, refunds, and saved payment methods.
           </p>
         </div>
 
         <button
           onClick={() => setIsAddModalOpen(true)}
-          className="px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 shadow-xs flex items-center gap-1.5 self-start cursor-pointer transition-all"
+          className="px-4 py-2 rounded-xl bg-surface border border-border text-xs font-bold text-foreground-secondary hover:bg-surface-elevated shadow-xs flex items-center gap-1.5 self-start cursor-pointer transition-all"
         >
           <Plus className="w-3.5 h-3.5 text-brand-primary" /> Add Payment Method
         </button>
       </div>
 
       {/* Escrow Custody Banner */}
-      <div className="bg-[#18124E] text-white p-6 rounded-2xl shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="bg-[#18124E] text-foreground p-6 rounded-2xl shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-white">
-            <Lock className="w-6 h-6 text-amber-300" />
+          <div className="w-12 h-12 rounded-xl bg-info-solid text-white/20 border border-indigo-400/30 flex items-center justify-center text-foreground">
+            <Lock className="w-6 h-6 text-warning" />
           </div>
           <div>
-            <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-300">
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-warning">
               Active Custody Balance
             </span>
             <div className="flex items-baseline gap-2 mt-0.5">
@@ -145,7 +145,7 @@ export default function UserPaymentsPage() {
       </div>
 
       {/* Saved Payment Methods Section */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs p-5 space-y-4">
+      <div className="bg-surface rounded-2xl border border-border shadow-xs p-5 space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <CreditCard className="w-4 h-4 text-brand-primary" />
@@ -163,7 +163,7 @@ export default function UserPaymentsPage() {
         </div>
 
         {methodsLoading ? (
-          <div className="py-6 flex items-center justify-center text-slate-400 gap-2 text-xs">
+          <div className="py-6 flex items-center justify-center text-foreground-muted gap-2 text-xs">
             <Loader2 className="w-4 h-4 animate-spin text-brand-primary" />
             <span>Loading payment methods...</span>
           </div>
@@ -176,12 +176,12 @@ export default function UserPaymentsPage() {
                   "p-4 rounded-xl border relative transition-all flex flex-col justify-between",
                   pm.isDefault
                     ? "border-brand-primary bg-indigo-50/30 shadow-2xs"
-                    : "border-slate-200 hover:border-slate-300 bg-white"
+                    : "border-border hover:border-border bg-surface"
                 )}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="px-2 py-1 rounded bg-slate-900 text-white font-bold text-[10px] uppercase tracking-wider">
+                    <div className="px-2 py-1 rounded bg-slate-900 text-foreground font-bold text-[10px] uppercase tracking-wider">
                       {pm.brand || "Card"}
                     </div>
                     {pm.isDefault && (
@@ -193,7 +193,7 @@ export default function UserPaymentsPage() {
 
                   <button
                     onClick={() => handleRemove(pm.id)}
-                    className="text-slate-400 hover:text-rose-600 p-1 rounded transition-colors"
+                    className="text-foreground-muted hover:text-rose-600 p-1 rounded transition-colors"
                     title="Remove card"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -201,10 +201,10 @@ export default function UserPaymentsPage() {
                 </div>
 
                 <div className="my-3">
-                  <p className="font-mono text-sm font-bold text-slate-800">
+                  <p className="font-mono text-sm font-bold text-foreground">
                     •••• •••• •••• {pm.last4 || "4242"}
                   </p>
-                  <p className="text-[11px] text-slate-400 mt-0.5">
+                  <p className="text-[11px] text-foreground-muted mt-0.5">
                     Expires {pm.expMonth ? `${pm.expMonth}/${pm.expYear}` : "12/2028"}
                   </p>
                 </div>
@@ -212,7 +212,7 @@ export default function UserPaymentsPage() {
                 {!pm.isDefault && (
                   <button
                     onClick={() => handleSetDefault(pm.id)}
-                    className="text-[11px] font-semibold text-brand-primary hover:underline text-left pt-2 border-t border-slate-100"
+                    className="text-[11px] font-semibold text-brand-primary hover:underline text-left pt-2 border-t border-border"
                   >
                     Set as default
                   </button>
@@ -221,15 +221,15 @@ export default function UserPaymentsPage() {
             ))}
           </div>
         ) : (
-          <div className="p-6 text-center border border-dashed border-slate-200 rounded-xl space-y-2">
-            <CreditCard className="w-6 h-6 text-slate-300 mx-auto" />
-            <p className="text-xs font-semibold text-slate-600">No payment methods saved yet</p>
-            <p className="text-[11px] text-slate-400 max-w-sm mx-auto">
+          <div className="p-6 text-center border border-dashed border-border rounded-xl space-y-2">
+            <CreditCard className="w-6 h-6 text-foreground-secondary mx-auto" />
+            <p className="text-xs font-semibold text-foreground-secondary">No payment methods saved yet</p>
+            <p className="text-[11px] text-foreground-muted max-w-sm mx-auto">
               Save a card to enable 1-click escrow deposit and seamless milestone releases.
             </p>
             <button
               onClick={() => setIsAddModalOpen(true)}
-              className="mt-2 px-3 py-1.5 bg-brand-primary text-white text-xs font-bold rounded-lg shadow-xs hover:bg-indigo-900 transition-colors"
+              className="mt-2 px-3 py-1.5 bg-brand-primary text-foreground text-xs font-bold rounded-lg shadow-xs hover:bg-indigo-900 transition-colors"
             >
               Add Your First Card
             </button>
@@ -238,15 +238,15 @@ export default function UserPaymentsPage() {
       </div>
 
       {/* Transaction History Table */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden text-xs">
-        <div className="p-4 border-b border-slate-200 font-bold text-[#0F0C3B] flex items-center justify-between">
+      <div className="bg-surface rounded-2xl border border-border shadow-xs overflow-hidden text-xs">
+        <div className="p-4 border-b border-border font-bold text-[#0F0C3B] flex items-center justify-between">
           <span>Payment &amp; Escrow History</span>
-          {ledgerLoading && <Loader2 className="w-3.5 h-3.5 animate-spin text-slate-400" />}
+          {ledgerLoading && <Loader2 className="w-3.5 h-3.5 animate-spin text-foreground-muted" />}
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-slate-50 border-b border-slate-200 text-[11px] font-bold uppercase text-slate-500">
+            <thead className="bg-surface-elevated border-b border-border text-[11px] font-bold uppercase text-foreground-muted">
               <tr>
                 <th className="py-3 px-4">Transaction ID &amp; Date</th>
                 <th className="py-3 px-4">Description</th>
@@ -255,15 +255,15 @@ export default function UserPaymentsPage() {
                 <th className="py-3 px-4">Escrow Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-border">
               {ledgerItems.map((tx: any) => (
-                <tr key={tx.id} className="hover:bg-slate-50/50 transition-colors">
+                <tr key={tx.id} className="hover:bg-surface-elevated/50 transition-colors">
                   <td className="py-3.5 px-4 font-bold text-[#0F0C3B]">
                     #{tx.id}
-                    <span className="text-[10px] text-slate-400 font-normal block">{tx.date}</span>
+                    <span className="text-[10px] text-foreground-muted font-normal block">{tx.date}</span>
                   </td>
-                  <td className="py-3.5 px-4 font-medium text-slate-800">{tx.description}</td>
-                  <td className="py-3.5 px-4 text-slate-600">{tx.method}</td>
+                  <td className="py-3.5 px-4 font-medium text-foreground">{tx.description}</td>
+                  <td className="py-3.5 px-4 text-foreground-secondary">{tx.method}</td>
                   <td className="py-3.5 px-4 font-bold text-[#0F0C3B]">{tx.total}</td>
                   <td className="py-3.5 px-4">
                     <span
@@ -288,15 +288,15 @@ export default function UserPaymentsPage() {
       {/* Add Payment Method Modal */}
       {isAddModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+          <div className="bg-surface rounded-2xl max-w-md w-full p-6 shadow-2xl border border-border space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-border">
               <div className="flex items-center gap-2">
                 <CreditCard className="w-5 h-5 text-brand-primary" />
                 <h3 className="font-bold text-base text-[#0F0C3B]">Add New Payment Card</h3>
               </div>
               <button
                 onClick={() => setIsAddModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 p-1 rounded-lg"
+                className="text-foreground-muted hover:text-foreground-secondary p-1 rounded-lg"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -304,15 +304,15 @@ export default function UserPaymentsPage() {
 
             <form onSubmit={handleSaveCard} className="space-y-4 text-xs">
               <div className="p-3 bg-indigo-50/60 border border-indigo-100 rounded-xl text-[11px] text-indigo-900 flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-indigo-600 flex-shrink-0" />
+                <ShieldCheck className="w-4 h-4 text-info flex-shrink-0" />
                 <span>
                   Card details are securely tokenized with Stripe. Your CVV is never stored on our servers.
                 </span>
               </div>
 
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Card details</label>
-                <div ref={cardContainerRef} className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-3" />
+                <label className="block text-foreground-secondary font-bold mb-1">Card details</label>
+                <div ref={cardContainerRef} className="w-full bg-[#F8F9FD] border border-border rounded-xl p-3" />
       <Script src="https://js.stripe.com/v3/" strategy="afterInteractive" onLoad={() => setStripeReady(true)} />
               </div>
 
@@ -323,21 +323,21 @@ export default function UserPaymentsPage() {
                   onChange={(e) => setMakeDefault(e.target.checked)}
                   className="w-4 h-4 rounded text-brand-primary focus:ring-0"
                 />
-                <span className="font-semibold text-slate-700">Set as my default payment method</span>
+                <span className="font-semibold text-foreground-secondary">Set as my default payment method</span>
               </label>
 
               <div className="flex items-center gap-2 pt-2">
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="w-1/2 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors"
+                  className="w-1/2 py-2.5 bg-surface-sunken hover:bg-slate-200 text-foreground-secondary font-bold rounded-xl transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSavingCard || isCreatingSetup}
-                  className="w-1/2 py-2.5 bg-brand-primary hover:bg-indigo-900 text-white font-bold rounded-xl transition-colors flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-50"
+                  className="w-1/2 py-2.5 bg-brand-primary hover:bg-indigo-900 text-foreground font-bold rounded-xl transition-colors flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-50"
                 >
                   {isSavingCard || isCreatingSetup ? (
                     <>
