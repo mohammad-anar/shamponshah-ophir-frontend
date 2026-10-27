@@ -555,7 +555,7 @@ export default function AdminPendingGigsPage() {
                 value={rejectionReason}
                 onChange={(e) => setRejectionReason(e.target.value)}
                 placeholder="Explain specifically what needs to be changed before this listing can be approved..."
-                className="w-full p-3 bg-surface-elevated border border-border rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-rose-500"
+                className="w-full p-3 bg-surface-elevated border border-border rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-danger"
                 rows={3}
               />
             </div>
@@ -572,7 +572,7 @@ export default function AdminPendingGigsPage() {
                 type="button"
                 onClick={handleRejectSubmit}
                 disabled={isRejecting || (!rejectionReason.trim() && !selectedQuickReason)}
-                className="px-4 py-2 rounded-xl bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground font-bold text-xs flex items-center gap-1.5 transition-colors disabled:opacity-50 cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground font-bold text-xs flex items-center gap-1.5 transition-colors disabled:opacity-50 cursor-pointer"
               >
                 {isRejecting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <XCircle className="w-3.5 h-3.5" />}
                 <span>Confirm Rejection</span>
