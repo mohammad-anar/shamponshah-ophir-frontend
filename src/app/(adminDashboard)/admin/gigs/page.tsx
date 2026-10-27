@@ -136,7 +136,7 @@ export default function AdminGigsModerationPage() {
         <div className="flex items-center gap-2">
           <Link
             href="/admin/gigs/pending"
-            className="px-4 py-2 rounded-xl bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] font-extrabold text-xs transition-all shadow-sm flex items-center gap-1.5"
+            className="px-4 py-2 rounded-xl bg-brand hover:bg-brand-hover text-on-brand font-extrabold text-xs transition-all shadow-sm flex items-center gap-1.5"
           >
             <span>Review Pending Gigs</span>
             <ChevronRight className="w-3.5 h-3.5" />
@@ -145,8 +145,8 @@ export default function AdminGigsModerationPage() {
       </div>
 
       {/* Gigs Table */}
-      <div className="bg-[#121418] rounded-3xl border border-[#26282E] shadow-sm overflow-hidden text-xs">
-        <div className="p-4 border-b border-[#26282E] flex items-center justify-between gap-4 flex-wrap bg-[#16181F]/40">
+      <div className="bg-surface rounded-3xl border border-border shadow-sm overflow-hidden text-xs">
+        <div className="p-4 border-b border-border flex items-center justify-between gap-4 flex-wrap bg-surface-elevated/40">
           <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
             {["ALL", "ACTIVE", "PENDING_VERIFICATION", "SUSPENDED", "REJECTED"].map((f) => (
               <button
@@ -155,8 +155,8 @@ export default function AdminGigsModerationPage() {
                 className={cn(
                   "px-3 py-1.5 rounded-xl font-bold text-xs transition-all whitespace-nowrap cursor-pointer",
                   activeFilter === f 
-                    ? "bg-[#DFB76C] text-[#0B0C0E] shadow-sm" 
-                    : "bg-[#16181F] text-foreground-secondary hover:bg-[#1A1D24] border border-[#26282E]"
+                    ? "bg-brand text-on-brand shadow-sm" 
+                    : "bg-surface-elevated text-foreground-secondary hover:bg-surface-sunken border border-border"
                 )}
               >
                 {f === "PENDING_VERIFICATION" ? "Pending Verification" : f.replace(/_/g, " ")}
@@ -171,14 +171,14 @@ export default function AdminGigsModerationPage() {
               placeholder="Search gigs, vendors, IDs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
+              className="w-full pl-9 pr-3 py-1.5 bg-surface-elevated border border-border rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand"
             />
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-[#16181F]/80 border-b border-[#26282E] text-[11px] font-bold uppercase text-foreground-muted">
+            <thead className="bg-surface-elevated/80 border-b border-border text-[11px] font-bold uppercase text-foreground-muted">
               <tr>
                 <th className="py-3.5 px-4">Service Gig</th>
                 <th className="py-3.5 px-4">Vendor</th>
@@ -188,23 +188,23 @@ export default function AdminGigsModerationPage() {
                 <th className="py-3.5 px-4 text-right">Moderation Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#26282E]/60">
+            <tbody className="divide-y divide-border/60">
               {filteredGigs.map((gig) => (
-                <tr key={gig.id} className="hover:bg-[#16181F]/50 transition-colors group">
+                <tr key={gig.id} className="hover:bg-surface-elevated/50 transition-colors group">
                   <td className="py-3.5 px-4 max-w-sm">
                     <div className="flex items-center gap-3">
-                      <div className="w-14 h-12 rounded-xl overflow-hidden bg-slate-900 flex-shrink-0 border border-[#26282E]">
+                      <div className="w-14 h-12 rounded-xl overflow-hidden bg-surface-sunken flex-shrink-0 border border-border">
                         <img src={gig.image} alt={gig.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                       </div>
                       <div>
                         <Link 
                           href={`/admin/gigs/${gig.id}`}
-                          className="font-bold text-foreground hover:text-[#DFB76C] line-clamp-1 text-xs block transition-colors"
+                          className="font-bold text-foreground hover:text-brand line-clamp-1 text-xs block transition-colors"
                         >
                           {gig.title}
                         </Link>
                         <div className="flex items-center gap-2 mt-0.5">
-                          <span className="text-[10px] font-mono font-bold text-[#DFB76C] bg-[#1A1D24] px-1.5 py-0.2 rounded border border-border-brand/40">
+                          <span className="text-[10px] font-mono font-bold text-brand bg-surface-sunken px-1.5 py-0.2 rounded border border-border-brand/40">
                             #{gig.id}
                           </span>
                           {gig.isFeatured && (
@@ -231,13 +231,13 @@ export default function AdminGigsModerationPage() {
                     <span className={cn(
                       "px-2.5 py-0.5 rounded-full text-[10px] font-bold inline-block border",
                       gig.status === "ACTIVE"
-                        ? "bg-success-solid text-white/15 text-success border-success/30"
+                        ? "bg-success-solid text-foreground/15 text-success border-success/30"
                         : gig.status === "PENDING_VERIFICATION"
                         ? "bg-warning-solid text-on-brand/15 text-warning border-warning/30 font-extrabold"
                         : gig.status === "SUSPENDED"
-                        ? "bg-danger-solid text-white/15 text-danger border-danger/30 font-bold"
+                        ? "bg-danger-solid text-foreground/15 text-danger border-danger/30 font-bold"
                         : gig.status === "REJECTED"
-                        ? "bg-[#1A1D24] text-foreground-muted border border-[#26282E]"
+                        ? "bg-surface-sunken text-foreground-muted border border-border"
                         : "bg-warning-solid text-on-brand/15 text-warning border border-warning/30"
                     )}>
                       {gig.status === "PENDING_VERIFICATION" ? "Pending Verification" : gig.status.replace("_", " ")}
@@ -250,14 +250,14 @@ export default function AdminGigsModerationPage() {
                   <td className="py-3.5 px-4 text-right space-x-1.5 whitespace-nowrap">
                     <Link
                       href={`/admin/gigs/${gig.id}`}
-                      className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-secondary rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-sm"
+                      className="px-3 py-1.5 bg-surface-elevated hover:bg-surface-sunken border border-border text-foreground-secondary rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-sm"
                     >
-                      <Eye className="w-3 h-3 text-[#DFB76C]" /> Audit Details
+                      <Eye className="w-3 h-3 text-brand" /> Audit Details
                     </Link>
                     {gig.status !== "ACTIVE" && (
                       <button
                         onClick={() => handleModerate(gig.id, "approved and verified")}
-                        className="px-2.5 py-1.5 bg-success-solid text-white/20 hover:bg-success-solid text-white/30 text-success border border-success/30 rounded-xl font-bold text-[11px] transition-colors"
+                        className="px-2.5 py-1.5 bg-success-solid text-foreground/20 hover:bg-success-solid text-foreground/30 text-success border border-success/30 rounded-xl font-bold text-[11px] transition-colors"
                       >
                         Approve
                       </button>
