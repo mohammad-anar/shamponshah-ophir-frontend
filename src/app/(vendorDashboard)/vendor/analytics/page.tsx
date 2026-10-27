@@ -120,10 +120,10 @@ export default function VendorAnalyticsPage() {
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-surface p-6 rounded-2xl border border-border/80 shadow-xs">
         <div>
           <div className="flex flex-wrap items-center gap-2.5">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
               Performance & Analytics
             </h1>
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-purple-500/10 to-indigo-500/10 text-indigo-700 border border-indigo-200/60">
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-purple-500/10 to-indigo-500/10 text-info border border-info/30/60">
               <Sparkles className="w-3.5 h-3.5 text-warning" />
               {vendorProfile?.tier || "Professional Seller"}
             </span>
@@ -148,8 +148,8 @@ export default function VendorAnalyticsPage() {
                 onClick={() => setTimeRange(r)}
                 className={`px-3.5 py-1.5 rounded-lg text-xs font-black transition-all ${
                   timeRange === r
-                    ? "bg-[#0F0C3B] text-foreground shadow-xs"
-                    : "text-foreground-secondary hover:text-[#0F0C3B] hover:bg-surface/60"
+                    ? "bg-brand text-foreground shadow-xs"
+                    : "text-foreground-secondary hover:text-foreground hover:bg-surface/60"
                 }`}
               >
                 {r === "7D" ? "Last 7 Days" : r === "30D" ? "Last 30 Days" : "Last 90 Days"}
@@ -162,7 +162,7 @@ export default function VendorAnalyticsPage() {
             <select
               value={selectedGigId}
               onChange={(e) => setSelectedGigId(e.target.value)}
-              className="w-full bg-surface border border-border rounded-xl px-3.5 py-2 pr-8 text-xs font-bold text-foreground-secondary shadow-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/20 cursor-pointer appearance-none"
+              className="w-full bg-surface border border-border rounded-xl px-3.5 py-2 pr-8 text-xs font-bold text-foreground-secondary shadow-xs focus:outline-none focus:ring-2 focus:ring-focus-ring/20 cursor-pointer appearance-none"
             >
               <option value="ALL">All Gigs & Services ({gigBreakdown.length})</option>
               {gigBreakdown.map((gig) => (
@@ -179,7 +179,7 @@ export default function VendorAnalyticsPage() {
             onClick={() => refetch()}
             disabled={isFetching}
             title="Refresh analytics data"
-            className="p-2 rounded-xl bg-surface-sunken hover:bg-slate-200 text-foreground-secondary transition-colors"
+            className="p-2 rounded-xl bg-surface-sunken hover:bg-surface-sunken text-foreground-secondary transition-colors"
           >
             <RefreshCw className={`w-4 h-4 ${isFetching ? "animate-spin" : ""}`} />
           </button>
@@ -189,46 +189,46 @@ export default function VendorAnalyticsPage() {
       {/* ── 8 Fiverr-Style Core KPI Cards ─────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* 1. Gig Impressions */}
-        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-indigo-300 transition-all flex flex-col justify-between">
+        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-info/30 transition-all flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-black tracking-wider text-foreground-muted uppercase">
                 Gig Impressions
               </span>
-              <div className="p-2 rounded-xl bg-indigo-50 text-info">
+              <div className="p-2 rounded-xl bg-info-soft text-info">
                 <Eye className="w-4 h-4" />
               </div>
             </div>
             <div className="mt-2 flex items-baseline gap-2">
-              <span className="text-2xl font-black text-[#0F0C3B]">
+              <span className="text-2xl font-black text-foreground">
                 {isLoading ? "..." : (summary.gigImpressions ?? 0).toLocaleString()}
               </span>
             </div>
           </div>
           <p className="text-[11px] text-foreground-muted mt-3 pt-2 border-t border-border flex items-center justify-between">
             <span>Search & category views</span>
-            <span className="font-bold text-info text-[10px] bg-indigo-50 px-1.5 py-0.5 rounded">
+            <span className="font-bold text-info text-[10px] bg-info-soft px-1.5 py-0.5 rounded">
               Organic
             </span>
           </p>
         </div>
 
         {/* 2. Clicks & CTR */}
-        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-indigo-300 transition-all flex flex-col justify-between">
+        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-info/30 transition-all flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-black tracking-wider text-foreground-muted uppercase">
                 Gig Clicks & CTR
               </span>
-              <div className="p-2 rounded-xl bg-purple-50 text-purple-600">
+              <div className="p-2 rounded-xl bg-brand-soft text-brand">
                 <MousePointerClick className="w-4 h-4" />
               </div>
             </div>
             <div className="mt-2 flex items-baseline gap-2">
-              <span className="text-2xl font-black text-[#0F0C3B]">
+              <span className="text-2xl font-black text-foreground">
                 {isLoading ? "..." : (summary.gigClicks ?? 0).toLocaleString()}
               </span>
-              <span className="text-xs font-black px-2 py-0.5 rounded-full bg-purple-100 text-purple-700">
+              <span className="text-xs font-black px-2 py-0.5 rounded-full bg-brand-soft text-brand">
                 {summary.ctr ?? 0}% CTR
               </span>
             </div>
@@ -239,18 +239,18 @@ export default function VendorAnalyticsPage() {
         </div>
 
         {/* 3. Profile Views */}
-        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-indigo-300 transition-all flex flex-col justify-between">
+        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-info/30 transition-all flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-black tracking-wider text-foreground-muted uppercase">
                 Profile Views
               </span>
-              <div className="p-2 rounded-xl bg-blue-50 text-blue-600">
+              <div className="p-2 rounded-xl bg-info-soft text-blue-600">
                 <UserCheck className="w-4 h-4" />
               </div>
             </div>
             <div className="mt-2 flex items-baseline gap-2">
-              <span className="text-2xl font-black text-[#0F0C3B]">
+              <span className="text-2xl font-black text-foreground">
                 {isLoading ? "..." : (summary.profileViews ?? 0).toLocaleString()}
               </span>
             </div>
@@ -262,21 +262,21 @@ export default function VendorAnalyticsPage() {
         </div>
 
         {/* 4. Orders & Conversion Rate */}
-        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-indigo-300 transition-all flex flex-col justify-between">
+        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-info/30 transition-all flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-black tracking-wider text-foreground-muted uppercase">
                 Orders & Conversion
               </span>
-              <div className="p-2 rounded-xl bg-emerald-50 text-success">
+              <div className="p-2 rounded-xl bg-success-soft text-success">
                 <ShoppingBag className="w-4 h-4" />
               </div>
             </div>
             <div className="mt-2 flex items-baseline gap-2">
-              <span className="text-2xl font-black text-[#0F0C3B]">
+              <span className="text-2xl font-black text-foreground">
                 {isLoading ? "..." : (summary.totalOrders ?? 0)}
               </span>
-              <span className="text-xs font-black px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
+              <span className="text-xs font-black px-2 py-0.5 rounded-full bg-success-soft text-success">
                 {summary.conversionRate ?? 0}% Conv.
               </span>
             </div>
@@ -287,30 +287,30 @@ export default function VendorAnalyticsPage() {
         </div>
 
         {/* 5. Total Net Earnings */}
-        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-indigo-300 transition-all flex flex-col justify-between">
+        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-info/30 transition-all flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-black tracking-wider text-foreground-muted uppercase">
                 Net Earnings
               </span>
-              <div className="p-2 rounded-xl bg-amber-50 text-amber-600">
+              <div className="p-2 rounded-xl bg-warning-soft text-warning">
                 <DollarSign className="w-4 h-4" />
               </div>
             </div>
             <div className="mt-2 flex items-baseline gap-2">
-              <span className="text-2xl font-black text-[#0F0C3B]">
+              <span className="text-2xl font-black text-foreground">
                 ${isLoading ? "..." : Number(summary.totalEarnings ?? 0).toLocaleString()}
               </span>
             </div>
           </div>
           <p className="text-[11px] text-foreground-muted mt-3 pt-2 border-t border-border flex items-center justify-between">
             <span>Avg Order Value:</span>
-            <span className="font-bold text-[#0F0C3B]">${summary.avgOrderValue ?? 0}</span>
+            <span className="font-bold text-foreground">${summary.avgOrderValue ?? 0}</span>
           </p>
         </div>
 
         {/* 6. Order Completion / Delivery Rate */}
-        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-indigo-300 transition-all flex flex-col justify-between">
+        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-info/30 transition-all flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-black tracking-wider text-foreground-muted uppercase">
@@ -333,22 +333,22 @@ export default function VendorAnalyticsPage() {
         </div>
 
         {/* 7. Cancelled Orders & Ratio */}
-        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-rose-300 transition-all flex flex-col justify-between">
+        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-danger/30 transition-all flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-black tracking-wider text-foreground-muted uppercase">
                 Cancelled Orders
               </span>
-              <div className="p-2 rounded-xl bg-rose-50 text-rose-600">
+              <div className="p-2 rounded-xl bg-danger-soft text-danger">
                 <XCircle className="w-4 h-4" />
               </div>
             </div>
             <div className="mt-2 flex items-baseline gap-2">
-              <span className="text-2xl font-black text-rose-600">
+              <span className="text-2xl font-black text-danger">
                 {isLoading ? "..." : (summary.cancelledOrders ?? 0)}
               </span>
               <span className={`text-xs font-black px-2 py-0.5 rounded-full ${
-                (summary.cancellationRatio ?? 0) > 10 ? "bg-rose-100 text-rose-700" : "bg-surface-sunken text-foreground-secondary"
+                (summary.cancellationRatio ?? 0) > 10 ? "bg-danger-soft text-danger" : "bg-surface-sunken text-foreground-secondary"
               }`}>
                 {summary.cancellationRatio ?? 0}% Ratio
               </span>
@@ -360,26 +360,26 @@ export default function VendorAnalyticsPage() {
         </div>
 
         {/* 8. Disputed Orders */}
-        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-amber-300 transition-all flex flex-col justify-between">
+        <div className="bg-surface p-5 rounded-2xl border border-border/90 shadow-xs hover:border-warning/30 transition-all flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-black tracking-wider text-foreground-muted uppercase">
                 Disputed Orders
               </span>
               <div className={`p-2 rounded-xl ${
-                (summary.disputedOrders ?? 0) > 0 ? "bg-amber-100 text-amber-700" : "bg-emerald-50 text-success"
+                (summary.disputedOrders ?? 0) > 0 ? "bg-warning-soft text-warning" : "bg-success-soft text-success"
               }`}>
                 <AlertTriangle className="w-4 h-4" />
               </div>
             </div>
             <div className="mt-2 flex items-baseline gap-2">
               <span className={`text-2xl font-black ${
-                (summary.disputedOrders ?? 0) > 0 ? "text-amber-600" : "text-[#0F0C3B]"
+                (summary.disputedOrders ?? 0) > 0 ? "text-warning" : "text-foreground"
               }`}>
                 {isLoading ? "..." : (summary.disputedOrders ?? 0)}
               </span>
               <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                (summary.disputedOrders ?? 0) === 0 ? "bg-emerald-100 text-emerald-700" : "bg-amber-100 text-amber-700"
+                (summary.disputedOrders ?? 0) === 0 ? "bg-success-soft text-success" : "bg-warning-soft text-warning"
               }`}>
                 {(summary.disputedOrders ?? 0) === 0 ? "Clean Record" : "Action Needed"}
               </span>
@@ -399,7 +399,7 @@ export default function VendorAnalyticsPage() {
             <div>
               <div className="flex items-center gap-2">
                 <BarChart3 className="w-5 h-5 text-info" />
-                <h2 className="text-base font-black text-[#0F0C3B]">
+                <h2 className="text-base font-black text-foreground">
                   Trend & Velocity
                 </h2>
               </div>
@@ -414,8 +414,8 @@ export default function VendorAnalyticsPage() {
                 onClick={() => setActiveChartMetric("earnings")}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
                   activeChartMetric === "earnings"
-                    ? "bg-[#0F0C3B] text-foreground shadow-xs"
-                    : "text-foreground-secondary hover:text-[#0F0C3B]"
+                    ? "bg-brand text-foreground shadow-xs"
+                    : "text-foreground-secondary hover:text-foreground"
                 }`}
               >
                 Earnings ($)
@@ -424,8 +424,8 @@ export default function VendorAnalyticsPage() {
                 onClick={() => setActiveChartMetric("traffic")}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
                   activeChartMetric === "traffic"
-                    ? "bg-[#0F0C3B] text-foreground shadow-xs"
-                    : "text-foreground-secondary hover:text-[#0F0C3B]"
+                    ? "bg-brand text-foreground shadow-xs"
+                    : "text-foreground-secondary hover:text-foreground"
                 }`}
               >
                 Traffic (Impr & Clicks)
@@ -434,8 +434,8 @@ export default function VendorAnalyticsPage() {
                 onClick={() => setActiveChartMetric("orders")}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
                   activeChartMetric === "orders"
-                    ? "bg-[#0F0C3B] text-foreground shadow-xs"
-                    : "text-foreground-secondary hover:text-[#0F0C3B]"
+                    ? "bg-brand text-foreground shadow-xs"
+                    : "text-foreground-secondary hover:text-foreground"
                 }`}
               >
                 Orders
@@ -447,7 +447,7 @@ export default function VendorAnalyticsPage() {
           <div className="relative pt-6">
             {/* Tooltip Card on Hover */}
             {hoveredPointIndex !== null && timeSeries[hoveredPointIndex] && (
-              <div className="absolute top-0 right-4 bg-[#0F0C3B] text-foreground px-3.5 py-2 rounded-xl text-xs shadow-lg pointer-events-none z-10 flex items-center gap-3">
+              <div className="absolute top-0 right-4 bg-brand text-foreground px-3.5 py-2 rounded-xl text-xs shadow-lg pointer-events-none z-10 flex items-center gap-3">
                 <span className="font-bold text-foreground-secondary">
                   {timeSeries[hoveredPointIndex].formattedDate}
                 </span>
@@ -500,14 +500,14 @@ export default function VendorAnalyticsPage() {
                           activeChartMetric === "earnings"
                             ? isHovered
                               ? "bg-gradient-to-t from-emerald-600 to-teal-400"
-                              : "bg-gradient-to-t from-[#0F0C3B] to-indigo-600"
+                              : "bg-gradient-to-t from-brand to-brand"
                             : activeChartMetric === "traffic"
                             ? isHovered
                               ? "bg-gradient-to-t from-purple-700 to-indigo-400"
                               : "bg-gradient-to-t from-indigo-700 to-purple-500"
                             : isHovered
-                            ? "bg-gradient-to-t from-amber-600 to-amber-400"
-                            : "bg-gradient-to-t from-slate-700 to-amber-500"
+                            ? "bg-gradient-to-t from-brand to-amber-400"
+                            : "bg-gradient-to-t from-slate-700 to-brand-active"
                         }`}
                       />
                     </div>
@@ -529,10 +529,10 @@ export default function VendorAnalyticsPage() {
             <div className="flex flex-wrap items-center justify-between gap-3 pt-3 text-xs text-foreground-muted">
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-1.5">
-                  <span className="w-3 h-3 rounded bg-gradient-to-r from-[#0F0C3B] to-indigo-600" />
+                  <span className="w-3 h-3 rounded bg-gradient-to-r from-brand to-brand" />
                   <span>
                     Total in period:{" "}
-                    <strong className="text-[#0F0C3B]">
+                    <strong className="text-foreground">
                       {activeChartMetric === "earnings"
                         ? `$${totalChartSum.toLocaleString()}`
                         : activeChartMetric === "traffic"
@@ -553,8 +553,8 @@ export default function VendorAnalyticsPage() {
         <div className="bg-surface border border-border/90 rounded-2xl p-6 shadow-xs flex flex-col justify-between space-y-4">
           <div>
             <div className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-purple-600" />
-              <h2 className="text-base font-black text-[#0F0C3B]">
+              <TrendingUp className="w-5 h-5 text-brand" />
+              <h2 className="text-base font-black text-foreground">
                 Acquisition Funnel
               </h2>
             </div>
@@ -568,10 +568,10 @@ export default function VendorAnalyticsPage() {
             <div className="space-y-1">
               <div className="flex justify-between items-center text-foreground-secondary">
                 <span className="font-bold flex items-center gap-1.5">
-                  <span className="w-4 h-4 rounded-full bg-indigo-100 text-indigo-700 text-[10px] flex items-center justify-center font-black">1</span>
+                  <span className="w-4 h-4 rounded-full bg-info-soft text-info text-[10px] flex items-center justify-center font-black">1</span>
                   Search Impressions
                 </span>
-                <span className="font-black text-[#0F0C3B]">
+                <span className="font-black text-foreground">
                   {(summary.gigImpressions ?? 0).toLocaleString()} (100%)
                 </span>
               </div>
@@ -584,17 +584,17 @@ export default function VendorAnalyticsPage() {
             <div className="space-y-1">
               <div className="flex justify-between items-center text-foreground-secondary">
                 <span className="font-bold flex items-center gap-1.5">
-                  <span className="w-4 h-4 rounded-full bg-purple-100 text-purple-700 text-[10px] flex items-center justify-center font-black">2</span>
+                  <span className="w-4 h-4 rounded-full bg-brand-soft text-brand text-[10px] flex items-center justify-center font-black">2</span>
                   Card Clicks (CTR)
                 </span>
-                <span className="font-black text-[#0F0C3B]">
+                <span className="font-black text-foreground">
                   {(summary.gigClicks ?? 0).toLocaleString()} ({summary.ctr ?? 0}%)
                 </span>
               </div>
               <div className="w-full h-2.5 bg-surface-sunken rounded-full overflow-hidden">
                 <div 
                   style={{ width: `${Math.min(Math.max(summary.ctr || 0, 5), 100)}%` }} 
-                  className="h-full bg-purple-600 rounded-full transition-all duration-500" 
+                  className="h-full bg-brand text-on-brand rounded-full transition-all duration-500" 
                 />
               </div>
             </div>
@@ -603,17 +603,17 @@ export default function VendorAnalyticsPage() {
             <div className="space-y-1">
               <div className="flex justify-between items-center text-foreground-secondary">
                 <span className="font-bold flex items-center gap-1.5">
-                  <span className="w-4 h-4 rounded-full bg-blue-100 text-blue-700 text-[10px] flex items-center justify-center font-black">3</span>
+                  <span className="w-4 h-4 rounded-full bg-info-soft text-blue-700 text-[10px] flex items-center justify-center font-black">3</span>
                   Deep Details Views
                 </span>
-                <span className="font-black text-[#0F0C3B]">
+                <span className="font-black text-foreground">
                   {(summary.totalViews ?? 0).toLocaleString()}
                 </span>
               </div>
               <div className="w-full h-2.5 bg-surface-sunken rounded-full overflow-hidden">
                 <div 
                   style={{ width: `${Math.min(Math.max(((summary.totalViews || 0) / Math.max(summary.gigImpressions || 1, 1)) * 100, 8), 100)}%` }} 
-                  className="h-full bg-info-solid text-white rounded-full transition-all duration-500" 
+                  className="h-full bg-info-solid text-foreground rounded-full transition-all duration-500" 
                 />
               </div>
             </div>
@@ -622,7 +622,7 @@ export default function VendorAnalyticsPage() {
             <div className="space-y-1">
               <div className="flex justify-between items-center text-foreground-secondary">
                 <span className="font-bold flex items-center gap-1.5">
-                  <span className="w-4 h-4 rounded-full bg-emerald-100 text-emerald-700 text-[10px] flex items-center justify-center font-black">4</span>
+                  <span className="w-4 h-4 rounded-full bg-success-soft text-success text-[10px] flex items-center justify-center font-black">4</span>
                   Funded Orders
                 </span>
                 <span className="font-black text-success">
@@ -632,14 +632,14 @@ export default function VendorAnalyticsPage() {
               <div className="w-full h-2.5 bg-surface-sunken rounded-full overflow-hidden">
                 <div 
                   style={{ width: `${Math.min(Math.max((summary.conversionRate || 0) * 4, 6), 100)}%` }} 
-                  className="h-full bg-success-solid text-white rounded-full transition-all duration-500" 
+                  className="h-full bg-success-solid text-foreground rounded-full transition-all duration-500" 
                 />
               </div>
             </div>
           </div>
 
-          <div className="p-3.5 bg-gradient-to-br from-indigo-50/60 to-purple-50/60 rounded-xl border border-indigo-100/80 text-[11px] text-foreground-secondary leading-relaxed">
-            <strong className="text-indigo-900 font-bold">Pro Growth Tip:</strong>{" "}
+          <div className="p-3.5 bg-gradient-to-br from-indigo-50/60 to-purple-50/60 rounded-xl border border-info/30/80 text-[11px] text-foreground-secondary leading-relaxed">
+            <strong className="text-info font-bold">Pro Growth Tip:</strong>{" "}
             High CTR with low conversion indicates buyers are intrigued by your thumbnail, but may hesitate at your package prices or FAQ clarity.
           </div>
         </div>
@@ -652,7 +652,7 @@ export default function VendorAnalyticsPage() {
           <div>
             <div className="flex items-center gap-2">
               <Layers className="w-5 h-5 text-info" />
-              <h2 className="text-base font-black text-[#0F0C3B]">
+              <h2 className="text-base font-black text-foreground">
                 Gig-Wise Performance Breakdown
               </h2>
             </div>
@@ -668,7 +668,7 @@ export default function VendorAnalyticsPage() {
               placeholder="Search your gigs..."
               value={gigSearchQuery}
               onChange={(e) => setGigSearchQuery(e.target.value)}
-              className="w-full bg-surface-elevated border border-border rounded-xl pl-9 pr-3.5 py-1.5 text-xs font-bold text-foreground-secondary placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
+              className="w-full bg-surface-elevated border border-border rounded-xl pl-9 pr-3.5 py-1.5 text-xs font-bold text-foreground-secondary placeholder:text-foreground-muted focus:outline-none focus:ring-2 focus:ring-focus-ring/20"
             />
             <Search className="w-3.5 h-3.5 text-foreground-muted absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
@@ -714,7 +714,7 @@ export default function VendorAnalyticsPage() {
                           />
                         </div>
                         <div className="min-w-0 max-w-[260px]">
-                          <p className="font-black text-[#0F0C3B] truncate hover:text-info transition-colors">
+                          <p className="font-black text-foreground truncate hover:text-info transition-colors">
                             {gig.title}
                           </p>
                           <div className="flex items-center gap-2 mt-0.5">
@@ -724,8 +724,8 @@ export default function VendorAnalyticsPage() {
                             <span className="w-1 h-1 rounded-full bg-slate-300" />
                             <span className={`text-[10px] font-black uppercase px-1.5 py-0.2 rounded ${
                               gig.status === "ACTIVE" 
-                                ? "bg-emerald-50 text-emerald-700 border border-emerald-200/50" 
-                                : "bg-amber-50 text-amber-700 border border-amber-200/50"
+                                ? "bg-success-soft text-success border border-success/30/50" 
+                                : "bg-warning-soft text-warning border border-warning/30/50"
                             }`}>
                               {gig.status}
                             </span>
@@ -746,7 +746,7 @@ export default function VendorAnalyticsPage() {
 
                     {/* CTR */}
                     <td className="py-4 px-4 text-right">
-                      <span className="font-black text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full border border-purple-200/60 text-[11px]">
+                      <span className="font-black text-brand bg-brand-soft px-2 py-0.5 rounded-full border border-purple-200/60 text-[11px]">
                         {gig.ctr}%
                       </span>
                     </td>
@@ -757,19 +757,19 @@ export default function VendorAnalyticsPage() {
                     </td>
 
                     {/* Orders */}
-                    <td className="py-4 px-4 text-right font-black text-[#0F0C3B]">
+                    <td className="py-4 px-4 text-right font-black text-foreground">
                       {gig.orders}
                     </td>
 
                     {/* Conversion */}
                     <td className="py-4 px-4 text-right">
-                      <span className="font-bold text-emerald-700 text-xs">
+                      <span className="font-bold text-success text-xs">
                         {gig.conversionRate}%
                       </span>
                     </td>
 
                     {/* Revenue */}
-                    <td className="py-4 px-5 text-right font-black text-[#0F0C3B]">
+                    <td className="py-4 px-5 text-right font-black text-foreground">
                       ${gig.earnings.toLocaleString()}
                     </td>
 
@@ -780,14 +780,14 @@ export default function VendorAnalyticsPage() {
                           href={`/services/${gig.slug || gig.id}`}
                           target="_blank"
                           title="View live service page"
-                          className="p-1.5 rounded-lg bg-surface-sunken hover:bg-indigo-50 hover:text-info text-foreground-secondary transition-colors"
+                          className="p-1.5 rounded-lg bg-surface-sunken hover:bg-info-soft hover:text-info text-foreground-secondary transition-colors"
                         >
                           <ExternalLink className="w-3.5 h-3.5" />
                         </Link>
                         <button
                           onClick={() => setSelectedGigId(gig.id)}
                           title="Filter dashboard for this gig"
-                          className="px-2 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-[10px] font-black transition-colors"
+                          className="px-2 py-1 rounded-lg bg-info-soft hover:bg-info-soft text-info text-[10px] font-black transition-colors"
                         >
                           Focus
                         </button>
