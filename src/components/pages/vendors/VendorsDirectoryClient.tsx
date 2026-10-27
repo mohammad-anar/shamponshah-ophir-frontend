@@ -184,11 +184,11 @@ export default function VendorsDirectoryPage() {
   };
 
   return (
-    <div className="w-full bg-[#0B0C0E] text-[#F3F4F6] min-h-screen py-8 lg:py-12 space-y-8">
+    <div className="w-full bg-background text-foreground min-h-screen py-8 lg:py-12 space-y-8">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10 space-y-8">
         {/* Header Title Section */}
         <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-none bg-[#121418] border border-border-brand/40 text-[#DFB76C] text-xs font-semibold uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-none bg-surface border border-border-brand/40 text-brand text-xs font-semibold uppercase tracking-widest">
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>The Reserve Artisan Directory • Escrow Safeguarded</span>
           </div>
@@ -203,8 +203,8 @@ export default function VendorsDirectoryPage() {
         </div>
 
         {/* Primary Search Bar */}
-        <div className="bg-[#121418] rounded-none p-3 sm:p-4 shadow-luxury border border-[#26282E] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center">
-          <div className="p-3 bg-[#0B0C0E] rounded-none border border-[#26282E]">
+        <div className="bg-surface rounded-none p-3 sm:p-4 shadow-luxury border border-border grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center">
+          <div className="p-3 bg-background rounded-none border border-border">
             <label className="block text-[9px] font-bold text-foreground-muted uppercase tracking-widest">
               SERVICE OR CRAFT
             </label>
@@ -217,7 +217,7 @@ export default function VendorsDirectoryPage() {
             />
           </div>
 
-          <div className="p-3 bg-[#0B0C0E] rounded-none border border-[#26282E]">
+          <div className="p-3 bg-background rounded-none border border-border">
             <label className="block text-[9px] font-bold text-foreground-muted uppercase tracking-widest">
               LOCATION OR METRO
             </label>
@@ -227,19 +227,19 @@ export default function VendorsDirectoryPage() {
               className="w-full bg-transparent text-xs sm:text-sm font-semibold text-foreground-secondary focus:outline-none cursor-pointer"
             >
               {cities.map((c) => (
-                <option key={c} value={c} className="bg-[#121418] text-foreground-secondary">
+                <option key={c} value={c} className="bg-surface text-foreground-secondary">
                   {c}
                 </option>
               ))}
             </select>
           </div>
 
-          <div className="p-3 bg-[#0B0C0E] rounded-none border border-[#26282E]">
+          <div className="p-3 bg-background rounded-none border border-border">
             <label className="block text-[9px] font-bold text-foreground-muted uppercase tracking-widest">
               CEREMONIAL AVAILABILITY
             </label>
             <div className="text-xs sm:text-sm font-semibold text-foreground-secondary flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-[#DFB76C]" />
+              <Calendar className="w-3.5 h-3.5 text-brand" />
               <span>Any Weekend 2025/2026</span>
             </div>
           </div>
@@ -250,7 +250,7 @@ export default function VendorsDirectoryPage() {
               const el = document.getElementById("artisan-results");
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
-            className="w-full h-full min-h-[50px] px-6 bg-[#DFB76C] hover:bg-[#ECC870] active:scale-98 text-[#0B0C0E] text-xs font-bold uppercase tracking-widest rounded-none shadow-gold-glow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full h-full min-h-[50px] px-6 bg-brand hover:bg-brand-hover active:scale-98 text-on-brand text-xs font-bold uppercase tracking-widest rounded-none shadow-gold-glow-sm transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <Search className="w-4 h-4" />
             <span>Search Artisans</span>
@@ -258,7 +258,7 @@ export default function VendorsDirectoryPage() {
         </div>
 
         {/* Secondary Filter Controls */}
-        <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-[#121418] rounded-none border border-[#26282E] shadow-xl">
+        <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-surface rounded-none border border-border shadow-xl">
           <div className="flex flex-wrap items-center gap-3 text-xs">
             {/* Service dropdown */}
             <div className="flex items-center gap-1.5 font-medium text-foreground-muted">
@@ -266,12 +266,12 @@ export default function VendorsDirectoryPage() {
               <select
                 value={selectedService}
                 onChange={(e) => setSelectedService(e.target.value)}
-                className="bg-[#0B0C0E] px-2.5 py-1.5 rounded-none border border-[#26282E] text-foreground-secondary font-semibold focus:outline-none"
+                className="bg-background px-2.5 py-1.5 rounded-none border border-border text-foreground-secondary font-semibold focus:outline-none"
               >
                 <option value="all">All Crafts</option>
                 {liveCategories.length > 0 ? (
                   liveCategories.map((cat: any) => (
-                    <option key={cat.id} value={cat.slug || cat.name.toLowerCase()} className="bg-[#121418] text-foreground-secondary">
+                    <option key={cat.id} value={cat.slug || cat.name.toLowerCase()} className="bg-surface text-foreground-secondary">
                       {cat.name}
                     </option>
                   ))
@@ -293,7 +293,7 @@ export default function VendorsDirectoryPage() {
               <select
                 value={selectedTier}
                 onChange={(e) => setSelectedTier(e.target.value)}
-                className="bg-[#0B0C0E] px-2.5 py-1.5 rounded-none border border-[#26282E] text-foreground-secondary font-semibold focus:outline-none"
+                className="bg-background px-2.5 py-1.5 rounded-none border border-border text-foreground-secondary font-semibold focus:outline-none"
               >
                 <option value="all">All Tiers</option>
                 <option value="Elite">Elite Artisan (Top 2%)</option>
@@ -309,7 +309,7 @@ export default function VendorsDirectoryPage() {
               <select
                 value={minRating}
                 onChange={(e) => setMinRating(Number(e.target.value))}
-                className="bg-[#0B0C0E] px-2.5 py-1.5 rounded-none border border-[#26282E] text-foreground-secondary font-semibold focus:outline-none"
+                className="bg-background px-2.5 py-1.5 rounded-none border border-border text-foreground-secondary font-semibold focus:outline-none"
               >
                 <option value={0}>Any Rating</option>
                 <option value={4.5}>4.5+ Stars</option>
@@ -324,7 +324,7 @@ export default function VendorsDirectoryPage() {
                 type="checkbox"
                 checked={verifiedOnly}
                 onChange={(e) => setVerifiedOnly(e.target.checked)}
-                className="w-4 h-4 rounded-none accent-[#DFB76C]"
+                className="w-4 h-4 rounded-none accent-brand"
               />
               <span className="text-xs">Verified Artisans Only</span>
             </label>
@@ -332,7 +332,7 @@ export default function VendorsDirectoryPage() {
 
           <button
             onClick={handleReset}
-            className="flex items-center gap-1 text-xs text-foreground-muted hover:text-[#DFB76C] font-medium transition-colors"
+            className="flex items-center gap-1 text-xs text-foreground-muted hover:text-brand font-medium transition-colors"
           >
             <RotateCcw className="w-3 h-3" />
             <span>Reset filters</span>
@@ -351,8 +351,8 @@ export default function VendorsDirectoryPage() {
               className={cn(
                 "px-3 py-1 rounded-none text-xs font-semibold whitespace-nowrap transition-all border",
                 selectedCity === city
-                  ? "bg-[#DFB76C] text-[#0B0C0E] border-[#DFB76C] shadow-gold-glow-sm"
-                  : "bg-[#121418] text-foreground-muted hover:text-[#DFB76C] border-[#26282E] hover:border-border-brand/40"
+                  ? "bg-brand text-on-brand border-border-brand shadow-gold-glow-sm"
+                  : "bg-surface text-foreground-muted hover:text-brand border-border hover:border-border-brand/40"
               )}
             >
               {city}
@@ -368,7 +368,7 @@ export default function VendorsDirectoryPage() {
             </span>
 
             {selectedService !== "all" && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] border border-[#26282E] text-xs font-medium">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-none bg-surface-sunken text-brand border border-border text-xs font-medium">
                 {selectedService}
                 <button onClick={() => setSelectedService("all")}>
                   <X className="w-3 h-3" />
@@ -377,7 +377,7 @@ export default function VendorsDirectoryPage() {
             )}
 
             {selectedCity !== "All Cities" && (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] border border-[#26282E] text-xs font-medium">
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-none bg-surface-sunken text-brand border border-border text-xs font-medium">
                 {selectedCity}
                 <button onClick={() => setSelectedCity("All Cities")}>
                   <X className="w-3 h-3" />
@@ -391,7 +391,7 @@ export default function VendorsDirectoryPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-[#121418] px-3 py-1.5 rounded-none border border-[#26282E] text-foreground-secondary font-semibold focus:outline-none"
+              className="bg-surface px-3 py-1.5 rounded-none border border-border text-foreground-secondary font-semibold focus:outline-none"
             >
               <option value="recommended">Recommended / Highest Rated</option>
               <option value="price-low">Price: Low to High</option>
@@ -403,8 +403,8 @@ export default function VendorsDirectoryPage() {
 
         {/* Vendors Grid or Loading */}
         {isVendorsLoading ? (
-          <div className="w-full py-24 bg-[#121418] rounded-none border border-[#26282E] text-center space-y-4 flex flex-col items-center justify-center">
-            <Loader2 className="w-8 h-8 text-[#DFB76C] animate-spin" />
+          <div className="w-full py-24 bg-surface rounded-none border border-border text-center space-y-4 flex flex-col items-center justify-center">
+            <Loader2 className="w-8 h-8 text-brand animate-spin" />
             <p className="text-xs text-foreground-muted uppercase tracking-widest font-semibold">
               Loading verified cultural artisans...
             </p>
@@ -431,15 +431,15 @@ export default function VendorsDirectoryPage() {
             )}
           </div>
         ) : (
-          <div className="w-full py-16 bg-[#121418] rounded-none border border-[#26282E] text-center space-y-4">
-            <Sparkles className="w-8 h-8 text-[#DFB76C] mx-auto" />
+          <div className="w-full py-16 bg-surface rounded-none border border-border text-center space-y-4">
+            <Sparkles className="w-8 h-8 text-brand mx-auto" />
             <h3 className="font-serif font-bold text-xl text-foreground">No artisans match your exact criteria</h3>
             <p className="text-xs sm:text-sm text-foreground-muted max-w-md mx-auto">
               Try adjusting your region or craft filters to discover more master artisans across the Reserve network.
             </p>
             <button
               onClick={handleReset}
-              className="px-5 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-widest rounded-none shadow-gold-glow-sm transition-all"
+              className="px-5 py-2.5 bg-brand hover:bg-brand-hover text-on-brand text-xs font-bold uppercase tracking-widest rounded-none shadow-gold-glow-sm transition-all"
             >
               Clear All Filters
             </button>
@@ -447,9 +447,9 @@ export default function VendorsDirectoryPage() {
         )}
 
         {/* Bottom Guild CTA Banner */}
-        <div className="p-8 sm:p-10 rounded-none bg-[#121418] text-foreground flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl border border-[#26282E]">
+        <div className="p-8 sm:p-10 rounded-none bg-surface text-foreground flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl border border-border">
           <div className="space-y-2 max-w-xl">
-            <span className="text-xs font-bold text-[#DFB76C] uppercase tracking-widest">
+            <span className="text-xs font-bold text-brand uppercase tracking-widest">
               THE RESERVE ARTISAN GUILD
             </span>
             <h3 className="font-serif text-2xl sm:text-3xl font-bold text-foreground">
@@ -463,7 +463,7 @@ export default function VendorsDirectoryPage() {
           <div className="flex items-center gap-3">
             <Link
               href="/signup?role=vendor"
-              className="px-6 py-3 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] font-bold text-xs uppercase tracking-widest rounded-none shadow-gold-glow-sm transition-all"
+              className="px-6 py-3 bg-brand hover:bg-brand-hover text-on-brand font-bold text-xs uppercase tracking-widest rounded-none shadow-gold-glow-sm transition-all"
             >
               Become a Vendor
             </Link>
