@@ -74,7 +74,7 @@ export default function VendorEarningsPage() {
     switch (status) {
       case "PENDING":
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-info-solid text-white/15 text-info border border-info/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-info-solid text-foreground/15 text-info border border-info/30">
             <Lock className="w-2.5 h-2.5" /> Pending (Active Order)
           </span>
         );
@@ -86,26 +86,26 @@ export default function VendorEarningsPage() {
         );
       case "AVAILABLE":
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-success-solid text-white/15 text-success border border-success/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-success-solid text-foreground/15 text-success border border-success/30">
             <CheckCircle2 className="w-2.5 h-2.5" /> Available to Withdraw
           </span>
         );
       case "WITHDRAWN":
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-info-solid text-white/15 text-info border border-info/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-info-solid text-foreground/15 text-info border border-info/30">
             <ArrowUpRight className="w-2.5 h-2.5" /> Withdrawn to Bank
           </span>
         );
       case "CANCELLED":
       case "REFUNDED":
         return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-danger-solid text-white/15 text-danger border border-danger/30">
+          <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-danger-solid text-foreground/15 text-danger border border-danger/30">
             <AlertCircle className="w-2.5 h-2.5" /> Refunded / Reversible
           </span>
         );
       default:
         return (
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-800 text-foreground-secondary">
+          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-surface-sunken text-foreground-secondary">
             {status}
           </span>
         );
@@ -138,7 +138,7 @@ export default function VendorEarningsPage() {
       />
 
       {/* Top Banner & Action */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-gradient-to-r from-[#0d0c1e] via-[#14122d] to-[#0d0c1e] border border-border shadow-2xl">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl bg-gradient-to-r from-background via-surface to-[#0d0c1e] border border-border shadow-2xl">
         <div>
           <div className="flex items-center gap-2">
             <span className="px-2.5 py-0.5 rounded-md bg-warning-solid text-on-brand/15 border border-warning/30 text-warning font-bold text-[10px] uppercase tracking-wider">
@@ -157,7 +157,7 @@ export default function VendorEarningsPage() {
         <button
           onClick={() => setWithdrawOpen(true)}
           disabled={Number(wallet.availableAmount || 0) <= 0}
-          className="px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 hover:from-amber-600 hover:to-amber-700 disabled:opacity-50 disabled:cursor-not-allowed text-slate-950 text-xs font-bold uppercase tracking-wider transition-all shadow-xl shadow-amber-500/20 flex items-center gap-2 self-start sm:self-auto cursor-pointer"
+          className="px-6 py-3 rounded-xl bg-gradient-to-r from-brand via-brand to-brand-active hover:from-brand hover:to-brand-active disabled:opacity-50 disabled:cursor-not-allowed text-on-brand text-xs font-bold uppercase tracking-wider transition-all shadow-xl shadow-gold-glow-sm flex items-center gap-2 self-start sm:self-auto cursor-pointer"
         >
           <Wallet className="w-4 h-4" /> Withdraw Funds (${availableFormatted})
         </button>
@@ -166,13 +166,13 @@ export default function VendorEarningsPage() {
       {/* ── 3 DISTINCT WALLET AMOUNT CARDS ─────────────────────── */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
         {/* 1. Pending (Order চলছে) */}
-        <div className="relative overflow-hidden p-6 rounded-2xl bg-[#110f24] border border-info/30 shadow-xl group hover:border-info/30 transition-all">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-info-solid text-white/10 rounded-full blur-2xl pointer-events-none" />
+        <div className="relative overflow-hidden p-6 rounded-2xl bg-surface-sunken border border-info/30 shadow-xl group hover:border-info/30 transition-all">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-info-solid text-foreground/10 rounded-full blur-2xl pointer-events-none" />
           <div className="flex items-center justify-between">
-            <span className="text-[11px] uppercase font-bold tracking-wider text-indigo-300 flex items-center gap-1.5">
+            <span className="text-[11px] uppercase font-bold tracking-wider text-info flex items-center gap-1.5">
               <Lock className="w-3.5 h-3.5" /> 1. Pending Balance
             </span>
-            <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-info-solid text-white/20 text-indigo-300 border border-info/30">
+            <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-info-solid text-foreground/20 text-info border border-info/30">
               Active Orders
             </span>
           </div>
@@ -187,7 +187,7 @@ export default function VendorEarningsPage() {
         </div>
 
         {/* 2. Pending for Release (7-Day Clearing) */}
-        <div className="relative overflow-hidden p-6 rounded-2xl bg-[#110f24] border border-warning/30 shadow-xl group hover:border-warning/30 transition-all">
+        <div className="relative overflow-hidden p-6 rounded-2xl bg-surface-sunken border border-warning/30 shadow-xl group hover:border-warning/30 transition-all">
           <div className="absolute top-0 right-0 w-32 h-32 bg-warning-solid text-on-brand/10 rounded-full blur-2xl pointer-events-none" />
           <div className="flex items-center justify-between">
             <span className="text-[11px] uppercase font-bold tracking-wider text-warning flex items-center gap-1.5">
@@ -208,13 +208,13 @@ export default function VendorEarningsPage() {
         </div>
 
         {/* 3. Available (Withdraw-যোগ্য) */}
-        <div className="relative overflow-hidden p-6 rounded-2xl bg-[#110f24] border border-success/30 shadow-xl group hover:border-success/30 transition-all">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-success-solid text-white/10 rounded-full blur-2xl pointer-events-none" />
+        <div className="relative overflow-hidden p-6 rounded-2xl bg-surface-sunken border border-success/30 shadow-xl group hover:border-success/30 transition-all">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-success-solid text-foreground/10 rounded-full blur-2xl pointer-events-none" />
           <div className="flex items-center justify-between">
-            <span className="text-[11px] uppercase font-bold tracking-wider text-emerald-300 flex items-center gap-1.5">
+            <span className="text-[11px] uppercase font-bold tracking-wider text-success flex items-center gap-1.5">
               <CheckCircle2 className="w-3.5 h-3.5" /> 3. Available Balance
             </span>
-            <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-success-solid text-white/20 text-emerald-300 border border-success/30">
+            <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-success-solid text-foreground/20 text-success border border-success/30">
               Withdrawable
             </span>
           </div>
@@ -231,26 +231,26 @@ export default function VendorEarningsPage() {
 
       {/* Summary Metrics Row */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="p-4 rounded-xl bg-[#131127] border border-border text-xs">
+        <div className="p-4 rounded-xl bg-surface-elevated border border-border text-xs">
           <span className="text-foreground-muted block font-medium">Total Lifetime Earned</span>
           <span className="text-lg font-bold text-foreground font-mono mt-1 block">${totalEarnedFormatted}</span>
         </div>
-        <div className="p-4 rounded-xl bg-[#131127] border border-border text-xs">
+        <div className="p-4 rounded-xl bg-surface-elevated border border-border text-xs">
           <span className="text-foreground-muted block font-medium">Total Withdrawn</span>
           <span className="text-lg font-bold text-foreground-secondary font-mono mt-1 block">${totalWithdrawnFormatted}</span>
         </div>
-        <div className="p-4 rounded-xl bg-[#131127] border border-border text-xs">
+        <div className="p-4 rounded-xl bg-surface-elevated border border-border text-xs">
           <span className="text-foreground-muted block font-medium">Platform Fee Rate</span>
           <span className="text-lg font-bold text-warning mt-1 block">15%</span>
         </div>
-        <div className="p-4 rounded-xl bg-[#131127] border border-border text-xs">
+        <div className="p-4 rounded-xl bg-surface-elevated border border-border text-xs">
           <span className="text-foreground-muted block font-medium">Vendor Net Allocation</span>
           <span className="text-lg font-bold text-success mt-1 block">85% Guaranteed</span>
         </div>
       </div>
 
       {/* ── TRANSACTION LEDGER HISTORY TABLE ─────────────────────── */}
-      <div className="rounded-2xl bg-[#0f0e21] border border-border shadow-2xl overflow-hidden">
+      <div className="rounded-2xl bg-surface border border-border shadow-2xl overflow-hidden">
         {/* Table Filter Header */}
         <div className="p-5 border-b border-border flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
@@ -269,18 +269,18 @@ export default function VendorEarningsPage() {
                 placeholder="Search order #..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-[#181533] border border-border rounded-xl px-3.5 py-1.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-amber-400 w-44"
+                className="bg-surface-sunken border border-border rounded-xl px-3.5 py-1.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-warning/30 w-44"
               />
             </div>
 
-            <div className="flex items-center rounded-xl bg-[#181533] p-1 border border-border text-xs">
+            <div className="flex items-center rounded-xl bg-surface-sunken p-1 border border-border text-xs">
               {(["ALL", "PENDING", "CLEARING", "AVAILABLE"] as const).map((filter) => (
                 <button
                   key={filter}
                   onClick={() => setStatusFilter(filter)}
                   className={`px-3 py-1 rounded-lg font-semibold transition-all cursor-pointer ${
                     statusFilter === filter
-                      ? "bg-warning-solid text-on-brand text-slate-950 shadow-sm"
+                      ? "bg-warning-solid text-on-brand text-on-brand shadow-sm"
                       : "text-foreground-muted hover:text-foreground"
                   }`}
                 >
