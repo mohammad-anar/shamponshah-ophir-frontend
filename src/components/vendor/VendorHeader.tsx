@@ -50,12 +50,12 @@ export default function VendorHeader({ onMenuToggle }: VendorHeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-30 h-16 bg-[#0B0C0E] border-b border-[#26282E] px-4 md:px-8 flex items-center justify-between">
+    <header className="sticky top-0 z-30 h-16 bg-background border-b border-border px-4 md:px-8 flex items-center justify-between">
       {/* Left section: mobile toggle & search */}
       <div className="flex items-center gap-3 flex-1 max-w-lg">
         <button
           onClick={onMenuToggle}
-          className="lg:hidden p-2 rounded-none text-foreground-muted hover:bg-[#16181F] hover:text-foreground"
+          className="lg:hidden p-2 rounded-none text-foreground-muted hover:bg-surface-elevated hover:text-foreground"
           aria-label="Toggle navigation"
         >
           <Menu className="w-5 h-5" />
@@ -66,7 +66,7 @@ export default function VendorHeader({ onMenuToggle }: VendorHeaderProps) {
           <input
             type="text"
             placeholder="Search orders, jobs, messages..."
-            className="w-full bg-[#121418] border border-[#26282E] rounded-none pl-9 pr-4 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C] transition-all"
+            className="w-full bg-surface border border-border rounded-none pl-9 pr-4 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand transition-all"
           />
         </div>
       </div>
@@ -76,30 +76,30 @@ export default function VendorHeader({ onMenuToggle }: VendorHeaderProps) {
         {/* Switch to Buying Button */}
         <Link
           href="/user"
-          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-none border border-[#26282E] bg-[#121418] text-xs font-semibold uppercase tracking-wider text-foreground-secondary hover:text-[#DFB76C] hover:border-border-brand/40 transition-colors"
+          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-none border border-border bg-surface text-xs font-semibold uppercase tracking-wider text-foreground-secondary hover:text-brand hover:border-border-brand/40 transition-colors"
         >
-          <ArrowLeftRight className="w-3.5 h-3.5 text-[#DFB76C]" />
+          <ArrowLeftRight className="w-3.5 h-3.5 text-brand" />
           <span>Switch to Buying</span>
         </Link>
 
         {/* Tier Badge */}
         <Link
           href="/vendor/levels"
-          className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-none bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40 text-[11px] font-bold uppercase tracking-wider hover:bg-[#20242D] transition-colors"
+          className="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-none bg-surface-sunken text-brand border border-border-brand/40 text-[11px] font-bold uppercase tracking-wider hover:bg-surface-elevated transition-colors"
         >
-          <Award className="w-3.5 h-3.5 text-[#DFB76C]" />
+          <Award className="w-3.5 h-3.5 text-brand" />
           <span>{tier}</span>
         </Link>
 
         {/* Notifications */}
         <Link
           href="/vendor/notifications"
-          className="relative p-2 rounded-none text-foreground-muted hover:text-foreground hover:bg-[#16181F] transition-colors"
+          className="relative p-2 rounded-none text-foreground-muted hover:text-foreground hover:bg-surface-elevated transition-colors"
           title="Notifications"
         >
           <Bell className="w-4 h-4" />
           {unreadCount > 0 && (
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-none bg-[#DFB76C] animate-pulse" />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-none bg-brand animate-pulse" />
           )}
         </Link>
 
@@ -107,9 +107,9 @@ export default function VendorHeader({ onMenuToggle }: VendorHeaderProps) {
         <div className="relative">
           <button
             onClick={() => setShowProfile(!showProfile)}
-            className="flex items-center gap-2 pl-2 py-1 rounded-none hover:bg-[#16181F] transition-colors cursor-pointer"
+            className="flex items-center gap-2 pl-2 py-1 rounded-none hover:bg-surface-elevated transition-colors cursor-pointer"
           >
-            <div className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] flex items-center justify-center font-bold text-xs">
+            <div className="w-8 h-8 rounded-none bg-surface-sunken border border-border text-brand flex items-center justify-center font-bold text-xs">
               {initials}
             </div>
             <div className="hidden lg:flex flex-col text-left leading-tight">
@@ -120,21 +120,21 @@ export default function VendorHeader({ onMenuToggle }: VendorHeaderProps) {
           </button>
 
           {showProfile && (
-            <div className="absolute right-0 mt-2 w-52 bg-[#121418] rounded-none shadow-2xl border border-[#26282E] py-1.5 z-50 text-xs animate-in fade-in">
-              <div className="px-3 py-2 border-b border-[#26282E]">
+            <div className="absolute right-0 mt-2 w-52 bg-surface rounded-none shadow-2xl border border-border py-1.5 z-50 text-xs animate-in fade-in">
+              <div className="px-3 py-2 border-b border-border">
                 <p className="font-bold text-foreground font-serif">{vendorName}</p>
                 <p className="text-[11px] text-foreground-muted">{businessName}</p>
               </div>
-              <Link href="/vendor/profile" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-[#16181F] hover:text-[#DFB76C]">
+              <Link href="/vendor/profile" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-surface-elevated hover:text-brand">
                 <User className="w-3.5 h-3.5 text-foreground-muted" /> Public Profile
               </Link>
-              <Link href="/user" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-[#16181F] hover:text-[#DFB76C]">
+              <Link href="/user" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-surface-elevated hover:text-brand">
                 <ExternalLink className="w-3.5 h-3.5 text-foreground-muted" /> Client View
               </Link>
-              <Link href="/vendor/payout-settings" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-[#16181F] hover:text-[#DFB76C]">
+              <Link href="/vendor/payout-settings" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-surface-elevated hover:text-brand">
                 <Settings className="w-3.5 h-3.5 text-foreground-muted" /> Payout Settings
               </Link>
-              <div className="border-t border-[#26282E] my-1" />
+              <div className="border-t border-border my-1" />
               <button 
                 onClick={handleSignOut} 
                 className="w-full text-left flex items-center gap-2 px-3 py-2 text-danger hover:bg-danger-soft text-danger cursor-pointer font-semibold"
