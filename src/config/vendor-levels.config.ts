@@ -53,7 +53,7 @@ export const VENDOR_LEVELS_CONFIG: Record<VendorTierType, VendorLevelConfig> = {
       glowColor: 'rgba(var(--success), 0.25)',
       ringColor: 'ring-success/50',
       heroOverlay: 'linear-gradient(to top, rgb(var(--background)) 0%, rgba(var(--success-soft), 0.4) 60%, transparent 100%)',
-      buttonClass: 'bg-success-solid text-white hover:bg-success text-on-brand shadow-md',
+      buttonClass: 'bg-success-solid text-foreground hover:bg-success text-on-brand shadow-md',
       tabActiveClass: 'border-success text-success',
     },
     perks: [
@@ -85,7 +85,7 @@ export const VENDOR_LEVELS_CONFIG: Record<VendorTierType, VendorLevelConfig> = {
       glowColor: 'rgba(var(--info), 0.25)',
       ringColor: 'ring-info/50',
       heroOverlay: 'linear-gradient(to top, rgb(var(--background)) 0%, rgba(var(--info-soft), 0.4) 60%, transparent 100%)',
-      buttonClass: 'bg-info-solid text-white hover:bg-info text-on-brand shadow-md',
+      buttonClass: 'bg-info-solid text-foreground hover:bg-info text-on-brand shadow-md',
       tabActiveClass: 'border-info text-info',
     },
     perks: [
