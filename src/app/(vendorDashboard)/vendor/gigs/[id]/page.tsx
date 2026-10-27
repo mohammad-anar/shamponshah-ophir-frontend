@@ -50,18 +50,18 @@ export default function VendorGigDetailPage() {
   if (isError || !gig) {
     return (
       <div className="max-w-xl mx-auto my-12 bg-surface border border-border rounded-2xl p-8 text-center space-y-4 shadow-xs">
-        <div className="w-12 h-12 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center mx-auto">
+        <div className="w-12 h-12 rounded-full bg-danger-soft text-danger flex items-center justify-center mx-auto">
           <AlertCircle className="w-6 h-6" />
         </div>
         <div>
-          <h2 className="text-base font-bold text-[#0F0C3B]">Service Listing Not Found</h2>
+          <h2 className="text-base font-bold text-foreground">Service Listing Not Found</h2>
           <p className="text-xs text-foreground-muted mt-1">
             We couldn&apos;t load the gig details for ID: <code className="font-mono text-foreground-secondary">{gigId}</code>
           </p>
         </div>
         <Link
           href="/vendor/gigs"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0F0C3B] text-foreground text-xs font-bold hover:bg-[#18124E] transition-colors"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand text-foreground text-xs font-bold hover:bg-surface-sunken transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to My Gigs</span>
@@ -103,14 +103,14 @@ export default function VendorGigDetailPage() {
           </Link>
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-success-soft text-success">
                 {gig.status || "ACTIVE"}
               </span>
               <span className="text-[11px] font-semibold text-foreground-muted">
                 ID: {gig.id}
               </span>
             </div>
-            <h1 className="text-xl md:text-2xl font-bold text-[#0F0C3B] mt-1 line-clamp-1">
+            <h1 className="text-xl md:text-2xl font-bold text-foreground mt-1 line-clamp-1">
               {gig.title}
             </h1>
           </div>
@@ -130,7 +130,7 @@ export default function VendorGigDetailPage() {
 
           <Link
             href={`/vendor/gigs/${gig.id || gigId}/edit`}
-            className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-brand hover:bg-surface-sunken text-foreground font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
           >
             <Edit3 className="w-3.5 h-3.5 text-warning" />
             <span>Edit Gig</span>
@@ -144,7 +144,7 @@ export default function VendorGigDetailPage() {
           <span className="text-[10px] uppercase font-bold text-foreground-muted flex items-center gap-1">
             <ShoppingBag className="w-3 h-3 text-brand-primary" /> Total Orders
           </span>
-          <p className="text-xl font-black text-[#0F0C3B]">
+          <p className="text-xl font-black text-foreground">
             {gig.orderCount || gig._count?.orders || gig.ordersCompleted || 0}
           </p>
           <span className="text-[10px] text-success font-medium">Fulfilled via escrow</span>
@@ -154,7 +154,7 @@ export default function VendorGigDetailPage() {
           <span className="text-[10px] uppercase font-bold text-foreground-muted flex items-center gap-1">
             <Eye className="w-3 h-3 text-indigo-500" /> Marketplace Views
           </span>
-          <p className="text-xl font-black text-[#0F0C3B]">
+          <p className="text-xl font-black text-foreground">
             {gig.viewCount || gig.views || 0}
           </p>
           <span className="text-[10px] text-foreground-muted font-medium">Unique buyer impressions</span>
@@ -164,20 +164,20 @@ export default function VendorGigDetailPage() {
           <span className="text-[10px] uppercase font-bold text-foreground-muted flex items-center gap-1">
             <Star className="w-3 h-3 text-warning fill-amber-500" /> Client Rating
           </span>
-          <p className="text-xl font-black text-[#0F0C3B] flex items-center gap-1">
+          <p className="text-xl font-black text-foreground flex items-center gap-1">
             {gig.rating || gig.avgRating || "5.0"}
             <span className="text-xs font-normal text-foreground-muted">
               ({gig._count?.gigReviews || 0} reviews)
             </span>
           </p>
-          <span className="text-[10px] text-amber-700 font-medium">Verified customer score</span>
+          <span className="text-[10px] text-warning font-medium">Verified customer score</span>
         </div>
 
         <div className="bg-surface p-4 rounded-2xl border border-border shadow-xs space-y-1">
           <span className="text-[10px] uppercase font-bold text-foreground-muted flex items-center gap-1">
             <Package className="w-3 h-3 text-success" /> Base Price
           </span>
-          <p className="text-xl font-black text-[#0F0C3B]">{startingPrice}</p>
+          <p className="text-xl font-black text-foreground">{startingPrice}</p>
           <span className="text-[10px] text-foreground-muted font-medium">{packages.length} tier options</span>
         </div>
       </div>
@@ -188,14 +188,14 @@ export default function VendorGigDetailPage() {
         <div className="lg:col-span-8 space-y-6">
           {/* Gallery Showcase Card */}
           <div className="bg-surface rounded-2xl border border-border overflow-hidden shadow-xs space-y-3 p-4">
-            <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-slate-900 shadow-inner">
+            <div className="relative aspect-video w-full rounded-xl overflow-hidden bg-surface-sunken shadow-inner">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={coverImage}
                 alt={gig.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-xs text-foreground text-[10px] font-bold px-2.5 py-1 rounded-md">
+              <div className="absolute top-3 left-3 bg-background/60 backdrop-blur-xs text-foreground text-[10px] font-bold px-2.5 py-1 rounded-md">
                 {categoryName}
               </div>
             </div>
@@ -211,7 +211,7 @@ export default function VendorGigDetailPage() {
                     className={cn(
                       "w-20 h-14 rounded-lg overflow-hidden border-2 transition-all flex-shrink-0 cursor-pointer",
                       selectedGalleryIdx === idx
-                        ? "border-[#0F0C3B] ring-2 ring-indigo-200"
+                        ? "border-border-brand ring-2 ring-focus-ring"
                         : "border-border opacity-70 hover:opacity-100"
                     )}
                   >
@@ -230,7 +230,7 @@ export default function VendorGigDetailPage() {
           {/* Description Card */}
           <div className="bg-surface rounded-2xl border border-border p-6 shadow-xs space-y-4">
             <div>
-              <h2 className="text-sm font-bold text-[#0F0C3B] uppercase tracking-wider">
+              <h2 className="text-sm font-bold text-foreground uppercase tracking-wider">
                 Service Description &amp; Scope
               </h2>
               <div className="h-[2px] w-8 bg-brand-primary mt-1" />
@@ -266,7 +266,7 @@ export default function VendorGigDetailPage() {
         <div className="lg:col-span-4 space-y-6">
           <div className="bg-surface rounded-2xl border border-border p-5 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-xs font-bold text-[#0F0C3B] uppercase tracking-wider">
+              <h2 className="text-xs font-bold text-foreground uppercase tracking-wider">
                 Pricing Packages
               </h2>
               <span className="text-[10px] text-foreground-muted font-bold">
@@ -285,8 +285,8 @@ export default function VendorGigDetailPage() {
                     className={cn(
                       "py-1.5 rounded-lg font-bold text-[11px] transition-all cursor-pointer text-center truncate px-1",
                       activePackageTab === idx
-                        ? "bg-surface text-[#0F0C3B] shadow-xs"
-                        : "text-foreground-muted hover:text-[#0F0C3B]"
+                        ? "bg-surface text-foreground shadow-xs"
+                        : "text-foreground-muted hover:text-foreground"
                     )}
                   >
                     {pkg.title?.split(" ")[0] || `Tier ${idx + 1}`}
@@ -300,14 +300,14 @@ export default function VendorGigDetailPage() {
               <div className="space-y-4 pt-1">
                 <div className="flex items-baseline justify-between border-b border-border pb-3">
                   <div>
-                    <h3 className="font-bold text-[#0F0C3B] text-sm">
+                    <h3 className="font-bold text-foreground text-sm">
                       {activePackage.title}
                     </h3>
                     <p className="text-[11px] text-foreground-muted mt-0.5">
                       {activePackage.description}
                     </p>
                   </div>
-                  <span className="text-xl font-black text-[#0F0C3B]">
+                  <span className="text-xl font-black text-foreground">
                     ${activePackage.price}
                   </span>
                 </div>
@@ -341,8 +341,8 @@ export default function VendorGigDetailPage() {
                 )}
 
                 <div className="pt-3 border-t border-border">
-                  <div className="p-3 rounded-xl bg-amber-50/70 border border-amber-200/80 flex items-start gap-2 text-amber-900 text-[11px]">
-                    <ShieldCheck className="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5" />
+                  <div className="p-3 rounded-xl bg-warning-soft/70 border border-warning/30/80 flex items-start gap-2 text-warning text-[11px]">
+                    <ShieldCheck className="w-4 h-4 text-warning flex-shrink-0 mt-0.5" />
                     <span>
                       All milestone payments are locked in FDIC-insured escrow before job commencement.
                     </span>
