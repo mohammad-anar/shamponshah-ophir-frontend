@@ -112,7 +112,7 @@ const Navbar = () => {
   // );
 
   return (
-    <div className="relative bg-[#E8E2D7] py-5">
+    <div className="relative bg-surface py-5">
       <div
         className="container"
         style={{
@@ -193,7 +193,7 @@ const Navbar = () => {
         <div className="!hidden lg:!flex items-center gap-2 ">
           <div
             onClick={() => setSearchOpen(!searchOpen)}
-            className="mr-5 bg-transparent hover:!bg-gray-300 duration-300 p-2 rounded-full cursor-pointer"
+            className="mr-5 bg-transparent hover:!bg-surface-elevated duration-300 p-2 rounded-full cursor-pointer"
           >
             <FaSearch size={20} className="text-foreground" />
           </div>
@@ -209,7 +209,7 @@ const Navbar = () => {
         <div className="lg:!hidden flex items-center">
           <div
             onClick={() => setSearchOpen(!searchOpen)}
-            className="mr-5 bg-transparent hover:!bg-gray-300 duration-300 p-2 rounded-full cursor-pointer"
+            className="mr-5 bg-transparent hover:!bg-surface-elevated duration-300 p-2 rounded-full cursor-pointer"
           >
             <FaSearch size={20} className="text-foreground" />
           </div>
