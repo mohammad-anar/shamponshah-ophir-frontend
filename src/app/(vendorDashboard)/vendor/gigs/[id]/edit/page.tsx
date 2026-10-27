@@ -311,13 +311,13 @@ export default function EditGigPage() {
   if (isError) {
     return (
       <div className="max-w-xl mx-auto my-12 bg-surface border border-border rounded-2xl p-8 text-center space-y-4 shadow-xs">
-        <div className="w-12 h-12 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center mx-auto">
+        <div className="w-12 h-12 rounded-full bg-danger-soft text-danger flex items-center justify-center mx-auto">
           <AlertCircle className="w-6 h-6" />
         </div>
-        <h2 className="text-base font-bold text-[#0F0C3B]">Unable to Load Service</h2>
+        <h2 className="text-base font-bold text-foreground">Unable to Load Service</h2>
         <Link
           href="/vendor/gigs"
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#0F0C3B] text-foreground text-xs font-bold"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand text-foreground text-xs font-bold"
         >
           <ArrowLeft className="w-3.5 h-3.5" /> Back to Gigs
         </Link>
@@ -340,7 +340,7 @@ export default function EditGigPage() {
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
-            <h1 className="text-xl md:text-2xl font-bold text-[#0F0C3B]">Edit Service Listing</h1>
+            <h1 className="text-xl md:text-2xl font-bold text-foreground">Edit Service Listing</h1>
             <p className="text-foreground-muted mt-0.5">
               Update pricing, packages, description, and photos for this listing.
             </p>
@@ -358,7 +358,7 @@ export default function EditGigPage() {
             type="button"
             onClick={handleSubmit}
             disabled={isUpdating}
-            className="px-5 py-2 bg-[#0F0C3B] hover:bg-[#18124E] text-foreground rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer disabled:opacity-60"
+            className="px-5 py-2 bg-brand hover:bg-surface-sunken text-foreground rounded-xl font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer disabled:opacity-60"
           >
             {isUpdating ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -376,14 +376,14 @@ export default function EditGigPage() {
         <form onSubmit={handleSubmit} className="lg:col-span-7 space-y-6">
           {/* Card 1: Basic Info */}
           <div className="bg-surface p-6 rounded-2xl border border-border shadow-xs space-y-4">
-            <h2 className="text-sm font-bold text-[#0F0C3B] uppercase tracking-wider">
+            <h2 className="text-sm font-bold text-foreground uppercase tracking-wider">
               Basic Information
             </h2>
 
             {/* Title */}
             <div>
               <label className="block text-foreground-secondary font-bold mb-1">Gig Title *</label>
-              <div className="flex items-center rounded-xl border border-border bg-[#F8F9FD] overflow-hidden focus-within:border-brand-primary focus-within:bg-surface">
+              <div className="flex items-center rounded-xl border border-border bg-surface-elevated overflow-hidden focus-within:border-brand-primary focus-within:bg-surface">
                 <span className="px-3.5 py-2.5 bg-surface-sunken border-r border-border font-bold text-foreground-secondary select-none">
                   I will
                 </span>
@@ -393,7 +393,7 @@ export default function EditGigPage() {
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="perform and deliver this service"
-                  className="w-full bg-transparent px-3 py-2.5 text-xs text-[#0F0C3B] font-medium focus:outline-none"
+                  className="w-full bg-transparent px-3 py-2.5 text-xs text-foreground font-medium focus:outline-none"
                 />
               </div>
             </div>
@@ -414,7 +414,7 @@ export default function EditGigPage() {
                       setSelectedCategoryName(val);
                     }
                   }}
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl px-3 py-2.5 text-xs text-[#0F0C3B] font-medium focus:outline-none focus:border-brand-primary cursor-pointer"
+                  className="w-full bg-surface-elevated border border-border rounded-xl px-3 py-2.5 text-xs text-foreground font-medium focus:outline-none focus:border-brand-primary cursor-pointer"
                 >
                   {categories.map((c: any) => (
                     <option key={c.id || c.name} value={c.id || c.name}>
@@ -429,7 +429,7 @@ export default function EditGigPage() {
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value as any)}
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl px-3 py-2.5 text-xs text-[#0F0C3B] font-medium focus:outline-none focus:border-brand-primary cursor-pointer"
+                  className="w-full bg-surface-elevated border border-border rounded-xl px-3 py-2.5 text-xs text-foreground font-medium focus:outline-none focus:border-brand-primary cursor-pointer"
                 >
                   <option value="ACTIVE">ACTIVE (Published to marketplace)</option>
                   <option value="PAUSED">PAUSED (Temporarily hidden)</option>
@@ -444,7 +444,7 @@ export default function EditGigPage() {
                 <label className="text-foreground-secondary font-bold">Search Tags (up to 5)</label>
                 <span className="text-foreground-muted">{tags.length} of 5</span>
               </div>
-              <div className="p-2 rounded-xl border border-border bg-[#F8F9FD] flex flex-wrap gap-1.5 items-center">
+              <div className="p-2 rounded-xl border border-border bg-surface-elevated flex flex-wrap gap-1.5 items-center">
                 {tags.map((t) => (
                   <span
                     key={t}
@@ -467,7 +467,7 @@ export default function EditGigPage() {
                     onChange={(e) => setTagInput(e.target.value)}
                     onKeyDown={handleAddTag}
                     placeholder="Type tag &amp; press Enter..."
-                    className="bg-transparent text-xs text-[#0F0C3B] placeholder:text-foreground-muted focus:outline-none px-2 py-1 flex-1 min-w-[130px]"
+                    className="bg-transparent text-xs text-foreground placeholder:text-foreground-muted focus:outline-none px-2 py-1 flex-1 min-w-[130px]"
                   />
                 )}
               </div>
@@ -476,7 +476,7 @@ export default function EditGigPage() {
 
           {/* Card 2: Package Tiers */}
           <div className="bg-surface p-6 rounded-2xl border border-border shadow-xs space-y-4">
-            <h2 className="text-sm font-bold text-[#0F0C3B] uppercase tracking-wider">
+            <h2 className="text-sm font-bold text-foreground uppercase tracking-wider">
               Package Tier Rates ($ USD)
             </h2>
 
@@ -489,21 +489,21 @@ export default function EditGigPage() {
                     type="text"
                     value={basicPrice}
                     onChange={(e) => setBasicPrice(e.target.value)}
-                    className="w-full bg-surface border border-border rounded-lg pl-7 pr-3 py-1.5 font-bold text-[#0F0C3B]"
+                    className="w-full bg-surface border border-border rounded-lg pl-7 pr-3 py-1.5 font-bold text-foreground"
                   />
                 </div>
                 <p className="text-[10px] text-foreground-muted">2 hours core coverage</p>
               </div>
 
-              <div className="p-3.5 rounded-xl border border-indigo-300 bg-indigo-50/40 space-y-2 ring-2 ring-indigo-50">
-                <span className="font-bold text-[#0F0C3B] block">Standard (Popular)</span>
+              <div className="p-3.5 rounded-xl border border-info/30 bg-info-soft/40 space-y-2 ring-2 ring-indigo-50">
+                <span className="font-bold text-foreground block">Standard (Popular)</span>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 font-bold text-foreground-muted">$</span>
                   <input
                     type="text"
                     value={standardPrice}
                     onChange={(e) => setStandardPrice(e.target.value)}
-                    className="w-full bg-surface border border-border rounded-lg pl-7 pr-3 py-1.5 font-bold text-[#0F0C3B]"
+                    className="w-full bg-surface border border-border rounded-lg pl-7 pr-3 py-1.5 font-bold text-foreground"
                   />
                 </div>
                 <p className="text-[10px] text-foreground-muted">4 hours + full gear</p>
@@ -517,7 +517,7 @@ export default function EditGigPage() {
                     type="text"
                     value={premiumPrice}
                     onChange={(e) => setPremiumPrice(e.target.value)}
-                    className="w-full bg-surface border border-border rounded-lg pl-7 pr-3 py-1.5 font-bold text-[#0F0C3B]"
+                    className="w-full bg-surface border border-border rounded-lg pl-7 pr-3 py-1.5 font-bold text-foreground"
                   />
                 </div>
                 <p className="text-[10px] text-foreground-muted">6 hours + concert rig</p>
@@ -527,7 +527,7 @@ export default function EditGigPage() {
 
           {/* Card 3: Description */}
           <div className="bg-surface p-6 rounded-2xl border border-border shadow-xs space-y-4">
-            <h2 className="text-sm font-bold text-[#0F0C3B] uppercase tracking-wider">
+            <h2 className="text-sm font-bold text-foreground uppercase tracking-wider">
               Service Description
             </h2>
 
@@ -537,13 +537,13 @@ export default function EditGigPage() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Describe your capabilities, workflow, equipment, and client experience..."
-              className="w-full bg-[#F8F9FD] border border-border rounded-xl p-3.5 text-xs text-[#0F0C3B] focus:outline-none focus:border-brand-primary leading-relaxed"
+              className="w-full bg-surface-elevated border border-border rounded-xl p-3.5 text-xs text-foreground focus:outline-none focus:border-brand-primary leading-relaxed"
             />
           </div>
 
           {/* Card 4: Gallery */}
           <div className="bg-surface p-6 rounded-2xl border border-border shadow-xs space-y-4">
-            <h2 className="text-sm font-bold text-[#0F0C3B] uppercase tracking-wider">
+            <h2 className="text-sm font-bold text-foreground uppercase tracking-wider">
               Gallery &amp; Showcase Photos
             </h2>
 
@@ -564,7 +564,7 @@ export default function EditGigPage() {
               className={cn(
                 "p-6 border-2 border-dashed rounded-xl flex flex-col items-center justify-center text-center cursor-pointer transition-all",
                 isDragging
-                  ? "border-brand-primary bg-indigo-50/50 scale-[1.01]"
+                  ? "border-brand-primary bg-info-soft/50 scale-[1.01]"
                   : "border-border bg-surface-elevated hover:border-brand-primary"
               )}
             >
@@ -575,7 +575,7 @@ export default function EditGigPage() {
                   <UploadCloud className="w-5 h-5 text-brand-primary" />
                 )}
               </div>
-              <p className="font-bold text-[#0F0C3B] text-xs">
+              <p className="font-bold text-foreground text-xs">
                 {isDragging ? "Drop images here" : "Drag & drop photos or click to browse"}
               </p>
               <p className="text-[10px] text-foreground-muted mt-0.5">JPG, PNG, WEBP up to 50MB</p>
@@ -587,7 +587,7 @@ export default function EditGigPage() {
                     e.stopPropagation();
                     fileInputRef.current?.click();
                   }}
-                  className="px-3 py-1.5 rounded-lg bg-[#0F0C3B] text-foreground text-[10px] font-bold shadow-xs hover:bg-[#18124E] cursor-pointer"
+                  className="px-3 py-1.5 rounded-lg bg-brand text-foreground text-[10px] font-bold shadow-xs hover:bg-surface-sunken cursor-pointer"
                 >
                   Choose From Computer
                 </button>
@@ -611,12 +611,12 @@ export default function EditGigPage() {
                   value={urlInput}
                   onChange={(e) => setUrlInput(e.target.value)}
                   placeholder="Paste image link (https://...)"
-                  className="flex-1 bg-surface border border-border rounded-lg px-3 py-1.5 text-xs text-[#0F0C3B] focus:outline-none"
+                  className="flex-1 bg-surface border border-border rounded-lg px-3 py-1.5 text-xs text-foreground focus:outline-none"
                 />
                 <button
                   type="button"
                   onClick={handleAddImageUrl}
-                  className="px-3 py-1.5 rounded-lg bg-[#0F0C3B] text-foreground text-xs font-bold cursor-pointer"
+                  className="px-3 py-1.5 rounded-lg bg-brand text-foreground text-xs font-bold cursor-pointer"
                 >
                   Add
                 </button>
@@ -641,7 +641,7 @@ export default function EditGigPage() {
                         className="w-full h-full object-cover"
                       />
                       {idx === 0 && (
-                        <span className="absolute top-1 left-1 bg-[#0F0C3B] text-foreground text-[8px] font-extrabold px-1.5 py-0.5 rounded shadow-xs">
+                        <span className="absolute top-1 left-1 bg-brand text-foreground text-[8px] font-extrabold px-1.5 py-0.5 rounded shadow-xs">
                           Cover
                         </span>
                       )}
@@ -671,7 +671,7 @@ export default function EditGigPage() {
             <button
               type="submit"
               disabled={isUpdating}
-              className="px-6 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer disabled:opacity-60"
+              className="px-6 py-2.5 rounded-xl bg-brand hover:bg-surface-sunken text-foreground font-bold transition-all shadow-md flex items-center gap-2 cursor-pointer disabled:opacity-60"
             >
               {isUpdating ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -686,7 +686,7 @@ export default function EditGigPage() {
         {/* Right Preview Card (5 cols) */}
         <div className="lg:col-span-5 space-y-4">
           <div className="flex items-center justify-between font-bold text-foreground-muted">
-            <span className="flex items-center gap-1 text-[#0F0C3B]">
+            <span className="flex items-center gap-1 text-foreground">
               <Sparkles className="w-3.5 h-3.5 text-brand-primary" /> Live Card Preview
             </span>
             <span className="text-[10px] text-foreground-muted">Buyer View</span>
@@ -694,25 +694,25 @@ export default function EditGigPage() {
 
           <div className="bg-surface rounded-2xl border border-border shadow-md overflow-hidden text-xs">
             {coverImageUrl ? (
-              <div className="relative aspect-video w-full overflow-hidden bg-slate-900">
+              <div className="relative aspect-video w-full overflow-hidden bg-surface-sunken">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={coverImageUrl}
                   alt="Gig cover preview"
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-3">
-                  <span className="px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-xs text-foreground text-[10px] font-bold uppercase">
+                <div className="absolute inset-0 bg-gradient-to-t from-background/70 via-transparent to-transparent flex items-end p-3">
+                  <span className="px-2.5 py-0.5 rounded-full bg-background/60 backdrop-blur-xs text-foreground text-[10px] font-bold uppercase">
                     {selectedCategoryName}
                   </span>
                 </div>
               </div>
             ) : (
-              <div className="bg-[#18124E] p-4 text-foreground flex items-center justify-between">
+              <div className="bg-surface-sunken p-4 text-foreground flex items-center justify-between">
                 <span className="px-2.5 py-0.5 rounded-full bg-surface/10 text-[10px] font-bold uppercase">
                   {selectedCategoryName}
                 </span>
-                <span className="text-[10px] font-extrabold bg-warning-solid text-on-brand text-[#0F0C3B] px-2 py-0.5 rounded">
+                <span className="text-[10px] font-extrabold bg-warning-solid text-on-brand text-foreground px-2 py-0.5 rounded">
                   {status}
                 </span>
               </div>
@@ -720,7 +720,7 @@ export default function EditGigPage() {
 
             <div className="p-5 space-y-3">
               <div>
-                <h3 className="text-sm font-bold text-[#0F0C3B] leading-snug line-clamp-2">
+                <h3 className="text-sm font-bold text-foreground leading-snug line-clamp-2">
                   I will {title || "perform and deliver this service"}
                 </h3>
                 <p className="text-[11px] text-foreground-muted mt-1">{selectedCategoryName}</p>
@@ -744,7 +744,7 @@ export default function EditGigPage() {
                   <span className="text-[9px] uppercase font-bold text-foreground-muted block">
                     STARTING AT
                   </span>
-                  <span className="text-xl font-extrabold text-[#0F0C3B]">
+                  <span className="text-xl font-extrabold text-foreground">
                     ${basicPrice || "450"}
                   </span>
                 </div>
