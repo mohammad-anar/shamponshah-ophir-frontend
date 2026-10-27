@@ -150,10 +150,10 @@ export default function LoginPage() {
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-6xl">
           {/* Left: Sign In Form Card */}
           <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-center">
-            <div className="w-full max-w-md mx-auto bg-[#121418] rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl border border-[#26282E] space-y-6 text-foreground">
+            <div className="w-full max-w-md mx-auto bg-surface rounded-3xl p-6 sm:p-8 lg:p-10 shadow-2xl border border-border space-y-6 text-foreground">
               {/* Vault Header Pill */}
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1A1D24] border border-border-brand/40 text-[#DFB76C] text-xs font-semibold uppercase tracking-wider">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#DFB76C]" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-sunken border border-border-brand/40 text-brand text-xs font-semibold uppercase tracking-wider">
+                <ShieldCheck className="w-3.5 h-3.5 text-brand" />
                 <span>OPHIR RESERVE SECURED</span>
               </div>
 
@@ -168,10 +168,10 @@ export default function LoginPage() {
               </div>
 
               {/* Quick 1-Click Demo Login Box */}
-              <div className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-2.5 shadow-md">
+              <div className="p-3.5 rounded-2xl bg-surface-elevated border border-border space-y-2.5 shadow-md">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5 text-xs font-bold text-foreground-secondary">
-                    <Sparkles className="w-3.5 h-3.5 text-[#DFB76C]" />
+                    <Sparkles className="w-3.5 h-3.5 text-brand" />
                     <span>Instant Demo Login (Seed Users)</span>
                   </div>
                   <span className="text-[10px] text-foreground-muted font-mono">Ophir1234!</span>
@@ -183,7 +183,7 @@ export default function LoginPage() {
                     type="button"
                     disabled={isLoading || !!demoLoadingRole}
                     onClick={() => handleDirectDemoLogin("CLIENT")}
-                    className="w-full px-3 py-2.5 rounded-xl border border-info/30 bg-[#1A1D24] hover:bg-info-soft text-info active:scale-99 transition-all text-left flex items-center justify-between group shadow-sm cursor-pointer"
+                    className="w-full px-3 py-2.5 rounded-xl border border-info/30 bg-surface-sunken hover:bg-info-soft text-info active:scale-99 transition-all text-left flex items-center justify-between group shadow-sm cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
                       <div className="w-8 h-8 rounded-lg bg-info-solid text-foreground/20 text-info flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
@@ -196,7 +196,7 @@ export default function LoginPage() {
                       <div className="truncate">
                         <div className="text-xs font-bold text-foreground flex items-center gap-1.5">
                           <span>Login as Client</span>
-                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-info-solid text-foreground/20 text-indigo-300">/user</span>
+                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-info-solid text-foreground/20 text-info">/user</span>
                         </div>
                         <div className="text-[11px] text-foreground-muted truncate">sarah@ophir.com (Sarah Jenkins)</div>
                       </div>
@@ -209,7 +209,7 @@ export default function LoginPage() {
                     type="button"
                     disabled={isLoading || !!demoLoadingRole}
                     onClick={() => handleDirectDemoLogin("VENDOR")}
-                    className="w-full px-3 py-2.5 rounded-xl border border-success/30 bg-[#1A1D24] hover:bg-success-soft text-success active:scale-99 transition-all text-left flex items-center justify-between group shadow-sm cursor-pointer"
+                    className="w-full px-3 py-2.5 rounded-xl border border-success/30 bg-surface-sunken hover:bg-success-soft text-success active:scale-99 transition-all text-left flex items-center justify-between group shadow-sm cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
                       <div className="w-8 h-8 rounded-lg bg-success-solid text-foreground/20 text-success flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
@@ -222,7 +222,7 @@ export default function LoginPage() {
                       <div className="truncate">
                         <div className="text-xs font-bold text-foreground flex items-center gap-1.5">
                           <span>Login as Vendor</span>
-                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-success-solid text-foreground/20 text-emerald-300">/vendor</span>
+                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-success-solid text-foreground/20 text-success">/vendor</span>
                         </div>
                         <div className="text-[11px] text-foreground-muted truncate">luminary@ophir.com (Luminary Studios)</div>
                       </div>
@@ -235,7 +235,7 @@ export default function LoginPage() {
                     type="button"
                     disabled={isLoading || !!demoLoadingRole}
                     onClick={() => handleDirectDemoLogin("ADMIN")}
-                    className="w-full px-3 py-2.5 rounded-xl border border-warning/30 bg-[#1A1D24] hover:bg-warning-soft text-warning active:scale-99 transition-all text-left flex items-center justify-between group shadow-sm cursor-pointer"
+                    className="w-full px-3 py-2.5 rounded-xl border border-warning/30 bg-surface-sunken hover:bg-warning-soft text-warning active:scale-99 transition-all text-left flex items-center justify-between group shadow-sm cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
                       <div className="w-8 h-8 rounded-lg bg-warning-solid text-on-brand/20 text-warning flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
@@ -260,14 +260,14 @@ export default function LoginPage() {
 
               {/* Unverified Account Warning & Resend Option */}
               {unverifiedUser && (
-                <div className="p-4 rounded-2xl bg-warning-soft text-warning border border-warning/30 text-amber-200 text-xs space-y-3 shadow-xs">
+                <div className="p-4 rounded-2xl bg-warning-soft text-warning border border-warning/30 text-warning text-xs space-y-3 shadow-xs">
                   <div className="flex items-start gap-2.5">
-                    <AlertCircle className="w-5 h-5 text-[#DFB76C] flex-shrink-0 mt-0.5" />
+                    <AlertCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
                     <div className="space-y-1">
                       <h4 className="font-bold text-warning text-sm">
                         {unverifiedUser.role?.toUpperCase() === "VENDOR" ? "Vendor Email Verification Required" : "Email Verification Required"}
                       </h4>
-                      <p className="text-amber-200/90 text-xs leading-relaxed">
+                      <p className="text-warning/90 text-xs leading-relaxed">
                         Your account email (<span className="font-semibold text-foreground">{unverifiedUser.email}</span>) is not verified. Please verify your email with the 6-digit code to activate your account.
                       </p>
                     </div>
@@ -284,13 +284,13 @@ export default function LoginPage() {
                           toast.error(err?.data?.message || "Failed to resend verification email.");
                         }
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] font-bold text-xs transition-colors shadow-xs disabled:opacity-50 cursor-pointer"
+                      className="px-3 py-1.5 rounded-lg bg-brand hover:bg-brand-hover text-on-brand font-bold text-xs transition-colors shadow-xs disabled:opacity-50 cursor-pointer"
                     >
                       {isResendingVerification ? "Sending..." : "Resend Verification Email"}
                     </button>
                     <Link
                       href={`/verify-email?email=${encodeURIComponent(unverifiedUser.email)}&role=${unverifiedUser.role?.toLowerCase() || "client"}`}
-                      className="px-3 py-1.5 rounded-lg bg-[#1A1D24] border border-[#26282E] hover:border-[#DFB76C] text-[#DFB76C] font-semibold text-xs transition-colors"
+                      className="px-3 py-1.5 rounded-lg bg-surface-sunken border border-border hover:border-border-brand text-brand font-semibold text-xs transition-colors"
                     >
                       Enter 6-Digit Code
                     </Link>
@@ -300,7 +300,7 @@ export default function LoginPage() {
 
               {/* Error Callout Toggleable */}
               {hasError && (
-                <div className="p-3.5 rounded-xl bg-danger-soft text-danger border border-danger/30 text-rose-300 text-xs flex items-start gap-2.5">
+                <div className="p-3.5 rounded-xl bg-danger-soft text-danger border border-danger/30 text-danger text-xs flex items-start gap-2.5">
                   <AlertCircle className="w-4 h-4 text-danger mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="font-medium text-foreground">Incorrect email or password.</span> Try again or reset your password.
@@ -316,7 +316,7 @@ export default function LoginPage() {
                     toast.info("Connecting to Google authentication...");
                     setTimeout(() => router.push("/"), 1200);
                   }}
-                  className="w-full h-11 px-4 flex items-center justify-center gap-3 bg-[#16181F] hover:bg-[#1E222B] border border-[#26282E] hover:border-border-brand/40 text-foreground-secondary text-xs sm:text-sm font-semibold rounded-xl transition-all shadow-sm cursor-pointer"
+                  className="w-full h-11 px-4 flex items-center justify-center gap-3 bg-surface-elevated hover:bg-surface-sunken border border-border hover:border-border-brand/40 text-foreground-secondary text-xs sm:text-sm font-semibold rounded-xl transition-all shadow-sm cursor-pointer"
                 >
                   <FcGoogle className="w-4 h-4 text-lg" />
                   <span className="text-foreground-secondary font-medium">Continue with Google</span>
@@ -328,7 +328,7 @@ export default function LoginPage() {
                     toast.info("Connecting to Apple authentication...");
                     setTimeout(() => router.push("/"), 1200);
                   }}
-                  className="w-full h-11 px-4 flex items-center justify-center gap-3 bg-[#16181F] hover:bg-[#1E222B] border border-[#26282E] hover:border-border-brand/40 text-foreground-secondary text-xs sm:text-sm font-semibold rounded-xl transition-all shadow-sm cursor-pointer"
+                  className="w-full h-11 px-4 flex items-center justify-center gap-3 bg-surface-elevated hover:bg-surface-sunken border border-border hover:border-border-brand/40 text-foreground-secondary text-xs sm:text-sm font-semibold rounded-xl transition-all shadow-sm cursor-pointer"
                 >
                   <FaApple className="w-4 h-4 text-lg text-foreground" />
                   <span className="text-foreground-secondary font-medium">Continue with Apple</span>
@@ -337,8 +337,8 @@ export default function LoginPage() {
 
               {/* Divider */}
               <div className="relative flex items-center justify-center">
-                <div className="w-full border-t border-[#26282E]" />
-                <span className="absolute bg-[#121418] px-3 text-[11px] font-semibold text-foreground-muted uppercase tracking-wider">
+                <div className="w-full border-t border-border" />
+                <span className="absolute bg-surface px-3 text-[11px] font-semibold text-foreground-muted uppercase tracking-wider">
                   OR
                 </span>
               </div>
@@ -358,7 +358,7 @@ export default function LoginPage() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="name@example.com"
-                          className="w-full h-11 px-3.5 pr-10 text-sm bg-[#16181F] text-foreground border border-[#26282E] rounded-xl focus:bg-[#1A1D24] focus:border-[#DFB76C] focus:outline-none transition-all placeholder:text-foreground-muted"
+                          className="w-full h-11 px-3.5 pr-10 text-sm bg-surface-elevated text-foreground border border-border rounded-xl focus:bg-surface-sunken focus:border-border-brand focus:outline-none transition-all placeholder:text-foreground-muted"
                         />
                         <Mail className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
                       </div>
@@ -375,12 +375,12 @@ export default function LoginPage() {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="••••••••••••"
-                          className="w-full h-11 px-3.5 pr-10 text-sm bg-[#16181F] text-foreground border border-[#26282E] rounded-xl focus:bg-[#1A1D24] focus:border-[#DFB76C] focus:outline-none transition-all placeholder:text-foreground-muted"
+                          className="w-full h-11 px-3.5 pr-10 text-sm bg-surface-elevated text-foreground border border-border rounded-xl focus:bg-surface-sunken focus:border-border-brand focus:outline-none transition-all placeholder:text-foreground-muted"
                         />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-foreground-muted hover:text-[#DFB76C] cursor-pointer"
+                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-foreground-muted hover:text-brand cursor-pointer"
                         >
                           {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4 text-foreground-muted" />}
                         </button>
@@ -399,7 +399,7 @@ export default function LoginPage() {
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                         placeholder="+1 (555) 000-0000"
-                        className="w-full h-11 px-3.5 pr-10 text-sm bg-[#16181F] text-foreground border border-[#26282E] rounded-xl focus:bg-[#1A1D24] focus:border-[#DFB76C] focus:outline-none transition-all placeholder:text-foreground-muted"
+                        className="w-full h-11 px-3.5 pr-10 text-sm bg-surface-elevated text-foreground border border-border rounded-xl focus:bg-surface-sunken focus:border-border-brand focus:outline-none transition-all placeholder:text-foreground-muted"
                       />
                       <Smartphone className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
                     </div>
@@ -416,14 +416,14 @@ export default function LoginPage() {
                       type="checkbox"
                       checked={rememberMe}
                       onChange={(e) => setRememberMe(e.target.checked)}
-                      className="w-4 h-4 rounded border-[#26282E] bg-[#16181F] text-[#DFB76C] focus:ring-0 cursor-pointer"
+                      className="w-4 h-4 rounded border-border bg-surface-elevated text-brand focus:ring-0 cursor-pointer"
                     />
                     <span>Remember me</span>
                   </label>
 
                   <Link
                     href="/forgot-password"
-                    className="font-semibold text-[#DFB76C] hover:text-[#ECC870] hover:underline transition-colors"
+                    className="font-semibold text-brand hover:text-brand-hover hover:underline transition-colors"
                   >
                     Forgot password?
                   </Link>
@@ -433,10 +433,10 @@ export default function LoginPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full h-12 flex items-center justify-center gap-2 bg-[#DFB76C] hover:bg-[#ECC870] active:scale-99 text-[#0B0C0E] font-bold rounded-xl shadow-md transition-all mt-2 cursor-pointer"
+                  className="w-full h-12 flex items-center justify-center gap-2 bg-brand hover:bg-brand-hover active:scale-99 text-on-brand font-bold rounded-xl shadow-md transition-all mt-2 cursor-pointer"
                 >
                   {isLoading ? (
-                    <div className="w-5 h-5 border-2 border-[#0B0C0E]/30 border-t-[#0B0C0E] rounded-full animate-spin" />
+                    <div className="w-5 h-5 border-2 border-on-brand/30 border-t-on-brand rounded-none animate-spin" />
                   ) : (
                     <>
                       <span>Sign in</span>
@@ -449,18 +449,18 @@ export default function LoginPage() {
                 <button
                   type="button"
                   onClick={() => setIsPhoneMode(!isPhoneMode)}
-                  className="w-full text-center py-1 text-xs font-semibold text-[#DFB76C] hover:underline cursor-pointer"
+                  className="w-full text-center py-1 text-xs font-semibold text-brand hover:underline cursor-pointer"
                 >
                   {isPhoneMode ? "Sign in with email and password" : "Sign in with a phone code"}
                 </button>
               </form>
 
               {/* Bottom Join CTA */}
-              <div className="pt-2 text-center text-xs text-foreground-muted border-t border-[#26282E]">
+              <div className="pt-2 text-center text-xs text-foreground-muted border-t border-border">
                 <span>New to Ophir Reserve? </span>
                 <Link
                   href="/register/select-role"
-                  className="font-bold text-[#DFB76C] hover:text-[#ECC870] hover:underline"
+                  className="font-bold text-brand hover:text-brand-hover hover:underline"
                 >
                   Join now
                 </Link>
