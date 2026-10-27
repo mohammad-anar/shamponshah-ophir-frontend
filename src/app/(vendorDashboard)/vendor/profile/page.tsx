@@ -304,10 +304,10 @@ export default function VendorProfileEditorPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
               Storefront Profile
             </h1>
-            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 text-emerald-800">
+            <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-success-soft text-success">
               Live in Directory
             </span>
           </div>
@@ -331,7 +331,7 @@ export default function VendorProfileEditorPage() {
           <button
             onClick={() => handleSave()}
             disabled={isUpdating}
-            className="px-5 py-2 bg-[#0F0C3B] hover:bg-[#18124E] text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer disabled:opacity-60"
+            className="px-5 py-2 bg-brand hover:bg-surface-sunken text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer disabled:opacity-60"
           >
             {isUpdating ? (
               <Loader2 className="w-4 h-4 animate-spin" />
@@ -344,7 +344,7 @@ export default function VendorProfileEditorPage() {
       </div>
 
       {savedSuccess && (
-        <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs font-bold flex items-center gap-2 animate-in fade-in">
+        <div className="p-4 bg-success-soft border border-success/30 rounded-xl text-success text-xs font-bold flex items-center gap-2 animate-in fade-in">
           <CheckCircle2 className="w-4 h-4 text-success" /> Storefront profile updated successfully!
         </div>
       )}
@@ -352,7 +352,7 @@ export default function VendorProfileEditorPage() {
       {/* Profile Header & Visual Assets */}
       <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-xs">
         {/* Banner Cover Image */}
-        <div className="relative h-48 bg-gradient-to-r from-[#0F0C3B] to-indigo-900 overflow-hidden group">
+        <div className="relative h-48 bg-gradient-to-r from-brand to-indigo-900 overflow-hidden group">
           {heroImageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -366,11 +366,11 @@ export default function VendorProfileEditorPage() {
             </div>
           )}
 
-          <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <div className="absolute inset-0 bg-background/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
             <button
               type="button"
               onClick={() => bannerInputRef.current?.click()}
-              className="px-4 py-2 rounded-xl bg-black/60 hover:bg-black/80 text-foreground text-xs font-bold backdrop-blur-xs flex items-center gap-2 transition-all cursor-pointer shadow-md"
+              className="px-4 py-2 rounded-xl bg-background/60 hover:bg-background/80 text-foreground text-xs font-bold backdrop-blur-xs flex items-center gap-2 transition-all cursor-pointer shadow-md"
             >
               <Camera className="w-4 h-4 text-warning" />
               <span>Change Cover Banner</span>
@@ -383,7 +383,7 @@ export default function VendorProfileEditorPage() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-12 mb-6">
             {/* Avatar */}
             <div className="relative group">
-              <div className="w-24 h-24 rounded-2xl bg-[#0F0C3B] text-foreground flex items-center justify-center font-black text-2xl border-4 border-white shadow-md overflow-hidden bg-cover bg-center">
+              <div className="w-24 h-24 rounded-2xl bg-brand text-foreground flex items-center justify-center font-black text-2xl border-4 border-border-strong shadow-md overflow-hidden bg-cover bg-center">
                 {avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
@@ -402,7 +402,7 @@ export default function VendorProfileEditorPage() {
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="px-3 py-1 bg-indigo-50 text-indigo-900 border border-indigo-200 rounded-full text-xs font-bold flex items-center gap-1">
+              <span className="px-3 py-1 bg-info-soft text-info border border-info/30 rounded-full text-xs font-bold flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-info" /> Verified Escrow Vendor
               </span>
             </div>
@@ -418,7 +418,7 @@ export default function VendorProfileEditorPage() {
                   value={businessName}
                   onChange={(e) => setBusinessName(e.target.value)}
                   placeholder="e.g. Luminary Event Studios"
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-bold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-bold focus:outline-none focus:border-brand-primary"
                 />
               </div>
 
@@ -429,7 +429,7 @@ export default function VendorProfileEditorPage() {
                   value={headline}
                   onChange={(e) => setHeadline(e.target.value)}
                   placeholder="e.g. Luxury Wedding DJ &amp; Sound Production"
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 />
               </div>
             </div>
@@ -441,7 +441,7 @@ export default function VendorProfileEditorPage() {
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
                 placeholder="Share your background, milestones handled, equipment used, and setup experience..."
-                className="w-full bg-[#F8F9FD] border border-border rounded-xl p-3 text-foreground focus:outline-none focus:border-brand-primary resize-none leading-relaxed"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-3 text-foreground focus:outline-none focus:border-brand-primary resize-none leading-relaxed"
               />
             </div>
 
@@ -454,7 +454,7 @@ export default function VendorProfileEditorPage() {
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   placeholder="Chicago"
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 />
               </div>
 
@@ -465,7 +465,7 @@ export default function VendorProfileEditorPage() {
                   value={state}
                   onChange={(e) => setState(e.target.value)}
                   placeholder="IL"
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 />
               </div>
 
@@ -476,7 +476,7 @@ export default function VendorProfileEditorPage() {
                   value={travelRadius}
                   onChange={(e) => setTravelRadius(e.target.value)}
                   placeholder="e.g. 50 miles"
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 />
               </div>
             </div>
@@ -485,7 +485,7 @@ export default function VendorProfileEditorPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
               <div>
                 <label className="block text-foreground-secondary font-bold mb-1">Website URL</label>
-                <div className="flex items-center rounded-xl border border-border bg-[#F8F9FD] overflow-hidden focus-within:border-brand-primary">
+                <div className="flex items-center rounded-xl border border-border bg-surface-elevated overflow-hidden focus-within:border-brand-primary">
                   <span className="px-3 text-foreground-muted">
                     <Globe className="w-3.5 h-3.5" />
                   </span>
@@ -501,7 +501,7 @@ export default function VendorProfileEditorPage() {
 
               <div>
                 <label className="block text-foreground-secondary font-bold mb-1">Instagram Handle</label>
-                <div className="flex items-center rounded-xl border border-border bg-[#F8F9FD] overflow-hidden focus-within:border-brand-primary">
+                <div className="flex items-center rounded-xl border border-border bg-surface-elevated overflow-hidden focus-within:border-brand-primary">
                   <span className="px-3 text-foreground-muted">
                     <Instagram className="w-3.5 h-3.5" />
                   </span>
@@ -523,7 +523,7 @@ export default function VendorProfileEditorPage() {
       <div className="bg-surface border border-border rounded-2xl p-6 shadow-xs space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-3">
           <div>
-            <h2 className="text-base font-bold text-[#0F0C3B]">Portfolio &amp; Event Media</h2>
+            <h2 className="text-base font-bold text-foreground">Portfolio &amp; Event Media</h2>
             <p className="text-xs text-foreground-muted">
               High-resolution photos showcasing past setups, performances, and celebrations. These appear on your profile and the home page showcase.
             </p>
@@ -538,7 +538,7 @@ export default function VendorProfileEditorPage() {
               setModalFilePreview(null);
               setPhotoModalOpen(true);
             }}
-            className="px-4 py-2 bg-[#0F0C3B] hover:bg-[#18124E] text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start cursor-pointer shadow-xs"
+            className="px-4 py-2 bg-brand hover:bg-surface-sunken text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start cursor-pointer shadow-xs"
           >
             <Plus className="w-3.5 h-3.5 text-warning" />
             <span>Upload Photo</span>
@@ -550,10 +550,10 @@ export default function VendorProfileEditorPage() {
             onClick={() => setPhotoModalOpen(true)}
             className="border-2 border-dashed border-border rounded-2xl p-8 text-center cursor-pointer hover:border-brand-primary hover:bg-surface-elevated/50 transition-colors"
           >
-            <div className="w-10 h-10 rounded-full bg-indigo-50 text-brand-primary flex items-center justify-center mx-auto mb-2">
+            <div className="w-10 h-10 rounded-full bg-info-soft text-brand-primary flex items-center justify-center mx-auto mb-2">
               <UploadCloud className="w-5 h-5" />
             </div>
-            <p className="text-xs font-bold text-[#0F0C3B]">No portfolio photos uploaded yet</p>
+            <p className="text-xs font-bold text-foreground">No portfolio photos uploaded yet</p>
             <p className="text-[11px] text-foreground-muted mt-0.5">Click here to upload photos of your past work</p>
           </div>
         ) : (
@@ -569,11 +569,11 @@ export default function VendorProfileEditorPage() {
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent p-2.5 flex flex-col justify-between opacity-90">
+                <div className="absolute inset-0 bg-gradient-to-t from-background/85 via-black/20 to-transparent p-2.5 flex flex-col justify-between opacity-90">
                   <button
                     type="button"
                     onClick={() => handleDeletePhoto(item.id)}
-                    className="self-end p-1.5 rounded-full bg-black/60 text-foreground hover:bg-rose-600 transition-colors cursor-pointer shadow-xs"
+                    className="self-end p-1.5 rounded-full bg-background/60 text-foreground hover:bg-danger-solid text-white transition-colors cursor-pointer shadow-xs"
                     title="Remove photo"
                   >
                     <Trash2 className="w-3 h-3" />
@@ -590,11 +590,11 @@ export default function VendorProfileEditorPage() {
 
       {/* Add Photo Modal with File Upload & URL Option */}
       {photoModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-border animate-in fade-in text-xs">
             <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
-                <h3 className="text-sm font-bold text-[#0F0C3B]">Add Event Media to Portfolio</h3>
+                <h3 className="text-sm font-bold text-foreground">Add Event Media to Portfolio</h3>
                 <p className="text-[11px] text-foreground-muted">Upload high-res event photography from your device or paste a URL</p>
               </div>
               <button
@@ -628,10 +628,10 @@ export default function VendorProfileEditorPage() {
                 className={cn(
                   "p-6 border-2 border-dashed rounded-xl flex flex-col items-center justify-center text-center cursor-pointer transition-all",
                   isModalDragging
-                    ? "border-brand-primary bg-indigo-50/50 scale-[1.01]"
+                    ? "border-brand-primary bg-info-soft/50 scale-[1.01]"
                     : modalFilePreview
-                    ? "border-emerald-300 bg-emerald-50/30"
-                    : "border-border bg-[#F8F9FD] hover:border-brand-primary"
+                    ? "border-success/30 bg-success-soft/30"
+                    : "border-border bg-surface-elevated hover:border-brand-primary"
                 )}
               >
                 {modalFilePreview ? (
@@ -642,12 +642,12 @@ export default function VendorProfileEditorPage() {
                       alt="Preview"
                       className="w-32 h-20 object-cover rounded-lg border border-border mx-auto shadow-xs"
                     />
-                    <p className="text-emerald-700 font-bold text-xs">Photo selected! Click to change</p>
+                    <p className="text-success font-bold text-xs">Photo selected! Click to change</p>
                   </div>
                 ) : (
                   <>
                     <UploadCloud className="w-8 h-8 text-brand-primary mb-2" />
-                    <p className="font-bold text-[#0F0C3B] text-xs">Drag &amp; drop an event photo, or click to browse</p>
+                    <p className="font-bold text-foreground text-xs">Drag &amp; drop an event photo, or click to browse</p>
                     <p className="text-[10px] text-foreground-muted mt-0.5">JPG, PNG, WEBP up to 50MB</p>
                   </>
                 )}
@@ -666,7 +666,7 @@ export default function VendorProfileEditorPage() {
                       setModalFilePreview(e.target.value.trim());
                     }
                   }}
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground text-xs focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground text-xs focus:outline-none focus:border-brand-primary"
                 />
               </div>
 
@@ -679,7 +679,7 @@ export default function VendorProfileEditorPage() {
                   placeholder="e.g. Grand Ballroom Wedding Stage &amp; Ambient Lighting"
                   value={modalPhotoTitle}
                   onChange={(e) => setModalPhotoTitle(e.target.value)}
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground text-xs focus:outline-none focus:border-brand-primary font-medium"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground text-xs focus:outline-none focus:border-brand-primary font-medium"
                 />
               </div>
 
@@ -688,14 +688,14 @@ export default function VendorProfileEditorPage() {
                 <button
                   type="button"
                   onClick={() => setPhotoModalOpen(false)}
-                  className="px-4 py-2 bg-surface-sunken hover:bg-slate-200 text-foreground-secondary rounded-xl font-bold cursor-pointer"
+                  className="px-4 py-2 bg-surface-sunken hover:bg-surface-sunken text-foreground-secondary rounded-xl font-bold cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isAddingPhoto || isUploadingMedia}
-                  className="px-5 py-2 bg-[#0F0C3B] hover:bg-[#18124E] text-foreground rounded-xl font-bold flex items-center gap-1.5 cursor-pointer disabled:opacity-60 shadow-sm"
+                  className="px-5 py-2 bg-brand hover:bg-surface-sunken text-foreground rounded-xl font-bold flex items-center gap-1.5 cursor-pointer disabled:opacity-60 shadow-sm"
                 >
                   {isAddingPhoto || isUploadingMedia ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
