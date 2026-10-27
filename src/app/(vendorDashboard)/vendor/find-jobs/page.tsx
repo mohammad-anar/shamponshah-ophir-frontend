@@ -203,7 +203,7 @@ export default function VendorFindJobsPage() {
                 className={cn(
                   "bg-surface p-6 rounded-2xl border transition-all shadow-xs space-y-4 text-xs",
                   hasSubmitted
-                    ? "border-success/30 ring-1 ring-emerald-100 bg-success-soft/10"
+                    ? "border-success/30 ring-1 ring-success/20 bg-success-soft/10"
                     : "border-border hover:border-info/30"
                 )}
               >
