@@ -47,16 +47,16 @@ export default function WithdrawFundsDrawer({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-black/50 backdrop-blur-xs flex justify-end">
+    <div className="fixed inset-0 z-50 overflow-hidden bg-background/50 backdrop-blur-xs flex justify-end">
       <div className="w-full max-w-md bg-surface h-full shadow-2xl flex flex-col animate-in slide-in-from-right duration-300">
         {/* Header */}
-        <div className="p-5 border-b border-border flex items-center justify-between bg-[#F8F9FD]">
+        <div className="p-5 border-b border-border flex items-center justify-between bg-surface-elevated">
           <div className="flex items-center gap-2">
-            <div className="p-2 rounded-lg bg-emerald-50 text-emerald-700">
+            <div className="p-2 rounded-lg bg-success-soft text-success">
               <Wallet className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="font-bold text-[#0F0C3B] text-base">Withdraw Funds</h3>
+              <h3 className="font-bold text-foreground text-base">Withdraw Funds</h3>
               <p className="text-[11px] text-foreground-muted">Payout from your connected Stripe balance</p>
             </div>
           </div>
@@ -75,8 +75,8 @@ export default function WithdrawFundsDrawer({
           <div className="p-4 rounded-xl bg-surface-elevated border border-border space-y-1">
             <span className="text-[10px] uppercase font-bold text-foreground-muted">Available to Withdraw</span>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-extrabold text-[#0F0C3B]">${availableAmount}</span>
-              <span className="text-xs font-bold text-success bg-emerald-100 px-2 py-0.5 rounded-full">
+              <span className="text-3xl font-extrabold text-foreground">${availableAmount}</span>
+              <span className="text-xs font-bold text-success bg-success-soft px-2 py-0.5 rounded-full">
                 Cleared
               </span>
             </div>
@@ -85,28 +85,28 @@ export default function WithdrawFundsDrawer({
 
           {/* Amount input */}
           <div className="space-y-1.5">
-            <label className="block font-bold text-[#0F0C3B]">Amount to withdraw ($)</label>
+            <label className="block font-bold text-foreground">Amount to withdraw ($)</label>
             <div className="relative">
               <span className="absolute left-3.5 top-1/2 -translate-y-1/2 font-bold text-foreground-muted text-sm">$</span>
               <input
                 type="text"
                 value={withdrawAmount}
                 onChange={(e) => setWithdrawAmount(e.target.value)}
-                className="w-full bg-surface border border-border rounded-xl pl-8 pr-4 py-2.5 text-sm font-bold text-[#0F0C3B] focus:outline-none focus:border-brand-primary"
+                className="w-full bg-surface border border-border rounded-xl pl-8 pr-4 py-2.5 text-sm font-bold text-foreground focus:outline-none focus:border-brand-primary"
               />
             </div>
           </div>
 
           {/* Destination Bank Account */}
           <div className="space-y-2">
-            <label className="block font-bold text-[#0F0C3B]">Destination Account</label>
+            <label className="block font-bold text-foreground">Destination Account</label>
             <div className="p-3.5 rounded-xl border border-border bg-surface flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-lg bg-indigo-50 text-indigo-700 flex items-center justify-center font-bold">
+                <div className="w-9 h-9 rounded-lg bg-info-soft text-info flex items-center justify-center font-bold">
                   <Wallet className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-[#0F0C3B]">Stripe connected account</h4>
+                  <h4 className="font-bold text-foreground">Stripe connected account</h4>
                   <p className="text-[11px] text-foreground-muted">Manage bank details in Stripe Express</p>
                 </div>
               </div>
@@ -115,7 +115,7 @@ export default function WithdrawFundsDrawer({
 
           {/* Speed Options */}
           <div className="space-y-2">
-            <label className="block font-bold text-[#0F0C3B]">Payout Speed</label>
+            <label className="block font-bold text-foreground">Payout Speed</label>
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
@@ -123,12 +123,12 @@ export default function WithdrawFundsDrawer({
                 className={cn(
                   "p-3 rounded-xl border text-left transition-all",
                   payoutMethod === "instant"
-                    ? "bg-indigo-50/60 border-brand-primary ring-2 ring-indigo-50"
+                    ? "bg-info-soft/60 border-brand-primary ring-2 ring-indigo-50"
                     : "bg-surface border-border hover:bg-surface-elevated"
                 )}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-[#0F0C3B]">Instant</span>
+                  <span className="font-bold text-foreground">Instant</span>
                 </div>
                 <p className="text-[10px] text-foreground-muted mt-1">If enabled for your account; fees and timing vary.</p>
               </button>
@@ -139,12 +139,12 @@ export default function WithdrawFundsDrawer({
                 className={cn(
                   "p-3 rounded-xl border text-left transition-all",
                   payoutMethod === "standard"
-                    ? "bg-indigo-50/60 border-brand-primary ring-2 ring-indigo-50"
+                    ? "bg-info-soft/60 border-brand-primary ring-2 ring-indigo-50"
                     : "bg-surface border-border hover:bg-surface-elevated"
                 )}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-bold text-[#0F0C3B]">Standard</span>
+                  <span className="font-bold text-foreground">Standard</span>
                 </div>
                 <p className="text-[10px] text-foreground-muted mt-1">Availability and timing are set by Stripe.</p>
               </button>
@@ -162,7 +162,7 @@ export default function WithdrawFundsDrawer({
           <button
             onClick={handleWithdraw}
             disabled={isLoading}
-            className="w-full py-3 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 disabled:opacity-50"
+            className="w-full py-3 rounded-xl bg-brand hover:bg-surface-sunken text-foreground text-xs font-bold transition-all shadow-md flex items-center justify-center gap-1.5 disabled:opacity-50"
           >
             <span>{isLoading ? "Sending to Stripe..." : `Request payout $${withdrawAmount}`}</span>
             <ArrowRight className="w-4 h-4" />
