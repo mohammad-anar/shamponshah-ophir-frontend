@@ -369,7 +369,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
         <div className="flex items-center gap-3">
           <Link
             href="/admin/jobs"
-            className="p-2.5 rounded-xl bg-[#16181F] border border-[#26282E] hover:bg-[#1A1D24] text-foreground-secondary transition-colors shadow-2xs flex items-center justify-center"
+            className="p-2.5 rounded-xl bg-surface-elevated border border-border hover:bg-surface-sunken text-foreground-secondary transition-colors shadow-2xs flex items-center justify-center"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
@@ -378,17 +378,17 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
               <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
                 Job RFP &amp; Bids Audit
               </h1>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-[#16181F] text-[#DFB76C] border border-[#26282E]">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-surface-elevated text-brand border border-border">
                 #{job.id}
               </span>
               <span
                 className={cn(
                   "px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase",
                   job.status === "OPEN_BIDDING"
-                    ? "bg-info-solid text-white/15 text-info border border-info/30"
+                    ? "bg-info-solid text-foreground/15 text-info border border-info/30"
                     : job.status === "AWARDED"
-                    ? "bg-success-solid text-white/15 text-success border border-success/30"
-                    : "bg-slate-500/15 text-foreground-muted border border-slate-500/30"
+                    ? "bg-success-solid text-foreground/15 text-success border border-success/30"
+                    : "bg-surface-sunken/15 text-foreground-muted border border-border-strong/30"
                 )}
               >
                 {job.status.replace("_", " ")}
@@ -405,7 +405,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
           {job.status === "OPEN_BIDDING" && (
             <button
               onClick={() => handleStatusChange("AWARDED")}
-              className="px-3.5 py-2 rounded-xl bg-success-solid text-white hover:bg-success-solid text-white text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-xl bg-success-solid text-foreground hover:bg-success-solid text-foreground text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
             >
               <CheckCircle2 className="w-4 h-4" /> Mark as Awarded
             </button>
@@ -414,7 +414,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
           {job.status !== "CANCELLED" && (
             <button
               onClick={() => handleStatusChange("CANCELLED")}
-              className="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-xl bg-danger-solid text-white hover:bg-danger-solid text-foreground text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
             >
               <XCircle className="w-4 h-4" /> Cancel RFP
             </button>
@@ -429,14 +429,14 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
         <div className="lg:col-span-2 space-y-6">
 
           {/* Job Overview Card */}
-          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-6 shadow-xs space-y-5">
+          <div className="bg-surface rounded-3xl border border-border p-6 shadow-xs space-y-5">
             <div>
               <div className="flex items-center justify-between gap-2 flex-wrap">
-                <span className="px-3 py-1 rounded-full bg-[#DFB76C]/15 text-[#DFB76C] border border-border-brand/40 text-[11px] font-bold">
+                <span className="px-3 py-1 rounded-full bg-brand/15 text-brand border border-border-brand/40 text-[11px] font-bold">
                   {job.category}
                 </span>
-                <span className="text-xs text-[#DFB76C] font-bold bg-[#16181F] px-2.5 py-1 rounded-full border border-[#26282E] flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5 text-[#DFB76C]" />
+                <span className="text-xs text-brand font-bold bg-surface-elevated px-2.5 py-1 rounded-full border border-border flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5 text-brand" />
                   {job.biddingDeadline}
                 </span>
               </div>
@@ -447,10 +447,10 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
             </div>
 
             {/* Quick Stats Banner */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-[#16181F] rounded-2xl border border-[#26282E]">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-surface-elevated rounded-2xl border border-border">
               <div>
                 <span className="text-foreground-muted text-[10px] uppercase font-bold block">Budget Range</span>
-                <span className="text-base font-black text-[#DFB76C] font-mono mt-0.5 block">
+                <span className="text-base font-black text-brand font-mono mt-0.5 block">
                   ${job.budgetMin} – ${job.budgetMax}
                 </span>
               </div>
@@ -462,7 +462,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
               <div>
                 <span className="text-foreground-muted text-[10px] uppercase font-bold block">Guest Count</span>
                 <span className="text-xs font-bold text-foreground mt-0.5 block flex items-center gap-1">
-                  <Users className="w-3.5 h-3.5 text-[#DFB76C]" /> {job.guestCount} Guests
+                  <Users className="w-3.5 h-3.5 text-brand" /> {job.guestCount} Guests
                 </span>
               </div>
               <div>
@@ -483,13 +483,13 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
             </div>
 
             {/* Inclusions / Scope Checklist */}
-            <div className="space-y-2.5 pt-2 border-t border-[#26282E]">
+            <div className="space-y-2.5 pt-2 border-t border-border">
               <h3 className="font-bold text-foreground text-sm flex items-center gap-1.5">
-                <Sparkles className="w-4 h-4 text-[#DFB76C]" /> Specific Requirements &amp; Deliverables
+                <Sparkles className="w-4 h-4 text-brand" /> Specific Requirements &amp; Deliverables
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {job.requirements.map((req, i) => (
-                  <div key={i} className="flex items-start gap-2 p-2.5 rounded-xl bg-[#16181F] border border-[#26282E]">
+                  <div key={i} className="flex items-start gap-2 p-2.5 rounded-xl bg-surface-elevated border border-border">
                     <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                     <span className="text-foreground-secondary leading-snug">{req}</span>
                   </div>
@@ -499,11 +499,11 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
           </div>
 
           {/* Vendor Proposals & Bids Table */}
-          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-6 shadow-xs space-y-4">
+          <div className="bg-surface rounded-3xl border border-border p-6 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-base font-black text-foreground flex items-center gap-2">
-                  <Briefcase className="w-4 h-4 text-[#DFB76C]" /> Vendor Proposals &amp; Bids Received ({job.bids.length})
+                  <Briefcase className="w-4 h-4 text-brand" /> Vendor Proposals &amp; Bids Received ({job.bids.length})
                 </h3>
                 <p className="text-xs text-foreground-muted">
                   Inspect vendor quotes, proposal messages, ratings, and award contracts on behalf of buyers.
@@ -512,7 +512,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
             </div>
 
             {job.bids.length === 0 ? (
-              <div className="p-8 text-center bg-[#16181F] rounded-2xl border border-dashed border-[#26282E]">
+              <div className="p-8 text-center bg-surface-elevated rounded-2xl border border-dashed border-border">
                 <Briefcase className="w-8 h-8 text-foreground-muted mx-auto mb-2" />
                 <p className="text-foreground-secondary font-bold">No vendor bids placed yet</p>
                 <p className="text-foreground-muted text-xs mt-0.5">Job is currently distributed to verified marketplace vendors.</p>
@@ -526,25 +526,25 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
                       "p-4 rounded-2xl border transition-all space-y-3",
                       bid.status === "ACCEPTED"
                         ? "bg-success-soft text-success border-success/30 shadow-xs"
-                        : "bg-[#16181F] border-[#26282E] hover:border-border-brand/40"
+                        : "bg-surface-elevated border-border hover:border-border-brand/40"
                     )}
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                       {/* Vendor Info */}
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#26282E] shadow-xs flex-shrink-0">
+                        <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-border shadow-xs flex-shrink-0">
                           <img src={bid.vendorAvatar} alt={bid.vendorName} className="w-full h-full object-cover" />
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
                             <h4 className="font-bold text-foreground text-xs sm:text-sm">{bid.vendorName}</h4>
-                            <span className="px-2 py-0.2 rounded text-[10px] font-bold bg-[#DFB76C]/15 text-[#DFB76C] border border-border-brand/40">
+                            <span className="px-2 py-0.2 rounded text-[10px] font-bold bg-brand/15 text-brand border border-border-brand/40">
                               {bid.tier}
                             </span>
                           </div>
                           <div className="flex items-center gap-2 text-[10px] text-foreground-muted mt-0.5">
-                            <span className="flex items-center text-[#DFB76C] font-bold">
-                              <Star className="w-3 h-3 fill-[#DFB76C] mr-0.5" />
+                            <span className="flex items-center text-brand font-bold">
+                              <Star className="w-3 h-3 fill-brand mr-0.5" />
                               {bid.rating} ({bid.reviewsCount})
                             </span>
                             <span>&bull;</span>
@@ -554,21 +554,21 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
                       </div>
 
                       {/* Bid Quote & Action */}
-                      <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#26282E]">
+                      <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-border">
                         <div className="text-left sm:text-right">
                           <span className="text-[10px] text-foreground-muted uppercase font-bold block">Bid Quote</span>
-                          <span className="text-base sm:text-lg font-black text-[#DFB76C] font-mono">${bid.bidAmount}</span>
+                          <span className="text-base sm:text-lg font-black text-brand font-mono">${bid.bidAmount}</span>
                           <span className="text-[10px] text-foreground-muted block">{bid.deliveryTime}</span>
                         </div>
 
                         {bid.status === "ACCEPTED" ? (
-                          <div className="px-3 py-1.5 bg-success-solid text-white/20 border border-success/30 text-success rounded-xl text-xs font-bold flex items-center gap-1">
+                          <div className="px-3 py-1.5 bg-success-solid text-foreground/20 border border-success/30 text-success rounded-xl text-xs font-bold flex items-center gap-1">
                             <Check className="w-3.5 h-3.5" /> Awarded
                           </div>
                         ) : (
                           <button
                             onClick={() => handleAwardBid(bid)}
-                            className="px-3 py-1.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl text-xs font-bold transition-all shadow-xs"
+                            className="px-3 py-1.5 bg-brand hover:bg-brand-hover text-on-brand rounded-xl text-xs font-bold transition-all shadow-xs"
                           >
                             Award Contract
                           </button>
@@ -577,7 +577,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
                     </div>
 
                     {/* Proposal Pitch */}
-                    <div className="p-3 bg-[#121418] rounded-xl border border-[#26282E] text-foreground-secondary text-xs leading-relaxed italic">
+                    <div className="p-3 bg-surface rounded-xl border border-border text-foreground-secondary text-xs leading-relaxed italic">
                       "{bid.pitch}"
                     </div>
                   </div>
@@ -591,18 +591,18 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
         <div className="space-y-6">
 
           {/* Client (Host) Card */}
-          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-5 shadow-xs space-y-4">
+          <div className="bg-surface rounded-3xl border border-border p-5 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">
                 Event Host (Buyer)
               </span>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-success-solid text-white/15 text-success border border-success/30">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-success-solid text-foreground/15 text-success border border-success/30">
                 Verified Buyer
               </span>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full bg-[#16181F] border border-[#26282E] text-[#DFB76C] flex items-center justify-center font-bold text-sm shadow-xs">
+              <div className="w-11 h-11 rounded-full bg-surface-elevated border border-border text-brand flex items-center justify-center font-bold text-sm shadow-xs">
                 {job.client.avatar}
               </div>
               <div>
@@ -615,7 +615,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
               </div>
             </div>
 
-            <div className="space-y-1.5 pt-2 border-t border-[#26282E] text-foreground-secondary text-xs">
+            <div className="space-y-1.5 pt-2 border-t border-border text-foreground-secondary text-xs">
               <div className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-foreground-muted" />
                 <span className="font-mono text-[11px]">{job.client.email}</span>
@@ -628,9 +628,9 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
           </div>
 
           {/* Escrow Custody & Fee Estimation */}
-          <div className="bg-[#121418] border border-[#26282E] text-foreground rounded-3xl p-5 shadow-md space-y-4">
+          <div className="bg-surface border border-border text-foreground rounded-3xl p-5 shadow-md space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-[#DFB76C] uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-brand uppercase tracking-wider">
                 Marketplace Escrow
               </span>
               <ShieldCheck className="w-4 h-4 text-success" />
@@ -638,12 +638,12 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
 
             <div className="space-y-1">
               <span className="text-xs text-foreground-muted">Budget Range Held on Reserve:</span>
-              <h3 className="text-xl font-black text-[#DFB76C] font-mono">
+              <h3 className="text-xl font-black text-brand font-mono">
                 ${job.budgetMin} – ${job.budgetMax}
               </h3>
             </div>
 
-            <div className="p-3 bg-[#16181F] rounded-xl border border-[#26282E] space-y-1.5 text-[11px]">
+            <div className="p-3 bg-surface-elevated rounded-xl border border-border space-y-1.5 text-[11px]">
               <div className="flex justify-between text-foreground-secondary">
                 <span>Vendor Platform Fee (10%):</span>
                 <span className="font-mono font-bold text-foreground">${job.budgetMax * 0.1}</span>
@@ -656,10 +656,10 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
           </div>
 
           {/* Admin Internal Audit Notes */}
-          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-5 shadow-xs space-y-3.5">
+          <div className="bg-surface rounded-3xl border border-border p-5 shadow-xs space-y-3.5">
             <div className="flex items-center justify-between">
               <h4 className="font-bold text-foreground text-sm flex items-center gap-1.5">
-                <MessageSquare className="w-4 h-4 text-[#DFB76C]" /> Internal Audit Log
+                <MessageSquare className="w-4 h-4 text-brand" /> Internal Audit Log
               </h4>
               <span className="text-foreground-muted text-[10px] font-bold">{job.adminNotes.length} notes</span>
             </div>
@@ -667,7 +667,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
             {/* Note list */}
             <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
               {job.adminNotes.map((note) => (
-                <div key={note.id} className="p-3 bg-[#16181F] rounded-xl border border-[#26282E] space-y-1">
+                <div key={note.id} className="p-3 bg-surface-elevated rounded-xl border border-border space-y-1">
                   <div className="flex items-center justify-between text-[10px]">
                     <span className="font-bold text-foreground">{note.author}</span>
                     <span className="text-foreground-muted">{note.date}</span>
@@ -678,17 +678,17 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
             </div>
 
             {/* Add note input */}
-            <form onSubmit={handleAddNote} className="space-y-2 pt-2 border-t border-[#26282E]">
+            <form onSubmit={handleAddNote} className="space-y-2 pt-2 border-t border-border">
               <textarea
                 rows={2}
                 placeholder="Log internal job moderation note..."
                 value={newNote}
                 onChange={(e) => setNewNote(e.target.value)}
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand"
               />
               <button
                 type="submit"
-                className="w-full py-2 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-secondary hover:text-foreground rounded-xl font-bold transition-colors flex items-center justify-center gap-1.5 text-xs"
+                className="w-full py-2 bg-surface-elevated hover:bg-surface-sunken border border-border text-foreground-secondary hover:text-foreground rounded-xl font-bold transition-colors flex items-center justify-center gap-1.5 text-xs"
               >
                 <Send className="w-3.5 h-3.5" /> Append Note
               </button>
