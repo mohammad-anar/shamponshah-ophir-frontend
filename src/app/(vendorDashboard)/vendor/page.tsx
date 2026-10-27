@@ -195,25 +195,25 @@ export default function VendorDashboardOverview() {
             <span className="text-foreground-secondary">•</span>
             <span className="text-xs text-foreground-secondary font-semibold">{locationCity}</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-[#0F0C3B] mt-0.5">
+          <h1 className="text-2xl sm:text-3xl font-bold text-foreground mt-0.5">
             Good morning, {vendorGreetingName}
           </h1>
           <p className="text-xs text-foreground-muted mt-1">
-            You have <strong className="text-[#0F0C3B]">{liveOrders.length} active orders</strong> in your fulfillment queue. Escrow balance is healthy.
+            You have <strong className="text-foreground">{liveOrders.length} active orders</strong> in your fulfillment queue. Escrow balance is healthy.
           </p>
         </div>
 
         <div className="flex items-center gap-3 flex-wrap">
           <Link
             href={vendorProfile?.slug ? `/vendors/profile/${vendorProfile.slug}` : "/vendors"}
-            className="px-4 py-2 rounded-xl bg-surface border border-border text-xs font-bold text-[#0F0C3B] hover:bg-surface-elevated shadow-xs flex items-center gap-1.5 transition-colors"
+            className="px-4 py-2 rounded-xl bg-surface border border-border text-xs font-bold text-foreground hover:bg-surface-elevated shadow-xs flex items-center gap-1.5 transition-colors"
           >
             <ExternalLink className="w-3.5 h-3.5 text-foreground-muted" />
             <span>Preview public profile</span>
           </Link>
           <Link
             href="/vendor/gigs/create"
-            className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
+            className="px-4 py-2 rounded-xl bg-brand hover:bg-surface-sunken text-foreground text-xs font-bold shadow-sm transition-all flex items-center gap-1.5"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Create new gig</span>
@@ -223,10 +223,10 @@ export default function VendorDashboardOverview() {
 
       {/* Profile Completion Prompt Banner (Shown for newly registered or incomplete vendor profiles) */}
       {(!vendorProfile?.bio || !vendorProfile?.avatarUrl || !vendorProfile?.stripeAccountId) && (
-        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-[#0F0C3B] to-[#1E1854] text-foreground shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4 border border-[#2D266E]">
+        <div className="p-4 sm:p-5 rounded-none bg-gradient-to-r from-surface-elevated to-surface text-foreground shadow-md flex flex-col md:flex-row md:items-center justify-between gap-4 border border-border-brand/40">
           <div className="space-y-1.5 max-w-xl">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-400/20 text-[#DFB76C] text-[10px] font-extrabold uppercase tracking-wider border border-border-brand/40">
-              <Sparkles className="w-3 h-3 text-[#DFB76C]" />
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-warning-solid text-on-brand/20 text-brand text-[10px] font-extrabold uppercase tracking-wider border border-border-brand/40">
+              <Sparkles className="w-3 h-3 text-brand" />
               <span>Complete Your Artisan Studio Profile</span>
             </div>
             <h3 className="font-bold text-base sm:text-lg text-foreground">
@@ -240,7 +240,7 @@ export default function VendorDashboardOverview() {
           <div className="flex items-center gap-2.5 flex-shrink-0">
             <Link
               href="/vendor/profile"
-              className="px-4 py-2.5 rounded-xl bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+              className="px-4 py-2.5 rounded-xl bg-brand hover:bg-brand-hover text-on-brand text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
             >
               <span>Complete Profile</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -256,21 +256,21 @@ export default function VendorDashboardOverview() {
       )}
 
       {/* Response Rate Alert Banner */}
-      <div className="p-4 rounded-xl bg-amber-50/80 border border-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+      <div className="p-4 rounded-xl bg-warning-soft/80 border border-warning/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
         <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-amber-100 text-amber-800">
+          <div className="p-2 rounded-lg bg-warning-soft text-warning">
             <Clock className="w-4 h-4" />
           </div>
           <div>
-            <h4 className="font-bold text-amber-950">Active inquiry messages pending response</h4>
-            <p className="text-[11px] text-amber-800">
+            <h4 className="font-bold text-warning">Active inquiry messages pending response</h4>
+            <p className="text-[11px] text-warning">
               Reply promptly within 1 hour to keep your response rate high (current: {vendorProfile?.responseRate || analytics?.responseRate || 94}%).
             </p>
           </div>
         </div>
         <Link
           href="/vendor/messages"
-          className="px-3.5 py-1.5 rounded-lg bg-amber-200/80 hover:bg-amber-300 text-amber-950 font-bold text-xs transition-colors self-start sm:self-auto cursor-pointer"
+          className="px-3.5 py-1.5 rounded-lg bg-warning-soft/80 hover:bg-amber-300 text-warning font-bold text-xs transition-colors self-start sm:self-auto cursor-pointer"
         >
           Open inbox →
         </Link>
@@ -286,18 +286,18 @@ export default function VendorDashboardOverview() {
               <Wallet className="w-4 h-4 text-brand-primary" />
             </div>
             <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-3xl font-extrabold text-[#0F0C3B]">${availableAmount.split('.')[0]}</span>
+              <span className="text-3xl font-extrabold text-foreground">${availableAmount.split('.')[0]}</span>
               <span className="text-base font-bold text-foreground-muted">.{availableAmount.split('.')[1] || '00'}</span>
             </div>
           </div>
 
           <div className="pt-2 border-t border-border flex items-center justify-between">
             <span className="text-[10px] text-success font-semibold flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-success-solid text-white" /> Instant payout eligible
+              <span className="w-1.5 h-1.5 rounded-full bg-success-solid text-foreground" /> Instant payout eligible
             </span>
             <button
               onClick={() => setWithdrawOpen(true)}
-              className="px-3 py-1 rounded-lg bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-[11px] font-bold transition-colors shadow-xs cursor-pointer"
+              className="px-3 py-1 rounded-lg bg-brand hover:bg-surface-sunken text-foreground text-[11px] font-bold transition-colors shadow-xs cursor-pointer"
             >
               Withdraw
             </button>
@@ -312,7 +312,7 @@ export default function VendorDashboardOverview() {
               <Clock className="w-4 h-4 text-warning" />
             </div>
             <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-3xl font-extrabold text-[#0F0C3B]">${pendingAmount.split('.')[0]}</span>
+              <span className="text-3xl font-extrabold text-foreground">${pendingAmount.split('.')[0]}</span>
               <span className="text-base font-bold text-foreground-muted">.{pendingAmount.split('.')[1] || '00'}</span>
             </div>
           </div>
@@ -330,14 +330,14 @@ export default function VendorDashboardOverview() {
               <ShieldCheck className="w-4 h-4 text-info" />
             </div>
             <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-3xl font-extrabold text-[#0F0C3B]">${escrowAmount.split('.')[0]}</span>
+              <span className="text-3xl font-extrabold text-foreground">${escrowAmount.split('.')[0]}</span>
               <span className="text-base font-bold text-foreground-muted">.{escrowAmount.split('.')[1] || '00'}</span>
             </div>
           </div>
 
           <div className="pt-2 border-t border-border flex items-center justify-between text-[10px] text-foreground-muted">
             <span>{liveOrders.length} active orders</span>
-            <span className="font-bold text-indigo-700">Ophir Vault</span>
+            <span className="font-bold text-info">Ophir Vault</span>
           </div>
         </div>
 
@@ -349,7 +349,7 @@ export default function VendorDashboardOverview() {
               <TrendingUp className="w-4 h-4 text-success" />
             </div>
             <div className="flex items-baseline gap-1 mt-1">
-              <span className="text-3xl font-extrabold text-[#0F0C3B]">${lifetimeAmount.split('.')[0]}</span>
+              <span className="text-3xl font-extrabold text-foreground">${lifetimeAmount.split('.')[0]}</span>
               <span className="text-base font-bold text-foreground-muted">.{lifetimeAmount.split('.')[1] || '00'}</span>
             </div>
           </div>
@@ -371,8 +371,8 @@ export default function VendorDashboardOverview() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-[#0F0C3B] text-base">Earnings Revenue</h3>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900">
+                  <h3 className="font-bold text-foreground text-base">Earnings Revenue</h3>
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-warning-soft text-warning">
                     Active Milestone Volume
                   </span>
                 </div>
@@ -388,8 +388,8 @@ export default function VendorDashboardOverview() {
                     className={cn(
                       "px-2.5 py-1 rounded transition-colors cursor-pointer",
                       timeframe === tf
-                        ? "bg-surface font-bold text-[#0F0C3B] shadow-xs"
-                        : "hover:text-[#0F0C3B]"
+                        ? "bg-surface font-bold text-foreground shadow-xs"
+                        : "hover:text-foreground"
                     )}
                   >
                     {tf}
@@ -405,7 +405,7 @@ export default function VendorDashboardOverview() {
                   <span
                     className={cn(
                       "text-[10px] font-semibold opacity-75 group-hover:opacity-100 transition-opacity",
-                      item.isCurrent ? "text-amber-600 font-bold" : "text-foreground-muted"
+                      item.isCurrent ? "text-warning font-bold" : "text-foreground-muted"
                     )}
                   >
                     {item.amount}
@@ -414,13 +414,13 @@ export default function VendorDashboardOverview() {
                     style={{ height: `${item.height}px` }}
                     className={cn(
                       "w-full max-w-[46px] rounded-t transition-all duration-300 group-hover:brightness-110",
-                      item.isCurrent ? "bg-warning-solid text-on-brand shadow-xs" : "bg-[#18124E]"
+                      item.isCurrent ? "bg-warning-solid text-on-brand shadow-xs" : "bg-surface-sunken"
                     )}
                   />
                   <span
                     className={cn(
                       "text-xs mt-1 font-semibold",
-                      item.isCurrent ? "text-[#0F0C3B] font-bold" : "text-foreground-muted"
+                      item.isCurrent ? "text-foreground font-bold" : "text-foreground-muted"
                     )}
                   >
                     {item.month}
@@ -432,14 +432,14 @@ export default function VendorDashboardOverview() {
 
           <div className="pt-3 border-t border-border flex items-center justify-between text-xs text-foreground-muted">
             <span>
-              Avg. order value: <strong className="text-[#0F0C3B]">{avgOrderValue}</strong>
+              Avg. order value: <strong className="text-foreground">{avgOrderValue}</strong>
             </span>
             <div className="flex items-center gap-3 text-[11px]">
               <span className="flex items-center gap-1">
                 <span className="w-2 h-2 rounded bg-warning-solid text-on-brand" /> Current Month
               </span>
               <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded bg-[#18124E]" /> Settled Months
+                <span className="w-2 h-2 rounded bg-surface-sunken" /> Settled Months
               </span>
             </div>
           </div>
@@ -451,13 +451,13 @@ export default function VendorDashboardOverview() {
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-info" />
-                <h3 className="font-bold text-[#0F0C3B] text-base">Payout &amp; Escrow Health</h3>
+                <h3 className="font-bold text-foreground text-base">Payout &amp; Escrow Health</h3>
               </div>
               <span className={cn(
                 "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase",
                 vendorProfile?.stripeAccountId
-                  ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
-                  : "bg-amber-50 text-amber-800 border border-amber-200"
+                  ? "bg-success-soft text-success border border-success/30"
+                  : "bg-warning-soft text-warning border border-warning/30"
               )}>
                 {vendorProfile?.stripeAccountId ? "Stripe Connected" : "Connect Needed"}
               </span>
@@ -466,11 +466,11 @@ export default function VendorDashboardOverview() {
             <div className="space-y-2.5 my-3 text-xs">
               <div className="flex items-center justify-between p-2.5 rounded-lg bg-surface-elevated">
                 <span className="text-foreground-secondary">Active In-Escrow</span>
-                <span className="font-bold text-[#0F0C3B]">${escrowAmount}</span>
+                <span className="font-bold text-foreground">${escrowAmount}</span>
               </div>
               <div className="flex items-center justify-between p-2.5 rounded-lg bg-surface-elevated">
                 <span className="text-foreground-secondary">Waiting 7-Day Release</span>
-                <span className="font-bold text-amber-600">${pendingAmount}</span>
+                <span className="font-bold text-warning">${pendingAmount}</span>
               </div>
               <div className="flex items-center justify-between p-2.5 rounded-lg bg-surface-elevated">
                 <span className="text-foreground-secondary">Available in Stripe</span>
@@ -479,8 +479,8 @@ export default function VendorDashboardOverview() {
             </div>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-indigo-50/60 border border-indigo-100 space-y-1.5 text-xs">
-            <span className="text-[10px] uppercase font-bold text-indigo-800 block">7-DAY CUSTODY PROTECTION</span>
+          <div className="p-3.5 rounded-xl bg-info-soft/60 border border-info/30 space-y-1.5 text-xs">
+            <span className="text-[10px] uppercase font-bold text-info block">7-DAY CUSTODY PROTECTION</span>
             <p className="text-[11px] text-indigo-950 font-medium leading-relaxed">
               Client-approved milestone funds are securely held in platform custody for 7 days before direct transfer to your connected Stripe account.
             </p>
@@ -502,8 +502,8 @@ export default function VendorDashboardOverview() {
         <div className="bg-surface rounded-2xl p-5 border border-border shadow-xs space-y-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <h3 className="font-bold text-[#0F0C3B] text-base">Active Orders</h3>
-              <span className="px-2 py-0.2 rounded-full text-[10px] font-bold bg-indigo-100 text-indigo-800">
+              <h3 className="font-bold text-foreground text-base">Active Orders</h3>
+              <span className="px-2 py-0.2 rounded-full text-[10px] font-bold bg-info-soft text-info">
                 {liveOrders.length}
               </span>
             </div>
@@ -523,15 +523,15 @@ export default function VendorDashboardOverview() {
                 const milestoneCount = ord.milestones?.length || 2;
 
                 return (
-                  <div key={ord.id} className="p-3.5 rounded-xl border border-border bg-[#F8F9FD]/60 flex items-center justify-between gap-3">
+                  <div key={ord.id} className="p-3.5 rounded-xl border border-border bg-surface-elevated/60 flex items-center justify-between gap-3">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h4 className="font-bold text-[#0F0C3B]">{clientName}</h4>
+                        <h4 className="font-bold text-foreground">{clientName}</h4>
                         <span className="text-[10px] text-foreground-muted">{orderNum}</span>
                       </div>
                       <p className="text-[11px] text-foreground-muted line-clamp-1">{title}</p>
                       <div className="flex items-center gap-2 mt-1.5">
-                        <span className="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.2 rounded">
+                        <span className="text-[10px] font-bold text-info bg-info-soft px-1.5 py-0.2 rounded">
                           {milestoneCount} Milestones
                         </span>
                         <span className="text-[10px] text-foreground-muted">Event: {eventDate}</span>
@@ -539,10 +539,10 @@ export default function VendorDashboardOverview() {
                     </div>
 
                     <div className="text-right flex-shrink-0">
-                      <span className="text-base font-extrabold text-[#0F0C3B] block">{amount}</span>
+                      <span className="text-base font-extrabold text-foreground block">{amount}</span>
                       <Link
                         href="/vendor/orders"
-                        className="px-3 py-1 rounded bg-[#0F0C3B] text-foreground text-[10px] font-bold hover:bg-[#18124E] transition-colors mt-1 inline-block"
+                        className="px-3 py-1 rounded bg-brand text-foreground text-[10px] font-bold hover:bg-surface-sunken transition-colors mt-1 inline-block"
                       >
                         Open
                       </Link>
@@ -562,7 +562,7 @@ export default function VendorDashboardOverview() {
         <div className="bg-surface rounded-2xl p-5 border border-border shadow-xs space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="font-bold text-[#0F0C3B] text-base">New Job Matches</h3>
+              <h3 className="font-bold text-foreground text-base">New Job Matches</h3>
               <p className="text-[11px] text-foreground-muted">📍 {locationCity} • Active Requests</p>
             </div>
             <Link href="/vendor/find-jobs" className="text-xs font-bold text-brand-primary hover:underline">
@@ -579,13 +579,13 @@ export default function VendorDashboardOverview() {
                 const dateText = job.eventDate ? new Date(job.eventDate).toLocaleDateString() : "Upcoming";
 
                 return (
-                  <div key={job.id} className="p-3.5 rounded-xl border border-border bg-[#F8F9FD]/60 space-y-2">
+                  <div key={job.id} className="p-3.5 rounded-xl border border-border bg-surface-elevated/60 space-y-2">
                     <div className="flex items-start justify-between">
                       <div>
-                        <h4 className="font-bold text-[#0F0C3B] line-clamp-1">{title}</h4>
+                        <h4 className="font-bold text-foreground line-clamp-1">{title}</h4>
                         <p className="text-[11px] text-foreground-muted">{location} • {dateText}</p>
                       </div>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900 flex-shrink-0">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-warning-soft text-warning flex-shrink-0">
                         Open Request
                       </span>
                     </div>
@@ -593,11 +593,11 @@ export default function VendorDashboardOverview() {
                     <div className="pt-2 border-t border-border flex items-center justify-between">
                       <div>
                         <span className="text-[10px] text-foreground-muted font-semibold block">Client Budget</span>
-                        <span className="font-extrabold text-[#0F0C3B]">{budget}</span>
+                        <span className="font-extrabold text-foreground">{budget}</span>
                       </div>
                       <button
                         onClick={() => handleOpenSendOffer(title, budget, job.id)}
-                        className="px-4 py-1.5 rounded-lg bg-[#0F0C3B] hover:bg-[#18124E] text-foreground font-bold text-xs transition-colors shadow-xs cursor-pointer"
+                        className="px-4 py-1.5 rounded-lg bg-brand hover:bg-surface-sunken text-foreground font-bold text-xs transition-colors shadow-xs cursor-pointer"
                       >
                         Send offer
                       </button>
