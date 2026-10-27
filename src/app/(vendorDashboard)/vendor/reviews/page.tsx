@@ -185,7 +185,7 @@ export default function VendorReviewsPage() {
             <div key={r.id} className="pt-6 first:pt-0 space-y-3">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-600 to-brand text-foreground flex items-center justify-center font-bold text-xs shadow-xs">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand to-brand text-foreground flex items-center justify-center font-bold text-xs shadow-xs">
                     {r.clientAvatar}
                   </div>
                   <div>
