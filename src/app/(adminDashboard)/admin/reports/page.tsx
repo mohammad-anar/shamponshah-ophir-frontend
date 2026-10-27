@@ -180,7 +180,7 @@ export default function AdminReportsPage() {
                 key={report.id}
                 className={cn(
                   "rounded-2xl border p-5 shadow-xs transition-all space-y-4",
-                  isPending ? "bg-surface border-warning/30 ring-1 ring-amber-500/20" : "bg-surface border-border"
+                  isPending ? "bg-surface border-warning/30 ring-1 ring-warning/20" : "bg-surface border-border"
                 )}
               >
                 {/* Header row: Report metadata & Status */}
@@ -233,7 +233,7 @@ export default function AdminReportsPage() {
                           "px-1.5 py-0.2 rounded text-[9px] font-bold",
                           gig?.status === "ACTIVE" ? "bg-success-solid text-foreground/15 text-success border border-success/30" :
                           gig?.status === "SUSPENDED" ? "bg-danger-solid text-foreground/15 text-danger border border-danger/30" :
-                          "bg-surface-sunken text-foreground-muted border border-slate-700"
+                          "bg-surface-sunken text-foreground-muted border border-border"
                         )}>
                           Status: {gig?.status || "UNKNOWN"}
                         </span>
@@ -295,7 +295,7 @@ export default function AdminReportsPage() {
                     <button
                       type="button"
                       onClick={() => handleOpenAction(report, "SUSPEND_GIG")}
-                      className="px-4 py-1.5 rounded-xl bg-danger-solid text-white hover:bg-danger-solid text-foreground text-foreground font-bold text-xs transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
+                      className="px-4 py-1.5 rounded-xl bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground font-bold text-xs transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
                     >
                       <ShieldAlert className="w-3.5 h-3.5" />
                       <span>Suspend / Hide Gig</span>
@@ -369,9 +369,9 @@ export default function AdminReportsPage() {
                 disabled={isModerating}
                 className={cn(
                   "px-4 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer text-foreground",
-                  actionType === "SUSPEND_GIG" ? "bg-danger-solid text-white hover:bg-danger-solid text-foreground" :
+                  actionType === "SUSPEND_GIG" ? "bg-danger-solid text-foreground hover:bg-danger-solid text-foreground" :
                   actionType === "RESOLVE" ? "bg-success-solid text-foreground hover:bg-success-solid text-foreground" :
-                  "bg-slate-700 hover:bg-slate-600"
+                  "bg-surface-elevated hover:bg-surface-elevated"
                 )}
               >
                 {isModerating ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Check className="w-3.5 h-3.5" />}
