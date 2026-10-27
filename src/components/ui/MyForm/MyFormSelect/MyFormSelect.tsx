@@ -33,7 +33,7 @@ const MyFormSelect = ({
           {/* Label */}
           <p
             className={cn(
-              "ps-1 mb-2 text-[#101828] text-base font-normal leading-6",
+              "ps-1 mb-2 text-foreground text-base font-normal leading-6",
               labelClassName
             )}
           >
