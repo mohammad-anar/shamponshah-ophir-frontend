@@ -407,7 +407,7 @@ export default function UserOrderDetailPage() {
               const el = document.getElementById("order-chat-section");
               if (el) el.scrollIntoView({ behavior: "smooth" });
             }}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand text-on-brand hover:bg-indigo-700 text-foreground rounded-xl text-xs font-bold shadow-xs transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand text-on-brand hover:bg-info text-foreground rounded-xl text-xs font-bold shadow-xs transition-all cursor-pointer"
           >
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Chat with Vendor</span>
@@ -417,7 +417,7 @@ export default function UserOrderDetailPage() {
             <>
               <button
                 onClick={() => setPartialRefundModalOpen(true)}
-                className="px-3 py-2 rounded-xl border border-purple-200 bg-brand-soft/70 hover:bg-brand-soft text-brand text-xs font-semibold transition-colors cursor-pointer"
+                className="px-3 py-2 rounded-xl border border-border-brand/40 bg-brand-soft/70 hover:bg-brand-soft text-brand text-xs font-semibold transition-colors cursor-pointer"
               >
                 Request Partial Refund
               </button>
@@ -439,7 +439,7 @@ export default function UserOrderDetailPage() {
           {(order.cancelStatus === "REJECTED" || order.refundStatus === "REJECTED" || order.status === "DISPUTED") && !order.escalatedToAdmin && (
             <button
               onClick={() => setEscalateModalOpen(true)}
-              className="px-3.5 py-2 rounded-xl border border-danger/30 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+              className="px-3.5 py-2 rounded-xl border border-danger/30 bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
             >
               <AlertTriangle className="w-3.5 h-3.5" />
               <span>Escalate to Admin</span>
@@ -450,9 +450,9 @@ export default function UserOrderDetailPage() {
 
       {/* Escalated to Admin Notice */}
       {order.escalatedToAdmin && (
-        <div className="p-5 rounded-2xl border-2 border-rose-400 bg-danger-soft text-danger shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl border-2 border-danger bg-danger-soft text-danger shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-danger-solid text-white text-foreground flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-danger-solid text-foreground text-foreground flex items-center justify-center shrink-0">
               <AlertTriangle className="w-5 h-5" />
             </div>
             <div>
@@ -460,7 +460,7 @@ export default function UserOrderDetailPage() {
                 <h3 className="font-extrabold text-foreground text-sm sm:text-base">
                   Case Escalated to Admin for Official Mediation
                 </h3>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-200 text-danger uppercase">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-danger/30 text-danger uppercase">
                   Escalated by {order.escalatedBy || "Party"}
                 </span>
               </div>
@@ -479,14 +479,14 @@ export default function UserOrderDetailPage() {
 
       {/* Admin Resolution Decision Banner */}
       {order.adminResolution && (
-        <div className="p-5 rounded-2xl border-2 border-info/30 bg-info-soft/90 text-indigo-950 shadow-sm flex items-start gap-3.5">
+        <div className="p-5 rounded-2xl border-2 border-info/30 bg-info-soft/90 text-info shadow-sm flex items-start gap-3.5">
           <div className="w-10 h-10 rounded-xl bg-brand text-on-brand text-foreground flex items-center justify-center shrink-0">
             <CheckCircle2 className="w-5 h-5" />
           </div>
           <div className="text-xs space-y-1">
             <div className="flex items-center gap-2">
-              <strong className="font-extrabold text-sm text-indigo-950">Admin Arbitration Judgment</strong>
-              <span className="px-2 py-0.5 rounded-md bg-indigo-200 text-info font-bold text-[10px]">
+              <strong className="font-extrabold text-sm text-info">Admin Arbitration Judgment</strong>
+              <span className="px-2 py-0.5 rounded-md bg-info/30 text-info font-bold text-[10px]">
                 {order.adminResolution}
               </span>
             </div>
@@ -505,14 +505,14 @@ export default function UserOrderDetailPage() {
 
       {/* Completed with Partial Refund Notice */}
       {order.status === "COMPLETED_WITH_PARTIAL_REFUND" && (
-        <div className="p-5 rounded-2xl border-2 border-purple-300 bg-brand-soft text-brand shadow-sm flex items-start gap-3.5">
+        <div className="p-5 rounded-2xl border-2 border-border-brand/50 bg-brand-soft text-brand shadow-sm flex items-start gap-3.5">
           <div className="w-10 h-10 rounded-xl bg-brand text-on-brand text-foreground flex items-center justify-center shrink-0">
             <DollarSign className="w-5 h-5" />
           </div>
           <div className="text-xs space-y-1">
             <h3 className="font-extrabold text-brand text-sm">Order Completed with Partial Refund</h3>
-            <p className="text-purple-800">
-              A partial refund of <strong className="font-mono text-purple-900">${Number(order.refundedAmount || order.partialRefundAmount || 0).toFixed(2)}</strong> has been returned to your payment method via Stripe. The remaining balance was settled with the vendor.
+            <p className="text-brand">
+              A partial refund of <strong className="font-mono text-brand">${Number(order.refundedAmount || order.partialRefundAmount || 0).toFixed(2)}</strong> has been returned to your payment method via Stripe. The remaining balance was settled with the vendor.
             </p>
           </div>
         </div>
@@ -542,7 +542,7 @@ export default function UserOrderDetailPage() {
       )}
 
       {order.cancelStatus === "REJECTED" && (
-        <div className="p-5 rounded-2xl border-2 border-danger/30 bg-danger-soft text-rose-950 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl border-2 border-danger/30 bg-danger-soft text-danger shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-danger shrink-0 mt-0.5" />
             <div className="text-xs space-y-1">
@@ -555,7 +555,7 @@ export default function UserOrderDetailPage() {
           {!order.escalatedToAdmin && (
             <button
               onClick={() => setEscalateModalOpen(true)}
-              className="px-4 py-2 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl text-xs font-bold shrink-0 transition-colors shadow-xs cursor-pointer"
+              className="px-4 py-2 bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground rounded-xl text-xs font-bold shrink-0 transition-colors shadow-xs cursor-pointer"
             >
               Escalate Case to Admin
             </button>
@@ -565,12 +565,12 @@ export default function UserOrderDetailPage() {
 
       {/* Partial Refund Request Status Banner */}
       {order.refundStatus === "REQUESTED" && (
-        <div className="p-5 rounded-2xl border-2 border-purple-300 bg-brand-soft text-brand shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl border-2 border-border-brand/50 bg-brand-soft text-brand shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
             <DollarSign className="w-5 h-5 text-brand shrink-0 mt-0.5" />
             <div className="text-xs space-y-1">
               <strong className="font-bold text-sm block">Partial Refund Request Pending (${Number(order.partialRefundAmount || 0).toFixed(2)})</strong>
-              <p className="text-purple-900">
+              <p className="text-brand">
                 Reason: "{order.refundReason}". If accepted by vendor, the refund portion will be returned to your payment method, and remainder settled.
               </p>
             </div>
@@ -578,7 +578,7 @@ export default function UserOrderDetailPage() {
           {!order.escalatedToAdmin && (
             <button
               onClick={() => setEscalateModalOpen(true)}
-              className="px-3.5 py-2 bg-brand text-on-brand hover:bg-purple-700 text-foreground rounded-xl text-xs font-bold shrink-0 transition-colors cursor-pointer"
+              className="px-3.5 py-2 bg-brand text-on-brand hover:bg-brand text-foreground rounded-xl text-xs font-bold shrink-0 transition-colors cursor-pointer"
             >
               Escalate to Admin
             </button>
@@ -587,7 +587,7 @@ export default function UserOrderDetailPage() {
       )}
 
       {order.refundStatus === "REJECTED" && (
-        <div className="p-5 rounded-2xl border-2 border-danger/30 bg-danger-soft text-rose-950 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl border-2 border-danger/30 bg-danger-soft text-danger shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
             <AlertTriangle className="w-5 h-5 text-danger shrink-0 mt-0.5" />
             <div className="text-xs space-y-1">
@@ -600,7 +600,7 @@ export default function UserOrderDetailPage() {
           {!order.escalatedToAdmin && (
             <button
               onClick={() => setEscalateModalOpen(true)}
-              className="px-4 py-2 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl text-xs font-bold shrink-0 transition-colors shadow-xs cursor-pointer"
+              className="px-4 py-2 bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground rounded-xl text-xs font-bold shrink-0 transition-colors shadow-xs cursor-pointer"
             >
               Escalate Case to Admin
             </button>
@@ -664,7 +664,7 @@ export default function UserOrderDetailPage() {
         <div className="lg:col-span-2 space-y-6">
           {/* Delivery Review Card: Action Required to Accept or Request Revision */}
           {isDelivered && (
-            <div className="p-6 rounded-2xl border-2 border-info/30 bg-gradient-to-br from-indigo-50/90 via-white to-purple-50/60 shadow-md space-y-5">
+            <div className="p-6 rounded-2xl border-2 border-info/30 bg-gradient-to-br from-surface-elevated via-white to-surface shadow-md space-y-5">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-info/30 pb-4">
                 <div className="flex items-center gap-3">
                   <div className="w-11 h-11 rounded-xl bg-brand text-on-brand text-foreground flex items-center justify-center shrink-0 shadow-sm">
@@ -796,7 +796,7 @@ export default function UserOrderDetailPage() {
                   type="button"
                   onClick={handleAcceptAllDelivery}
                   disabled={isAcceptingDelivery}
-                  className="flex-1 px-5 py-3 bg-success-solid text-foreground hover:bg-success-solid text-white text-foreground text-xs font-bold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="flex-1 px-5 py-3 bg-success-solid text-foreground hover:bg-success-solid text-foreground text-foreground text-xs font-bold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   {isAcceptingDelivery ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -866,7 +866,7 @@ export default function UserOrderDetailPage() {
                       Order Fulfillment Completed
                     </h3>
                     {order.clearingEndsAt && (
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-200 text-success">
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-success/30 text-success">
                         7-Day Security Clearing Active
                       </span>
                     )}
@@ -944,7 +944,7 @@ export default function UserOrderDetailPage() {
                 ? "bg-success-soft border-success/30 text-success"
                 : isCancelled
                 ? "bg-danger-soft border-danger/30 text-danger"
-                : "bg-gradient-to-r from-indigo-50/60 to-purple-50/60 border-info/30 text-foreground"
+                : "bg-gradient-to-r from-surface-elevated to-surface border-info/30 text-foreground"
             )}
           >
             <ShieldCheck
@@ -1081,7 +1081,7 @@ export default function UserOrderDetailPage() {
                           <div className="flex items-center gap-1.5 flex-wrap">
                             <button
                               onClick={() => setPayingMilestone(ms)}
-                              className="px-3 py-1.5 bg-success-solid text-foreground hover:bg-success-solid text-white text-foreground rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                              className="px-3 py-1.5 bg-success-solid text-foreground hover:bg-success-solid text-foreground text-foreground rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
                             >
                               <CheckCircle2 className="w-3.5 h-3.5" />
                               <span>Approve Delivery</span>
@@ -1261,7 +1261,7 @@ export default function UserOrderDetailPage() {
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-success-soft/60 border border-emerald-100 flex items-start gap-2.5">
+            <div className="p-3.5 rounded-xl bg-success-soft/60 border border-success/30 flex items-start gap-2.5">
               <ShieldCheck className="w-4 h-4 text-success mt-0.5 shrink-0" />
               <div className="text-[11px] text-success leading-tight">
                 <strong className="block font-bold">Milestone payment status</strong>
@@ -1315,7 +1315,7 @@ export default function UserOrderDetailPage() {
                 type="button"
                 onClick={() => handleApproveMilestone(payingMilestone)}
                 disabled={isApproving}
-                className="flex-1 py-2.5 bg-success-solid text-foreground hover:bg-success-solid text-white text-foreground rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
+                className="flex-1 py-2.5 bg-success-solid text-foreground hover:bg-success-solid text-foreground text-foreground rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
               >
                 {isApproving ? <Loader2 className="w-4 h-4 animate-spin" /> : <ShieldCheck className="w-4 h-4" />}
                 <span>Authorize Release</span>
@@ -1370,7 +1370,7 @@ export default function UserOrderDetailPage() {
                   value={declineNotes}
                   onChange={(e) => setDeclineNotes(e.target.value)}
                   placeholder="Explain clearly what the artisan needs to revise or fix..."
-                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-amber-500"
+                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-warning"
                   required
                 />
               </div>
@@ -1471,7 +1471,7 @@ export default function UserOrderDetailPage() {
                 type="button"
                 onClick={handleConfirmCancel}
                 disabled={isRequestingCancel || isCancelling}
-                className="flex-1 py-2.5 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                className="flex-1 py-2.5 bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
               >
                 {isRequestingCancel || isCancelling ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -1498,7 +1498,7 @@ export default function UserOrderDetailPage() {
               </div>
             </div>
 
-            <p className="text-xs text-foreground-secondary bg-brand-soft p-3 rounded-xl border border-purple-100">
+            <p className="text-xs text-foreground-secondary bg-brand-soft p-3 rounded-xl border border-border-brand/30">
               If accepted by vendor, the requested amount will be refunded directly to your card via Stripe. The remaining balance (minus 15% platform fee) will be paid to the vendor.
             </p>
 
@@ -1515,7 +1515,7 @@ export default function UserOrderDetailPage() {
                     value={partialRefundAmount}
                     onChange={(e) => setPartialRefundAmount(e.target.value)}
                     placeholder={`e.g. ${(Number(order.grandTotal || 0) * 0.3).toFixed(2)}`}
-                    className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-border text-xs font-mono font-bold focus:ring-2 focus:ring-purple-500"
+                    className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-border text-xs font-mono font-bold focus:ring-2 focus:ring-focus-ring"
                     required
                   />
                 </div>
@@ -1543,7 +1543,7 @@ export default function UserOrderDetailPage() {
                   onChange={(e) => setPartialRefundNotes(e.target.value)}
                   placeholder="Detail the partial delivery or shortfall..."
                   rows={2}
-                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-purple-500"
+                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-focus-ring"
                 />
               </div>
 
@@ -1554,7 +1554,7 @@ export default function UserOrderDetailPage() {
                   value={partialRefundProof}
                   onChange={(e) => setPartialRefundProof(e.target.value)}
                   placeholder="https://example.com/partial-work-proof.jpg"
-                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-purple-500"
+                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-focus-ring"
                 />
               </div>
             </div>
@@ -1571,7 +1571,7 @@ export default function UserOrderDetailPage() {
                 type="button"
                 onClick={handleConfirmPartialRefund}
                 disabled={isRequestingPartialRefund}
-                className="flex-1 py-2.5 bg-brand text-on-brand hover:bg-purple-700 text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                className="flex-1 py-2.5 bg-brand text-on-brand hover:bg-brand text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
               >
                 {isRequestingPartialRefund ? <Loader2 className="w-4 h-4 animate-spin" /> : "Submit Request"}
               </button>
@@ -1637,7 +1637,7 @@ export default function UserOrderDetailPage() {
                 type="button"
                 onClick={handleConfirmEscalation}
                 disabled={isEscalating}
-                className="flex-1 py-2.5 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                className="flex-1 py-2.5 bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
               >
                 {isEscalating ? <Loader2 className="w-4 h-4 animate-spin" /> : "Confirm Escalation"}
               </button>
