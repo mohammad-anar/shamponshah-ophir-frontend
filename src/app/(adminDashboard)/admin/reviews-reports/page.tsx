@@ -231,10 +231,10 @@ export default function AdminReviewsReportsPage() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">
+          <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">
             Reviews &amp; Trust Reports Moderation
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-400 mt-1">
             Audit verified buyer ratings, resolve flagged feedback, pin featured testimonials, and manage marketplace integrity
           </p>
         </div>
@@ -245,9 +245,9 @@ export default function AdminReviewsReportsPage() {
               refetch();
               toast.success("Reviews ledger refreshed with live data.");
             }}
-            className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center gap-1.5 shadow-xs"
+            className="px-3.5 py-2 rounded-xl bg-[#16181F] border border-[#26282E] text-xs font-bold text-slate-300 hover:text-white hover:bg-[#1A1D24] flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
           >
-            <RefreshCw className="w-3.5 h-3.5 text-brand-primary" />
+            <RefreshCw className="w-3.5 h-3.5 text-[#DFB76C]" />
             <span>Sync Live Feed</span>
           </button>
         </div>
@@ -255,49 +255,49 @@ export default function AdminReviewsReportsPage() {
 
       {/* Top Stat Overview Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
-        <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs">
+        <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-xs">
           <span className="text-[10px] uppercase font-bold text-slate-400 block">Total Reviews</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-[#0F0C3B] font-mono">{reviewsList.length}</span>
-            <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded">100% Verified</span>
+            <span className="text-2xl font-black text-white font-mono">{reviewsList.length}</span>
+            <span className="text-xs font-bold text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.2 rounded">100% Verified</span>
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">Post-event milestone ratings</p>
+          <p className="text-[11px] text-slate-400 mt-1">Post-event milestone ratings</p>
         </div>
 
-        <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs">
+        <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-xs">
           <span className="text-[10px] uppercase font-bold text-slate-400 block">Platform Avg Score</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-amber-600 font-mono">4.92 / 5.0</span>
-            <span className="text-xs font-bold text-amber-700 bg-amber-50 px-1.5 py-0.2 rounded">★ Top Tier</span>
+            <span className="text-2xl font-black text-[#DFB76C] font-mono">4.92 / 5.0</span>
+            <span className="text-xs font-bold text-amber-400 bg-amber-500/15 border border-amber-500/30 px-1.5 py-0.2 rounded">★ Top Tier</span>
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">Calculated across 840+ gigs</p>
+          <p className="text-[11px] text-slate-400 mt-1">Calculated across 840+ gigs</p>
         </div>
 
-        <div className="bg-white p-5 rounded-3xl border border-rose-200 shadow-xs bg-rose-50/20">
-          <span className="text-[10px] uppercase font-bold text-rose-900 block">Under Investigation</span>
+        <div className="bg-[#121418] p-5 rounded-3xl border border-rose-500/30 shadow-xs">
+          <span className="text-[10px] uppercase font-bold text-rose-400 block">Under Investigation</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-rose-700 font-mono">
+            <span className="text-2xl font-black text-rose-400 font-mono">
               {reviewsList.filter(r => r.status === "FLAGGED_DISPUTE" || r.status === "UNDER_MODERATION").length}
             </span>
-            <span className="text-xs font-bold text-rose-800 bg-rose-100 px-1.5 py-0.2 rounded">Action Required</span>
+            <span className="text-xs font-bold text-rose-400 bg-rose-500/15 border border-rose-500/30 px-1.5 py-0.2 rounded">Action Required</span>
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">Dispute holdbacks &amp; appeals</p>
+          <p className="text-[11px] text-slate-400 mt-1">Dispute holdbacks &amp; appeals</p>
         </div>
 
-        <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs">
+        <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-xs">
           <span className="text-[10px] uppercase font-bold text-slate-400 block">Featured Pinned</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-brand-primary font-mono">
+            <span className="text-2xl font-black text-[#DFB76C] font-mono">
               {reviewsList.filter(r => r.isPinned).length}
             </span>
-            <span className="text-xs font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.2 rounded">Homepage</span>
+            <span className="text-xs font-bold text-[#DFB76C] bg-[#DFB76C]/15 border border-[#DFB76C]/30 px-1.5 py-0.2 rounded">Homepage</span>
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">Showcased on main landing page</p>
+          <p className="text-[11px] text-slate-400 mt-1">Showcased on main landing page</p>
         </div>
       </div>
 
       {/* Filter & Search Bar */}
-      <div className="bg-white rounded-3xl border border-slate-200 p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
+      <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 text-xs">
         {/* Status Tabs */}
         <div className="flex items-center gap-1.5 flex-wrap">
           {[
@@ -311,10 +311,10 @@ export default function AdminReviewsReportsPage() {
               key={tab.key}
               onClick={() => setActiveFilter(tab.key)}
               className={cn(
-                "px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all",
+                "px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer",
                 activeFilter === tab.key
-                  ? "bg-[#0F0C3B] text-white shadow-xs"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  ? "bg-[#DFB76C] text-[#0B0C0E] shadow-xs font-bold"
+                  : "bg-[#16181F] text-slate-400 hover:text-white hover:bg-[#1A1D24] border border-[#26282E]"
               )}
             >
               {tab.label}
@@ -324,12 +324,12 @@ export default function AdminReviewsReportsPage() {
 
         {/* Rating Stars Filter & Search Input */}
         <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
-          <div className="flex items-center bg-slate-100 p-1 rounded-xl">
+          <div className="flex items-center bg-[#16181F] p-1 rounded-xl border border-[#26282E]">
             <button
               onClick={() => setRatingFilter("ALL")}
               className={cn(
-                "px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all",
-                ratingFilter === "ALL" ? "bg-white text-[#0F0C3B] shadow-2xs" : "text-slate-500 hover:text-slate-900"
+                "px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer",
+                ratingFilter === "ALL" ? "bg-[#DFB76C] text-[#0B0C0E] font-bold shadow-2xs" : "text-slate-400 hover:text-white"
               )}
             >
               All ★
@@ -339,12 +339,12 @@ export default function AdminReviewsReportsPage() {
                 key={r}
                 onClick={() => setRatingFilter(r)}
                 className={cn(
-                  "px-2 py-1 rounded-lg font-bold text-[11px] flex items-center gap-0.5 transition-all",
-                  ratingFilter === r ? "bg-white text-amber-600 shadow-2xs font-black" : "text-slate-500 hover:text-amber-600"
+                  "px-2 py-1 rounded-lg font-bold text-[11px] flex items-center gap-0.5 transition-all cursor-pointer",
+                  ratingFilter === r ? "bg-[#DFB76C] text-[#0B0C0E] shadow-2xs font-black" : "text-slate-400 hover:text-[#DFB76C]"
                 )}
               >
                 <span>{r}</span>
-                <Star className="w-2.5 h-2.5 fill-amber-500 text-amber-500" />
+                <Star className="w-2.5 h-2.5 fill-[#DFB76C] text-[#DFB76C]" />
               </button>
             ))}
           </div>
@@ -356,7 +356,7 @@ export default function AdminReviewsReportsPage() {
               placeholder="Search feedback, clients, vendors..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-[#F8F9FD] border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-brand-primary"
+              className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
             />
           </div>
         </div>
@@ -365,9 +365,9 @@ export default function AdminReviewsReportsPage() {
       {/* Reviews List Cards */}
       <div className="space-y-4 text-xs">
         {filteredReviews.length === 0 ? (
-          <div className="bg-white rounded-3xl border border-dashed border-slate-300 p-12 text-center space-y-2">
-            <MessageSquare className="w-8 h-8 text-slate-400 mx-auto" />
-            <p className="font-bold text-slate-700 text-sm">No reviews match your current filter criteria</p>
+          <div className="bg-[#121418] rounded-3xl border border-dashed border-[#26282E] p-12 text-center space-y-2">
+            <MessageSquare className="w-8 h-8 text-slate-500 mx-auto" />
+            <p className="font-bold text-slate-200 text-sm">No reviews match your current filter criteria</p>
             <p className="text-slate-400 text-xs">Try selecting a different status tab or clearing your search term.</p>
           </div>
         ) : (
@@ -375,27 +375,26 @@ export default function AdminReviewsReportsPage() {
             <div
               key={rev.id}
               className={cn(
-                "bg-white rounded-3xl border transition-all p-5 shadow-xs space-y-4",
-                rev.isPinned ? "border-brand-primary/50 ring-2 ring-indigo-100 bg-indigo-50/10" : "border-slate-200 hover:border-slate-300",
-                rev.status === "FLAGGED_DISPUTE" && "border-rose-300 bg-rose-50/10"
+                "rounded-3xl border transition-all p-5 shadow-xs space-y-4",
+                rev.isPinned ? "bg-[#121418] border-[#DFB76C]/50 ring-1 ring-[#DFB76C]/20" : rev.status === "FLAGGED_DISPUTE" ? "bg-[#121418] border-rose-500/40 ring-1 ring-rose-500/20" : "bg-[#121418] border-[#26282E] hover:border-slate-700"
               )}
             >
               {/* Top Row: User details, Vendor details, Date & Status */}
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#0F0C3B] text-white flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-xs">
+                  <div className="w-10 h-10 rounded-full bg-[#16181F] border border-[#26282E] text-[#DFB76C] flex items-center justify-center font-bold text-xs flex-shrink-0 shadow-xs">
                     {rev.clientAvatar}
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-bold text-[#0F0C3B] text-sm">{rev.client}</span>
+                      <span className="font-bold text-white text-sm">{rev.client}</span>
                       <span className="text-slate-400 font-normal">reviewed</span>
-                      <span className="font-bold text-brand-primary bg-indigo-50 px-2 py-0.5 rounded-lg border border-indigo-100">
+                      <span className="font-bold text-[#DFB76C] bg-[#16181F] px-2 py-0.5 rounded-lg border border-[#26282E]">
                         {rev.vendor}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
-                      Occasion: <strong className="text-slate-700">{rev.occasion}</strong> &bull; Order #{rev.orderId}
+                    <p className="text-[11px] text-slate-400 mt-0.5">
+                      Occasion: <strong className="text-slate-200">{rev.occasion}</strong> &bull; Order #{rev.orderId}
                     </p>
                   </div>
                 </div>
@@ -405,10 +404,10 @@ export default function AdminReviewsReportsPage() {
                   
                   <span className={cn(
                     "px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase",
-                    rev.status === "VERIFIED_PURCHASE" && "bg-emerald-100 text-emerald-800 border border-emerald-200",
-                    rev.status === "FLAGGED_DISPUTE" && "bg-rose-100 text-rose-800 border border-rose-200",
-                    rev.status === "UNDER_MODERATION" && "bg-amber-100 text-amber-800 border border-amber-200",
-                    rev.status === "HIDDEN" && "bg-slate-100 text-slate-700 border border-slate-200",
+                    rev.status === "VERIFIED_PURCHASE" && "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30",
+                    rev.status === "FLAGGED_DISPUTE" && "bg-rose-500/15 text-rose-400 border border-rose-500/30",
+                    rev.status === "UNDER_MODERATION" && "bg-amber-500/15 text-amber-400 border border-amber-500/30",
+                    rev.status === "HIDDEN" && "bg-slate-500/15 text-slate-400 border border-slate-500/30",
                   )}>
                     {rev.status.replace(/_/g, " ")}
                   </span>
@@ -418,34 +417,34 @@ export default function AdminReviewsReportsPage() {
               {/* Star Rating & Comment Box */}
               <div className="space-y-2">
                 <div className="flex items-center gap-1.5">
-                  <div className="flex text-amber-500">
+                  <div className="flex text-[#DFB76C]">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className={`w-4 h-4 ${i < rev.rating ? "fill-amber-500 text-amber-500" : "text-slate-200"}`}
+                        className={`w-4 h-4 ${i < rev.rating ? "fill-[#DFB76C] text-[#DFB76C]" : "text-slate-700"}`}
                       />
                     ))}
                   </div>
-                  <span className="font-black text-[#0F0C3B] text-xs">{rev.rating}.0 out of 5.0</span>
+                  <span className="font-black text-white text-xs">{rev.rating}.0 out of 5.0</span>
                   
                   {rev.isPinned && (
-                    <span className="ml-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-200 flex items-center gap-1">
-                      <Sparkles className="w-3 h-3 text-amber-600 fill-amber-600" /> Featured Pinned
+                    <span className="ml-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#DFB76C]/15 text-[#DFB76C] border border-[#DFB76C]/30 flex items-center gap-1">
+                      <Sparkles className="w-3 h-3 text-[#DFB76C] fill-[#DFB76C]" /> Featured Pinned
                     </span>
                   )}
                 </div>
 
-                <div className="p-4 rounded-2xl bg-[#F8F9FD] border border-slate-200/80 text-slate-700 text-xs leading-relaxed">
+                <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] text-slate-300 text-xs leading-relaxed">
                   &ldquo;{rev.comment}&rdquo;
                 </div>
               </div>
 
               {/* Flag / Dispute Notice if applicable */}
               {rev.flagReason && (
-                <div className="p-3 bg-rose-50 rounded-xl border border-rose-200 text-rose-900 text-xs flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
+                <div className="p-3 bg-rose-500/10 rounded-xl border border-rose-500/20 text-rose-300 text-xs flex items-start gap-2">
+                  <AlertTriangle className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-bold block">Moderation Notice:</span>
+                    <span className="font-bold block text-rose-400">Moderation Notice:</span>
                     <span>{rev.flagReason}</span>
                   </div>
                 </div>
@@ -453,38 +452,38 @@ export default function AdminReviewsReportsPage() {
 
               {/* Vendor Public Reply if present */}
               {rev.vendorReply && (
-                <div className="p-3 bg-indigo-50/50 rounded-xl border border-indigo-100 space-y-1">
+                <div className="p-3 bg-[#16181F] rounded-xl border border-[#26282E] space-y-1">
                   <div className="flex items-center justify-between text-[11px]">
-                    <span className="font-bold text-[#0F0C3B]">Vendor Official Response:</span>
+                    <span className="font-bold text-[#DFB76C]">Vendor Official Response:</span>
                     <span className="text-slate-400">{rev.vendorReply.date}</span>
                   </div>
-                  <p className="text-slate-700 italic text-[11px]">&ldquo;{rev.vendorReply.text}&rdquo;</p>
+                  <p className="text-slate-300 italic text-[11px]">&ldquo;{rev.vendorReply.text}&rdquo;</p>
                 </div>
               )}
 
               {/* Bottom Interactive Actions Toolbar */}
-              <div className="pt-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="pt-3 border-t border-[#26282E] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-2 flex-wrap">
                   {/* Pin / Unpin Button */}
                   <button
                     onClick={() => handleTogglePin(rev.id)}
                     className={cn(
-                      "px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border shadow-2xs",
+                      "px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border shadow-2xs cursor-pointer",
                       rev.isPinned
-                        ? "bg-amber-500 text-white border-amber-600 hover:bg-amber-600"
-                        : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50"
+                        ? "bg-[#DFB76C] text-[#0B0C0E] border-[#DFB76C] font-extrabold"
+                        : "bg-[#16181F] text-slate-300 border-[#26282E] hover:bg-[#1A1D24] hover:text-white"
                     )}
                   >
-                    <Pin className={cn("w-3.5 h-3.5", rev.isPinned && "fill-white")} />
+                    <Pin className={cn("w-3.5 h-3.5", rev.isPinned && "fill-[#0B0C0E]")} />
                     <span>{rev.isPinned ? "Pinned on Hero" : "Pin as Testimonial"}</span>
                   </button>
 
                   {/* Audit / Notes Modal Button */}
                   <button
                     onClick={() => setSelectedReview(rev)}
-                    className="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0F0C3B] text-xs font-bold transition-colors flex items-center gap-1.5 shadow-2xs"
+                    className="px-3 py-1.5 rounded-xl bg-[#16181F] hover:bg-[#1A1D24] text-slate-200 hover:text-white border border-[#26282E] text-xs font-bold transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
                   >
-                    <Eye className="w-3.5 h-3.5 text-brand-primary" />
+                    <Eye className="w-3.5 h-3.5 text-[#DFB76C]" />
                     <span>Audit &amp; Notes ({rev.adminNotes?.length || 0})</span>
                   </button>
                 </div>
@@ -494,7 +493,7 @@ export default function AdminReviewsReportsPage() {
                   {rev.status !== "VERIFIED_PURCHASE" && (
                     <button
                       onClick={() => handleStatusChange(rev.id, "VERIFIED_PURCHASE")}
-                      className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center gap-1"
+                      className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>Approve &amp; Publish</span>
@@ -504,7 +503,7 @@ export default function AdminReviewsReportsPage() {
                   {rev.status !== "UNDER_MODERATION" && rev.status !== "FLAGGED_DISPUTE" && (
                     <button
                       onClick={() => handleStatusChange(rev.id, "UNDER_MODERATION")}
-                      className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center gap-1"
+                      className="px-3 py-1.5 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
                     >
                       <Flag className="w-3.5 h-3.5" />
                       <span>Quarantine</span>
@@ -514,7 +513,7 @@ export default function AdminReviewsReportsPage() {
                   {rev.status !== "HIDDEN" && (
                     <button
                       onClick={() => handleStatusChange(rev.id, "HIDDEN")}
-                      className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors flex items-center gap-1"
+                      className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] text-slate-300 hover:text-white border border-[#26282E] rounded-xl text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
                     >
                       <EyeOff className="w-3.5 h-3.5" />
                       <span>Hide</span>
@@ -523,10 +522,10 @@ export default function AdminReviewsReportsPage() {
 
                   <button
                     onClick={() => handleDeleteReview(rev.id)}
-                    className="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl text-xs font-bold transition-colors flex items-center gap-1"
+                    className="px-2.5 py-1.5 bg-rose-500/15 hover:bg-rose-500/25 text-rose-400 border border-rose-500/30 rounded-xl text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
                     title="Permanently remove review"
                   >
-                    <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+                    <Trash2 className="w-3.5 h-3.5 text-rose-400" />
                   </button>
                 </div>
               </div>
@@ -537,13 +536,13 @@ export default function AdminReviewsReportsPage() {
 
       {/* Review Inspection & Audit Modal */}
       {selectedReview && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden border border-slate-200 animate-in fade-in flex flex-col text-xs">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-[#121418] rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden border border-[#26282E] animate-in fade-in flex flex-col text-xs">
             
             {/* Modal Header */}
-            <div className="p-5 bg-gradient-to-r from-[#0F0C3B] to-[#1E175E] text-white flex items-center justify-between">
+            <div className="p-5 bg-[#16181F] border-b border-[#26282E] text-white flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono font-bold bg-white/10 px-2.5 py-0.5 rounded-full border border-white/20">
+                <span className="text-[10px] font-mono font-bold bg-[#121418] text-[#DFB76C] px-2.5 py-0.5 rounded-full border border-[#26282E]">
                   #{selectedReview.id} &bull; Order #{selectedReview.orderId}
                 </span>
                 <h3 className="text-base font-black text-white mt-1">Review Audit &amp; Investigation</h3>
@@ -551,7 +550,7 @@ export default function AdminReviewsReportsPage() {
 
               <button
                 onClick={() => setSelectedReview(null)}
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-[#121418] hover:bg-[#1A1D24] border border-[#26282E] text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -562,42 +561,42 @@ export default function AdminReviewsReportsPage() {
               
               {/* Buyer & Vendor Summary */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-1">
                   <span className="text-[10px] font-bold text-slate-400 uppercase block">Client Author</span>
-                  <p className="font-bold text-[#0F0C3B]">{selectedReview.client}</p>
-                  <p className="text-[10px] text-slate-500 font-mono">{selectedReview.clientEmail}</p>
+                  <p className="font-bold text-white">{selectedReview.client}</p>
+                  <p className="text-[10px] text-slate-400 font-mono">{selectedReview.clientEmail}</p>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-1">
                   <span className="text-[10px] font-bold text-slate-400 uppercase block">Vendor Reviewed</span>
-                  <p className="font-bold text-[#0F0C3B]">{selectedReview.vendor}</p>
-                  <p className="text-[10px] text-slate-500">Booking Verified</p>
+                  <p className="font-bold text-white">{selectedReview.vendor}</p>
+                  <p className="text-[10px] text-[#DFB76C]">Booking Verified</p>
                 </div>
               </div>
 
               {/* Review Comment Quote */}
-              <div className="p-4 rounded-2xl bg-[#F8F9FD] border border-slate-200 space-y-2">
+              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                     Published Rating ({selectedReview.rating}.0 / 5.0)
                   </span>
                   <span className="text-slate-400 text-[10px]">{selectedReview.date}</span>
                 </div>
-                <p className="text-slate-800 italic leading-relaxed">
+                <p className="text-slate-300 italic leading-relaxed">
                   &ldquo;{selectedReview.comment}&rdquo;
                 </p>
               </div>
 
               {/* Moderation Notes Log */}
               <div className="space-y-3">
-                <h4 className="font-bold text-[#0F0C3B] text-xs uppercase tracking-wider flex items-center gap-1.5">
-                  <MessageSquare className="w-3.5 h-3.5 text-brand-primary" /> Internal Moderation Notes
+                <h4 className="font-bold text-white text-xs uppercase tracking-wider flex items-center gap-1.5">
+                  <MessageSquare className="w-3.5 h-3.5 text-[#DFB76C]" /> Internal Moderation Notes
                 </h4>
 
                 {selectedReview.adminNotes && selectedReview.adminNotes.length > 0 ? (
                   <div className="space-y-2">
                     {selectedReview.adminNotes.map((note, i) => (
-                      <div key={i} className="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-slate-700 text-xs">
+                      <div key={i} className="p-2.5 bg-[#16181F] rounded-xl border border-[#26282E] text-slate-300 text-xs">
                         {note}
                       </div>
                     ))}
@@ -607,17 +606,17 @@ export default function AdminReviewsReportsPage() {
                 )}
 
                 {/* Add Note Form */}
-                <form onSubmit={handleAddNote} className="flex items-center gap-2 pt-2 border-t border-slate-100">
+                <form onSubmit={handleAddNote} className="flex items-center gap-2 pt-2 border-t border-[#26282E]">
                   <input
                     type="text"
                     placeholder="Add audit note or escalation details..."
                     value={adminNoteInput}
                     onChange={(e) => setAdminNoteInput(e.target.value)}
-                    className="flex-1 bg-[#F8F9FD] border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-800 focus:outline-none focus:border-brand-primary"
+                    className="flex-1 bg-[#16181F] border border-[#26282E] rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
                   />
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl font-bold transition-all shadow-2xs flex items-center gap-1"
+                    className="px-4 py-2 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
                   >
                     <Send className="w-3.5 h-3.5" /> Log Note
                   </button>
@@ -627,10 +626,10 @@ export default function AdminReviewsReportsPage() {
             </div>
 
             {/* Modal Footer Controls */}
-            <div className="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
+            <div className="p-4 bg-[#16181F] border-t border-[#26282E] flex items-center justify-between">
               <button
                 onClick={() => setSelectedReview(null)}
-                className="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-800"
+                className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white cursor-pointer"
               >
                 Close
               </button>
@@ -638,9 +637,9 @@ export default function AdminReviewsReportsPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={() => handleTogglePin(selectedReview.id)}
-                  className="px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl font-bold text-xs transition-colors flex items-center gap-1"
+                  className="px-3.5 py-2 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer"
                 >
-                  <Pin className="w-3.5 h-3.5 fill-white" />
+                  <Pin className="w-3.5 h-3.5 fill-[#0B0C0E]" />
                   <span>{selectedReview.isPinned ? "Unpin" : "Pin Hero"}</span>
                 </button>
 
@@ -649,7 +648,7 @@ export default function AdminReviewsReportsPage() {
                     handleStatusChange(selectedReview.id, "VERIFIED_PURCHASE");
                     setSelectedReview(null);
                   }}
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs transition-colors flex items-center gap-1"
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer"
                 >
                   <CheckCircle2 className="w-3.5 h-3.5" /> Approve
                 </button>
@@ -660,5 +659,4 @@ export default function AdminReviewsReportsPage() {
         </div>
       )}
     </div>
-  );
 }
