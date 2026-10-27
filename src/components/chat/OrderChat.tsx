@@ -531,7 +531,7 @@ export default function OrderChat({ order, className }: OrderChatProps) {
       <div className="px-5 py-4 bg-surface-sunken border-b border-border flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-brand-active/80 flex items-center justify-center text-foreground font-black text-sm shadow-md">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-info to-brand-active/80 flex items-center justify-center text-foreground font-black text-sm shadow-md">
               {peerAvatar ? (
                 <img src={peerAvatar} alt={peerName} className="w-full h-full object-cover rounded-xl" />
               ) : (
@@ -731,7 +731,7 @@ export default function OrderChat({ order, className }: OrderChatProps) {
 
       {/* ── Realtime Typing Indicator ── */}
       {peerTypingName && (
-        <div className="px-5 py-1.5 bg-[#101118] border-t border-border-strong/5 text-[11px] text-warning flex items-center gap-2 animate-in fade-in">
+        <div className="px-5 py-1.5 bg-background border-t border-border-strong/5 text-[11px] text-warning flex items-center gap-2 animate-in fade-in">
           <span className="flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-warning-solid text-on-brand animate-bounce" style={{ animationDelay: "0ms" }} />
             <span className="w-1.5 h-1.5 rounded-full bg-warning-solid text-on-brand animate-bounce" style={{ animationDelay: "150ms" }} />
@@ -743,7 +743,7 @@ export default function OrderChat({ order, className }: OrderChatProps) {
 
       {/* ── Pending Attachments Bar ── */}
       {pendingAttachments.length > 0 && (
-        <div className="px-5 py-2.5 bg-[#12131d] border-t border-border flex items-center gap-2 overflow-x-auto">
+        <div className="px-5 py-2.5 bg-surface border-t border-border flex items-center gap-2 overflow-x-auto">
           {pendingAttachments.map((att, idx) => (
             <div
               key={idx}
