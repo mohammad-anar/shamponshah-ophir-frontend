@@ -314,7 +314,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                 <select
                   value={declineReason}
                   onChange={(e) => setDeclineReason(e.target.value)}
-                  className="w-full px-3 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-500 font-medium bg-surface"
+                  className="w-full px-3 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-warning font-medium bg-surface"
                 >
                   <option value="Deliverables do not match contract requirements">Deliverables do not match contract requirements</option>
                   <option value="Missing files, photos, or physical items">Missing files, photos, or physical items</option>
@@ -333,7 +333,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                   value={declineNotes}
                   onChange={(e) => setDeclineNotes(e.target.value)}
                   placeholder="Explain clearly what the vendor needs to revise, change, or provide..."
-                  className="w-full px-3 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-amber-500 font-medium"
+                  className="w-full px-3 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-warning font-medium"
                 />
               </div>
             </div>
@@ -460,7 +460,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                 type="button"
                 onClick={handleConfirmCancelOrder}
                 disabled={isCancelling}
-                className="px-5 py-2.5 rounded-xl bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-5 py-2.5 rounded-xl bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {isCancelling ? (
                   <>
@@ -547,7 +547,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
           })()}
           {/* Cancelled Banner */}
           {isOrderCancelled && (
-            <div className="p-4 rounded-xl bg-danger-soft border border-danger/30 flex items-start gap-3 text-rose-950">
+            <div className="p-4 rounded-xl bg-danger-soft border border-danger/30 flex items-start gap-3 text-danger">
               <Ban className="w-5 h-5 text-danger shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-bold text-xs">Order Cancelled</h4>
@@ -602,7 +602,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                   type="button"
                   onClick={handleAcceptAllDelivery}
                   disabled={isAcceptingDelivery}
-                  className="px-3.5 py-2 bg-success-solid text-foreground hover:bg-success-solid text-white text-foreground rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  className="px-3.5 py-2 bg-success-solid text-foreground hover:bg-success-solid text-foreground text-foreground rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 >
                   {isAcceptingDelivery ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -788,7 +788,7 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
                             type="button"
                             disabled={isApproving}
                             onClick={() => handleApproveMilestone(ms)}
-                            className="px-3 py-1.5 rounded-xl bg-success-solid text-foreground hover:bg-success-solid text-white text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                            className="px-3 py-1.5 rounded-xl bg-success-solid text-foreground hover:bg-success-solid text-foreground text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                           >
                             <CheckCircle2 className="w-3.5 h-3.5" />
                             <span>{isApproving ? "Approving…" : "Approve delivery"}</span>
