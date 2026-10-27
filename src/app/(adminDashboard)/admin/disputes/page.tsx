@@ -169,7 +169,7 @@ export default function AdminDisputesPage() {
                     "p-4 rounded-3xl border transition-all cursor-pointer space-y-2.5",
                     isSelected
                       ? "bg-surface-elevated border-border-brand shadow-sm ring-1 ring-focus-ring/30"
-                      : "bg-surface border-border hover:border-slate-700 hover:bg-surface-elevated/40"
+                      : "bg-surface border-border hover:border-border hover:bg-surface-elevated/40"
                   )}
                 >
                   <div className="flex items-start justify-between gap-2">
