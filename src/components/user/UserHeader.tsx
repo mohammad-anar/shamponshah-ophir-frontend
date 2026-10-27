@@ -67,12 +67,12 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-30 h-16 bg-[#0B0C0E] border-b border-[#26282E] px-4 md:px-8 flex items-center justify-between">
+    <header className="sticky top-0 z-30 h-16 bg-background border-b border-border px-4 md:px-8 flex items-center justify-between">
       {/* Left section: mobile hamburger & search */}
       <div className="flex items-center gap-3 flex-1 max-w-lg">
         <button
           onClick={onMenuToggle}
-          className="lg:hidden p-2 rounded-none text-foreground-muted hover:bg-[#16181F] hover:text-foreground"
+          className="lg:hidden p-2 rounded-none text-foreground-muted hover:bg-surface-elevated hover:text-foreground"
           aria-label="Toggle navigation"
         >
           <Menu className="w-5 h-5" />
@@ -83,7 +83,7 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
           <input
             type="text"
             placeholder="Search vendors, gigs, family services..."
-            className="w-full bg-[#121418] border border-[#26282E] rounded-none pl-9 pr-4 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C] transition-all"
+            className="w-full bg-surface border border-border rounded-none pl-9 pr-4 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand transition-all"
           />
         </div>
       </div>
@@ -94,9 +94,9 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
         <div className="relative hidden sm:block">
           <Link
             href="/user/family-hub"
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-none border border-[#26282E] bg-[#121418] text-xs font-semibold uppercase tracking-wider text-foreground-secondary hover:text-[#DFB76C] hover:border-border-brand/40 transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-none border border-border bg-surface text-xs font-semibold uppercase tracking-wider text-foreground-secondary hover:text-brand hover:border-border-brand/40 transition-colors"
           >
-            <Users2 className="w-3.5 h-3.5 text-[#DFB76C]" />
+            <Users2 className="w-3.5 h-3.5 text-brand" />
             <span className="max-w-[150px] truncate">{activeHubName}</span>
           </Link>
         </div>
@@ -104,12 +104,12 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
         {/* Notifications */}
         <Link 
           href="/user/notifications"
-          className="relative p-2 rounded-none text-foreground-muted hover:text-foreground hover:bg-[#16181F] transition-colors"
+          className="relative p-2 rounded-none text-foreground-muted hover:text-foreground hover:bg-surface-elevated transition-colors"
           title="Notifications"
         >
           <Bell className="w-4 h-4" />
           {unreadNotifs > 0 && (
-            <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-none bg-[#DFB76C] text-[10px] font-bold text-[#0B0C0E] flex items-center justify-center">
+            <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-none bg-brand text-[10px] font-bold text-on-brand flex items-center justify-center">
               {unreadNotifs}
             </span>
           )}
@@ -118,12 +118,12 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
         {/* Messages */}
         <Link 
           href="/user/messages"
-          className="relative p-2 rounded-none text-foreground-muted hover:text-foreground hover:bg-[#16181F] transition-colors hidden sm:block"
+          className="relative p-2 rounded-none text-foreground-muted hover:text-foreground hover:bg-surface-elevated transition-colors hidden sm:block"
           title="Messages"
         >
           <MessageSquare className="w-4 h-4" />
           {unreadMessages > 0 && (
-            <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-none bg-[#DFB76C] text-[10px] font-bold text-[#0B0C0E] flex items-center justify-center">
+            <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 rounded-none bg-brand text-[10px] font-bold text-on-brand flex items-center justify-center">
               {unreadMessages}
             </span>
           )}
@@ -133,9 +133,9 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
         <div className="relative">
           <button
             onClick={() => setShowProfile(!showProfile)}
-            className="flex items-center gap-2 pl-2 py-1 rounded-none hover:bg-[#16181F] transition-colors cursor-pointer"
+            className="flex items-center gap-2 pl-2 py-1 rounded-none hover:bg-surface-elevated transition-colors cursor-pointer"
           >
-            <div className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] flex items-center justify-center font-bold text-xs">
+            <div className="w-8 h-8 rounded-none bg-surface-sunken border border-border text-brand flex items-center justify-center font-bold text-xs">
               {initials}
             </div>
             <span className="hidden md:block text-xs font-bold text-foreground">
@@ -145,21 +145,21 @@ export default function UserHeader({ onMenuToggle }: UserHeaderProps) {
           </button>
 
           {showProfile && (
-            <div className="absolute right-0 mt-2 w-52 bg-[#121418] rounded-none shadow-2xl border border-[#26282E] py-1.5 z-50 text-xs animate-in fade-in">
-              <div className="px-3 py-2 border-b border-[#26282E]">
+            <div className="absolute right-0 mt-2 w-52 bg-surface rounded-none shadow-2xl border border-border py-1.5 z-50 text-xs animate-in fade-in">
+              <div className="px-3 py-2 border-b border-border">
                 <p className="font-bold text-foreground font-serif truncate">{userName}</p>
                 <p className="text-[11px] text-foreground-muted truncate">{userEmail}</p>
               </div>
-              <Link href="/vendor" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-[#16181F] hover:text-[#DFB76C]">
+              <Link href="/vendor" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-surface-elevated hover:text-brand">
                 <ExternalLink className="w-3.5 h-3.5 text-foreground-muted" /> Switch to Seller Mode
               </Link>
-              <Link href="/admin" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-[#16181F] hover:text-[#DFB76C]">
+              <Link href="/admin" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-surface-elevated hover:text-brand">
                 <ExternalLink className="w-3.5 h-3.5 text-foreground-muted" /> Admin Console
               </Link>
-              <Link href="/user/settings" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-[#16181F] hover:text-[#DFB76C]">
+              <Link href="/user/settings" onClick={() => setShowProfile(false)} className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-surface-elevated hover:text-brand">
                 <Settings className="w-3.5 h-3.5 text-foreground-muted" /> Account Settings
               </Link>
-              <div className="border-t border-[#26282E] my-1" />
+              <div className="border-t border-border my-1" />
               <button
                 onClick={handleSignOut}
                 className="w-full flex items-center gap-2 px-3 py-2 text-danger hover:bg-danger-soft text-danger cursor-pointer text-left font-semibold"
