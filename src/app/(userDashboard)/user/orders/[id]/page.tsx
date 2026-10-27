@@ -146,10 +146,10 @@ export default function UserOrderDetailPage() {
   if (isError || !order) {
     return (
       <div className="bg-surface p-12 rounded-2xl border border-border text-center max-w-lg mx-auto my-12 space-y-4">
-        <div className="w-14 h-14 bg-rose-50 text-danger rounded-full flex items-center justify-center mx-auto">
+        <div className="w-14 h-14 bg-danger-soft text-danger rounded-full flex items-center justify-center mx-auto">
           <AlertTriangle className="w-7 h-7" />
         </div>
-        <h2 className="text-xl font-bold text-[#0F0C3B]">Order Not Found</h2>
+        <h2 className="text-xl font-bold text-foreground">Order Not Found</h2>
         <p className="text-xs text-foreground-muted">
           The requested order contract #{orderId} could not be retrieved or you do not have permission to view it.
         </p>
@@ -390,11 +390,11 @@ export default function UserOrderDetailPage() {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs text-foreground-muted font-medium">Order Contract</span>
-              <span className="text-xs font-bold text-brand-primary bg-indigo-50 px-2 py-0.5 rounded-md">
+              <span className="text-xs font-bold text-brand-primary bg-info-soft px-2 py-0.5 rounded-md">
                 #{order.id}
               </span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-black text-[#0F0C3B] tracking-tight mt-0.5">
+            <h1 className="text-xl sm:text-2xl font-black text-foreground tracking-tight mt-0.5">
               {serviceTitle}
             </h1>
           </div>
@@ -417,7 +417,7 @@ export default function UserOrderDetailPage() {
             <>
               <button
                 onClick={() => setPartialRefundModalOpen(true)}
-                className="px-3 py-2 rounded-xl border border-purple-200 bg-purple-50/70 hover:bg-purple-100 text-purple-700 text-xs font-semibold transition-colors cursor-pointer"
+                className="px-3 py-2 rounded-xl border border-purple-200 bg-brand-soft/70 hover:bg-brand-soft text-brand text-xs font-semibold transition-colors cursor-pointer"
               >
                 Request Partial Refund
               </button>
@@ -429,7 +429,7 @@ export default function UserOrderDetailPage() {
               </button>
               <button
                 onClick={() => setCancelModalOpen(true)}
-                className="px-3 py-2 rounded-xl border border-rose-200 bg-rose-50/50 hover:bg-rose-50 text-rose-600 text-xs font-semibold transition-colors cursor-pointer"
+                className="px-3 py-2 rounded-xl border border-danger/30 bg-danger-soft/50 hover:bg-danger-soft text-danger text-xs font-semibold transition-colors cursor-pointer"
               >
                 Cancel Order
               </button>
@@ -439,7 +439,7 @@ export default function UserOrderDetailPage() {
           {(order.cancelStatus === "REJECTED" || order.refundStatus === "REJECTED" || order.status === "DISPUTED") && !order.escalatedToAdmin && (
             <button
               onClick={() => setEscalateModalOpen(true)}
-              className="px-3.5 py-2 rounded-xl border border-rose-300 bg-rose-600 hover:bg-rose-700 text-foreground text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+              className="px-3.5 py-2 rounded-xl border border-danger/30 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
             >
               <AlertTriangle className="w-3.5 h-3.5" />
               <span>Escalate to Admin</span>
@@ -450,25 +450,25 @@ export default function UserOrderDetailPage() {
 
       {/* Escalated to Admin Notice */}
       {order.escalatedToAdmin && (
-        <div className="p-5 rounded-2xl border-2 border-rose-400 bg-rose-50 text-rose-900 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl border-2 border-rose-400 bg-danger-soft text-danger shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-rose-600 text-foreground flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-danger-solid text-white text-foreground flex items-center justify-center shrink-0">
               <AlertTriangle className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="font-extrabold text-[#0F0C3B] text-sm sm:text-base">
+                <h3 className="font-extrabold text-foreground text-sm sm:text-base">
                   Case Escalated to Admin for Official Mediation
                 </h3>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-200 text-rose-900 uppercase">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-200 text-danger uppercase">
                   Escalated by {order.escalatedBy || "Party"}
                 </span>
               </div>
-              <p className="text-xs text-rose-800 mt-1">
+              <p className="text-xs text-danger mt-1">
                 An administrator has joined this order. The admin is reviewing chat history, contract deliverables, and submitted proof to arbitrate a binding resolution.
               </p>
               {order.escalationReason && (
-                <p className="text-xs text-foreground-secondary mt-1 italic bg-surface/70 p-2 rounded-lg border border-rose-200">
+                <p className="text-xs text-foreground-secondary mt-1 italic bg-surface/70 p-2 rounded-lg border border-danger/30">
                   Escalation reason: {order.escalationReason}
                 </p>
               )}
@@ -479,23 +479,23 @@ export default function UserOrderDetailPage() {
 
       {/* Admin Resolution Decision Banner */}
       {order.adminResolution && (
-        <div className="p-5 rounded-2xl border-2 border-indigo-300 bg-indigo-50/90 text-indigo-950 shadow-sm flex items-start gap-3.5">
+        <div className="p-5 rounded-2xl border-2 border-info/30 bg-info-soft/90 text-indigo-950 shadow-sm flex items-start gap-3.5">
           <div className="w-10 h-10 rounded-xl bg-brand text-on-brand text-foreground flex items-center justify-center shrink-0">
             <CheckCircle2 className="w-5 h-5" />
           </div>
           <div className="text-xs space-y-1">
             <div className="flex items-center gap-2">
               <strong className="font-extrabold text-sm text-indigo-950">Admin Arbitration Judgment</strong>
-              <span className="px-2 py-0.5 rounded-md bg-indigo-200 text-indigo-900 font-bold text-[10px]">
+              <span className="px-2 py-0.5 rounded-md bg-indigo-200 text-info font-bold text-[10px]">
                 {order.adminResolution}
               </span>
             </div>
-            <p className="text-indigo-800">
+            <p className="text-info">
               The case was arbitrated by Platform Admin on {order.adminResolvedAt ? new Date(order.adminResolvedAt).toLocaleString() : "recently"}.
               {order.refundedAmount && ` Total refunded: $${Number(order.refundedAmount).toFixed(2)}.`}
             </p>
             {order.deliveryNotes && (
-              <p className="text-indigo-900/90 italic mt-1 bg-surface p-2.5 rounded-xl border border-indigo-100">
+              <p className="text-info/90 italic mt-1 bg-surface p-2.5 rounded-xl border border-info/30">
                 {order.deliveryNotes}
               </p>
             )}
@@ -505,12 +505,12 @@ export default function UserOrderDetailPage() {
 
       {/* Completed with Partial Refund Notice */}
       {order.status === "COMPLETED_WITH_PARTIAL_REFUND" && (
-        <div className="p-5 rounded-2xl border-2 border-purple-300 bg-purple-50 text-purple-950 shadow-sm flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-xl bg-purple-600 text-foreground flex items-center justify-center shrink-0">
+        <div className="p-5 rounded-2xl border-2 border-purple-300 bg-brand-soft text-brand shadow-sm flex items-start gap-3.5">
+          <div className="w-10 h-10 rounded-xl bg-brand text-on-brand text-foreground flex items-center justify-center shrink-0">
             <DollarSign className="w-5 h-5" />
           </div>
           <div className="text-xs space-y-1">
-            <h3 className="font-extrabold text-purple-950 text-sm">Order Completed with Partial Refund</h3>
+            <h3 className="font-extrabold text-brand text-sm">Order Completed with Partial Refund</h3>
             <p className="text-purple-800">
               A partial refund of <strong className="font-mono text-purple-900">${Number(order.refundedAmount || order.partialRefundAmount || 0).toFixed(2)}</strong> has been returned to your payment method via Stripe. The remaining balance was settled with the vendor.
             </p>
@@ -520,12 +520,12 @@ export default function UserOrderDetailPage() {
 
       {/* Cancellation Request Status Banner */}
       {order.cancelStatus === "REQUESTED" && (
-        <div className="p-5 rounded-2xl border-2 border-amber-400 bg-amber-50 text-amber-950 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl border-2 border-warning/30 bg-warning-soft text-warning shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+            <AlertTriangle className="w-5 h-5 text-warning shrink-0 mt-0.5" />
             <div className="text-xs space-y-1">
               <strong className="font-bold text-sm block">Cancellation Request Pending Vendor Review</strong>
-              <p className="text-amber-900">
+              <p className="text-warning">
                 Reason: "{order.cancelReason}". Visible on Vendor and Admin dashboards.
               </p>
             </div>
@@ -533,7 +533,7 @@ export default function UserOrderDetailPage() {
           {!order.escalatedToAdmin && (
             <button
               onClick={() => setEscalateModalOpen(true)}
-              className="px-3.5 py-2 bg-warning-solid text-on-brand hover:bg-amber-700 text-foreground rounded-xl text-xs font-bold shrink-0 transition-colors cursor-pointer"
+              className="px-3.5 py-2 bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-foreground rounded-xl text-xs font-bold shrink-0 transition-colors cursor-pointer"
             >
               Escalate to Admin
             </button>
@@ -542,12 +542,12 @@ export default function UserOrderDetailPage() {
       )}
 
       {order.cancelStatus === "REJECTED" && (
-        <div className="p-5 rounded-2xl border-2 border-rose-300 bg-rose-50 text-rose-950 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl border-2 border-danger/30 bg-danger-soft text-rose-950 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+            <AlertTriangle className="w-5 h-5 text-danger shrink-0 mt-0.5" />
             <div className="text-xs space-y-1">
               <strong className="font-bold text-sm block">Cancellation Request Declined by Vendor</strong>
-              <p className="text-rose-900">
+              <p className="text-danger">
                 Vendor Note: "{order.cancelResponseNote || "Declined"}". You may escalate this order to Admin for binding mediation.
               </p>
             </div>
@@ -555,7 +555,7 @@ export default function UserOrderDetailPage() {
           {!order.escalatedToAdmin && (
             <button
               onClick={() => setEscalateModalOpen(true)}
-              className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-foreground rounded-xl text-xs font-bold shrink-0 transition-colors shadow-xs cursor-pointer"
+              className="px-4 py-2 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl text-xs font-bold shrink-0 transition-colors shadow-xs cursor-pointer"
             >
               Escalate Case to Admin
             </button>
@@ -565,9 +565,9 @@ export default function UserOrderDetailPage() {
 
       {/* Partial Refund Request Status Banner */}
       {order.refundStatus === "REQUESTED" && (
-        <div className="p-5 rounded-2xl border-2 border-purple-300 bg-purple-50 text-purple-950 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl border-2 border-purple-300 bg-brand-soft text-brand shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
-            <DollarSign className="w-5 h-5 text-purple-600 shrink-0 mt-0.5" />
+            <DollarSign className="w-5 h-5 text-brand shrink-0 mt-0.5" />
             <div className="text-xs space-y-1">
               <strong className="font-bold text-sm block">Partial Refund Request Pending (${Number(order.partialRefundAmount || 0).toFixed(2)})</strong>
               <p className="text-purple-900">
@@ -578,7 +578,7 @@ export default function UserOrderDetailPage() {
           {!order.escalatedToAdmin && (
             <button
               onClick={() => setEscalateModalOpen(true)}
-              className="px-3.5 py-2 bg-purple-600 hover:bg-purple-700 text-foreground rounded-xl text-xs font-bold shrink-0 transition-colors cursor-pointer"
+              className="px-3.5 py-2 bg-brand text-on-brand hover:bg-purple-700 text-foreground rounded-xl text-xs font-bold shrink-0 transition-colors cursor-pointer"
             >
               Escalate to Admin
             </button>
@@ -587,12 +587,12 @@ export default function UserOrderDetailPage() {
       )}
 
       {order.refundStatus === "REJECTED" && (
-        <div className="p-5 rounded-2xl border-2 border-rose-300 bg-rose-50 text-rose-950 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl border-2 border-danger/30 bg-danger-soft text-rose-950 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
-            <AlertTriangle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+            <AlertTriangle className="w-5 h-5 text-danger shrink-0 mt-0.5" />
             <div className="text-xs space-y-1">
               <strong className="font-bold text-sm block">Partial Refund Request Declined by Vendor</strong>
-              <p className="text-rose-900">
+              <p className="text-danger">
                 Vendor Note: "{order.refundResponseNote || "Declined"}". You can escalate to Admin for mediation.
               </p>
             </div>
@@ -600,7 +600,7 @@ export default function UserOrderDetailPage() {
           {!order.escalatedToAdmin && (
             <button
               onClick={() => setEscalateModalOpen(true)}
-              className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-foreground rounded-xl text-xs font-bold shrink-0 transition-colors shadow-xs cursor-pointer"
+              className="px-4 py-2 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl text-xs font-bold shrink-0 transition-colors shadow-xs cursor-pointer"
             >
               Escalate Case to Admin
             </button>
@@ -613,7 +613,7 @@ export default function UserOrderDetailPage() {
         const createdAtMs = order.createdAt ? new Date(order.createdAt).getTime() : Date.now();
         const hoursRemaining = Math.max(0, Math.ceil((createdAtMs + 24 * 60 * 60 * 1000 - Date.now()) / (1000 * 60 * 60)));
         return (
-          <div className="p-6 rounded-2xl border-2 border-amber-400 bg-warning-solid text-on-brand/10 shadow-sm space-y-4">
+          <div className="p-6 rounded-2xl border-2 border-warning/30 bg-warning-solid text-on-brand/10 shadow-sm space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-start gap-3.5">
                 <div className="w-12 h-12 rounded-xl bg-warning-solid text-on-brand text-foreground flex items-center justify-center shrink-0">
@@ -621,10 +621,10 @@ export default function UserOrderDetailPage() {
                 </div>
                 <div>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <h2 className="font-extrabold text-[#0F0C3B] text-base sm:text-lg">
+                    <h2 className="font-extrabold text-foreground text-base sm:text-lg">
                       Payment Required to Activate Order
                     </h2>
-                    <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-200 text-amber-900 animate-pulse">
+                    <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-warning-soft text-warning animate-pulse">
                       Auto-cancels in {hoursRemaining} hours if unpaid
                     </span>
                   </div>
@@ -647,11 +647,11 @@ export default function UserOrderDetailPage() {
       })()}
 
       {order.status === "CANCELLED" && (
-        <div className="p-5 rounded-2xl border border-rose-300 bg-rose-50 text-rose-800 flex items-start gap-3">
+        <div className="p-5 rounded-2xl border border-danger/30 bg-danger-soft text-danger flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 shrink-0 mt-0.5" />
           <div className="text-xs">
             <strong className="font-bold block text-sm">Order Cancelled</strong>
-            <p className="mt-0.5 text-rose-700">
+            <p className="mt-0.5 text-danger">
               This order contract has been cancelled. Unpaid bookings are automatically cancelled after 24 hours.
             </p>
           </div>
@@ -664,18 +664,18 @@ export default function UserOrderDetailPage() {
         <div className="lg:col-span-2 space-y-6">
           {/* Delivery Review Card: Action Required to Accept or Request Revision */}
           {isDelivered && (
-            <div className="p-6 rounded-2xl border-2 border-indigo-400 bg-gradient-to-br from-indigo-50/90 via-white to-purple-50/60 shadow-md space-y-5">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-indigo-100 pb-4">
+            <div className="p-6 rounded-2xl border-2 border-info/30 bg-gradient-to-br from-indigo-50/90 via-white to-purple-50/60 shadow-md space-y-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-info/30 pb-4">
                 <div className="flex items-center gap-3">
                   <div className="w-11 h-11 rounded-xl bg-brand text-on-brand text-foreground flex items-center justify-center shrink-0 shadow-sm">
                     <UploadCloud className="w-6 h-6" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-extrabold text-[#0F0C3B] text-base sm:text-lg">
+                      <h3 className="font-extrabold text-foreground text-base sm:text-lg">
                         Deliverables Submitted for Your Approval
                       </h3>
-                      <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-800 animate-pulse">
+                      <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-info-soft text-info animate-pulse">
                         Action Required
                       </span>
                     </div>
@@ -688,8 +688,8 @@ export default function UserOrderDetailPage() {
 
               {/* Delivery Message */}
               {order.deliveryNotes && (
-                <div className="p-4 bg-surface rounded-xl border border-indigo-100 shadow-2xs space-y-1">
-                  <span className="text-[11px] font-bold text-indigo-700 uppercase tracking-wider block">
+                <div className="p-4 bg-surface rounded-xl border border-info/30 shadow-2xs space-y-1">
+                  <span className="text-[11px] font-bold text-info uppercase tracking-wider block">
                     Artisan's Delivery Message:
                   </span>
                   <p className="text-xs text-foreground whitespace-pre-line leading-relaxed">
@@ -701,7 +701,7 @@ export default function UserOrderDetailPage() {
               {/* Delivered Files Grid */}
               {Array.isArray(order.deliveryFiles) && order.deliveryFiles.length > 0 && (
                 <div className="space-y-2.5">
-                  <span className="text-xs font-bold text-[#0F0C3B] block">
+                  <span className="text-xs font-bold text-foreground block">
                     Delivered Files &amp; Proof ({order.deliveryFiles.length}):
                   </span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
@@ -714,7 +714,7 @@ export default function UserOrderDetailPage() {
                       return (
                         <div
                           key={idx}
-                          className="bg-surface rounded-xl border border-border overflow-hidden shadow-2xs group hover:border-indigo-400 transition-all flex flex-col justify-between"
+                          className="bg-surface rounded-xl border border-border overflow-hidden shadow-2xs group hover:border-info/30 transition-all flex flex-col justify-between"
                         >
                           {isImg ? (
                             <div className="relative aspect-video w-full bg-surface-sunken overflow-hidden">
@@ -727,19 +727,19 @@ export default function UserOrderDetailPage() {
                                 href={fullUrl}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-foreground text-xs font-bold transition-opacity gap-1.5"
+                                className="absolute inset-0 bg-background/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-foreground text-xs font-bold transition-opacity gap-1.5"
                               >
                                 <Eye className="w-4 h-4" />
                                 <span>View Full Image</span>
                               </a>
                             </div>
                           ) : isVid ? (
-                            <div className="aspect-video w-full bg-slate-900 flex items-center justify-center">
+                            <div className="aspect-video w-full bg-surface-sunken flex items-center justify-center">
                               <Film className="w-8 h-8 text-foreground/70" />
                             </div>
                           ) : (
                             <div className="p-4 flex items-center gap-3">
-                              <div className="w-10 h-10 rounded-lg bg-indigo-50 text-info flex items-center justify-center shrink-0">
+                              <div className="w-10 h-10 rounded-lg bg-info-soft text-info flex items-center justify-center shrink-0">
                                 <FileArchive className="w-5 h-5" />
                               </div>
                               <div className="overflow-hidden">
@@ -760,7 +760,7 @@ export default function UserOrderDetailPage() {
                               download
                               target="_blank"
                               rel="noreferrer"
-                              className="p-1.5 text-info hover:text-indigo-800 hover:bg-indigo-50 rounded-lg transition-colors flex items-center gap-1 text-[11px] font-bold"
+                              className="p-1.5 text-info hover:text-info hover:bg-info-soft rounded-lg transition-colors flex items-center gap-1 text-[11px] font-bold"
                             >
                               <Download className="w-3.5 h-3.5" />
                               <span>Download</span>
@@ -775,8 +775,8 @@ export default function UserOrderDetailPage() {
 
               {/* Auto-Complete Countdown notice */}
               {order.autoCompleteAt && (
-                <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 flex items-start gap-2.5 text-xs">
-                  <Clock className="w-4 h-4 text-amber-600 mt-0.5 shrink-0" />
+                <div className="p-3.5 rounded-xl bg-warning-soft border border-warning/30 text-warning flex items-start gap-2.5 text-xs">
+                  <Clock className="w-4 h-4 text-warning mt-0.5 shrink-0" />
                   <div className="leading-relaxed">
                     <strong className="font-bold block">3-Day Review Window Active</strong>
                     <span>
@@ -796,7 +796,7 @@ export default function UserOrderDetailPage() {
                   type="button"
                   onClick={handleAcceptAllDelivery}
                   disabled={isAcceptingDelivery}
-                  className="flex-1 px-5 py-3 bg-success-solid text-white hover:bg-emerald-700 text-foreground text-xs font-bold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="flex-1 px-5 py-3 bg-success-solid text-foreground hover:bg-success-solid text-white text-foreground text-xs font-bold rounded-xl shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   {isAcceptingDelivery ? (
                     <Loader2 className="w-4 h-4 animate-spin" />
@@ -810,7 +810,7 @@ export default function UserOrderDetailPage() {
                   type="button"
                   onClick={() => handleOpenDeclineModal(null)}
                   disabled={isDecliningDelivery || isRequestingRevision}
-                  className="px-5 py-3 bg-surface hover:bg-rose-50 border-2 border-rose-200 hover:border-rose-300 text-rose-700 text-xs font-bold rounded-xl transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer"
+                  className="px-5 py-3 bg-surface hover:bg-danger-soft border-2 border-danger/30 hover:border-danger/30 text-danger text-xs font-bold rounded-xl transition-all shadow-xs flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <RotateCcw className="w-4 h-4" />
                   <span>Request Revision</span>
@@ -825,17 +825,17 @@ export default function UserOrderDetailPage() {
 
           {/* Revision Requested Banner */}
           {isRevisionRequested && (
-            <div className="p-5 rounded-2xl border-2 border-amber-400 bg-amber-50/70 shadow-xs space-y-3">
+            <div className="p-5 rounded-2xl border-2 border-warning/30 bg-warning-soft/70 shadow-xs space-y-3">
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-xl bg-warning-solid text-on-brand text-foreground flex items-center justify-center shrink-0 mt-0.5">
                   <RotateCcw className="w-5 h-5" />
                 </div>
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="font-extrabold text-[#0F0C3B] text-base">
+                    <h3 className="font-extrabold text-foreground text-base">
                       Revision Requested (Round #{order.revisionCount || 1})
                     </h3>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-200 text-amber-900">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-warning-soft text-warning">
                       Artisan Working on Changes
                     </span>
                   </div>
@@ -843,8 +843,8 @@ export default function UserOrderDetailPage() {
                     You have requested revisions for this order. {vendorName} has been notified and is updating the deliverables.
                   </p>
                   {order.revisionReason && (
-                    <div className="mt-2 p-3 bg-surface rounded-xl border border-amber-200 text-xs text-foreground">
-                      <span className="font-bold text-amber-900 block mb-0.5">Your Feedback / Requirements:</span>
+                    <div className="mt-2 p-3 bg-surface rounded-xl border border-warning/30 text-xs text-foreground">
+                      <span className="font-bold text-warning block mb-0.5">Your Feedback / Requirements:</span>
                       <p className="italic">{order.revisionReason}</p>
                     </div>
                   )}
@@ -855,23 +855,23 @@ export default function UserOrderDetailPage() {
 
           {/* Completed & 7-Day Clearing Notice */}
           {isCompleted && (
-            <div className="p-5 rounded-2xl border-2 border-emerald-300 bg-emerald-50/80 shadow-xs space-y-3">
+            <div className="p-5 rounded-2xl border-2 border-success/30 bg-success-soft/80 shadow-xs space-y-3">
               <div className="flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-success-solid text-white text-foreground flex items-center justify-center shrink-0 mt-0.5">
+                <div className="w-10 h-10 rounded-xl bg-success-solid text-foreground text-foreground flex items-center justify-center shrink-0 mt-0.5">
                   <CheckCircle2 className="w-5 h-5" />
                 </div>
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <h3 className="font-extrabold text-emerald-950 text-base">
+                    <h3 className="font-extrabold text-success text-base">
                       Order Fulfillment Completed
                     </h3>
                     {order.clearingEndsAt && (
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-200 text-emerald-900">
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-200 text-success">
                         7-Day Security Clearing Active
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-emerald-800 leading-relaxed">
+                  <p className="text-xs text-success leading-relaxed">
                     {order.clearingEndsAt ? (
                       <>
                         Thank you for confirming your order delivery! Funds held in escrow are currently in the 7-day clearing period, scheduled for automatic release to {vendorName}'s Stripe Connect balance on{" "}
@@ -895,8 +895,8 @@ export default function UserOrderDetailPage() {
 
               {/* Delivered Files permanent access */}
               {Array.isArray(order.deliveryFiles) && order.deliveryFiles.length > 0 && (
-                <div className="pt-2 border-t border-emerald-200/60 space-y-2">
-                  <span className="text-xs font-bold text-emerald-950 block">Your Final Delivered Files:</span>
+                <div className="pt-2 border-t border-success/30/60 space-y-2">
+                  <span className="text-xs font-bold text-success block">Your Final Delivered Files:</span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5">
                     {order.deliveryFiles.map((fileUrl: string, idx: number) => {
                       const fullUrl = getFileUrl(fileUrl);
@@ -905,7 +905,7 @@ export default function UserOrderDetailPage() {
                       return (
                         <div
                           key={idx}
-                          className="bg-surface rounded-xl border border-emerald-200 p-2.5 flex items-center justify-between gap-2 shadow-2xs"
+                          className="bg-surface rounded-xl border border-success/30 p-2.5 flex items-center justify-between gap-2 shadow-2xs"
                         >
                           <div className="flex items-center gap-2 overflow-hidden">
                             {isImg ? (
@@ -922,7 +922,7 @@ export default function UserOrderDetailPage() {
                             download
                             target="_blank"
                             rel="noreferrer"
-                            className="p-1 text-emerald-700 hover:bg-emerald-50 rounded transition-colors shrink-0"
+                            className="p-1 text-success hover:bg-success-soft rounded transition-colors shrink-0"
                             title="Download File"
                           >
                             <Download className="w-4 h-4" />
@@ -941,16 +941,16 @@ export default function UserOrderDetailPage() {
             className={cn(
               "p-4 rounded-2xl border flex items-start gap-3",
               isCompleted
-                ? "bg-emerald-50 border-emerald-200 text-emerald-900"
+                ? "bg-success-soft border-success/30 text-success"
                 : isCancelled
-                ? "bg-rose-50 border-rose-200 text-rose-900"
-                : "bg-gradient-to-r from-indigo-50/60 to-purple-50/60 border-indigo-100 text-[#0F0C3B]"
+                ? "bg-danger-soft border-danger/30 text-danger"
+                : "bg-gradient-to-r from-indigo-50/60 to-purple-50/60 border-info/30 text-foreground"
             )}
           >
             <ShieldCheck
               className={cn(
                 "w-5 h-5 shrink-0 mt-0.5",
-                isCompleted ? "text-success" : isCancelled ? "text-rose-600" : "text-brand-primary"
+                isCompleted ? "text-success" : isCancelled ? "text-danger" : "text-brand-primary"
               )}
             />
             <div className="text-xs space-y-1">
@@ -975,12 +975,12 @@ export default function UserOrderDetailPage() {
           <div className="bg-surface rounded-2xl border border-border shadow-xs overflow-hidden">
             <div className="p-5 border-b border-border flex items-center justify-between">
               <div>
-                <h2 className="font-extrabold text-[#0F0C3B] text-base">Milestone Payment Schedule</h2>
+                <h2 className="font-extrabold text-foreground text-base">Milestone Payment Schedule</h2>
                 <p className="text-xs text-foreground-muted mt-0.5">
                   Approve releases individually as the vendor delivers work
                 </p>
               </div>
-              <span className="text-xs font-bold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-lg">
+              <span className="text-xs font-bold text-info bg-info-soft px-2.5 py-1 rounded-lg">
                 {milestones.length} {milestones.length === 1 ? "Milestone" : "Milestones"}
               </span>
             </div>
@@ -1003,7 +1003,7 @@ export default function UserOrderDetailPage() {
                       key={ms.id || idx}
                       className={cn(
                         "p-5 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-4",
-                        isPendingRelease ? "bg-amber-50/40" : "hover:bg-surface-elevated/50"
+                        isPendingRelease ? "bg-warning-soft/40" : "hover:bg-surface-elevated/50"
                       )}
                     >
                       <div className="flex items-start gap-3.5">
@@ -1011,9 +1011,9 @@ export default function UserOrderDetailPage() {
                           className={cn(
                             "w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs font-bold mt-0.5",
                             isReleased
-                              ? "bg-emerald-100 text-emerald-700"
+                              ? "bg-success-soft text-success"
                               : isPendingRelease || isScheduled
-                              ? "bg-amber-100 text-amber-800"
+                              ? "bg-warning-soft text-warning"
                               : isRefunded
                               ? "bg-surface-sunken text-foreground-muted"
                               : "bg-surface-sunken text-foreground-muted"
@@ -1028,18 +1028,18 @@ export default function UserOrderDetailPage() {
 
                         <div className="space-y-1">
                           <div className="flex items-center gap-2 flex-wrap">
-                            <h4 className="font-bold text-[#0F0C3B] text-sm">
+                            <h4 className="font-bold text-foreground text-sm">
                               {ms.label || ms.title || `Milestone ${idx + 1}`}
                             </h4>
                             <span
                               className={cn(
                                 "text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider",
                                 isReleased
-                                  ? "bg-emerald-100 text-emerald-700"
+                                  ? "bg-success-soft text-success"
                                   : isPendingRelease || isScheduled
-                                  ? "bg-amber-100 text-amber-800"
+                                  ? "bg-warning-soft text-warning"
                                   : isRefunded
-                                  ? "bg-rose-100 text-rose-700"
+                                  ? "bg-danger-soft text-danger"
                                   : "bg-surface-sunken text-foreground-muted"
                               )}
                             >
@@ -1069,7 +1069,7 @@ export default function UserOrderDetailPage() {
 
                       <div className="flex items-center gap-3 sm:self-center justify-between sm:justify-end">
                         <div className="text-right">
-                          <span className="font-extrabold text-[#0F0C3B] text-base block">
+                          <span className="font-extrabold text-foreground text-base block">
                             ${Number(ms.amount || 0).toFixed(2)}
                           </span>
                           <span className="text-[10px] text-foreground-muted block font-medium">
@@ -1081,14 +1081,14 @@ export default function UserOrderDetailPage() {
                           <div className="flex items-center gap-1.5 flex-wrap">
                             <button
                               onClick={() => setPayingMilestone(ms)}
-                              className="px-3 py-1.5 bg-success-solid text-white hover:bg-emerald-700 text-foreground rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                              className="px-3 py-1.5 bg-success-solid text-foreground hover:bg-success-solid text-white text-foreground rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
                             >
                               <CheckCircle2 className="w-3.5 h-3.5" />
                               <span>Approve Delivery</span>
                             </button>
                             <button
                               onClick={() => handleOpenDeclineModal(ms)}
-                              className="px-2.5 py-1.5 bg-surface hover:bg-rose-50 text-rose-700 border border-rose-200 rounded-xl text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
+                              className="px-2.5 py-1.5 bg-surface hover:bg-danger-soft text-danger border border-danger/30 rounded-xl text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
                               title="Decline this milestone and request revision"
                             >
                               <RotateCcw className="w-3 h-3" />
@@ -1106,7 +1106,7 @@ export default function UserOrderDetailPage() {
 
           {/* Celebration Details Card */}
           <div className="bg-surface rounded-2xl border border-border p-5 shadow-xs space-y-4">
-            <h3 className="font-extrabold text-[#0F0C3B] text-sm uppercase tracking-wider">
+            <h3 className="font-extrabold text-foreground text-sm uppercase tracking-wider">
               Celebration &amp; Service Information
             </h3>
 
@@ -1115,7 +1115,7 @@ export default function UserOrderDetailPage() {
                 <Calendar className="w-4 h-4 text-info mt-0.5 shrink-0" />
                 <div>
                   <span className="text-[10px] uppercase font-bold text-foreground-muted block">Scheduled Date</span>
-                  <span className="font-bold text-[#0F0C3B]">{eventDateStr}</span>
+                  <span className="font-bold text-foreground">{eventDateStr}</span>
                 </div>
               </div>
 
@@ -1123,7 +1123,7 @@ export default function UserOrderDetailPage() {
                 <MapPin className="w-4 h-4 text-info mt-0.5 shrink-0" />
                 <div>
                   <span className="text-[10px] uppercase font-bold text-foreground-muted block">Event Venue</span>
-                  <span className="font-bold text-[#0F0C3B]">
+                  <span className="font-bold text-foreground">
                     {order.deliveryNotes || order.location || "Online / Coordinate via Chat"}
                   </span>
                 </div>
@@ -1141,7 +1141,7 @@ export default function UserOrderDetailPage() {
           {/* Live Order Chat Panel */}
           <div className="space-y-3 pt-2" id="order-chat-section">
             <div className="flex items-center justify-between">
-              <h3 className="font-extrabold text-[#0F0C3B] text-base flex items-center gap-2">
+              <h3 className="font-extrabold text-foreground text-base flex items-center gap-2">
                 <MessageSquare className="w-5 h-5 text-info" />
                 <span>Live Order Chat</span>
               </h3>
@@ -1153,7 +1153,7 @@ export default function UserOrderDetailPage() {
           {/* Review section if completed */}
           {isCompleted && (
             <div className="bg-surface rounded-2xl border border-border p-5 shadow-xs space-y-4">
-              <h3 className="font-extrabold text-[#0F0C3B] text-sm flex items-center gap-2">
+              <h3 className="font-extrabold text-foreground text-sm flex items-center gap-2">
                 <Star className="w-4 h-4 text-warning fill-amber-500" />
                 <span>Rate &amp; Review Your Vendor</span>
               </h3>
@@ -1210,7 +1210,7 @@ export default function UserOrderDetailPage() {
             </span>
 
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-brand-primary to-indigo-600 text-foreground font-black text-lg flex items-center justify-center overflow-hidden shrink-0">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-brand-primary to-brand text-foreground font-black text-lg flex items-center justify-center overflow-hidden shrink-0">
                 {order.vendorProfile?.avatarUrl ? (
                   <img
                     src={order.vendorProfile.avatarUrl}
@@ -1222,7 +1222,7 @@ export default function UserOrderDetailPage() {
                 )}
               </div>
               <div className="overflow-hidden">
-                <h4 className="font-extrabold text-[#0F0C3B] text-sm truncate">{vendorName}</h4>
+                <h4 className="font-extrabold text-foreground text-sm truncate">{vendorName}</h4>
                 <span className="inline-flex items-center gap-1 text-[11px] font-bold text-success">
                   <ShieldCheck className="w-3.5 h-3.5" /> Ophir Verified
                 </span>
@@ -1232,7 +1232,7 @@ export default function UserOrderDetailPage() {
             <div className="pt-2 border-t border-border flex flex-col gap-2">
               <Link
                 href={`/user/messages?userId=${vendorUserId}&orderId=${order.id}&vendorName=${encodeURIComponent(vendorName)}`}
-                className="w-full py-2.5 bg-indigo-50 hover:bg-indigo-100 text-brand-primary rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                className="w-full py-2.5 bg-info-soft hover:bg-info-soft text-brand-primary rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
               >
                 <MessageSquare className="w-3.5 h-3.5" />
                 <span>Open Direct Messages</span>
@@ -1242,7 +1242,7 @@ export default function UserOrderDetailPage() {
 
           {/* Financial Summary */}
           <div className="bg-surface rounded-2xl border border-border p-5 shadow-xs space-y-4">
-            <h3 className="font-extrabold text-[#0F0C3B] text-sm">Order Payment Summary</h3>
+            <h3 className="font-extrabold text-foreground text-sm">Order Payment Summary</h3>
 
             <div className="space-y-2 text-xs">
               <div className="flex justify-between py-1 text-foreground-muted">
@@ -1255,15 +1255,15 @@ export default function UserOrderDetailPage() {
                   <span className="font-semibold text-foreground-secondary">${Number(order.platformFee).toFixed(2)}</span>
                 </div>
               )}
-              <div className="flex justify-between py-2 border-t border-border text-sm font-black text-[#0F0C3B]">
+              <div className="flex justify-between py-2 border-t border-border text-sm font-black text-foreground">
                 <span>Total Contract Value</span>
                 <span>{totalAmount}</span>
               </div>
             </div>
 
-            <div className="p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-100 flex items-start gap-2.5">
+            <div className="p-3.5 rounded-xl bg-success-soft/60 border border-emerald-100 flex items-start gap-2.5">
               <ShieldCheck className="w-4 h-4 text-success mt-0.5 shrink-0" />
-              <div className="text-[11px] text-emerald-900 leading-tight">
+              <div className="text-[11px] text-success leading-tight">
                 <strong className="block font-bold">Milestone payment status</strong>
                 <span>Payments are collected by Stripe. Approved transfers have a 7-day hold before transfer to the vendor's connected Stripe balance.</span>
               </div>
@@ -1274,14 +1274,14 @@ export default function UserOrderDetailPage() {
 
       {/* Approve Milestone Modal */}
       {payingMilestone && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-border">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-success-soft text-success flex items-center justify-center">
                 <CheckCircle2 className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-[#0F0C3B] text-base">Confirm Milestone Release</h3>
+                <h3 className="font-bold text-foreground text-base">Confirm Milestone Release</h3>
                 <p className="text-xs text-foreground-muted">
                   Approve this delivery for {vendorName}
                 </p>
@@ -1291,9 +1291,9 @@ export default function UserOrderDetailPage() {
             <div className="p-4 rounded-xl bg-surface-elevated border border-border text-xs space-y-1.5">
               <div className="flex justify-between">
                 <span className="text-foreground-muted">Milestone:</span>
-                <span className="font-bold text-[#0F0C3B]">{payingMilestone.label || payingMilestone.title}</span>
+                <span className="font-bold text-foreground">{payingMilestone.label || payingMilestone.title}</span>
               </div>
-              <div className="flex justify-between text-sm font-extrabold text-emerald-700 pt-1 border-t border-border">
+              <div className="flex justify-between text-sm font-extrabold text-success pt-1 border-t border-border">
                 <span>Release Amount:</span>
                 <span>${Number(payingMilestone.amount || 0).toFixed(2)}</span>
               </div>
@@ -1315,7 +1315,7 @@ export default function UserOrderDetailPage() {
                 type="button"
                 onClick={() => handleApproveMilestone(payingMilestone)}
                 disabled={isApproving}
-                className="flex-1 py-2.5 bg-success-solid text-white hover:bg-emerald-700 text-foreground rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
+                className="flex-1 py-2.5 bg-success-solid text-foreground hover:bg-success-solid text-white text-foreground rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
               >
                 {isApproving ? <Loader2 className="w-4 h-4 animate-spin" /> : <ShieldCheck className="w-4 h-4" />}
                 <span>Authorize Release</span>
@@ -1327,14 +1327,14 @@ export default function UserOrderDetailPage() {
 
       {/* Decline Delivery Modal */}
       {declineModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-border">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-warning-soft text-warning flex items-center justify-center">
                 <RotateCcw className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-[#0F0C3B] text-base">Decline &amp; Request Revision</h3>
+                <h3 className="font-bold text-foreground text-base">Decline &amp; Request Revision</h3>
                 <p className="text-xs text-foreground-muted">
                   {selectedDeclineMilestone ? selectedDeclineMilestone.label || selectedDeclineMilestone.title : `Order #${order.id}`}
                 </p>
@@ -1388,7 +1388,7 @@ export default function UserOrderDetailPage() {
                 type="button"
                 onClick={handleConfirmDecline}
                 disabled={isDecliningDelivery || isRequestingRevision}
-                className="flex-1 py-2.5 bg-warning-solid text-on-brand hover:bg-amber-700 text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                className="flex-1 py-2.5 bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
               >
                 {isDecliningDelivery || isRequestingRevision ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -1404,14 +1404,14 @@ export default function UserOrderDetailPage() {
 
       {/* Cancel Order Request Modal */}
       {cancelModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-border">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-danger-soft text-danger flex items-center justify-center">
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-[#0F0C3B] text-base">Request Cancellation</h3>
+                <h3 className="font-bold text-foreground text-base">Request Cancellation</h3>
                 <p className="text-xs text-foreground-muted">Order #{order.orderNumber || order.id}</p>
               </div>
             </div>
@@ -1471,7 +1471,7 @@ export default function UserOrderDetailPage() {
                 type="button"
                 onClick={handleConfirmCancel}
                 disabled={isRequestingCancel || isCancelling}
-                className="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                className="flex-1 py-2.5 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
               >
                 {isRequestingCancel || isCancelling ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -1486,19 +1486,19 @@ export default function UserOrderDetailPage() {
 
       {/* Partial Refund Request Modal */}
       {partialRefundModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-border">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-brand-soft text-brand flex items-center justify-center">
                 <DollarSign className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-[#0F0C3B] text-base">Request Partial Refund</h3>
+                <h3 className="font-bold text-foreground text-base">Request Partial Refund</h3>
                 <p className="text-xs text-foreground-muted">Order total: ${Number(order.grandTotal || 0).toFixed(2)}</p>
               </div>
             </div>
 
-            <p className="text-xs text-foreground-secondary bg-purple-50 p-3 rounded-xl border border-purple-100">
+            <p className="text-xs text-foreground-secondary bg-brand-soft p-3 rounded-xl border border-purple-100">
               If accepted by vendor, the requested amount will be refunded directly to your card via Stripe. The remaining balance (minus 15% platform fee) will be paid to the vendor.
             </p>
 
@@ -1571,7 +1571,7 @@ export default function UserOrderDetailPage() {
                 type="button"
                 onClick={handleConfirmPartialRefund}
                 disabled={isRequestingPartialRefund}
-                className="flex-1 py-2.5 bg-purple-600 hover:bg-purple-700 text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                className="flex-1 py-2.5 bg-brand text-on-brand hover:bg-purple-700 text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
               >
                 {isRequestingPartialRefund ? <Loader2 className="w-4 h-4 animate-spin" /> : "Submit Request"}
               </button>
@@ -1582,14 +1582,14 @@ export default function UserOrderDetailPage() {
 
       {/* Escalate to Admin Modal */}
       {escalateModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-border">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-danger-soft text-danger flex items-center justify-center">
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-[#0F0C3B] text-base">Escalate Case to Admin</h3>
+                <h3 className="font-bold text-foreground text-base">Escalate Case to Admin</h3>
                 <p className="text-xs text-foreground-muted">Order #{order.orderNumber || order.id}</p>
               </div>
             </div>
@@ -1620,7 +1620,7 @@ export default function UserOrderDetailPage() {
                   onChange={(e) => setEscalateNotes(e.target.value)}
                   placeholder="Provide any summary notes for the admin mediator..."
                   rows={3}
-                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-rose-500"
+                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-danger"
                 />
               </div>
             </div>
@@ -1637,7 +1637,7 @@ export default function UserOrderDetailPage() {
                 type="button"
                 onClick={handleConfirmEscalation}
                 disabled={isEscalating}
-                className="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                className="flex-1 py-2.5 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
               >
                 {isEscalating ? <Loader2 className="w-4 h-4 animate-spin" /> : "Confirm Escalation"}
               </button>
@@ -1648,14 +1648,14 @@ export default function UserOrderDetailPage() {
 
       {/* Dispute Modal */}
       {disputeModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-border">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-xl bg-warning-soft text-warning flex items-center justify-center">
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-[#0F0C3B] text-base">Open Dispute</h3>
+                <h3 className="font-bold text-foreground text-base">Open Dispute</h3>
                 <p className="text-xs text-foreground-muted">Halts remaining milestone payments for mediation</p>
               </div>
             </div>
@@ -1699,7 +1699,7 @@ export default function UserOrderDetailPage() {
                 type="button"
                 onClick={handleSubmitDispute}
                 disabled={isDisputing}
-                className="flex-1 py-2.5 bg-warning-solid text-on-brand hover:bg-amber-700 text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
+                className="flex-1 py-2.5 bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
               >
                 {isDisputing ? <Loader2 className="w-4 h-4 animate-spin" /> : "Submit Dispute"}
               </button>
