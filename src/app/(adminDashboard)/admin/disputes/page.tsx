@@ -116,7 +116,7 @@ export default function AdminDisputesPage() {
             <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
               Disputes &amp; Arbitration Console
             </h1>
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-surface-sunken text-brand border border-border-brand/40">
               Stripe Connect Vault Arbitration
             </span>
           </div>
@@ -127,21 +127,21 @@ export default function AdminDisputesPage() {
 
         <button
           onClick={() => setIsEscrowModalOpen(true)}
-          className="px-4 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold rounded-xl shadow-sm flex items-center gap-2 cursor-pointer transition-colors"
+          className="px-4 py-2.5 bg-brand hover:bg-brand-hover text-on-brand text-xs font-bold rounded-xl shadow-sm flex items-center gap-2 cursor-pointer transition-colors"
         >
-          <Scale className="w-4 h-4 text-[#0B0C0E]" /> Open Escrow Settlement Console
+          <Scale className="w-4 h-4 text-on-brand" /> Open Escrow Settlement Console
         </button>
       </div>
 
       {/* Overdue Alert Banner */}
-      <div className="p-3.5 rounded-2xl bg-danger-solid text-white/10 border border-danger/30 flex items-center justify-between text-xs text-rose-300">
+      <div className="p-3.5 rounded-2xl bg-danger-solid text-foreground/10 border border-danger/30 flex items-center justify-between text-xs text-danger">
         <div className="flex items-center gap-2 font-bold">
           <AlertTriangle className="w-4 h-4 text-danger flex-shrink-0" />
           <span>Case #{selectedDispute.id} Exceeded 72h SLA: Immediate Arbitrator Decision Required</span>
         </div>
         <button 
           onClick={() => setIsEscrowModalOpen(true)}
-          className="font-bold text-danger hover:text-rose-300 hover:underline flex items-center gap-1 cursor-pointer"
+          className="font-bold text-danger hover:text-danger hover:underline flex items-center gap-1 cursor-pointer"
         >
           <span>Execute Settlement</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -168,14 +168,14 @@ export default function AdminDisputesPage() {
                   className={cn(
                     "p-4 rounded-3xl border transition-all cursor-pointer space-y-2.5",
                     isSelected
-                      ? "bg-[#16181F] border-[#DFB76C] shadow-sm ring-1 ring-[#DFB76C]/30"
-                      : "bg-[#121418] border-[#26282E] hover:border-slate-700 hover:bg-[#16181F]/40"
+                      ? "bg-surface-elevated border-border-brand shadow-sm ring-1 ring-focus-ring/30"
+                      : "bg-surface border-border hover:border-slate-700 hover:bg-surface-elevated/40"
                   )}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-[#DFB76C] font-mono bg-[#1A1D24] px-2 py-0.5 rounded border border-border-brand/40">
+                        <span className="text-xs font-bold text-brand font-mono bg-surface-sunken px-2 py-0.5 rounded border border-border-brand/40">
                           #{d.id}
                         </span>
                         <span className="text-[10px] text-foreground-muted font-medium">Order #{d.orderId}</span>
@@ -187,19 +187,19 @@ export default function AdminDisputesPage() {
 
                     <span className={cn(
                       "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border",
-                      d.status === "OVERDUE" && "bg-danger-solid text-white/15 text-danger border-danger/30",
+                      d.status === "OVERDUE" && "bg-danger-solid text-foreground/15 text-danger border-danger/30",
                       d.status === "ACTIVE" && "bg-warning-solid text-on-brand/15 text-warning border-warning/30",
-                      d.status === "EVIDENCE_PENDING" && "bg-purple-500/15 text-purple-400 border-purple-500/30",
+                      d.status === "EVIDENCE_PENDING" && "bg-brand text-on-brand/15 text-info border-border-brand/30",
                     )}>
                       {d.statusText}
                     </span>
                   </div>
 
-                  <p className="text-[11px] text-foreground-secondary line-clamp-2 leading-relaxed bg-[#0B0C0E]/60 p-2.5 rounded-xl border border-[#26282E]">
+                  <p className="text-[11px] text-foreground-secondary line-clamp-2 leading-relaxed bg-background/60 p-2.5 rounded-xl border border-border">
                     {d.summary}
                   </p>
 
-                  <div className="pt-2 border-t border-[#26282E] flex items-center justify-between text-[11px]">
+                  <div className="pt-2 border-t border-border flex items-center justify-between text-[11px]">
                     <span className="font-bold text-success flex items-center gap-1 font-mono">
                       <Lock className="w-3 h-3 text-foreground-muted" /> Escrow: ${d.amount.toLocaleString()}
                     </span>
@@ -215,35 +215,35 @@ export default function AdminDisputesPage() {
         <div className="lg:col-span-8 space-y-5">
           
           {/* Case Header Details Card */}
-          <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm space-y-4">
+          <div className="bg-surface p-5 rounded-3xl border border-border shadow-sm space-y-4">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#DFB76C] bg-[#1A1D24] px-2.5 py-0.5 rounded-full border border-border-brand/40">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-brand bg-surface-sunken px-2.5 py-0.5 rounded-full border border-border-brand/40">
                   Priority Arbitration Docket
                 </span>
                 <h2 className="text-base font-black text-foreground mt-1.5">
                   Case #{selectedDispute.id}: {selectedDispute.client} vs. {selectedDispute.vendor}
                 </h2>
               </div>
-              <span className="px-3 py-1 rounded-full bg-danger-solid text-white/15 text-danger border border-danger/30 text-xs font-bold flex items-center gap-1">
+              <span className="px-3 py-1 rounded-full bg-danger-solid text-foreground/15 text-danger border border-danger/30 text-xs font-bold flex items-center gap-1">
                 <Clock className="w-3.5 h-3.5 text-danger" /> Overdue 18h
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-[#26282E] text-xs">
-              <div className="p-3 bg-[#16181F] rounded-2xl border border-[#26282E]">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-border text-xs">
+              <div className="p-3 bg-surface-elevated rounded-2xl border border-border">
                 <span className="text-foreground-muted text-[10px] uppercase font-bold block">Escrow in Custody</span>
                 <p className="text-base font-black text-foreground font-mono mt-0.5">${selectedDispute.amount.toLocaleString()}</p>
               </div>
-              <div className="p-3 bg-[#16181F] rounded-2xl border border-[#26282E]">
+              <div className="p-3 bg-surface-elevated rounded-2xl border border-border">
                 <span className="text-foreground-muted text-[10px] uppercase font-bold block">Parent Order</span>
                 <p className="font-bold text-foreground mt-0.5">#{selectedDispute.orderId}</p>
               </div>
-              <div className="p-3 bg-[#16181F] rounded-2xl border border-[#26282E]">
+              <div className="p-3 bg-surface-elevated rounded-2xl border border-border">
                 <span className="text-foreground-muted text-[10px] uppercase font-bold block">Vendor Stripe ID</span>
-                <p className="font-mono text-[#DFB76C] text-[11px] font-bold mt-0.5 truncate">{selectedDispute.vendorStripeAccountId}</p>
+                <p className="font-mono text-brand text-[11px] font-bold mt-0.5 truncate">{selectedDispute.vendorStripeAccountId}</p>
               </div>
-              <div className="p-3 bg-[#16181F] rounded-2xl border border-[#26282E]">
+              <div className="p-3 bg-surface-elevated rounded-2xl border border-border">
                 <span className="text-foreground-muted text-[10px] uppercase font-bold block">Arbitration Rule</span>
                 <p className="font-bold text-foreground-secondary mt-0.5">Policy v3.2 Escrow</p>
               </div>
@@ -251,10 +251,10 @@ export default function AdminDisputesPage() {
           </div>
 
           {/* Evidence Dossier */}
-          <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm space-y-4">
+          <div className="bg-surface p-5 rounded-3xl border border-border shadow-sm space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="font-bold text-foreground text-sm flex items-center gap-2">
-                <FileText className="w-4 h-4 text-[#DFB76C]" />
+                <FileText className="w-4 h-4 text-brand" />
                 Party Submissions &amp; Evidentiary Dossier
               </h3>
               <span className="text-xs text-foreground-muted font-medium">2 Submissions Lodged</span>
@@ -262,10 +262,10 @@ export default function AdminDisputesPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
               {/* Client Statement */}
-              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-3">
+              <div className="p-4 rounded-2xl bg-surface-elevated border border-border space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40 flex items-center justify-center font-bold text-[10px]">
+                    <div className="w-7 h-7 rounded-full bg-surface-sunken text-brand border border-border-brand/40 flex items-center justify-center font-bold text-[10px]">
                       EC
                     </div>
                     <div>
@@ -276,22 +276,22 @@ export default function AdminDisputesPage() {
                   <span className="text-[10px] text-foreground-muted">Nov 12, 10:30 AM</span>
                 </div>
 
-                <p className="text-foreground-secondary text-[11px] leading-relaxed italic bg-[#121418] p-3 rounded-xl border border-[#26282E]">
+                <p className="text-foreground-secondary text-[11px] leading-relaxed italic bg-surface p-3 rounded-xl border border-border">
                   &ldquo;{selectedDispute.clientStatement}&rdquo;
                 </p>
 
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="px-2.5 py-1 rounded-lg bg-[#1A1D24] border border-[#26282E] text-[10px] font-bold text-foreground-secondary">
+                  <span className="px-2.5 py-1 rounded-lg bg-surface-sunken border border-border text-[10px] font-bold text-foreground-secondary">
                     📸 cords_draped.jpg
                   </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#1A1D24] border border-[#26282E] text-[10px] font-bold text-foreground-secondary">
+                  <span className="px-2.5 py-1 rounded-lg bg-surface-sunken border border-border text-[10px] font-bold text-foreground-secondary">
                     📄 contract_rider.pdf
                   </span>
                 </div>
               </div>
 
               {/* Vendor Statement */}
-              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-3">
+              <div className="p-4 rounded-2xl bg-surface-elevated border border-border space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-full bg-warning-solid text-on-brand/20 text-warning border border-warning/30 flex items-center justify-center font-bold text-[10px]">
@@ -305,15 +305,15 @@ export default function AdminDisputesPage() {
                   <span className="text-[10px] text-foreground-muted">Nov 13, 03:15 PM</span>
                 </div>
 
-                <p className="text-foreground-secondary text-[11px] leading-relaxed italic bg-[#121418] p-3 rounded-xl border border-[#26282E]">
+                <p className="text-foreground-secondary text-[11px] leading-relaxed italic bg-surface p-3 rounded-xl border border-border">
                   &ldquo;{selectedDispute.vendorStatement}&rdquo;
                 </p>
 
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="px-2.5 py-1 rounded-lg bg-[#1A1D24] border border-[#26282E] text-[10px] font-bold text-foreground-secondary">
+                  <span className="px-2.5 py-1 rounded-lg bg-surface-sunken border border-border text-[10px] font-bold text-foreground-secondary">
                     📸 mist_conditions.jpg
                   </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-[#1A1D24] border border-[#26282E] text-[10px] font-bold text-foreground-secondary">
+                  <span className="px-2.5 py-1 rounded-lg bg-surface-sunken border border-border text-[10px] font-bold text-foreground-secondary">
                     🌦️ weather_log.pdf
                   </span>
                 </div>
@@ -322,7 +322,7 @@ export default function AdminDisputesPage() {
           </div>
 
           {/* Settle Dispute CTA Card */}
-          <div className="bg-[#16181F] border border-border-brand/40 text-foreground p-6 rounded-3xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="bg-surface-elevated border border-border-brand/40 text-foreground p-6 rounded-3xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
               <h3 className="text-sm font-bold text-foreground">Execute Binding Escrow Settlement</h3>
               <p className="text-xs text-foreground-muted mt-0.5">
@@ -333,16 +333,16 @@ export default function AdminDisputesPage() {
             <div className="flex items-center gap-2 flex-wrap flex-shrink-0">
               <Link
                 href={`/admin/orders/${(selectedDispute as any).dbOrderId || selectedDispute.orderId}`}
-                className="px-4 py-2.5 bg-[#1A1D24] hover:bg-[#222630] border border-[#26282E] text-foreground-secondary hover:text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+                className="px-4 py-2.5 bg-surface-sunken hover:bg-surface-sunken border border-border text-foreground-secondary hover:text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
               >
-                <MessageSquare className="w-4 h-4 text-[#DFB76C]" />
+                <MessageSquare className="w-4 h-4 text-brand" />
                 <span>Join Order Page & Chat</span>
               </Link>
               <button
                 onClick={() => setIsEscrowModalOpen(true)}
-                className="px-4 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-2.5 bg-brand hover:bg-brand-hover text-on-brand rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
               >
-                <Scale className="w-4 h-4 text-[#0B0C0E]" />
+                <Scale className="w-4 h-4 text-on-brand" />
                 <span>Settlement Console</span>
               </button>
             </div>
