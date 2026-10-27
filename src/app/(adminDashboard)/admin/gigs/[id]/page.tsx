@@ -517,7 +517,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
         <div className="flex items-center gap-3">
           <Link
             href="/admin/gigs"
-            className="p-2.5 rounded-xl bg-[#16181F] border border-[#26282E] hover:bg-[#1A1D24] text-foreground-secondary transition-colors shadow-2xs flex items-center justify-center"
+            className="p-2.5 rounded-xl bg-surface-elevated border border-border hover:bg-surface-sunken text-foreground-secondary transition-colors shadow-2xs flex items-center justify-center"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
@@ -526,17 +526,17 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
               <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
                 Gig Audit &amp; Moderation
               </h1>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-[#16181F] text-[#DFB76C] border border-[#26282E]">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-surface-elevated text-brand border border-border">
                 #{gig.id}
               </span>
               <span
                 className={cn(
                   "px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase",
                   gig.status === "ACTIVE"
-                    ? "bg-success-solid text-white/15 text-success border border-success/30"
+                    ? "bg-success-solid text-foreground/15 text-success border border-success/30"
                     : gig.status === "PENDING_REVIEW"
                     ? "bg-warning-solid text-on-brand/15 text-warning border border-warning/30"
-                    : "bg-danger-solid text-white/15 text-danger border border-danger/30"
+                    : "bg-danger-solid text-foreground/15 text-danger border border-danger/30"
                 )}
               >
                 {gig.status.replace("_", " ")}
@@ -553,7 +553,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           <Link
             href={`/vendors/${gig.vendor.id}`}
             target="_blank"
-            className="px-3.5 py-2 rounded-xl bg-[#16181F] hover:bg-[#1A1D24] text-foreground-secondary hover:text-foreground border border-[#26282E] text-xs font-bold transition-colors flex items-center gap-1.5"
+            className="px-3.5 py-2 rounded-xl bg-surface-elevated hover:bg-surface-sunken text-foreground-secondary hover:text-foreground border border-border text-xs font-bold transition-colors flex items-center gap-1.5"
           >
             <ExternalLink className="w-3.5 h-3.5" /> Public View
           </Link>
@@ -564,17 +564,17 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
               "px-3.5 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border",
               gig.isFeatured
                 ? "bg-warning-solid text-on-brand/15 text-warning border-warning/30 hover:bg-warning-solid text-on-brand/25"
-                : "bg-[#16181F] text-foreground-secondary border-[#26282E] hover:bg-[#1A1D24] hover:text-foreground"
+                : "bg-surface-elevated text-foreground-secondary border-border hover:bg-surface-sunken hover:text-foreground"
             )}
           >
-            <Sparkles className="w-3.5 h-3.5 text-[#DFB76C] fill-[#DFB76C]" />
+            <Sparkles className="w-3.5 h-3.5 text-brand fill-brand" />
             <span>{gig.isFeatured ? "Featured Active" : "Set Featured"}</span>
           </button>
 
           {gig.status !== "ACTIVE" && (
             <button
               onClick={() => handleStatusChange("ACTIVE")}
-              className="px-4 py-2 rounded-xl bg-success-solid text-white hover:bg-success-solid text-white text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+              className="px-4 py-2 rounded-xl bg-success-solid text-foreground hover:bg-success-solid text-foreground text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
             >
               <CheckCircle2 className="w-4 h-4" /> Approve &amp; Activate
             </button>
@@ -592,7 +592,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           {gig.status !== "SUSPENDED" && (
             <button
               onClick={() => handleStatusChange("SUSPENDED")}
-              className="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-xl bg-danger-solid text-white hover:bg-danger-solid text-foreground text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
             >
               <XCircle className="w-4 h-4" /> Suspend
             </button>
@@ -607,23 +607,23 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
         <div className="lg:col-span-2 space-y-6">
           
           {/* Hero Media & Title Card */}
-          <div className="bg-[#121418] rounded-3xl border border-[#26282E] overflow-hidden shadow-xs">
+          <div className="bg-surface rounded-3xl border border-border overflow-hidden shadow-xs">
             {/* Banner Cover */}
-            <div className="relative h-64 md:h-80 w-full bg-slate-900 overflow-hidden">
+            <div className="relative h-64 md:h-80 w-full bg-surface-sunken overflow-hidden">
               <img
                 src={gig.media.cover}
                 alt={gig.title}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0B0C0E] via-black/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-black/40 to-transparent" />
 
               <div className="absolute top-4 left-4 flex gap-2">
-                <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-foreground text-[11px] font-bold border border-border-strong">
+                <span className="px-3 py-1 rounded-full bg-background/70 backdrop-blur-md text-foreground text-[11px] font-bold border border-border-strong">
                   {gig.category}
                 </span>
                 {gig.isFeatured && (
-                  <span className="px-3 py-1 rounded-full bg-[#DFB76C] text-[#0B0C0E] text-[11px] font-bold shadow-sm flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 fill-[#0B0C0E]" /> Featured Homepage
+                  <span className="px-3 py-1 rounded-full bg-brand text-on-brand text-[11px] font-bold shadow-sm flex items-center gap-1">
+                    <Sparkles className="w-3 h-3 fill-background" /> Featured Homepage
                   </span>
                 )}
               </div>
@@ -635,8 +635,8 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
                 </h2>
                 
                 <div className="flex items-center gap-4 flex-wrap text-xs text-foreground-secondary">
-                  <div className="flex items-center gap-1 text-[#DFB76C] font-bold">
-                    <Star className="w-3.5 h-3.5 fill-[#DFB76C]" />
+                  <div className="flex items-center gap-1 text-brand font-bold">
+                    <Star className="w-3.5 h-3.5 fill-brand" />
                     <span>{gig.rating}</span>
                     <span className="text-foreground-muted font-normal">({gig.reviewsCount} reviews)</span>
                   </div>
@@ -652,15 +652,15 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
 
             {/* Gallery Thumbnails */}
             {gig.media.gallery.length > 0 && (
-              <div className="p-4 bg-[#16181F] border-t border-[#26282E] flex items-center gap-3 overflow-x-auto">
+              <div className="p-4 bg-surface-elevated border-t border-border flex items-center gap-3 overflow-x-auto">
                 <span className="text-[10px] font-bold uppercase text-foreground-muted whitespace-nowrap">
                   Gallery Assets ({gig.media.gallery.length + 1}):
                 </span>
-                <div className="w-16 h-12 rounded-lg overflow-hidden border-2 border-[#DFB76C] flex-shrink-0 cursor-pointer">
+                <div className="w-16 h-12 rounded-lg overflow-hidden border-2 border-border-brand flex-shrink-0 cursor-pointer">
                   <img src={gig.media.cover} alt="Cover" className="w-full h-full object-cover" />
                 </div>
                 {gig.media.gallery.map((img, i) => (
-                  <div key={i} className="w-16 h-12 rounded-lg overflow-hidden border border-[#26282E] flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity">
+                  <div key={i} className="w-16 h-12 rounded-lg overflow-hidden border border-border flex-shrink-0 cursor-pointer hover:opacity-80 transition-opacity">
                     <img src={img} alt={`Gallery ${i}`} className="w-full h-full object-cover" />
                   </div>
                 ))}
@@ -686,7 +686,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
                   {gig.occasions.map((occ, i) => (
                     <span
                       key={i}
-                      className="px-2.5 py-1 bg-[#1A1D24] text-[#DFB76C] border border-[#26282E] rounded-lg text-[11px] font-semibold"
+                      className="px-2.5 py-1 bg-surface-sunken text-brand border border-border rounded-lg text-[11px] font-semibold"
                     >
                       {occ}
                     </span>
@@ -697,11 +697,11 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           </div>
 
           {/* 3-Tier Pricing Packages Matrix */}
-          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-6 shadow-xs space-y-4">
+          <div className="bg-surface rounded-3xl border border-border p-6 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-base font-black text-foreground flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-[#DFB76C]" /> Service Pricing Packages &amp; Deliverables
+                  <Layers className="w-4 h-4 text-brand" /> Service Pricing Packages &amp; Deliverables
                 </h3>
                 <p className="text-xs text-foreground-muted">
                   Inspect the structured package tiers submitted by the vendor for marketplace compliance.
@@ -709,7 +709,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
               </div>
 
               {/* Tier Switcher Buttons */}
-              <div className="flex items-center bg-[#16181F] p-1 rounded-xl border border-[#26282E]">
+              <div className="flex items-center bg-surface-elevated p-1 rounded-xl border border-border">
                 {(["basic", "standard", "premium"] as const).map((tier) => (
                   <button
                     key={tier}
@@ -717,7 +717,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
                     className={cn(
                       "px-3 py-1.5 rounded-lg font-bold text-xs capitalize transition-all",
                       selectedTier === tier
-                        ? "bg-[#DFB76C] text-[#0B0C0E] shadow-2xs font-extrabold"
+                        ? "bg-brand text-on-brand shadow-2xs font-extrabold"
                         : "text-foreground-muted hover:text-foreground"
                     )}
                   >
@@ -731,10 +731,10 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
             {(() => {
               const activePkg = gig.packages[selectedTier];
               return (
-                <div className="p-5 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-4">
+                <div className="p-5 rounded-2xl bg-surface-elevated border border-border space-y-4">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-[#DFB76C]/15 text-[#DFB76C] border border-border-brand/40">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-brand/15 text-brand border border-border-brand/40">
                         {selectedTier} Tier
                       </span>
                       <h4 className="text-base font-bold text-foreground mt-1">{activePkg.name}</h4>
@@ -743,18 +743,18 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
 
                     <div className="text-right">
                       <span className="text-[10px] font-bold text-foreground-muted uppercase block">Client Price</span>
-                      <span className="text-2xl font-black text-[#DFB76C] font-mono">${activePkg.price}</span>
+                      <span className="text-2xl font-black text-brand font-mono">${activePkg.price}</span>
                       <span className="text-[10px] text-foreground-muted block">{activePkg.deliveryTime}</span>
                     </div>
                   </div>
 
-                  <div className="pt-3 border-t border-[#26282E]">
+                  <div className="pt-3 border-t border-border">
                     <span className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider block mb-2">
                       Included Deliverables &amp; Equipment
                     </span>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       {activePkg.features.map((feat, i) => (
-                        <div key={i} className="flex items-center gap-2 p-2.5 rounded-xl bg-[#121418] border border-[#26282E]">
+                        <div key={i} className="flex items-center gap-2 p-2.5 rounded-xl bg-surface border border-border">
                           <Check className="w-3.5 h-3.5 text-success flex-shrink-0" />
                           <span className="text-foreground-secondary font-medium">{feat}</span>
                         </div>
@@ -767,31 +767,31 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           </div>
 
           {/* Analytics & Conversion Performance */}
-          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-6 shadow-xs space-y-4">
+          <div className="bg-surface rounded-3xl border border-border p-6 shadow-xs space-y-4">
             <h3 className="text-base font-black text-foreground flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-[#DFB76C]" /> Listing Performance Metrics
+              <TrendingUp className="w-4 h-4 text-brand" /> Listing Performance Metrics
             </h3>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E]">
+              <div className="p-4 rounded-2xl bg-surface-elevated border border-border">
                 <span className="text-foreground-muted text-[10px] uppercase font-bold block">Marketplace Views</span>
                 <span className="text-lg font-black text-foreground mt-1 block">{gig.viewsCount.toLocaleString()}</span>
                 <span className="text-[10px] text-success font-bold">+12% this month</span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E]">
+              <div className="p-4 rounded-2xl bg-surface-elevated border border-border">
                 <span className="text-foreground-muted text-[10px] uppercase font-bold block">Conversion Rate</span>
-                <span className="text-lg font-black text-[#DFB76C] mt-1 block">{gig.conversionRate}</span>
+                <span className="text-lg font-black text-brand mt-1 block">{gig.conversionRate}</span>
                 <span className="text-[10px] text-foreground-muted">Industry avg: 8.5%</span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E]">
+              <div className="p-4 rounded-2xl bg-surface-elevated border border-border">
                 <span className="text-foreground-muted text-[10px] uppercase font-bold block">Completed Orders</span>
                 <span className="text-lg font-black text-foreground mt-1 block">{gig.totalOrders}</span>
                 <span className="text-[10px] text-foreground-muted">0 Disputes logged</span>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E]">
+              <div className="p-4 rounded-2xl bg-surface-elevated border border-border">
                 <span className="text-foreground-muted text-[10px] uppercase font-bold block">Gross Payouts</span>
                 <span className="text-lg font-black text-success font-mono mt-1 block">
                   ${(gig.totalRevenue * (1 - gig.commissionRate / 100)).toLocaleString()}
@@ -806,18 +806,18 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
         <div className="space-y-6">
 
           {/* Vendor Profile Card */}
-          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-5 shadow-xs space-y-4">
+          <div className="bg-surface rounded-3xl border border-border p-5 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">
                 Listed By Vendor
               </span>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#DFB76C]/15 text-[#DFB76C] border border-border-brand/40">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-brand/15 text-brand border border-border-brand/40">
                 {gig.vendor.tier}
               </span>
             </div>
 
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#DFB76C] shadow-xs">
+              <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-border-brand shadow-xs">
                 <img src={gig.vendor.avatar} alt={gig.vendor.name} className="w-full h-full object-cover" />
               </div>
               <div>
@@ -830,14 +830,14 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-[#26282E] text-center">
-              <div className="p-2 bg-[#16181F] border border-[#26282E] rounded-xl">
+            <div className="grid grid-cols-2 gap-2 pt-2 border-t border-border text-center">
+              <div className="p-2 bg-surface-elevated border border-border rounded-xl">
                 <span className="text-[10px] text-foreground-muted uppercase font-bold block">Rating</span>
                 <span className="font-bold text-foreground text-xs flex items-center justify-center gap-1">
-                  <Star className="w-3 h-3 text-[#DFB76C] fill-[#DFB76C]" /> {gig.vendor.rating}
+                  <Star className="w-3 h-3 text-brand fill-brand" /> {gig.vendor.rating}
                 </span>
               </div>
-              <div className="p-2 bg-[#16181F] border border-[#26282E] rounded-xl">
+              <div className="p-2 bg-surface-elevated border border-border rounded-xl">
                 <span className="text-[10px] text-foreground-muted uppercase font-bold block">Completed</span>
                 <span className="font-bold text-foreground text-xs">{gig.vendor.completedOrders} Gigs</span>
               </div>
@@ -846,7 +846,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
             <div className="pt-2">
               <Link
                 href={`/admin/vendor-approvals`}
-                className="w-full py-2 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-secondary hover:text-foreground rounded-xl font-bold text-center block transition-colors"
+                className="w-full py-2 bg-surface-elevated hover:bg-surface-sunken border border-border text-foreground-secondary hover:text-foreground rounded-xl font-bold text-center block transition-colors"
               >
                 Inspect Vendor Credentials &rarr;
               </Link>
@@ -854,18 +854,18 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           </div>
 
           {/* Insurance & Safety Compliance Audit */}
-          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-5 shadow-xs space-y-3.5">
+          <div className="bg-surface rounded-3xl border border-border p-5 shadow-xs space-y-3.5">
             <h4 className="font-bold text-foreground text-sm flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-success" /> Insurance &amp; Compliance Audit
             </h4>
 
             <div className="space-y-2">
-              <div className="p-3 rounded-xl bg-[#16181F] border border-[#26282E] space-y-1">
+              <div className="p-3 rounded-xl bg-surface-elevated border border-border space-y-1">
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-foreground-secondary">Commercial Liability</span>
                   <span className={cn(
                     "px-2 py-0.5 rounded text-[10px] font-bold",
-                    gig.compliance.insuranceStatus === "VERIFIED" ? "bg-success-solid text-white/15 text-success border border-success/30" : "bg-warning-solid text-on-brand/15 text-warning border border-warning/30"
+                    gig.compliance.insuranceStatus === "VERIFIED" ? "bg-success-solid text-foreground/15 text-success border border-success/30" : "bg-warning-solid text-on-brand/15 text-warning border border-warning/30"
                   )}>
                     {gig.compliance.insuranceStatus}
                   </span>
@@ -874,21 +874,21 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
                 <span className="text-[10px] text-foreground-muted block">Valid thru: {gig.compliance.insuranceExpiry}</span>
               </div>
 
-              <div className="p-3 rounded-xl bg-[#16181F] border border-[#26282E] space-y-1">
+              <div className="p-3 rounded-xl bg-surface-elevated border border-border space-y-1">
                 <div className="flex items-center justify-between">
                   <span className="font-semibold text-foreground-secondary">Background Screening</span>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-success-solid text-white/15 text-success border border-success/30">
+                  <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-success-solid text-foreground/15 text-success border border-success/30">
                     {gig.compliance.backgroundCheck}
                   </span>
                 </div>
                 <p className="text-[10px] text-foreground-muted">Identity and criminal background verified via Checkr.</p>
               </div>
 
-              <div className="p-3 rounded-xl bg-[#16181F] border border-[#26282E] space-y-1">
+              <div className="p-3 rounded-xl bg-surface-elevated border border-border space-y-1">
                 <span className="font-semibold text-foreground-secondary block">Certifications On File:</span>
                 <div className="flex flex-wrap gap-1">
                   {gig.compliance.certifications.map((c, i) => (
-                    <span key={i} className="px-2 py-0.5 bg-[#121418] rounded border border-[#26282E] text-[10px] font-medium text-foreground-secondary">
+                    <span key={i} className="px-2 py-0.5 bg-surface rounded border border-border text-[10px] font-medium text-foreground-secondary">
                       {c}
                     </span>
                   ))}
@@ -898,9 +898,9 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           </div>
 
           {/* Platform Commission & Escrow Settings */}
-          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-5 shadow-xs space-y-3.5">
+          <div className="bg-surface rounded-3xl border border-border p-5 shadow-xs space-y-3.5">
             <h4 className="font-bold text-foreground text-sm flex items-center gap-1.5">
-              <Percent className="w-4 h-4 text-[#DFB76C]" /> Platform Fee &amp; Commission Override
+              <Percent className="w-4 h-4 text-brand" /> Platform Fee &amp; Commission Override
             </h4>
 
             <p className="text-foreground-muted text-[11px]">
@@ -915,7 +915,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
                   max="50"
                   value={commissionInput}
                   onChange={(e) => setCommissionInput(Number(e.target.value))}
-                  className="w-full bg-[#16181F] border border-[#26282E] rounded-xl px-3 py-2 text-xs font-bold text-foreground focus:outline-none focus:border-[#DFB76C]"
+                  className="w-full bg-surface-elevated border border-border rounded-xl px-3 py-2 text-xs font-bold text-foreground focus:outline-none focus:border-border-brand"
                 />
                 <span className="absolute right-3 top-2 text-foreground-muted font-bold">%</span>
               </div>
@@ -923,7 +923,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
               <button
                 type="button"
                 onClick={handleSaveCommission}
-                className="px-4 py-2 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl font-bold transition-colors text-xs"
+                className="px-4 py-2 bg-brand hover:bg-brand-hover text-on-brand rounded-xl font-bold transition-colors text-xs"
               >
                 Save
               </button>
@@ -931,10 +931,10 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           </div>
 
           {/* Admin Audit Log & Internal Notes */}
-          <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-5 shadow-xs space-y-3.5">
+          <div className="bg-surface rounded-3xl border border-border p-5 shadow-xs space-y-3.5">
             <div className="flex items-center justify-between">
               <h4 className="font-bold text-foreground text-sm flex items-center gap-1.5">
-                <MessageSquare className="w-4 h-4 text-[#DFB76C]" /> Admin Audit Log &amp; Notes
+                <MessageSquare className="w-4 h-4 text-brand" /> Admin Audit Log &amp; Notes
               </h4>
               <span className="text-foreground-muted text-[10px] font-bold">{gig.adminNotes.length} notes</span>
             </div>
@@ -942,7 +942,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
             {/* Note items */}
             <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar">
               {gig.adminNotes.map((note) => (
-                <div key={note.id} className="p-3 bg-[#16181F] rounded-xl border border-[#26282E] space-y-1">
+                <div key={note.id} className="p-3 bg-surface-elevated rounded-xl border border-border space-y-1">
                   <div className="flex items-center justify-between text-[10px]">
                     <span className="font-bold text-foreground">{note.author}</span>
                     <span className="text-foreground-muted">{note.date}</span>
@@ -953,17 +953,17 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
             </div>
 
             {/* Append Note Form */}
-            <form onSubmit={handleAddNote} className="space-y-2 pt-2 border-t border-[#26282E]">
+            <form onSubmit={handleAddNote} className="space-y-2 pt-2 border-t border-border">
               <textarea
                 rows={2}
                 placeholder="Add internal moderation note..."
                 value={newNote}
                 onChange={(e) => setNewNote(e.target.value)}
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand"
               />
               <button
                 type="submit"
-                className="w-full py-2 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-secondary hover:text-foreground rounded-xl font-bold transition-colors flex items-center justify-center gap-1.5 text-xs"
+                className="w-full py-2 bg-surface-elevated hover:bg-surface-sunken border border-border text-foreground-secondary hover:text-foreground rounded-xl font-bold transition-colors flex items-center justify-center gap-1.5 text-xs"
               >
                 <Send className="w-3.5 h-3.5" /> Append Note
               </button>
