@@ -56,7 +56,7 @@ export default function VendorRootLayout({
                 type="button"
                 disabled={isResending}
                 onClick={handleResend}
-                className="px-3 py-1.5 rounded-lg bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-black text-xs font-bold transition-all shadow-xs cursor-pointer disabled:opacity-50"
+                className="px-3 py-1.5 rounded-lg bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-foreground text-xs font-bold transition-all shadow-xs cursor-pointer disabled:opacity-50"
               >
                 {isResending ? "Sending..." : "Resend Verification Email"}
               </button>
