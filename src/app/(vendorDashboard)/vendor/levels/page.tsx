@@ -35,8 +35,8 @@ export default function VendorLevelsPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">Vendor Level & Tier Status</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#EDE9FE] text-[#0F0C3B]">
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">Vendor Level & Tier Status</h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-soft text-foreground">
               Level: {currentTier}
             </span>
           </div>
@@ -47,7 +47,7 @@ export default function VendorLevelsPage() {
 
         <div className="flex items-center gap-2">
           <span className="text-xs font-bold text-foreground-muted">Next Tier Evaluation:</span>
-          <span className="px-2.5 py-1 bg-amber-50 text-amber-900 border border-amber-200 rounded-lg text-xs font-bold">
+          <span className="px-2.5 py-1 bg-warning-soft text-warning border border-warning/30 rounded-lg text-xs font-bold">
             Nov 01, 2025 (27 Days)
           </span>
         </div>
@@ -55,7 +55,7 @@ export default function VendorLevelsPage() {
 
 
       {/* Main Progression Showcase Card */}
-      <div className="bg-gradient-to-r from-[#0F0C3B] via-[#18124E] to-indigo-950 text-foreground rounded-3xl p-6 md:p-8 shadow-xl relative overflow-hidden space-y-6">
+      <div className="bg-gradient-to-r from-surface-elevated via-surface to-background text-foreground rounded-none p-6 md:p-8 shadow-xl relative overflow-hidden space-y-6 border border-border">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface/10 text-warning text-xs font-bold backdrop-blur-xs">
@@ -64,7 +64,7 @@ export default function VendorLevelsPage() {
             <h2 className="text-2xl md:text-3xl font-black tracking-tight">
               You are almost a <span className="text-warning">{nextTier}</span>!
             </h2>
-            <p className="text-xs text-indigo-200 max-w-xl">
+            <p className="text-xs text-info max-w-xl">
               Only 2 more completed orders needed before the November evaluation cycle to unlock the Gold Crown badge and Instant Payouts.
             </p>
           </div>
@@ -79,13 +79,13 @@ export default function VendorLevelsPage() {
         {/* Big Progress Bar */}
         <div className="space-y-2">
           <div className="flex items-center justify-between text-xs font-bold">
-            <span className="text-indigo-200">Current Level: Rising (L2)</span>
+            <span className="text-info">Current Level: Rising (L2)</span>
             <span className="text-warning font-mono text-sm">91% Progress</span>
           </div>
-          <div className="w-full h-4 bg-black/40 rounded-full p-0.5 border border-border">
+          <div className="w-full h-4 bg-background/40 rounded-full p-0.5 border border-border">
             <div 
               style={{ width: `${progressPercent}%` }}
-              className="h-full bg-gradient-to-r from-amber-400 to-amber-500 rounded-full shadow-md transition-all duration-1000"
+              className="h-full bg-gradient-to-r from-amber-400 to-brand-active rounded-full shadow-md transition-all duration-1000"
             />
           </div>
         </div>
@@ -101,10 +101,10 @@ export default function VendorLevelsPage() {
           </div>
           <div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-2xl font-black text-[#0F0C3B]">38</span>
+              <span className="text-2xl font-black text-foreground">38</span>
               <span className="text-xs text-foreground-muted font-bold">/ 40 required</span>
             </div>
-            <p className="text-[11px] text-amber-600 font-bold mt-1">2 orders remaining</p>
+            <p className="text-[11px] text-warning font-bold mt-1">2 orders remaining</p>
           </div>
           <div className="w-full h-1.5 bg-surface-sunken rounded-full overflow-hidden">
             <div className="h-full bg-warning-solid text-on-brand rounded-full w-[95%]" />
@@ -125,7 +125,7 @@ export default function VendorLevelsPage() {
             <p className="text-[11px] text-success font-bold mt-1">✓ Goal exceeded (+84%)</p>
           </div>
           <div className="w-full h-1.5 bg-surface-sunken rounded-full overflow-hidden">
-            <div className="h-full bg-success-solid text-white rounded-full w-full" />
+            <div className="h-full bg-success-solid text-foreground rounded-full w-full" />
           </div>
         </div>
 
@@ -137,13 +137,13 @@ export default function VendorLevelsPage() {
           </div>
           <div>
             <div className="flex items-baseline gap-1.5">
-              <span className="text-2xl font-black text-[#0F0C3B]">4.95</span>
+              <span className="text-2xl font-black text-foreground">4.95</span>
               <span className="text-xs text-foreground-muted font-bold">/ 4.85 min</span>
             </div>
             <p className="text-[11px] text-success font-bold mt-1">✓ 5.0 Star Target</p>
           </div>
           <div className="w-full h-1.5 bg-surface-sunken rounded-full overflow-hidden">
-            <div className="h-full bg-success-solid text-white rounded-full w-full" />
+            <div className="h-full bg-success-solid text-foreground rounded-full w-full" />
           </div>
         </div>
 
@@ -161,14 +161,14 @@ export default function VendorLevelsPage() {
             <p className="text-[11px] text-success font-bold mt-1">✓ Zero disputes logged</p>
           </div>
           <div className="w-full h-1.5 bg-surface-sunken rounded-full overflow-hidden">
-            <div className="h-full bg-success-solid text-white rounded-full w-full" />
+            <div className="h-full bg-success-solid text-foreground rounded-full w-full" />
           </div>
         </div>
       </div>
 
       {/* Tier Perks & Powers Roadmap */}
       <div className="bg-surface border border-border rounded-2xl p-6 shadow-xs space-y-5">
-        <h2 className="text-sm font-bold text-[#0F0C3B]">Tier Benefits Comparison</h2>
+        <h2 className="text-sm font-bold text-foreground">Tier Benefits Comparison</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
           {/* Level 1 */}
@@ -185,12 +185,12 @@ export default function VendorLevelsPage() {
           </div>
 
           {/* Level 2 (Current) */}
-          <div className="p-4 rounded-xl bg-indigo-50/70 border-2 border-brand-primary space-y-3 relative">
+          <div className="p-4 rounded-xl bg-info-soft/70 border-2 border-brand-primary space-y-3 relative">
             <span className="absolute -top-2.5 right-3 px-2 py-0.5 bg-brand-primary text-foreground text-[10px] font-extrabold rounded-full">
               CURRENT LEVEL
             </span>
             <div className="flex items-center justify-between">
-              <span className="font-black text-[#0F0C3B]">Rising Vendor</span>
+              <span className="font-black text-foreground">Rising Vendor</span>
               <span className="text-[10px] font-bold text-brand-primary">Tier 2</span>
             </div>
             <ul className="space-y-1.5 text-foreground-secondary text-[11px] font-medium">
@@ -202,12 +202,12 @@ export default function VendorLevelsPage() {
           </div>
 
           {/* Level 3 (Next) */}
-          <div className="p-4 rounded-xl bg-amber-50/60 border border-amber-200 space-y-3">
+          <div className="p-4 rounded-xl bg-warning-soft/60 border border-warning/30 space-y-3">
             <div className="flex items-center justify-between">
-              <span className="font-black text-amber-950">Top Rated Pro</span>
-              <span className="text-[10px] font-bold text-amber-700">Tier 3 (91% Ready)</span>
+              <span className="font-black text-warning">Top Rated Pro</span>
+              <span className="text-[10px] font-bold text-warning">Tier 3 (91% Ready)</span>
             </div>
-            <ul className="space-y-1.5 text-amber-900 text-[11px] font-medium">
+            <ul className="space-y-1.5 text-warning text-[11px] font-medium">
               <li>👑 Gold Crown Top Rated badge</li>
               <li>⭐ 2.0x Top-Shelf search boost</li>
               <li>⚡ Instant next-day bank transfers</li>
