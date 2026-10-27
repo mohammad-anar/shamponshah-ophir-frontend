@@ -57,7 +57,7 @@ const MyFormInput = ({
         render={({ field, fieldState: { error } }) => (
           <div className="flex flex-col justify-center w-full">
             {label && (
-              <p className={cn("ps-1 mb-2 text-[#101828] text-base font-normal leading-6", labelClassName)}>
+              <p className={cn("ps-1 mb-2 text-foreground text-base font-normal leading-6", labelClassName)}>
                 {label}
               </p>
             )}
