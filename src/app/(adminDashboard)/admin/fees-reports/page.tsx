@@ -192,75 +192,75 @@ export default function AdminFeesReportsPage() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">
+          <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">
             Platform Fees &amp; Financial Reports
           </h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-400 mt-1">
             Real-time reconciliation of 5% buyer platform fees, 10% vendor commissions, Stripe processing spreads, and net take-rate margins
           </p>
         </div>
 
         <button 
           onClick={() => toast.success("Complete platform financial ledger CSV exported.")}
-          className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-indigo-900 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 self-start"
+          className="px-4 py-2 rounded-xl bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 self-start"
         >
-          <Download className="w-3.5 h-3.5 text-amber-300" /> 
+          <Download className="w-3.5 h-3.5 text-[#DFB76C]" /> 
           <span>Export Financial Audit (.csv)</span>
         </button>
       </div>
 
       {/* KPI Metric Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-        <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs">
+        <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm">
           <span className="text-[10px] uppercase font-bold text-slate-400 block">Gross Escrow Volume (GMV)</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-[#0F0C3B] font-mono">
+            <span className="text-2xl font-black text-white font-mono">
               ${totalGMV.toLocaleString(undefined, { minimumFractionDigits: 2 })}
             </span>
-            <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.2 rounded">+18%</span>
+            <span className="text-xs font-bold text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.2 rounded">+18%</span>
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">Total booked celebration contracts</p>
+          <p className="text-[11px] text-slate-400 mt-1">Total booked celebration contracts</p>
         </div>
 
-        <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs">
+        <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm">
           <span className="text-[10px] uppercase font-bold text-slate-400 block">Buyer Platform Fees (5%)</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-brand-primary font-mono">
+            <span className="text-2xl font-black text-[#DFB76C] font-mono">
               ${totalBuyerFees.toLocaleString(undefined, { minimumFractionDigits: 2 })}
             </span>
-            <span className="text-xs font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.2 rounded">5.0%</span>
+            <span className="text-xs font-bold text-[#DFB76C] bg-[#1A1D24] border border-[#DFB76C]/30 px-1.5 py-0.2 rounded">5.0%</span>
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">Escrow protection &amp; client guarantee fee</p>
+          <p className="text-[11px] text-slate-400 mt-1">Escrow protection &amp; client guarantee fee</p>
         </div>
 
-        <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs">
+        <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm">
           <span className="text-[10px] uppercase font-bold text-slate-400 block">Vendor Commissions (10%)</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-[#0F0C3B] font-mono">
+            <span className="text-2xl font-black text-white font-mono">
               ${totalVendorCommissions.toLocaleString(undefined, { minimumFractionDigits: 2 })}
             </span>
-            <span className="text-xs font-bold text-amber-700 bg-amber-50 px-1.5 py-0.2 rounded">10.0%</span>
+            <span className="text-xs font-bold text-amber-400 bg-amber-500/15 border border-amber-500/30 px-1.5 py-0.2 rounded">10.0%</span>
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">Platform take-rate deducted on payout</p>
+          <p className="text-[11px] text-slate-400 mt-1">Platform take-rate deducted on payout</p>
         </div>
 
-        <div className="bg-gradient-to-br from-[#0F0C3B] to-[#1E175E] text-white p-5 rounded-3xl shadow-md">
-          <span className="text-[10px] uppercase font-bold text-amber-300 block">Net Platform Yield</span>
+        <div className="bg-[#16181F] border border-[#DFB76C]/30 text-white p-5 rounded-3xl shadow-sm">
+          <span className="text-[10px] uppercase font-bold text-[#DFB76C] block">Net Platform Yield</span>
           <div className="flex items-baseline gap-2 mt-1">
             <span className="text-2xl font-black text-emerald-400 font-mono">
               ${totalNetRevenue.toLocaleString(undefined, { minimumFractionDigits: 2 })}
             </span>
-            <span className="text-xs font-bold text-white/80 bg-white/10 px-1.5 py-0.2 rounded">Net Margin</span>
+            <span className="text-xs font-bold text-slate-300 bg-[#1A1D24] border border-[#26282E] px-1.5 py-0.2 rounded">Net Margin</span>
           </div>
-          <p className="text-[11px] text-slate-300 mt-1">After Stripe payment gateway fees</p>
+          <p className="text-[11px] text-slate-400 mt-1">After Stripe payment gateway fees</p>
         </div>
       </div>
 
       {/* Financial Transactions & Fee Breakdown Table */}
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden text-xs">
+      <div className="bg-[#121418] rounded-3xl border border-[#26282E] shadow-sm overflow-hidden text-xs">
         {/* Search & Status Filter Controls */}
-        <div className="p-4 border-b border-slate-200 flex items-center justify-between gap-4 flex-wrap bg-[#F8F9FD]/50">
-          <div className="flex items-center gap-2">
+        <div className="p-4 border-b border-[#26282E] flex items-center justify-between gap-4 flex-wrap bg-[#16181F]/40">
+          <div className="flex items-center gap-2 flex-wrap">
             {["ALL", "SETTLED", "ESCROW_HOLD", "REFUNDED"].map((f) => (
               <button
                 key={f}
@@ -268,8 +268,8 @@ export default function AdminFeesReportsPage() {
                 className={cn(
                   "px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all",
                   activeFilter === f 
-                    ? "bg-[#0F0C3B] text-white shadow-xs" 
-                    : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80"
+                    ? "bg-[#DFB76C] text-[#0B0C0E] shadow-sm" 
+                    : "bg-[#16181F] text-slate-300 hover:bg-[#1A1D24] border border-[#26282E]"
                 )}
               >
                 {f.replace(/_/g, " ")}
@@ -284,7 +284,7 @@ export default function AdminFeesReportsPage() {
               placeholder="Search TXNs, orders, buyers, vendors..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-brand-primary"
+              className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
             />
           </div>
         </div>
@@ -292,7 +292,7 @@ export default function AdminFeesReportsPage() {
         {/* Table View */}
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-[#EDE9FE]/40 border-b border-slate-200 text-[11px] font-bold uppercase text-slate-500 tracking-wider">
+            <thead className="bg-[#16181F]/80 border-b border-[#26282E] text-[11px] font-bold uppercase text-slate-400 tracking-wider">
               <tr>
                 <th className="py-3.5 px-4">Transaction &amp; Order</th>
                 <th className="py-3.5 px-4">Service &amp; Category</th>
@@ -305,15 +305,15 @@ export default function AdminFeesReportsPage() {
                 <th className="py-3.5 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#26282E]/60">
               {filteredTransactions.map((txn) => (
                 <tr 
                   key={txn.id}
                   onClick={() => setSelectedTxn(txn)}
-                  className="hover:bg-slate-50/70 transition-colors cursor-pointer group"
+                  className="hover:bg-[#16181F]/50 transition-colors cursor-pointer group"
                 >
                   <td className="py-3.5 px-4">
-                    <span className="font-bold text-[#0F0C3B] font-mono block">
+                    <span className="font-bold text-white font-mono block">
                       #{txn.id}
                     </span>
                     <span className="text-[10px] text-slate-400 font-mono">
@@ -322,39 +322,39 @@ export default function AdminFeesReportsPage() {
                   </td>
 
                   <td className="py-3.5 px-4 max-w-xs">
-                    <p className="font-bold text-[#0F0C3B] group-hover:text-brand-primary line-clamp-1 transition-colors">
+                    <p className="font-bold text-white group-hover:text-[#DFB76C] line-clamp-1 transition-colors">
                       {txn.serviceTitle}
                     </p>
                     <span className="text-[10px] text-slate-400 block">{txn.category}</span>
                   </td>
 
                   <td className="py-3.5 px-4">
-                    <p className="font-semibold text-slate-800">{txn.buyerName}</p>
-                    <p className="text-[10px] text-slate-500 line-clamp-1">To: {txn.vendorName}</p>
+                    <p className="font-semibold text-slate-200">{txn.buyerName}</p>
+                    <p className="text-[10px] text-slate-400 line-clamp-1">To: {txn.vendorName}</p>
                   </td>
 
-                  <td className="py-3.5 px-4 font-bold text-[#0F0C3B] font-mono">
+                  <td className="py-3.5 px-4 font-bold text-white font-mono">
                     ${txn.grossAmount.toFixed(2)}
                   </td>
 
-                  <td className="py-3.5 px-4 font-bold text-brand-primary font-mono">
+                  <td className="py-3.5 px-4 font-bold text-[#DFB76C] font-mono">
                     +${txn.buyerFee.toFixed(2)}
                   </td>
 
-                  <td className="py-3.5 px-4 font-bold text-amber-700 font-mono">
+                  <td className="py-3.5 px-4 font-bold text-amber-400 font-mono">
                     +${txn.vendorCommission.toFixed(2)}
                   </td>
 
-                  <td className="py-3.5 px-4 font-black text-emerald-700 font-mono">
+                  <td className="py-3.5 px-4 font-black text-emerald-400 font-mono">
                     ${txn.netPlatformRevenue.toFixed(2)}
                   </td>
 
                   <td className="py-3.5 px-4">
                     <span className={cn(
-                      "px-2.5 py-0.5 rounded-full text-[10px] font-bold inline-block",
-                      txn.status === "SETTLED" && "bg-emerald-100 text-emerald-800 border border-emerald-200",
-                      txn.status === "ESCROW_HOLD" && "bg-indigo-100 text-indigo-800 border border-indigo-200",
-                      txn.status === "REFUNDED" && "bg-rose-100 text-rose-800 border border-rose-200",
+                      "px-2.5 py-0.5 rounded-full text-[10px] font-bold inline-block border",
+                      txn.status === "SETTLED" && "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+                      txn.status === "ESCROW_HOLD" && "bg-blue-500/15 text-blue-400 border-blue-500/30",
+                      txn.status === "REFUNDED" && "bg-rose-500/15 text-rose-400 border-rose-500/30",
                     )}>
                       {txn.status.replace("_", " ")}
                     </span>
@@ -366,9 +366,9 @@ export default function AdminFeesReportsPage() {
                         e.stopPropagation();
                         setSelectedTxn(txn);
                       }}
-                      className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-[#0F0C3B] rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-2xs"
+                      className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-slate-200 rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-sm"
                     >
-                      <Eye className="w-3 h-3 text-brand-primary" /> Breakdown
+                      <Eye className="w-3 h-3 text-[#DFB76C]" /> Breakdown
                     </button>
                   </td>
                 </tr>
@@ -380,13 +380,13 @@ export default function AdminFeesReportsPage() {
 
       {/* Detailed Transaction Breakdown Modal */}
       {selectedTxn && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden border border-slate-200 animate-in fade-in flex flex-col text-xs">
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-[#121418] rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden border border-[#26282E] animate-in fade-in flex flex-col text-xs text-slate-300">
             
             {/* Modal Header */}
-            <div className="p-5 bg-gradient-to-r from-[#0F0C3B] to-[#1E175E] text-white flex items-center justify-between">
+            <div className="p-5 bg-[#16181F] border-b border-[#26282E] text-white flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-mono font-bold bg-white/10 px-2.5 py-0.5 rounded-full border border-white/20 uppercase">
+                <span className="text-[10px] font-mono font-bold bg-[#1A1D24] text-[#DFB76C] px-2.5 py-0.5 rounded-full border border-[#DFB76C]/30 uppercase">
                   Transaction Audit #{selectedTxn.id}
                 </span>
                 <h3 className="text-base font-black text-white mt-1">Fee &amp; Escrow Reconciliation</h3>
@@ -394,7 +394,7 @@ export default function AdminFeesReportsPage() {
 
               <button
                 onClick={() => setSelectedTxn(null)}
-                className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-[#1A1D24] hover:bg-[#222630] text-slate-400 hover:text-white flex items-center justify-center transition-colors border border-[#26282E]"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -403,55 +403,55 @@ export default function AdminFeesReportsPage() {
             {/* Modal Body */}
             <div className="p-6 space-y-5 overflow-y-auto max-h-[75vh]">
               {/* Service Info */}
-              <div className="p-4 rounded-2xl bg-[#F8F9FD] border border-slate-200 space-y-1">
+              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-1">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Service Listing</span>
-                <h4 className="font-bold text-[#0F0C3B] text-sm">{selectedTxn.serviceTitle}</h4>
-                <p className="text-slate-500 text-xs">Category: {selectedTxn.category} &bull; Order: #{selectedTxn.orderId}</p>
+                <h4 className="font-bold text-white text-sm">{selectedTxn.serviceTitle}</h4>
+                <p className="text-slate-400 text-xs">Category: {selectedTxn.category} &bull; Order: #{selectedTxn.orderId}</p>
               </div>
 
               {/* Counterparties */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-1">
                   <span className="text-[10px] font-bold text-slate-400 uppercase block">Host (Buyer)</span>
-                  <p className="font-bold text-[#0F0C3B]">{selectedTxn.buyerName}</p>
-                  <p className="text-[10px] text-slate-500 font-mono">{selectedTxn.buyerEmail}</p>
+                  <p className="font-bold text-white">{selectedTxn.buyerName}</p>
+                  <p className="text-[10px] text-slate-400 font-mono">{selectedTxn.buyerEmail}</p>
                 </div>
 
-                <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-1">
                   <span className="text-[10px] font-bold text-slate-400 uppercase block">Vendor (Vendor)</span>
-                  <p className="font-bold text-[#0F0C3B]">{selectedTxn.vendorName}</p>
-                  <p className="text-[10px] text-slate-500">Verified Stripe Connect</p>
+                  <p className="font-bold text-white">{selectedTxn.vendorName}</p>
+                  <p className="text-[10px] text-slate-400">Verified Stripe Connect</p>
                 </div>
               </div>
 
               {/* Comprehensive Fee Math Waterfall */}
-              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-2.5">
                 <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
                   Waterfall Accounting Breakdown
                 </span>
 
                 <div className="space-y-1.5 font-mono text-xs">
-                  <div className="flex justify-between text-slate-700">
+                  <div className="flex justify-between text-slate-300">
                     <span>Gross Booking Value:</span>
-                    <span className="font-bold">${selectedTxn.grossAmount.toFixed(2)}</span>
+                    <span className="font-bold text-white">${selectedTxn.grossAmount.toFixed(2)}</span>
                   </div>
 
-                  <div className="flex justify-between text-brand-primary">
+                  <div className="flex justify-between text-[#DFB76C]">
                     <span>+ Buyer Platform Fee (5.0%):</span>
                     <span className="font-bold">+${selectedTxn.buyerFee.toFixed(2)}</span>
                   </div>
 
-                  <div className="flex justify-between text-amber-700">
+                  <div className="flex justify-between text-amber-400">
                     <span>+ Vendor Marketplace Fee (10.0%):</span>
                     <span className="font-bold">+${selectedTxn.vendorCommission.toFixed(2)}</span>
                   </div>
 
-                  <div className="flex justify-between text-rose-600">
+                  <div className="flex justify-between text-rose-400">
                     <span>- Stripe Gateway Cost (2.9% + 30¢):</span>
                     <span className="font-bold">-${selectedTxn.stripeCost.toFixed(2)}</span>
                   </div>
 
-                  <div className="pt-2 border-t border-slate-200 flex justify-between text-emerald-700 font-black text-sm">
+                  <div className="pt-2 border-t border-[#26282E] flex justify-between text-emerald-400 font-black text-sm">
                     <span>= Net Platform Margin:</span>
                     <span>${selectedTxn.netPlatformRevenue.toFixed(2)}</span>
                   </div>
@@ -459,14 +459,14 @@ export default function AdminFeesReportsPage() {
               </div>
 
               {/* Payment Gateway Specs */}
-              <div className="space-y-1 text-slate-500 text-[11px] pt-1 border-t border-slate-100">
+              <div className="space-y-1 text-slate-400 text-[11px] pt-1 border-t border-[#26282E]">
                 <div className="flex justify-between">
                   <span>Payment Method:</span>
-                  <span className="font-medium text-slate-700">{selectedTxn.paymentMethod}</span>
+                  <span className="font-medium text-slate-200">{selectedTxn.paymentMethod}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Stripe Charge ID:</span>
-                  <span className="font-mono text-indigo-700">{selectedTxn.stripeChargeId}</span>
+                  <span className="font-mono text-[#DFB76C]">{selectedTxn.stripeChargeId}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Timestamp:</span>
@@ -476,10 +476,10 @@ export default function AdminFeesReportsPage() {
             </div>
 
             {/* Modal Footer */}
-            <div className="p-4 bg-slate-50 border-t border-slate-200 flex justify-end">
+            <div className="p-4 bg-[#16181F] border-t border-[#26282E] flex justify-end">
               <button
                 onClick={() => setSelectedTxn(null)}
-                className="px-5 py-2 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl font-bold transition-colors"
+                className="px-5 py-2 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl font-bold transition-colors"
               >
                 Close Breakdown
               </button>
