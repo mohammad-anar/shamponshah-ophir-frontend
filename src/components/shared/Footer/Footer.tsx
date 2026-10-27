@@ -30,13 +30,13 @@ export default function Footer() {
   };
 
   return (
-    <footer className="w-full bg-[#0B0C0E] border-t border-[#26282E] pt-16 pb-12 text-slate-400">
+    <footer className="w-full bg-[#0B0C0E] border-t border-[#26282E] pt-16 pb-12 text-foreground-muted">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10">
         {/* Brand Header with Logo & Newsletter */}
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-12 border-b border-[#26282E]">
           <div className="space-y-2">
             <Logo size="lg" />
-            <p className="text-xs text-slate-400 max-w-md mt-2">
+            <p className="text-xs text-foreground-muted max-w-md mt-2">
               The premier milestone enclave connecting distinguished patrons with vetted cultural artisans under 100% escrow milestone protection.
             </p>
           </div>
@@ -46,14 +46,14 @@ export default function Footer() {
             {!subscribed ? (
               <form onSubmit={handleNewsletterSubmit} className="flex items-center gap-2">
                 <div className="relative">
-                  <Mail className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                  <Mail className="w-3.5 h-3.5 text-foreground-muted absolute left-3 top-1/2 -translate-y-1/2" />
                   <input
                     type="email"
                     required
                     value={newsletterEmail}
                     onChange={(e) => setNewsletterEmail(e.target.value)}
                     placeholder="Enter email for private drops..."
-                    className="h-10 pl-8 pr-3 text-xs bg-[#121418] border border-[#262930] rounded-none focus:outline-none focus:border-[#DFB76C] w-56 text-slate-200"
+                    className="h-10 pl-8 pr-3 text-xs bg-[#121418] border border-[#262930] rounded-none focus:outline-none focus:border-[#DFB76C] w-56 text-foreground-secondary"
                   />
                 </div>
                 <button
@@ -66,7 +66,7 @@ export default function Footer() {
                 </button>
               </form>
             ) : (
-              <div className="flex items-center gap-1.5 text-xs font-bold text-[#DFB76C] bg-[#1A1D24] px-3 py-2 rounded-none border border-[#DFB76C]/30">
+              <div className="flex items-center gap-1.5 text-xs font-bold text-[#DFB76C] bg-[#1A1D24] px-3 py-2 rounded-none border border-border-brand/40">
                 <CheckCircle2 className="w-3.5 h-3.5 text-[#DFB76C]" />
                 <span>Subscribed to Ophir Reserve</span>
               </div>
@@ -81,7 +81,7 @@ export default function Footer() {
               </Link>
               <Link 
                 href="/vendors" 
-                className="px-4 py-2.5 rounded-none bg-[#121418] hover:bg-[#1A1D24] text-slate-200 text-xs font-bold uppercase tracking-wider border border-[#262930] transition-all"
+                className="px-4 py-2.5 rounded-none bg-[#121418] hover:bg-[#1A1D24] text-foreground-secondary text-xs font-bold uppercase tracking-wider border border-[#262930] transition-all"
               >
                 Artisans
               </Link>
@@ -259,22 +259,22 @@ export default function Footer() {
 
             {/* Escrow Badge Card */}
             <div className="p-3.5 bg-[#121418] rounded-none border border-[#26282E] space-y-1.5">
-              <div className="flex items-center gap-2 text-white font-bold text-xs">
+              <div className="flex items-center gap-2 text-foreground font-bold text-xs">
                 <ShieldCheck className="w-4 h-4 text-[#DFB76C] flex-shrink-0" />
                 <span>100% Escrow Protection</span>
               </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
+              <p className="text-[11px] text-foreground-muted leading-relaxed">
                 Funds remain secured in segregated accounts and disburse exclusively upon client ceremonial milestone approval.
               </p>
             </div>
 
             {/* Encryption Card */}
             <div className="p-3.5 bg-[#121418] rounded-none border border-[#26282E] space-y-1.5">
-              <div className="flex items-center gap-2 text-white font-bold text-xs">
+              <div className="flex items-center gap-2 text-foreground font-bold text-xs">
                 <Lock className="w-4 h-4 text-[#DFB76C] flex-shrink-0" />
                 <span>Private Vault Security</span>
               </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
+              <p className="text-[11px] text-foreground-muted leading-relaxed">
                 Institutional-grade encryption and multi-signature authorization for all transactions.
               </p>
             </div>
@@ -282,14 +282,14 @@ export default function Footer() {
         </div>
 
         {/* Bottom Legal & Selector Bar */}
-        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-slate-500">
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-foreground-muted">
           <div className="flex flex-wrap items-center gap-4">
-            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#121418] border border-[#26282E] rounded-none hover:border-[#DFB76C]/40 text-slate-300 transition-colors">
+            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#121418] border border-[#26282E] rounded-none hover:border-border-brand/40 text-foreground-secondary transition-colors">
               <Globe className="w-3.5 h-3.5 text-[#DFB76C]" />
               <span>{language}</span>
             </button>
 
-            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#121418] border border-[#26282E] rounded-none hover:border-[#DFB76C]/40 text-slate-300 transition-colors">
+            <button className="flex items-center gap-1.5 px-3 py-1.5 bg-[#121418] border border-[#26282E] rounded-none hover:border-border-brand/40 text-foreground-secondary transition-colors">
               <DollarSign className="w-3.5 h-3.5 text-[#DFB76C]" />
               <span>{currency}</span>
             </button>
