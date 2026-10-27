@@ -66,7 +66,7 @@ export default function UserOrdersPage() {
 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#0F0C3B]">My Orders</h1>
+          <h1 className="text-2xl font-bold text-foreground">My Orders</h1>
           <p className="text-xs text-foreground-muted mt-1">
             Track active milestones, review vendor deliveries, and approve milestone payments
           </p>
@@ -82,12 +82,12 @@ export default function UserOrdersPage() {
         ) : displayOrders.length === 0 ? (
           <div className="bg-surface rounded-2xl border border-border p-12 text-center text-foreground-muted space-y-3">
             <ShoppingBag className="w-10 h-10 text-foreground-secondary mx-auto" />
-            <h3 className="font-bold text-[#0F0C3B] text-base">No orders yet</h3>
+            <h3 className="font-bold text-foreground text-base">No orders yet</h3>
             <p className="text-xs text-foreground-muted max-w-sm mx-auto">
               You haven't booked any vendor services yet. Browse our verified artisans or save services in your Family Hub to get started.
             </p>
             <div className="flex items-center justify-center gap-3 pt-2">
-              <Link href="/services" className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold transition-all shadow-xs">
+              <Link href="/services" className="px-4 py-2 rounded-xl bg-brand hover:bg-surface-sunken text-foreground text-xs font-bold transition-all shadow-xs">
                 Browse Services
               </Link>
               <Link href="/user/family-hub" className="px-4 py-2 rounded-xl border border-border hover:bg-surface-elevated text-foreground-secondary text-xs font-bold transition-all">
@@ -116,31 +116,31 @@ export default function UserOrdersPage() {
               const createdAtMs = ord.createdAt ? new Date(ord.createdAt).getTime() : Date.now();
               const hoursLeft = Math.max(0, Math.ceil((createdAtMs + 24 * 60 * 60 * 1000 - Date.now()) / (1000 * 60 * 60)));
               milestoneStatusText = `Unpaid · Auto-cancels in ${hoursLeft}h`;
-              milestoneBadgeClass = "bg-amber-50 text-amber-800 border border-amber-300 font-semibold";
+              milestoneBadgeClass = "bg-warning-soft text-warning border border-warning/30 font-semibold";
             } else if (ord.status === "CANCELLED") {
               milestoneStatusText = "Cancelled / Expired (24h)";
-              milestoneBadgeClass = "bg-rose-50 text-rose-700 border border-rose-200";
+              milestoneBadgeClass = "bg-danger-soft text-danger border border-danger/30";
             } else if (ord.status === "COMPLETED" && scheduledMs > 0) {
               milestoneStatusText = `Approved · ${scheduledMs} Transfer${scheduledMs === 1 ? "" : "s"} in 7-day hold`;
-              milestoneBadgeClass = "bg-blue-50 text-blue-800 border border-blue-200";
+              milestoneBadgeClass = "bg-info-soft text-blue-800 border border-info/30";
             } else if (ord.status === "COMPLETED" || (totalMs > 0 && releasedMs === totalMs)) {
               milestoneStatusText = "All Milestones Transferred";
-              milestoneBadgeClass = "bg-emerald-50 text-emerald-800 border border-emerald-200/60";
+              milestoneBadgeClass = "bg-success-soft text-success border border-success/30/60";
             } else if (pendingReleaseMs > 0) {
               milestoneStatusText = `Delivery Submitted (${pendingReleaseMs} Approval Needed)`;
-              milestoneBadgeClass = "bg-amber-50 text-amber-800 border border-amber-200/60 animate-pulse";
+              milestoneBadgeClass = "bg-warning-soft text-warning border border-warning/30/60 animate-pulse";
             } else if (fundedMs > 0) {
               milestoneStatusText = `${fundedMs} of ${totalMs} Milestones Funded`;
-              milestoneBadgeClass = "bg-blue-50 text-blue-800 border border-blue-200/60";
+              milestoneBadgeClass = "bg-info-soft text-blue-800 border border-info/30/60";
             } else if (totalMs === 1) {
               milestoneStatusText = "1 Milestone • Payment Locked";
-              milestoneBadgeClass = "bg-indigo-50 text-indigo-700 border border-indigo-100";
+              milestoneBadgeClass = "bg-info-soft text-info border border-info/30";
             } else if (totalMs > 1) {
               milestoneStatusText = `0/${totalMs} Milestones Paid`;
               milestoneBadgeClass = "bg-surface-sunken text-foreground-secondary border border-border";
             } else if (ord.status === "CONFIRMED" || ord.status === "IN_PROGRESS" || ord.status === "ACTIVE") {
               milestoneStatusText = "In Progress • Payment Secured";
-              milestoneBadgeClass = "bg-emerald-50 text-emerald-800 border border-emerald-200/60";
+              milestoneBadgeClass = "bg-success-soft text-success border border-success/30/60";
             }
 
             const milestoneSubtitle = totalMs === 1
@@ -153,16 +153,16 @@ export default function UserOrdersPage() {
               <div
                 key={ord.id}
                 onClick={() => handleOpenOrder(ord)}
-                className="bg-surface p-5 rounded-2xl border border-border shadow-xs hover:border-indigo-300 hover:shadow-sm transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs"
+                className="bg-surface p-5 rounded-2xl border border-border shadow-xs hover:border-info/30 hover:shadow-sm transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-indigo-50 text-brand-primary flex items-center justify-center font-bold text-lg flex-shrink-0">
+                  <div className="w-11 h-11 rounded-xl bg-info-soft text-brand-primary flex items-center justify-center font-bold text-lg flex-shrink-0">
                     <ShoppingBag className="w-5 h-5" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-[#0F0C3B] text-sm">{title}</span>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-800">
+                      <span className="font-bold text-foreground text-sm">{title}</span>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-info-soft text-info">
                         #{ord.id}
                       </span>
                     </div>
@@ -175,7 +175,7 @@ export default function UserOrdersPage() {
 
                 <div className="flex items-center gap-4 self-end sm:self-center flex-wrap">
                   <div className="text-right">
-                    <span className="font-extrabold text-[#0F0C3B] text-base block">{amountStr}</span>
+                    <span className="font-extrabold text-foreground text-base block">{amountStr}</span>
                     <span className={cn("px-2.5 py-0.5 rounded-full text-[10px] font-bold inline-block mt-0.5", milestoneBadgeClass)}>
                       {milestoneStatusText}
                     </span>
