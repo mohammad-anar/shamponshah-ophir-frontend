@@ -272,7 +272,7 @@ export default function VendorApprovalsPage() {
 
                     <span className={cn(
                       "px-2 py-0.5 rounded text-[10px] font-bold uppercase",
-                      app.status === "REVIEWING" && "bg-purple-950 text-purple-300 border border-purple-800/40",
+                      app.status === "REVIEWING" && "bg-brand-soft text-brand border border-border-brand/40",
                       app.status === "QUEUED" && "bg-surface-elevated text-foreground-secondary border border-border",
                       app.status === "NEW" && "bg-surface-sunken text-brand border border-border-brand/40",
                     )}>
@@ -406,7 +406,7 @@ export default function VendorApprovalsPage() {
                         type="checkbox"
                         checked={checklist[item.key]}
                         onChange={() => {}}
-                        className="mt-0.5 rounded text-brand focus:ring-focus-ring w-4 h-4 accent-[#DFB76C]"
+                        className="mt-0.5 rounded text-brand focus:ring-focus-ring w-4 h-4 accent-brand"
                       />
                       <span className={cn(
                         "text-[11px] leading-tight",
@@ -458,7 +458,7 @@ export default function VendorApprovalsPage() {
                   <p className="font-bold text-success">Government ID Verification</p>
                   <p className="text-[10px] text-success/80">Illinois Real ID Driver License • 99.4% biometric selfie match</p>
                 </div>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-900/60 text-emerald-200 border border-emerald-700/50">
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-success-soft text-success border border-success/50">
                   Passed (100%)
                 </span>
               </div>
@@ -468,7 +468,7 @@ export default function VendorApprovalsPage() {
                   <p className="font-bold text-success">Trust & Background Screening</p>
                   <p className="text-[10px] text-success/80">Cook County court database, sex offender registry</p>
                 </div>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-900/60 text-emerald-200 border border-emerald-700/50">
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-success-soft text-success border border-success/50">
                   Clear
                 </span>
               </div>
@@ -478,17 +478,17 @@ export default function VendorApprovalsPage() {
                   <p className="font-bold text-success">Commercial General Liability</p>
                   <p className="text-[10px] text-success/80">Hartford Casualty • Policy #GL-8820491 ($2,000,000 aggregate)</p>
                 </div>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-900/60 text-emerald-200 border border-emerald-700/50">
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-success-soft text-success border border-success/50">
                   Verified
                 </span>
               </div>
 
-              <div className="p-3 rounded-lg bg-warning-soft text-warning border border-amber-800/40 flex items-center justify-between">
+              <div className="p-3 rounded-lg bg-warning-soft text-warning border border-warning/40 flex items-center justify-between">
                 <div>
                   <p className="font-bold text-warning">Stripe Escrow Bank Payout</p>
                   <p className="text-[10px] text-warning/80">Pending vendor bank account onboarding (Allowed post-approval)</p>
                 </div>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-900/60 text-warning border border-amber-700/50">
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-warning-soft text-warning border border-warning/50">
                   Not yet connected
                 </span>
               </div>
@@ -521,7 +521,7 @@ export default function VendorApprovalsPage() {
                 </button>
                 <button
                   onClick={handleReject}
-                  className="px-4 py-2 rounded-lg bg-danger-soft text-danger hover:bg-rose-900/60 text-danger border border-danger/30/40 text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2 rounded-lg bg-danger-soft text-danger hover:bg-danger-soft text-danger border border-danger/30/40 text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <X className="w-3.5 h-3.5" />
                   <span>Reject</span>
