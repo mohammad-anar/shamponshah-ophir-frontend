@@ -278,13 +278,13 @@ export default function OrderChatModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+    <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
       <div className="bg-surface rounded-2xl w-full max-w-xl h-[85vh] max-h-[680px] flex flex-col shadow-2xl border border-border overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         
         {/* Top Header */}
-        <div className="px-5 py-3.5 bg-[#0F0C3B] text-foreground flex items-center justify-between gap-3">
+        <div className="px-5 py-3.5 bg-brand text-foreground flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 rounded-full bg-amber-400 text-[#0F0C3B] font-extrabold flex items-center justify-center text-sm shadow-xs flex-shrink-0">
+            <div className="w-10 h-10 rounded-full bg-warning-solid text-on-brand text-foreground font-extrabold flex items-center justify-center text-sm shadow-xs flex-shrink-0">
               {clientName.slice(0, 2).toUpperCase()}
             </div>
             <div className="min-w-0">
@@ -300,12 +300,12 @@ export default function OrderChatModal({
                 <span className="flex items-center gap-1">
                   {isConnected ? (
                     <>
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                      <span className="text-emerald-300 font-medium">Socket Live</span>
+                      <span className="w-2 h-2 rounded-full bg-success-solid text-white animate-pulse" />
+                      <span className="text-success font-medium">Socket Live</span>
                     </>
                   ) : (
                     <>
-                      <span className="w-2 h-2 rounded-full bg-amber-400" />
+                      <span className="w-2 h-2 rounded-full bg-warning-solid text-on-brand" />
                       <span className="text-foreground-secondary">Connecting</span>
                     </>
                   )}
@@ -344,7 +344,7 @@ export default function OrderChatModal({
             <span className="text-foreground-muted">•</span>
             <span className="text-foreground-muted">
               Escrow Total:{" "}
-              <strong className="text-emerald-700">
+              <strong className="text-success">
                 ${Number(order?.subtotal || order?.grandTotal || order?.totalAmount?.replace(/[^0-9.]/g, "") || 0).toFixed(2)}
               </strong>
             </span>
@@ -354,10 +354,10 @@ export default function OrderChatModal({
             className={cn(
               "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider flex-shrink-0",
               order?.status === "COMPLETED"
-                ? "bg-emerald-100 text-emerald-800"
+                ? "bg-success-soft text-success"
                 : order?.status === "DISPUTED"
-                ? "bg-rose-100 text-rose-800"
-                : "bg-blue-100 text-blue-800"
+                ? "bg-danger-soft text-danger"
+                : "bg-info-soft text-blue-800"
             )}
           >
             {order?.status?.replace("_", " ") || "ACTIVE"}
@@ -365,7 +365,7 @@ export default function OrderChatModal({
         </div>
 
         {/* Messages Body */}
-        <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#F8F9FD]">
+        <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-surface-elevated">
           {isInitializing ? (
             <div className="h-full flex flex-col items-center justify-center text-foreground-muted gap-2 py-12">
               <Loader2 className="w-6 h-6 animate-spin text-brand-primary" />
@@ -412,7 +412,7 @@ export default function OrderChatModal({
                   className={cn(
                     "px-4 py-2.5 rounded-2xl text-xs leading-relaxed shadow-2xs break-words",
                     m.isMe
-                      ? "bg-[#0F0C3B] text-foreground rounded-br-xs"
+                      ? "bg-brand text-foreground rounded-br-xs"
                       : "bg-surface text-foreground border border-border rounded-bl-xs"
                   )}
                 >
@@ -453,12 +453,12 @@ export default function OrderChatModal({
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder={`Message ${clientName} about Order #${orderNumberStr}...`}
-            className="flex-1 bg-[#F8F9FD] border border-border rounded-xl px-3.5 py-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-brand-primary"
+            className="flex-1 bg-surface-elevated border border-border rounded-xl px-3.5 py-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-brand-primary"
           />
           <button
             type="submit"
             disabled={!inputValue.trim() || isSending}
-            className="px-4 py-2.5 bg-[#0F0C3B] hover:bg-[#18124E] disabled:opacity-40 text-foreground rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer flex-shrink-0"
+            className="px-4 py-2.5 bg-brand hover:bg-surface-sunken disabled:opacity-40 text-foreground rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer flex-shrink-0"
           >
             {isSending ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
