@@ -56,13 +56,13 @@ const MyFormPdfUpload = ({
           <>
             {fileName ? (
               <div className="mb-2 flex items-center">
-                <span className="mr-2 text-sm text-gray-700">{fileName}</span>
+                <span className="mr-2 text-sm text-foreground-secondary">{fileName}</span>
                 <button
                   type="button"
                   onClick={handleRemoveFile}
-                  className="px-1 py-1 bg-black bg-opacity-80 text-white rounded-md"
+                  className="px-1 py-1 bg-black bg-opacity-80 text-foreground rounded-md"
                 >
-                  <RiDeleteBinLine size={20} className="hover:text-red-500" />
+                  <RiDeleteBinLine size={20} className="hover:text-danger" />
                 </button>
               </div>
             ) : null}

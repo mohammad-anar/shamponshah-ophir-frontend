@@ -79,9 +79,9 @@ const MyFormImageUpload = ({
                 <button
                   type="button"
                   onClick={handleRemoveImage}
-                  className="px-1 py-1 bg-black bg-opacity-80 text-white rounded-md absolute top-2 right-2"
+                  className="px-1 py-1 bg-black bg-opacity-80 text-foreground rounded-md absolute top-2 right-2"
                 >
-                  <RiDeleteBinLine size={20} className="hover:text-red-500" />
+                  <RiDeleteBinLine size={20} className="hover:text-danger" />
                 </button>
               </div>
             ) :   <>

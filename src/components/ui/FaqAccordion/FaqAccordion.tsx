@@ -28,7 +28,7 @@ export default function FaqAccordion() {
           <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#DFB76C]">
             GOVERNANCE & PROTOCOLS
           </span>
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-foreground tracking-tight">
             Frequently Asked Questions
           </h2>
           <p className="text-[#CBD5E1] text-xs sm:text-sm max-w-xl mx-auto font-light leading-relaxed">
@@ -50,7 +50,7 @@ export default function FaqAccordion() {
                   onClick={() => toggle(idx)}
                   className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 hover:bg-[#1A1D24] transition-colors cursor-pointer"
                 >
-                  <span className="font-serif text-base sm:text-lg text-white font-light">
+                  <span className="font-serif text-base sm:text-lg text-foreground font-light">
                     {faq.q}
                   </span>
                   <div

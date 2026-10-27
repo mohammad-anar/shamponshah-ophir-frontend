@@ -11,7 +11,7 @@ const MyLoading = () => {
         <div className="w-12 h-12 rounded-full border-2 border-indigo-200 border-t-[#0F0C3B] animate-spin" />
       </div>
       <div className="text-center space-y-1">
-        <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">
+        <p className="text-[11px] font-semibold text-foreground-muted uppercase tracking-widest">
           Loading Ophir Vault...
         </p>
       </div>

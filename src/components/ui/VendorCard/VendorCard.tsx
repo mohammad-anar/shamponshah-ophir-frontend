@@ -51,7 +51,7 @@ export default function VendorCard({ vendor, variant = "default" }: VendorCardPr
     switch (vendor.guildTier) {
       case "Elite":
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-[#222018] text-[#DFB76C] text-[10px] font-bold tracking-widest uppercase border border-[#DFB76C]/40">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-[#222018] text-[#DFB76C] text-[10px] font-bold tracking-widest uppercase border border-border-brand/40">
             <Sparkles className="w-3 h-3 text-[#DFB76C]" />
             <span>Elite Artisan</span>
           </span>
@@ -65,15 +65,15 @@ export default function VendorCard({ vendor, variant = "default" }: VendorCardPr
         );
       case "Rising":
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-[#1A1D24] text-amber-400 text-[10px] font-bold tracking-widest uppercase border border-amber-500/30">
-            <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-[#1A1D24] text-warning text-[10px] font-bold tracking-widest uppercase border border-warning/30">
+            <Star className="w-3 h-3 fill-amber-400 text-warning" />
             <span>Rising Master</span>
           </span>
         );
       default:
         return (
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-[#0D211A] text-emerald-400 text-[10px] font-bold tracking-widest uppercase border border-emerald-500/30">
-            <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-[#0D211A] text-success text-[10px] font-bold tracking-widest uppercase border border-success/30">
+            <CheckCircle2 className="w-3 h-3 text-success" />
             <span>Verified Artisan</span>
           </span>
         );
@@ -84,7 +84,7 @@ export default function VendorCard({ vendor, variant = "default" }: VendorCardPr
     <>
       <div 
         ref={cardRef}
-        className="group relative bg-[#121418] rounded-none overflow-hidden border border-[#26282E] hover:border-[#DFB76C]/60 shadow-lg transition-all duration-300 flex flex-col justify-between"
+        className="group relative bg-[#121418] rounded-none overflow-hidden border border-[#26282E] hover:border-border-brand/40 shadow-lg transition-all duration-300 flex flex-col justify-between"
       >
         {/* Top Image & Overlays */}
         <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-[#0B0C0E]">
@@ -103,7 +103,7 @@ export default function VendorCard({ vendor, variant = "default" }: VendorCardPr
 
           {/* Top Badges */}
           <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-            <div className="inline-flex items-center gap-1 px-2 py-1 rounded-none bg-[#0B0C0E]/85 backdrop-blur-md text-[#DFB76C] text-[10px] font-bold uppercase tracking-wider border border-[#DFB76C]/30 pointer-events-auto">
+            <div className="inline-flex items-center gap-1 px-2 py-1 rounded-none bg-[#0B0C0E]/85 backdrop-blur-md text-[#DFB76C] text-[10px] font-bold uppercase tracking-wider border border-border-brand/40 pointer-events-auto">
               <ShieldCheck className="w-3 h-3 text-[#DFB76C]" />
               <span>Escrow Vault</span>
             </div>
@@ -112,7 +112,7 @@ export default function VendorCard({ vendor, variant = "default" }: VendorCardPr
               <button
                 onClick={() => setIsFamilyModalOpen(true)}
                 title="Add to Collaborative Hub"
-                className="w-8 h-8 rounded-none bg-[#0B0C0E]/85 hover:bg-[#1A1D24] border border-[#26282E] hover:border-[#DFB76C]/40 backdrop-blur-md flex items-center justify-center text-slate-300 hover:text-[#DFB76C] transition-colors"
+                className="w-8 h-8 rounded-none bg-[#0B0C0E]/85 hover:bg-[#1A1D24] border border-[#26282E] hover:border-border-brand/40 backdrop-blur-md flex items-center justify-center text-foreground-secondary hover:text-[#DFB76C] transition-colors"
               >
                 <Users2 className="w-4 h-4" />
               </button>
@@ -120,16 +120,16 @@ export default function VendorCard({ vendor, variant = "default" }: VendorCardPr
               <button
                 onClick={toggleFavorite}
                 aria-label="Save to shortlist"
-                className="w-8 h-8 rounded-none bg-[#0B0C0E]/85 hover:bg-[#1A1D24] border border-[#26282E] hover:border-[#DFB76C]/40 backdrop-blur-md flex items-center justify-center text-slate-300 hover:text-red-400 transition-colors"
+                className="w-8 h-8 rounded-none bg-[#0B0C0E]/85 hover:bg-[#1A1D24] border border-[#26282E] hover:border-border-brand/40 backdrop-blur-md flex items-center justify-center text-foreground-secondary hover:text-danger transition-colors"
               >
-                <Heart className={cn("w-4 h-4 transition-colors", isFavorite ? "fill-red-500 text-red-500" : "")} />
+                <Heart className={cn("w-4 h-4 transition-colors", isFavorite ? "fill-red-500 text-danger" : "")} />
               </button>
             </div>
           </div>
 
           {/* Bottom Location */}
           <div className="absolute bottom-3 left-3 pointer-events-none">
-            <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-[#0B0C0E]/85 backdrop-blur-md text-slate-300 text-[10px] font-medium uppercase tracking-wider border border-[#26282E]">
+            <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-none bg-[#0B0C0E]/85 backdrop-blur-md text-foreground-secondary text-[10px] font-medium uppercase tracking-wider border border-[#26282E]">
               <MapPin className="w-3 h-3 text-[#DFB76C]" />
               <span>{vendor.location}</span>
             </div>
@@ -160,13 +160,13 @@ export default function VendorCard({ vendor, variant = "default" }: VendorCardPr
 
             {/* Title / Name */}
             <Link href={`/vendors/${vendor.id}`}>
-              <h3 className="font-serif font-bold text-base text-white group-hover:text-[#DFB76C] transition-colors line-clamp-1">
+              <h3 className="font-serif font-bold text-base text-foreground group-hover:text-[#DFB76C] transition-colors line-clamp-1">
                 {vendor.name}
               </h3>
             </Link>
 
             {/* Short Bio */}
-            <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+            <p className="text-xs text-foreground-muted line-clamp-2 leading-relaxed">
               {vendor.title}
             </p>
 
@@ -176,14 +176,14 @@ export default function VendorCard({ vendor, variant = "default" }: VendorCardPr
                 <Star className="w-3.5 h-3.5 fill-[#DFB76C] text-[#DFB76C]" />
                 <span>{vendor.rating.toFixed(1)}</span>
               </div>
-              <span className="text-slate-500">({vendor.reviewCount} verified ceremonies)</span>
+              <span className="text-foreground-muted">({vendor.reviewCount} verified ceremonies)</span>
             </div>
           </div>
 
           {/* Bottom Price & View Profile CTA */}
           <div className="pt-3 border-t border-[#26282E] flex items-center justify-between">
             <div>
-              <span className="block text-[9px] uppercase tracking-widest text-slate-500 font-bold">
+              <span className="block text-[9px] uppercase tracking-widest text-foreground-muted font-bold">
                 Starting from
               </span>
               <span className="font-mono font-bold text-lg text-[#DFB76C]">
@@ -194,7 +194,7 @@ export default function VendorCard({ vendor, variant = "default" }: VendorCardPr
             <div className="flex items-center gap-2">
               <button
                 onClick={() => setIsFamilyModalOpen(true)}
-                className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-none bg-[#1A1D24] text-slate-300 hover:text-white hover:bg-[#22252F] border border-[#26282E] transition-colors flex items-center gap-1"
+                className="px-2.5 py-1.5 text-xs font-bold uppercase tracking-wider rounded-none bg-[#1A1D24] text-foreground-secondary hover:text-foreground hover:bg-[#22252F] border border-[#26282E] transition-colors flex items-center gap-1"
               >
                 <Users2 className="w-3.5 h-3.5 text-[#DFB76C]" />
                 <span className="hidden sm:inline">Hub</span>

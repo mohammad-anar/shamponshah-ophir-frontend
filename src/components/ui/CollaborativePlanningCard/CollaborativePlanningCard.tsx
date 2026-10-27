@@ -51,12 +51,12 @@ export default function CollaborativePlanningCard() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left Column: Descriptive Story & Features */}
           <div className="lg:col-span-6 space-y-6">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#121418] text-[#DFB76C] border border-[#DFB76C]/30 text-xs font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#121418] text-[#DFB76C] border border-border-brand/40 text-xs font-bold uppercase tracking-wider">
               <Sparkles className="w-3.5 h-3.5 text-[#DFB76C]" />
               <span>Created for Milestone Celebrations</span>
             </div>
 
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight leading-[1.15]">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-foreground tracking-tight leading-[1.15]">
               Plan Together. <br className="hidden sm:inline" />
               Protect Together.
             </h2>
@@ -72,7 +72,7 @@ export default function CollaborativePlanningCard() {
                   <Users className="w-5 h-5 text-[#DFB76C]" />
                 </div>
                 <div>
-                  <h4 className="font-serif text-base font-light text-white">
+                  <h4 className="font-serif text-base font-light text-foreground">
                     Democratic Family Board
                   </h4>
                   <p className="text-xs text-[#CBD5E1] leading-relaxed font-light mt-0.5">
@@ -86,7 +86,7 @@ export default function CollaborativePlanningCard() {
                   <ThumbsUp className="w-5 h-5 text-[#DFB76C]" />
                 </div>
                 <div>
-                  <h4 className="font-serif text-base font-light text-white">
+                  <h4 className="font-serif text-base font-light text-foreground">
                     Consensus Approval
                   </h4>
                   <p className="text-xs text-[#CBD5E1] leading-relaxed font-light mt-0.5">
@@ -100,7 +100,7 @@ export default function CollaborativePlanningCard() {
                   <Wallet className="w-5 h-5 text-[#DFB76C]" />
                 </div>
                 <div>
-                  <h4 className="font-serif text-base font-light text-white">
+                  <h4 className="font-serif text-base font-light text-foreground">
                     Split Milestone Escrow
                   </h4>
                   <p className="text-xs text-[#CBD5E1] leading-relaxed font-light mt-0.5">
@@ -139,7 +139,7 @@ export default function CollaborativePlanningCard() {
                   <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#DFB76C] block">
                     SHARED WORKSPACE
                   </span>
-                  <h3 className="font-serif font-light text-lg sm:text-xl text-white">
+                  <h3 className="font-serif font-light text-lg sm:text-xl text-foreground">
                     The Johnson Family Wedding Hub
                   </h3>
                   <span className="text-xs text-[#CBD5E1] font-light">Austin, TX • Verified Reserve</span>
@@ -150,10 +150,10 @@ export default function CollaborativePlanningCard() {
                   <div className="inline-block h-8 w-8 bg-[#0B0C0E] border border-[#DFB76C] text-[#DFB76C] font-bold text-xs flex items-center justify-center">
                     M
                   </div>
-                  <div className="inline-block h-8 w-8 bg-[#16181F] border border-[#26282E] text-white font-bold text-xs flex items-center justify-center">
+                  <div className="inline-block h-8 w-8 bg-[#16181F] border border-[#26282E] text-foreground font-bold text-xs flex items-center justify-center">
                     D
                   </div>
-                  <div className="inline-block h-8 w-8 bg-[#16181F] border border-[#26282E] text-white font-bold text-xs flex items-center justify-center">
+                  <div className="inline-block h-8 w-8 bg-[#16181F] border border-[#26282E] text-foreground font-bold text-xs flex items-center justify-center">
                     E
                   </div>
                   <div className="inline-block h-8 w-8 bg-[#0B0C0E] border border-[#26282E] text-[#DFB76C] font-bold text-xs flex items-center justify-center">
@@ -165,7 +165,7 @@ export default function CollaborativePlanningCard() {
               {/* Shortlisted Vendors List */}
               <div className="space-y-3">
                 {/* Vendor 1 */}
-                <div className="p-4 bg-[#0B0C0E] border border-[#26282E] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-all hover:border-[#DFB76C]/60">
+                <div className="p-4 bg-[#0B0C0E] border border-[#26282E] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-all hover:border-border-brand/40">
                   <div className="flex items-center gap-3">
                     <div className="relative w-12 h-12 overflow-hidden flex-shrink-0 bg-[#16181F]">
                       <Image
@@ -176,7 +176,7 @@ export default function CollaborativePlanningCard() {
                       />
                     </div>
                     <div>
-                      <h4 className="font-serif font-light text-sm text-white">
+                      <h4 className="font-serif font-light text-sm text-foreground">
                         Lumina Cinema Studios
                       </h4>
                       <p className="text-xs text-[#CBD5E1] font-light">Lead Cinematographer • $2,450</p>
@@ -186,16 +186,16 @@ export default function CollaborativePlanningCard() {
                   <div className="flex items-center gap-2 self-end sm:self-center">
                     <button
                       onClick={() => handleVote("cinema")}
-                      className="px-3 py-1 bg-[#121418] text-emerald-400 text-xs font-bold flex items-center gap-1.5 border border-emerald-500/30 hover:bg-[#1A1D24] transition-colors cursor-pointer"
+                      className="px-3 py-1 bg-[#121418] text-success text-xs font-bold flex items-center gap-1.5 border border-success/30 hover:bg-[#1A1D24] transition-colors cursor-pointer"
                     >
-                      <ThumbsUp className="w-3.5 h-3.5 text-emerald-400" />
+                      <ThumbsUp className="w-3.5 h-3.5 text-success" />
                       <span>{upvotes.cinema} of 4 Approved</span>
                     </button>
                   </div>
                 </div>
 
                 {/* Vendor 2 */}
-                <div className="p-4 bg-[#0B0C0E] border border-[#26282E] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-all hover:border-[#DFB76C]/60">
+                <div className="p-4 bg-[#0B0C0E] border border-[#26282E] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition-all hover:border-border-brand/40">
                   <div className="flex items-center gap-3">
                     <div className="relative w-12 h-12 overflow-hidden flex-shrink-0 bg-[#16181F]">
                       <Image
@@ -206,7 +206,7 @@ export default function CollaborativePlanningCard() {
                       />
                     </div>
                     <div>
-                      <h4 className="font-serif font-light text-sm text-white">
+                      <h4 className="font-serif font-light text-sm text-foreground">
                         Velvet & Bloom Design
                       </h4>
                       <p className="text-xs text-[#CBD5E1] font-light">Floral Mandap Package • $1,800</p>
@@ -216,9 +216,9 @@ export default function CollaborativePlanningCard() {
                   <div className="flex items-center gap-2 self-end sm:self-center">
                     <button
                       onClick={() => handleVote("floral")}
-                      className="px-3 py-1 bg-[#121418] text-amber-400 text-xs font-bold flex items-center gap-1.5 border border-amber-500/30 hover:bg-[#1A1D24] transition-colors cursor-pointer"
+                      className="px-3 py-1 bg-[#121418] text-warning text-xs font-bold flex items-center gap-1.5 border border-warning/30 hover:bg-[#1A1D24] transition-colors cursor-pointer"
                     >
-                      <ThumbsUp className="w-3.5 h-3.5 text-amber-400" />
+                      <ThumbsUp className="w-3.5 h-3.5 text-warning" />
                       <span>{upvotes.floral} of 4 Voted</span>
                     </button>
                   </div>
@@ -226,7 +226,7 @@ export default function CollaborativePlanningCard() {
               </div>
 
               {/* Escrow Pool Target Progress */}
-              <div className="p-5 bg-[#0B0C0E] border border-[#26282E] text-white space-y-3">
+              <div className="p-5 bg-[#0B0C0E] border border-[#26282E] text-foreground space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 text-xs text-[#CBD5E1] uppercase tracking-wider font-semibold">
                     <ShieldCheck className="w-4 h-4 text-[#DFB76C]" />

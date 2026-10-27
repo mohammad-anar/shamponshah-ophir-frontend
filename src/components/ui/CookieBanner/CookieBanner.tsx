@@ -27,7 +27,7 @@ export default function CookieBanner() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 max-w-md w-[calc(100%-2rem)] z-50 bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-luxury-lg border border-[#EAE6DF] animate-in slide-in-from-bottom-5 duration-300">
+    <div className="fixed bottom-4 right-4 max-w-md w-[calc(100%-2rem)] z-50 bg-surface/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 shadow-luxury-lg border border-[#EAE6DF] animate-in slide-in-from-bottom-5 duration-300">
       <div className="flex items-start gap-3">
         <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center flex-shrink-0 mt-0.5">
           <Cookie className="w-4 h-4" />
@@ -40,28 +40,28 @@ export default function CookieBanner() {
             </h4>
             <button
               onClick={() => setIsVisible(false)}
-              className="text-slate-400 hover:text-slate-600 transition-colors"
+              className="text-foreground-muted hover:text-foreground-secondary transition-colors"
               aria-label="Dismiss cookie notice"
             >
               <X className="w-4 h-4" />
             </button>
           </div>
 
-          <p className="text-[11px] text-slate-500 leading-relaxed">
+          <p className="text-[11px] text-foreground-muted leading-relaxed">
             Ophir Reserve uses essential escrow tracking cookies and analytical signals to curate optimal hospitality matches.
           </p>
 
           <div className="flex items-center gap-2 pt-1">
             <button
               onClick={handleAccept}
-              className="px-3.5 py-1.5 bg-[#0F1228] hover:bg-[#1A1F40] text-white text-xs font-semibold rounded-lg shadow-xs transition-all"
+              className="px-3.5 py-1.5 bg-[#0F1228] hover:bg-[#1A1F40] text-foreground text-xs font-semibold rounded-lg shadow-xs transition-all"
             >
               Accept all cookies
             </button>
 
             <button
               onClick={handleCustomize}
-              className="px-3.5 py-1.5 bg-[#F4F2EE] hover:bg-[#EAE6DF] text-slate-700 text-xs font-medium rounded-lg transition-colors"
+              className="px-3.5 py-1.5 bg-[#F4F2EE] hover:bg-[#EAE6DF] text-foreground-secondary text-xs font-medium rounded-lg transition-colors"
             >
               Customize preferences
             </button>

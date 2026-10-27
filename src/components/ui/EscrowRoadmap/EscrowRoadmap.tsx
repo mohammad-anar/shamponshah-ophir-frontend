@@ -52,12 +52,12 @@ export default function EscrowRoadmap() {
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10 space-y-12">
         {/* Header */}
         <div className="max-w-2xl space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#121418] text-[#DFB76C] border border-[#DFB76C]/30 text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#121418] text-[#DFB76C] border border-border-brand/40 text-xs font-bold uppercase tracking-wider">
             <ShieldCheck className="w-3.5 h-3.5 text-[#DFB76C]" />
             <span>Ophir Escrow Vault Protocol</span>
           </div>
 
-          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-tight">
+          <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-foreground tracking-tight">
             How Your Investment Remains 100% Safe
           </h2>
 
@@ -73,7 +73,7 @@ export default function EscrowRoadmap() {
             return (
               <div
                 key={idx}
-                className="relative bg-[#121418] p-5 sm:p-6 border border-[#26282E] hover:border-[#DFB76C]/60 transition-all space-y-4 flex flex-col justify-between"
+                className="relative bg-[#121418] p-5 sm:p-6 border border-[#26282E] hover:border-border-brand/40 transition-all space-y-4 flex flex-col justify-between"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -85,7 +85,7 @@ export default function EscrowRoadmap() {
                     </span>
                   </div>
 
-                  <h3 className="font-serif font-light text-base sm:text-lg text-white">
+                  <h3 className="font-serif font-light text-base sm:text-lg text-foreground">
                     {step.title}
                   </h3>
 
@@ -94,8 +94,8 @@ export default function EscrowRoadmap() {
                   </p>
                 </div>
 
-                <div className="pt-2 border-t border-[#26282E] text-[10px] font-semibold text-emerald-400 flex items-center gap-1 uppercase tracking-wider">
-                  <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                <div className="pt-2 border-t border-[#26282E] text-[10px] font-semibold text-success flex items-center gap-1 uppercase tracking-wider">
+                  <CheckCircle2 className="w-3 h-3 text-success" />
                   <span>Vault Guaranteed</span>
                 </div>
               </div>
@@ -104,13 +104,13 @@ export default function EscrowRoadmap() {
         </div>
 
         {/* Bottom Guarantee Strip */}
-        <div className="p-5 bg-[#121418] border border-[#26282E] text-white flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="p-5 bg-[#121418] border border-[#26282E] text-foreground flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-[#16181F] text-[#DFB76C] border border-[#26282E] flex items-center justify-center flex-shrink-0">
               <Scale className="w-5 h-5" />
             </div>
             <div>
-              <h4 className="font-serif font-light text-base text-white">
+              <h4 className="font-serif font-light text-base text-foreground">
                 Independent Mediation Council
               </h4>
               <p className="text-xs text-[#CBD5E1] font-light">
