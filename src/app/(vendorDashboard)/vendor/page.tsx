@@ -270,7 +270,7 @@ export default function VendorDashboardOverview() {
         </div>
         <Link
           href="/vendor/messages"
-          className="px-3.5 py-1.5 rounded-lg bg-warning-soft/80 hover:bg-amber-300 text-warning font-bold text-xs transition-colors self-start sm:self-auto cursor-pointer"
+          className="px-3.5 py-1.5 rounded-lg bg-warning-soft/80 hover:bg-warning text-warning font-bold text-xs transition-colors self-start sm:self-auto cursor-pointer"
         >
           Open inbox →
         </Link>
@@ -481,7 +481,7 @@ export default function VendorDashboardOverview() {
 
           <div className="p-3.5 rounded-xl bg-info-soft/60 border border-info/30 space-y-1.5 text-xs">
             <span className="text-[10px] uppercase font-bold text-info block">7-DAY CUSTODY PROTECTION</span>
-            <p className="text-[11px] text-indigo-950 font-medium leading-relaxed">
+            <p className="text-[11px] text-info font-medium leading-relaxed">
               Client-approved milestone funds are securely held in platform custody for 7 days before direct transfer to your connected Stripe account.
             </p>
             <div className="flex items-center justify-between pt-1">
