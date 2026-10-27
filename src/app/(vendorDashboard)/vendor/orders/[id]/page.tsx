@@ -294,7 +294,7 @@ export default function VendorOrderDetailPage() {
         <div className="flex items-center gap-2 flex-wrap">
           <Link
             href={`/vendor/messages?userId=${clientUserId}&orderId=${order.id}&clientName=${encodeURIComponent(clientName)}`}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand text-on-brand hover:bg-indigo-700 text-foreground rounded-xl text-xs font-bold shadow-xs transition-all"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand text-on-brand hover:bg-info text-foreground rounded-xl text-xs font-bold shadow-xs transition-all"
           >
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Chat with Client</span>
@@ -324,7 +324,7 @@ export default function VendorOrderDetailPage() {
                   "inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold shadow-xs transition-all text-foreground",
                   hasPendingApproval
                     ? "bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand"
-                    : "bg-success-solid text-foreground hover:bg-success-solid text-white"
+                    : "bg-success-solid text-foreground hover:bg-success-solid text-foreground"
                 )}
               >
                 <UploadCloud className="w-3.5 h-3.5" />
@@ -337,9 +337,9 @@ export default function VendorOrderDetailPage() {
 
       {/* Escalated to Admin Notice */}
       {order.escalatedToAdmin && (
-        <div className="p-5 rounded-2xl border-2 border-rose-400 bg-danger-soft text-danger shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="p-5 rounded-2xl border-2 border-danger bg-danger-soft text-danger shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-danger-solid text-white text-foreground flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-danger-solid text-foreground text-foreground flex items-center justify-center shrink-0">
               <AlertTriangle className="w-5 h-5" />
             </div>
             <div>
@@ -347,7 +347,7 @@ export default function VendorOrderDetailPage() {
                 <h3 className="font-extrabold text-foreground text-sm sm:text-base">
                   Case Escalated to Admin for Official Mediation
                 </h3>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-200 text-danger uppercase">
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-danger/30 text-danger uppercase">
                   Escalated by {order.escalatedBy || "Party"}
                 </span>
               </div>
@@ -366,14 +366,14 @@ export default function VendorOrderDetailPage() {
 
       {/* Admin Resolution Decision Banner */}
       {order.adminResolution && (
-        <div className="p-5 rounded-2xl border-2 border-info/30 bg-info-soft/90 text-indigo-950 shadow-sm flex items-start gap-3.5">
+        <div className="p-5 rounded-2xl border-2 border-info/30 bg-info-soft/90 text-info shadow-sm flex items-start gap-3.5">
           <div className="w-10 h-10 rounded-xl bg-brand text-on-brand text-foreground flex items-center justify-center shrink-0">
             <CheckCircle2 className="w-5 h-5" />
           </div>
           <div className="text-xs space-y-1">
             <div className="flex items-center gap-2">
-              <strong className="font-extrabold text-sm text-indigo-950">Admin Arbitration Judgment</strong>
-              <span className="px-2 py-0.5 rounded-md bg-indigo-200 text-info font-bold text-[10px]">
+              <strong className="font-extrabold text-sm text-info">Admin Arbitration Judgment</strong>
+              <span className="px-2 py-0.5 rounded-md bg-info/30 text-info font-bold text-[10px]">
                 {order.adminResolution}
               </span>
             </div>
@@ -392,14 +392,14 @@ export default function VendorOrderDetailPage() {
 
       {/* Completed with Partial Refund Notice */}
       {order.status === "COMPLETED_WITH_PARTIAL_REFUND" && (
-        <div className="p-5 rounded-2xl border-2 border-purple-300 bg-brand-soft text-brand shadow-sm flex items-start gap-3.5">
+        <div className="p-5 rounded-2xl border-2 border-border-brand/50 bg-brand-soft text-brand shadow-sm flex items-start gap-3.5">
           <div className="w-10 h-10 rounded-xl bg-brand text-on-brand text-foreground flex items-center justify-center shrink-0">
             <DollarSign className="w-5 h-5" />
           </div>
           <div className="text-xs space-y-1">
             <h3 className="font-extrabold text-brand text-sm">Order Completed with Partial Refund</h3>
-            <p className="text-purple-800">
-              A partial refund of <strong className="font-mono text-purple-900">${Number(order.refundedAmount || order.partialRefundAmount || 0).toFixed(2)}</strong> was returned to the client via Stripe.
+            <p className="text-brand">
+              A partial refund of <strong className="font-mono text-brand">${Number(order.refundedAmount || order.partialRefundAmount || 0).toFixed(2)}</strong> was returned to the client via Stripe.
               The remaining balance was settled with your wallet (15% platform fee deducted, 85% vendor payout).
             </p>
           </div>
@@ -461,7 +461,7 @@ export default function VendorOrderDetailPage() {
               value={cancelResponseNote}
               onChange={(e) => setCancelResponseNote(e.target.value)}
               placeholder="e.g. Work is already prepared and non-refundable, or accepting full refund..."
-              className="w-full p-2.5 bg-surface rounded-xl border border-warning/30 text-xs focus:ring-2 focus:ring-amber-500"
+              className="w-full p-2.5 bg-surface rounded-xl border border-warning/30 text-xs focus:ring-2 focus:ring-warning"
             />
 
             <div className="flex flex-wrap items-center gap-2 pt-1">
@@ -469,7 +469,7 @@ export default function VendorOrderDetailPage() {
                 type="button"
                 onClick={() => handleRespondCancel("ACCEPT")}
                 disabled={isRespondingCancel}
-                className="px-4 py-2 bg-success-solid text-foreground hover:bg-success-solid text-white text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 bg-success-solid text-foreground hover:bg-success-solid text-foreground text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 <Check className="w-4 h-4" />
                 <span>Accept Cancellation &amp; Refund Client</span>
@@ -479,7 +479,7 @@ export default function VendorOrderDetailPage() {
                 type="button"
                 onClick={() => handleRespondCancel("REJECT")}
                 disabled={isRespondingCancel}
-                className="px-4 py-2 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 <span>Decline Cancellation</span>
               </button>
@@ -501,7 +501,7 @@ export default function VendorOrderDetailPage() {
 
       {/* Partial Refund Request Review Banner */}
       {order.refundStatus === "REQUESTED" && (
-        <div className="p-5 rounded-2xl border-2 border-purple-400 bg-brand-soft text-brand shadow-sm space-y-4">
+        <div className="p-5 rounded-2xl border-2 border-border-brand bg-brand-soft text-brand shadow-sm space-y-4">
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-brand text-on-brand text-foreground flex items-center justify-center shrink-0">
               <DollarSign className="w-5 h-5" />
@@ -511,7 +511,7 @@ export default function VendorOrderDetailPage() {
                 <h3 className="font-extrabold text-foreground text-sm">
                   Client Requested Partial Refund (${partialRefundAmountNum.toFixed(2)})
                 </h3>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-200 text-purple-900">
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-brand/30 text-brand">
                   Action Required
                 </span>
               </div>
@@ -528,7 +528,7 @@ export default function VendorOrderDetailPage() {
                       href={url}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1 px-2.5 py-1 bg-surface hover:bg-surface-elevated border border-purple-300 rounded-lg text-brand font-bold text-[11px]"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 bg-surface hover:bg-surface-elevated border border-border-brand/50 rounded-lg text-brand font-bold text-[11px]"
                     >
                       <ExternalLink className="w-3 h-3" />
                       <span>Proof Attachment #{i + 1}</span>
@@ -540,7 +540,7 @@ export default function VendorOrderDetailPage() {
           </div>
 
           {/* Transparent Settlement Split Breakdown */}
-          <div className="p-3.5 bg-surface rounded-xl border border-purple-200 text-xs space-y-2">
+          <div className="p-3.5 bg-surface rounded-xl border border-border-brand/40 text-xs space-y-2">
             <div className="font-bold text-foreground flex items-center justify-between">
               <span>Settlement Breakdown If You Accept:</span>
               <span className="text-[10px] text-brand bg-brand-soft font-bold px-2 py-0.5 rounded">
@@ -552,7 +552,7 @@ export default function VendorOrderDetailPage() {
                 <span className="text-[10px] text-foreground-muted block">Contract Total</span>
                 <strong className="text-sm font-bold text-foreground">${grandTotalNum.toFixed(2)}</strong>
               </div>
-              <div className="p-2 rounded-lg bg-danger-soft border border-rose-100 text-danger">
+              <div className="p-2 rounded-lg bg-danger-soft border border-danger/30 text-danger">
                 <span className="text-[10px] text-danger block">Refund to Client</span>
                 <strong className="text-sm font-bold">-${partialRefundAmountNum.toFixed(2)}</strong>
               </div>
@@ -560,14 +560,14 @@ export default function VendorOrderDetailPage() {
                 <span className="text-[10px] text-info block">15% Platform Fee</span>
                 <strong className="text-sm font-bold">-${partialFee.toFixed(2)}</strong>
               </div>
-              <div className="p-2 rounded-lg bg-success-soft border border-emerald-100 text-success">
+              <div className="p-2 rounded-lg bg-success-soft border border-success/30 text-success">
                 <span className="text-[10px] text-success block">Your Net Payout (85%)</span>
                 <strong className="text-sm font-bold">+${partialVendorNet.toFixed(2)}</strong>
               </div>
             </div>
           </div>
 
-          <div className="space-y-2 pt-1 border-t border-purple-200">
+          <div className="space-y-2 pt-1 border-t border-border-brand/40">
             <label className="text-[11px] font-bold text-foreground-secondary block">
               Response Note (Optional):
             </label>
@@ -576,7 +576,7 @@ export default function VendorOrderDetailPage() {
               value={partialRefundResponseNote}
               onChange={(e) => setPartialRefundResponseNote(e.target.value)}
               placeholder="e.g. Accepted with revised scope, or declined..."
-              className="w-full p-2.5 bg-surface rounded-xl border border-purple-300 text-xs focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2.5 bg-surface rounded-xl border border-border-brand/50 text-xs focus:ring-2 focus:ring-focus-ring"
             />
 
             <div className="flex flex-wrap items-center gap-2 pt-1">
@@ -584,7 +584,7 @@ export default function VendorOrderDetailPage() {
                 type="button"
                 onClick={() => handleRespondPartialRefund("ACCEPT")}
                 disabled={isRespondingRefund}
-                className="px-4 py-2 bg-success-solid text-foreground hover:bg-success-solid text-white text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 bg-success-solid text-foreground hover:bg-success-solid text-foreground text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 <Check className="w-4 h-4" />
                 <span>Accept Partial Refund &amp; Settle Payout</span>
@@ -594,7 +594,7 @@ export default function VendorOrderDetailPage() {
                 type="button"
                 onClick={() => handleRespondPartialRefund("REJECT")}
                 disabled={isRespondingRefund}
-                className="px-4 py-2 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 <span>Decline Partial Refund</span>
               </button>
@@ -663,7 +663,7 @@ export default function VendorOrderDetailPage() {
                 <h3 className="font-extrabold text-foreground text-sm">
                   Order Delivered · Waiting for Client Approval
                 </h3>
-                <span className="text-[10px] bg-indigo-200 text-info font-bold px-2 py-0.5 rounded-full">
+                <span className="text-[10px] bg-info/30 text-info font-bold px-2 py-0.5 rounded-full">
                   3-Day Review Window
                 </span>
               </div>
@@ -686,7 +686,7 @@ export default function VendorOrderDetailPage() {
                 <h3 className="font-extrabold text-foreground text-sm">
                   Order Completed · 7-Day Security Clearing Active
                 </h3>
-                <span className="text-[10px] bg-emerald-200 text-success font-bold px-2 py-0.5 rounded-full">
+                <span className="text-[10px] bg-success/30 text-success font-bold px-2 py-0.5 rounded-full">
                   Pending for Release
                 </span>
               </div>
@@ -1070,7 +1070,7 @@ export default function VendorOrderDetailPage() {
                 type="button"
                 onClick={handleConfirmEscalation}
                 disabled={isEscalating}
-                className="flex-1 py-2.5 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
+                className="flex-1 py-2.5 bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
               >
                 {isEscalating ? <Loader2 className="w-4 h-4 animate-spin" /> : <AlertTriangle className="w-4 h-4" />}
                 <span>Confirm Escalation</span>
