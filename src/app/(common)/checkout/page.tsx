@@ -225,18 +225,18 @@ export default function CheckoutBookingPage() {
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>Stripe Connect Escrow Checkout</span>
             </div>
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white tracking-tight mt-1">
+            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-foreground tracking-tight mt-1">
               Secure Milestone Gig Booking
             </h1>
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-400">
-            <span className="text-emerald-400 bg-emerald-950/60 px-3 py-1.5 rounded-lg border border-emerald-500/30 inline-flex items-center gap-1.5 font-bold">
-              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+          <div className="flex items-center gap-2 text-xs font-semibold text-foreground-muted">
+            <span className="text-success bg-success-soft text-success px-3 py-1.5 rounded-lg border border-success/30 inline-flex items-center gap-1.5 font-bold">
+              <CheckCircle2 className="w-3.5 h-3.5 text-success" />
               Step 1: Package
             </span>
-            <span className="text-slate-500">→</span>
-            <span className="text-amber-300 bg-amber-950/40 px-3 py-1.5 rounded-lg border border-amber-500/40 font-bold">
+            <span className="text-foreground-muted">→</span>
+            <span className="text-warning bg-warning-soft text-warning px-3 py-1.5 rounded-lg border border-warning/30 font-bold">
               Step 2: Payment
             </span>
           </div>
@@ -247,9 +247,9 @@ export default function CheckoutBookingPage() {
             {/* Left Column (7 cols): Package breakdown, Addons, Milestone Release Roadmap */}
             <div className="lg:col-span-7 space-y-6">
               {/* Vendor & Package Card */}
-              <div className="bg-[#12141A] rounded-3xl p-6 sm:p-7 shadow-luxury border border-white/10 space-y-5">
+              <div className="bg-[#12141A] rounded-3xl p-6 sm:p-7 shadow-luxury border border-border space-y-5">
                 <div className="flex items-center gap-4">
-                  <div className="relative w-14 h-14 rounded-2xl overflow-hidden shadow-xs border-2 border-white/20 bg-slate-800 flex-shrink-0">
+                  <div className="relative w-14 h-14 rounded-2xl overflow-hidden shadow-xs border-2 border-border-strong bg-slate-800 flex-shrink-0">
                     <Image
                       src={vendor.avatar || "/placeholder-avatar.png"}
                       alt={vendor.name}
@@ -258,51 +258,51 @@ export default function CheckoutBookingPage() {
                     />
                   </div>
                   <div>
-                    <h3 className="font-serif font-bold text-lg text-white">
+                    <h3 className="font-serif font-bold text-lg text-foreground">
                       {selectedPkg?.title || vendor.packages[0]?.title || "Milestone Vendor Package"}
                     </h3>
-                    <p className="text-xs text-slate-400">
-                      Vendor: <span className="font-semibold text-amber-300">{vendor.name}</span> • {vendor.location}
+                    <p className="text-xs text-foreground-muted">
+                      Vendor: <span className="font-semibold text-warning">{vendor.name}</span> • {vendor.location}
                     </p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 bg-[#181B24] rounded-2xl border border-white/10 text-xs">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 bg-[#181B24] rounded-2xl border border-border text-xs">
                   <div>
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold">EVENT DATE</span>
+                    <span className="text-foreground-muted block text-[10px] uppercase font-bold">EVENT DATE</span>
                     <input
                       type="date"
                       value={eventDate}
                       onChange={(e) => setEventDate(e.target.value)}
-                      className="font-bold text-white bg-transparent focus:outline-none mt-0.5 cursor-pointer"
+                      className="font-bold text-foreground bg-transparent focus:outline-none mt-0.5 cursor-pointer"
                     />
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold">COVERAGE</span>
-                    <span className="font-bold text-white">Continuous Dedicated</span>
+                    <span className="text-foreground-muted block text-[10px] uppercase font-bold">COVERAGE</span>
+                    <span className="font-bold text-foreground">Continuous Dedicated</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold">ESCROW VAULT</span>
-                    <span className="font-bold text-emerald-400">100% Guaranteed</span>
+                    <span className="text-foreground-muted block text-[10px] uppercase font-bold">ESCROW VAULT</span>
+                    <span className="font-bold text-success">100% Guaranteed</span>
                   </div>
                 </div>
               </div>
 
               {/* Milestone payment terms */}
-              <div className="bg-[#12141A] rounded-3xl p-6 sm:p-7 shadow-luxury border border-white/10 space-y-4">
+              <div className="bg-[#12141A] rounded-3xl p-6 sm:p-7 shadow-luxury border border-border space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-serif font-bold text-lg text-white">
+                  <h3 className="font-serif font-bold text-lg text-foreground">
                     Milestone Security & Protection
                   </h3>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-1 rounded-full">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-success bg-success-soft text-success border border-success/30 px-2.5 py-1 rounded-full">
                     Approval required
                   </span>
                 </div>
-                <div className="p-4 rounded-2xl bg-[#181B24] border border-white/10 space-y-2 text-sm text-slate-300">
-                  <p className="font-semibold text-white">
+                <div className="p-4 rounded-2xl bg-[#181B24] border border-border space-y-2 text-sm text-foreground-secondary">
+                  <p className="font-semibold text-foreground">
                     Escrow Deposit Today: ${grandTotal.toFixed(2)} held safely in vault
                   </p>
-                  <p className="text-xs text-slate-400 leading-relaxed">
+                  <p className="text-xs text-foreground-muted leading-relaxed">
                     Funds are secured under escrow contracts. The vendor begins work immediately. Payout is released to the vendor only after you inspect and approve completion.
                   </p>
                 </div>
@@ -311,34 +311,34 @@ export default function CheckoutBookingPage() {
 
             {/* Right Column (5 cols): Order Summary & Interactive Payment Inputs */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="bg-[#12141A] rounded-3xl p-6 sm:p-7 shadow-luxury-lg border border-white/10 space-y-6">
-                <h3 className="font-serif font-bold text-xl text-white">
+              <div className="bg-[#12141A] rounded-3xl p-6 sm:p-7 shadow-luxury-lg border border-border space-y-6">
+                <h3 className="font-serif font-bold text-xl text-foreground">
                   Payment & Escrow Authorization
                 </h3>
 
-                <div className="space-y-3 text-xs sm:text-sm text-slate-300 border-b border-white/10 pb-4">
+                <div className="space-y-3 text-xs sm:text-sm text-foreground-secondary border-b border-border pb-4">
                   <div className="flex justify-between">
                     <span>Base Package Fee</span>
-                    <span className="font-bold text-white">${basePackagePrice.toLocaleString()}</span>
+                    <span className="font-bold text-foreground">${basePackagePrice.toLocaleString()}</span>
                   </div>
 
                   <div className="flex justify-between">
                     <span>Platform Escrow Fee (15%)</span>
-                    <span className="font-bold text-slate-300">+${platformFee.toFixed(2)}</span>
+                    <span className="font-bold text-foreground-secondary">+${platformFee.toFixed(2)}</span>
                   </div>
                 </div>
 
                 {/* Total */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <span className="text-xs text-slate-400 block font-medium">
+                    <span className="text-xs text-foreground-muted block font-medium">
                       TOTAL ESCROW DEPOSIT
                     </span>
-                    <span className="font-serif text-3xl font-extrabold text-amber-300">
+                    <span className="font-serif text-3xl font-extrabold text-warning">
                       ${grandTotal.toFixed(2)}
                     </span>
                   </div>
-                  <span className="text-[10px] font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-2.5 py-1 rounded-full">
+                  <span className="text-[10px] font-bold text-emerald-300 bg-success-soft text-success border border-success/30 px-2.5 py-1 rounded-full">
                     Protected in Vault
                   </span>
                 </div>
@@ -346,24 +346,24 @@ export default function CheckoutBookingPage() {
                 {/* Payment Mode Selector */}
                 <div className="space-y-4 pt-2">
                   <div className="flex items-center justify-between">
-                    <label className="block text-xs font-bold text-slate-200">
+                    <label className="block text-xs font-bold text-foreground-secondary">
                       Select Payment Method
                     </label>
-                    <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
+                    <span className="text-[10px] font-mono text-success flex items-center gap-1">
                       <Lock className="w-2.5 h-2.5" /> 256-bit SSL
                     </span>
                   </div>
 
                   {/* Tabs: Card vs Saved Methods */}
-                  <div className="grid grid-cols-2 gap-2 p-1 bg-[#181B24] rounded-xl border border-white/10 text-xs">
+                  <div className="grid grid-cols-2 gap-2 p-1 bg-[#181B24] rounded-xl border border-border text-xs">
                     <button
                       type="button"
                       onClick={() => setPaymentMode("card")}
                       className={cn(
                         "py-2 px-3 rounded-lg font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer",
                         paymentMode === "card"
-                          ? "bg-amber-500 text-slate-950 shadow-sm"
-                          : "text-slate-400 hover:text-white"
+                          ? "bg-warning-solid text-on-brand text-slate-950 shadow-sm"
+                          : "text-foreground-muted hover:text-foreground"
                       )}
                     >
                       <CreditCard className="w-3.5 h-3.5" />
@@ -376,8 +376,8 @@ export default function CheckoutBookingPage() {
                       className={cn(
                         "py-2 px-3 rounded-lg font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed",
                         paymentMode === "saved"
-                          ? "bg-amber-500 text-slate-950 shadow-sm"
-                          : "text-slate-400 hover:text-white"
+                          ? "bg-warning-solid text-on-brand text-slate-950 shadow-sm"
+                          : "text-foreground-muted hover:text-foreground"
                       )}
                     >
                       <span>Saved Cards ({savedMethods.length})</span>
@@ -386,10 +386,10 @@ export default function CheckoutBookingPage() {
 
                   {/* Direct Card Input Fields */}
                   {paymentMode === "card" && (
-                    <div className="p-4 rounded-2xl bg-[#181B24] border border-white/10 space-y-3.5">
+                    <div className="p-4 rounded-2xl bg-[#181B24] border border-border space-y-3.5">
                       {/* Cardholder Name */}
                       <div>
-                        <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                        <label className="block text-[11px] font-bold text-foreground-secondary mb-1">
                           Cardholder Name
                         </label>
                         <input
@@ -397,17 +397,17 @@ export default function CheckoutBookingPage() {
                           value={cardholderName}
                           onChange={(e) => setCardholderName(e.target.value)}
                           placeholder="Full name on card"
-                          className="w-full bg-[#12141A] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-400"
+                          className="w-full bg-[#12141A] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-amber-400"
                         />
                       </div>
 
                       {/* Card Number */}
                       <div>
                         <div className="flex items-center justify-between mb-1">
-                          <label className="block text-[11px] font-bold text-slate-300">
+                          <label className="block text-[11px] font-bold text-foreground-secondary">
                             Card Number
                           </label>
-                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-warning-solid text-on-brand/20 text-warning border border-warning/30">
                             {getCardBrand(cardNumber)}
                           </span>
                         </div>
@@ -418,16 +418,16 @@ export default function CheckoutBookingPage() {
                             onChange={handleCardNumberChange}
                             maxLength={19}
                             placeholder="1234 5678 9012 3456"
-                            className="w-full bg-[#12141A] border border-white/15 rounded-xl pl-9 pr-3.5 py-2.5 text-xs font-mono font-bold text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-400 tracking-wider"
+                            className="w-full bg-[#12141A] border border-white/15 rounded-xl pl-9 pr-3.5 py-2.5 text-xs font-mono font-bold text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-amber-400 tracking-wider"
                           />
-                          <CreditCard className="w-4 h-4 text-slate-400 absolute left-3 top-3 pointer-events-none" />
+                          <CreditCard className="w-4 h-4 text-foreground-muted absolute left-3 top-3 pointer-events-none" />
                         </div>
                       </div>
 
                       {/* Expiry & CVC Grid */}
                       <div className="grid grid-cols-2 gap-3">
                         <div>
-                          <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                          <label className="block text-[11px] font-bold text-foreground-secondary mb-1">
                             Expiration Date
                           </label>
                           <input
@@ -436,11 +436,11 @@ export default function CheckoutBookingPage() {
                             onChange={handleExpiryChange}
                             maxLength={5}
                             placeholder="MM/YY"
-                            className="w-full bg-[#12141A] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs font-mono text-center font-bold text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-400"
+                            className="w-full bg-[#12141A] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs font-mono text-center font-bold text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-amber-400"
                           />
                         </div>
                         <div>
-                          <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                          <label className="block text-[11px] font-bold text-foreground-secondary mb-1">
                             Security Code (CVC)
                           </label>
                           <div className="relative">
@@ -450,9 +450,9 @@ export default function CheckoutBookingPage() {
                               onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, "").slice(0, 4))}
                               maxLength={4}
                               placeholder="CVC"
-                              className="w-full bg-[#12141A] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs font-mono text-center font-bold text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-400 tracking-widest"
+                              className="w-full bg-[#12141A] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs font-mono text-center font-bold text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-amber-400 tracking-widest"
                             />
-                            <Lock className="w-3 h-3 text-slate-500 absolute right-3 top-3.5 pointer-events-none" />
+                            <Lock className="w-3 h-3 text-foreground-muted absolute right-3 top-3.5 pointer-events-none" />
                           </div>
                         </div>
                       </div>
@@ -466,7 +466,7 @@ export default function CheckoutBookingPage() {
                           onChange={(e) => setSaveCard(e.target.checked)}
                           className="w-4 h-4 accent-amber-500 rounded cursor-pointer"
                         />
-                        <label htmlFor="saveCardCheckbox" className="text-[11px] text-slate-300 cursor-pointer select-none">
+                        <label htmlFor="saveCardCheckbox" className="text-[11px] text-foreground-secondary cursor-pointer select-none">
                           Save card securely for future payments &amp; 1-click checkout
                         </label>
                       </div>
@@ -485,19 +485,19 @@ export default function CheckoutBookingPage() {
                           className={cn(
                             "p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all text-xs",
                             selectedSavedCardId === (pm.stripePaymentMethodId || pm.id)
-                              ? "border-amber-400 bg-amber-500/10 shadow-xs"
-                              : "border-white/10 bg-[#181B24] hover:border-white/20"
+                              ? "border-amber-400 bg-warning-solid text-on-brand/10 shadow-xs"
+                              : "border-border bg-[#181B24] hover:border-border-strong"
                           )}
                         >
                           <div className="flex items-center gap-2.5">
-                            <span className="px-2 py-0.5 bg-slate-800 text-amber-300 rounded text-[10px] font-bold uppercase border border-white/10">
+                            <span className="px-2 py-0.5 bg-slate-800 text-warning rounded text-[10px] font-bold uppercase border border-border">
                               {pm.brand || "Card"}
                             </span>
-                            <span className="font-mono font-bold text-white">
+                            <span className="font-mono font-bold text-foreground">
                               •••• {pm.last4 || "4242"}
                             </span>
                             {pm.isDefault && (
-                              <span className="text-[9px] font-bold px-1.5 py-0.2 bg-emerald-950 text-emerald-400 border border-emerald-500/30 rounded-full">
+                              <span className="text-[9px] font-bold px-1.5 py-0.2 bg-emerald-950 text-success border border-success/30 rounded-full">
                                 Default
                               </span>
                             )}
@@ -565,13 +565,13 @@ export default function CheckoutBookingPage() {
                         toast.error(err?.data?.message || err?.message || "Could not prepare order for payment");
                       }
                     }}
-                    className="text-[11px] text-slate-400 hover:text-amber-300 transition-colors underline cursor-pointer"
+                    className="text-[11px] text-foreground-muted hover:text-warning transition-colors underline cursor-pointer"
                   >
                     Or open full Stripe PaymentElement popup
                   </button>
                 </div>
 
-                <p className="text-[11px] text-slate-400 text-center leading-relaxed">
+                <p className="text-[11px] text-foreground-muted text-center leading-relaxed">
                   Full amount is held in Ophir Escrow Vault (15% platform fee, 85% vendor net). Funds are protected until you approve completed delivery.
                 </p>
               </div>
@@ -579,48 +579,48 @@ export default function CheckoutBookingPage() {
           </form>
         ) : (
           /* Confirmation Success Screen */
-          <div className="max-w-2xl mx-auto bg-[#12141A] rounded-3xl p-8 sm:p-12 shadow-luxury-lg border border-emerald-500/30 text-center space-y-6 animate-in zoom-in-95 duration-300">
-            <div className="w-16 h-16 rounded-3xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center mx-auto shadow-sm">
+          <div className="max-w-2xl mx-auto bg-[#12141A] rounded-3xl p-8 sm:p-12 shadow-luxury-lg border border-success/30 text-center space-y-6 animate-in zoom-in-95 duration-300">
+            <div className="w-16 h-16 rounded-3xl bg-success-solid text-white/20 text-success border border-success/30 flex items-center justify-center mx-auto shadow-sm">
               <CheckCircle2 className="w-8 h-8" />
             </div>
 
             <div className="space-y-2">
-              <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider bg-emerald-950/80 border border-emerald-500/40 px-3 py-1 rounded-full">
+              <span className="text-xs font-bold text-success uppercase tracking-wider bg-success-soft text-success border border-success/30 px-3 py-1 rounded-full">
                 PAYMENT CONFIRMED - ORDER #{confirmedOrderNumber}
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white">
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground">
                 Your escrow payment is confirmed.
               </h2>
-              <p className="text-sm text-slate-300 max-w-md mx-auto">
-                <span className="font-bold text-amber-300">${confirmedChargeAmount.toFixed(2)}</span> has been securely deposited into the Ophir Escrow Vault. The order is now <span className="font-bold text-emerald-400">ACTIVE</span>.
+              <p className="text-sm text-foreground-secondary max-w-md mx-auto">
+                <span className="font-bold text-warning">${confirmedChargeAmount.toFixed(2)}</span> has been securely deposited into the Ophir Escrow Vault. The order is now <span className="font-bold text-success">ACTIVE</span>.
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#181B24] border border-white/10 text-xs text-left space-y-2.5">
+            <div className="p-5 rounded-2xl bg-[#181B24] border border-border text-xs text-left space-y-2.5">
               <div className="flex justify-between">
-                <span className="text-slate-400">Vendor:</span>
-                <span className="font-bold text-white">{vendor.name}</span>
+                <span className="text-foreground-muted">Vendor:</span>
+                <span className="font-bold text-foreground">{vendor.name}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Event Date:</span>
-                <span className="font-bold text-white">{eventDate}</span>
+                <span className="text-foreground-muted">Event Date:</span>
+                <span className="font-bold text-foreground">{eventDate}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-400">Escrow Security:</span>
-                <span className="font-bold text-emerald-400">Protected until delivery sign-off</span>
+                <span className="text-foreground-muted">Escrow Security:</span>
+                <span className="font-bold text-success">Protected until delivery sign-off</span>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <Link
                 href="/user/orders"
-                className="w-full sm:w-auto px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-xl shadow-xs transition-colors"
+                className="w-full sm:w-auto px-6 py-3 bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-slate-950 font-bold text-xs rounded-xl shadow-xs transition-colors"
               >
                 View my orders
               </Link>
               <Link
                 href="/"
-                className="w-full sm:w-auto px-6 py-3 bg-white/10 hover:bg-white/15 text-white font-semibold text-xs rounded-xl transition-colors"
+                className="w-full sm:w-auto px-6 py-3 bg-surface/10 hover:bg-surface/15 text-foreground font-semibold text-xs rounded-xl transition-colors"
               >
                 Return to Home
               </Link>
