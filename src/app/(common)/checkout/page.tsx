@@ -464,7 +464,7 @@ export default function CheckoutBookingPage() {
                           id="saveCardCheckbox"
                           checked={saveCard}
                           onChange={(e) => setSaveCard(e.target.checked)}
-                          className="w-4 h-4 accent-amber-500 rounded cursor-pointer"
+                          className="w-4 h-4 accent-warning rounded cursor-pointer"
                         />
                         <label htmlFor="saveCardCheckbox" className="text-[11px] text-foreground-secondary cursor-pointer select-none">
                           Save card securely for future payments &amp; 1-click checkout
@@ -497,7 +497,7 @@ export default function CheckoutBookingPage() {
                               •••• {pm.last4 || "4242"}
                             </span>
                             {pm.isDefault && (
-                              <span className="text-[9px] font-bold px-1.5 py-0.2 bg-emerald-950 text-success border border-success/30 rounded-full">
+                              <span className="text-[9px] font-bold px-1.5 py-0.2 bg-success-soft text-success border border-success/30 rounded-full">
                                 Default
                               </span>
                             )}
