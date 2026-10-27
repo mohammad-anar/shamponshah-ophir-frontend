@@ -376,7 +376,7 @@ export default function AdminReviewsReportsPage() {
               key={rev.id}
               className={cn(
                 "rounded-3xl border transition-all p-5 shadow-xs space-y-4",
-                rev.isPinned ? "bg-surface border-border-brand/40 ring-1 ring-focus-ring/20" : rev.status === "FLAGGED_DISPUTE" ? "bg-surface border-danger/30 ring-1 ring-danger/20" : "bg-surface border-border hover:border-slate-700"
+                rev.isPinned ? "bg-surface border-border-brand/40 ring-1 ring-focus-ring/20" : rev.status === "FLAGGED_DISPUTE" ? "bg-surface border-danger/30 ring-1 ring-danger/20" : "bg-surface border-border hover:border-border"
               )}
             >
               {/* Top Row: User details, Vendor details, Date & Status */}
