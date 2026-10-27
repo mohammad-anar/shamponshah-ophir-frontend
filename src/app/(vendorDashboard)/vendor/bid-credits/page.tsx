@@ -70,7 +70,7 @@ export default function VendorBidCreditsPage() {
         </div>
         <a
           href="/vendor/find-jobs"
-          className="px-4 py-2 bg-success-solid text-white hover:bg-emerald-800 text-foreground rounded-xl text-xs font-bold transition-colors whitespace-nowrap shadow-xs"
+          className="px-4 py-2 bg-success-solid text-foreground hover:bg-success text-foreground rounded-xl text-xs font-bold transition-colors whitespace-nowrap shadow-xs"
         >
           Find Open Jobs
         </a>
@@ -119,7 +119,7 @@ export default function VendorBidCreditsPage() {
               key={pack.id || pack.credits}
               className={cn(
                 "bg-surface p-5 rounded-2xl border flex flex-col justify-between space-y-4 relative shadow-xs transition-all",
-                pack.popular ? "border-warning/30 ring-2 ring-amber-100 shadow-md" : "border-border"
+                pack.popular ? "border-warning/30 ring-2 ring-warning/20 shadow-md" : "border-border"
               )}
             >
               {pack.popular && (
