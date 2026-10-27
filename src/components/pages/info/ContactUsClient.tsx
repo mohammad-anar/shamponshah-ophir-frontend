@@ -37,10 +37,10 @@ export default function ContactUsPage() {
   };
 
   return (
-    <div className="w-full bg-[#0B0C0E] text-[#F3F4F6] min-h-screen py-10 lg:py-16 font-sans selection:bg-[#DFB76C] selection:text-[#0B0C0E]">
+    <div className="w-full bg-background text-foreground min-h-screen py-10 lg:py-16 font-sans selection:bg-brand selection:text-on-brand">
       <div className="max-w-[1280px] mx-auto px-6 lg:px-10 space-y-12">
         <div className="max-w-2xl space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-none bg-[#1A1D24] text-[#DFB76C] text-xs font-bold uppercase tracking-widest border border-border-brand/40">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-none bg-surface-sunken text-brand text-xs font-bold uppercase tracking-widest border border-border-brand/40">
             <Headphones className="w-3.5 h-3.5" />
             <span>24/7 DEDICATED CONCIERGE</span>
           </div>
@@ -56,7 +56,7 @@ export default function ContactUsPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: Form */}
-          <div className="lg:col-span-7 bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
+          <div className="lg:col-span-7 bg-surface rounded-none p-6 sm:p-8 shadow-2xl border border-border space-y-6">
             {!sent ? (
               <form onSubmit={handleSubmit} className="space-y-4 text-xs">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -68,7 +68,7 @@ export default function ContactUsPage() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Maya Patel"
-                      className="w-full h-11 px-3.5 bg-[#0B0C0E] text-foreground border border-[#26282E] rounded-none focus:border-[#DFB76C] focus:outline-none"
+                      className="w-full h-11 px-3.5 bg-background text-foreground border border-border rounded-none focus:border-border-brand focus:outline-none"
                     />
                   </div>
 
@@ -80,7 +80,7 @@ export default function ContactUsPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="maya@example.com"
-                      className="w-full h-11 px-3.5 bg-[#0B0C0E] text-foreground border border-[#26282E] rounded-none focus:border-[#DFB76C] focus:outline-none"
+                      className="w-full h-11 px-3.5 bg-background text-foreground border border-border rounded-none focus:border-border-brand focus:outline-none"
                     />
                   </div>
                 </div>
@@ -91,7 +91,7 @@ export default function ContactUsPage() {
                     <select
                       value={topic}
                       onChange={(e) => setTopic(e.target.value)}
-                      className="w-full h-11 px-3.5 bg-[#0B0C0E] text-foreground border border-[#26282E] rounded-none focus:border-[#DFB76C] focus:outline-none cursor-pointer"
+                      className="w-full h-11 px-3.5 bg-background text-foreground border border-border rounded-none focus:border-border-brand focus:outline-none cursor-pointer"
                     >
                       <option value="concierge">VIP Celebration Concierge & Artisan Matching</option>
                       <option value="escrow">Escrow Vault Payouts & Deposit Inquiries</option>
@@ -107,7 +107,7 @@ export default function ContactUsPage() {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+1 (312) 555-0194"
-                      className="w-full h-11 px-3.5 bg-[#0B0C0E] text-foreground border border-[#26282E] rounded-none focus:border-[#DFB76C] focus:outline-none"
+                      className="w-full h-11 px-3.5 bg-background text-foreground border border-border rounded-none focus:border-border-brand focus:outline-none"
                     />
                   </div>
                 </div>
@@ -120,23 +120,23 @@ export default function ContactUsPage() {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Tell us about your celebration date, guest count, or specific assistance needed..."
-                    className="w-full p-3.5 bg-[#0B0C0E] text-foreground border border-[#26282E] rounded-none focus:border-[#DFB76C] focus:outline-none"
+                    className="w-full p-3.5 bg-background text-foreground border border-border rounded-none focus:border-border-brand focus:outline-none"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full sm:w-auto px-8 h-12 bg-[#DFB76C] hover:bg-[#ECC870] active:scale-99 text-[#0B0C0E] font-bold text-xs uppercase tracking-wider rounded-none shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="w-full sm:w-auto px-8 h-12 bg-brand hover:bg-brand-hover active:scale-99 text-on-brand font-bold text-xs uppercase tracking-wider rounded-none shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="w-4 h-4 animate-spin text-[#0B0C0E]" />
+                      <Loader2 className="w-4 h-4 animate-spin text-on-brand" />
                       <span>Sending Request...</span>
                     </>
                   ) : (
                     <>
-                      <Send className="w-4 h-4 text-[#0B0C0E]" />
+                      <Send className="w-4 h-4 text-on-brand" />
                       <span>Send Concierge Request</span>
                     </>
                   )}
@@ -144,12 +144,12 @@ export default function ContactUsPage() {
               </form>
             ) : (
               <div className="text-center py-8 space-y-4 animate-in fade-in">
-                <div className="w-12 h-12 rounded-none bg-[#0D211A] text-success border border-success/30 flex items-center justify-center mx-auto">
+                <div className="w-12 h-12 rounded-none bg-success-soft text-success border border-success/30 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
                 <div className="space-y-1">
                   {ticketNumber && (
-                    <span className="text-[11px] font-mono font-bold text-[#DFB76C] bg-[#1A1D24] px-3 py-1 rounded-none border border-border-brand/40">
+                    <span className="text-[11px] font-mono font-bold text-brand bg-surface-sunken px-3 py-1 rounded-none border border-border-brand/40">
                       TICKET #{ticketNumber}
                     </span>
                   )}
@@ -163,7 +163,7 @@ export default function ContactUsPage() {
                     setSent(false);
                     setMessage("");
                   }}
-                  className="text-xs font-bold text-[#DFB76C] hover:underline"
+                  className="text-xs font-bold text-brand hover:underline"
                 >
                   Submit another inquiry &rarr;
                 </button>
@@ -173,36 +173,36 @@ export default function ContactUsPage() {
 
           {/* Right Column: Direct Contact Info */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-5">
+            <div className="bg-surface rounded-none p-6 sm:p-8 shadow-2xl border border-border space-y-5">
               <h3 className="font-serif font-light text-lg text-foreground">Direct Channels</h3>
 
               <div className="space-y-4 text-xs">
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-none bg-surface-sunken border border-border text-brand flex items-center justify-center shrink-0">
                     <Mail className="w-4 h-4" />
                   </div>
                   <div>
                     <div className="font-semibold text-foreground">Hospitality & Concierge Desk</div>
-                    <a href="mailto:concierge@ophirreserve.com" className="text-foreground-muted hover:text-[#DFB76C] transition-colors">
+                    <a href="mailto:concierge@ophirreserve.com" className="text-foreground-muted hover:text-brand transition-colors">
                       concierge@ophirreserve.com
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#26282E] text-success flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-none bg-surface-sunken border border-border text-success flex items-center justify-center shrink-0">
                     <Phone className="w-4 h-4" />
                   </div>
                   <div>
                     <div className="font-semibold text-foreground">Live Escrow Support Line</div>
-                    <a href="tel:+18005556744" className="text-foreground-muted hover:text-[#DFB76C] transition-colors">
+                    <a href="tel:+18005556744" className="text-foreground-muted hover:text-brand transition-colors">
                       +1 (800) 555-OPHIR (Mon–Sun, 8am–10pm EST)
                     </a>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] flex items-center justify-center shrink-0">
+                  <div className="w-8 h-8 rounded-none bg-surface-sunken border border-border text-brand flex items-center justify-center shrink-0">
                     <MapPin className="w-4 h-4" />
                   </div>
                   <div>
