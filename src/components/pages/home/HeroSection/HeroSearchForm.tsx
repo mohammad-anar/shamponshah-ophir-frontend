@@ -8,7 +8,7 @@ const HeroSearchForm = () => {
     console.log(`selected ${value}`);
   };
   return (
-    <div className="mt-7 bg-white p-6 rounded-lg w-fit text-black flex items-center gap-5">
+    <div className="mt-7 bg-surface p-6 rounded-lg w-fit text-black flex items-center gap-5">
       <Select placeholder="Select service" onChange={serviceSelect}>
         <Select.Option value="sample">Sample</Select.Option>
       </Select>

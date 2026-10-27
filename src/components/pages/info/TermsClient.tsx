@@ -8,12 +8,12 @@ export default function TermsOfServicePage() {
     <div className="w-full bg-[#0B0C0E] text-[#F3F4F6] min-h-screen py-10 lg:py-16 font-sans selection:bg-[#DFB76C] selection:text-[#0B0C0E]">
       <div className="max-w-4xl mx-auto px-6 space-y-10">
         <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-[#121418] text-[#DFB76C] border border-[#DFB76C]/30 text-xs font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-[#121418] text-[#DFB76C] border border-border-brand/40 text-xs font-bold uppercase tracking-wider">
             <Scale className="w-3.5 h-3.5 text-[#DFB76C]" />
             <span>LEGAL & GOVERNANCE PROTOCOL</span>
           </div>
 
-          <h1 className="font-serif text-4xl sm:text-5xl font-light text-white tracking-tight">
+          <h1 className="font-serif text-4xl sm:text-5xl font-light text-foreground tracking-tight">
             Terms of Service & Escrow Governance
           </h1>
 
@@ -24,7 +24,7 @@ export default function TermsOfServicePage() {
 
         <div className="bg-[#121418] p-8 sm:p-12 border border-[#26282E] space-y-8 text-xs sm:text-sm text-[#CBD5E1] leading-relaxed font-light">
           <section className="space-y-3">
-            <h2 className="font-serif text-lg sm:text-xl font-light text-white">
+            <h2 className="font-serif text-lg sm:text-xl font-light text-foreground">
               1. The Ophir Trust Vault & Milestone Escrow Protocol
             </h2>
             <p>
@@ -34,14 +34,14 @@ export default function TermsOfServicePage() {
               Funds are held under strict programmatic lock and disbursed solely according to the contracted milestone schedule:
             </p>
             <ul className="list-disc pl-5 space-y-1 text-[#CBD5E1]">
-              <li><strong className="text-white">Milestone 1 (Retainer):</strong> Locks the calendar date. Released upon agreement or held until event commencement.</li>
-              <li><strong className="text-white">Milestone 2 (Day-of Execution):</strong> Disbursed upon verified physical presence and execution of scheduled services.</li>
-              <li><strong className="text-white">Milestone 3 (Final Deliverable Sign-Off):</strong> Disbursed exclusively upon written client approval of raw/edited assets, media, or floral/catering wrap-up.</li>
+              <li><strong className="text-foreground">Milestone 1 (Retainer):</strong> Locks the calendar date. Released upon agreement or held until event commencement.</li>
+              <li><strong className="text-foreground">Milestone 2 (Day-of Execution):</strong> Disbursed upon verified physical presence and execution of scheduled services.</li>
+              <li><strong className="text-foreground">Milestone 3 (Final Deliverable Sign-Off):</strong> Disbursed exclusively upon written client approval of raw/edited assets, media, or floral/catering wrap-up.</li>
             </ul>
           </section>
 
           <section className="space-y-3 border-t border-[#26282E] pt-6">
-            <h2 className="font-serif text-lg sm:text-xl font-light text-white">
+            <h2 className="font-serif text-lg sm:text-xl font-light text-foreground">
               2. Flat 5% Platform Concierge Fee
             </h2>
             <p>
@@ -50,7 +50,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="space-y-3 border-t border-[#26282E] pt-6">
-            <h2 className="font-serif text-lg sm:text-xl font-light text-white">
+            <h2 className="font-serif text-lg sm:text-xl font-light text-foreground">
               3. Independent Mediation Council & Dispute Resolution
             </h2>
             <p>
@@ -59,7 +59,7 @@ export default function TermsOfServicePage() {
           </section>
 
           <section className="space-y-3 border-t border-[#26282E] pt-6">
-            <h2 className="font-serif text-lg sm:text-xl font-light text-white">
+            <h2 className="font-serif text-lg sm:text-xl font-light text-foreground">
               4. Guild Verification & Background Standards
             </h2>
             <p>

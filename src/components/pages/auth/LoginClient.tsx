@@ -186,7 +186,7 @@ export default function LoginPage() {
                     className="w-full px-3 py-2.5 rounded-xl border border-info/30 bg-[#1A1D24] hover:bg-info-soft text-info active:scale-99 transition-all text-left flex items-center justify-between group shadow-sm cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="w-8 h-8 rounded-lg bg-info-solid text-white/20 text-info flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                      <div className="w-8 h-8 rounded-lg bg-info-solid text-foreground/20 text-info flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                         {demoLoadingRole === "CLIENT" ? (
                           <Loader2 className="w-4 h-4 animate-spin text-info" />
                         ) : (
@@ -196,7 +196,7 @@ export default function LoginPage() {
                       <div className="truncate">
                         <div className="text-xs font-bold text-foreground flex items-center gap-1.5">
                           <span>Login as Client</span>
-                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-info-solid text-white/20 text-indigo-300">/user</span>
+                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-info-solid text-foreground/20 text-indigo-300">/user</span>
                         </div>
                         <div className="text-[11px] text-foreground-muted truncate">sarah@ophir.com (Sarah Jenkins)</div>
                       </div>
@@ -212,7 +212,7 @@ export default function LoginPage() {
                     className="w-full px-3 py-2.5 rounded-xl border border-success/30 bg-[#1A1D24] hover:bg-success-soft text-success active:scale-99 transition-all text-left flex items-center justify-between group shadow-sm cursor-pointer"
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="w-8 h-8 rounded-lg bg-success-solid text-white/20 text-success flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
+                      <div className="w-8 h-8 rounded-lg bg-success-solid text-foreground/20 text-success flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
                         {demoLoadingRole === "VENDOR" ? (
                           <Loader2 className="w-4 h-4 animate-spin text-success" />
                         ) : (
@@ -222,7 +222,7 @@ export default function LoginPage() {
                       <div className="truncate">
                         <div className="text-xs font-bold text-foreground flex items-center gap-1.5">
                           <span>Login as Vendor</span>
-                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-success-solid text-white/20 text-emerald-300">/vendor</span>
+                          <span className="px-1.5 py-0.2 rounded text-[9px] font-bold bg-success-solid text-foreground/20 text-emerald-300">/vendor</span>
                         </div>
                         <div className="text-[11px] text-foreground-muted truncate">luminary@ophir.com (Luminary Studios)</div>
                       </div>

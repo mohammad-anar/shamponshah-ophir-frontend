@@ -275,7 +275,7 @@ export default function RegisterClient() {
 
                   <div className="space-y-1.5">
                     <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                      <span className="w-1.5 h-1.5 rounded-full bg-success-solid text-white" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-success-solid text-foreground" />
                       Registration Received
                     </span>
                     <h1 className="font-serif text-3xl font-bold text-obsidian tracking-tight">
@@ -615,19 +615,19 @@ export default function RegisterClient() {
                               <div
                                 className={cn(
                                   "h-1.5 flex-1 rounded-full transition-colors",
-                                  strengthScore >= 1 ? "bg-success-solid text-white" : "bg-slate-200"
+                                  strengthScore >= 1 ? "bg-success-solid text-foreground" : "bg-slate-200"
                                 )}
                               />
                               <div
                                 className={cn(
                                   "h-1.5 flex-1 rounded-full transition-colors",
-                                  strengthScore >= 2 ? "bg-success-solid text-white" : "bg-slate-200"
+                                  strengthScore >= 2 ? "bg-success-solid text-foreground" : "bg-slate-200"
                                 )}
                               />
                               <div
                                 className={cn(
                                   "h-1.5 flex-1 rounded-full transition-colors",
-                                  strengthScore >= 3 ? "bg-success-solid text-white" : "bg-slate-200"
+                                  strengthScore >= 3 ? "bg-success-solid text-foreground" : "bg-slate-200"
                                 )}
                               />
                             </div>

@@ -580,7 +580,7 @@ export default function CheckoutBookingPage() {
         ) : (
           /* Confirmation Success Screen */
           <div className="max-w-2xl mx-auto bg-[#12141A] rounded-3xl p-8 sm:p-12 shadow-luxury-lg border border-success/30 text-center space-y-6 animate-in zoom-in-95 duration-300">
-            <div className="w-16 h-16 rounded-3xl bg-success-solid text-white/20 text-success border border-success/30 flex items-center justify-center mx-auto shadow-sm">
+            <div className="w-16 h-16 rounded-3xl bg-success-solid text-foreground/20 text-success border border-success/30 flex items-center justify-center mx-auto shadow-sm">
               <CheckCircle2 className="w-8 h-8" />
             </div>
 

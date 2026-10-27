@@ -53,7 +53,7 @@ export default function HomePage() {
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto px-6 py-20 sm:py-28 flex flex-col items-center text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#121418]/90 border border-[#DFB76C]/30 text-[#DFB76C] text-[11px] font-bold uppercase tracking-[0.25em] mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 bg-[#121418]/90 border border-border-brand/40 text-[#DFB76C] text-[11px] font-bold uppercase tracking-[0.25em] mb-6">
             <Sparkles className="w-3.5 h-3.5 text-[#DFB76C]" />
             <span>The Private Cultural Reserve</span>
           </div>
@@ -79,7 +79,7 @@ export default function HomePage() {
                 value={serviceInput}
                 onChange={(e) => setServiceInput(e.target.value)}
                 placeholder="Service (Catering, Floral, Music...)"
-                className="w-full bg-transparent text-xs sm:text-sm text-white placeholder-[#94A3B8] focus:outline-none"
+                className="w-full bg-transparent text-xs sm:text-sm text-foreground placeholder-[#94A3B8] focus:outline-none"
               />
             </div>
 
@@ -91,7 +91,7 @@ export default function HomePage() {
                 value={cultureInput}
                 onChange={(e) => setCultureInput(e.target.value)}
                 placeholder="Culture (African, South Asian...)"
-                className="w-full bg-transparent text-xs sm:text-sm text-white placeholder-[#94A3B8] focus:outline-none"
+                className="w-full bg-transparent text-xs sm:text-sm text-foreground placeholder-[#94A3B8] focus:outline-none"
               />
             </div>
 
@@ -103,7 +103,7 @@ export default function HomePage() {
                 value={locationInput}
                 onChange={(e) => setLocationInput(e.target.value)}
                 placeholder="City or Metro Area"
-                className="w-full bg-transparent text-xs sm:text-sm text-white placeholder-[#94A3B8] focus:outline-none"
+                className="w-full bg-transparent text-xs sm:text-sm text-foreground placeholder-[#94A3B8] focus:outline-none"
               />
             </div>
 
@@ -147,7 +147,7 @@ export default function HomePage() {
           {/* Card 1: African Heritage */}
           <Link
             href="/services?culture=African"
-            className="group relative h-[460px] sm:h-[500px] bg-[#121418] border border-[#26282E] overflow-hidden flex flex-col justify-end p-8 transition-all duration-500 hover:border-[#DFB76C]/70 hover:shadow-2xl"
+            className="group relative h-[460px] sm:h-[500px] bg-[#121418] border border-[#26282E] overflow-hidden flex flex-col justify-end p-8 transition-all duration-500 hover:border-border-brand/40 hover:shadow-2xl"
           >
             <Image
               src="https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=1200&q=85"
@@ -160,7 +160,7 @@ export default function HomePage() {
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#DFB76C] block">
                 Heritage Enclave
               </span>
-              <h3 className="font-serif text-2xl sm:text-3xl font-light text-white group-hover:text-[#DFB76C] transition-colors">
+              <h3 className="font-serif text-2xl sm:text-3xl font-light text-foreground group-hover:text-[#DFB76C] transition-colors">
                 African Heritage
               </h3>
               <p className="text-xs sm:text-sm text-[#CBD5E1] font-light leading-relaxed line-clamp-2">
@@ -172,7 +172,7 @@ export default function HomePage() {
           {/* Card 2: South Asian Heritage */}
           <Link
             href="/services?culture=South+Asian"
-            className="group relative h-[460px] sm:h-[500px] bg-[#121418] border border-[#26282E] overflow-hidden flex flex-col justify-end p-8 transition-all duration-500 hover:border-[#DFB76C]/70 hover:shadow-2xl"
+            className="group relative h-[460px] sm:h-[500px] bg-[#121418] border border-[#26282E] overflow-hidden flex flex-col justify-end p-8 transition-all duration-500 hover:border-border-brand/40 hover:shadow-2xl"
           >
             <Image
               src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1200&q=85"
@@ -185,7 +185,7 @@ export default function HomePage() {
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#DFB76C] block">
                 Heritage Enclave
               </span>
-              <h3 className="font-serif text-2xl sm:text-3xl font-light text-white group-hover:text-[#DFB76C] transition-colors">
+              <h3 className="font-serif text-2xl sm:text-3xl font-light text-foreground group-hover:text-[#DFB76C] transition-colors">
                 South Asian Heritage
               </h3>
               <p className="text-xs sm:text-sm text-[#CBD5E1] font-light leading-relaxed line-clamp-2">
@@ -197,7 +197,7 @@ export default function HomePage() {
           {/* Card 3: Latino Heritage */}
           <Link
             href="/services?culture=Latino"
-            className="group relative h-[460px] sm:h-[500px] bg-[#121418] border border-[#26282E] overflow-hidden flex flex-col justify-end p-8 transition-all duration-500 hover:border-[#DFB76C]/70 hover:shadow-2xl"
+            className="group relative h-[460px] sm:h-[500px] bg-[#121418] border border-[#26282E] overflow-hidden flex flex-col justify-end p-8 transition-all duration-500 hover:border-border-brand/40 hover:shadow-2xl"
           >
             <Image
               src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=85"
@@ -210,7 +210,7 @@ export default function HomePage() {
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#DFB76C] block">
                 Heritage Enclave
               </span>
-              <h3 className="font-serif text-2xl sm:text-3xl font-light text-white group-hover:text-[#DFB76C] transition-colors">
+              <h3 className="font-serif text-2xl sm:text-3xl font-light text-foreground group-hover:text-[#DFB76C] transition-colors">
                 Latino Heritage
               </h3>
               <p className="text-xs sm:text-sm text-[#CBD5E1] font-light leading-relaxed line-clamp-2">
@@ -245,7 +245,7 @@ export default function HomePage() {
                   01
                 </div>
                 <div className="space-y-1">
-                  <h3 className="font-serif text-base tracking-wider uppercase text-white">
+                  <h3 className="font-serif text-base tracking-wider uppercase text-foreground">
                     Cultural Nuance & Blueprint
                   </h3>
                   <p className="text-xs text-[#CBD5E1] font-light leading-relaxed">
@@ -260,7 +260,7 @@ export default function HomePage() {
                   02
                 </div>
                 <div className="space-y-1">
-                  <h3 className="font-serif text-base tracking-wider uppercase text-white">
+                  <h3 className="font-serif text-base tracking-wider uppercase text-foreground">
                     Vetted Master Artisans
                   </h3>
                   <p className="text-xs text-[#CBD5E1] font-light leading-relaxed">
@@ -271,11 +271,11 @@ export default function HomePage() {
 
               {/* Step 3 */}
               <div className="flex items-start gap-4 p-5 bg-[#121418] border border-[#26282E]">
-                <div className="w-9 h-9 border border-emerald-500 text-emerald-400 font-bold text-xs flex items-center justify-center shrink-0">
+                <div className="w-9 h-9 border border-emerald-500 text-success font-bold text-xs flex items-center justify-center shrink-0">
                   03
                 </div>
                 <div className="space-y-1">
-                  <h3 className="font-serif text-base tracking-wider uppercase text-white">
+                  <h3 className="font-serif text-base tracking-wider uppercase text-foreground">
                     100% Escrow Protection
                   </h3>
                   <p className="text-xs text-[#CBD5E1] font-light leading-relaxed">
@@ -326,7 +326,7 @@ export default function HomePage() {
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#DFB76C]">
               Join The Reserve
             </p>
-            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-white tracking-tight leading-[1.15]">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light text-foreground tracking-tight leading-[1.15]">
               Elevate Your Celebration or Craft.
             </h2>
             <p className="text-xs sm:text-sm text-[#CBD5E1] font-light leading-relaxed">
@@ -342,7 +342,7 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/services"
-                className="px-7 py-3 border border-[#DFB76C]/60 hover:border-[#DFB76C] hover:bg-[#DFB76C]/10 text-xs font-semibold tracking-[0.2em] uppercase text-[#DFB76C] transition-all duration-300"
+                className="px-7 py-3 border border-border-brand/40 hover:border-[#DFB76C] hover:bg-[#DFB76C]/10 text-xs font-semibold tracking-[0.2em] uppercase text-[#DFB76C] transition-all duration-300"
               >
                 Explore Services
               </Link>

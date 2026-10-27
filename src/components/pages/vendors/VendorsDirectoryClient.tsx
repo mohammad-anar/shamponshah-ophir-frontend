@@ -188,16 +188,16 @@ export default function VendorsDirectoryPage() {
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10 space-y-8">
         {/* Header Title Section */}
         <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-none bg-[#121418] border border-[#DFB76C]/30 text-[#DFB76C] text-xs font-semibold uppercase tracking-widest">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-none bg-[#121418] border border-border-brand/40 text-[#DFB76C] text-xs font-semibold uppercase tracking-widest">
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>The Reserve Artisan Directory • Escrow Safeguarded</span>
           </div>
 
-          <h1 className="font-serif text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+          <h1 className="font-serif text-4xl sm:text-5xl font-extrabold text-foreground tracking-tight">
             Premier Cultural Artisans
           </h1>
 
-          <p className="text-slate-400 text-sm sm:text-base max-w-2xl">
+          <p className="text-foreground-muted text-sm sm:text-base max-w-2xl">
             Browse verified masters of ancestral ceremony, haute couture, celebratory banquets, and fine-art cinematography.
           </p>
         </div>
@@ -205,7 +205,7 @@ export default function VendorsDirectoryPage() {
         {/* Primary Search Bar */}
         <div className="bg-[#121418] rounded-none p-3 sm:p-4 shadow-luxury border border-[#26282E] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 items-center">
           <div className="p-3 bg-[#0B0C0E] rounded-none border border-[#26282E]">
-            <label className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest">
+            <label className="block text-[9px] font-bold text-foreground-muted uppercase tracking-widest">
               SERVICE OR CRAFT
             </label>
             <input
@@ -213,21 +213,21 @@ export default function VendorsDirectoryPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Kaiseki, Flamenco, Henna, Couture..."
-              className="w-full bg-transparent text-xs sm:text-sm font-semibold text-slate-200 placeholder:text-slate-600 focus:outline-none"
+              className="w-full bg-transparent text-xs sm:text-sm font-semibold text-foreground-secondary placeholder:text-foreground-secondary focus:outline-none"
             />
           </div>
 
           <div className="p-3 bg-[#0B0C0E] rounded-none border border-[#26282E]">
-            <label className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest">
+            <label className="block text-[9px] font-bold text-foreground-muted uppercase tracking-widest">
               LOCATION OR METRO
             </label>
             <select
               value={selectedCity}
               onChange={(e) => setSelectedCity(e.target.value)}
-              className="w-full bg-transparent text-xs sm:text-sm font-semibold text-slate-200 focus:outline-none cursor-pointer"
+              className="w-full bg-transparent text-xs sm:text-sm font-semibold text-foreground-secondary focus:outline-none cursor-pointer"
             >
               {cities.map((c) => (
-                <option key={c} value={c} className="bg-[#121418] text-slate-200">
+                <option key={c} value={c} className="bg-[#121418] text-foreground-secondary">
                   {c}
                 </option>
               ))}
@@ -235,10 +235,10 @@ export default function VendorsDirectoryPage() {
           </div>
 
           <div className="p-3 bg-[#0B0C0E] rounded-none border border-[#26282E]">
-            <label className="block text-[9px] font-bold text-slate-500 uppercase tracking-widest">
+            <label className="block text-[9px] font-bold text-foreground-muted uppercase tracking-widest">
               CEREMONIAL AVAILABILITY
             </label>
-            <div className="text-xs sm:text-sm font-semibold text-slate-300 flex items-center gap-1.5">
+            <div className="text-xs sm:text-sm font-semibold text-foreground-secondary flex items-center gap-1.5">
               <Calendar className="w-3.5 h-3.5 text-[#DFB76C]" />
               <span>Any Weekend 2025/2026</span>
             </div>
@@ -261,17 +261,17 @@ export default function VendorsDirectoryPage() {
         <div className="flex flex-wrap items-center justify-between gap-4 p-4 bg-[#121418] rounded-none border border-[#26282E] shadow-xl">
           <div className="flex flex-wrap items-center gap-3 text-xs">
             {/* Service dropdown */}
-            <div className="flex items-center gap-1.5 font-medium text-slate-400">
+            <div className="flex items-center gap-1.5 font-medium text-foreground-muted">
               <span className="uppercase tracking-wider text-[11px]">Craft:</span>
               <select
                 value={selectedService}
                 onChange={(e) => setSelectedService(e.target.value)}
-                className="bg-[#0B0C0E] px-2.5 py-1.5 rounded-none border border-[#26282E] text-slate-200 font-semibold focus:outline-none"
+                className="bg-[#0B0C0E] px-2.5 py-1.5 rounded-none border border-[#26282E] text-foreground-secondary font-semibold focus:outline-none"
               >
                 <option value="all">All Crafts</option>
                 {liveCategories.length > 0 ? (
                   liveCategories.map((cat: any) => (
-                    <option key={cat.id} value={cat.slug || cat.name.toLowerCase()} className="bg-[#121418] text-slate-200">
+                    <option key={cat.id} value={cat.slug || cat.name.toLowerCase()} className="bg-[#121418] text-foreground-secondary">
                       {cat.name}
                     </option>
                   ))
@@ -288,12 +288,12 @@ export default function VendorsDirectoryPage() {
             </div>
 
             {/* Guild Tier dropdown */}
-            <div className="flex items-center gap-1.5 font-medium text-slate-400">
+            <div className="flex items-center gap-1.5 font-medium text-foreground-muted">
               <span className="uppercase tracking-wider text-[11px]">Artisan Tier:</span>
               <select
                 value={selectedTier}
                 onChange={(e) => setSelectedTier(e.target.value)}
-                className="bg-[#0B0C0E] px-2.5 py-1.5 rounded-none border border-[#26282E] text-slate-200 font-semibold focus:outline-none"
+                className="bg-[#0B0C0E] px-2.5 py-1.5 rounded-none border border-[#26282E] text-foreground-secondary font-semibold focus:outline-none"
               >
                 <option value="all">All Tiers</option>
                 <option value="Elite">Elite Artisan (Top 2%)</option>
@@ -304,12 +304,12 @@ export default function VendorsDirectoryPage() {
             </div>
 
             {/* Rating dropdown */}
-            <div className="flex items-center gap-1.5 font-medium text-slate-400">
+            <div className="flex items-center gap-1.5 font-medium text-foreground-muted">
               <span className="uppercase tracking-wider text-[11px]">Rating:</span>
               <select
                 value={minRating}
                 onChange={(e) => setMinRating(Number(e.target.value))}
-                className="bg-[#0B0C0E] px-2.5 py-1.5 rounded-none border border-[#26282E] text-slate-200 font-semibold focus:outline-none"
+                className="bg-[#0B0C0E] px-2.5 py-1.5 rounded-none border border-[#26282E] text-foreground-secondary font-semibold focus:outline-none"
               >
                 <option value={0}>Any Rating</option>
                 <option value={4.5}>4.5+ Stars</option>
@@ -319,7 +319,7 @@ export default function VendorsDirectoryPage() {
             </div>
 
             {/* Verified toggle */}
-            <label className="flex items-center gap-2 cursor-pointer ml-2 text-slate-300 font-semibold select-none">
+            <label className="flex items-center gap-2 cursor-pointer ml-2 text-foreground-secondary font-semibold select-none">
               <input
                 type="checkbox"
                 checked={verifiedOnly}
@@ -332,7 +332,7 @@ export default function VendorsDirectoryPage() {
 
           <button
             onClick={handleReset}
-            className="flex items-center gap-1 text-xs text-slate-400 hover:text-[#DFB76C] font-medium transition-colors"
+            className="flex items-center gap-1 text-xs text-foreground-muted hover:text-[#DFB76C] font-medium transition-colors"
           >
             <RotateCcw className="w-3 h-3" />
             <span>Reset filters</span>
@@ -341,7 +341,7 @@ export default function VendorsDirectoryPage() {
 
         {/* City Filter Pills */}
         <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
-          <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex-shrink-0">
+          <span className="text-[10px] font-bold text-foreground-muted uppercase tracking-widest flex-shrink-0">
             METROPOLITAN REGIONS:
           </span>
           {cities.map((city) => (
@@ -352,7 +352,7 @@ export default function VendorsDirectoryPage() {
                 "px-3 py-1 rounded-none text-xs font-semibold whitespace-nowrap transition-all border",
                 selectedCity === city
                   ? "bg-[#DFB76C] text-[#0B0C0E] border-[#DFB76C] shadow-gold-glow-sm"
-                  : "bg-[#121418] text-slate-400 hover:text-[#DFB76C] border-[#26282E] hover:border-[#DFB76C]/40"
+                  : "bg-[#121418] text-foreground-muted hover:text-[#DFB76C] border-[#26282E] hover:border-border-brand/40"
               )}
             >
               {city}
@@ -363,7 +363,7 @@ export default function VendorsDirectoryPage() {
         {/* Results Metadata Bar */}
         <div id="artisan-results" className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-sm font-bold text-slate-200">
+            <span className="text-sm font-bold text-foreground-secondary">
               Showing {filteredVendors.length > 0 ? `${startIndex}–${endIndex}` : 0} of {filteredVendors.length} verified artisans
             </span>
 
@@ -386,12 +386,12 @@ export default function VendorsDirectoryPage() {
             )}
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-medium text-slate-400">
+          <div className="flex items-center gap-2 text-xs font-medium text-foreground-muted">
             <span>Sort by:</span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="bg-[#121418] px-3 py-1.5 rounded-none border border-[#26282E] text-slate-200 font-semibold focus:outline-none"
+              className="bg-[#121418] px-3 py-1.5 rounded-none border border-[#26282E] text-foreground-secondary font-semibold focus:outline-none"
             >
               <option value="recommended">Recommended / Highest Rated</option>
               <option value="price-low">Price: Low to High</option>
@@ -405,7 +405,7 @@ export default function VendorsDirectoryPage() {
         {isVendorsLoading ? (
           <div className="w-full py-24 bg-[#121418] rounded-none border border-[#26282E] text-center space-y-4 flex flex-col items-center justify-center">
             <Loader2 className="w-8 h-8 text-[#DFB76C] animate-spin" />
-            <p className="text-xs text-slate-400 uppercase tracking-widest font-semibold">
+            <p className="text-xs text-foreground-muted uppercase tracking-widest font-semibold">
               Loading verified cultural artisans...
             </p>
           </div>
@@ -433,8 +433,8 @@ export default function VendorsDirectoryPage() {
         ) : (
           <div className="w-full py-16 bg-[#121418] rounded-none border border-[#26282E] text-center space-y-4">
             <Sparkles className="w-8 h-8 text-[#DFB76C] mx-auto" />
-            <h3 className="font-serif font-bold text-xl text-white">No artisans match your exact criteria</h3>
-            <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto">
+            <h3 className="font-serif font-bold text-xl text-foreground">No artisans match your exact criteria</h3>
+            <p className="text-xs sm:text-sm text-foreground-muted max-w-md mx-auto">
               Try adjusting your region or craft filters to discover more master artisans across the Reserve network.
             </p>
             <button
@@ -447,15 +447,15 @@ export default function VendorsDirectoryPage() {
         )}
 
         {/* Bottom Guild CTA Banner */}
-        <div className="p-8 sm:p-10 rounded-none bg-[#121418] text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl border border-[#26282E]">
+        <div className="p-8 sm:p-10 rounded-none bg-[#121418] text-foreground flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl border border-[#26282E]">
           <div className="space-y-2 max-w-xl">
             <span className="text-xs font-bold text-[#DFB76C] uppercase tracking-widest">
               THE RESERVE ARTISAN GUILD
             </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white">
+            <h3 className="font-serif text-2xl sm:text-3xl font-bold text-foreground">
               Elevate your craft to the Reserve.
             </h3>
-            <p className="text-xs sm:text-sm text-slate-400">
+            <p className="text-xs sm:text-sm text-foreground-muted">
               Retain 100% of agreed earnings with zero bidding fees, verified patronage, and guaranteed milestone escrow protection on every ceremony.
             </p>
           </div>

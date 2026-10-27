@@ -156,7 +156,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
     return (
       <div className="min-h-[75vh] bg-[#0B0C0E] flex flex-col items-center justify-center space-y-4">
         <Loader2 className="w-10 h-10 text-[#DFB76C] animate-spin" />
-        <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">
+        <p className="text-xs uppercase tracking-widest text-foreground-muted font-bold">
           Loading ceremonial artisan service details...
         </p>
       </div>
@@ -169,8 +169,8 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
         <div className="w-14 h-14 rounded-none bg-[#121418] border border-[#26282E] flex items-center justify-center text-[#DFB76C]">
           <AlertTriangle className="w-7 h-7" />
         </div>
-        <h1 className="font-serif text-3xl font-light text-white">Ceremonial Service Not Found</h1>
-        <p className="text-xs text-slate-400 max-w-md">
+        <h1 className="font-serif text-3xl font-light text-foreground">Ceremonial Service Not Found</h1>
+        <p className="text-xs text-foreground-muted max-w-md">
           The service you are looking for may have been archived, completed, or the URL might be invalid.
         </p>
         <Link
@@ -206,14 +206,14 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
       {/* Report Service Modal */}
       {reportModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-[#121418] border border-[#26282E] max-w-md w-full p-6 text-white space-y-4 shadow-2xl">
+          <div className="bg-[#121418] border border-[#26282E] max-w-md w-full p-6 text-foreground space-y-4 shadow-2xl">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-rose-500/10 border border-rose-500/30 text-rose-400 flex items-center justify-center">
+              <div className="w-10 h-10 bg-danger-solid text-white/10 border border-danger/30 text-danger flex items-center justify-center">
                 <Flag className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="font-bold text-white text-base">Report Service Listing</h3>
-                <p className="text-xs text-slate-400">
+                <h3 className="font-bold text-foreground text-base">Report Service Listing</h3>
+                <p className="text-xs text-foreground-muted">
                   Notify Platform Trust &amp; Safety of policy violations or safety concerns
                 </p>
               </div>
@@ -221,13 +221,13 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
 
             <div className="space-y-3.5 text-xs">
               <div>
-                <label className="font-bold text-slate-300 block mb-1">
-                  Reason for Report <span className="text-rose-500">*</span>
+                <label className="font-bold text-foreground-secondary block mb-1">
+                  Reason for Report <span className="text-danger">*</span>
                 </label>
                 <select
                   value={reportReason}
                   onChange={(e) => setReportReason(e.target.value)}
-                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-slate-200 text-xs focus:border-[#DFB76C] outline-none"
+                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-foreground-secondary text-xs focus:border-[#DFB76C] outline-none"
                 >
                   <option value="Misleading pricing or inaccurate deliverables">Misleading pricing or inaccurate deliverables</option>
                   <option value="Inappropriate or offensive content">Inappropriate or offensive content</option>
@@ -240,37 +240,37 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               </div>
 
               <div>
-                <label className="font-bold text-slate-300 block mb-1">
-                  Detailed Explanation <span className="text-rose-500">*</span>
+                <label className="font-bold text-foreground-secondary block mb-1">
+                  Detailed Explanation <span className="text-danger">*</span>
                 </label>
                 <textarea
                   value={reportDescription}
                   onChange={(e) => setReportDescription(e.target.value)}
                   placeholder="Explain clearly what violates platform terms, with relevant details..."
                   rows={4}
-                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-slate-200 text-xs focus:border-[#DFB76C] outline-none"
+                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-foreground-secondary text-xs focus:border-[#DFB76C] outline-none"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-300 block mb-1">Your Name (Optional)</label>
+                <label className="font-bold text-foreground-secondary block mb-1">Your Name (Optional)</label>
                 <input
                   type="text"
                   value={reporterName}
                   onChange={(e) => setReporterName(e.target.value)}
                   placeholder="Your full name"
-                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-slate-200 text-xs focus:border-[#DFB76C] outline-none"
+                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-foreground-secondary text-xs focus:border-[#DFB76C] outline-none"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-300 block mb-1">Your Email (Optional)</label>
+                <label className="font-bold text-foreground-secondary block mb-1">Your Email (Optional)</label>
                 <input
                   type="email"
                   value={reporterEmail}
                   onChange={(e) => setReporterEmail(e.target.value)}
                   placeholder="your.email@example.com"
-                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-slate-200 text-xs focus:border-[#DFB76C] outline-none"
+                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-foreground-secondary text-xs focus:border-[#DFB76C] outline-none"
                 />
               </div>
             </div>
@@ -279,7 +279,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               <button
                 type="button"
                 onClick={() => setReportModalOpen(false)}
-                className="flex-1 py-2.5 border border-[#26282E] text-xs font-bold text-slate-400 hover:text-white hover:bg-[#1A1D24] cursor-pointer"
+                className="flex-1 py-2.5 border border-[#26282E] text-xs font-bold text-foreground-muted hover:text-foreground hover:bg-[#1A1D24] cursor-pointer"
               >
                 Cancel
               </button>
@@ -287,7 +287,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                 type="button"
                 onClick={handleSubmitReport}
                 disabled={isSubmittingReport}
-                className="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                className="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-foreground text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
               >
                 {isSubmittingReport ? <Loader2 className="w-4 h-4 animate-spin" /> : <Flag className="w-4 h-4" />}
                 <span>Submit Report</span>
@@ -300,13 +300,13 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
       {/* Breadcrumb Navigation */}
       <div className="bg-[#121418] border-b border-[#26282E]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
-          <div className="flex items-center gap-2 text-xs text-slate-400 flex-wrap">
+          <div className="flex items-center gap-2 text-xs text-foreground-muted flex-wrap">
             <Link href="/" className="hover:text-[#DFB76C] transition-colors">Home</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+            <ChevronRight className="w-3.5 h-3.5 text-foreground-secondary" />
             <Link href="/services" className="hover:text-[#DFB76C] transition-colors">Services</Link>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
-            <span className="font-medium text-slate-300">{service.category}</span>
-            <ChevronRight className="w-3.5 h-3.5 text-slate-600" />
+            <ChevronRight className="w-3.5 h-3.5 text-foreground-secondary" />
+            <span className="font-medium text-foreground-secondary">{service.category}</span>
+            <ChevronRight className="w-3.5 h-3.5 text-foreground-secondary" />
             <span className="font-bold text-[#DFB76C] truncate max-w-xs">{service.title}</span>
           </div>
         </div>
@@ -317,20 +317,20 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-2">
             <div className="flex items-center gap-2.5 flex-wrap">
-              <span className="px-3 py-1 rounded-none bg-[#121418] border border-[#DFB76C]/30 text-[#DFB76C] text-xs font-bold tracking-widest uppercase">
+              <span className="px-3 py-1 rounded-none bg-[#121418] border border-border-brand/40 text-[#DFB76C] text-xs font-bold tracking-widest uppercase">
                 {service.category}
               </span>
               <span className="px-2.5 py-1 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] text-xs font-bold flex items-center gap-1">
                 <Star className="w-3.5 h-3.5 fill-[#DFB76C] text-[#DFB76C]" />
                 {service.rating} ({service.reviewCount} verified ceremonies)
               </span>
-              <span className="text-xs text-slate-400 flex items-center gap-1 font-medium">
+              <span className="text-xs text-foreground-muted flex items-center gap-1 font-medium">
                 <MapPin className="w-3.5 h-3.5 text-[#DFB76C]" />
                 {service.location}
               </span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight font-serif">
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-foreground tracking-tight font-serif">
               {service.title}
             </h1>
           </div>
@@ -349,7 +349,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                 navigator.clipboard.writeText(window.location.href);
                 toast.success("Service link copied to clipboard!");
               }}
-              className="p-2.5 rounded-none bg-[#121418] border border-[#26282E] text-slate-300 hover:text-[#DFB76C] transition-colors cursor-pointer"
+              className="p-2.5 rounded-none bg-[#121418] border border-[#26282E] text-foreground-secondary hover:text-[#DFB76C] transition-colors cursor-pointer"
               title="Share Service"
             >
               <Share2 className="w-4 h-4" />
@@ -357,7 +357,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
 
             <button
               onClick={() => setReportModalOpen(true)}
-              className="p-2.5 rounded-none bg-[#121418] border border-[#26282E] text-slate-400 hover:text-rose-400 hover:border-rose-500/40 transition-colors cursor-pointer"
+              className="p-2.5 rounded-none bg-[#121418] border border-[#26282E] text-foreground-muted hover:text-danger hover:border-danger/30 transition-colors cursor-pointer"
               title="Report this service"
             >
               <Flag className="w-4 h-4" />
@@ -383,7 +383,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                   priority
                 />
                 <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 rounded-none bg-[#0B0C0E]/85 backdrop-blur-md text-[#DFB76C] border border-[#DFB76C]/30 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                  <span className="px-3 py-1 rounded-none bg-[#0B0C0E]/85 backdrop-blur-md text-[#DFB76C] border border-border-brand/40 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5">
                     <Sparkles className="w-3 h-3 text-[#DFB76C]" />
                     Verified Portfolio
                   </span>
@@ -427,14 +427,14 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <h3 className="font-serif font-bold text-lg text-white">
+                      <h3 className="font-serif font-bold text-lg text-foreground">
                         {service.vendorName}
                       </h3>
-                      <span className="px-2 py-0.5 rounded-none text-[10px] font-bold uppercase tracking-wider bg-[#1A1D24] text-[#DFB76C] border border-[#DFB76C]/30">
+                      <span className="px-2 py-0.5 rounded-none text-[10px] font-bold uppercase tracking-wider bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40">
                         {service.vendorTier}
                       </span>
                     </div>
-                    <p className="text-xs text-slate-400 mt-0.5">
+                    <p className="text-xs text-foreground-muted mt-0.5">
                       Verified Ophir Reserve Guild Member &bull; {service.location}
                     </p>
                   </div>
@@ -442,39 +442,39 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
 
                 <Link
                   href={`/vendors/${service.vendorId}`}
-                  className="px-4 py-2 rounded-none bg-[#1A1D24] hover:bg-[#22252F] text-xs font-bold uppercase tracking-wider text-slate-300 border border-[#26282E] transition-colors"
+                  className="px-4 py-2 rounded-none bg-[#1A1D24] hover:bg-[#22252F] text-xs font-bold uppercase tracking-wider text-foreground-secondary border border-[#26282E] transition-colors"
                 >
                   View Artisan Profile
                 </Link>
               </div>
 
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-foreground-secondary leading-relaxed">
                 {service.description}
               </p>
 
               {/* Service Assurance Badges */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-[#26282E] text-xs">
-                <div className="flex items-center gap-2.5 p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] text-slate-300">
+                <div className="flex items-center gap-2.5 p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] text-foreground-secondary">
                   <ShieldCheck className="w-4 h-4 text-[#DFB76C] shrink-0" />
                   <div>
-                    <span className="font-bold block text-white">Escrow Custody</span>
-                    <span className="text-[11px] text-slate-400">Released upon acceptance</span>
+                    <span className="font-bold block text-foreground">Escrow Custody</span>
+                    <span className="text-[11px] text-foreground-muted">Released upon acceptance</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2.5 p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] text-slate-300">
+                <div className="flex items-center gap-2.5 p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] text-foreground-secondary">
                   <Clock className="w-4 h-4 text-[#DFB76C] shrink-0" />
                   <div>
-                    <span className="font-bold block text-white">Punctual Arrival</span>
-                    <span className="text-[11px] text-slate-400">Guaranteed schedule lock</span>
+                    <span className="font-bold block text-foreground">Punctual Arrival</span>
+                    <span className="text-[11px] text-foreground-muted">Guaranteed schedule lock</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2.5 p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] text-slate-300">
+                <div className="flex items-center gap-2.5 p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] text-foreground-secondary">
                   <Award className="w-4 h-4 text-[#DFB76C] shrink-0" />
                   <div>
-                    <span className="font-bold block text-white">Vetted Master</span>
-                    <span className="text-[11px] text-slate-400">Identity & craft authenticated</span>
+                    <span className="font-bold block text-foreground">Vetted Master</span>
+                    <span className="text-[11px] text-foreground-muted">Identity & craft authenticated</span>
                   </div>
                 </div>
               </div>
@@ -482,7 +482,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
 
             {/* Package Details & What's Included */}
             <div className="bg-[#121418] rounded-none p-6 sm:p-7 border border-[#26282E] shadow-xl space-y-5">
-              <h3 className="font-serif font-bold text-xl text-white">
+              <h3 className="font-serif font-bold text-xl text-foreground">
                 What is Included in the Selected Package
               </h3>
 
@@ -490,7 +490,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                 {activePackage.features.map((feature: string, idx: number) => (
                   <div
                     key={idx}
-                    className="p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] flex items-start gap-2.5 text-xs text-slate-300"
+                    className="p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] flex items-start gap-2.5 text-xs text-foreground-secondary"
                   >
                     <CheckCircle2 className="w-4 h-4 text-[#DFB76C] shrink-0 mt-0.5" />
                     <span className="font-medium leading-relaxed">{feature}</span>
@@ -503,10 +503,10 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
             <div className="bg-[#121418] rounded-none p-6 sm:p-7 border border-[#26282E] shadow-xl space-y-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-serif font-bold text-xl text-white">
+                  <h3 className="font-serif font-bold text-xl text-foreground">
                     Client Reviews & Ratings
                   </h3>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-foreground-muted mt-1">
                     Verified client feedback backed by completed escrow milestones
                   </p>
                 </div>
@@ -527,12 +527,12 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                         <div className="w-7 h-7 rounded-none bg-[#1A1D24] text-[#DFB76C] font-bold flex items-center justify-center text-xs border border-[#26282E]">
                           {rev.author.slice(0, 2).toUpperCase()}
                         </div>
-                        <span className="font-bold text-white">{rev.author}</span>
-                        <span className="text-[10px] text-emerald-400 font-semibold bg-[#0D211A] border border-emerald-500/30 px-2 py-0.5 rounded-none">
+                        <span className="font-bold text-foreground">{rev.author}</span>
+                        <span className="text-[10px] text-success font-semibold bg-[#0D211A] border border-success/30 px-2 py-0.5 rounded-none">
                           Verified Ceremony
                         </span>
                       </div>
-                      <span className="text-[10px] text-slate-500">{rev.date}</span>
+                      <span className="text-[10px] text-foreground-muted">{rev.date}</span>
                     </div>
 
                     <div className="flex items-center gap-0.5">
@@ -542,13 +542,13 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                           className={`w-3.5 h-3.5 ${
                             starI < rev.rating
                               ? "fill-[#DFB76C] text-[#DFB76C]"
-                              : "text-slate-700"
+                              : "text-foreground-secondary"
                           }`}
                         />
                       ))}
                     </div>
 
-                    <p className="text-slate-300 leading-relaxed">{rev.text}</p>
+                    <p className="text-foreground-secondary leading-relaxed">{rev.text}</p>
                   </div>
                 ))}
               </div>
@@ -571,7 +571,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                         className={`flex-1 py-2 rounded-none text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                           isSelected
                             ? "bg-[#DFB76C] text-[#0B0C0E] shadow-gold-glow-sm"
-                            : "text-slate-400 hover:text-white"
+                            : "text-foreground-muted hover:text-foreground"
                         }`}
                       >
                         {pkg.title.split(" ")[0]}
@@ -584,19 +584,19 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               {/* Price & Summary */}
               <div className="border-b border-[#26282E] pb-5 space-y-2">
                 <div className="flex items-baseline justify-between">
-                  <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Reserve Price</span>
+                  <span className="text-xs font-bold text-foreground-muted uppercase tracking-widest">Reserve Price</span>
                   <div className="text-right">
                     <span className="text-3xl font-bold font-mono text-[#DFB76C]">
                       ${activePackage.price.toLocaleString()}
                     </span>
-                    <span className="text-xs text-slate-500 block font-normal">Escrow-safeguarded total</span>
+                    <span className="text-xs text-foreground-muted block font-normal">Escrow-safeguarded total</span>
                   </div>
                 </div>
 
-                <h4 className="font-serif font-bold text-base text-white pt-2">
+                <h4 className="font-serif font-bold text-base text-foreground pt-2">
                   {activePackage.title}
                 </h4>
-                <p className="text-xs text-slate-400 leading-relaxed">
+                <p className="text-xs text-foreground-muted leading-relaxed">
                   {activePackage.description}
                 </p>
               </div>
@@ -604,11 +604,11 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               {/* Turnaround & Coverage Specs */}
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div className="p-3 rounded-none bg-[#0B0C0E] border border-[#26282E]">
-                  <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block">Coverage</span>
-                  <span className="font-bold text-white">{activePackage.hours || "Ceremonial Duration"}</span>
+                  <span className="text-[9px] font-bold text-foreground-muted uppercase tracking-widest block">Coverage</span>
+                  <span className="font-bold text-foreground">{activePackage.hours || "Ceremonial Duration"}</span>
                 </div>
                 <div className="p-3 rounded-none bg-[#0B0C0E] border border-[#26282E]">
-                  <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest block">Turnaround</span>
+                  <span className="text-[9px] font-bold text-foreground-muted uppercase tracking-widest block">Turnaround</span>
                   <span className="font-bold text-[#DFB76C]">{activePackage.turnaround}</span>
                 </div>
               </div>
@@ -616,7 +616,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               {/* Package Features List */}
               <div className="space-y-2 text-xs">
                 {activePackage.features.slice(0, 4).map((f: string, i: number) => (
-                  <div key={i} className="flex items-center gap-2 text-slate-300">
+                  <div key={i} className="flex items-center gap-2 text-foreground-secondary">
                     <CheckCircle2 className="w-3.5 h-3.5 text-[#DFB76C] shrink-0" />
                     <span>{f}</span>
                   </div>
@@ -644,12 +644,12 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               </div>
 
               {/* Escrow Guarantee Footer Note */}
-              <div className="p-3.5 rounded-none bg-[#0D211A] border border-emerald-500/30 text-[11px] text-emerald-300 space-y-1">
+              <div className="p-3.5 rounded-none bg-[#0D211A] border border-success/30 text-[11px] text-emerald-300 space-y-1">
                 <div className="flex items-center gap-1.5 font-bold">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
+                  <ShieldCheck className="w-4 h-4 text-success shrink-0" />
                   <span>100% Milestone Escrow Protection</span>
                 </div>
-                <p className="text-[10px] text-emerald-400/80 leading-relaxed">
+                <p className="text-[10px] text-success/80 leading-relaxed">
                   Your funds remain locked in escrow until you inspect and accept milestone deliverables.
                 </p>
               </div>

@@ -20,7 +20,7 @@ export default function ErrorPage({
     <div className="min-h-screen bg-[#FAF9F6] flex flex-col justify-between p-6">
       <div className="max-w-7xl mx-auto w-full flex justify-between items-center">
         <Logo />
-        <Link href="/" className="text-xs font-semibold text-slate-700 hover:text-obsidian">
+        <Link href="/" className="text-xs font-semibold text-foreground-secondary hover:text-obsidian">
           Home
         </Link>
       </div>
@@ -37,7 +37,7 @@ export default function ErrorPage({
           <h1 className="font-serif text-4xl sm:text-5xl font-extrabold text-obsidian tracking-tight">
             Unexpected System Error
           </h1>
-          <p className="text-slate-600 text-xs sm:text-sm max-w-sm mx-auto leading-relaxed">
+          <p className="text-foreground-secondary text-xs sm:text-sm max-w-sm mx-auto leading-relaxed">
             Our technical team has been automatically alerted. Your escrow vault deposits and data remain 100% secure.
           </p>
         </div>
@@ -45,7 +45,7 @@ export default function ErrorPage({
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
           <button
             onClick={() => reset()}
-            className="w-full sm:w-auto px-6 py-3 bg-[#0F1228] hover:bg-[#1A1F40] text-white font-semibold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-6 py-3 bg-[#0F1228] hover:bg-[#1A1F40] text-foreground font-semibold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
           >
             <RotateCcw className="w-4 h-4" />
             <span>Try Again</span>
@@ -53,7 +53,7 @@ export default function ErrorPage({
 
           <Link
             href="/"
-            className="w-full sm:w-auto px-6 py-3 bg-white hover:bg-slate-50 border border-[#EAE6DF] text-slate-800 font-semibold text-xs rounded-xl shadow-xs transition-colors flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-6 py-3 bg-surface hover:bg-surface-elevated border border-[#EAE6DF] text-foreground font-semibold text-xs rounded-xl shadow-xs transition-colors flex items-center justify-center gap-2"
           >
             <Home className="w-4 h-4" />
             <span>Back to Home</span>
@@ -61,7 +61,7 @@ export default function ErrorPage({
         </div>
       </div>
 
-      <div className="text-center text-xs text-slate-400">
+      <div className="text-center text-xs text-foreground-muted">
         © {new Date().getFullYear()} Ophir Technologies Inc. All rights reserved.
       </div>
     </div>

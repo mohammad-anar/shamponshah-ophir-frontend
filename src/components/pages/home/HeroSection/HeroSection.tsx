@@ -5,11 +5,11 @@ import HeroSearchForm from "./HeroSearchForm";
 
 const HeroSection = () => {
   return (
-    <div className="bg-primary text-white py-20 min-h-[60vh]">
+    <div className="bg-primary text-foreground py-20 min-h-[60vh]">
       <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 lg:grid-cols-3 py-10 pt-28">
         {/* left  */}
         <div className="lg:col-span-2">
-          <h1 className="text-white text-[64px] font-bold max-w-4xl">
+          <h1 className="text-foreground text-[64px] font-bold max-w-4xl">
             Committed to your health & life long care
           </h1>
           <p className="mt-7 max-w-2xl leading-normal">

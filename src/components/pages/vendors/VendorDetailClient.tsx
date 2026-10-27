@@ -79,7 +79,7 @@ export default function VendorProfilePage() {
     return (
       <div className="min-h-[75vh] bg-[#0B0C0E] flex flex-col items-center justify-center space-y-4">
         <Loader2 className="w-10 h-10 text-[#DFB76C] animate-spin" />
-        <p className="text-xs uppercase tracking-widest text-slate-400 font-bold">
+        <p className="text-xs uppercase tracking-widest text-foreground-muted font-bold">
           Loading master artisan profile...
         </p>
       </div>
@@ -92,8 +92,8 @@ export default function VendorProfilePage() {
         <div className="w-14 h-14 rounded-none bg-[#121418] border border-[#26282E] flex items-center justify-center text-[#DFB76C]">
           <ShieldCheck className="w-7 h-7" />
         </div>
-        <h1 className="font-serif text-3xl font-light text-white">Artisan Profile Not Found</h1>
-        <p className="text-xs text-slate-400 max-w-md">
+        <h1 className="font-serif text-3xl font-light text-foreground">Artisan Profile Not Found</h1>
+        <p className="text-xs text-foreground-muted max-w-md">
           The vendor profile you are looking for may not exist, is under review, or the link is incorrect.
         </p>
         <Link
@@ -166,7 +166,7 @@ export default function VendorProfilePage() {
           style={{ background: levelTheme.heroOverlay }}
         />
 
-        <div className="absolute bottom-4 right-6 text-slate-300 text-xs bg-[#0B0C0E]/80 backdrop-blur-md px-3.5 py-1.5 rounded-none border border-[#26282E] shadow-sm flex items-center gap-1.5">
+        <div className="absolute bottom-4 right-6 text-foreground-secondary text-xs bg-[#0B0C0E]/80 backdrop-blur-md px-3.5 py-1.5 rounded-none border border-[#26282E] shadow-sm flex items-center gap-1.5">
           <MapPin className="w-3.5 h-3.5" style={{ color: levelTheme.accentColor }} />
           <span>{vendor.location}</span>
         </div>
@@ -213,11 +213,11 @@ export default function VendorProfilePage() {
                   </span>
                 </div>
 
-                <p className="text-xs sm:text-sm text-slate-300 max-w-xl leading-relaxed">
+                <p className="text-xs sm:text-sm text-foreground-secondary max-w-xl leading-relaxed">
                   {vendor.title}
                 </p>
 
-                <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 pt-1">
+                <div className="flex flex-wrap items-center gap-3 text-xs text-foreground-muted pt-1">
                   <span className="flex items-center gap-1">
                     <MapPin className="w-3.5 h-3.5" style={{ color: levelTheme.accentColor }} />
                     {vendor.location}
@@ -225,7 +225,7 @@ export default function VendorProfilePage() {
                   <span>•</span>
                   <span>Member since {memberYear}</span>
                   <span>•</span>
-                  <span className="text-emerald-400 font-medium">
+                  <span className="text-success font-medium">
                     Typically responds {vendor.responseSpeed || "within 1 hour"}
                   </span>
                 </div>
@@ -265,7 +265,7 @@ export default function VendorProfilePage() {
 
               <button
                 onClick={handleShare}
-                className="p-2.5 bg-[#16181F] hover:bg-[#1F222B] border border-[#26282E] rounded-none text-slate-300 hover:text-[#DFB76C] transition-colors cursor-pointer"
+                className="p-2.5 bg-[#16181F] hover:bg-[#1F222B] border border-[#26282E] rounded-none text-foreground-secondary hover:text-[#DFB76C] transition-colors cursor-pointer"
                 aria-label="Share"
               >
                 <Share2 className="w-4 h-4" />
@@ -282,10 +282,10 @@ export default function VendorProfilePage() {
                     toast.success(nextState ? "Saved to favorites!" : "Removed from favorites");
                   }
                 }}
-                className="p-2.5 bg-[#16181F] hover:bg-[#1F222B] border border-[#26282E] rounded-none text-slate-300 hover:text-red-400 transition-colors cursor-pointer"
+                className="p-2.5 bg-[#16181F] hover:bg-[#1F222B] border border-[#26282E] rounded-none text-foreground-secondary hover:text-danger transition-colors cursor-pointer"
                 aria-label="Favorite"
               >
-                <Heart className={cn("w-4 h-4", isWishlisted && "fill-red-500 text-red-500")} />
+                <Heart className={cn("w-4 h-4", isWishlisted && "fill-red-500 text-danger")} />
               </button>
             </div>
           </div>
@@ -303,11 +303,11 @@ export default function VendorProfilePage() {
                 className="w-2.5 h-2.5 rounded-full animate-pulse"
                 style={{ backgroundColor: levelTheme.accentColor }}
               />
-              <span className="font-bold text-white uppercase tracking-wider text-[11px]">
+              <span className="font-bold text-foreground uppercase tracking-wider text-[11px]">
                 {levelTitle} (Level {levelNumber})
               </span>
-              <span className="text-slate-400 hidden sm:inline">•</span>
-              <span className="text-slate-300 hidden sm:inline text-[11px]">
+              <span className="text-foreground-muted hidden sm:inline">•</span>
+              <span className="text-foreground-secondary hidden sm:inline text-[11px]">
                 {levelConfig.tagline}
               </span>
             </div>
@@ -336,10 +336,10 @@ export default function VendorProfilePage() {
               >
                 ORDERS COMPLETED
               </div>
-              <div className="font-serif text-xl sm:text-2xl font-light text-white">
+              <div className="font-serif text-xl sm:text-2xl font-light text-foreground">
                 {vendor.ordersCompleted || 35}
               </div>
-              <div className="text-[11px] text-slate-400">Milestone ceremonies</div>
+              <div className="text-[11px] text-foreground-muted">Milestone ceremonies</div>
             </div>
 
             <div className="space-y-0.5">
@@ -353,7 +353,7 @@ export default function VendorProfilePage() {
                 <Star className="w-4 h-4" style={{ color: levelTheme.accentColor, fill: levelTheme.accentColor }} />
                 <span>{vendor.rating ? Number(vendor.rating).toFixed(1) : "5.0"} / 5.0</span>
               </div>
-              <div className="text-[11px] text-slate-400">
+              <div className="text-[11px] text-foreground-muted">
                 {reviewsList.length || vendor.reviewCount || 1} verified ceremonies
               </div>
             </div>
@@ -365,10 +365,10 @@ export default function VendorProfilePage() {
               >
                 RESPONSE TIME
               </div>
-              <div className="font-serif text-xl sm:text-2xl font-light text-white">
+              <div className="font-serif text-xl sm:text-2xl font-light text-foreground">
                 {vendor.responseSpeed || "Within 1 hour"}
               </div>
-              <div className="text-[11px] text-emerald-400 font-medium">Instant alert dispatch</div>
+              <div className="text-[11px] text-success font-medium">Instant alert dispatch</div>
             </div>
 
             <div className="space-y-0.5">
@@ -378,10 +378,10 @@ export default function VendorProfilePage() {
               >
                 ON-TIME DELIVERY
               </div>
-              <div className="font-serif text-xl sm:text-2xl font-light text-white">
+              <div className="font-serif text-xl sm:text-2xl font-light text-foreground">
                 {vendor.onTimeDelivery || "99%"}
               </div>
-              <div className="text-[11px] text-slate-400">Punctual arrival guarantee</div>
+              <div className="text-[11px] text-foreground-muted">Punctual arrival guarantee</div>
             </div>
 
             <div className="space-y-0.5">
@@ -391,10 +391,10 @@ export default function VendorProfilePage() {
               >
                 REPEAT PATRONAGE
               </div>
-              <div className="font-serif text-xl sm:text-2xl font-light text-white">
+              <div className="font-serif text-xl sm:text-2xl font-light text-foreground">
                 {vendor.repeatClients || "85%"}
               </div>
-              <div className="text-[11px] text-slate-400">Ceremonial patrons</div>
+              <div className="text-[11px] text-foreground-muted">Ceremonial patrons</div>
             </div>
           </div>
         </div>
@@ -412,7 +412,7 @@ export default function VendorProfilePage() {
                   "px-5 py-3 text-xs sm:text-sm font-semibold border-b-2 whitespace-nowrap transition-all cursor-pointer rounded-none uppercase tracking-wider",
                   isActive
                     ? "font-bold"
-                    : "border-transparent text-slate-400 hover:text-white"
+                    : "border-transparent text-foreground-muted hover:text-foreground"
                 )}
               >
                 {tab.label}
@@ -431,16 +431,16 @@ export default function VendorProfilePage() {
                 {/* About & Ethos Card */}
                 <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
                   <div className="flex items-center justify-between">
-                    <h2 className="font-serif text-2xl font-light text-white">
+                    <h2 className="font-serif text-2xl font-light text-foreground">
                       About {vendor.name}
                     </h2>
-                    <span className="text-xs font-semibold px-3 py-1 bg-[#0B0C0E] text-[#DFB76C] rounded-none border border-[#DFB76C]/30 flex items-center gap-1.5 uppercase tracking-wider">
+                    <span className="text-xs font-semibold px-3 py-1 bg-[#0B0C0E] text-[#DFB76C] rounded-none border border-border-brand/40 flex items-center gap-1.5 uppercase tracking-wider">
                       <ShieldCheck className="w-3.5 h-3.5 text-[#DFB76C]" />
                       <span>Verified Artisan</span>
                     </span>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+                  <p className="text-xs sm:text-sm text-foreground-secondary leading-relaxed font-light">
                     {vendor.bio ||
                       "Dedicated cultural master and culinary artisan creating tailored ceremonial experiences and authentic heritage presentations for milestone galas and sacred weddings."}
                   </p>
@@ -448,27 +448,27 @@ export default function VendorProfilePage() {
                   {/* Guarantees Box */}
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-[#26282E]">
                     <div className="p-3.5 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-1">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-white">
-                        <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
+                        <ShieldCheck className="w-4 h-4 text-success" />
                         <span>Licensed & Insured</span>
                       </div>
-                      <div className="text-[11px] text-slate-400">$2M Commercial Policy</div>
+                      <div className="text-[11px] text-foreground-muted">$2M Commercial Policy</div>
                     </div>
 
                     <div className="p-3.5 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-1">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-white">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
                         <CheckCircle2 className="w-4 h-4 text-[#DFB76C]" />
                         <span>Verified Identity</span>
                       </div>
-                      <div className="text-[11px] text-slate-400">Background Checked</div>
+                      <div className="text-[11px] text-foreground-muted">Background Checked</div>
                     </div>
 
                     <div className="p-3.5 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-1">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-white">
+                      <div className="flex items-center gap-1.5 text-xs font-bold text-foreground">
                         <Lock className="w-4 h-4 text-[#DFB76C]" />
                         <span>100% Escrow Safeguard</span>
                       </div>
-                      <div className="text-[11px] text-slate-400">Milestone-Released Funds</div>
+                      <div className="text-[11px] text-foreground-muted">Milestone-Released Funds</div>
                     </div>
                   </div>
                 </div>
@@ -477,7 +477,7 @@ export default function VendorProfilePage() {
                 {packagesList.length > 0 && (
                   <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
                     <div className="flex items-center justify-between">
-                      <h2 className="font-serif text-2xl font-light text-white">
+                      <h2 className="font-serif text-2xl font-light text-foreground">
                         Featured Offerings & Packages
                       </h2>
                       <button
@@ -493,18 +493,18 @@ export default function VendorProfilePage() {
                       {packagesList.slice(0, 4).map((pkg: any) => (
                         <div
                           key={pkg.id}
-                          className="p-5 rounded-none bg-[#16181F] border border-[#26282E] hover:border-[#DFB76C]/60 transition-all flex flex-col justify-between space-y-4"
+                          className="p-5 rounded-none bg-[#16181F] border border-[#26282E] hover:border-border-brand/40 transition-all flex flex-col justify-between space-y-4"
                         >
                           <div className="space-y-1.5">
                             <div className="flex items-center justify-between">
-                              <h3 className="font-serif font-light text-base text-white">
+                              <h3 className="font-serif font-light text-base text-foreground">
                                 {pkg.title}
                               </h3>
                               <span className="font-serif text-lg font-bold text-[#DFB76C]">
                                 ${Number(pkg.price).toLocaleString()}
                               </span>
                             </div>
-                            <p className="text-xs text-slate-400 line-clamp-2 font-light">
+                            <p className="text-xs text-foreground-muted line-clamp-2 font-light">
                               {pkg.description}
                             </p>
                           </div>
@@ -512,7 +512,7 @@ export default function VendorProfilePage() {
                           <div className="pt-2 border-t border-[#26282E] flex items-center justify-between gap-2">
                             <button
                               onClick={() => handleAddPackageToHub(pkg)}
-                              className="px-2.5 py-1.5 rounded-none border border-[#26282E] text-slate-300 hover:text-[#DFB76C] text-[11px] font-semibold transition-colors flex items-center gap-1 cursor-pointer"
+                              className="px-2.5 py-1.5 rounded-none border border-[#26282E] text-foreground-secondary hover:text-[#DFB76C] text-[11px] font-semibold transition-colors flex items-center gap-1 cursor-pointer"
                             >
                               <Users2 className="w-3 h-3 text-[#DFB76C]" />
                               <span>Hub</span>
@@ -547,7 +547,7 @@ export default function VendorProfilePage() {
                             <span className="text-[10px] font-bold text-[#DFB76C] uppercase tracking-[0.2em]">
                               {svc.category || "Service Tier"}
                             </span>
-                            <h3 className="font-serif text-xl sm:text-2xl font-light text-white">
+                            <h3 className="font-serif text-xl sm:text-2xl font-light text-foreground">
                               {svc.title}
                             </h3>
                           </div>
@@ -555,11 +555,11 @@ export default function VendorProfilePage() {
                             <span className="font-serif text-2xl font-bold text-[#DFB76C] block">
                               ${Number(svc.startingPrice || 0).toLocaleString()}
                             </span>
-                            <span className="text-[11px] text-slate-400">Starting price</span>
+                            <span className="text-[11px] text-foreground-muted">Starting price</span>
                           </div>
                         </div>
 
-                        <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+                        <p className="text-xs sm:text-sm text-foreground-secondary font-light leading-relaxed">
                           {svc.description}
                         </p>
 
@@ -571,14 +571,14 @@ export default function VendorProfilePage() {
                             >
                               <div className="space-y-2">
                                 <div className="flex items-center justify-between">
-                                  <span className="text-xs font-bold text-white uppercase tracking-wider">
+                                  <span className="text-xs font-bold text-foreground uppercase tracking-wider">
                                     {pkg.name || pkg.title}
                                   </span>
                                   <span className="font-serif text-base font-bold text-[#DFB76C]">
                                     ${Number(pkg.price).toLocaleString()}
                                   </span>
                                 </div>
-                                <p className="text-[11px] text-slate-400 leading-relaxed font-light">
+                                <p className="text-[11px] text-foreground-muted leading-relaxed font-light">
                                   {pkg.description}
                                 </p>
                               </div>
@@ -619,11 +619,11 @@ export default function VendorProfilePage() {
                         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                           <div className="space-y-1">
                             {pkg.isPopular && (
-                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] text-[10px] font-bold uppercase tracking-widest border border-[#DFB76C]/30">
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] text-[10px] font-bold uppercase tracking-widest border border-border-brand/40">
                                 <Sparkles className="w-3 h-3" /> Popular Choice
                               </span>
                             )}
-                            <h3 className="font-serif text-xl font-light text-white">
+                            <h3 className="font-serif text-xl font-light text-foreground">
                               {pkg.title}
                             </h3>
                           </div>
@@ -632,16 +632,16 @@ export default function VendorProfilePage() {
                             <span className="font-serif text-2xl sm:text-3xl font-bold text-[#DFB76C] block">
                               ${Number(pkg.price).toLocaleString()}
                             </span>
-                            <span className="text-[11px] text-slate-400">Fixed rate</span>
+                            <span className="text-[11px] text-foreground-muted">Fixed rate</span>
                           </div>
                         </div>
 
-                        <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+                        <p className="text-xs sm:text-sm text-foreground-secondary font-light leading-relaxed">
                           {pkg.description}
                         </p>
 
                         <div className="pt-3 border-t border-[#26282E] flex items-center justify-between gap-3">
-                          <span className="text-xs text-slate-400">100% Escrow Protected</span>
+                          <span className="text-xs text-foreground-muted">100% Escrow Protected</span>
                           <div className="flex items-center gap-2">
                             <button
                               onClick={() => handleAddPackageToHub(pkg)}
@@ -671,10 +671,10 @@ export default function VendorProfilePage() {
               <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
                   <div>
-                    <h2 className="font-serif text-2xl font-light text-white">
+                    <h2 className="font-serif text-2xl font-light text-foreground">
                       Portfolio & Showcase Gallery
                     </h2>
-                    <p className="text-xs text-slate-400 font-light">
+                    <p className="text-xs text-foreground-muted font-light">
                       Verified ceremonial presentations, milestone galas, and fine-art moments
                     </p>
                   </div>
@@ -696,7 +696,7 @@ export default function VendorProfilePage() {
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-105 filter brightness-90 group-hover:brightness-100"
                       />
-                      <div className="absolute inset-0 bg-[#0B0C0E]/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white p-3 text-center">
+                      <div className="absolute inset-0 bg-[#0B0C0E]/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-foreground p-3 text-center">
                         <Eye className="w-6 h-6 mb-1 text-[#DFB76C]" />
                         <span className="text-xs font-bold uppercase tracking-widest text-[#DFB76C]">Enlarge View</span>
                       </div>
@@ -711,10 +711,10 @@ export default function VendorProfilePage() {
               <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-6 border-b border-[#26282E]">
                   <div>
-                    <h2 className="font-serif text-2xl font-light text-white">
+                    <h2 className="font-serif text-2xl font-light text-foreground">
                       Verified Client Reviews
                     </h2>
-                    <p className="text-xs text-slate-400 font-light">
+                    <p className="text-xs text-foreground-muted font-light">
                       Reviews authenticated via completed Ophir Escrow milestone releases
                     </p>
                   </div>
@@ -722,10 +722,10 @@ export default function VendorProfilePage() {
                   <div className="flex items-center gap-3 bg-[#16181F] border border-[#26282E] px-4 py-2.5 rounded-none">
                     <Star className="w-6 h-6 fill-[#DFB76C] text-[#DFB76C]" />
                     <div>
-                      <div className="font-serif text-xl font-bold text-white leading-tight">
+                      <div className="font-serif text-xl font-bold text-foreground leading-tight">
                         {vendor.rating ? Number(vendor.rating).toFixed(1) : "5.0"} / 5.0
                       </div>
-                      <div className="text-[11px] text-slate-400">
+                      <div className="text-[11px] text-foreground-muted">
                         {reviewsList.length || 1} verified client {reviewsList.length === 1 ? "review" : "reviews"}
                       </div>
                     </div>
@@ -746,14 +746,14 @@ export default function VendorProfilePage() {
                               {rev.author ? rev.author.charAt(0) : "C"}
                             </div>
                             <div>
-                              <div className="font-serif font-bold text-sm text-white flex items-center gap-1.5">
+                              <div className="font-serif font-bold text-sm text-foreground flex items-center gap-1.5">
                                 <span>{rev.author}</span>
-                                <span className="inline-flex items-center gap-0.5 text-[10px] text-emerald-400 bg-[#0D211A] px-2 py-0.5 rounded-none border border-emerald-500/30 font-semibold">
+                                <span className="inline-flex items-center gap-0.5 text-[10px] text-success bg-[#0D211A] px-2 py-0.5 rounded-none border border-success/30 font-semibold">
                                   <ShieldCheck className="w-3 h-3" />
                                   <span>Verified Host</span>
                                 </span>
                               </div>
-                              <span className="text-[11px] text-slate-400">{rev.event}</span>
+                              <span className="text-[11px] text-foreground-muted">{rev.event}</span>
                             </div>
                           </div>
 
@@ -764,32 +764,32 @@ export default function VendorProfilePage() {
                               ))}
                             </div>
                             {rev.date && (
-                              <span className="text-xs text-slate-400">({rev.date})</span>
+                              <span className="text-xs text-foreground-muted">({rev.date})</span>
                             )}
                           </div>
                         </div>
 
-                        <p className="text-xs sm:text-sm text-slate-300 leading-relaxed italic pl-1 font-light">
+                        <p className="text-xs sm:text-sm text-foreground-secondary leading-relaxed italic pl-1 font-light">
                           &ldquo;{rev.text}&rdquo;
                         </p>
 
                         {rev.reply && (
-                          <div className="mt-3 p-3.5 bg-[#121418] rounded-none border border-[#26282E] text-xs text-slate-300 space-y-1">
+                          <div className="mt-3 p-3.5 bg-[#121418] rounded-none border border-[#26282E] text-xs text-foreground-secondary space-y-1">
                             <div className="font-bold text-[#DFB76C] flex items-center gap-1.5">
                               <ShieldCheck className="w-3.5 h-3.5 text-[#DFB76C]" />
                               <span>Vendor Response ({rev.reply.author}):</span>
                             </div>
-                            <p className="text-slate-400 italic">{rev.reply.text}</p>
+                            <p className="text-foreground-muted italic">{rev.reply.text}</p>
                           </div>
                         )}
                       </div>
                     ))
                   ) : (
                     <div className="text-center py-10 space-y-2">
-                      <p className="text-sm font-semibold text-slate-300">
+                      <p className="text-sm font-semibold text-foreground-secondary">
                         All past events completed with full escrow release satisfaction.
                       </p>
-                      <p className="text-xs text-slate-500">
+                      <p className="text-xs text-foreground-muted">
                         Bookings are verified upon milestone completion.
                       </p>
                     </div>
@@ -802,10 +802,10 @@ export default function VendorProfilePage() {
             {activeTab === "about" && (
               <div className="space-y-6">
                 <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
-                  <h2 className="font-serif text-2xl font-light text-white">
+                  <h2 className="font-serif text-2xl font-light text-foreground">
                     About {vendor.name}
                   </h2>
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-light">
+                  <p className="text-xs sm:text-sm text-foreground-secondary leading-relaxed font-light">
                     {vendor.bio ||
                       "Dedicated cultural master and culinary artisan creating tailored ceremonial experiences and authentic heritage presentations for milestone galas and sacred weddings."}
                   </p>
@@ -816,17 +816,17 @@ export default function VendorProfilePage() {
                         <UtensilsCrossed className="w-4 h-4 text-[#DFB76C]" />
                         <span>Artisanal Philosophy</span>
                       </div>
-                      <p className="text-xs text-slate-400 leading-relaxed font-light">
+                      <p className="text-xs text-foreground-muted leading-relaxed font-light">
                         Authentic heritage sourcing, handcrafted custom arrangements, and cultural reverence for traditional customs.
                       </p>
                     </div>
 
                     <div className="p-4 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-2">
-                      <div className="flex items-center gap-2 text-sm font-bold text-emerald-400">
-                        <Truck className="w-4 h-4 text-emerald-400" />
+                      <div className="flex items-center gap-2 text-sm font-bold text-success">
+                        <Truck className="w-4 h-4 text-success" />
                         <span>Logistics & On-Site Protocol</span>
                       </div>
-                      <p className="text-xs text-slate-400 leading-relaxed font-light">
+                      <p className="text-xs text-foreground-muted leading-relaxed font-light">
                         White-glove delivery, dedicated ceremonial sound or culinary staging, and full venue breakdown.
                       </p>
                     </div>
@@ -835,17 +835,17 @@ export default function VendorProfilePage() {
 
                 {/* Professional Standards & Certifications */}
                 <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-6">
-                  <h3 className="font-serif text-xl font-light text-white">
+                  <h3 className="font-serif text-xl font-light text-foreground">
                     Standards, Insurance & Escrow Guarantees
                   </h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div className="p-4 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-1.5">
-                      <div className="flex items-center gap-2 text-xs font-bold text-emerald-400">
-                        <ShieldCheck className="w-4 h-4 text-emerald-400" />
+                      <div className="flex items-center gap-2 text-xs font-bold text-success">
+                        <ShieldCheck className="w-4 h-4 text-success" />
                         <span>$2,000,000 Insurance</span>
                       </div>
-                      <p className="text-[11px] text-slate-400 leading-relaxed font-light">
+                      <p className="text-[11px] text-foreground-muted leading-relaxed font-light">
                         Full Commercial General Liability policy. COI issued directly to event venues.
                       </p>
                     </div>
@@ -855,7 +855,7 @@ export default function VendorProfilePage() {
                         <Award className="w-4 h-4 text-[#DFB76C]" />
                         <span>Certified Mastercraft</span>
                       </div>
-                      <p className="text-[11px] text-slate-400 leading-relaxed font-light">
+                      <p className="text-[11px] text-foreground-muted leading-relaxed font-light">
                         Vetted credentials and certified professional expertise in ceremonial traditions.
                       </p>
                     </div>
@@ -865,7 +865,7 @@ export default function VendorProfilePage() {
                         <Lock className="w-4 h-4 text-[#DFB76C]" />
                         <span>Ophir Escrow Vault</span>
                       </div>
-                      <p className="text-[11px] text-slate-400 leading-relaxed font-light">
+                      <p className="text-[11px] text-foreground-muted leading-relaxed font-light">
                         100% deposit protection. Payouts are held in escrow and released solely upon client milestone approval.
                       </p>
                     </div>
@@ -874,22 +874,22 @@ export default function VendorProfilePage() {
 
                 {/* Service Territory & Operations */}
                 <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-4">
-                  <h3 className="font-serif text-xl font-light text-white">
+                  <h3 className="font-serif text-xl font-light text-foreground">
                     Service Radius & Operations
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-300">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-foreground-secondary">
                     <div className="flex items-start gap-2.5">
                       <MapPin className="w-4 h-4 text-[#DFB76C] mt-0.5 shrink-0" />
                       <div>
-                        <span className="font-bold text-white block">Base Location</span>
-                        <span className="text-slate-400">{vendor.location} (Servicing up to {vendor.serviceRadius || 50} miles)</span>
+                        <span className="font-bold text-foreground block">Base Location</span>
+                        <span className="text-foreground-muted">{vendor.location} (Servicing up to {vendor.serviceRadius || 50} miles)</span>
                       </div>
                     </div>
                     <div className="flex items-start gap-2.5">
                       <Clock className="w-4 h-4 text-[#DFB76C] mt-0.5 shrink-0" />
                       <div>
-                        <span className="font-bold text-white block">Response Speed</span>
-                        <span className="text-slate-400">{vendor.responseSpeed || "Within 1 hour"} with priority dispatch</span>
+                        <span className="font-bold text-foreground block">Response Speed</span>
+                        <span className="text-foreground-muted">{vendor.responseSpeed || "Within 1 hour"} with priority dispatch</span>
                       </div>
                     </div>
                   </div>
@@ -906,20 +906,20 @@ export default function VendorProfilePage() {
                   <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#DFB76C] block">
                     SERVICES STARTING FROM
                   </span>
-                  <span className="font-serif text-3xl font-bold text-white">
+                  <span className="font-serif text-3xl font-bold text-foreground">
                     ${Number(vendor.startingPrice || 750).toLocaleString()}
                   </span>
                 </div>
-                <span className="text-xs text-slate-400">/ event</span>
+                <span className="text-xs text-foreground-muted">/ event</span>
               </div>
 
               {/* 100% Escrow Callout */}
-              <div className="p-3.5 rounded-none bg-[#0D211A] border border-emerald-500/30 space-y-1 text-emerald-300">
-                <div className="flex items-center gap-1.5 text-xs font-bold text-emerald-400">
+              <div className="p-3.5 rounded-none bg-[#0D211A] border border-success/30 space-y-1 text-emerald-300">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-success">
                   <ShieldCheck className="w-4 h-4" />
                   <span>100% Escrow Protected</span>
                 </div>
-                <p className="text-[11px] text-emerald-400/80 leading-relaxed font-light">
+                <p className="text-[11px] text-success/80 leading-relaxed font-light">
                   Funds remain locked in FDIC-insured depository accounts and cleared strictly upon your signed milestone approval.
                 </p>
               </div>
@@ -937,7 +937,7 @@ export default function VendorProfilePage() {
                     });
                     setIsFamilyModalOpen(true);
                   }}
-                  className="w-full h-11 bg-[#16181F] hover:bg-[#1F222B] text-[#DFB76C] font-semibold text-xs rounded-none border border-[#26282E] hover:border-[#DFB76C]/60 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full h-11 bg-[#16181F] hover:bg-[#1F222B] text-[#DFB76C] font-semibold text-xs rounded-none border border-[#26282E] hover:border-border-brand/40 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
                   <Users2 className="w-4 h-4 text-[#DFB76C]" />
                   <span>Collaborative Hub Shortlist</span>
@@ -953,7 +953,7 @@ export default function VendorProfilePage() {
               </div>
 
               <div className="pt-2 border-t border-[#26282E] space-y-2 text-center">
-                <span className="text-[11px] text-slate-400 block font-light">
+                <span className="text-[11px] text-foreground-muted block font-light">
                   Have bespoke ceremony requirements?
                 </span>
                 <Link
@@ -987,7 +987,7 @@ export default function VendorProfilePage() {
             />
             <button
               onClick={() => setActiveLightboxImg(null)}
-              className="absolute top-4 right-4 p-2 bg-[#121418] hover:bg-[#1A1D24] text-white border border-[#26282E] rounded-none transition-colors cursor-pointer"
+              className="absolute top-4 right-4 p-2 bg-[#121418] hover:bg-[#1A1D24] text-foreground border border-[#26282E] rounded-none transition-colors cursor-pointer"
             >
               <X className="w-5 h-5 text-[#DFB76C]" />
             </button>
