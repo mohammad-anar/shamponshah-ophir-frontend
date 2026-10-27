@@ -103,7 +103,7 @@ const MyFormImageUpload = ({
                 }
               }}
               className={cn(
-                "w-full rounded-md border border-gray-300 p-2",
+                "w-full rounded-md border border-border p-2",
                 inputClassName,
                 children && "hidden"
               )}
