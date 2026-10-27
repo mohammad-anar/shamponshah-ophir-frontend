@@ -109,7 +109,7 @@ export default function UserPaymentsPage() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-        <h1 className="text-2xl font-bold text-[#0F0C3B]">Payments &amp; Billing History</h1>
+        <h1 className="text-2xl font-bold text-foreground">Payments &amp; Billing History</h1>
           <p className="text-xs text-foreground-muted mt-1">
             Review milestone charges, refunds, and saved payment methods.
           </p>
@@ -124,9 +124,9 @@ export default function UserPaymentsPage() {
       </div>
 
       {/* Escrow Custody Banner */}
-      <div className="bg-[#18124E] text-foreground p-6 rounded-2xl shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div className="bg-surface-sunken text-foreground p-6 rounded-2xl shadow-md flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-info-solid text-white/20 border border-indigo-400/30 flex items-center justify-center text-foreground">
+          <div className="w-12 h-12 rounded-xl bg-info-solid text-foreground/20 border border-info/30/30 flex items-center justify-center text-foreground">
             <Lock className="w-6 h-6 text-warning" />
           </div>
           <div>
@@ -136,7 +136,7 @@ export default function UserPaymentsPage() {
             <div className="flex items-baseline gap-2 mt-0.5">
               <span className="text-3xl font-extrabold">${Number(ledgerData?.data?.escrowTotal ?? ledgerData?.escrowTotal ?? 0).toFixed(2)}</span>
             </div>
-            <p className="text-xs text-indigo-200 mt-1">
+            <p className="text-xs text-info mt-1">
               Paid milestone funds are held on the marketplace Stripe balance until release or refund.
             </p>
           </div>
@@ -149,8 +149,8 @@ export default function UserPaymentsPage() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <CreditCard className="w-4 h-4 text-brand-primary" />
-            <h2 className="text-sm font-bold text-[#0F0C3B]">Saved Payment Methods</h2>
-            <span className="px-2 py-0.5 text-[10px] font-extrabold rounded-full bg-indigo-50 text-brand-primary">
+            <h2 className="text-sm font-bold text-foreground">Saved Payment Methods</h2>
+            <span className="px-2 py-0.5 text-[10px] font-extrabold rounded-full bg-info-soft text-brand-primary">
               Stripe Vault Verified
             </span>
           </div>
@@ -175,17 +175,17 @@ export default function UserPaymentsPage() {
                 className={cn(
                   "p-4 rounded-xl border relative transition-all flex flex-col justify-between",
                   pm.isDefault
-                    ? "border-brand-primary bg-indigo-50/30 shadow-2xs"
+                    ? "border-brand-primary bg-info-soft/30 shadow-2xs"
                     : "border-border hover:border-border bg-surface"
                 )}
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="px-2 py-1 rounded bg-slate-900 text-foreground font-bold text-[10px] uppercase tracking-wider">
+                    <div className="px-2 py-1 rounded bg-surface-sunken text-foreground font-bold text-[10px] uppercase tracking-wider">
                       {pm.brand || "Card"}
                     </div>
                     {pm.isDefault && (
-                      <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-100 text-emerald-800">
+                      <span className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-success-soft text-success">
                         <Check className="w-3 h-3" /> Default
                       </span>
                     )}
@@ -193,7 +193,7 @@ export default function UserPaymentsPage() {
 
                   <button
                     onClick={() => handleRemove(pm.id)}
-                    className="text-foreground-muted hover:text-rose-600 p-1 rounded transition-colors"
+                    className="text-foreground-muted hover:text-danger p-1 rounded transition-colors"
                     title="Remove card"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -229,7 +229,7 @@ export default function UserPaymentsPage() {
             </p>
             <button
               onClick={() => setIsAddModalOpen(true)}
-              className="mt-2 px-3 py-1.5 bg-brand-primary text-foreground text-xs font-bold rounded-lg shadow-xs hover:bg-indigo-900 transition-colors"
+              className="mt-2 px-3 py-1.5 bg-brand-primary text-foreground text-xs font-bold rounded-lg shadow-xs hover:bg-info-soft transition-colors"
             >
               Add Your First Card
             </button>
@@ -239,7 +239,7 @@ export default function UserPaymentsPage() {
 
       {/* Transaction History Table */}
       <div className="bg-surface rounded-2xl border border-border shadow-xs overflow-hidden text-xs">
-        <div className="p-4 border-b border-border font-bold text-[#0F0C3B] flex items-center justify-between">
+        <div className="p-4 border-b border-border font-bold text-foreground flex items-center justify-between">
           <span>Payment &amp; Escrow History</span>
           {ledgerLoading && <Loader2 className="w-3.5 h-3.5 animate-spin text-foreground-muted" />}
         </div>
@@ -258,21 +258,21 @@ export default function UserPaymentsPage() {
             <tbody className="divide-y divide-border">
               {ledgerItems.map((tx: any) => (
                 <tr key={tx.id} className="hover:bg-surface-elevated/50 transition-colors">
-                  <td className="py-3.5 px-4 font-bold text-[#0F0C3B]">
+                  <td className="py-3.5 px-4 font-bold text-foreground">
                     #{tx.id}
                     <span className="text-[10px] text-foreground-muted font-normal block">{tx.date}</span>
                   </td>
                   <td className="py-3.5 px-4 font-medium text-foreground">{tx.description}</td>
                   <td className="py-3.5 px-4 text-foreground-secondary">{tx.method}</td>
-                  <td className="py-3.5 px-4 font-bold text-[#0F0C3B]">{tx.total}</td>
+                  <td className="py-3.5 px-4 font-bold text-foreground">{tx.total}</td>
                   <td className="py-3.5 px-4">
                     <span
                       className={cn(
                         "px-2.5 py-0.5 rounded-full text-[10px] font-bold",
                 (tx.status === "PENDING" || tx.status === "PROCESSING") &&
-                          "bg-amber-100 text-amber-900 border border-amber-200",
+                          "bg-warning-soft text-warning border border-warning/30",
                 tx.status === "SUCCEEDED" &&
-                          "bg-emerald-100 text-emerald-900 border border-emerald-200"
+                          "bg-success-soft text-success border border-success/30"
                       )}
                     >
                       {tx.status === "SUCCEEDED" ? "Paid" : tx.status === "FAILED" ? "Failed" : tx.status === "REFUNDED" ? "Refunded" : tx.status || "Processing"}
@@ -287,12 +287,12 @@ export default function UserPaymentsPage() {
 
       {/* Add Payment Method Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-2xl max-w-md w-full p-6 shadow-2xl border border-border space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-border">
               <div className="flex items-center gap-2">
                 <CreditCard className="w-5 h-5 text-brand-primary" />
-                <h3 className="font-bold text-base text-[#0F0C3B]">Add New Payment Card</h3>
+                <h3 className="font-bold text-base text-foreground">Add New Payment Card</h3>
               </div>
               <button
                 onClick={() => setIsAddModalOpen(false)}
@@ -303,7 +303,7 @@ export default function UserPaymentsPage() {
             </div>
 
             <form onSubmit={handleSaveCard} className="space-y-4 text-xs">
-              <div className="p-3 bg-indigo-50/60 border border-indigo-100 rounded-xl text-[11px] text-indigo-900 flex items-center gap-2">
+              <div className="p-3 bg-info-soft/60 border border-info/30 rounded-xl text-[11px] text-info flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-info flex-shrink-0" />
                 <span>
                   Card details are securely tokenized with Stripe. Your CVV is never stored on our servers.
@@ -312,7 +312,7 @@ export default function UserPaymentsPage() {
 
               <div>
                 <label className="block text-foreground-secondary font-bold mb-1">Card details</label>
-                <div ref={cardContainerRef} className="w-full bg-[#F8F9FD] border border-border rounded-xl p-3" />
+                <div ref={cardContainerRef} className="w-full bg-surface-elevated border border-border rounded-xl p-3" />
       <Script src="https://js.stripe.com/v3/" strategy="afterInteractive" onLoad={() => setStripeReady(true)} />
               </div>
 
@@ -330,14 +330,14 @@ export default function UserPaymentsPage() {
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="w-1/2 py-2.5 bg-surface-sunken hover:bg-slate-200 text-foreground-secondary font-bold rounded-xl transition-colors"
+                  className="w-1/2 py-2.5 bg-surface-sunken hover:bg-surface-sunken text-foreground-secondary font-bold rounded-xl transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSavingCard || isCreatingSetup}
-                  className="w-1/2 py-2.5 bg-brand-primary hover:bg-indigo-900 text-foreground font-bold rounded-xl transition-colors flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-50"
+                  className="w-1/2 py-2.5 bg-brand-primary hover:bg-info-soft text-foreground font-bold rounded-xl transition-colors flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-50"
                 >
                   {isSavingCard || isCreatingSetup ? (
                     <>
