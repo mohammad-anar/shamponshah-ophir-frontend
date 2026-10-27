@@ -99,7 +99,7 @@ export default function PayoutDetailModal({
                 "px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase",
                 payout.status === "COMPLETED" && "bg-success-soft text-success text-success border border-success/30/40",
                 payout.status === "SCHEDULED" && "bg-surface-sunken text-brand border border-border-brand/40",
-                payout.status === "PROCESSING" && "bg-info-soft text-info text-info border border-indigo-800/40",
+                payout.status === "PROCESSING" && "bg-info-soft text-info text-info border border-info/40",
                 payout.status === "FLAGGED" && "bg-danger-soft text-danger text-danger border border-danger/30/40",
               )}>
                 {payout.status}
@@ -292,7 +292,7 @@ export default function PayoutDetailModal({
                     onFlag(payout.id, "Tax W-9 form renewal required before ACH disbursement.");
                     onClose();
                   }}
-                  className="px-3.5 py-2.5 bg-danger-soft text-danger hover:bg-rose-900/60 text-danger border border-danger/30/40 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer"
+                  className="px-3.5 py-2.5 bg-danger-soft text-danger hover:bg-danger-soft text-danger border border-danger/30/40 rounded-xl text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <AlertTriangle className="w-3.5 h-3.5 text-danger" />
                   <span>Flag / Hold Batch</span>
