@@ -231,10 +231,10 @@ export default function SendOfferModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-[#121418] rounded-2xl max-w-xl w-full shadow-2xl overflow-hidden border border-[#26282E] animate-in fade-in my-8 text-foreground">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-background/80 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-surface rounded-2xl max-w-xl w-full shadow-2xl overflow-hidden border border-border animate-in fade-in my-8 text-foreground">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#26282E] flex items-center justify-between bg-[#121418]">
+        <div className="px-6 py-4 border-b border-border flex items-center justify-between bg-surface">
           <div>
             <span className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">
               Send Custom Proposal {clientName ? `to ${clientName}` : ""}
@@ -244,7 +244,7 @@ export default function SendOfferModal({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-foreground-muted hover:text-foreground hover:bg-[#16181F] cursor-pointer"
+            className="p-1.5 rounded-lg text-foreground-muted hover:text-foreground hover:bg-surface-elevated cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -253,9 +253,9 @@ export default function SendOfferModal({
         {/* Body */}
         <div className="p-6 space-y-5 text-xs max-h-[75vh] overflow-y-auto custom-scrollbar">
           {/* Client Target Budget */}
-          <div className="p-3.5 rounded-xl bg-[#16181F] border border-[#26282E] flex items-center justify-between">
+          <div className="p-3.5 rounded-xl bg-surface-elevated border border-border flex items-center justify-between">
             <span className="text-foreground-muted font-semibold">Client Target Budget:</span>
-            <span className="font-extrabold text-[#DFB76C] text-sm">{clientBudget}</span>
+            <span className="font-extrabold text-brand text-sm">{clientBudget}</span>
           </div>
 
           {/* Proposed Price */}
@@ -267,7 +267,7 @@ export default function SendOfferModal({
                 type="text"
                 value={offerPrice}
                 onChange={(e) => handlePriceChange(e.target.value)}
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl pl-8 pr-4 py-2.5 text-sm font-bold text-foreground focus:outline-none focus:border-[#DFB76C] transition-colors"
+                className="w-full bg-surface-elevated border border-border rounded-xl pl-8 pr-4 py-2.5 text-sm font-bold text-foreground focus:outline-none focus:border-border-brand transition-colors"
                 placeholder="0.00"
               />
             </div>
@@ -290,12 +290,12 @@ export default function SendOfferModal({
                 className={cn(
                   "p-3 rounded-xl border text-left transition-all cursor-pointer relative",
                   paymentType === "MILESTONE"
-                    ? "bg-[#1A1D24] border-[#DFB76C] ring-1 ring-[#DFB76C]"
-                    : "bg-[#16181F] border-[#26282E] hover:border-slate-600"
+                    ? "bg-surface-sunken border-border-brand ring-1 ring-focus-ring"
+                    : "bg-surface-elevated border-border hover:border-border-strong"
                 )}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <Layers className={cn("w-4 h-4", paymentType === "MILESTONE" ? "text-[#DFB76C]" : "text-foreground-muted")} />
+                  <Layers className={cn("w-4 h-4", paymentType === "MILESTONE" ? "text-brand" : "text-foreground-muted")} />
                   <span className={cn("font-bold text-xs", paymentType === "MILESTONE" ? "text-foreground" : "text-foreground-secondary")}>
                     Staged Milestones
                   </span>
@@ -311,12 +311,12 @@ export default function SendOfferModal({
                 className={cn(
                   "p-3 rounded-xl border text-left transition-all cursor-pointer relative",
                   paymentType === "FULL"
-                    ? "bg-[#1A1D24] border-[#DFB76C] ring-1 ring-[#DFB76C]"
-                    : "bg-[#16181F] border-[#26282E] hover:border-slate-600"
+                    ? "bg-surface-sunken border-border-brand ring-1 ring-focus-ring"
+                    : "bg-surface-elevated border-border hover:border-border-strong"
                 )}
               >
                 <div className="flex items-center gap-2 mb-1">
-                  <CreditCard className={cn("w-4 h-4", paymentType === "FULL" ? "text-[#DFB76C]" : "text-foreground-muted")} />
+                  <CreditCard className={cn("w-4 h-4", paymentType === "FULL" ? "text-brand" : "text-foreground-muted")} />
                   <span className={cn("font-bold text-xs", paymentType === "FULL" ? "text-foreground" : "text-foreground-secondary")}>
                     Full Payment on Completion
                   </span>
@@ -330,7 +330,7 @@ export default function SendOfferModal({
 
           {/* Conditional Payment UI */}
           {paymentType === "MILESTONE" ? (
-            <div className="p-4 rounded-xl bg-[#16181F] border border-[#26282E] space-y-3">
+            <div className="p-4 rounded-xl bg-surface-elevated border border-border space-y-3">
               <div className="flex items-center justify-between">
                 <div>
                   <span className="font-bold text-xs text-foreground block">Configure Milestones</span>
@@ -341,14 +341,14 @@ export default function SendOfferModal({
                   <button
                     type="button"
                     onClick={handleApplySplit5050}
-                    className="px-2 py-1 rounded-lg bg-[#121418] border border-[#26282E] text-[10px] font-semibold text-foreground-secondary hover:text-foreground hover:border-[#DFB76C] cursor-pointer"
+                    className="px-2 py-1 rounded-lg bg-surface border border-border text-[10px] font-semibold text-foreground-secondary hover:text-foreground hover:border-border-brand cursor-pointer"
                   >
                     50% / 50%
                   </button>
                   <button
                     type="button"
                     onClick={handleApplySplitThreeWay}
-                    className="px-2 py-1 rounded-lg bg-[#121418] border border-[#26282E] text-[10px] font-semibold text-foreground-secondary hover:text-foreground hover:border-[#DFB76C] cursor-pointer"
+                    className="px-2 py-1 rounded-lg bg-surface border border-border text-[10px] font-semibold text-foreground-secondary hover:text-foreground hover:border-border-brand cursor-pointer"
                   >
                     3-Way Split
                   </button>
@@ -358,17 +358,17 @@ export default function SendOfferModal({
               {/* Milestones List */}
               <div className="space-y-2.5">
                 {milestones.map((ms, idx) => (
-                  <div key={idx} className="p-3 bg-[#121418] rounded-xl border border-[#26282E] space-y-2">
+                  <div key={idx} className="p-3 bg-surface rounded-xl border border-border space-y-2">
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-1.5 flex-1">
-                        <span className="w-5 h-5 rounded-full bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40 font-bold text-[10px] flex items-center justify-center shrink-0">
+                        <span className="w-5 h-5 rounded-full bg-surface-sunken text-brand border border-border-brand/40 font-bold text-[10px] flex items-center justify-center shrink-0">
                           {idx + 1}
                         </span>
                         <input
                           type="text"
                           value={ms.label}
                           onChange={(e) => handleMilestoneFieldChange(idx, "label", e.target.value)}
-                          className="w-full font-bold text-xs text-foreground bg-transparent border-b border-transparent focus:border-[#DFB76C] focus:outline-none"
+                          className="w-full font-bold text-xs text-foreground bg-transparent border-b border-transparent focus:border-border-brand focus:outline-none"
                           placeholder={`Milestone ${idx + 1} title`}
                         />
                       </div>
@@ -380,7 +380,7 @@ export default function SendOfferModal({
                             type="text"
                             value={ms.amount}
                             onChange={(e) => handleMilestoneFieldChange(idx, "amount", e.target.value)}
-                            className="w-full bg-[#16181F] border border-[#26282E] rounded-lg pl-5 pr-2 py-1 text-xs font-bold text-right text-foreground focus:outline-none focus:border-[#DFB76C]"
+                            className="w-full bg-surface-elevated border border-border rounded-lg pl-5 pr-2 py-1 text-xs font-bold text-right text-foreground focus:outline-none focus:border-border-brand"
                             placeholder="0.00"
                           />
                         </div>
@@ -401,7 +401,7 @@ export default function SendOfferModal({
                       type="text"
                       value={ms.note || ""}
                       onChange={(e) => handleMilestoneFieldChange(idx, "note", e.target.value)}
-                      className="w-full text-[10px] text-foreground-secondary bg-[#16181F] px-2.5 py-1.5 rounded-md border border-[#26282E] focus:outline-none focus:border-[#DFB76C]"
+                      className="w-full text-[10px] text-foreground-secondary bg-surface-elevated px-2.5 py-1.5 rounded-md border border-border focus:outline-none focus:border-border-brand"
                       placeholder="Release condition note (e.g. Upon arrival, upon completion)"
                     />
                   </div>
@@ -414,7 +414,7 @@ export default function SendOfferModal({
                   <button
                     type="button"
                     onClick={handleAddMilestone}
-                    className="text-[11px] font-bold text-[#DFB76C] hover:underline flex items-center gap-1 cursor-pointer"
+                    className="text-[11px] font-bold text-brand hover:underline flex items-center gap-1 cursor-pointer"
                   >
                     <Plus className="w-3.5 h-3.5" />
                     <span>Add Milestone</span>
@@ -439,11 +439,11 @@ export default function SendOfferModal({
               </div>
             </div>
           ) : (
-            <div className="p-4 rounded-xl bg-success-soft text-success border border-emerald-800/40 space-y-2">
+            <div className="p-4 rounded-xl bg-success-soft text-success border border-success/30/40 space-y-2">
               <div className="flex items-start gap-2.5">
                 <ShieldCheck className="w-5 h-5 text-success shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="font-bold text-xs text-emerald-300">Full Payment Escrow Protection</h4>
+                  <h4 className="font-bold text-xs text-success">Full Payment Escrow Protection</h4>
                   <p className="text-[11px] text-emerald-200/80 leading-relaxed mt-0.5">
                     Client deposits <strong>${offerPrice}</strong> into Ophir Vault Escrow upon accepting this proposal. The full 100% amount will be released to you when the order is marked completed and delivered.
                   </p>
@@ -459,19 +459,19 @@ export default function SendOfferModal({
               rows={3}
               value={coverLetter}
               onChange={(e) => setCoverLetter(e.target.value)}
-              className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-3 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
+              className="w-full bg-surface-elevated border border-border rounded-xl p-3 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand"
             />
           </div>
 
           {/* Credits info */}
-          <div className="p-3 rounded-xl bg-[#16181F] border border-[#26282E] flex items-center justify-between text-[11px] text-foreground-secondary">
+          <div className="p-3 rounded-xl bg-surface-elevated border border-border flex items-center justify-between text-[11px] text-foreground-secondary">
             <span>Bid Credits Cost: <strong className="text-foreground">2 Credits</strong></span>
-            <span className="font-semibold text-[#DFB76C]">Remaining Balance: 14 Credits</span>
+            <span className="font-semibold text-brand">Remaining Balance: 14 Credits</span>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-[#26282E] bg-[#121418] flex items-center justify-between gap-3">
+        <div className="px-6 py-4 border-t border-border bg-surface flex items-center justify-between gap-3">
           <button
             onClick={onClose}
             className="px-4 py-2 text-xs font-semibold text-foreground-muted hover:text-foreground cursor-pointer"
@@ -481,17 +481,17 @@ export default function SendOfferModal({
           <button
             onClick={handleSend}
             disabled={isSubmitting || (paymentType === "MILESTONE" && !isSumMatched)}
-            className="px-6 py-2.5 rounded-xl bg-[#DFB76C] hover:bg-[#ECC870] disabled:opacity-50 text-[#0B0C0E] text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+            className="px-6 py-2.5 rounded-xl bg-brand hover:bg-brand-hover disabled:opacity-50 text-on-brand text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="w-3.5 h-3.5 animate-spin text-[#0B0C0E]" />
+                <Loader2 className="w-3.5 h-3.5 animate-spin text-on-brand" />
                 <span>Submitting...</span>
               </>
             ) : (
               <>
                 <span>Submit Proposal (2 Credits)</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#0B0C0E]" />
+                <ArrowRight className="w-3.5 h-3.5 text-on-brand" />
               </>
             )}
           </button>
