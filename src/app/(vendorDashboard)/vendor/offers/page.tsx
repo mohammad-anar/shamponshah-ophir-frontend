@@ -329,7 +329,7 @@ export default function VendorOffersPage() {
                 </p>
               </div>
 
-              <div className="p-3 bg-success-soft rounded-xl border border-emerald-100 flex items-center justify-between">
+              <div className="p-3 bg-success-soft rounded-xl border border-success/30 flex items-center justify-between">
                 <div>
                   <span className="text-[10px] text-success font-bold uppercase">Payout Guarantee</span>
                   <p className="text-sm font-black text-success">${selectedOffer.price.toLocaleString()} Net Payout</p>
