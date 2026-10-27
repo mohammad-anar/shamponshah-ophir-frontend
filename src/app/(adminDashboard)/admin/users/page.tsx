@@ -97,8 +97,8 @@ export default function AdminUsersPage() {
         </div>
       </div>
 
-      <div className="bg-[#121418] rounded-xl border border-[#26282E] shadow-sm overflow-hidden">
-        <div className="p-4 border-b border-[#26282E] flex items-center justify-between gap-4 flex-wrap">
+      <div className="bg-surface rounded-xl border border-border shadow-sm overflow-hidden">
+        <div className="p-4 border-b border-border flex items-center justify-between gap-4 flex-wrap">
           <div className="relative max-w-sm w-full">
             <Search className="w-4 h-4 text-foreground-muted absolute left-3 top-1/2 -translate-y-1/2" />
             <input
@@ -106,14 +106,14 @@ export default function AdminUsersPage() {
               placeholder="Search by name, email, or user ID..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-[#16181F] border border-[#26282E] rounded-lg pl-9 pr-4 py-1.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C] transition-colors"
+              className="w-full bg-surface-elevated border border-border rounded-lg pl-9 pr-4 py-1.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand transition-colors"
             />
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="bg-[#16181F]/80 border-b border-[#26282E] text-[11px] font-bold uppercase text-foreground-muted tracking-wider">
+            <thead className="bg-surface-elevated/80 border-b border-border text-[11px] font-bold uppercase text-foreground-muted tracking-wider">
               <tr>
                 <th className="py-3 px-4">User ID & Name</th>
                 <th className="py-3 px-4">Email</th>
@@ -123,16 +123,16 @@ export default function AdminUsersPage() {
                 <th className="py-3 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#26282E]/60">
+            <tbody className="divide-y divide-border/60">
               {usersList.map((usr) => (
-                <tr key={usr.id} className="hover:bg-[#16181F]/50 transition-colors">
+                <tr key={usr.id} className="hover:bg-surface-elevated/50 transition-colors">
                   <td className="py-3.5 px-4 font-bold text-foreground">
                     {usr.name}
                     <p className="text-[10px] text-foreground-muted font-normal">{usr.id} • Joined {usr.joined}</p>
                   </td>
                   <td className="py-3.5 px-4 text-foreground-secondary">{usr.email}</td>
                   <td className="py-3.5 px-4">
-                    <span className="px-2 py-0.5 rounded bg-[#1A1D24] text-[#DFB76C] text-[10px] font-semibold border border-border-brand/40">
+                    <span className="px-2 py-0.5 rounded bg-surface-sunken text-brand text-[10px] font-semibold border border-border-brand/40">
                       {usr.role}
                     </span>
                   </td>
@@ -140,9 +140,9 @@ export default function AdminUsersPage() {
                   <td className="py-3.5 px-4">
                     <span className={cn(
                       "px-2.5 py-0.5 rounded-full text-[10px] font-bold border",
-                      usr.status === "ACTIVE" && "bg-success-solid text-white/15 text-success border-success/30",
+                      usr.status === "ACTIVE" && "bg-success-solid text-foreground/15 text-success border-success/30",
                       usr.status === "DISPUTE_HOLD" && "bg-warning-solid text-on-brand/15 text-warning border-warning/30",
-                      usr.status === "PENDING_VERIFICATION" && "bg-info-solid text-white/15 text-info border-info/30",
+                      usr.status === "PENDING_VERIFICATION" && "bg-info-solid text-foreground/15 text-info border-info/30",
                     )}>
                       {usr.status}
                     </span>
@@ -151,14 +151,14 @@ export default function AdminUsersPage() {
                     {usr.status !== "ACTIVE" && (
                       <button
                         onClick={() => handleAction(usr, "Verify")}
-                        className="px-2.5 py-1 rounded bg-success-solid text-white/20 hover:bg-success-solid text-white/30 text-success font-semibold text-[11px] border border-success/30 transition-colors"
+                        className="px-2.5 py-1 rounded bg-success-solid text-foreground/20 hover:bg-success-solid text-foreground/30 text-success font-semibold text-[11px] border border-success/30 transition-colors"
                       >
                         Verify
                       </button>
                     )}
                     <button
                       onClick={() => handleAction(usr, "Profile Audit")}
-                      className="px-2.5 py-1 rounded bg-[#1A1D24] hover:bg-[#222630] text-foreground-secondary font-semibold text-[11px] border border-[#26282E] transition-colors"
+                      className="px-2.5 py-1 rounded bg-surface-sunken hover:bg-surface-sunken text-foreground-secondary font-semibold text-[11px] border border-border transition-colors"
                     >
                       Audit
                     </button>
