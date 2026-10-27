@@ -301,7 +301,7 @@ export default function VendorProfileEditorPage() {
       />
 
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-4">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">
@@ -311,7 +311,7 @@ export default function VendorProfileEditorPage() {
               Live in Directory
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Edit your business information, bio, contact details, and event portfolio shown to buyers.
           </p>
         </div>
@@ -321,9 +321,9 @@ export default function VendorProfileEditorPage() {
             <Link
               href={`/vendors/profile/${slug}`}
               target="_blank"
-              className="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center gap-1.5 transition-colors"
+              className="px-3.5 py-2 rounded-xl border border-border text-xs font-bold text-foreground-secondary hover:bg-surface-elevated flex items-center gap-1.5 transition-colors"
             >
-              <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+              <ExternalLink className="w-3.5 h-3.5 text-foreground-muted" />
               <span>View Public Page</span>
             </Link>
           )}
@@ -331,12 +331,12 @@ export default function VendorProfileEditorPage() {
           <button
             onClick={() => handleSave()}
             disabled={isUpdating}
-            className="px-5 py-2 bg-[#0F0C3B] hover:bg-[#18124E] text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer disabled:opacity-60"
+            className="px-5 py-2 bg-[#0F0C3B] hover:bg-[#18124E] text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer disabled:opacity-60"
           >
             {isUpdating ? (
               <Loader2 className="w-4 h-4 animate-spin" />
             ) : (
-              <Save className="w-4 h-4 text-amber-300" />
+              <Save className="w-4 h-4 text-warning" />
             )}
             <span>Save Changes</span>
           </button>
@@ -345,12 +345,12 @@ export default function VendorProfileEditorPage() {
 
       {savedSuccess && (
         <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs font-bold flex items-center gap-2 animate-in fade-in">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Storefront profile updated successfully!
+          <CheckCircle2 className="w-4 h-4 text-success" /> Storefront profile updated successfully!
         </div>
       )}
 
       {/* Profile Header & Visual Assets */}
-      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-xs">
+      <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-xs">
         {/* Banner Cover Image */}
         <div className="relative h-48 bg-gradient-to-r from-[#0F0C3B] to-indigo-900 overflow-hidden group">
           {heroImageUrl ? (
@@ -361,7 +361,7 @@ export default function VendorProfileEditorPage() {
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-white/30 text-xs font-bold">
+            <div className="w-full h-full flex items-center justify-center text-foreground/30 text-xs font-bold">
               Custom Banner Cover
             </div>
           )}
@@ -370,9 +370,9 @@ export default function VendorProfileEditorPage() {
             <button
               type="button"
               onClick={() => bannerInputRef.current?.click()}
-              className="px-4 py-2 rounded-xl bg-black/60 hover:bg-black/80 text-white text-xs font-bold backdrop-blur-xs flex items-center gap-2 transition-all cursor-pointer shadow-md"
+              className="px-4 py-2 rounded-xl bg-black/60 hover:bg-black/80 text-foreground text-xs font-bold backdrop-blur-xs flex items-center gap-2 transition-all cursor-pointer shadow-md"
             >
-              <Camera className="w-4 h-4 text-amber-300" />
+              <Camera className="w-4 h-4 text-warning" />
               <span>Change Cover Banner</span>
             </button>
           </div>
@@ -383,7 +383,7 @@ export default function VendorProfileEditorPage() {
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 -mt-12 mb-6">
             {/* Avatar */}
             <div className="relative group">
-              <div className="w-24 h-24 rounded-2xl bg-[#0F0C3B] text-white flex items-center justify-center font-black text-2xl border-4 border-white shadow-md overflow-hidden bg-cover bg-center">
+              <div className="w-24 h-24 rounded-2xl bg-[#0F0C3B] text-foreground flex items-center justify-center font-black text-2xl border-4 border-white shadow-md overflow-hidden bg-cover bg-center">
                 {avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" />
@@ -395,7 +395,7 @@ export default function VendorProfileEditorPage() {
                 type="button"
                 onClick={() => avatarInputRef.current?.click()}
                 title="Change Profile Photo"
-                className="absolute bottom-0 right-0 p-1.5 bg-white border border-slate-200 rounded-lg shadow-sm text-slate-700 hover:text-brand-primary cursor-pointer hover:bg-slate-50 transition-colors"
+                className="absolute bottom-0 right-0 p-1.5 bg-surface border border-border rounded-lg shadow-sm text-foreground-secondary hover:text-brand-primary cursor-pointer hover:bg-surface-elevated transition-colors"
               >
                 <Camera className="w-4 h-4" />
               </button>
@@ -403,7 +403,7 @@ export default function VendorProfileEditorPage() {
 
             <div className="flex items-center gap-2 flex-wrap">
               <span className="px-3 py-1 bg-indigo-50 text-indigo-900 border border-indigo-200 rounded-full text-xs font-bold flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-indigo-600" /> Verified Escrow Vendor
+                <ShieldCheck className="w-3.5 h-3.5 text-info" /> Verified Escrow Vendor
               </span>
             </div>
           </div>
@@ -412,71 +412,71 @@ export default function VendorProfileEditorPage() {
           <div className="space-y-4 text-xs">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Business / Brand Name *</label>
+                <label className="block text-foreground-secondary font-bold mb-1">Business / Brand Name *</label>
                 <input
                   type="text"
                   value={businessName}
                   onChange={(e) => setBusinessName(e.target.value)}
                   placeholder="e.g. Luminary Event Studios"
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-bold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-bold focus:outline-none focus:border-brand-primary"
                 />
               </div>
 
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Headline / Specialty *</label>
+                <label className="block text-foreground-secondary font-bold mb-1">Headline / Specialty *</label>
                 <input
                   type="text"
                   value={headline}
                   onChange={(e) => setHeadline(e.target.value)}
                   placeholder="e.g. Luxury Wedding DJ &amp; Sound Production"
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-slate-700 font-bold mb-1">About Your Craft &amp; Experience *</label>
+              <label className="block text-foreground-secondary font-bold mb-1">About Your Craft &amp; Experience *</label>
               <textarea
                 rows={4}
                 value={bio}
                 onChange={(e) => setBio(e.target.value)}
                 placeholder="Share your background, milestones handled, equipment used, and setup experience..."
-                className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-3 text-slate-800 focus:outline-none focus:border-brand-primary resize-none leading-relaxed"
+                className="w-full bg-[#F8F9FD] border border-border rounded-xl p-3 text-foreground focus:outline-none focus:border-brand-primary resize-none leading-relaxed"
               />
             </div>
 
             {/* Location & Radius */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <label className="block text-slate-700 font-bold mb-1">City / Region *</label>
+                <label className="block text-foreground-secondary font-bold mb-1">City / Region *</label>
                 <input
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                   placeholder="Chicago"
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 />
               </div>
 
               <div>
-                <label className="block text-slate-700 font-bold mb-1">State / Province</label>
+                <label className="block text-foreground-secondary font-bold mb-1">State / Province</label>
                 <input
                   type="text"
                   value={state}
                   onChange={(e) => setState(e.target.value)}
                   placeholder="IL"
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 />
               </div>
 
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Service Travel Radius</label>
+                <label className="block text-foreground-secondary font-bold mb-1">Service Travel Radius</label>
                 <input
                   type="text"
                   value={travelRadius}
                   onChange={(e) => setTravelRadius(e.target.value)}
                   placeholder="e.g. 50 miles"
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 />
               </div>
             </div>
@@ -484,9 +484,9 @@ export default function VendorProfileEditorPage() {
             {/* Links & Socials */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Website URL</label>
-                <div className="flex items-center rounded-xl border border-slate-200 bg-[#F8F9FD] overflow-hidden focus-within:border-brand-primary">
-                  <span className="px-3 text-slate-400">
+                <label className="block text-foreground-secondary font-bold mb-1">Website URL</label>
+                <div className="flex items-center rounded-xl border border-border bg-[#F8F9FD] overflow-hidden focus-within:border-brand-primary">
+                  <span className="px-3 text-foreground-muted">
                     <Globe className="w-3.5 h-3.5" />
                   </span>
                   <input
@@ -494,15 +494,15 @@ export default function VendorProfileEditorPage() {
                     value={website}
                     onChange={(e) => setWebsite(e.target.value)}
                     placeholder="https://yourbrand.com"
-                    className="w-full bg-transparent p-2.5 text-slate-800 font-semibold focus:outline-none text-xs"
+                    className="w-full bg-transparent p-2.5 text-foreground font-semibold focus:outline-none text-xs"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Instagram Handle</label>
-                <div className="flex items-center rounded-xl border border-slate-200 bg-[#F8F9FD] overflow-hidden focus-within:border-brand-primary">
-                  <span className="px-3 text-slate-400">
+                <label className="block text-foreground-secondary font-bold mb-1">Instagram Handle</label>
+                <div className="flex items-center rounded-xl border border-border bg-[#F8F9FD] overflow-hidden focus-within:border-brand-primary">
+                  <span className="px-3 text-foreground-muted">
                     <Instagram className="w-3.5 h-3.5" />
                   </span>
                   <input
@@ -510,7 +510,7 @@ export default function VendorProfileEditorPage() {
                     value={instagram}
                     onChange={(e) => setInstagram(e.target.value)}
                     placeholder="@yourhandle"
-                    className="w-full bg-transparent p-2.5 text-slate-800 font-semibold focus:outline-none text-xs"
+                    className="w-full bg-transparent p-2.5 text-foreground font-semibold focus:outline-none text-xs"
                   />
                 </div>
               </div>
@@ -520,11 +520,11 @@ export default function VendorProfileEditorPage() {
       </div>
 
       {/* Portfolio Showcase Grid */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-xs space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+      <div className="bg-surface border border-border rounded-2xl p-6 shadow-xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-3">
           <div>
             <h2 className="text-base font-bold text-[#0F0C3B]">Portfolio &amp; Event Media</h2>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-foreground-muted">
               High-resolution photos showcasing past setups, performances, and celebrations. These appear on your profile and the home page showcase.
             </p>
           </div>
@@ -538,9 +538,9 @@ export default function VendorProfileEditorPage() {
               setModalFilePreview(null);
               setPhotoModalOpen(true);
             }}
-            className="px-4 py-2 bg-[#0F0C3B] hover:bg-[#18124E] text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start cursor-pointer shadow-xs"
+            className="px-4 py-2 bg-[#0F0C3B] hover:bg-[#18124E] text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start cursor-pointer shadow-xs"
           >
-            <Plus className="w-3.5 h-3.5 text-amber-300" />
+            <Plus className="w-3.5 h-3.5 text-warning" />
             <span>Upload Photo</span>
           </button>
         </div>
@@ -548,20 +548,20 @@ export default function VendorProfileEditorPage() {
         {portfolio.length === 0 ? (
           <div
             onClick={() => setPhotoModalOpen(true)}
-            className="border-2 border-dashed border-slate-200 rounded-2xl p-8 text-center cursor-pointer hover:border-brand-primary hover:bg-slate-50/50 transition-colors"
+            className="border-2 border-dashed border-border rounded-2xl p-8 text-center cursor-pointer hover:border-brand-primary hover:bg-surface-elevated/50 transition-colors"
           >
             <div className="w-10 h-10 rounded-full bg-indigo-50 text-brand-primary flex items-center justify-center mx-auto mb-2">
               <UploadCloud className="w-5 h-5" />
             </div>
             <p className="text-xs font-bold text-[#0F0C3B]">No portfolio photos uploaded yet</p>
-            <p className="text-[11px] text-slate-400 mt-0.5">Click here to upload photos of your past work</p>
+            <p className="text-[11px] text-foreground-muted mt-0.5">Click here to upload photos of your past work</p>
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {portfolio.map((item) => (
               <div
                 key={item.id}
-                className="group relative rounded-xl overflow-hidden border border-slate-200 h-44 bg-slate-100 shadow-xs"
+                className="group relative rounded-xl overflow-hidden border border-border h-44 bg-surface-sunken shadow-xs"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -573,12 +573,12 @@ export default function VendorProfileEditorPage() {
                   <button
                     type="button"
                     onClick={() => handleDeletePhoto(item.id)}
-                    className="self-end p-1.5 rounded-full bg-black/60 text-white hover:bg-rose-600 transition-colors cursor-pointer shadow-xs"
+                    className="self-end p-1.5 rounded-full bg-black/60 text-foreground hover:bg-rose-600 transition-colors cursor-pointer shadow-xs"
                     title="Remove photo"
                   >
                     <Trash2 className="w-3 h-3" />
                   </button>
-                  <p className="text-[11px] font-bold text-white line-clamp-2 leading-tight">
+                  <p className="text-[11px] font-bold text-foreground line-clamp-2 leading-tight">
                     {item.title}
                   </p>
                 </div>
@@ -591,16 +591,16 @@ export default function VendorProfileEditorPage() {
       {/* Add Photo Modal with File Upload & URL Option */}
       {photoModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-slate-100 animate-in fade-in text-xs">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="bg-surface rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-border animate-in fade-in text-xs">
+            <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
                 <h3 className="text-sm font-bold text-[#0F0C3B]">Add Event Media to Portfolio</h3>
-                <p className="text-[11px] text-slate-500">Upload high-res event photography from your device or paste a URL</p>
+                <p className="text-[11px] text-foreground-muted">Upload high-res event photography from your device or paste a URL</p>
               </div>
               <button
                 type="button"
                 onClick={() => setPhotoModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 p-1 rounded-lg"
+                className="text-foreground-muted hover:text-foreground-secondary p-1 rounded-lg"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -631,7 +631,7 @@ export default function VendorProfileEditorPage() {
                     ? "border-brand-primary bg-indigo-50/50 scale-[1.01]"
                     : modalFilePreview
                     ? "border-emerald-300 bg-emerald-50/30"
-                    : "border-slate-300 bg-[#F8F9FD] hover:border-brand-primary"
+                    : "border-border bg-[#F8F9FD] hover:border-brand-primary"
                 )}
               >
                 {modalFilePreview ? (
@@ -640,7 +640,7 @@ export default function VendorProfileEditorPage() {
                     <img
                       src={modalFilePreview}
                       alt="Preview"
-                      className="w-32 h-20 object-cover rounded-lg border border-slate-200 mx-auto shadow-xs"
+                      className="w-32 h-20 object-cover rounded-lg border border-border mx-auto shadow-xs"
                     />
                     <p className="text-emerald-700 font-bold text-xs">Photo selected! Click to change</p>
                   </div>
@@ -648,14 +648,14 @@ export default function VendorProfileEditorPage() {
                   <>
                     <UploadCloud className="w-8 h-8 text-brand-primary mb-2" />
                     <p className="font-bold text-[#0F0C3B] text-xs">Drag &amp; drop an event photo, or click to browse</p>
-                    <p className="text-[10px] text-slate-400 mt-0.5">JPG, PNG, WEBP up to 50MB</p>
+                    <p className="text-[10px] text-foreground-muted mt-0.5">JPG, PNG, WEBP up to 50MB</p>
                   </>
                 )}
               </div>
 
               {/* Alternative: Image URL */}
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Or paste photo URL</label>
+                <label className="block text-foreground-secondary font-bold mb-1">Or paste photo URL</label>
                 <input
                   type="url"
                   placeholder="https://images.unsplash.com/... or hosted URL"
@@ -666,41 +666,41 @@ export default function VendorProfileEditorPage() {
                       setModalFilePreview(e.target.value.trim());
                     }
                   }}
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 text-xs focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground text-xs focus:outline-none focus:border-brand-primary"
                 />
               </div>
 
               {/* Caption */}
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Caption / Event Title *</label>
+                <label className="block text-foreground-secondary font-bold mb-1">Caption / Event Title *</label>
                 <input
                   type="text"
                   required
                   placeholder="e.g. Grand Ballroom Wedding Stage &amp; Ambient Lighting"
                   value={modalPhotoTitle}
                   onChange={(e) => setModalPhotoTitle(e.target.value)}
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 text-xs focus:outline-none focus:border-brand-primary font-medium"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground text-xs focus:outline-none focus:border-brand-primary font-medium"
                 />
               </div>
 
               {/* Modal Buttons */}
-              <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+              <div className="flex justify-end gap-2 pt-2 border-t border-border">
                 <button
                   type="button"
                   onClick={() => setPhotoModalOpen(false)}
-                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold cursor-pointer"
+                  className="px-4 py-2 bg-surface-sunken hover:bg-slate-200 text-foreground-secondary rounded-xl font-bold cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isAddingPhoto || isUploadingMedia}
-                  className="px-5 py-2 bg-[#0F0C3B] hover:bg-[#18124E] text-white rounded-xl font-bold flex items-center gap-1.5 cursor-pointer disabled:opacity-60 shadow-sm"
+                  className="px-5 py-2 bg-[#0F0C3B] hover:bg-[#18124E] text-foreground rounded-xl font-bold flex items-center gap-1.5 cursor-pointer disabled:opacity-60 shadow-sm"
                 >
                   {isAddingPhoto || isUploadingMedia ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   ) : (
-                    <Plus className="w-3.5 h-3.5 text-amber-300" />
+                    <Plus className="w-3.5 h-3.5 text-warning" />
                   )}
                   <span>Add to Portfolio</span>
                 </button>

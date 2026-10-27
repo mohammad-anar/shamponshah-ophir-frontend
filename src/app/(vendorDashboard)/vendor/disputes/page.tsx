@@ -102,34 +102,34 @@ export default function VendorDisputesPage() {
       case "OPEN":
         return (
           <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-200 flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
+            <span className="w-1.5 h-1.5 rounded-full bg-warning-solid text-on-brand animate-pulse" />
             Response Required
           </span>
         );
       case "UNDER_REVIEW":
         return (
           <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-800 border border-indigo-200 flex items-center gap-1.5">
-            <Clock className="w-3 h-3 text-indigo-600" />
+            <Clock className="w-3 h-3 text-info" />
             Under Mediation Review
           </span>
         );
       case "RESOLVED_CLIENT":
         return (
           <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-1.5">
-            <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+            <CheckCircle2 className="w-3 h-3 text-success" />
             Resolved (Client Refunded)
           </span>
         );
       case "RESOLVED_VENDOR":
         return (
           <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-1.5">
-            <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+            <CheckCircle2 className="w-3 h-3 text-success" />
             Resolved in Vendor's Favor
           </span>
         );
       default:
         return (
-          <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+          <span className="px-2.5 py-1 rounded-full text-xs font-bold bg-surface-sunken text-foreground-secondary border border-border">
             {status || "Closed"}
           </span>
         );
@@ -149,14 +149,14 @@ export default function VendorDisputesPage() {
               Ophir Escrow Protected
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Review client dispute filings, submit fulfillment proof &amp; statements, or authorize escrow resolutions.
           </p>
         </div>
 
         <Link
           href="/vendor/orders"
-          className="px-4 py-2 bg-white border border-slate-200 hover:bg-slate-50 text-[#0F0C3B] rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 self-start sm:self-auto"
+          className="px-4 py-2 bg-surface border border-border hover:bg-surface-elevated text-[#0F0C3B] rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 self-start sm:self-auto"
         >
           <span>View Orders</span>
           <ChevronRight className="w-3.5 h-3.5" />
@@ -166,9 +166,9 @@ export default function VendorDisputesPage() {
       {/* Escrow Mediation Assurance Banner */}
       <div className="p-4 bg-indigo-50/70 border border-indigo-100 rounded-2xl flex items-start gap-3">
         <ShieldAlert className="w-5 h-5 text-indigo-700 shrink-0 mt-0.5" />
-        <div className="text-xs text-slate-700 leading-relaxed">
+        <div className="text-xs text-foreground-secondary leading-relaxed">
           <p className="font-bold text-[#0F0C3B]">How Vendor Dispute Resolution Works:</p>
-          <p className="text-slate-600 mt-0.5">
+          <p className="text-foreground-secondary mt-0.5">
             When a client files a dispute, the disputed milestone funds remain securely held in the Ophir Escrow Vault. 
             You have the opportunity to provide your statement and upload delivery proof. If mutually resolved or confirmed, 
             the mediation desk finalizes the settlement via Stripe Connect.
@@ -178,35 +178,35 @@ export default function VendorDisputesPage() {
 
       {/* Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
+        <div className="bg-surface p-5 rounded-2xl border border-border shadow-xs flex items-center justify-between">
           <div>
-            <span className="text-[10px] uppercase font-bold text-slate-400">Action Required</span>
+            <span className="text-[10px] uppercase font-bold text-foreground-muted">Action Required</span>
             <div className="text-2xl font-black text-amber-600 mt-0.5">{openCasesCount}</div>
-            <p className="text-[11px] text-slate-500 mt-0.5">Awaiting your statement</p>
+            <p className="text-[11px] text-foreground-muted mt-0.5">Awaiting your statement</p>
           </div>
           <div className="p-3 bg-amber-50 rounded-xl text-amber-600">
             <AlertCircle className="w-6 h-6" />
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
+        <div className="bg-surface p-5 rounded-2xl border border-border shadow-xs flex items-center justify-between">
           <div>
-            <span className="text-[10px] uppercase font-bold text-slate-400">Under Mediation</span>
+            <span className="text-[10px] uppercase font-bold text-foreground-muted">Under Mediation</span>
             <div className="text-2xl font-black text-indigo-700 mt-0.5">{underReviewCount}</div>
-            <p className="text-[11px] text-slate-500 mt-0.5">Reviewed by Ophir Trust Desk</p>
+            <p className="text-[11px] text-foreground-muted mt-0.5">Reviewed by Ophir Trust Desk</p>
           </div>
-          <div className="p-3 bg-indigo-50 rounded-xl text-indigo-600">
+          <div className="p-3 bg-indigo-50 rounded-xl text-info">
             <Clock className="w-6 h-6" />
           </div>
         </div>
 
-        <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
+        <div className="bg-surface p-5 rounded-2xl border border-border shadow-xs flex items-center justify-between">
           <div>
-            <span className="text-[10px] uppercase font-bold text-slate-400">Resolved Cases</span>
+            <span className="text-[10px] uppercase font-bold text-foreground-muted">Resolved Cases</span>
             <div className="text-2xl font-black text-emerald-700 mt-0.5">{resolvedCount}</div>
-            <p className="text-[11px] text-slate-500 mt-0.5">Settled or closed</p>
+            <p className="text-[11px] text-foreground-muted mt-0.5">Settled or closed</p>
           </div>
-          <div className="p-3 bg-emerald-50 rounded-xl text-emerald-600">
+          <div className="p-3 bg-emerald-50 rounded-xl text-success">
             <CheckCircle2 className="w-6 h-6" />
           </div>
         </div>
@@ -221,17 +221,17 @@ export default function VendorDisputesPage() {
         </div>
 
         {isLoading ? (
-          <div className="p-12 bg-white rounded-2xl border border-slate-200 text-center text-slate-400 flex flex-col items-center gap-2">
+          <div className="p-12 bg-surface rounded-2xl border border-border text-center text-foreground-muted flex flex-col items-center gap-2">
             <Loader2 className="w-6 h-6 animate-spin text-[#0F0C3B]" />
             <span className="text-xs">Loading resolution cases...</span>
           </div>
         ) : disputes.length === 0 ? (
-          <div className="p-12 bg-white rounded-2xl border border-slate-200 text-center space-y-3 shadow-xs">
-            <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mx-auto">
+          <div className="p-12 bg-surface rounded-2xl border border-border text-center space-y-3 shadow-xs">
+            <div className="w-12 h-12 bg-emerald-50 text-success rounded-full flex items-center justify-center mx-auto">
               <ShieldCheck className="w-6 h-6" />
             </div>
             <h3 className="text-base font-bold text-[#0F0C3B]">No Disputes on Record</h3>
-            <p className="text-xs text-slate-500 max-w-sm mx-auto">
+            <p className="text-xs text-foreground-muted max-w-sm mx-auto">
               You maintain a clean dispute record! All client orders and milestone deliveries are proceeding normally.
             </p>
           </div>
@@ -243,21 +243,21 @@ export default function VendorDisputesPage() {
               return (
                 <div
                   key={d.id}
-                  className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-4 transition-all"
+                  className="bg-surface border border-border rounded-2xl p-5 shadow-xs space-y-4 transition-all"
                 >
                   {/* Card Header */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border pb-3">
                     <div className="flex items-center gap-2.5 flex-wrap">
                       <span className="font-mono text-xs font-black text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded">
                         {d.disputeNumber || `DISP-${d.id.slice(-6).toUpperCase()}`}
                       </span>
-                      <span className="text-xs font-bold text-slate-300">•</span>
-                      <span className="text-xs font-semibold text-slate-700">
+                      <span className="text-xs font-bold text-foreground-secondary">•</span>
+                      <span className="text-xs font-semibold text-foreground-secondary">
                         Order #{d.orderId}
                       </span>
-                      <span className="text-xs font-bold text-slate-300">•</span>
-                      <span className="text-xs font-medium text-slate-500">
-                        Client: <strong className="text-slate-800">{d.clientName || "Host Client"}</strong>
+                      <span className="text-xs font-bold text-foreground-secondary">•</span>
+                      <span className="text-xs font-medium text-foreground-muted">
+                        Client: <strong className="text-foreground">{d.clientName || "Host Client"}</strong>
                       </span>
                     </div>
 
@@ -267,24 +267,24 @@ export default function VendorDisputesPage() {
                   </div>
 
                   {/* Service & Escrow Info */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-slate-50 p-4 rounded-xl text-xs">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-surface-elevated p-4 rounded-xl text-xs">
                     <div>
-                      <span className="text-slate-400 block text-[10px] uppercase font-bold">Service Disputed</span>
+                      <span className="text-foreground-muted block text-[10px] uppercase font-bold">Service Disputed</span>
                       <strong className="text-[#0F0C3B] text-sm mt-0.5 block">{d.serviceTitle}</strong>
                     </div>
                     <div>
-                      <span className="text-slate-400 block text-[10px] uppercase font-bold">Escrow Amount in Custody</span>
+                      <span className="text-foreground-muted block text-[10px] uppercase font-bold">Escrow Amount in Custody</span>
                       <strong className="text-indigo-700 text-sm mt-0.5 block">${d.amountInCustody}</strong>
                     </div>
                     <div>
-                      <span className="text-slate-400 block text-[10px] uppercase font-bold">Opened Date</span>
-                      <span className="text-slate-600 mt-0.5 block">{d.openedDate || "Recent"}</span>
+                      <span className="text-foreground-muted block text-[10px] uppercase font-bold">Opened Date</span>
+                      <span className="text-foreground-secondary mt-0.5 block">{d.openedDate || "Recent"}</span>
                     </div>
                   </div>
 
                   {/* Client Reason */}
                   <div className="space-y-1.5 text-xs">
-                    <span className="text-slate-500 font-bold block">Client Claim / Dispute Reason:</span>
+                    <span className="text-foreground-muted font-bold block">Client Claim / Dispute Reason:</span>
                     <div className="p-3 bg-rose-50/60 border border-rose-100 rounded-xl text-rose-950 leading-relaxed font-medium">
                       "{d.reason}"
                     </div>
@@ -292,9 +292,9 @@ export default function VendorDisputesPage() {
 
                   {/* Evidence / Attachments if any */}
                   {d.evidence && (
-                    <div className="p-3 bg-slate-50 rounded-xl text-xs space-y-1">
-                      <span className="font-bold text-slate-500 block">Submitted Evidence:</span>
-                      <p className="text-slate-700">{typeof d.evidence === "string" ? d.evidence : JSON.stringify(d.evidence)}</p>
+                    <div className="p-3 bg-surface-elevated rounded-xl text-xs space-y-1">
+                      <span className="font-bold text-foreground-muted block">Submitted Evidence:</span>
+                      <p className="text-foreground-secondary">{typeof d.evidence === "string" ? d.evidence : JSON.stringify(d.evidence)}</p>
                     </div>
                   )}
 
@@ -308,8 +308,8 @@ export default function VendorDisputesPage() {
 
                   {/* Messages / Statement History Thread */}
                   {Array.isArray(d.messages) && d.messages.length > 0 && (
-                    <div className="space-y-2 pt-2 border-t border-slate-100 text-xs">
-                      <span className="font-bold text-slate-500 block">Mediation Messages &amp; Vendor Responses ({d.messages.length}):</span>
+                    <div className="space-y-2 pt-2 border-t border-border text-xs">
+                      <span className="font-bold text-foreground-muted block">Mediation Messages &amp; Vendor Responses ({d.messages.length}):</span>
                       <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
                         {d.messages.map((m: any) => (
                           <div 
@@ -317,16 +317,16 @@ export default function VendorDisputesPage() {
                             className={`p-3 rounded-xl ${
                               m.senderRole === "VENDOR" 
                                 ? "bg-indigo-50/80 border border-indigo-100 ml-4" 
-                                : "bg-slate-50 border border-slate-200 mr-4"
+                                : "bg-surface-elevated border border-border mr-4"
                             }`}
                           >
-                            <div className="flex items-center justify-between text-[10px] text-slate-500 mb-1">
+                            <div className="flex items-center justify-between text-[10px] text-foreground-muted mb-1">
                               <span className="font-bold uppercase tracking-wider text-[#0F0C3B]">
                                 {m.senderRole === "VENDOR" ? "Your Response" : m.senderRole}
                               </span>
                               <span>{m.createdAt ? new Date(m.createdAt).toLocaleDateString() : ""}</span>
                             </div>
-                            <p className="text-slate-700 leading-relaxed">{m.content}</p>
+                            <p className="text-foreground-secondary leading-relaxed">{m.content}</p>
                             {Array.isArray(m.attachments) && m.attachments.length > 0 && (
                               <div className="mt-1 flex items-center gap-2">
                                 {m.attachments.map((att: string, idx: number) => (
@@ -335,7 +335,7 @@ export default function VendorDisputesPage() {
                                     href={att}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="text-indigo-600 underline text-[11px] flex items-center gap-1"
+                                    className="text-info underline text-[11px] flex items-center gap-1"
                                   >
                                     Proof Attachment #{idx + 1} <ExternalLink className="w-3 h-3" />
                                   </a>
@@ -350,7 +350,7 @@ export default function VendorDisputesPage() {
 
                   {/* Action Buttons for Vendor */}
                   {isActionable && (
-                    <div className="pt-3 border-t border-slate-100 flex items-center justify-end gap-3 flex-wrap">
+                    <div className="pt-3 border-t border-border flex items-center justify-end gap-3 flex-wrap">
                       <button
                         onClick={() => handleOpenAcceptRefund(d)}
                         className="px-3.5 py-2 rounded-xl text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 transition-colors cursor-pointer"
@@ -360,9 +360,9 @@ export default function VendorDisputesPage() {
 
                       <button
                         onClick={() => handleOpenResponse(d)}
-                        className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-[#0F0C3B] hover:bg-[#1C1656] shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+                        className="px-4 py-2 rounded-xl text-xs font-bold text-foreground bg-[#0F0C3B] hover:bg-[#1C1656] shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
                       >
-                        <MessageSquare className="w-3.5 h-3.5 text-amber-300" />
+                        <MessageSquare className="w-3.5 h-3.5 text-warning" />
                         <span>Submit Vendor Statement &amp; Proof</span>
                       </button>
                     </div>
@@ -377,15 +377,15 @@ export default function VendorDisputesPage() {
       {/* Modal: Submit Statement & Evidence */}
       {responseModalOpen && activeDispute && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-5 shadow-2xl animate-in zoom-in-95 duration-200">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="bg-surface rounded-2xl max-w-lg w-full p-6 space-y-5 shadow-2xl animate-in zoom-in-95 duration-200">
+            <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
                 <h3 className="font-bold text-[#0F0C3B] text-base">Submit Dispute Statement</h3>
-                <p className="text-xs text-slate-500">Order #{activeDispute.orderId} • {activeDispute.serviceTitle}</p>
+                <p className="text-xs text-foreground-muted">Order #{activeDispute.orderId} • {activeDispute.serviceTitle}</p>
               </div>
               <button
                 onClick={() => setResponseModalOpen(false)}
-                className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                className="p-1 rounded-lg text-foreground-muted hover:text-foreground-secondary hover:bg-surface-sunken"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -398,7 +398,7 @@ export default function VendorDisputesPage() {
               </div>
 
               <div className="space-y-1.5">
-                <label className="font-bold text-slate-700 block">
+                <label className="font-bold text-foreground-secondary block">
                   Your Vendor Response / Evidence Statement *
                 </label>
                 <textarea
@@ -407,12 +407,12 @@ export default function VendorDisputesPage() {
                   value={responseText}
                   onChange={(e) => setResponseText(e.target.value)}
                   placeholder="Detail the services delivered, milestones completed, agreement terms, or any communication with the client..."
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-3 text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-indigo-600 focus:bg-surface transition-all"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <label className="font-bold text-slate-700 block">
+                <label className="font-bold text-foreground-secondary block">
                   Evidence Attachment URL (Optional)
                 </label>
                 <input
@@ -420,25 +420,25 @@ export default function VendorDisputesPage() {
                   value={evidenceUrl}
                   onChange={(e) => setEvidenceUrl(e.target.value)}
                   placeholder="https://drive.google.com/... or photo/contract link"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-indigo-600 focus:bg-white transition-all"
+                  className="w-full bg-surface-elevated border border-border rounded-xl px-3 py-2 text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-indigo-600 focus:bg-surface transition-all"
                 />
-                <span className="text-[11px] text-slate-400">
+                <span className="text-[11px] text-foreground-muted">
                   Provide a link to delivery files, event photos, logs, or signed agreements for mediator review.
                 </span>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-border">
                 <button
                   type="button"
                   onClick={() => setResponseModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-slate-600 hover:bg-slate-100 font-bold"
+                  className="px-4 py-2 rounded-xl text-foreground-secondary hover:bg-surface-sunken font-bold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isResponding || !responseText.trim()}
-                  className="px-5 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#1C1656] text-white font-bold transition-all shadow-sm flex items-center gap-2 disabled:opacity-50"
+                  className="px-5 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#1C1656] text-foreground font-bold transition-all shadow-sm flex items-center gap-2 disabled:opacity-50"
                 >
                   {isResponding && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                   <span>Submit Statement</span>
@@ -452,20 +452,20 @@ export default function VendorDisputesPage() {
       {/* Modal: Confirm Accept Refund */}
       {refundConfirmOpen && activeDispute && (
         <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-in zoom-in-95 duration-200">
+          <div className="bg-surface rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl animate-in zoom-in-95 duration-200">
             <div className="w-12 h-12 bg-rose-50 text-rose-600 rounded-full flex items-center justify-center mx-auto">
               <Scale className="w-6 h-6" />
             </div>
 
             <div className="text-center space-y-1.5">
               <h3 className="font-bold text-[#0F0C3B] text-base">Authorize Escrow Refund?</h3>
-              <p className="text-xs text-slate-500 leading-relaxed">
+              <p className="text-xs text-foreground-muted leading-relaxed">
                 You are agreeing to resolve Dispute <strong>#{activeDispute.disputeNumber || activeDispute.id.slice(-6).toUpperCase()}</strong> by refunding the escrow amount of <strong>${activeDispute.amountInCustody}</strong> back to the client.
               </p>
             </div>
 
-            <div className="p-3 bg-slate-50 rounded-xl text-[11px] text-slate-600 space-y-1">
-              <span className="font-bold text-slate-700 block">Note:</span>
+            <div className="p-3 bg-surface-elevated rounded-xl text-[11px] text-foreground-secondary space-y-1">
+              <span className="font-bold text-foreground-secondary block">Note:</span>
               <p>The associated order will be marked as cancelled/resolved and funds will be released to the client via Stripe.</p>
             </div>
 
@@ -473,7 +473,7 @@ export default function VendorDisputesPage() {
               <button
                 type="button"
                 onClick={() => setRefundConfirmOpen(false)}
-                className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100"
+                className="px-4 py-2 rounded-xl text-xs font-bold text-foreground-secondary hover:bg-surface-sunken"
               >
                 No, Go Back
               </button>
@@ -481,7 +481,7 @@ export default function VendorDisputesPage() {
                 type="button"
                 disabled={isAccepting}
                 onClick={handleConfirmRefund}
-                className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 disabled:opacity-50"
+                className="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 disabled:opacity-50"
               >
                 {isAccepting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                 <span>Yes, Authorize Refund</span>

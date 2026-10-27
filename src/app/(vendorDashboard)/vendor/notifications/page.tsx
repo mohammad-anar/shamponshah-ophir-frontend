@@ -148,13 +148,13 @@ export default function VendorNotificationsPage() {
         return <Briefcase className="w-4 h-4 text-brand-primary" />;
       case "milestone":
       case "escrow":
-        return <ShieldCheck className="w-4 h-4 text-emerald-600" />;
+        return <ShieldCheck className="w-4 h-4 text-success" />;
       case "message":
-        return <MessageSquare className="w-4 h-4 text-indigo-600" />;
+        return <MessageSquare className="w-4 h-4 text-info" />;
       case "review":
-        return <Star className="w-4 h-4 text-amber-500" />;
+        return <Star className="w-4 h-4 text-warning" />;
       default:
-        return <Bell className="w-4 h-4 text-slate-500" />;
+        return <Bell className="w-4 h-4 text-foreground-muted" />;
     }
   };
 
@@ -166,12 +166,12 @@ export default function VendorNotificationsPage() {
           <div className="flex items-center gap-2">
             <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">Vendor Notifications</h1>
             {unreadCount > 0 && (
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#0F0C3B] text-white">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#0F0C3B] text-foreground">
                 {unreadCount} Unread
               </span>
             )}
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Real-time notifications for new event leads, milestone payout releases, and client inquiries.
           </p>
         </div>
@@ -179,7 +179,7 @@ export default function VendorNotificationsPage() {
         {unreadCount > 0 && (
           <button
             onClick={handleMarkAllAsRead}
-            className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-[#0F0C3B] rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
+            className="px-3.5 py-2 bg-surface-sunken hover:bg-slate-200 text-[#0F0C3B] rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start sm:self-auto cursor-pointer"
           >
             <CheckCheck className="w-4 h-4 text-brand-primary" /> Mark All as Read
           </button>
@@ -194,8 +194,8 @@ export default function VendorNotificationsPage() {
             onClick={() => setFilterType(tab)}
             className={`px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all ${
               filterType === tab
-                ? "bg-[#0F0C3B] text-white shadow-xs"
-                : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50"
+                ? "bg-[#0F0C3B] text-foreground shadow-xs"
+                : "bg-surface text-foreground-secondary border border-border hover:bg-surface-elevated"
             }`}
           >
             {tab === "All" ? "All Updates" :
@@ -210,15 +210,15 @@ export default function VendorNotificationsPage() {
       {/* Notifications List */}
       <div className="space-y-3">
         {isLoading ? (
-          <div className="py-12 flex flex-col items-center justify-center text-slate-400 gap-2 text-xs">
+          <div className="py-12 flex flex-col items-center justify-center text-foreground-muted gap-2 text-xs">
             <Loader2 className="w-5 h-5 animate-spin text-brand-primary" />
             <span>Loading notifications...</span>
           </div>
         ) : filtered.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-500 text-xs">
-            <Bell className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+          <div className="bg-surface rounded-2xl border border-border p-12 text-center text-foreground-muted text-xs">
+            <Bell className="w-8 h-8 text-foreground-secondary mx-auto mb-2" />
             <p className="font-bold text-[#0F0C3B]">You&apos;re all caught up!</p>
-            <p className="text-slate-400 mt-0.5">No notifications matching selected filter.</p>
+            <p className="text-foreground-muted mt-0.5">No notifications matching selected filter.</p>
           </div>
         ) : (
           filtered.map((n) => (
@@ -227,11 +227,11 @@ export default function VendorNotificationsPage() {
               onClick={() => handleMarkAsRead(n.id)}
               className={`p-4 rounded-2xl border transition-all flex items-start gap-4 cursor-pointer ${
                 n.read
-                  ? "bg-white border-slate-200 shadow-2xs opacity-80"
+                  ? "bg-surface border-border shadow-2xs opacity-80"
                   : "bg-indigo-50/40 border-indigo-200 shadow-xs"
               }`}
             >
-              <div className="w-10 h-10 rounded-xl bg-white border border-slate-200 shadow-2xs flex items-center justify-center flex-shrink-0 mt-0.5">
+              <div className="w-10 h-10 rounded-xl bg-surface border border-border shadow-2xs flex items-center justify-center flex-shrink-0 mt-0.5">
                 {getIcon(n.type)}
               </div>
 
@@ -243,10 +243,10 @@ export default function VendorNotificationsPage() {
                       <span className="w-2 h-2 rounded-full bg-brand-primary flex-shrink-0" />
                     )}
                   </div>
-                  <span className="text-[10px] text-slate-400 flex-shrink-0">{n.time}</span>
+                  <span className="text-[10px] text-foreground-muted flex-shrink-0">{n.time}</span>
                 </div>
 
-                <p className="text-xs text-slate-600 leading-relaxed">
+                <p className="text-xs text-foreground-secondary leading-relaxed">
                   {n.description}
                 </p>
 
@@ -257,13 +257,13 @@ export default function VendorNotificationsPage() {
                   >
                     {n.actionLabel} <ChevronRight className="w-3 h-3" />
                   </Link>
-                  <span className="text-slate-300">&bull;</span>
+                  <span className="text-foreground-secondary">&bull;</span>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       handleDelete(n.id);
                     }}
-                    className="text-[11px] text-slate-400 hover:text-rose-600 transition-colors"
+                    className="text-[11px] text-foreground-muted hover:text-rose-600 transition-colors"
                   >
                     Dismiss
                   </button>

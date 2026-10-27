@@ -71,7 +71,7 @@ export default function VendorPayoutSettingsPage() {
               {isConnected ? "Stripe Connect Active" : "Stripe Setup Pending"}
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Complete identity verification and manage your payout account through Stripe Express.
           </p>
         </div>
@@ -79,16 +79,16 @@ export default function VendorPayoutSettingsPage() {
       </div>
 
       {/* Stripe Connect Banner */}
-      <div className="bg-[#0F0C3B] text-white p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md">
+      <div className="bg-[#0F0C3B] text-foreground p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-white/10 rounded-xl flex-shrink-0">
-            <ShieldCheck className="w-6 h-6 text-emerald-400" />
+          <div className="p-3 bg-surface/10 rounded-xl flex-shrink-0">
+            <ShieldCheck className="w-6 h-6 text-success" />
           </div>
           <div>
             <h3 className="text-sm font-bold flex items-center gap-1.5">
               <span>Stripe Connect Express</span>
               {isConnected && (
-                <span className="text-[10px] font-mono px-2 py-0.2 bg-white/20 rounded">
+                <span className="text-[10px] font-mono px-2 py-0.2 bg-surface/20 rounded">
                   Connected
                 </span>
               )}
@@ -105,7 +105,7 @@ export default function VendorPayoutSettingsPage() {
           <button
             onClick={handleOpenStripePortal}
             disabled={isPortalLoading}
-            className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-xl text-xs font-bold border border-white/20 transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
+            className="px-4 py-2 bg-surface/10 hover:bg-surface/20 text-foreground rounded-xl text-xs font-bold border border-border-strong transition-colors flex items-center gap-1.5 whitespace-nowrap cursor-pointer"
           >
             Stripe Portal <ArrowUpRight className="w-3.5 h-3.5" />
           </button>
@@ -113,7 +113,7 @@ export default function VendorPayoutSettingsPage() {
           <button
             onClick={handleConnectStripe}
             disabled={isConnecting || isStatusLoading}
-            className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shadow-md cursor-pointer disabled:opacity-50"
+            className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shadow-md cursor-pointer disabled:opacity-50"
           >
             {isConnecting ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -125,18 +125,18 @@ export default function VendorPayoutSettingsPage() {
         )}
       </div>
 
-      <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-xs">
+      <div className="bg-surface border border-border rounded-2xl p-6 space-y-4 shadow-xs">
         <h2 className="text-sm font-bold text-[#0F0C3B]">Bank and payout details</h2>
-        <p className="text-xs text-slate-600">
+        <p className="text-xs text-foreground-secondary">
           Add or update bank details in Stripe Express. This marketplace does not collect or store bank account or routing numbers.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <span className="block text-slate-500">Transfer capability</span>
+          <div className="p-3 rounded-xl bg-surface-elevated border border-border">
+            <span className="block text-foreground-muted">Transfer capability</span>
             <strong className="text-[#0F0C3B]">{stripeStatus.transfersEnabled ? "Enabled" : "Setup required"}</strong>
           </div>
-          <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <span className="block text-slate-500">Bank payouts</span>
+          <div className="p-3 rounded-xl bg-surface-elevated border border-border">
+            <span className="block text-foreground-muted">Bank payouts</span>
             <strong className="text-[#0F0C3B]">{payoutsEnabled ? "Enabled" : "Setup required"}</strong>
           </div>
         </div>

@@ -43,11 +43,11 @@ export default function VendorRootLayout({
 
         {/* Unverified Vendor Warning Banner */}
         {isUnverifiedVendor && (
-          <div className="bg-amber-500/10 border-b border-amber-500/25 px-4 py-3 sm:px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-amber-200">
+          <div className="bg-warning-solid text-on-brand/10 border-b border-warning/30 px-4 py-3 sm:px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-amber-200">
             <div className="flex items-center gap-2.5">
-              <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
+              <AlertTriangle className="w-5 h-5 text-warning shrink-0" />
               <div className="text-xs sm:text-sm">
-                <span className="font-semibold text-white">Unverified Vendor Account:</span>{" "}
+                <span className="font-semibold text-foreground">Unverified Vendor Account:</span>{" "}
                 Please verify your email ({user.email}) to activate your account and start accepting bookings.
               </div>
             </div>
@@ -56,13 +56,13 @@ export default function VendorRootLayout({
                 type="button"
                 disabled={isResending}
                 onClick={handleResend}
-                className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-black text-xs font-bold transition-all shadow-xs cursor-pointer disabled:opacity-50"
+                className="px-3 py-1.5 rounded-lg bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-black text-xs font-bold transition-all shadow-xs cursor-pointer disabled:opacity-50"
               >
                 {isResending ? "Sending..." : "Resend Verification Email"}
               </button>
               <Link
                 href={`/verify-email?email=${encodeURIComponent(user.email)}&role=vendor`}
-                className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition-all border border-white/20"
+                className="px-3 py-1.5 rounded-lg bg-surface/10 hover:bg-surface/20 text-foreground text-xs font-semibold transition-all border border-border-strong"
               >
                 Verify Now
               </Link>

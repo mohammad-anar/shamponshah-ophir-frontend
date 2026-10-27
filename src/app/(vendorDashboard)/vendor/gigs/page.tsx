@@ -46,17 +46,17 @@ export default function VendorGigsPage() {
   return (
     <div className="space-y-6 pb-12">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-4">
         <div>
           <h1 className="text-2xl font-bold text-[#0F0C3B]">My Service Gigs</h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Manage your active marketplace listings, pricing packages, and discovery performance
           </p>
         </div>
 
         <Link
           href="/vendor/gigs/create"
-          className="px-4 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 self-start cursor-pointer"
+          className="px-4 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 self-start cursor-pointer"
         >
           <Plus className="w-4 h-4" /> Create New Gig
         </Link>
@@ -64,18 +64,18 @@ export default function VendorGigsPage() {
 
       {/* Main Content */}
       {isLoading ? (
-        <div className="py-20 flex flex-col items-center justify-center text-slate-400 gap-3 text-xs">
+        <div className="py-20 flex flex-col items-center justify-center text-foreground-muted gap-3 text-xs">
           <Loader2 className="w-8 h-8 animate-spin text-brand-primary" />
-          <span className="font-medium text-slate-600">Loading your service gigs...</span>
+          <span className="font-medium text-foreground-secondary">Loading your service gigs...</span>
         </div>
       ) : liveGigs.length === 0 ? (
-        <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center max-w-xl mx-auto my-8 space-y-4 shadow-xs">
+        <div className="bg-surface border border-border rounded-2xl p-12 text-center max-w-xl mx-auto my-8 space-y-4 shadow-xs">
           <div className="w-14 h-14 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center mx-auto text-brand-primary">
             <PackageOpen className="w-7 h-7" />
           </div>
           <div className="space-y-1">
             <h3 className="text-base font-bold text-[#0F0C3B]">No Service Gigs Yet</h3>
-            <p className="text-xs text-slate-500 leading-relaxed">
+            <p className="text-xs text-foreground-muted leading-relaxed">
               You haven&apos;t published any service listings yet. Create your first gig with custom
               package tiers and start getting event bookings from clients.
             </p>
@@ -83,9 +83,9 @@ export default function VendorGigsPage() {
           <div className="pt-2">
             <Link
               href="/vendor/gigs/create"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white text-xs font-bold shadow-md transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold shadow-md transition-all cursor-pointer"
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <Sparkles className="w-3.5 h-3.5 text-warning" />
               <span>Create Your First Gig</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
@@ -113,7 +113,7 @@ export default function VendorGigsPage() {
             return (
               <div
                 key={gig.id}
-                className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition-all overflow-hidden flex flex-col justify-between"
+                className="bg-surface rounded-2xl border border-border shadow-xs hover:shadow-md transition-all overflow-hidden flex flex-col justify-between"
               >
                 {/* Gig Cover Image */}
                 <div className="relative aspect-video w-full bg-slate-900 overflow-hidden">
@@ -125,25 +125,25 @@ export default function VendorGigsPage() {
                   />
                   <div className="absolute top-3 left-3">
                     {gig.status === "PENDING_VERIFICATION" ? (
-                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-amber-500 text-slate-950 shadow-sm flex items-center gap-1 animate-pulse">
+                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-warning-solid text-on-brand text-slate-950 shadow-sm flex items-center gap-1 animate-pulse">
                         <span className="w-1.5 h-1.5 rounded-full bg-slate-950" />
                         Pending Verification
                       </span>
                     ) : gig.status === "REJECTED" ? (
-                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-rose-600 text-white shadow-sm flex items-center gap-1">
+                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-rose-600 text-foreground shadow-sm flex items-center gap-1">
                         Rejected
                       </span>
                     ) : gig.status === "SUSPENDED" ? (
-                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-slate-800 text-rose-300 border border-rose-500/30 shadow-sm flex items-center gap-1">
+                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-slate-800 text-rose-300 border border-danger/30 shadow-sm flex items-center gap-1">
                         Suspended
                       </span>
                     ) : gig.status === "ACTIVE" ? (
-                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-emerald-600 text-white shadow-sm flex items-center gap-1">
+                      <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold bg-success-solid text-white text-foreground shadow-sm flex items-center gap-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-200" />
                         Active
                       </span>
                     ) : (
-                      <span className="px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-[#0F0C3B]/80 backdrop-blur-xs text-white">
+                      <span className="px-2.5 py-0.5 rounded-md text-[10px] font-bold bg-[#0F0C3B]/80 backdrop-blur-xs text-foreground">
                         {gig.status || "ACTIVE"}
                       </span>
                     )}
@@ -154,7 +154,7 @@ export default function VendorGigsPage() {
                       onClick={(e) => handleDelete(gig.id, e)}
                       disabled={isDeleting}
                       title="Archive Gig"
-                      className="w-7 h-7 rounded-full bg-white/80 hover:bg-red-600 hover:text-white backdrop-blur-xs text-slate-700 flex items-center justify-center transition-colors shadow-xs"
+                      className="w-7 h-7 rounded-full bg-surface/80 hover:bg-red-600 hover:text-foreground backdrop-blur-xs text-foreground-secondary flex items-center justify-center transition-colors shadow-xs"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -179,27 +179,27 @@ export default function VendorGigsPage() {
                   </div>
 
                   {/* Performance Metrics */}
-                  <div className="grid grid-cols-3 gap-2 py-2.5 border-y border-slate-100 text-center bg-slate-50/60 rounded-xl">
+                  <div className="grid grid-cols-3 gap-2 py-2.5 border-y border-border text-center bg-surface-elevated/60 rounded-xl">
                     <div>
-                      <span className="text-slate-400 text-[9px] uppercase font-bold block">
+                      <span className="text-foreground-muted text-[9px] uppercase font-bold block">
                         Orders
                       </span>
                       <span className="font-bold text-[#0F0C3B] text-xs">{orders}</span>
                     </div>
                     <div>
-                      <span className="text-slate-400 text-[9px] uppercase font-bold block">
+                      <span className="text-foreground-muted text-[9px] uppercase font-bold block">
                         Rating
                       </span>
                       <span className="font-bold text-amber-700 text-xs flex items-center justify-center gap-0.5">
-                        <Star className="w-2.5 h-2.5 text-amber-500 fill-amber-500" /> {rating}
+                        <Star className="w-2.5 h-2.5 text-warning fill-amber-500" /> {rating}
                       </span>
                     </div>
                     <div>
-                      <span className="text-slate-400 text-[9px] uppercase font-bold block">
+                      <span className="text-foreground-muted text-[9px] uppercase font-bold block">
                         Views
                       </span>
                       <span className="font-bold text-[#0F0C3B] text-xs flex items-center justify-center gap-0.5">
-                        <Eye className="w-2.5 h-2.5 text-slate-400" /> {views}
+                        <Eye className="w-2.5 h-2.5 text-foreground-muted" /> {views}
                       </span>
                     </div>
                   </div>
@@ -207,7 +207,7 @@ export default function VendorGigsPage() {
                   {/* Pricing and Action */}
                   <div className="flex items-center justify-between pt-1">
                     <div>
-                      <span className="text-[9px] text-slate-400 uppercase font-bold block">
+                      <span className="text-[9px] text-foreground-muted uppercase font-bold block">
                         Starting at
                       </span>
                       <span className="text-base font-extrabold text-[#0F0C3B]">{price}</span>
@@ -216,15 +216,15 @@ export default function VendorGigsPage() {
                     <div className="flex items-center gap-1.5">
                       <Link
                         href={`/vendor/gigs/${gig.id || gig.slug}`}
-                        className="px-2.5 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold transition-colors text-[11px]"
+                        className="px-2.5 py-1.5 rounded-lg border border-border hover:bg-surface-elevated text-foreground-secondary font-bold transition-colors text-[11px]"
                       >
                         Details
                       </Link>
                       <Link
                         href={`/vendor/gigs/${gig.id || gig.slug}/edit`}
-                        className="px-3 py-1.5 rounded-lg bg-[#0F0C3B] hover:bg-[#18124E] text-white font-bold transition-colors text-[11px] flex items-center gap-1 cursor-pointer"
+                        className="px-3 py-1.5 rounded-lg bg-[#0F0C3B] hover:bg-[#18124E] text-foreground font-bold transition-colors text-[11px] flex items-center gap-1 cursor-pointer"
                       >
-                        <Edit3 className="w-3 h-3 text-amber-300" />
+                        <Edit3 className="w-3 h-3 text-warning" />
                         <span>Edit</span>
                       </Link>
                     </div>

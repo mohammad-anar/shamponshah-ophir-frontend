@@ -81,24 +81,24 @@ export default function VendorOrderDetailPage() {
     return (
       <div className="min-h-[60vh] flex flex-col items-center justify-center gap-3">
         <Loader2 className="w-8 h-8 text-brand-primary animate-spin" />
-        <p className="text-xs text-slate-500 font-medium">Loading vendor order #{orderId}...</p>
+        <p className="text-xs text-foreground-muted font-medium">Loading vendor order #{orderId}...</p>
       </div>
     );
   }
 
   if (isError || !order) {
     return (
-      <div className="bg-white p-12 rounded-2xl border border-slate-200 text-center max-w-lg mx-auto my-12 space-y-4">
-        <div className="w-14 h-14 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mx-auto">
+      <div className="bg-surface p-12 rounded-2xl border border-border text-center max-w-lg mx-auto my-12 space-y-4">
+        <div className="w-14 h-14 bg-rose-50 text-danger rounded-full flex items-center justify-center mx-auto">
           <AlertTriangle className="w-7 h-7" />
         </div>
         <h2 className="text-xl font-bold text-[#0F0C3B]">Order Not Found</h2>
-        <p className="text-xs text-slate-500">
+        <p className="text-xs text-foreground-muted">
           The requested vendor order contract #{orderId} could not be retrieved.
         </p>
         <button
           onClick={() => router.push("/vendor/orders")}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-primary text-white rounded-xl text-xs font-bold hover:bg-brand-primary/90 transition-all"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand-primary text-foreground rounded-xl text-xs font-bold hover:bg-brand-primary/90 transition-all"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to All Orders</span>
@@ -274,13 +274,13 @@ export default function VendorOrderDetailPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => router.push("/vendor/orders")}
-            className="w-9 h-9 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 transition-colors shadow-xs"
+            className="w-9 h-9 rounded-xl border border-border bg-surface hover:bg-surface-elevated flex items-center justify-center text-foreground-secondary transition-colors shadow-xs"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-400 font-medium">Vendor Order Contract</span>
+              <span className="text-xs text-foreground-muted font-medium">Vendor Order Contract</span>
               <span className="text-xs font-bold text-brand-primary bg-indigo-50 px-2 py-0.5 rounded-md">
                 #{order.id}
               </span>
@@ -294,7 +294,7 @@ export default function VendorOrderDetailPage() {
         <div className="flex items-center gap-2 flex-wrap">
           <Link
             href={`/vendor/messages?userId=${clientUserId}&orderId=${order.id}&clientName=${encodeURIComponent(clientName)}`}
-            className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold shadow-xs transition-all"
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-brand text-on-brand hover:bg-indigo-700 text-foreground rounded-xl text-xs font-bold shadow-xs transition-all"
           >
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Chat with Client</span>
@@ -312,7 +312,7 @@ export default function VendorOrderDetailPage() {
 
           {isCompleted ? (
             <div className="inline-flex items-center gap-1.5 px-4 py-2 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-xl text-xs font-bold">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <CheckCircle2 className="w-4 h-4 text-success" />
               <span>Delivered</span>
             </div>
           ) : (
@@ -321,10 +321,10 @@ export default function VendorOrderDetailPage() {
               <button
                 onClick={() => handleOpenDelivery(null, true)}
                 className={cn(
-                  "inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold shadow-xs transition-all text-white",
+                  "inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold shadow-xs transition-all text-foreground",
                   hasPendingApproval
-                    ? "bg-amber-600 hover:bg-amber-700"
-                    : "bg-emerald-600 hover:bg-emerald-700"
+                    ? "bg-warning-solid text-on-brand hover:bg-amber-700"
+                    : "bg-success-solid text-white hover:bg-emerald-700"
                 )}
               >
                 <UploadCloud className="w-3.5 h-3.5" />
@@ -339,7 +339,7 @@ export default function VendorOrderDetailPage() {
       {order.escalatedToAdmin && (
         <div className="p-5 rounded-2xl border-2 border-rose-400 bg-rose-50 text-rose-900 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3.5">
-            <div className="w-10 h-10 rounded-xl bg-rose-600 text-white flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-rose-600 text-foreground flex items-center justify-center shrink-0">
               <AlertTriangle className="w-5 h-5" />
             </div>
             <div>
@@ -355,7 +355,7 @@ export default function VendorOrderDetailPage() {
                 An administrator has joined this order. The admin will review chat messages, contract delivery files, and submitted evidence to issue a binding determination.
               </p>
               {order.escalationReason && (
-                <p className="text-xs text-slate-700 mt-1.5 italic bg-white/80 p-2.5 rounded-lg border border-rose-200">
+                <p className="text-xs text-foreground-secondary mt-1.5 italic bg-surface/80 p-2.5 rounded-lg border border-rose-200">
                   Escalation statement: "{order.escalationReason}"
                 </p>
               )}
@@ -367,7 +367,7 @@ export default function VendorOrderDetailPage() {
       {/* Admin Resolution Decision Banner */}
       {order.adminResolution && (
         <div className="p-5 rounded-2xl border-2 border-indigo-300 bg-indigo-50/90 text-indigo-950 shadow-sm flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-brand text-on-brand text-foreground flex items-center justify-center shrink-0">
             <CheckCircle2 className="w-5 h-5" />
           </div>
           <div className="text-xs space-y-1">
@@ -382,7 +382,7 @@ export default function VendorOrderDetailPage() {
               {order.refundedAmount && ` Total refunded to client: $${Number(order.refundedAmount).toFixed(2)}.`}
             </p>
             {order.deliveryNotes && (
-              <p className="text-indigo-900/90 italic mt-1 bg-white p-2.5 rounded-xl border border-indigo-100">
+              <p className="text-indigo-900/90 italic mt-1 bg-surface p-2.5 rounded-xl border border-indigo-100">
                 "{order.deliveryNotes}"
               </p>
             )}
@@ -393,7 +393,7 @@ export default function VendorOrderDetailPage() {
       {/* Completed with Partial Refund Notice */}
       {order.status === "COMPLETED_WITH_PARTIAL_REFUND" && (
         <div className="p-5 rounded-2xl border-2 border-purple-300 bg-purple-50 text-purple-950 shadow-sm flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0">
+          <div className="w-10 h-10 rounded-xl bg-purple-600 text-foreground flex items-center justify-center shrink-0">
             <DollarSign className="w-5 h-5" />
           </div>
           <div className="text-xs space-y-1">
@@ -410,7 +410,7 @@ export default function VendorOrderDetailPage() {
       {order.cancelStatus === "REQUESTED" && (
         <div className="p-5 rounded-2xl border-2 border-amber-400 bg-amber-50 text-amber-950 shadow-sm space-y-3.5">
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-warning-solid text-on-brand text-foreground flex items-center justify-center shrink-0">
               <AlertTriangle className="w-5 h-5" />
             </div>
             <div className="flex-1 text-xs space-y-1">
@@ -422,17 +422,17 @@ export default function VendorOrderDetailPage() {
                   Action Required
                 </span>
               </div>
-              <p className="text-slate-700">
+              <p className="text-foreground-secondary">
                 Client requested to cancel this order with reason:
               </p>
-              <div className="p-2.5 bg-white rounded-xl border border-amber-200 font-semibold text-slate-800">
+              <div className="p-2.5 bg-surface rounded-xl border border-amber-200 font-semibold text-foreground">
                 "{order.cancelReason}"
-                {order.cancelNotes && <span className="block font-normal text-slate-600 mt-1">{order.cancelNotes}</span>}
+                {order.cancelNotes && <span className="block font-normal text-foreground-secondary mt-1">{order.cancelNotes}</span>}
               </div>
 
               {Array.isArray(order.cancelProofUrls) && order.cancelProofUrls.length > 0 && (
                 <div className="mt-2 space-y-1">
-                  <span className="text-[11px] font-bold text-slate-600">Client Submitted Evidence / Proof:</span>
+                  <span className="text-[11px] font-bold text-foreground-secondary">Client Submitted Evidence / Proof:</span>
                   <div className="flex flex-wrap gap-2">
                     {order.cancelProofUrls.map((url: string, i: number) => (
                       <a
@@ -440,7 +440,7 @@ export default function VendorOrderDetailPage() {
                         href={url}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 px-2.5 py-1 bg-white hover:bg-slate-50 border border-amber-300 rounded-lg text-indigo-600 font-bold text-[11px]"
+                        className="inline-flex items-center gap-1 px-2.5 py-1 bg-surface hover:bg-surface-elevated border border-amber-300 rounded-lg text-info font-bold text-[11px]"
                       >
                         <ExternalLink className="w-3 h-3" />
                         <span>Proof Attachment #{i + 1}</span>
@@ -453,7 +453,7 @@ export default function VendorOrderDetailPage() {
           </div>
 
           <div className="space-y-2 pt-1 border-t border-amber-200">
-            <label className="text-[11px] font-bold text-slate-700 block">
+            <label className="text-[11px] font-bold text-foreground-secondary block">
               Response Note / Rejection Reason (Optional):
             </label>
             <input
@@ -461,7 +461,7 @@ export default function VendorOrderDetailPage() {
               value={cancelResponseNote}
               onChange={(e) => setCancelResponseNote(e.target.value)}
               placeholder="e.g. Work is already prepared and non-refundable, or accepting full refund..."
-              className="w-full p-2.5 bg-white rounded-xl border border-amber-300 text-xs focus:ring-2 focus:ring-amber-500"
+              className="w-full p-2.5 bg-surface rounded-xl border border-amber-300 text-xs focus:ring-2 focus:ring-amber-500"
             />
 
             <div className="flex flex-wrap items-center gap-2 pt-1">
@@ -469,7 +469,7 @@ export default function VendorOrderDetailPage() {
                 type="button"
                 onClick={() => handleRespondCancel("ACCEPT")}
                 disabled={isRespondingCancel}
-                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 bg-success-solid text-white hover:bg-emerald-700 text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 <Check className="w-4 h-4" />
                 <span>Accept Cancellation &amp; Refund Client</span>
@@ -479,7 +479,7 @@ export default function VendorOrderDetailPage() {
                 type="button"
                 onClick={() => handleRespondCancel("REJECT")}
                 disabled={isRespondingCancel}
-                className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 <span>Decline Cancellation</span>
               </button>
@@ -488,7 +488,7 @@ export default function VendorOrderDetailPage() {
                 <button
                   type="button"
                   onClick={() => setEscalateModalOpen(true)}
-                  className="px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ml-auto"
+                  className="px-3.5 py-2 bg-surface hover:bg-surface-elevated border border-border text-foreground-secondary rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ml-auto"
                 >
                   <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />
                   <span>Escalate to Admin</span>
@@ -503,7 +503,7 @@ export default function VendorOrderDetailPage() {
       {order.refundStatus === "REQUESTED" && (
         <div className="p-5 rounded-2xl border-2 border-purple-400 bg-purple-50 text-purple-950 shadow-sm space-y-4">
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-purple-600 text-white flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-purple-600 text-foreground flex items-center justify-center shrink-0">
               <DollarSign className="w-5 h-5" />
             </div>
             <div className="flex-1 text-xs space-y-1.5">
@@ -515,9 +515,9 @@ export default function VendorOrderDetailPage() {
                   Action Required
                 </span>
               </div>
-              <p className="text-slate-700">
+              <p className="text-foreground-secondary">
                 Reason: "{order.refundReason}"
-                {order.refundNotes && <span className="block text-slate-600 mt-0.5">{order.refundNotes}</span>}
+                {order.refundNotes && <span className="block text-foreground-secondary mt-0.5">{order.refundNotes}</span>}
               </p>
 
               {Array.isArray(order.refundProofUrls) && order.refundProofUrls.length > 0 && (
@@ -528,7 +528,7 @@ export default function VendorOrderDetailPage() {
                       href={url}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1 px-2.5 py-1 bg-white hover:bg-slate-50 border border-purple-300 rounded-lg text-purple-700 font-bold text-[11px]"
+                      className="inline-flex items-center gap-1 px-2.5 py-1 bg-surface hover:bg-surface-elevated border border-purple-300 rounded-lg text-purple-700 font-bold text-[11px]"
                     >
                       <ExternalLink className="w-3 h-3" />
                       <span>Proof Attachment #{i + 1}</span>
@@ -540,16 +540,16 @@ export default function VendorOrderDetailPage() {
           </div>
 
           {/* Transparent Settlement Split Breakdown */}
-          <div className="p-3.5 bg-white rounded-xl border border-purple-200 text-xs space-y-2">
-            <div className="font-bold text-slate-800 flex items-center justify-between">
+          <div className="p-3.5 bg-surface rounded-xl border border-purple-200 text-xs space-y-2">
+            <div className="font-bold text-foreground flex items-center justify-between">
               <span>Settlement Breakdown If You Accept:</span>
               <span className="text-[10px] text-purple-700 bg-purple-100 font-bold px-2 py-0.5 rounded">
                 COMPLETED_WITH_PARTIAL_REFUND
               </span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center pt-1">
-              <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">
-                <span className="text-[10px] text-slate-500 block">Contract Total</span>
+              <div className="p-2 rounded-lg bg-surface-elevated border border-border">
+                <span className="text-[10px] text-foreground-muted block">Contract Total</span>
                 <strong className="text-sm font-bold text-[#0F0C3B]">${grandTotalNum.toFixed(2)}</strong>
               </div>
               <div className="p-2 rounded-lg bg-rose-50 border border-rose-100 text-rose-700">
@@ -557,18 +557,18 @@ export default function VendorOrderDetailPage() {
                 <strong className="text-sm font-bold">-${partialRefundAmountNum.toFixed(2)}</strong>
               </div>
               <div className="p-2 rounded-lg bg-indigo-50 border border-indigo-100 text-indigo-700">
-                <span className="text-[10px] text-indigo-600 block">15% Platform Fee</span>
+                <span className="text-[10px] text-info block">15% Platform Fee</span>
                 <strong className="text-sm font-bold">-${partialFee.toFixed(2)}</strong>
               </div>
               <div className="p-2 rounded-lg bg-emerald-50 border border-emerald-100 text-emerald-700">
-                <span className="text-[10px] text-emerald-600 block">Your Net Payout (85%)</span>
+                <span className="text-[10px] text-success block">Your Net Payout (85%)</span>
                 <strong className="text-sm font-bold">+${partialVendorNet.toFixed(2)}</strong>
               </div>
             </div>
           </div>
 
           <div className="space-y-2 pt-1 border-t border-purple-200">
-            <label className="text-[11px] font-bold text-slate-700 block">
+            <label className="text-[11px] font-bold text-foreground-secondary block">
               Response Note (Optional):
             </label>
             <input
@@ -576,7 +576,7 @@ export default function VendorOrderDetailPage() {
               value={partialRefundResponseNote}
               onChange={(e) => setPartialRefundResponseNote(e.target.value)}
               placeholder="e.g. Accepted with revised scope, or declined..."
-              className="w-full p-2.5 bg-white rounded-xl border border-purple-300 text-xs focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2.5 bg-surface rounded-xl border border-purple-300 text-xs focus:ring-2 focus:ring-purple-500"
             />
 
             <div className="flex flex-wrap items-center gap-2 pt-1">
@@ -584,7 +584,7 @@ export default function VendorOrderDetailPage() {
                 type="button"
                 onClick={() => handleRespondPartialRefund("ACCEPT")}
                 disabled={isRespondingRefund}
-                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 bg-success-solid text-white hover:bg-emerald-700 text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 <Check className="w-4 h-4" />
                 <span>Accept Partial Refund &amp; Settle Payout</span>
@@ -594,7 +594,7 @@ export default function VendorOrderDetailPage() {
                 type="button"
                 onClick={() => handleRespondPartialRefund("REJECT")}
                 disabled={isRespondingRefund}
-                className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 <span>Decline Partial Refund</span>
               </button>
@@ -603,7 +603,7 @@ export default function VendorOrderDetailPage() {
                 <button
                   type="button"
                   onClick={() => setEscalateModalOpen(true)}
-                  className="px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ml-auto"
+                  className="px-3.5 py-2 bg-surface hover:bg-surface-elevated border border-border text-foreground-secondary rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ml-auto"
                 >
                   <AlertTriangle className="w-3.5 h-3.5 text-purple-600" />
                   <span>Escalate to Admin</span>
@@ -622,7 +622,7 @@ export default function VendorOrderDetailPage() {
           {order.status === "REVISION_REQUESTED" && (
             <div className="p-5 rounded-2xl border-2 border-amber-300 bg-amber-50 text-amber-900 shadow-xs space-y-3">
               <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-warning-solid text-on-brand text-foreground flex items-center justify-center shrink-0">
                   <RotateCcw className="w-5 h-5" />
                 </div>
                 <div className="flex-1">
@@ -634,10 +634,10 @@ export default function VendorOrderDetailPage() {
                       Action Required
                     </span>
                   </div>
-                  <p className="text-xs text-slate-700 mt-1 font-medium">
+                  <p className="text-xs text-foreground-secondary mt-1 font-medium">
                     The client reviewed your submission and requested the following modifications:
                   </p>
-                  <div className="mt-2 p-3 bg-white rounded-xl border border-amber-200 text-xs text-slate-800 font-semibold italic">
+                  <div className="mt-2 p-3 bg-surface rounded-xl border border-amber-200 text-xs text-foreground font-semibold italic">
                     "{order.revisionReason || order.deliveryNotes}"
                   </div>
                 </div>
@@ -646,7 +646,7 @@ export default function VendorOrderDetailPage() {
                 <button
                   type="button"
                   onClick={() => handleOpenDelivery(null, true)}
-                  className="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2 bg-warning-solid text-on-brand hover:bg-amber-700 text-foreground rounded-xl text-xs font-bold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <UploadCloud className="w-4 h-4" />
                   <span>Deliver Revised Work</span>
@@ -659,7 +659,7 @@ export default function VendorOrderDetailPage() {
           {order.status === "DELIVERED" && (
             <div className="p-5 rounded-2xl border border-indigo-200 bg-indigo-50/70 text-indigo-900 shadow-xs space-y-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <Clock className="w-5 h-5 text-indigo-600 animate-pulse" />
+                <Clock className="w-5 h-5 text-info animate-pulse" />
                 <h3 className="font-extrabold text-[#0F0C3B] text-sm">
                   Order Delivered · Waiting for Client Approval
                 </h3>
@@ -667,7 +667,7 @@ export default function VendorOrderDetailPage() {
                   3-Day Review Window
                 </span>
               </div>
-              <p className="text-xs text-slate-600">
+              <p className="text-xs text-foreground-secondary">
                 Your deliverables have been submitted to the client. The client has 3 days to review and accept or request revisions. If no action is taken within 3 days, the system will automatically complete the order and begin the 7-day security clearing hold.
               </p>
               {order.autoCompleteAt && (
@@ -682,7 +682,7 @@ export default function VendorOrderDetailPage() {
           {isCompleted && order.clearingEndsAt && (
             <div className="p-5 rounded-2xl border border-emerald-200 bg-emerald-50/70 text-emerald-950 shadow-xs space-y-2">
               <div className="flex items-center gap-2 flex-wrap">
-                <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                <CheckCircle2 className="w-5 h-5 text-success" />
                 <h3 className="font-extrabold text-[#0F0C3B] text-sm">
                   Order Completed · 7-Day Security Clearing Active
                 </h3>
@@ -690,7 +690,7 @@ export default function VendorOrderDetailPage() {
                   Pending for Release
                 </span>
               </div>
-              <p className="text-xs text-slate-600">
+              <p className="text-xs text-foreground-secondary">
                 Client approved your delivery! Your net payout of <strong className="text-emerald-800 font-bold">${Number(order.vendorNet || 0).toFixed(2)}</strong> is currently in the 7-day security clearing hold. Funds will automatically transfer to your Stripe Connect balance on:
               </p>
               <p className="text-xs font-bold text-emerald-700">
@@ -699,17 +699,17 @@ export default function VendorOrderDetailPage() {
             </div>
           )}
 
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
-            <div className="p-5 border-b border-slate-100 flex items-center justify-between">
+          <div className="bg-surface rounded-2xl border border-border shadow-xs overflow-hidden">
+            <div className="p-5 border-b border-border flex items-center justify-between">
               <div>
                 <h2 className="font-extrabold text-[#0F0C3B] text-base">Milestone Progress &amp; Payouts</h2>
-                <p className="text-xs text-slate-500 mt-0.5">
+                <p className="text-xs text-foreground-muted mt-0.5">
                   Submit proof for each milestone to trigger client approval
                 </p>
               </div>
               {isCompleted ? (
                 <span className="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-lg flex items-center gap-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                  <CheckCircle2 className="w-3.5 h-3.5 text-success" />
                   Delivered
                 </span>
               ) : hasPendingApproval ? (
@@ -724,7 +724,7 @@ export default function VendorOrderDetailPage() {
               )}
             </div>
 
-            <div className="divide-y divide-slate-100">
+            <div className="divide-y divide-border">
               {milestones.map((ms, idx) => {
                 const isReleased = ms.status === "RELEASED" || ms.status === "PAID";
                 const isPendingRelease = ms.status === "PENDING_RELEASE";
@@ -734,11 +734,11 @@ export default function VendorOrderDetailPage() {
                 return (
                   <div
                     key={ms.id || idx}
-                    className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-slate-50/50 transition-colors"
+                    className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-surface-elevated/50 transition-colors"
                   >
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-xs font-bold">
+                        <span className="w-6 h-6 rounded-full bg-surface-sunken text-foreground-secondary flex items-center justify-center text-xs font-bold">
                           {idx + 1}
                         </span>
                         <h4 className="font-bold text-[#0F0C3B] text-sm">
@@ -751,14 +751,14 @@ export default function VendorOrderDetailPage() {
                               ? "bg-emerald-100 text-emerald-700"
                               : isPendingRelease || isApprovedPending
                               ? "bg-amber-100 text-amber-800 animate-pulse"
-                              : "bg-slate-100 text-slate-500"
+                              : "bg-surface-sunken text-foreground-muted"
                           )}
                         >
                           {isReleased ? "Transferred" : isPendingRelease ? "Waiting Approval" : isApprovedPending ? "Transfer Scheduled" : isFunded ? "Funded · Ready to Deliver" : ms.status === "LOCKED" ? "Awaiting Client Payment" : ms.status}
                         </span>
                       </div>
 
-                      <p className="text-xs text-slate-500">
+                      <p className="text-xs text-foreground-muted">
                         {ms.percentage ? `${ms.percentage}% of payout` : "Payment instalment"}
                         {ms.notes && ` • Work notes: ${ms.notes}`}
                       </p>
@@ -768,7 +768,7 @@ export default function VendorOrderDetailPage() {
                           href={ms.proofUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-[11px] font-bold text-indigo-600 hover:underline"
+                          className="inline-flex items-center gap-1 text-[11px] font-bold text-info hover:underline"
                         >
                           <ExternalLink className="w-3 h-3" />
                           <span>View Uploaded Proof</span>
@@ -781,7 +781,7 @@ export default function VendorOrderDetailPage() {
                         <span className="font-extrabold text-[#0F0C3B] text-base block">
                           ${Number(ms.amount || 0).toFixed(2)}
                         </span>
-                        <span className="text-[10px] text-slate-400 block font-medium">
+                        <span className="text-[10px] text-foreground-muted block font-medium">
                           {isReleased ? "Transferred to Connect balance" : isPendingRelease ? "Awaiting client approval" : isApprovedPending ? "7-day transfer hold" : isFunded ? "Funded · ready for work" : ms.status === "LOCKED" ? "Awaiting client payment" : ms.status}
                         </span>
                       </div>
@@ -815,8 +815,8 @@ export default function VendorOrderDetailPage() {
 
         {/* Right Sidebar: Client Info & Summary */}
         <div className="space-y-6">
-          <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-4">
-            <span className="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
+          <div className="bg-surface rounded-2xl border border-border p-5 shadow-xs space-y-4">
+            <span className="text-[10px] uppercase font-bold text-foreground-muted block tracking-wider">
               Client Information
             </span>
 
@@ -834,11 +834,11 @@ export default function VendorOrderDetailPage() {
               </div>
               <div>
                 <h4 className="font-extrabold text-[#0F0C3B] text-sm">{clientName}</h4>
-                <p className="text-xs text-slate-400">{order.clientProfile?.phone || "Verified Client"}</p>
+                <p className="text-xs text-foreground-muted">{order.clientProfile?.phone || "Verified Client"}</p>
               </div>
             </div>
 
-            <div className="pt-2 border-t border-slate-100">
+            <div className="pt-2 border-t border-border">
               <button
                 type="button"
                 onClick={() => {
@@ -853,10 +853,10 @@ export default function VendorOrderDetailPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs space-y-3">
+          <div className="bg-surface rounded-2xl border border-border p-5 shadow-xs space-y-3">
             <h3 className="font-extrabold text-[#0F0C3B] text-sm">Contract Total</h3>
             <div className="text-2xl font-black text-[#0F0C3B]">{totalAmount}</div>
-            <p className="text-xs text-slate-500">
+            <p className="text-xs text-foreground-muted">
               Client approved milestones enter a 7-day hold before transfer to your Stripe Connect balance. Bank payouts are managed separately.
             </p>
           </div>
@@ -866,7 +866,7 @@ export default function VendorOrderDetailPage() {
       {/* Deliver Work Modal */}
       {(selectedMilestone || isFullOrderDelivery) && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-100">
+          <div className="bg-surface rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-border">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-indigo-100 text-brand-primary flex items-center justify-center">
                 <UploadCloud className="w-5 h-5" />
@@ -877,7 +877,7 @@ export default function VendorOrderDetailPage() {
                     ? (hasPendingApproval ? "Deliver Again / Update Deliverables" : "Deliver Entire Order")
                     : (selectedMilestone?.status === "PENDING_RELEASE" ? "Deliver Again / Update Milestone" : "Submit Milestone Deliverable")}
                 </h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-foreground-muted">
                   {isFullOrderDelivery
                     ? (hasPendingApproval ? "Update deliverables and notify client to review" : "Mark order as fulfilled for client approval")
                     : selectedMilestone?.label || selectedMilestone?.title}
@@ -888,10 +888,10 @@ export default function VendorOrderDetailPage() {
             <div className="space-y-3.5 text-xs">
               {/* Deliverable File Upload Area */}
               <div>
-                <label className="font-bold text-slate-700 block mb-1">
-                  Upload Deliverables / Files / Images <span className="text-rose-500">*</span>
+                <label className="font-bold text-foreground-secondary block mb-1">
+                  Upload Deliverables / Files / Images <span className="text-danger">*</span>
                 </label>
-                <div className="border-2 border-dashed border-slate-200 hover:border-brand-primary/50 rounded-xl p-4 text-center transition-colors bg-slate-50/50">
+                <div className="border-2 border-dashed border-border hover:border-brand-primary/50 rounded-xl p-4 text-center transition-colors bg-surface-elevated/50">
                   <input
                     type="file"
                     id="vendor-delivery-files"
@@ -908,7 +908,7 @@ export default function VendorOrderDetailPage() {
                       <Paperclip className="w-4 h-4" />
                     </div>
                     <span className="text-xs font-bold text-brand-primary">Click to attach files</span>
-                    <span className="text-[10px] text-slate-400">
+                    <span className="text-[10px] text-foreground-muted">
                       Images, Videos, PDFs, ZIP archives, Documents (up to 50MB per file)
                     </span>
                   </label>
@@ -923,16 +923,16 @@ export default function VendorOrderDetailPage() {
                         className="flex items-center justify-between p-2 rounded-lg bg-indigo-50/60 border border-indigo-100 text-[11px]"
                       >
                         <div className="flex items-center gap-2 truncate">
-                          <ImageIcon className="w-3.5 h-3.5 text-indigo-600 shrink-0" />
-                          <span className="font-medium text-slate-700 truncate">{file.name}</span>
-                          <span className="text-[10px] text-slate-400 shrink-0">
+                          <ImageIcon className="w-3.5 h-3.5 text-info shrink-0" />
+                          <span className="font-medium text-foreground-secondary truncate">{file.name}</span>
+                          <span className="text-[10px] text-foreground-muted shrink-0">
                             ({(file.size / (1024 * 1024)).toFixed(2)} MB)
                           </span>
                         </div>
                         <button
                           type="button"
                           onClick={() => handleRemoveFile(idx)}
-                          className="text-slate-400 hover:text-rose-600 p-1 rounded transition-colors"
+                          className="text-foreground-muted hover:text-rose-600 p-1 rounded transition-colors"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -943,20 +943,20 @@ export default function VendorOrderDetailPage() {
               </div>
 
               <div>
-                <label className="font-bold text-slate-700 block mb-1">
-                  Delivery Message / Work Explanation <span className="text-rose-500">*</span>
+                <label className="font-bold text-foreground-secondary block mb-1">
+                  Delivery Message / Work Explanation <span className="text-danger">*</span>
                 </label>
                 <textarea
                   value={proofNotes}
                   onChange={(e) => setProofNotes(e.target.value)}
                   placeholder="Explain completed work, instructions, setup notes (at least 5 characters)..."
                   rows={3}
-                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-brand-primary"
+                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-brand-primary"
                 />
               </div>
 
               <div>
-                <label className="font-bold text-slate-700 block mb-1">
+                <label className="font-bold text-foreground-secondary block mb-1">
                   Additional Proof URL / Cloud Storage Link (Optional)
                 </label>
                 <input
@@ -964,7 +964,7 @@ export default function VendorOrderDetailPage() {
                   value={proofUrl}
                   onChange={(e) => setProofUrl(e.target.value)}
                   placeholder="https://drive.google.com/..."
-                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-brand-primary"
+                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-brand-primary"
                 />
               </div>
             </div>
@@ -976,7 +976,7 @@ export default function VendorOrderDetailPage() {
                   setSelectedMilestone(null);
                   setIsFullOrderDelivery(false);
                 }}
-                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50"
+                className="flex-1 py-2.5 rounded-xl border border-border text-xs font-bold text-foreground-secondary hover:bg-surface-elevated"
               >
                 Cancel
               </button>
@@ -984,7 +984,7 @@ export default function VendorOrderDetailPage() {
                 type="button"
                 onClick={handleSubmitWork}
                 disabled={isSubmitting || isDeliveringFull}
-                className="flex-1 py-2.5 bg-brand-primary hover:bg-brand-primary/90 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
+                className="flex-1 py-2.5 bg-brand-primary hover:bg-brand-primary/90 text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
               >
                 {isSubmitting || isDeliveringFull ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
@@ -1005,14 +1005,14 @@ export default function VendorOrderDetailPage() {
       {/* Escalate to Admin Modal */}
       {escalateModalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-slate-100">
+          <div className="bg-surface rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-border">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div>
                 <h3 className="font-bold text-[#0F0C3B] text-base">Escalate Order to Admin</h3>
-                <p className="text-xs text-slate-500">
+                <p className="text-xs text-foreground-muted">
                   Request official mediation and arbitration from Platform Administrators
                 </p>
               </div>
@@ -1020,13 +1020,13 @@ export default function VendorOrderDetailPage() {
 
             <div className="space-y-3.5 text-xs">
               <div>
-                <label className="font-bold text-slate-700 block mb-1">
-                  Reason for Escalation <span className="text-rose-500">*</span>
+                <label className="font-bold text-foreground-secondary block mb-1">
+                  Reason for Escalation <span className="text-danger">*</span>
                 </label>
                 <select
                   value={escalateReason}
                   onChange={(e) => setEscalateReason(e.target.value)}
-                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-rose-500 bg-white"
+                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-rose-500 bg-surface"
                 >
                   <option value="Client requested unreasonable cancellation">Client requested unreasonable cancellation</option>
                   <option value="Partial refund terms disagreement">Partial refund terms disagreement</option>
@@ -1038,7 +1038,7 @@ export default function VendorOrderDetailPage() {
               </div>
 
               <div>
-                <label className="font-bold text-slate-700 block mb-1">
+                <label className="font-bold text-foreground-secondary block mb-1">
                   Vendor Statement / Case Explanation (Optional)
                 </label>
                 <textarea
@@ -1046,7 +1046,7 @@ export default function VendorOrderDetailPage() {
                   onChange={(e) => setEscalateNotes(e.target.value)}
                   placeholder="Detail your completed milestones, communication attempts, and grounds for dispute rejection or release..."
                   rows={3}
-                  className="w-full p-2.5 rounded-xl border border-slate-200 text-xs focus:ring-2 focus:ring-rose-500"
+                  className="w-full p-2.5 rounded-xl border border-border text-xs focus:ring-2 focus:ring-rose-500"
                 />
               </div>
 
@@ -1062,7 +1062,7 @@ export default function VendorOrderDetailPage() {
               <button
                 type="button"
                 onClick={() => setEscalateModalOpen(false)}
-                className="flex-1 py-2.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50"
+                className="flex-1 py-2.5 rounded-xl border border-border text-xs font-bold text-foreground-secondary hover:bg-surface-elevated"
               >
                 Back
               </button>
@@ -1070,7 +1070,7 @@ export default function VendorOrderDetailPage() {
                 type="button"
                 onClick={handleConfirmEscalation}
                 disabled={isEscalating}
-                className="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
+                className="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50"
               >
                 {isEscalating ? <Loader2 className="w-4 h-4 animate-spin" /> : <AlertTriangle className="w-4 h-4" />}
                 <span>Confirm Escalation</span>

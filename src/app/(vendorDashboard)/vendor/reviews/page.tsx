@@ -130,7 +130,7 @@ export default function VendorReviewsPage() {
               4.95 / 5.0 Rating
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Build buyer trust by responding to client testimonials and highlighting your 5-star milestones.
           </p>
         </div>
@@ -143,15 +143,15 @@ export default function VendorReviewsPage() {
       </div>
 
       {/* Rating Breakdown Top Banner */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-100 pb-4 md:pb-0">
+      <div className="bg-surface border border-border rounded-2xl p-5 shadow-xs grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-border pb-4 md:pb-0">
           <span className="text-4xl font-black text-[#0F0C3B]">4.95</span>
-          <div className="flex items-center text-amber-400 mt-1">
+          <div className="flex items-center text-warning mt-1">
             {[1, 2, 3, 4, 5].map((s) => (
               <Star key={s} className="w-5 h-5 fill-amber-400" />
             ))}
           </div>
-          <p className="text-xs text-slate-400 mt-1">Based on 38 verified client reviews</p>
+          <p className="text-xs text-foreground-muted mt-1">Based on 38 verified client reviews</p>
         </div>
 
         <div className="md:col-span-2 space-y-2 justify-center flex flex-col text-xs">
@@ -163,42 +163,42 @@ export default function VendorReviewsPage() {
             { stars: "1 Star", pct: 0, count: 0 },
           ].map((row) => (
             <div key={row.stars} className="flex items-center gap-3">
-              <span className="w-12 text-slate-600 font-semibold">{row.stars}</span>
-              <div className="flex-1 h-2 bg-slate-100 rounded-full overflow-hidden">
+              <span className="w-12 text-foreground-secondary font-semibold">{row.stars}</span>
+              <div className="flex-1 h-2 bg-surface-sunken rounded-full overflow-hidden">
                 <div 
                   style={{ width: `${row.pct}%` }}
                   className="h-full bg-amber-400 rounded-full"
                 />
               </div>
-              <span className="w-8 text-right text-slate-400 font-mono">{row.count}</span>
+              <span className="w-8 text-right text-foreground-muted font-mono">{row.count}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Reviews List */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-xs space-y-6">
+      <div className="bg-surface border border-border rounded-2xl p-5 shadow-xs space-y-6">
         <h2 className="text-sm font-bold text-[#0F0C3B]">Client Testimonials ({reviews.length})</h2>
 
-        <div className="divide-y divide-slate-100 space-y-6">
+        <div className="divide-y divide-border space-y-6">
           {reviews.map((r) => (
             <div key={r.id} className="pt-6 first:pt-0 space-y-3">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-white flex items-center justify-center font-bold text-xs shadow-xs">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-foreground flex items-center justify-center font-bold text-xs shadow-xs">
                     {r.clientAvatar}
                   </div>
                   <div>
                     <h3 className="text-xs font-bold text-[#0F0C3B]">{r.clientName}</h3>
-                    <p className="text-[11px] text-slate-500 font-medium">{r.eventTitle} &bull; {r.eventDate}</p>
+                    <p className="text-[11px] text-foreground-muted font-medium">{r.eventTitle} &bull; {r.eventDate}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center text-amber-400">
+                <div className="flex items-center text-warning">
                   {[1, 2, 3, 4, 5].map((s) => (
                     <Star
                       key={s}
-                      className={`w-4 h-4 ${s <= r.rating ? "fill-amber-400" : "text-slate-200"}`}
+                      className={`w-4 h-4 ${s <= r.rating ? "fill-amber-400" : "text-foreground-secondary"}`}
                     />
                   ))}
                 </div>
@@ -213,7 +213,7 @@ export default function VendorReviewsPage() {
                 ))}
               </div>
 
-              <p className="text-xs text-slate-700 leading-relaxed bg-[#F8F9FD] p-3.5 rounded-xl border border-slate-100">
+              <p className="text-xs text-foreground-secondary leading-relaxed bg-[#F8F9FD] p-3.5 rounded-xl border border-border">
                 "{r.comment}"
               </p>
 
@@ -223,7 +223,7 @@ export default function VendorReviewsPage() {
                   <div className="flex items-center gap-1.5 text-[11px] font-bold text-brand-primary">
                     <Reply className="w-3.5 h-3.5" /> Your Public Response
                   </div>
-                  <p className="text-xs text-slate-700 italic leading-relaxed">
+                  <p className="text-xs text-foreground-secondary italic leading-relaxed">
                     "{r.response}"
                   </p>
                 </div>
@@ -236,18 +236,18 @@ export default function VendorReviewsPage() {
                         placeholder="Write your professional thank-you response to the client..."
                         value={replyText}
                         onChange={(e) => setReplyText(e.target.value)}
-                        className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-3 text-xs text-slate-800 focus:outline-none focus:border-brand-primary resize-none"
+                        className="w-full bg-[#F8F9FD] border border-border rounded-xl p-3 text-xs text-foreground focus:outline-none focus:border-brand-primary resize-none"
                       />
                       <div className="flex items-center justify-end gap-2">
                         <button
                           onClick={() => setReplyingToId(null)}
-                          className="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold"
+                          className="px-3 py-1.5 bg-surface-sunken text-foreground-secondary rounded-lg text-xs font-bold"
                         >
                           Cancel
                         </button>
                         <button
                           onClick={() => handleSendReply(r.id)}
-                          className="px-4 py-1.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-xs"
+                          className="px-4 py-1.5 bg-[#0F0C3B] hover:bg-indigo-900 text-foreground rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-xs"
                         >
                           <Send className="w-3.5 h-3.5" /> Post Public Reply
                         </button>

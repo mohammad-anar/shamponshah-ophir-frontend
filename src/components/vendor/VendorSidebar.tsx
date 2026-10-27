@@ -72,7 +72,7 @@ export default function VendorSidebar({ isOpen, onClose }: VendorSidebarProps) {
           href: "/vendor/messages", 
           icon: MessageSquare, 
           badge: unreadMessagesCount > 0 ? String(unreadMessagesCount) : undefined, 
-          badgeColor: "bg-amber-500 text-white" 
+          badgeColor: "bg-warning-solid text-on-brand text-foreground" 
         },
         { label: "Calendar", href: "/vendor/calendar", icon: Calendar },
         { label: "Disputes", href: "/vendor/disputes", icon: Scale },
@@ -116,7 +116,7 @@ export default function VendorSidebar({ isOpen, onClose }: VendorSidebarProps) {
           <Logo variant="vendor" href="/vendor" />
           <button
             onClick={onClose}
-            className="lg:hidden p-1.5 rounded-none text-slate-400 hover:text-white hover:bg-[#16181F]"
+            className="lg:hidden p-1.5 rounded-none text-foreground-muted hover:text-foreground hover:bg-[#16181F]"
           >
             <X className="w-5 h-5" />
           </button>
@@ -142,11 +142,11 @@ export default function VendorSidebar({ isOpen, onClose }: VendorSidebarProps) {
                         "flex items-center justify-between px-3 py-2 rounded-none text-xs font-medium transition-all",
                         isActive
                           ? "bg-[#16181F] text-[#DFB76C] border-l-2 border-[#DFB76C]"
-                          : "text-slate-400 hover:bg-[#121418] hover:text-[#F3F4F6]"
+                          : "text-foreground-muted hover:bg-[#121418] hover:text-[#F3F4F6]"
                       )}
                     >
                       <div className="flex items-center gap-2.5">
-                        <Icon className={cn("w-4 h-4", isActive ? "text-[#DFB76C]" : "text-slate-500")} />
+                        <Icon className={cn("w-4 h-4", isActive ? "text-[#DFB76C]" : "text-foreground-muted")} />
                         <span>{item.label}</span>
                       </div>
 
@@ -164,11 +164,11 @@ export default function VendorSidebar({ isOpen, onClose }: VendorSidebarProps) {
         </div>
 
         {/* Bottom Payout Guarantee Banner */}
-        <div className="p-3.5 border-t border-[#26282E] bg-[#121418] text-[11px] text-slate-300 flex items-start gap-2.5">
+        <div className="p-3.5 border-t border-[#26282E] bg-[#121418] text-[11px] text-foreground-secondary flex items-start gap-2.5">
           <ShieldCheck className="w-4 h-4 text-[#DFB76C] mt-0.5 flex-shrink-0" />
           <div>
             <p className="font-bold text-[#F3F4F6] font-serif">Keep 100% of your price</p>
-            <p className="text-[10px] text-slate-400">Clients pay 5% platform fee</p>
+            <p className="text-[10px] text-foreground-muted">Clients pay 5% platform fee</p>
           </div>
         </div>
       </aside>

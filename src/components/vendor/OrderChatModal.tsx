@@ -279,22 +279,22 @@ export default function OrderChatModal({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
-      <div className="bg-white rounded-2xl w-full max-w-xl h-[85vh] max-h-[680px] flex flex-col shadow-2xl border border-slate-100 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
+      <div className="bg-surface rounded-2xl w-full max-w-xl h-[85vh] max-h-[680px] flex flex-col shadow-2xl border border-border overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         
         {/* Top Header */}
-        <div className="px-5 py-3.5 bg-[#0F0C3B] text-white flex items-center justify-between gap-3">
+        <div className="px-5 py-3.5 bg-[#0F0C3B] text-foreground flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
             <div className="w-10 h-10 rounded-full bg-amber-400 text-[#0F0C3B] font-extrabold flex items-center justify-center text-sm shadow-xs flex-shrink-0">
               {clientName.slice(0, 2).toUpperCase()}
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <h3 className="font-bold text-sm text-white truncate">{clientName}</h3>
-                <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-white/10 text-amber-300">
+                <h3 className="font-bold text-sm text-foreground truncate">{clientName}</h3>
+                <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-surface/10 text-warning">
                   #{orderNumberStr}
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-[11px] text-slate-300">
+              <div className="flex items-center gap-2 text-[11px] text-foreground-secondary">
                 <span className="truncate">{orderTitle}</span>
                 <span>•</span>
                 <span className="flex items-center gap-1">
@@ -306,7 +306,7 @@ export default function OrderChatModal({
                   ) : (
                     <>
                       <span className="w-2 h-2 rounded-full bg-amber-400" />
-                      <span className="text-slate-300">Connecting</span>
+                      <span className="text-foreground-secondary">Connecting</span>
                     </>
                   )}
                 </span>
@@ -319,7 +319,7 @@ export default function OrderChatModal({
               <Link
                 href={`/vendor/messages?userId=${clientUserId || ''}&orderId=${order?.id || ''}&conv=${conversationId || ''}`}
                 target="_blank"
-                className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+                className="p-1.5 rounded-lg text-foreground-secondary hover:text-foreground hover:bg-surface/10 transition-colors"
                 title="Open in full screen messenger"
               >
                 <ExternalLink className="w-4 h-4" />
@@ -327,7 +327,7 @@ export default function OrderChatModal({
             )}
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+              className="p-1.5 rounded-lg text-foreground-secondary hover:text-foreground hover:bg-surface/10 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -335,14 +335,14 @@ export default function OrderChatModal({
         </div>
 
         {/* Order Details Context Bar */}
-        <div className="px-5 py-2 bg-slate-50 border-b border-slate-200 flex items-center justify-between text-xs text-slate-600 gap-2">
+        <div className="px-5 py-2 bg-surface-elevated border-b border-border flex items-center justify-between text-xs text-foreground-secondary gap-2">
           <div className="flex items-center gap-1.5 truncate">
             <ShoppingBag className="w-3.5 h-3.5 text-brand-primary flex-shrink-0" />
-            <span className="font-semibold text-slate-800 truncate">
+            <span className="font-semibold text-foreground truncate">
               Order #{orderNumberStr}
             </span>
-            <span className="text-slate-400">•</span>
-            <span className="text-slate-500">
+            <span className="text-foreground-muted">•</span>
+            <span className="text-foreground-muted">
               Escrow Total:{" "}
               <strong className="text-emerald-700">
                 ${Number(order?.subtotal || order?.grandTotal || order?.totalAmount?.replace(/[^0-9.]/g, "") || 0).toFixed(2)}
@@ -367,17 +367,17 @@ export default function OrderChatModal({
         {/* Messages Body */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-[#F8F9FD]">
           {isInitializing ? (
-            <div className="h-full flex flex-col items-center justify-center text-slate-400 gap-2 py-12">
+            <div className="h-full flex flex-col items-center justify-center text-foreground-muted gap-2 py-12">
               <Loader2 className="w-6 h-6 animate-spin text-brand-primary" />
               <span className="text-xs font-semibold">Connecting real-time socket room...</span>
             </div>
           ) : messages.length === 0 ? (
-            <div className="h-full flex flex-col items-center justify-center text-center text-slate-400 gap-2 py-12">
-              <div className="w-12 h-12 rounded-2xl bg-white border border-slate-200 flex items-center justify-center shadow-xs text-brand-primary">
-                <Sparkles className="w-6 h-6 text-amber-500" />
+            <div className="h-full flex flex-col items-center justify-center text-center text-foreground-muted gap-2 py-12">
+              <div className="w-12 h-12 rounded-2xl bg-surface border border-border flex items-center justify-center shadow-xs text-brand-primary">
+                <Sparkles className="w-6 h-6 text-warning" />
               </div>
-              <p className="font-bold text-slate-700 text-sm">Real-time Order Chat</p>
-              <p className="text-xs text-slate-500 max-w-xs">
+              <p className="font-bold text-foreground-secondary text-sm">Real-time Order Chat</p>
+              <p className="text-xs text-foreground-muted max-w-xs">
                 Direct instant messaging with <strong>{clientName}</strong> for deliverables, revisions, and milestone updates.
               </p>
               <div className="flex flex-wrap gap-1.5 justify-center mt-2 max-w-sm">
@@ -389,7 +389,7 @@ export default function OrderChatModal({
                   <button
                     key={i}
                     onClick={() => handleQuickReply(quick)}
-                    className="text-[11px] bg-white hover:bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-full text-slate-600 transition-colors cursor-pointer"
+                    className="text-[11px] bg-surface hover:bg-surface-sunken border border-border px-2.5 py-1 rounded-full text-foreground-secondary transition-colors cursor-pointer"
                   >
                     {quick}
                   </button>
@@ -405,15 +405,15 @@ export default function OrderChatModal({
                   m.isMe ? "ml-auto items-end" : "mr-auto items-start"
                 )}
               >
-                <span className="text-[10px] text-slate-400 px-1 mb-0.5">
+                <span className="text-[10px] text-foreground-muted px-1 mb-0.5">
                   {m.isMe ? "You" : clientName} • {m.time}
                 </span>
                 <div
                   className={cn(
                     "px-4 py-2.5 rounded-2xl text-xs leading-relaxed shadow-2xs break-words",
                     m.isMe
-                      ? "bg-[#0F0C3B] text-white rounded-br-xs"
-                      : "bg-white text-slate-800 border border-slate-200 rounded-bl-xs"
+                      ? "bg-[#0F0C3B] text-foreground rounded-br-xs"
+                      : "bg-surface text-foreground border border-border rounded-bl-xs"
                   )}
                 >
                   {m.content}
@@ -425,8 +425,8 @@ export default function OrderChatModal({
         </div>
 
         {/* Quick Suggestions Bar */}
-        <div className="px-4 py-1.5 bg-white border-t border-slate-100 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-          <span className="text-[10px] text-slate-400 font-bold whitespace-nowrap">Quick:</span>
+        <div className="px-4 py-1.5 bg-surface border-t border-border flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+          <span className="text-[10px] text-foreground-muted font-bold whitespace-nowrap">Quick:</span>
           {[
             "Milestone work ready for review!",
             "Thank you! Please release payment.",
@@ -436,7 +436,7 @@ export default function OrderChatModal({
               key={i}
               type="button"
               onClick={() => handleQuickReply(quick)}
-              className="text-[10px] bg-slate-50 hover:bg-slate-100 text-slate-600 border border-slate-200 px-2 py-0.5 rounded-md whitespace-nowrap transition-colors cursor-pointer"
+              className="text-[10px] bg-surface-elevated hover:bg-surface-sunken text-foreground-secondary border border-border px-2 py-0.5 rounded-md whitespace-nowrap transition-colors cursor-pointer"
             >
               {quick}
             </button>
@@ -446,24 +446,24 @@ export default function OrderChatModal({
         {/* Input Bar */}
         <form
           onSubmit={handleSend}
-          className="p-3 bg-white border-t border-slate-200 flex items-center gap-2"
+          className="p-3 bg-surface border-t border-border flex items-center gap-2"
         >
           <input
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder={`Message ${clientName} about Order #${orderNumberStr}...`}
-            className="flex-1 bg-[#F8F9FD] border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-primary"
+            className="flex-1 bg-[#F8F9FD] border border-border rounded-xl px-3.5 py-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-brand-primary"
           />
           <button
             type="submit"
             disabled={!inputValue.trim() || isSending}
-            className="px-4 py-2.5 bg-[#0F0C3B] hover:bg-[#18124E] disabled:opacity-40 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer flex-shrink-0"
+            className="px-4 py-2.5 bg-[#0F0C3B] hover:bg-[#18124E] disabled:opacity-40 text-foreground rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer flex-shrink-0"
           >
             {isSending ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
             ) : (
-              <Send className="w-3.5 h-3.5 text-amber-300" />
+              <Send className="w-3.5 h-3.5 text-warning" />
             )}
             <span>Send</span>
           </button>

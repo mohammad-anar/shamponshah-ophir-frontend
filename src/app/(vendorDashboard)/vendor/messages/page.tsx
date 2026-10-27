@@ -566,23 +566,23 @@ function VendorMessagesContent() {
       <div className="w-full md:w-80 lg:w-96 border-r border-[#26282E] flex flex-col bg-[#121418]">
         <div className="p-4 border-b border-[#26282E] bg-[#121418]">
           <div className="flex items-center justify-between mb-3">
-            <h1 className="text-base font-bold text-white">Client Messages</h1>
+            <h1 className="text-base font-bold text-foreground">Client Messages</h1>
             <div className="flex items-center gap-1.5">
-              <span className={`w-2 h-2 rounded-full ${isSocketConnected ? "bg-emerald-500 animate-pulse" : "bg-amber-400"}`} />
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+              <span className={`w-2 h-2 rounded-full ${isSocketConnected ? "bg-success-solid text-white animate-pulse" : "bg-amber-400"}`} />
+              <span className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">
                 {isSocketConnected ? "Socket Live" : "Connecting"}
               </span>
             </div>
           </div>
 
           <div className="relative">
-            <Search className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+            <Search className="w-4 h-4 text-foreground-muted absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               placeholder="Search clients or events..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#16181F] border border-[#26282E] rounded-lg pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C] focus:bg-[#1A1D24] transition-all"
+              className="w-full bg-[#16181F] border border-[#26282E] rounded-lg pl-9 pr-3 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C] focus:bg-[#1A1D24] transition-all"
             />
           </div>
         </div>
@@ -590,15 +590,15 @@ function VendorMessagesContent() {
         {/* Conversation List */}
         <div className="flex-1 overflow-y-auto divide-y divide-[#26282E] custom-scrollbar">
           {isConvLoading ? (
-            <div className="py-12 flex flex-col items-center justify-center text-slate-400 gap-2">
+            <div className="py-12 flex flex-col items-center justify-center text-foreground-muted gap-2">
               <Loader2 className="w-5 h-5 animate-spin text-[#DFB76C]" />
               <span className="text-xs">Loading conversations...</span>
             </div>
           ) : filteredConversations.length === 0 ? (
-            <div className="p-8 text-center text-slate-400 space-y-2">
-              <MessageSquare className="w-8 h-8 text-slate-500 mx-auto" />
-              <p className="font-bold text-slate-300 text-xs">No active conversations</p>
-              <p className="text-[11px] text-slate-500 max-w-[200px] mx-auto">
+            <div className="p-8 text-center text-foreground-muted space-y-2">
+              <MessageSquare className="w-8 h-8 text-foreground-muted mx-auto" />
+              <p className="font-bold text-foreground-secondary text-xs">No active conversations</p>
+              <p className="text-[11px] text-foreground-muted max-w-[200px] mx-auto">
                 When clients message you or order your services, conversations will appear here.
               </p>
               <Link
@@ -620,7 +620,7 @@ function VendorMessagesContent() {
                   }`}
                 >
                   <div className="relative flex-shrink-0">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-800 to-indigo-900 border border-[#26282E] text-white flex items-center justify-center font-bold text-xs shadow-xs overflow-hidden">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-800 to-indigo-900 border border-[#26282E] text-foreground flex items-center justify-center font-bold text-xs shadow-xs overflow-hidden">
                       {conv.clientAvatar.startsWith("http") ? (
                         <img src={conv.clientAvatar} alt={conv.clientName} className="w-full h-full object-cover" />
                       ) : (
@@ -628,21 +628,21 @@ function VendorMessagesContent() {
                       )}
                     </div>
                     {conv.online && (
-                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 border-2 border-[#121418] absolute bottom-0 right-0" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-success-solid text-white border-2 border-[#121418] absolute bottom-0 right-0" />
                     )}
                   </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-xs font-bold text-white truncate">{conv.clientName}</h3>
-                      <span className="text-[10px] text-slate-400 font-medium">{conv.lastTime}</span>
+                      <h3 className="text-xs font-bold text-foreground truncate">{conv.clientName}</h3>
+                      <span className="text-[10px] text-foreground-muted font-medium">{conv.lastTime}</span>
                     </div>
 
                     <p className="text-[11px] text-[#DFB76C] truncate mt-0.5 font-semibold">{conv.eventName}</p>
-                    <p className="text-xs text-slate-300 truncate mt-1">{conv.lastMessage}</p>
+                    <p className="text-xs text-foreground-secondary truncate mt-1">{conv.lastMessage}</p>
 
-                    <div className="flex items-center justify-between mt-2 pt-1 border-t border-[#26282E] text-[10px] text-slate-400">
-                      <span>Budget: <strong className="text-white">{conv.budget}</strong></span>
+                    <div className="flex items-center justify-between mt-2 pt-1 border-t border-[#26282E] text-[10px] text-foreground-muted">
+                      <span>Budget: <strong className="text-foreground">{conv.budget}</strong></span>
                       {conv.unreadCount > 0 && (
                         <span className="px-1.5 py-0.2 rounded-full bg-[#DFB76C] text-[#0B0C0E] font-bold">
                           {conv.unreadCount}
@@ -664,7 +664,7 @@ function VendorMessagesContent() {
             {/* Active Header */}
             <div className="p-4 border-b border-[#26282E] flex items-center justify-between bg-[#121418]">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-800 to-indigo-900 border border-[#26282E] text-white flex items-center justify-center font-bold text-sm shadow-xs overflow-hidden">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-800 to-indigo-900 border border-[#26282E] text-foreground flex items-center justify-center font-bold text-sm shadow-xs overflow-hidden">
                   {activeConv.clientAvatar.startsWith("http") ? (
                     <img src={activeConv.clientAvatar} alt={activeConv.clientName} className="w-full h-full object-cover" />
                   ) : (
@@ -673,15 +673,15 @@ function VendorMessagesContent() {
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 className="text-sm font-bold text-white">{activeConv.clientName}</h2>
-                    <span className="px-2 py-0.5 rounded-full bg-[#1A1D24] border border-[#DFB76C]/30 text-[#DFB76C] text-[10px] font-bold">
+                    <h2 className="text-sm font-bold text-foreground">{activeConv.clientName}</h2>
+                    <span className="px-2 py-0.5 rounded-full bg-[#1A1D24] border border-border-brand/40 text-[#DFB76C] text-[10px] font-bold">
                       Verified Client
                     </span>
                   </div>
-                  <p className="text-xs text-slate-400 flex items-center gap-1.5">
+                  <p className="text-xs text-foreground-muted flex items-center gap-1.5">
                     <span>{activeConv.eventName}</span>
                     <span>&bull;</span>
-                    <span className="text-slate-300 font-bold">{activeConv.eventDate}</span>
+                    <span className="text-foreground-secondary font-bold">{activeConv.eventDate}</span>
                   </p>
                 </div>
               </div>
@@ -696,7 +696,7 @@ function VendorMessagesContent() {
                 {activeConv.orderId && (
                   <Link
                     href={`/vendor/orders`}
-                    className="p-2 rounded-lg border border-[#26282E] text-slate-400 hover:text-white hover:bg-[#16181F]"
+                    className="p-2 rounded-lg border border-[#26282E] text-foreground-muted hover:text-foreground hover:bg-[#16181F]"
                     title="View Linked Order"
                   >
                     <ShoppingBag className="w-4 h-4 text-[#DFB76C]" />
@@ -706,12 +706,12 @@ function VendorMessagesContent() {
             </div>
 
             {/* Escrow 100% Payout Notice */}
-            <div className="px-4 py-2 bg-[#16181F] border-b border-[#26282E] flex items-center justify-between text-xs text-slate-300">
+            <div className="px-4 py-2 bg-[#16181F] border-b border-[#26282E] flex items-center justify-between text-xs text-foreground-secondary">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
-                <span>Vendors keep <strong className="text-white">100% of price</strong>. Guaranteed payout upon client milestone approval.</span>
+                <ShieldCheck className="w-4 h-4 text-success flex-shrink-0" />
+                <span>Vendors keep <strong className="text-foreground">100% of price</strong>. Guaranteed payout upon client milestone approval.</span>
               </div>
-              <span className="text-[11px] text-slate-400 font-medium">Socket.IO Real-time Room</span>
+              <span className="text-[11px] text-foreground-muted font-medium">Socket.IO Real-time Room</span>
             </div>
 
             {/* Message Stream with Reverse Scroll Pagination */}
@@ -722,7 +722,7 @@ function VendorMessagesContent() {
             >
               {/* Older messages loading indicator */}
               {isLoadingOlder && (
-                <div className="py-2 flex items-center justify-center gap-2 text-xs text-slate-400 font-medium">
+                <div className="py-2 flex items-center justify-center gap-2 text-xs text-foreground-muted font-medium">
                   <Loader2 className="w-4 h-4 animate-spin text-[#DFB76C]" />
                   <span>Loading previous messages...</span>
                 </div>
@@ -740,10 +740,10 @@ function VendorMessagesContent() {
               )}
 
               {messages.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-center text-slate-400 py-12 space-y-2">
+                <div className="h-full flex flex-col items-center justify-center text-center text-foreground-muted py-12 space-y-2">
                   <Sparkles className="w-8 h-8 text-[#DFB76C]" />
-                  <p className="font-bold text-white text-sm">Conversation Started</p>
-                  <p className="text-xs text-slate-400 max-w-xs">
+                  <p className="font-bold text-foreground text-sm">Conversation Started</p>
+                  <p className="text-xs text-foreground-muted max-w-xs">
                     Send your first message to discuss deliverables, quotes, and timeline with {activeConv.clientName}.
                   </p>
                 </div>
@@ -757,7 +757,7 @@ function VendorMessagesContent() {
                     >
                       <div className="flex items-end gap-2 max-w-[85%] md:max-w-[70%]">
                         {!isVendor && (
-                          <div className="w-7 h-7 rounded-full bg-purple-900 border border-[#26282E] text-white flex items-center justify-center font-bold text-[10px] flex-shrink-0 mb-1">
+                          <div className="w-7 h-7 rounded-full bg-purple-900 border border-[#26282E] text-foreground flex items-center justify-center font-bold text-[10px] flex-shrink-0 mb-1">
                             {activeConv.clientAvatar}
                           </div>
                         )}
@@ -765,26 +765,26 @@ function VendorMessagesContent() {
                         <div
                           className={`p-3.5 rounded-2xl text-xs space-y-2 shadow-xs ${
                             isVendor
-                              ? "bg-[#1E222B] text-white border border-[#DFB76C]/30 rounded-br-xs"
-                              : "bg-[#16181F] text-slate-200 border border-[#26282E] rounded-bl-xs"
+                              ? "bg-[#1E222B] text-foreground border border-border-brand/40 rounded-br-xs"
+                              : "bg-[#16181F] text-foreground-secondary border border-[#26282E] rounded-bl-xs"
                           }`}
                         >
                           <p className="leading-relaxed whitespace-pre-wrap">{m.text}</p>
 
                           {m.isOffer && (
-                            <div className="p-3 bg-[#121418] text-white rounded-xl space-y-2 border border-[#DFB76C]/40 mt-2">
+                            <div className="p-3 bg-[#121418] text-foreground rounded-xl space-y-2 border border-border-brand/40 mt-2">
                               <div className="flex items-center justify-between">
                                 <span className="text-[10px] uppercase font-bold tracking-wider text-[#DFB76C]">Custom Offer Sent</span>
-                                <span className="text-xs font-black text-white">${m.isOffer.amount}</span>
+                                <span className="text-xs font-black text-foreground">${m.isOffer.amount}</span>
                               </div>
                               <p className="font-bold text-xs">{m.isOffer.title}</p>
-                              <p className="text-[10px] text-slate-400">Status: {m.isOffer.status}</p>
+                              <p className="text-[10px] text-foreground-muted">Status: {m.isOffer.status}</p>
                             </div>
                           )}
                         </div>
                       </div>
 
-                      <span className="text-[10px] text-slate-400 mt-1 px-1 flex items-center gap-1">
+                      <span className="text-[10px] text-foreground-muted mt-1 px-1 flex items-center gap-1">
                         {m.time} {isVendor && <CheckCheck className="w-3 h-3 text-[#DFB76C]" />}
                       </span>
                     </div>
@@ -826,7 +826,7 @@ function VendorMessagesContent() {
                   onClick={() => fileInputRef.current?.click()}
                   disabled={isUploadingAttachment}
                   title="Attach photo or document"
-                  className="p-2 text-slate-400 hover:text-[#DFB76C] rounded-lg hover:bg-[#16181F] cursor-pointer disabled:opacity-50"
+                  className="p-2 text-foreground-muted hover:text-[#DFB76C] rounded-lg hover:bg-[#16181F] cursor-pointer disabled:opacity-50"
                 >
                   {isUploadingAttachment ? (
                     <Loader2 className="w-4 h-4 animate-spin text-[#DFB76C]" />
@@ -840,14 +840,14 @@ function VendorMessagesContent() {
                   placeholder={`Reply to ${activeConv.clientName}...`}
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  className="flex-1 bg-[#16181F] border border-[#26282E] rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C] focus:bg-[#1A1D24] transition-all"
+                  className="flex-1 bg-[#16181F] border border-[#26282E] rounded-xl px-4 py-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C] focus:bg-[#1A1D24] transition-all"
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowEmojiPicker(!showEmojiPicker)}
                   title="Insert celebratory emoji"
-                  className="p-2 text-slate-400 hover:text-[#DFB76C] rounded-lg hover:bg-[#16181F] hidden sm:block cursor-pointer"
+                  className="p-2 text-foreground-muted hover:text-[#DFB76C] rounded-lg hover:bg-[#16181F] hidden sm:block cursor-pointer"
                 >
                   <Smile className="w-4 h-4" />
                 </button>
@@ -868,8 +868,8 @@ function VendorMessagesContent() {
             <div className="w-14 h-14 rounded-2xl bg-[#16181F] text-[#DFB76C] border border-[#26282E] flex items-center justify-center">
               <MessageSquare className="w-7 h-7" />
             </div>
-            <h3 className="text-sm font-bold text-white">No Conversation Selected</h3>
-            <p className="text-xs text-slate-400 max-w-sm">
+            <h3 className="text-sm font-bold text-foreground">No Conversation Selected</h3>
+            <p className="text-xs text-foreground-muted max-w-sm">
               Select a conversation from the sidebar or click "Message" on any active order to start chatting live via Socket.IO.
             </p>
             <Link
@@ -898,7 +898,7 @@ function VendorMessagesContent() {
 
 export default function VendorMessagesPage() {
   return (
-    <Suspense fallback={<div className="h-96 flex items-center justify-center text-slate-400 text-xs">Loading conversations...</div>}>
+    <Suspense fallback={<div className="h-96 flex items-center justify-center text-foreground-muted text-xs">Loading conversations...</div>}>
       <VendorMessagesContent />
     </Suspense>
   );

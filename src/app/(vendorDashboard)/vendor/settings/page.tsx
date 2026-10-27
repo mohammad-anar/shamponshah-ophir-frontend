@@ -94,7 +94,7 @@ export default function VendorSettingsPage() {
               Tax Verified
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Manage your legal entity details, marketplace public profile, and vacation pause mode.
           </p>
         </div>
@@ -102,7 +102,7 @@ export default function VendorSettingsPage() {
         <button
           onClick={handleSave}
           disabled={isUpdating}
-          className="px-5 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start sm:self-auto cursor-pointer disabled:opacity-50"
+          className="px-5 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start sm:self-auto cursor-pointer disabled:opacity-50"
         >
           {isUpdating ? (
             <>
@@ -120,7 +120,7 @@ export default function VendorSettingsPage() {
 
       {savedSuccess && (
         <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs font-bold flex items-center gap-2 animate-in fade-in">
-          <CheckCircle2 className="w-4 h-4 text-emerald-600" /> Business preferences successfully updated.
+          <CheckCircle2 className="w-4 h-4 text-success" /> Business preferences successfully updated.
         </div>
       )}
 
@@ -144,8 +144,8 @@ export default function VendorSettingsPage() {
           disabled={isTogglingVacation}
           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
             isVacationMode
-              ? "bg-amber-600 hover:bg-amber-700 text-white shadow-xs"
-              : "bg-white border border-amber-300 text-amber-900 hover:bg-amber-100/50"
+              ? "bg-warning-solid text-on-brand hover:bg-amber-700 text-foreground shadow-xs"
+              : "bg-surface border border-amber-300 text-amber-900 hover:bg-amber-100/50"
           }`}
         >
           {isVacationMode ? "Vacation Active (Turn Off)" : "Take a Break"}
@@ -155,55 +155,55 @@ export default function VendorSettingsPage() {
       {/* Grid */}
       <form onSubmit={handleSave} className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Marketplace Public Profile */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-xs">
-          <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3">
+        <div className="bg-surface border border-border rounded-2xl p-5 space-y-4 shadow-xs">
+          <div className="flex items-center gap-2.5 border-b border-border pb-3">
             <div className="p-2 rounded-xl bg-indigo-50 text-brand-primary">
               <FileText className="w-4 h-4" />
             </div>
             <div>
               <h2 className="text-sm font-bold text-[#0F0C3B]">Vendor Public Profile</h2>
-              <p className="text-xs text-slate-500">Visible to clients across the directory</p>
+              <p className="text-xs text-foreground-muted">Visible to clients across the directory</p>
             </div>
           </div>
 
           <div className="space-y-3 text-xs">
             <div>
-              <label className="block text-slate-700 font-bold mb-1">Business / Brand Name</label>
+              <label className="block text-foreground-secondary font-bold mb-1">Business / Brand Name</label>
               <input
                 type="text"
                 value={businessName}
                 onChange={(e) => setBusinessName(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none focus:border-brand-primary"
+                className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
               />
             </div>
 
             <div>
-              <label className="block text-slate-700 font-bold mb-1">Headline / Specialty</label>
+              <label className="block text-foreground-secondary font-bold mb-1">Headline / Specialty</label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none focus:border-brand-primary"
+                className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Primary City</label>
+                <label className="block text-foreground-secondary font-bold mb-1">Primary City</label>
                 <input
                   type="text"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 />
               </div>
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Starting Price ($)</label>
+                <label className="block text-foreground-secondary font-bold mb-1">Starting Price ($)</label>
                 <input
                   type="number"
                   value={startingPrice}
                   onChange={(e) => setStartingPrice(e.target.value)}
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 />
               </div>
             </div>
@@ -211,24 +211,24 @@ export default function VendorSettingsPage() {
         </div>
 
         {/* Legal & Tax Entity */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-xs">
-          <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3">
+        <div className="bg-surface border border-border rounded-2xl p-5 space-y-4 shadow-xs">
+          <div className="flex items-center gap-2.5 border-b border-border pb-3">
             <div className="p-2 rounded-xl bg-purple-50 text-purple-600">
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div>
               <h2 className="text-sm font-bold text-[#0F0C3B]">Legal Entity &amp; 1099 Tax Info</h2>
-              <p className="text-xs text-slate-500">For annual IRS reporting and escrow payouts</p>
+              <p className="text-xs text-foreground-muted">For annual IRS reporting and escrow payouts</p>
             </div>
           </div>
 
           <div className="space-y-3 text-xs">
             <div>
-              <label className="block text-slate-700 font-bold mb-1">Business Structure</label>
+              <label className="block text-foreground-secondary font-bold mb-1">Business Structure</label>
               <select
                 value={businessType}
                 onChange={(e) => setBusinessType(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none"
+                className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none"
               >
                 <option value="LLC">Limited Liability Company (LLC)</option>
                 <option value="Sole">Sole Proprietorship</option>
@@ -238,18 +238,18 @@ export default function VendorSettingsPage() {
             </div>
 
             <div>
-              <label className="block text-slate-700 font-bold mb-1">Employer Identification Number (EIN)</label>
+              <label className="block text-foreground-secondary font-bold mb-1">Employer Identification Number (EIN)</label>
               <input
                 type="text"
                 value={taxEin}
                 onChange={(e) => setTaxEin(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-mono font-bold focus:outline-none"
+                className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none"
               />
             </div>
 
             <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-100 flex items-center justify-between">
               <span className="text-emerald-900 font-bold">W-9 Form Status</span>
-              <span className="px-2 py-0.5 rounded-full bg-emerald-600 text-white text-[10px] font-bold">
+              <span className="px-2 py-0.5 rounded-full bg-success-solid text-white text-foreground text-[10px] font-bold">
                 Active on File
               </span>
             </div>
@@ -257,22 +257,22 @@ export default function VendorSettingsPage() {
         </div>
 
         {/* Lead Alerts & Notifications */}
-        <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-4 shadow-xs md:col-span-2">
-          <div className="flex items-center gap-2.5 border-b border-slate-100 pb-3">
+        <div className="bg-surface border border-border rounded-2xl p-5 space-y-4 shadow-xs md:col-span-2">
+          <div className="flex items-center gap-2.5 border-b border-border pb-3">
             <div className="p-2 rounded-xl bg-amber-50 text-amber-600">
               <Bell className="w-4 h-4" />
             </div>
             <div>
               <h2 className="text-sm font-bold text-[#0F0C3B]">Lead Matching &amp; Notifications</h2>
-              <p className="text-xs text-slate-500">Configure alerts when new events are posted near you</p>
+              <p className="text-xs text-foreground-muted">Configure alerts when new events are posted near you</p>
             </div>
           </div>
 
           <div className="space-y-3 text-xs">
-            <label className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FD] border border-slate-200/80 cursor-pointer hover:bg-slate-50">
+            <label className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FD] border border-border/80 cursor-pointer hover:bg-surface-elevated">
               <div>
                 <p className="font-bold text-[#0F0C3B]">Instant SMS for &lt;50 mi Job Matches</p>
-                <p className="text-slate-500 text-[11px]">Receive an immediate text when a client posts a job in your category</p>
+                <p className="text-foreground-muted text-[11px]">Receive an immediate text when a client posts a job in your category</p>
               </div>
               <input
                 type="checkbox"
@@ -282,10 +282,10 @@ export default function VendorSettingsPage() {
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FD] border border-slate-200/80 cursor-pointer hover:bg-slate-50">
+            <label className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FD] border border-border/80 cursor-pointer hover:bg-surface-elevated">
               <div>
                 <p className="font-bold text-[#0F0C3B]">Direct Gig Instant Booking</p>
-                <p className="text-slate-500 text-[11px]">Allow verified clients to book open calendar dates without prior inquiry</p>
+                <p className="text-foreground-muted text-[11px]">Allow verified clients to book open calendar dates without prior inquiry</p>
               </div>
               <input
                 type="checkbox"
@@ -295,10 +295,10 @@ export default function VendorSettingsPage() {
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FD] border border-slate-200/80 cursor-pointer hover:bg-slate-50">
+            <label className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FD] border border-border/80 cursor-pointer hover:bg-surface-elevated">
               <div>
                 <p className="font-bold text-[#0F0C3B]">Weekly Performance Summary Email</p>
-                <p className="text-slate-500 text-[11px]">Weekly breakdown of impressions, bids won, and level progress</p>
+                <p className="text-foreground-muted text-[11px]">Weekly breakdown of impressions, bids won, and level progress</p>
               </div>
               <input
                 type="checkbox"

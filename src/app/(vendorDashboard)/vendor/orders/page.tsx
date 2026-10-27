@@ -117,13 +117,13 @@ export default function VendorOrdersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-[#0F0C3B]">Fulfillment &amp; Client Orders</h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Submit work for funded milestones. Client approval starts the 7-day transfer hold.
           </p>
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center gap-1.5 bg-white p-1 rounded-xl border border-slate-200 self-start text-xs font-bold flex-wrap">
+        <div className="flex items-center gap-1.5 bg-surface p-1 rounded-xl border border-border self-start text-xs font-bold flex-wrap">
           {[
             { id: "ALL", label: "All Orders" },
             { id: "IN_PROGRESS", label: "In Progress" },
@@ -137,8 +137,8 @@ export default function VendorOrdersPage() {
               className={cn(
                 "px-3 py-1.5 rounded-lg transition-colors cursor-pointer",
                 filterStatus === tab.id 
-                  ? "bg-[#0F0C3B] text-white" 
-                  : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                  ? "bg-[#0F0C3B] text-foreground" 
+                  : "text-foreground-secondary hover:text-foreground hover:bg-surface-elevated"
               )}
             >
               {tab.label}
@@ -150,15 +150,15 @@ export default function VendorOrdersPage() {
       {/* Orders List */}
       <div className="space-y-3 text-xs">
         {isLoading ? (
-          <div className="py-12 flex flex-col items-center justify-center text-slate-400 gap-2">
+          <div className="py-12 flex flex-col items-center justify-center text-foreground-muted gap-2">
             <Loader2 className="w-5 h-5 animate-spin text-brand-primary" />
             <span>Loading active orders...</span>
           </div>
         ) : filteredOrders.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-500">
-            <ShoppingBag className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+          <div className="bg-surface rounded-2xl border border-border p-12 text-center text-foreground-muted">
+            <ShoppingBag className="w-8 h-8 text-foreground-secondary mx-auto mb-2" />
             <p className="font-bold text-[#0F0C3B]">No orders matching status</p>
-            <p className="text-xs text-slate-400 mt-0.5">Change filters or browse open client RFPs</p>
+            <p className="text-xs text-foreground-muted mt-0.5">Change filters or browse open client RFPs</p>
           </div>
         ) : (
           filteredOrders.map((ord: any) => {
@@ -174,7 +174,7 @@ export default function VendorOrdersPage() {
             return (
               <div
                 key={ord.id}
-                className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all hover:border-slate-300"
+                className="bg-surface p-5 rounded-2xl border border-border shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all hover:border-border"
               >
                 <div className="flex items-start gap-4">
                   <div className="w-11 h-11 rounded-xl bg-indigo-50 text-brand-primary flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">
@@ -188,7 +188,7 @@ export default function VendorOrdersPage() {
                       </span>
                       {isCompleted ? (
                         <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
-                          <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                          <CheckCircle2 className="w-3 h-3 text-success" />
                           Delivered
                         </span>
                       ) : hasPendingApproval ? (
@@ -207,14 +207,14 @@ export default function VendorOrdersPage() {
                       )}
                     </div>
 
-                    <p className="text-slate-500 mt-0.5">
+                    <p className="text-foreground-muted mt-0.5">
                       Client: <strong>{clientName}</strong> • Event Date: {dateStr}
                     </p>
 
                     <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                       {isCompleted ? (
                         <span className="text-[11px] font-bold text-emerald-700 flex items-center gap-1">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                          <CheckCircle2 className="w-3.5 h-3.5 text-success" />
                           Client approved · transfer follows the 7-day hold
                         </span>
                       ) : hasPendingApproval ? (
@@ -223,8 +223,8 @@ export default function VendorOrdersPage() {
                           Waiting for Client Approval {ord.deliveryNotes ? "• Deliverables Submitted" : ""}
                         </span>
                       ) : (
-                        <span className="text-[11px] font-semibold text-slate-600 flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5 text-slate-500" />
+                        <span className="text-[11px] font-semibold text-foreground-secondary flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5 text-foreground-muted" />
                           {milestoneText}
                         </span>
                       )}
@@ -241,7 +241,7 @@ export default function VendorOrdersPage() {
                                   "px-2 py-0.5 rounded text-[9px] font-bold",
                                   isRel ? "bg-emerald-100 text-emerald-800 border border-emerald-200" :
                                   isPend ? "bg-amber-100 text-amber-900 border border-amber-300 font-extrabold" :
-                                  "bg-slate-100 text-slate-600"
+                                  "bg-surface-sunken text-foreground-secondary"
                                 )}
                               >
                                 M{idx + 1}: {isRel ? "DELIVERED" : isPend ? "PENDING APPROVAL" : (m.status || "LOCKED")}
@@ -257,14 +257,14 @@ export default function VendorOrdersPage() {
                 <div className="flex items-center gap-3 self-end md:self-center flex-wrap">
                   <div className="text-right mr-2">
                     <span className="text-base font-extrabold text-[#0F0C3B] block">{amountStr}</span>
-                    <span className="text-[10px] text-slate-500 font-bold">Stripe Connect payments</span>
+                    <span className="text-[10px] text-foreground-muted font-bold">Stripe Connect payments</span>
                   </div>
 
                   <div className="flex items-center gap-1.5">
                     <button
                       type="button"
                       onClick={() => handleOpenChat(ord)}
-                      className="px-3 py-2 rounded-xl border border-slate-200 hover:bg-indigo-50 hover:text-brand-primary hover:border-indigo-200 text-slate-700 transition-all flex items-center gap-1.5 cursor-pointer font-bold text-xs shadow-2xs"
+                      className="px-3 py-2 rounded-xl border border-border hover:bg-indigo-50 hover:text-brand-primary hover:border-indigo-200 text-foreground-secondary transition-all flex items-center gap-1.5 cursor-pointer font-bold text-xs shadow-2xs"
                       title="Live Chat Modal via Socket.IO"
                     >
                       <MessageSquare className="w-4 h-4 text-brand-primary" />
@@ -272,7 +272,7 @@ export default function VendorOrdersPage() {
                     </button>
                     <Link
                       href={`/vendor/messages?userId=${ord.clientProfile?.userId || ord.clientProfile?.id || ''}&orderId=${ord.id}&name=${encodeURIComponent(clientName)}`}
-                      className="p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-500 hover:text-slate-800 transition-all flex items-center justify-center cursor-pointer shadow-2xs"
+                      className="p-2 rounded-xl border border-border hover:bg-surface-elevated text-foreground-muted hover:text-foreground transition-all flex items-center justify-center cursor-pointer shadow-2xs"
                       title="Open in Full Messages Page"
                     >
                       <ExternalLink className="w-3.5 h-3.5" />
@@ -282,15 +282,15 @@ export default function VendorOrdersPage() {
                   {isCompleted ? (
                     <div className="flex items-center gap-1.5">
                       <div className="px-3.5 py-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                        <CheckCircle2 className="w-4 h-4 text-success" />
                         <span>Delivered</span>
                       </div>
                       <Link
                         href={`/vendor/orders/${ord.id}`}
-                        className="px-3 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-600 hover:text-slate-900 text-xs font-bold transition-all shadow-2xs flex items-center gap-1"
+                        className="px-3 py-2.5 rounded-xl border border-border hover:bg-surface-elevated text-foreground-secondary hover:text-foreground text-xs font-bold transition-all shadow-2xs flex items-center gap-1"
                         title="View Order Contract"
                       >
-                        <FileText className="w-3.5 h-3.5 text-slate-500" />
+                        <FileText className="w-3.5 h-3.5 text-foreground-muted" />
                         <span>Details</span>
                       </Link>
                     </div>
@@ -304,9 +304,9 @@ export default function VendorOrdersPage() {
                   ) : (!ord.milestones?.length || ord.milestones?.some((m: any) => m.status === "FUNDED")) ? (
                     <button
                       onClick={() => handleOpenDelivery(ord)}
-                      className="px-4 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-white text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                      className="px-4 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                     >
-                      <UploadCloud className="w-3.5 h-3.5 text-amber-300" />
+                      <UploadCloud className="w-3.5 h-3.5 text-warning" />
                       <span>Submit Funded Milestone</span>
                     </button>
                   ) : null}
@@ -320,8 +320,8 @@ export default function VendorOrdersPage() {
       {/* Deliver Milestone Modal */}
       {deliveryModalOpen && selectedOrder && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-slate-100 animate-in fade-in">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="bg-surface rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-border animate-in fade-in">
+            <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
                 <span className="font-mono text-xs font-bold text-brand-primary">
                   Order #{selectedOrder.orderNumber || selectedOrder.id?.slice(-6).toUpperCase()}
@@ -334,7 +334,7 @@ export default function VendorOrdersPage() {
               </div>
               <button 
                 onClick={() => setDeliveryModalOpen(false)} 
-                className="text-slate-400 hover:text-slate-600 p-1 rounded-lg cursor-pointer"
+                className="text-foreground-muted hover:text-foreground-secondary p-1 rounded-lg cursor-pointer"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -343,11 +343,11 @@ export default function VendorOrdersPage() {
             <form onSubmit={handleConfirmDelivery} className="space-y-4 text-xs">
               {/* Select Milestone */}
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Target Milestone to Deliver *</label>
+                <label className="block text-foreground-secondary font-bold mb-1">Target Milestone to Deliver *</label>
                 <select
                   value={selectedMilestoneId}
                   onChange={(e) => setSelectedMilestoneId(e.target.value)}
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 >
                   {selectedOrder.milestones && selectedOrder.milestones.length > 0 ? (
                     <>
@@ -366,26 +366,26 @@ export default function VendorOrdersPage() {
 
               {/* Delivery Notes */}
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Fulfillment Notes &amp; Summary *</label>
+                <label className="block text-foreground-secondary font-bold mb-1">Fulfillment Notes &amp; Summary *</label>
                 <textarea
                   rows={3}
                   value={deliveryNotes}
                   onChange={(e) => setDeliveryNotes(e.target.value)}
                   placeholder="Provide completion details, summary of work done for client review..."
                   required
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-brand-primary resize-none leading-relaxed"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary resize-none leading-relaxed"
                 />
               </div>
 
               {/* Work Proof URL */}
               <div>
-                <label className="block text-slate-700 font-bold mb-1">Work Proof / Deliverable Link (Optional)</label>
+                <label className="block text-foreground-secondary font-bold mb-1">Work Proof / Deliverable Link (Optional)</label>
                 <input
                   type="url"
                   value={proofUrl}
                   onChange={(e) => setProofUrl(e.target.value)}
                   placeholder="https://drive.google.com/... or cloud share link"
-                  className="w-full bg-[#F8F9FD] border border-slate-200 rounded-xl p-2.5 text-slate-800 focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary"
                 />
               </div>
 
@@ -396,23 +396,23 @@ export default function VendorOrdersPage() {
                 </p>
               </div>
 
-              <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">
+              <div className="flex justify-end gap-2 pt-2 border-t border-border">
                 <button
                   type="button"
                   onClick={() => setDeliveryModalOpen(false)}
-                  className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-bold transition-colors cursor-pointer"
+                  className="px-4 py-2 bg-surface-sunken hover:bg-slate-200 text-foreground-secondary rounded-xl font-bold transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-5 py-2 bg-[#0F0C3B] hover:bg-[#18124E] text-white rounded-xl font-bold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer"
+                  className="px-5 py-2 bg-[#0F0C3B] hover:bg-[#18124E] text-foreground rounded-xl font-bold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer"
                 >
                   {isSubmitting ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   ) : (
-                    <UploadCloud className="w-3.5 h-3.5 text-amber-300" />
+                    <UploadCloud className="w-3.5 h-3.5 text-warning" />
                   )}
                   <span>
                     {selectedOrder.milestones?.some((m: any) => m.status === "PENDING_RELEASE") || selectedOrder.deliveryNotes
