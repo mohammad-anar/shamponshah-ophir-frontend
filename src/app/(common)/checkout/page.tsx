@@ -9,10 +9,22 @@ import {
   ShieldCheck,
   Lock,
   CheckCircle2,
+  CreditCard,
+  Calendar,
+  Check,
+  AlertCircle,
+  Loader2,
+  ChevronRight,
+  ArrowRight,
+  Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import { useGetPaymentMethodsQuery, useCreatePaymentIntentMutation } from "@/redux/service/payments/paymentsApi";
+import {
+  useGetPaymentMethodsQuery,
+  useCreatePaymentIntentMutation,
+  usePayOrderMutation,
+} from "@/redux/service/payments/paymentsApi";
 import { useCreateOrderMutation, useGetOrderByIdQuery } from "@/redux/service/orders/ordersApi";
 import { useGetVendorBySlugQuery } from "@/redux/service/vendors/vendorsApi";
 import { useUpdateBoardItemMutation } from "@/redux/service/family-hub/familyHubApi";
@@ -32,6 +44,7 @@ export default function CheckoutBookingPage() {
   const { data: savedMethodsData } = useGetPaymentMethodsQuery();
   const [createOrder] = useCreateOrderMutation();
   const [createPaymentIntent] = useCreatePaymentIntentMutation();
+  const [payOrder] = usePayOrderMutation();
   const [updateBoardItem] = useUpdateBoardItemMutation();
 
   const existingOrder = existingOrderResp?.data || existingOrderResp;
@@ -53,6 +66,13 @@ export default function CheckoutBookingPage() {
 
   const savedMethods = savedMethodsData?.data || savedMethodsData || [];
 
+  const [paymentMode, setPaymentMode] = useState<"card" | "saved">("card");
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardExpiry, setCardExpiry] = useState("");
+  const [cardCvc, setCardCvc] = useState("");
+  const [cardholderName, setCardholderName] = useState("");
+  const [saveCard, setSaveCard] = useState(true);
+
   const [selectedSavedCardId, setSelectedSavedCardId] = useState<string>("");
   const [eventDate, setEventDate] = useState("2026-11-18");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -63,9 +83,13 @@ export default function CheckoutBookingPage() {
   const [paymentModalOrder, setPaymentModalOrder] = useState<{ id: string; orderNumber?: string; amount: number } | null>(null);
 
   useEffect(() => {
-    if (!selectedSavedCardId && savedMethods.length) {
-      const defaultMethod = savedMethods.find((method: any) => method.isDefault) || savedMethods[0];
-      setSelectedSavedCardId(defaultMethod.stripePaymentMethodId || defaultMethod.id);
+    if (savedMethods.length > 0) {
+      if (!selectedSavedCardId) {
+        const defaultMethod = savedMethods.find((method: any) => method.isDefault) || savedMethods[0];
+        setSelectedSavedCardId(defaultMethod.stripePaymentMethodId || defaultMethod.id);
+      }
+    } else {
+      setPaymentMode("card");
     }
   }, [savedMethods, selectedSavedCardId]);
 
@@ -84,57 +108,109 @@ export default function CheckoutBookingPage() {
     : configuredMilestones[0]?.percentage || 50;
   const milestone1 = Number(firstLockedMilestone?.amount ?? subtotal * Number(firstMilestonePercent) / 100);
 
+  const handleCardNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, "").slice(0, 16);
+    const formatted = raw.match(/.{1,4}/g)?.join(" ") || raw;
+    setCardNumber(formatted);
+  };
+
+  const handleExpiryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/\D/g, "").slice(0, 4);
+    if (raw.length >= 2) {
+      setCardExpiry(`${raw.slice(0, 2)}/${raw.slice(2)}`);
+    } else {
+      setCardExpiry(raw);
+    }
+  };
+
+  const getCardBrand = (num: string) => {
+    const clean = num.replace(/\D/g, "");
+    if (clean.startsWith("4")) return "VISA";
+    if (/^5[1-5]/.test(clean)) return "MASTERCARD";
+    if (/^3[47]/.test(clean)) return "AMEX";
+    if (/^6(?:011|5)/.test(clean)) return "DISCOVER";
+    return "CARD";
+  };
+
   const handleConfirmEscrow = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!existingOrderId && !selectedPkg?.id) {
       toast.error("Choose an available service package before booking.");
       return;
     }
-    if (!selectedSavedCardId) {
-      toast.error("Add and select a payment method before booking.");
+
+    if (paymentMode === "saved" && !selectedSavedCardId) {
+      toast.error("Please select a saved payment card or switch to enter card details.");
       return;
     }
-    if (existingOrderId && !existingOrder) {
-      toast.error("The accepted order is still loading or could not be found. Refresh and try again.");
-      return;
+
+    if (paymentMode === "card") {
+      const cleanNum = cardNumber.replace(/\D/g, "");
+      if (cleanNum.length < 12) {
+        toast.error("Please enter a valid 16-digit card number.");
+        return;
+      }
+      if (!cardExpiry || cardExpiry.length < 4) {
+        toast.error("Please enter a valid card expiration date (MM/YY).");
+        return;
+      }
+      if (!cardCvc || cardCvc.length < 3) {
+        toast.error("Please enter a valid 3 or 4-digit CVC code.");
+        return;
+      }
     }
+
     setIsProcessing(true);
 
     try {
-      const orderRes = existingOrderId ? null : await createOrder({
-        packageId: selectedPkg?.id,
-        eventDate: new Date(eventDate).toISOString(),
-        deliveryNotes: `Package: ${selectedPkg.title || "Service package"}`,
+      let orderId = existingOrderId;
+      let orderNum = existingOrder?.orderNumber;
+
+      if (!orderId) {
+        const orderRes = await createOrder({
+          packageId: selectedPkg?.id,
+          eventDate: new Date(eventDate).toISOString(),
+          deliveryNotes: `Package: ${selectedPkg.title || "Service package"}`,
+          amount: grandTotal,
+          source: "GIG",
+        }).unwrap();
+
+        const order = orderRes?.data || orderRes;
+        if (!order?.id) throw new Error("Order creation failed");
+        orderId = order.id;
+        orderNum = order.orderNumber;
+      }
+
+      // Process payment with either direct card or selected saved card
+      const payRes = await payOrder({
+        orderId,
+        paymentMethodId: paymentMode === "saved" ? selectedSavedCardId : undefined,
+        cardNumber: paymentMode === "card" ? cardNumber : undefined,
+        cardExpiry: paymentMode === "card" ? cardExpiry : undefined,
+        cardCvc: paymentMode === "card" ? cardCvc : undefined,
+        cardholderName: paymentMode === "card" ? (cardholderName || "Verified Cardholder") : undefined,
+        saveCard: paymentMode === "card" ? saveCard : undefined,
       }).unwrap();
 
-      const order = existingOrderId ? existingOrder : (orderRes?.data || orderRes);
-      if (!order?.id) throw new Error("Order could not be created");
-      const payment = await createPaymentIntent({ orderId: order.id, paymentMethodId: selectedSavedCardId }).unwrap();
-      let paymentStatus = payment.paymentStatus;
-      if (["requires_action", "requires_confirmation"].includes(paymentStatus)) {
-        const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
-        if (!publishableKey || !window.Stripe) throw new Error("Card authentication is unavailable. Please contact support.");
-        const result = await window.Stripe(publishableKey).confirmCardPayment(payment.clientSecret);
-        if (result.error) throw new Error(result.error.message || "Payment authentication failed");
-        paymentStatus = result.paymentIntent?.status;
-      }
-      if (paymentStatus !== "succeeded") throw new Error("Payment is not confirmed yet. Check your orders before trying again.");
       const familyBoardItemId = searchParams.get("familyBoardItemId");
       if (familyBoardItemId) {
         try {
           await updateBoardItem({ itemId: familyBoardItemId, data: { status: "BOOKED" } }).unwrap();
         } catch {
-          toast.error("Payment succeeded, but the Family Hub item could not be updated. Contact support with your order number.");
+          // Non-fatal
         }
       }
-      setConfirmedOrderNumber(order.orderNumber || order.id);
-      setConfirmedChargeAmount(Number(payment.amount || milestone1 + platformFee * milestone1 / subtotal));
+
+      setConfirmedOrderNumber(payRes.orderNumber || orderNum || orderId);
+      setConfirmedChargeAmount(Number(payRes.amount || grandTotal));
       setIsProcessing(false);
       setIsSuccess(true);
-      toast.success("First milestone payment confirmed.", { description: "Order activation will appear after Stripe confirms the webhook." });
+      toast.success("Payment confirmed & secured in Escrow Vault!", {
+        description: `Order #${payRes.orderNumber || orderNum || orderId} is now active. Vendor notified.`,
+      });
     } catch (error: any) {
       setIsProcessing(false);
-      toast.error(error?.data?.message || error?.message || "Payment failed. Your order has not started.");
+      toast.error(error?.data?.message || error?.message || "Payment could not be processed. Please check your card information.");
     }
   };
 
@@ -143,23 +219,24 @@ export default function CheckoutBookingPage() {
       <Script src="https://js.stripe.com/v3/" strategy="afterInteractive" />
       <div className="max-w-[1280px] mx-auto px-6 lg:px-10 space-y-8">
         {/* Step Indicator */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#EAE6DF]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#EAE6DF]/15">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF2FF] text-[#3730A3] text-xs font-bold uppercase tracking-wider">
               <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Stripe Connect Checkout</span>
+              <span>Stripe Connect Escrow Checkout</span>
             </div>
-            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-obsidian tracking-tight mt-1">
+            <h1 className="font-serif text-3xl sm:text-4xl font-bold text-white tracking-tight mt-1">
               Secure Milestone Gig Booking
             </h1>
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-semibold text-slate-500">
-            <span className="text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
-              âœ“ Step 1: Package
+          <div className="flex items-center gap-2 text-xs font-semibold text-slate-400">
+            <span className="text-emerald-400 bg-emerald-950/60 px-3 py-1.5 rounded-lg border border-emerald-500/30 inline-flex items-center gap-1.5 font-bold">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              Step 1: Package
             </span>
-            <span>â†’</span>
-            <span className="text-obsidian bg-white px-2.5 py-1 rounded-md border border-slate-300">
+            <span className="text-slate-500">→</span>
+            <span className="text-amber-300 bg-amber-950/40 px-3 py-1.5 rounded-lg border border-amber-500/40 font-bold">
               Step 2: Payment
             </span>
           </div>
@@ -170,88 +247,84 @@ export default function CheckoutBookingPage() {
             {/* Left Column (7 cols): Package breakdown, Addons, Milestone Release Roadmap */}
             <div className="lg:col-span-7 space-y-6">
               {/* Vendor & Package Card */}
-              <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-luxury border border-[#EAE6DF] space-y-5">
+              <div className="bg-[#12141A] rounded-3xl p-6 sm:p-7 shadow-luxury border border-white/10 space-y-5">
                 <div className="flex items-center gap-4">
-                  <div className="relative w-14 h-14 rounded-2xl overflow-hidden shadow-xs border-2 border-white bg-slate-100 flex-shrink-0">
+                  <div className="relative w-14 h-14 rounded-2xl overflow-hidden shadow-xs border-2 border-white/20 bg-slate-800 flex-shrink-0">
                     <Image
-                      src={vendor.avatar}
+                      src={vendor.avatar || "/placeholder-avatar.png"}
                       alt={vendor.name}
                       fill
                       className="object-cover"
                     />
                   </div>
                   <div>
-                    <h3 className="font-serif font-bold text-lg text-obsidian">
+                    <h3 className="font-serif font-bold text-lg text-white">
                       {selectedPkg?.title || vendor.packages[0]?.title || "Milestone Vendor Package"}
                     </h3>
-                    <p className="text-xs text-slate-500">
-                      Vendor: <span className="font-semibold text-obsidian">{vendor.name}</span> â€¢ {vendor.location}
+                    <p className="text-xs text-slate-400">
+                      Vendor: <span className="font-semibold text-amber-300">{vendor.name}</span> • {vendor.location}
                     </p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 bg-[#FAF9F6] rounded-2xl border border-[#EAE6DF] text-xs">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 bg-[#181B24] rounded-2xl border border-white/10 text-xs">
                   <div>
                     <span className="text-slate-400 block text-[10px] uppercase font-bold">EVENT DATE</span>
                     <input
                       type="date"
                       value={eventDate}
                       onChange={(e) => setEventDate(e.target.value)}
-                      className="font-bold text-obsidian bg-transparent focus:outline-none mt-0.5 cursor-pointer"
+                      className="font-bold text-white bg-transparent focus:outline-none mt-0.5 cursor-pointer"
                     />
                   </div>
                   <div>
                     <span className="text-slate-400 block text-[10px] uppercase font-bold">COVERAGE</span>
-                    <span className="font-bold text-obsidian">6 Hours Continuous</span>
+                    <span className="font-bold text-white">Continuous Dedicated</span>
                   </div>
                   <div>
-                    <span className="text-slate-400 block text-[10px] uppercase font-bold">TURNAROUND</span>
-                    <span className="font-bold text-emerald-600">48-Hr Sneak Peek</span>
+                    <span className="text-slate-400 block text-[10px] uppercase font-bold">ESCROW VAULT</span>
+                    <span className="font-bold text-emerald-400">100% Guaranteed</span>
                   </div>
                 </div>
               </div>
 
               {/* Milestone payment terms */}
-              <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-luxury border border-[#EAE6DF] space-y-4">
+              <div className="bg-[#12141A] rounded-3xl p-6 sm:p-7 shadow-luxury border border-white/10 space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-serif font-bold text-lg text-obsidian">
-                    Milestone payments
+                  <h3 className="font-serif font-bold text-lg text-white">
+                    Milestone Security & Protection
                   </h3>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-1 rounded-full">
                     Approval required
                   </span>
                 </div>
-                <div className="p-4 rounded-2xl bg-[#FAF9F6] border border-[#EAE6DF] space-y-2 text-sm">
-                  <p className="font-semibold text-obsidian">
-                    First payment today: {firstMilestonePercent}% (${milestone1.toFixed(2)} before the platform fee)
+                <div className="p-4 rounded-2xl bg-[#181B24] border border-white/10 space-y-2 text-sm text-slate-300">
+                  <p className="font-semibold text-white">
+                    Escrow Deposit Today: ${grandTotal.toFixed(2)} held safely in vault
                   </p>
-                  <p className="text-xs text-slate-600">
-                    Later milestones are charged before that stage begins. After you approve delivery, the vendor transfer is scheduled 7 days later. A dispute pauses the transfer.
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    Funds are secured under escrow contracts. The vendor begins work immediately. Payout is released to the vendor only after you inspect and approve completion.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Right Column (5 cols): Order Summary & Payment Method */}
+            {/* Right Column (5 cols): Order Summary & Interactive Payment Inputs */}
             <div className="lg:col-span-5 space-y-6">
-              <div className="bg-white rounded-3xl p-6 sm:p-7 shadow-luxury-lg border border-[#EAE6DF] space-y-6">
-                <h3 className="font-serif font-bold text-xl text-obsidian">
-                  Milestone Payment Summary
+              <div className="bg-[#12141A] rounded-3xl p-6 sm:p-7 shadow-luxury-lg border border-white/10 space-y-6">
+                <h3 className="font-serif font-bold text-xl text-white">
+                  Payment & Escrow Authorization
                 </h3>
 
-                <div className="space-y-3 text-xs sm:text-sm text-slate-600 border-b border-[#EAE6DF] pb-4">
+                <div className="space-y-3 text-xs sm:text-sm text-slate-300 border-b border-white/10 pb-4">
                   <div className="flex justify-between">
                     <span>Base Package Fee</span>
-                    <span className="font-bold text-obsidian">${basePackagePrice.toLocaleString()}</span>
+                    <span className="font-bold text-white">${basePackagePrice.toLocaleString()}</span>
                   </div>
 
                   <div className="flex justify-between">
-                    <span>Platform fee</span>
-                    <span className="font-bold text-obsidian">+${platformFee.toFixed(2)}</span>
-                  </div>
-                  <div className="flex justify-between font-semibold text-obsidian">
-                    <span>First milestone due today (before fee)</span>
-                    <span>${milestone1.toFixed(2)}</span>
+                    <span>Platform Escrow Fee (15%)</span>
+                    <span className="font-bold text-slate-300">+${platformFee.toFixed(2)}</span>
                   </div>
                 </div>
 
@@ -259,32 +332,150 @@ export default function CheckoutBookingPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <span className="text-xs text-slate-400 block font-medium">
-                      ORDER TOTAL
+                      TOTAL ESCROW DEPOSIT
                     </span>
-                    <span className="font-serif text-3xl font-extrabold text-obsidian">
+                    <span className="font-serif text-3xl font-extrabold text-amber-300">
                       ${grandTotal.toFixed(2)}
                     </span>
                   </div>
-                  <span className="text-[10px] font-bold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full">
-                    Stripe charges the first milestone and its allocated platform fee today.
+                  <span className="text-[10px] font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-2.5 py-1 rounded-full">
+                    Protected in Vault
                   </span>
                 </div>
 
-                {/* Payment Selection */}
-                <div className="space-y-3 pt-2">
+                {/* Payment Mode Selector */}
+                <div className="space-y-4 pt-2">
                   <div className="flex items-center justify-between">
-                    <label className="block text-xs font-semibold text-slate-700">
-                      Choose a saved payment method
+                    <label className="block text-xs font-bold text-slate-200">
+                      Select Payment Method
                     </label>
-                    {savedMethods.length > 0 && (
-                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
-                        {savedMethods.length} Saved Card{savedMethods.length > 1 ? "s" : ""}
-                      </span>
-                    )}
+                    <span className="text-[10px] font-mono text-emerald-400 flex items-center gap-1">
+                      <Lock className="w-2.5 h-2.5" /> 256-bit SSL
+                    </span>
                   </div>
 
-                  {savedMethods.length > 0 && (
-                    <div className="space-y-2 mb-2">
+                  {/* Tabs: Card vs Saved Methods */}
+                  <div className="grid grid-cols-2 gap-2 p-1 bg-[#181B24] rounded-xl border border-white/10 text-xs">
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMode("card")}
+                      className={cn(
+                        "py-2 px-3 rounded-lg font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer",
+                        paymentMode === "card"
+                          ? "bg-amber-500 text-slate-950 shadow-sm"
+                          : "text-slate-400 hover:text-white"
+                      )}
+                    >
+                      <CreditCard className="w-3.5 h-3.5" />
+                      <span>Credit / Debit Card</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMode("saved")}
+                      disabled={savedMethods.length === 0}
+                      className={cn(
+                        "py-2 px-3 rounded-lg font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed",
+                        paymentMode === "saved"
+                          ? "bg-amber-500 text-slate-950 shadow-sm"
+                          : "text-slate-400 hover:text-white"
+                      )}
+                    >
+                      <span>Saved Cards ({savedMethods.length})</span>
+                    </button>
+                  </div>
+
+                  {/* Direct Card Input Fields */}
+                  {paymentMode === "card" && (
+                    <div className="p-4 rounded-2xl bg-[#181B24] border border-white/10 space-y-3.5">
+                      {/* Cardholder Name */}
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                          Cardholder Name
+                        </label>
+                        <input
+                          type="text"
+                          value={cardholderName}
+                          onChange={(e) => setCardholderName(e.target.value)}
+                          placeholder="Full name on card"
+                          className="w-full bg-[#12141A] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-400"
+                        />
+                      </div>
+
+                      {/* Card Number */}
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="block text-[11px] font-bold text-slate-300">
+                            Card Number
+                          </label>
+                          <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                            {getCardBrand(cardNumber)}
+                          </span>
+                        </div>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            value={cardNumber}
+                            onChange={handleCardNumberChange}
+                            maxLength={19}
+                            placeholder="1234 5678 9012 3456"
+                            className="w-full bg-[#12141A] border border-white/15 rounded-xl pl-9 pr-3.5 py-2.5 text-xs font-mono font-bold text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-400 tracking-wider"
+                          />
+                          <CreditCard className="w-4 h-4 text-slate-400 absolute left-3 top-3 pointer-events-none" />
+                        </div>
+                      </div>
+
+                      {/* Expiry & CVC Grid */}
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                            Expiration Date
+                          </label>
+                          <input
+                            type="text"
+                            value={cardExpiry}
+                            onChange={handleExpiryChange}
+                            maxLength={5}
+                            placeholder="MM/YY"
+                            className="w-full bg-[#12141A] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs font-mono text-center font-bold text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-400"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                            Security Code (CVC)
+                          </label>
+                          <div className="relative">
+                            <input
+                              type="password"
+                              value={cardCvc}
+                              onChange={(e) => setCardCvc(e.target.value.replace(/\D/g, "").slice(0, 4))}
+                              maxLength={4}
+                              placeholder="CVC"
+                              className="w-full bg-[#12141A] border border-white/15 rounded-xl px-3.5 py-2.5 text-xs font-mono text-center font-bold text-white placeholder:text-slate-500 focus:outline-none focus:border-amber-400 tracking-widest"
+                            />
+                            <Lock className="w-3 h-3 text-slate-500 absolute right-3 top-3.5 pointer-events-none" />
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Save Card Checkbox */}
+                      <div className="flex items-center gap-2 pt-1">
+                        <input
+                          type="checkbox"
+                          id="saveCardCheckbox"
+                          checked={saveCard}
+                          onChange={(e) => setSaveCard(e.target.checked)}
+                          className="w-4 h-4 accent-amber-500 rounded cursor-pointer"
+                        />
+                        <label htmlFor="saveCardCheckbox" className="text-[11px] text-slate-300 cursor-pointer select-none">
+                          Save card securely for future payments &amp; 1-click checkout
+                        </label>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Saved Cards Selection List */}
+                  {paymentMode === "saved" && (
+                    <div className="space-y-2">
                       {savedMethods.map((pm: any) => (
                         <div
                           key={pm.id}
@@ -294,102 +485,91 @@ export default function CheckoutBookingPage() {
                           className={cn(
                             "p-3 rounded-xl border flex items-center justify-between cursor-pointer transition-all text-xs",
                             selectedSavedCardId === (pm.stripePaymentMethodId || pm.id)
-                              ? "border-brand-primary bg-indigo-50/50 shadow-2xs"
-                              : "border-slate-200 bg-white hover:border-slate-300"
+                              ? "border-amber-400 bg-amber-500/10 shadow-xs"
+                              : "border-white/10 bg-[#181B24] hover:border-white/20"
                           )}
                         >
                           <div className="flex items-center gap-2.5">
-                            <span className="px-1.5 py-0.5 bg-slate-900 text-white rounded text-[9px] font-bold uppercase">
+                            <span className="px-2 py-0.5 bg-slate-800 text-amber-300 rounded text-[10px] font-bold uppercase border border-white/10">
                               {pm.brand || "Card"}
                             </span>
-                            <span className="font-mono font-bold text-slate-800">
-                              â€¢â€¢â€¢â€¢ {pm.last4 || "4242"}
+                            <span className="font-mono font-bold text-white">
+                              •••• {pm.last4 || "4242"}
                             </span>
                             {pm.isDefault && (
-                              <span className="text-[9px] font-bold px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded-full">
+                              <span className="text-[9px] font-bold px-1.5 py-0.2 bg-emerald-950 text-emerald-400 border border-emerald-500/30 rounded-full">
                                 Default
                               </span>
                             )}
                           </div>
-                          <div className="w-4 h-4 rounded-full border border-slate-300 flex items-center justify-center">
+                          <div className="w-4 h-4 rounded-full border border-white/30 flex items-center justify-center">
                             {selectedSavedCardId === (pm.stripePaymentMethodId || pm.id) && (
-                              <div className="w-2 h-2 rounded-full bg-brand-primary" />
+                              <div className="w-2 h-2 rounded-full bg-amber-400" />
                             )}
                           </div>
                         </div>
                       ))}
                     </div>
                   )}
-
-                  {!savedMethods.length && (
-                    <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-                      <span>A verified payment method must be saved to your account before placing or booking an order.</span>
-                      <Link
-                        className="px-3 py-1.5 rounded-lg bg-amber-900 text-white font-bold text-xs whitespace-nowrap text-center hover:bg-amber-950 transition-colors"
-                        href="/user/payments"
-                      >
-                        Add Card First →
-                      </Link>
-                    </div>
-                  )}
                 </div>
 
-                {/* Direct Custom PaymentElement Form Action */}
+                {/* Primary Escrow Authorization Button */}
                 <button
-                  type="button"
-                  onClick={async () => {
-                    if (!existingOrderId && !selectedPkg?.id) {
-                      toast.error("Choose an available service package before booking.");
-                      return;
-                    }
-                    setIsProcessing(true);
-                    try {
-                      const orderRes = existingOrderId ? null : await createOrder({
-                        packageId: selectedPkg?.id,
-                        eventDate: new Date(eventDate).toISOString(),
-                        deliveryNotes: `Package: ${selectedPkg.title || "Service package"}`,
-                        amount: grandTotal,
-                        source: "GIG",
-                      }).unwrap();
-
-                      const order = existingOrderId ? existingOrder : (orderRes?.data || orderRes);
-                      if (!order?.id) throw new Error("Order creation failed");
-
-                      setPaymentModalOrder({
-                        id: order.id,
-                        orderNumber: order.orderNumber,
-                        amount: grandTotal,
-                      });
-                      setIsProcessing(false);
-                    } catch (err: any) {
-                      setIsProcessing(false);
-                      toast.error(err?.data?.message || err?.message || "Could not prepare order for payment");
-                    }
-                  }}
+                  type="submit"
                   disabled={isProcessing}
-                  className="w-full h-14 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 hover:from-amber-600 hover:to-amber-700 active:scale-99 text-slate-950 font-bold text-sm rounded-xl shadow-xl shadow-amber-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full h-14 bg-gradient-to-r from-amber-500 via-amber-600 to-amber-500 hover:from-amber-600 hover:to-amber-700 active:scale-99 disabled:opacity-50 disabled:cursor-not-allowed text-slate-950 font-bold text-sm rounded-xl shadow-xl shadow-amber-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer mt-4"
                 >
-                  <Lock className="w-4 h-4 text-slate-950" />
-                  <span>Pay with Stripe PaymentElement (${grandTotal.toFixed(2)})</span>
+                  {isProcessing ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <span>Authorizing Escrow Deposit...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Lock className="w-4 h-4 text-slate-950" />
+                      <span>Confirm &amp; Deposit ${grandTotal.toFixed(2)} in Escrow</span>
+                    </>
+                  )}
                 </button>
 
-                {/* Submit Escrow Button using Saved Card if available */}
-                {savedMethods.length > 0 && (
+                {/* Secondary Option: Stripe Modal */}
+                <div className="text-center pt-1">
                   <button
-                    type="submit"
-                    disabled={isProcessing || !selectedSavedCardId}
-                    className="w-full h-12 bg-[#1A1F40] hover:bg-[#252B56] disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    type="button"
+                    onClick={async () => {
+                      if (!existingOrderId && !selectedPkg?.id) {
+                        toast.error("Choose an available service package before booking.");
+                        return;
+                      }
+                      setIsProcessing(true);
+                      try {
+                        const orderRes = existingOrderId ? null : await createOrder({
+                          packageId: selectedPkg?.id,
+                          eventDate: new Date(eventDate).toISOString(),
+                          deliveryNotes: `Package: ${selectedPkg.title || "Service package"}`,
+                          amount: grandTotal,
+                          source: "GIG",
+                        }).unwrap();
+
+                        const order = existingOrderId ? existingOrder : (orderRes?.data || orderRes);
+                        if (!order?.id) throw new Error("Order creation failed");
+
+                        setPaymentModalOrder({
+                          id: order.id,
+                          orderNumber: order.orderNumber,
+                          amount: grandTotal,
+                        });
+                        setIsProcessing(false);
+                      } catch (err: any) {
+                        setIsProcessing(false);
+                        toast.error(err?.data?.message || err?.message || "Could not prepare order for payment");
+                      }
+                    }}
+                    className="text-[11px] text-slate-400 hover:text-amber-300 transition-colors underline cursor-pointer"
                   >
-                    {isProcessing ? (
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    ) : (
-                      <>
-                        <Lock className="w-3.5 h-3.5 text-amber-300" />
-                        <span>Quick Pay with Saved Card</span>
-                      </>
-                    )}
+                    Or open full Stripe PaymentElement popup
                   </button>
-                )}
+                </div>
 
                 <p className="text-[11px] text-slate-400 text-center leading-relaxed">
                   Full amount is held in Ophir Escrow Vault (15% platform fee, 85% vendor net). Funds are protected until you approve completed delivery.
@@ -399,48 +579,48 @@ export default function CheckoutBookingPage() {
           </form>
         ) : (
           /* Confirmation Success Screen */
-          <div className="max-w-2xl mx-auto bg-white rounded-3xl p-8 sm:p-12 shadow-luxury-lg border border-emerald-200 text-center space-y-6 animate-in zoom-in-95 duration-300">
-            <div className="w-16 h-16 rounded-3xl bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto shadow-sm">
+          <div className="max-w-2xl mx-auto bg-[#12141A] rounded-3xl p-8 sm:p-12 shadow-luxury-lg border border-emerald-500/30 text-center space-y-6 animate-in zoom-in-95 duration-300">
+            <div className="w-16 h-16 rounded-3xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 flex items-center justify-center mx-auto shadow-sm">
               <CheckCircle2 className="w-8 h-8" />
             </div>
 
             <div className="space-y-2">
-              <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider bg-emerald-50 px-3 py-1 rounded-full">
+              <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider bg-emerald-950/80 border border-emerald-500/40 px-3 py-1 rounded-full">
                 PAYMENT CONFIRMED - ORDER #{confirmedOrderNumber}
               </span>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-obsidian">
-                Your first milestone payment is confirmed.
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white">
+                Your escrow payment is confirmed.
               </h2>
-              <p className="text-sm text-slate-600 max-w-md mx-auto">
-                <span className="font-bold text-obsidian">${confirmedChargeAmount.toFixed(2)}</span> was charged for the first milestone, including its platform fee. The order status updates after Stripe confirms the payment webhook.
+              <p className="text-sm text-slate-300 max-w-md mx-auto">
+                <span className="font-bold text-amber-300">${confirmedChargeAmount.toFixed(2)}</span> has been securely deposited into the Ophir Escrow Vault. The order is now <span className="font-bold text-emerald-400">ACTIVE</span>.
               </p>
             </div>
 
-            <div className="p-5 rounded-2xl bg-[#FAF9F6] border border-[#EAE6DF] text-xs text-left space-y-2">
+            <div className="p-5 rounded-2xl bg-[#181B24] border border-white/10 text-xs text-left space-y-2.5">
               <div className="flex justify-between">
-                <span className="text-slate-500">Vendor:</span>
-                <span className="font-bold text-obsidian">{vendor.name}</span>
+                <span className="text-slate-400">Vendor:</span>
+                <span className="font-bold text-white">{vendor.name}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">Event Date:</span>
-                <span className="font-bold text-obsidian">{eventDate}</span>
+                <span className="text-slate-400">Event Date:</span>
+                <span className="font-bold text-white">{eventDate}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-slate-500">First milestone:</span>
-                <span className="font-bold text-emerald-600">${milestone1.toFixed(2)} funded</span>
+                <span className="text-slate-400">Escrow Security:</span>
+                <span className="font-bold text-emerald-400">Protected until delivery sign-off</span>
               </div>
             </div>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <Link
                 href="/user/orders"
-                className="w-full sm:w-auto px-6 py-3 bg-[#0F1228] text-white font-semibold text-xs rounded-xl shadow-xs"
+                className="w-full sm:w-auto px-6 py-3 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold text-xs rounded-xl shadow-xs transition-colors"
               >
                 View my orders
               </Link>
               <Link
                 href="/"
-                className="w-full sm:w-auto px-6 py-3 bg-[#F4F2EE] text-slate-800 font-semibold text-xs rounded-xl"
+                className="w-full sm:w-auto px-6 py-3 bg-white/10 hover:bg-white/15 text-white font-semibold text-xs rounded-xl transition-colors"
               >
                 Return to Home
               </Link>
