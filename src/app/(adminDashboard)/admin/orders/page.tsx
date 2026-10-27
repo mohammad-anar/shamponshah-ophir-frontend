@@ -144,14 +144,14 @@ export default function AdminOrdersEscrowPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
               Orders &amp; Escrow Vault
             </h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#1A1D24] text-[#DFB76C] border border-[#DFB76C]/30">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40">
               Stripe Connect Vault Custody
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Real-time custody tracking, milestone schedules, manual Stripe Connect payouts, and partial refund arbitration
           </p>
         </div>
@@ -159,7 +159,7 @@ export default function AdminOrdersEscrowPage() {
         <div className="flex items-center gap-3">
           <button 
             onClick={() => toast.success("Immutable Escrow Custody Ledger exported to CSV")}
-            className="px-3.5 py-2 rounded-xl bg-[#16181F] border border-[#26282E] text-xs font-bold text-slate-200 hover:bg-[#1A1D24] hover:text-white flex items-center gap-1.5 shadow-sm transition-colors"
+            className="px-3.5 py-2 rounded-xl bg-[#16181F] border border-[#26282E] text-xs font-bold text-foreground-secondary hover:bg-[#1A1D24] hover:text-foreground flex items-center gap-1.5 shadow-sm transition-colors"
           >
             <Download className="w-3.5 h-3.5 text-[#DFB76C]" />
             <span>Export Custody Ledger</span>
@@ -170,30 +170,30 @@ export default function AdminOrdersEscrowPage() {
       {/* Escrow Liquidity Summary Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
         <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm space-y-1">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total in Escrow Custody</span>
+          <span className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">Total in Escrow Custody</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-white font-mono">$38,900.00</span>
-            <span className="text-xs font-bold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded-full border border-emerald-500/30">100% Backed</span>
+            <span className="text-2xl font-black text-foreground font-mono">$38,900.00</span>
+            <span className="text-xs font-bold text-success bg-success-solid text-white/15 px-2 py-0.5 rounded-full border border-success/30">100% Backed</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Across 42 active milestone contracts</p>
+          <p className="text-[11px] text-foreground-muted mt-1">Across 42 active milestone contracts</p>
         </div>
 
         <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm space-y-1">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Milestones Released (30d)</span>
+          <span className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">Milestones Released (30d)</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-emerald-400 font-mono">$148,250.00</span>
-            <span className="text-xs font-bold text-[#DFB76C] bg-[#1A1D24] px-2 py-0.5 rounded-full border border-[#DFB76C]/30">118 Milestones</span>
+            <span className="text-2xl font-black text-success font-mono">$148,250.00</span>
+            <span className="text-xs font-bold text-[#DFB76C] bg-[#1A1D24] px-2 py-0.5 rounded-full border border-border-brand/40">118 Milestones</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Stripe Connect ACH disbursements</p>
+          <p className="text-[11px] text-foreground-muted mt-1">Stripe Connect ACH disbursements</p>
         </div>
 
-        <div className="bg-[#121418] p-5 rounded-3xl border border-rose-500/30 shadow-sm space-y-1">
-          <span className="text-[10px] font-bold text-rose-400 uppercase tracking-wider">Dispute Holdback Pool</span>
+        <div className="bg-[#121418] p-5 rounded-3xl border border-danger/30 shadow-sm space-y-1">
+          <span className="text-[10px] font-bold text-danger uppercase tracking-wider">Dispute Holdback Pool</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-rose-400 font-mono">$4,850.00</span>
-            <span className="text-xs font-bold text-rose-300 bg-rose-500/15 px-2 py-0.5 rounded-full border border-rose-500/30">4 Orders Frozen</span>
+            <span className="text-2xl font-black text-danger font-mono">$4,850.00</span>
+            <span className="text-xs font-bold text-rose-300 bg-danger-solid text-white/15 px-2 py-0.5 rounded-full border border-danger/30">4 Orders Frozen</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Subject to ongoing arbitration</p>
+          <p className="text-[11px] text-foreground-muted mt-1">Subject to ongoing arbitration</p>
         </div>
       </div>
 
@@ -201,19 +201,19 @@ export default function AdminOrdersEscrowPage() {
       <div className="bg-[#121418] rounded-3xl border border-[#26282E] shadow-sm overflow-hidden text-xs">
         <div className="p-4 border-b border-[#26282E] flex items-center justify-between gap-4 flex-wrap bg-[#16181F]/40">
           <div className="relative max-w-sm w-full">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
+            <Search className="w-3.5 h-3.5 text-foreground-muted absolute left-3 top-2.5" />
             <input
               type="text"
               placeholder="Search by order ID, client, or vendor..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-[#16181F] border border-[#26282E] rounded-xl pl-9 pr-4 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
+              className="w-full bg-[#16181F] border border-[#26282E] rounded-xl pl-9 pr-4 py-1.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
             />
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-slate-400 font-semibold">
+          <div className="flex items-center gap-2 text-xs text-foreground-muted font-semibold">
             <span>Stripe Webhook Gateway:</span>
-            <span className="px-2.5 py-0.5 bg-emerald-500/15 text-emerald-400 rounded-full font-bold text-[10px] border border-emerald-500/30 flex items-center gap-1">
+            <span className="px-2.5 py-0.5 bg-success-solid text-white/15 text-success rounded-full font-bold text-[10px] border border-success/30 flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
               200 OK Live
             </span>
@@ -222,7 +222,7 @@ export default function AdminOrdersEscrowPage() {
 
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-[#16181F]/80 border-b border-[#26282E] text-[11px] font-bold uppercase text-slate-400 tracking-wider">
+            <thead className="bg-[#16181F]/80 border-b border-[#26282E] text-[11px] font-bold uppercase text-foreground-muted tracking-wider">
               <tr>
                 <th className="py-3.5 px-4">Order ID &amp; Event</th>
                 <th className="py-3.5 px-4">Client &amp; Vendor</th>
@@ -236,27 +236,27 @@ export default function AdminOrdersEscrowPage() {
               {filtered.map((ord) => (
                 <tr key={ord.id} className="hover:bg-[#16181F]/50 transition-colors group">
                   <td className="py-3.5 px-4">
-                    <span className="font-bold text-white font-mono block">#{ord.orderNumber}</span>
-                    <p className="text-[11px] text-slate-400 mt-0.5">{ord.occasion}</p>
+                    <span className="font-bold text-foreground font-mono block">#{ord.orderNumber}</span>
+                    <p className="text-[11px] text-foreground-muted mt-0.5">{ord.occasion}</p>
                   </td>
                   <td className="py-3.5 px-4">
-                    <span className="font-bold text-slate-200 block">{ord.clientName}</span>
+                    <span className="font-bold text-foreground-secondary block">{ord.clientName}</span>
                     <p className="text-[11px] text-[#DFB76C] font-medium">{ord.vendorName}</p>
                   </td>
-                  <td className="py-3.5 px-4 font-mono font-black text-white text-sm">
+                  <td className="py-3.5 px-4 font-mono font-black text-foreground text-sm">
                     ${ord.escrowLockedAmount.toLocaleString()}
                   </td>
                   <td className="py-3.5 px-4">
-                    <span className="text-slate-300 font-medium block">{ord.milestone}</span>
-                    <p className="text-[10px] text-slate-500">Target: {ord.date}</p>
+                    <span className="text-foreground-secondary font-medium block">{ord.milestone}</span>
+                    <p className="text-[10px] text-foreground-muted">Target: {ord.date}</p>
                   </td>
                   <td className="py-3.5 px-4">
                     <span className={cn(
                       "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold border",
-                      ord.escrowStatus === "LOCKED_IN_CUSTODY" && "bg-amber-500/15 text-amber-400 border-amber-500/30",
-                      ord.escrowStatus === "MILESTONE_RELEASED" && "bg-blue-500/15 text-blue-400 border-blue-500/30",
-                      ord.escrowStatus === "COMPLETED" && "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
-                      ord.escrowStatus === "REFUNDED" && "bg-rose-500/15 text-rose-400 border-rose-500/30",
+                      ord.escrowStatus === "LOCKED_IN_CUSTODY" && "bg-warning-solid text-on-brand/15 text-warning border-warning/30",
+                      ord.escrowStatus === "MILESTONE_RELEASED" && "bg-info-solid text-white/15 text-info border-info/30",
+                      ord.escrowStatus === "COMPLETED" && "bg-success-solid text-white/15 text-success border-success/30",
+                      ord.escrowStatus === "REFUNDED" && "bg-danger-solid text-white/15 text-danger border-danger/30",
                     )}>
                       <Lock className="w-2.5 h-2.5" />
                       {ord.escrowStatus.replace(/_/g, " ")}
@@ -265,7 +265,7 @@ export default function AdminOrdersEscrowPage() {
                   <td className="py-3.5 px-4 text-right">
                     <button
                       onClick={() => setSelectedOrderForEscrow(ord)}
-                      className="px-3.5 py-1.5 rounded-xl bg-[#1A1D24] hover:bg-[#222630] border border-[#26282E] hover:border-[#DFB76C]/40 text-white font-bold text-xs transition-all shadow-sm inline-flex items-center gap-1.5 ml-auto"
+                      className="px-3.5 py-1.5 rounded-xl bg-[#1A1D24] hover:bg-[#222630] border border-[#26282E] hover:border-border-brand/40 text-foreground font-bold text-xs transition-all shadow-sm inline-flex items-center gap-1.5 ml-auto"
                     >
                       <Scale className="w-3.5 h-3.5 text-[#DFB76C]" />
                       <span>Manage Escrow</span>

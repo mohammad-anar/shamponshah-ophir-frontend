@@ -231,10 +231,10 @@ export default function AdminReviewsReportsPage() {
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">
+          <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
             Reviews &amp; Trust Reports Moderation
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Audit verified buyer ratings, resolve flagged feedback, pin featured testimonials, and manage marketplace integrity
           </p>
         </div>
@@ -245,7 +245,7 @@ export default function AdminReviewsReportsPage() {
               refetch();
               toast.success("Reviews ledger refreshed with live data.");
             }}
-            className="px-3.5 py-2 rounded-xl bg-[#16181F] border border-[#26282E] text-xs font-bold text-slate-300 hover:text-white hover:bg-[#1A1D24] flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+            className="px-3.5 py-2 rounded-xl bg-[#16181F] border border-[#26282E] text-xs font-bold text-foreground-secondary hover:text-foreground hover:bg-[#1A1D24] flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
           >
             <RefreshCw className="w-3.5 h-3.5 text-[#DFB76C]" />
             <span>Sync Live Feed</span>
@@ -256,43 +256,43 @@ export default function AdminReviewsReportsPage() {
       {/* Top Stat Overview Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
         <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-xs">
-          <span className="text-[10px] uppercase font-bold text-slate-400 block">Total Reviews</span>
+          <span className="text-[10px] uppercase font-bold text-foreground-muted block">Total Reviews</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-white font-mono">{reviewsList.length}</span>
-            <span className="text-xs font-bold text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.2 rounded">100% Verified</span>
+            <span className="text-2xl font-black text-foreground font-mono">{reviewsList.length}</span>
+            <span className="text-xs font-bold text-success bg-success-solid text-white/15 border border-success/30 px-1.5 py-0.2 rounded">100% Verified</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Post-event milestone ratings</p>
+          <p className="text-[11px] text-foreground-muted mt-1">Post-event milestone ratings</p>
         </div>
 
         <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-xs">
-          <span className="text-[10px] uppercase font-bold text-slate-400 block">Platform Avg Score</span>
+          <span className="text-[10px] uppercase font-bold text-foreground-muted block">Platform Avg Score</span>
           <div className="flex items-baseline gap-2 mt-1">
             <span className="text-2xl font-black text-[#DFB76C] font-mono">4.92 / 5.0</span>
-            <span className="text-xs font-bold text-amber-400 bg-amber-500/15 border border-amber-500/30 px-1.5 py-0.2 rounded">★ Top Tier</span>
+            <span className="text-xs font-bold text-warning bg-warning-solid text-on-brand/15 border border-warning/30 px-1.5 py-0.2 rounded">★ Top Tier</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Calculated across 840+ gigs</p>
+          <p className="text-[11px] text-foreground-muted mt-1">Calculated across 840+ gigs</p>
         </div>
 
-        <div className="bg-[#121418] p-5 rounded-3xl border border-rose-500/30 shadow-xs">
-          <span className="text-[10px] uppercase font-bold text-rose-400 block">Under Investigation</span>
+        <div className="bg-[#121418] p-5 rounded-3xl border border-danger/30 shadow-xs">
+          <span className="text-[10px] uppercase font-bold text-danger block">Under Investigation</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-rose-400 font-mono">
+            <span className="text-2xl font-black text-danger font-mono">
               {reviewsList.filter(r => r.status === "FLAGGED_DISPUTE" || r.status === "UNDER_MODERATION").length}
             </span>
-            <span className="text-xs font-bold text-rose-400 bg-rose-500/15 border border-rose-500/30 px-1.5 py-0.2 rounded">Action Required</span>
+            <span className="text-xs font-bold text-danger bg-danger-solid text-white/15 border border-danger/30 px-1.5 py-0.2 rounded">Action Required</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Dispute holdbacks &amp; appeals</p>
+          <p className="text-[11px] text-foreground-muted mt-1">Dispute holdbacks &amp; appeals</p>
         </div>
 
         <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-xs">
-          <span className="text-[10px] uppercase font-bold text-slate-400 block">Featured Pinned</span>
+          <span className="text-[10px] uppercase font-bold text-foreground-muted block">Featured Pinned</span>
           <div className="flex items-baseline gap-2 mt-1">
             <span className="text-2xl font-black text-[#DFB76C] font-mono">
               {reviewsList.filter(r => r.isPinned).length}
             </span>
-            <span className="text-xs font-bold text-[#DFB76C] bg-[#DFB76C]/15 border border-[#DFB76C]/30 px-1.5 py-0.2 rounded">Homepage</span>
+            <span className="text-xs font-bold text-[#DFB76C] bg-[#DFB76C]/15 border border-border-brand/40 px-1.5 py-0.2 rounded">Homepage</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Showcased on main landing page</p>
+          <p className="text-[11px] text-foreground-muted mt-1">Showcased on main landing page</p>
         </div>
       </div>
 
@@ -314,7 +314,7 @@ export default function AdminReviewsReportsPage() {
                 "px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer",
                 activeFilter === tab.key
                   ? "bg-[#DFB76C] text-[#0B0C0E] shadow-xs font-bold"
-                  : "bg-[#16181F] text-slate-400 hover:text-white hover:bg-[#1A1D24] border border-[#26282E]"
+                  : "bg-[#16181F] text-foreground-muted hover:text-foreground hover:bg-[#1A1D24] border border-[#26282E]"
               )}
             >
               {tab.label}
@@ -329,7 +329,7 @@ export default function AdminReviewsReportsPage() {
               onClick={() => setRatingFilter("ALL")}
               className={cn(
                 "px-2.5 py-1 rounded-lg font-bold text-[11px] transition-all cursor-pointer",
-                ratingFilter === "ALL" ? "bg-[#DFB76C] text-[#0B0C0E] font-bold shadow-2xs" : "text-slate-400 hover:text-white"
+                ratingFilter === "ALL" ? "bg-[#DFB76C] text-[#0B0C0E] font-bold shadow-2xs" : "text-foreground-muted hover:text-foreground"
               )}
             >
               All ★
@@ -340,7 +340,7 @@ export default function AdminReviewsReportsPage() {
                 onClick={() => setRatingFilter(r)}
                 className={cn(
                   "px-2 py-1 rounded-lg font-bold text-[11px] flex items-center gap-0.5 transition-all cursor-pointer",
-                  ratingFilter === r ? "bg-[#DFB76C] text-[#0B0C0E] shadow-2xs font-black" : "text-slate-400 hover:text-[#DFB76C]"
+                  ratingFilter === r ? "bg-[#DFB76C] text-[#0B0C0E] shadow-2xs font-black" : "text-foreground-muted hover:text-[#DFB76C]"
                 )}
               >
                 <span>{r}</span>
@@ -350,13 +350,13 @@ export default function AdminReviewsReportsPage() {
           </div>
 
           <div className="relative w-full sm:w-64">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
+            <Search className="w-3.5 h-3.5 text-foreground-muted absolute left-3 top-2.5" />
             <input
               type="text"
               placeholder="Search feedback, clients, vendors..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
+              className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
             />
           </div>
         </div>
@@ -366,9 +366,9 @@ export default function AdminReviewsReportsPage() {
       <div className="space-y-4 text-xs">
         {filteredReviews.length === 0 ? (
           <div className="bg-[#121418] rounded-3xl border border-dashed border-[#26282E] p-12 text-center space-y-2">
-            <MessageSquare className="w-8 h-8 text-slate-500 mx-auto" />
-            <p className="font-bold text-slate-200 text-sm">No reviews match your current filter criteria</p>
-            <p className="text-slate-400 text-xs">Try selecting a different status tab or clearing your search term.</p>
+            <MessageSquare className="w-8 h-8 text-foreground-muted mx-auto" />
+            <p className="font-bold text-foreground-secondary text-sm">No reviews match your current filter criteria</p>
+            <p className="text-foreground-muted text-xs">Try selecting a different status tab or clearing your search term.</p>
           </div>
         ) : (
           filteredReviews.map((rev) => (
@@ -376,7 +376,7 @@ export default function AdminReviewsReportsPage() {
               key={rev.id}
               className={cn(
                 "rounded-3xl border transition-all p-5 shadow-xs space-y-4",
-                rev.isPinned ? "bg-[#121418] border-[#DFB76C]/50 ring-1 ring-[#DFB76C]/20" : rev.status === "FLAGGED_DISPUTE" ? "bg-[#121418] border-rose-500/40 ring-1 ring-rose-500/20" : "bg-[#121418] border-[#26282E] hover:border-slate-700"
+                rev.isPinned ? "bg-[#121418] border-border-brand/40 ring-1 ring-[#DFB76C]/20" : rev.status === "FLAGGED_DISPUTE" ? "bg-[#121418] border-danger/30 ring-1 ring-rose-500/20" : "bg-[#121418] border-[#26282E] hover:border-slate-700"
               )}
             >
               {/* Top Row: User details, Vendor details, Date & Status */}
@@ -387,27 +387,27 @@ export default function AdminReviewsReportsPage() {
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-bold text-white text-sm">{rev.client}</span>
-                      <span className="text-slate-400 font-normal">reviewed</span>
+                      <span className="font-bold text-foreground text-sm">{rev.client}</span>
+                      <span className="text-foreground-muted font-normal">reviewed</span>
                       <span className="font-bold text-[#DFB76C] bg-[#16181F] px-2 py-0.5 rounded-lg border border-[#26282E]">
                         {rev.vendor}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-400 mt-0.5">
-                      Occasion: <strong className="text-slate-200">{rev.occasion}</strong> &bull; Order #{rev.orderId}
+                    <p className="text-[11px] text-foreground-muted mt-0.5">
+                      Occasion: <strong className="text-foreground-secondary">{rev.occasion}</strong> &bull; Order #{rev.orderId}
                     </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-[11px] text-slate-400 font-mono">{rev.date}</span>
+                  <span className="text-[11px] text-foreground-muted font-mono">{rev.date}</span>
                   
                   <span className={cn(
                     "px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase",
-                    rev.status === "VERIFIED_PURCHASE" && "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30",
-                    rev.status === "FLAGGED_DISPUTE" && "bg-rose-500/15 text-rose-400 border border-rose-500/30",
-                    rev.status === "UNDER_MODERATION" && "bg-amber-500/15 text-amber-400 border border-amber-500/30",
-                    rev.status === "HIDDEN" && "bg-slate-500/15 text-slate-400 border border-slate-500/30",
+                    rev.status === "VERIFIED_PURCHASE" && "bg-success-solid text-white/15 text-success border border-success/30",
+                    rev.status === "FLAGGED_DISPUTE" && "bg-danger-solid text-white/15 text-danger border border-danger/30",
+                    rev.status === "UNDER_MODERATION" && "bg-warning-solid text-on-brand/15 text-warning border border-warning/30",
+                    rev.status === "HIDDEN" && "bg-slate-500/15 text-foreground-muted border border-slate-500/30",
                   )}>
                     {rev.status.replace(/_/g, " ")}
                   </span>
@@ -421,30 +421,30 @@ export default function AdminReviewsReportsPage() {
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className={`w-4 h-4 ${i < rev.rating ? "fill-[#DFB76C] text-[#DFB76C]" : "text-slate-700"}`}
+                        className={`w-4 h-4 ${i < rev.rating ? "fill-[#DFB76C] text-[#DFB76C]" : "text-foreground-secondary"}`}
                       />
                     ))}
                   </div>
-                  <span className="font-black text-white text-xs">{rev.rating}.0 out of 5.0</span>
+                  <span className="font-black text-foreground text-xs">{rev.rating}.0 out of 5.0</span>
                   
                   {rev.isPinned && (
-                    <span className="ml-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#DFB76C]/15 text-[#DFB76C] border border-[#DFB76C]/30 flex items-center gap-1">
+                    <span className="ml-2 px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#DFB76C]/15 text-[#DFB76C] border border-border-brand/40 flex items-center gap-1">
                       <Sparkles className="w-3 h-3 text-[#DFB76C] fill-[#DFB76C]" /> Featured Pinned
                     </span>
                   )}
                 </div>
 
-                <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] text-slate-300 text-xs leading-relaxed">
+                <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] text-foreground-secondary text-xs leading-relaxed">
                   &ldquo;{rev.comment}&rdquo;
                 </div>
               </div>
 
               {/* Flag / Dispute Notice if applicable */}
               {rev.flagReason && (
-                <div className="p-3 bg-rose-500/10 rounded-xl border border-rose-500/20 text-rose-300 text-xs flex items-start gap-2">
-                  <AlertTriangle className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+                <div className="p-3 bg-danger-solid text-white/10 rounded-xl border border-danger/30 text-rose-300 text-xs flex items-start gap-2">
+                  <AlertTriangle className="w-4 h-4 text-danger flex-shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-bold block text-rose-400">Moderation Notice:</span>
+                    <span className="font-bold block text-danger">Moderation Notice:</span>
                     <span>{rev.flagReason}</span>
                   </div>
                 </div>
@@ -455,9 +455,9 @@ export default function AdminReviewsReportsPage() {
                 <div className="p-3 bg-[#16181F] rounded-xl border border-[#26282E] space-y-1">
                   <div className="flex items-center justify-between text-[11px]">
                     <span className="font-bold text-[#DFB76C]">Vendor Official Response:</span>
-                    <span className="text-slate-400">{rev.vendorReply.date}</span>
+                    <span className="text-foreground-muted">{rev.vendorReply.date}</span>
                   </div>
-                  <p className="text-slate-300 italic text-[11px]">&ldquo;{rev.vendorReply.text}&rdquo;</p>
+                  <p className="text-foreground-secondary italic text-[11px]">&ldquo;{rev.vendorReply.text}&rdquo;</p>
                 </div>
               )}
 
@@ -471,7 +471,7 @@ export default function AdminReviewsReportsPage() {
                       "px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border shadow-2xs cursor-pointer",
                       rev.isPinned
                         ? "bg-[#DFB76C] text-[#0B0C0E] border-[#DFB76C] font-extrabold"
-                        : "bg-[#16181F] text-slate-300 border-[#26282E] hover:bg-[#1A1D24] hover:text-white"
+                        : "bg-[#16181F] text-foreground-secondary border-[#26282E] hover:bg-[#1A1D24] hover:text-foreground"
                     )}
                   >
                     <Pin className={cn("w-3.5 h-3.5", rev.isPinned && "fill-[#0B0C0E]")} />
@@ -481,7 +481,7 @@ export default function AdminReviewsReportsPage() {
                   {/* Audit / Notes Modal Button */}
                   <button
                     onClick={() => setSelectedReview(rev)}
-                    className="px-3 py-1.5 rounded-xl bg-[#16181F] hover:bg-[#1A1D24] text-slate-200 hover:text-white border border-[#26282E] text-xs font-bold transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
+                    className="px-3 py-1.5 rounded-xl bg-[#16181F] hover:bg-[#1A1D24] text-foreground-secondary hover:text-foreground border border-[#26282E] text-xs font-bold transition-colors flex items-center gap-1.5 shadow-2xs cursor-pointer"
                   >
                     <Eye className="w-3.5 h-3.5 text-[#DFB76C]" />
                     <span>Audit &amp; Notes ({rev.adminNotes?.length || 0})</span>
@@ -493,7 +493,7 @@ export default function AdminReviewsReportsPage() {
                   {rev.status !== "VERIFIED_PURCHASE" && (
                     <button
                       onClick={() => handleStatusChange(rev.id, "VERIFIED_PURCHASE")}
-                      className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
+                      className="px-3 py-1.5 bg-success-solid text-white hover:bg-success-solid text-white text-foreground rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>Approve &amp; Publish</span>
@@ -503,7 +503,7 @@ export default function AdminReviewsReportsPage() {
                   {rev.status !== "UNDER_MODERATION" && rev.status !== "FLAGGED_DISPUTE" && (
                     <button
                       onClick={() => handleStatusChange(rev.id, "UNDER_MODERATION")}
-                      className="px-3 py-1.5 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
+                      className="px-3 py-1.5 bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-foreground rounded-xl text-xs font-bold transition-all shadow-2xs flex items-center gap-1 cursor-pointer"
                     >
                       <Flag className="w-3.5 h-3.5" />
                       <span>Quarantine</span>
@@ -513,7 +513,7 @@ export default function AdminReviewsReportsPage() {
                   {rev.status !== "HIDDEN" && (
                     <button
                       onClick={() => handleStatusChange(rev.id, "HIDDEN")}
-                      className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] text-slate-300 hover:text-white border border-[#26282E] rounded-xl text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
+                      className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] text-foreground-secondary hover:text-foreground border border-[#26282E] rounded-xl text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
                     >
                       <EyeOff className="w-3.5 h-3.5" />
                       <span>Hide</span>
@@ -522,10 +522,10 @@ export default function AdminReviewsReportsPage() {
 
                   <button
                     onClick={() => handleDeleteReview(rev.id)}
-                    className="px-2.5 py-1.5 bg-rose-500/15 hover:bg-rose-500/25 text-rose-400 border border-rose-500/30 rounded-xl text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
+                    className="px-2.5 py-1.5 bg-danger-solid text-white/15 hover:bg-danger-solid text-white/25 text-danger border border-danger/30 rounded-xl text-xs font-bold transition-colors flex items-center gap-1 cursor-pointer"
                     title="Permanently remove review"
                   >
-                    <Trash2 className="w-3.5 h-3.5 text-rose-400" />
+                    <Trash2 className="w-3.5 h-3.5 text-danger" />
                   </button>
                 </div>
               </div>
@@ -540,17 +540,17 @@ export default function AdminReviewsReportsPage() {
           <div className="bg-[#121418] rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden border border-[#26282E] animate-in fade-in flex flex-col text-xs">
             
             {/* Modal Header */}
-            <div className="p-5 bg-[#16181F] border-b border-[#26282E] text-white flex items-center justify-between">
+            <div className="p-5 bg-[#16181F] border-b border-[#26282E] text-foreground flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-mono font-bold bg-[#121418] text-[#DFB76C] px-2.5 py-0.5 rounded-full border border-[#26282E]">
                   #{selectedReview.id} &bull; Order #{selectedReview.orderId}
                 </span>
-                <h3 className="text-base font-black text-white mt-1">Review Audit &amp; Investigation</h3>
+                <h3 className="text-base font-black text-foreground mt-1">Review Audit &amp; Investigation</h3>
               </div>
 
               <button
                 onClick={() => setSelectedReview(null)}
-                className="w-8 h-8 rounded-full bg-[#121418] hover:bg-[#1A1D24] border border-[#26282E] text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer"
+                className="w-8 h-8 rounded-full bg-[#121418] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-muted hover:text-foreground flex items-center justify-center transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -562,14 +562,14 @@ export default function AdminReviewsReportsPage() {
               {/* Buyer & Vendor Summary */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-1">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase block">Client Author</span>
-                  <p className="font-bold text-white">{selectedReview.client}</p>
-                  <p className="text-[10px] text-slate-400 font-mono">{selectedReview.clientEmail}</p>
+                  <span className="text-[10px] font-bold text-foreground-muted uppercase block">Client Author</span>
+                  <p className="font-bold text-foreground">{selectedReview.client}</p>
+                  <p className="text-[10px] text-foreground-muted font-mono">{selectedReview.clientEmail}</p>
                 </div>
 
                 <div className="p-3.5 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-1">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase block">Vendor Reviewed</span>
-                  <p className="font-bold text-white">{selectedReview.vendor}</p>
+                  <span className="text-[10px] font-bold text-foreground-muted uppercase block">Vendor Reviewed</span>
+                  <p className="font-bold text-foreground">{selectedReview.vendor}</p>
                   <p className="text-[10px] text-[#DFB76C]">Booking Verified</p>
                 </div>
               </div>
@@ -577,32 +577,32 @@ export default function AdminReviewsReportsPage() {
               {/* Review Comment Quote */}
               <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                  <span className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">
                     Published Rating ({selectedReview.rating}.0 / 5.0)
                   </span>
-                  <span className="text-slate-400 text-[10px]">{selectedReview.date}</span>
+                  <span className="text-foreground-muted text-[10px]">{selectedReview.date}</span>
                 </div>
-                <p className="text-slate-300 italic leading-relaxed">
+                <p className="text-foreground-secondary italic leading-relaxed">
                   &ldquo;{selectedReview.comment}&rdquo;
                 </p>
               </div>
 
               {/* Moderation Notes Log */}
               <div className="space-y-3">
-                <h4 className="font-bold text-white text-xs uppercase tracking-wider flex items-center gap-1.5">
+                <h4 className="font-bold text-foreground text-xs uppercase tracking-wider flex items-center gap-1.5">
                   <MessageSquare className="w-3.5 h-3.5 text-[#DFB76C]" /> Internal Moderation Notes
                 </h4>
 
                 {selectedReview.adminNotes && selectedReview.adminNotes.length > 0 ? (
                   <div className="space-y-2">
                     {selectedReview.adminNotes.map((note, i) => (
-                      <div key={i} className="p-2.5 bg-[#16181F] rounded-xl border border-[#26282E] text-slate-300 text-xs">
+                      <div key={i} className="p-2.5 bg-[#16181F] rounded-xl border border-[#26282E] text-foreground-secondary text-xs">
                         {note}
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-slate-400 text-xs italic">No internal notes added yet.</p>
+                  <p className="text-foreground-muted text-xs italic">No internal notes added yet.</p>
                 )}
 
                 {/* Add Note Form */}
@@ -612,7 +612,7 @@ export default function AdminReviewsReportsPage() {
                     placeholder="Add audit note or escalation details..."
                     value={adminNoteInput}
                     onChange={(e) => setAdminNoteInput(e.target.value)}
-                    className="flex-1 bg-[#16181F] border border-[#26282E] rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
+                    className="flex-1 bg-[#16181F] border border-[#26282E] rounded-xl px-3 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
                   />
                   <button
                     type="submit"
@@ -629,7 +629,7 @@ export default function AdminReviewsReportsPage() {
             <div className="p-4 bg-[#16181F] border-t border-[#26282E] flex items-center justify-between">
               <button
                 onClick={() => setSelectedReview(null)}
-                className="px-4 py-2 text-xs font-semibold text-slate-400 hover:text-white cursor-pointer"
+                className="px-4 py-2 text-xs font-semibold text-foreground-muted hover:text-foreground cursor-pointer"
               >
                 Close
               </button>
@@ -648,7 +648,7 @@ export default function AdminReviewsReportsPage() {
                     handleStatusChange(selectedReview.id, "VERIFIED_PURCHASE");
                     setSelectedReview(null);
                   }}
-                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer"
+                  className="px-4 py-2 bg-success-solid text-white hover:bg-success-solid text-white text-foreground rounded-xl font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer"
                 >
                   <CheckCircle2 className="w-3.5 h-3.5" /> Approve
                 </button>

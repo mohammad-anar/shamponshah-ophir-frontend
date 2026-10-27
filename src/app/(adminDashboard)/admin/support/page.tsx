@@ -304,14 +304,14 @@ export default function AdminSupportPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
               Support Ticket Command
             </h1>
             <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#16181F] text-[#DFB76C] border border-[#26282E]">
               Live Queue ({tickets.length})
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Real-time customer inquiries, technical bug logs, payment assistance, and dispute escalations
           </p>
         </div>
@@ -331,49 +331,49 @@ export default function AdminSupportPage() {
       {/* KPI Stats Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
         <div className="p-5 rounded-3xl bg-[#121418] border border-[#26282E] shadow-xs">
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Open Inquiries</p>
+          <p className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">Open Inquiries</p>
           <div className="flex items-baseline justify-between mt-1">
-            <span className="text-2xl font-black text-white font-mono">
+            <span className="text-2xl font-black text-foreground font-mono">
               {tickets.filter(t => t.status === "Open" || t.status === "In Progress").length}
             </span>
-            <span className="text-[10px] text-rose-400 font-bold bg-rose-500/15 px-2 py-0.5 rounded-full border border-rose-500/30">
+            <span className="text-[10px] text-danger font-bold bg-danger-solid text-white/15 px-2 py-0.5 rounded-full border border-danger/30">
               2 Urgent
             </span>
           </div>
-          <p className="text-[10px] text-slate-400 mt-1">Assigned across 4 support agents</p>
+          <p className="text-[10px] text-foreground-muted mt-1">Assigned across 4 support agents</p>
         </div>
 
         <div className="p-5 rounded-3xl bg-[#121418] border border-[#26282E] shadow-xs">
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Avg First Response</p>
+          <p className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">Avg First Response</p>
           <div className="flex items-baseline justify-between mt-1">
-            <span className="text-2xl font-black text-emerald-400 font-mono">4.2 min</span>
-            <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/15 px-2 py-0.5 rounded-full border border-emerald-500/30">
+            <span className="text-2xl font-black text-success font-mono">4.2 min</span>
+            <span className="text-[10px] text-success font-bold bg-success-solid text-white/15 px-2 py-0.5 rounded-full border border-success/30">
               -18% faster
             </span>
           </div>
-          <p className="text-[10px] text-slate-400 mt-1">SLA guarantee: &lt; 15 mins</p>
+          <p className="text-[10px] text-foreground-muted mt-1">SLA guarantee: &lt; 15 mins</p>
         </div>
 
         <div className="p-5 rounded-3xl bg-[#121418] border border-[#26282E] shadow-xs">
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Resolution Rate</p>
+          <p className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">Resolution Rate</p>
           <div className="flex items-baseline justify-between mt-1">
-            <span className="text-2xl font-black text-white font-mono">96.8%</span>
-            <span className="text-[10px] text-[#DFB76C] font-bold bg-[#DFB76C]/15 px-2 py-0.5 rounded-full border border-[#DFB76C]/30">
+            <span className="text-2xl font-black text-foreground font-mono">96.8%</span>
+            <span className="text-[10px] text-[#DFB76C] font-bold bg-[#DFB76C]/15 px-2 py-0.5 rounded-full border border-border-brand/40">
               Target 95%
             </span>
           </div>
-          <p className="text-[10px] text-slate-400 mt-1">First contact resolution</p>
+          <p className="text-[10px] text-foreground-muted mt-1">First contact resolution</p>
         </div>
 
         <div className="p-5 rounded-3xl bg-[#121418] border border-[#26282E] shadow-xs">
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">CSAT Score</p>
+          <p className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">CSAT Score</p>
           <div className="flex items-baseline justify-between mt-1">
-            <span className="text-2xl font-black text-amber-400 font-mono">4.92 / 5</span>
-            <span className="text-[10px] text-amber-400 font-bold bg-amber-500/15 px-2 py-0.5 rounded-full border border-amber-500/30">
+            <span className="text-2xl font-black text-warning font-mono">4.92 / 5</span>
+            <span className="text-[10px] text-warning font-bold bg-warning-solid text-on-brand/15 px-2 py-0.5 rounded-full border border-warning/30">
               ★ 128 rated
             </span>
           </div>
-          <p className="text-[10px] text-slate-400 mt-1">Marketplace satisfaction</p>
+          <p className="text-[10px] text-foreground-muted mt-1">Marketplace satisfaction</p>
         </div>
       </div>
 
@@ -386,13 +386,13 @@ export default function AdminSupportPage() {
           {/* Search & Filter Controls */}
           <div className="flex flex-col sm:flex-row gap-2.5 items-center justify-between">
             <div className="relative w-full sm:w-60">
-              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
+              <Search className="w-3.5 h-3.5 text-foreground-muted absolute left-3 top-2.5" />
               <input
                 type="text"
                 placeholder="Search tickets, names, subjects..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl pl-9 pr-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
+                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl pl-9 pr-3 py-1.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
               />
             </div>
 
@@ -400,7 +400,7 @@ export default function AdminSupportPage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="bg-[#16181F] border border-[#26282E] rounded-xl px-2.5 py-1.5 text-xs text-slate-200 font-semibold focus:outline-none focus:border-[#DFB76C]"
+                className="bg-[#16181F] border border-[#26282E] rounded-xl px-2.5 py-1.5 text-xs text-foreground-secondary font-semibold focus:outline-none focus:border-[#DFB76C]"
               >
                 <option value="All">All Status</option>
                 <option value="Open">Open</option>
@@ -412,7 +412,7 @@ export default function AdminSupportPage() {
               <select
                 value={priorityFilter}
                 onChange={(e) => setPriorityFilter(e.target.value)}
-                className="bg-[#16181F] border border-[#26282E] rounded-xl px-2.5 py-1.5 text-xs text-slate-200 font-semibold focus:outline-none focus:border-[#DFB76C]"
+                className="bg-[#16181F] border border-[#26282E] rounded-xl px-2.5 py-1.5 text-xs text-foreground-secondary font-semibold focus:outline-none focus:border-[#DFB76C]"
               >
                 <option value="All">All Priority</option>
                 <option value="Urgent">Urgent</option>
@@ -447,43 +447,43 @@ export default function AdminSupportPage() {
                       </span>
                       <span className={cn(
                         "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase",
-                        t.priority === "Urgent" && "bg-rose-500/15 text-rose-400 border border-rose-500/30",
-                        t.priority === "High" && "bg-amber-500/15 text-amber-400 border border-amber-500/30",
-                        t.priority === "Medium" && "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30",
-                        t.priority === "Low" && "bg-slate-500/15 text-slate-400 border border-slate-500/30"
+                        t.priority === "Urgent" && "bg-danger-solid text-white/15 text-danger border border-danger/30",
+                        t.priority === "High" && "bg-warning-solid text-on-brand/15 text-warning border border-warning/30",
+                        t.priority === "Medium" && "bg-info-solid text-white/15 text-info border border-info/30",
+                        t.priority === "Low" && "bg-slate-500/15 text-foreground-muted border border-slate-500/30"
                       )}>
                         {t.priority}
                       </span>
-                      <span className="text-[11px] text-slate-400 font-medium">{t.category}</span>
+                      <span className="text-[11px] text-foreground-muted font-medium">{t.category}</span>
                     </div>
 
-                    <span className="text-[10px] text-slate-400 font-medium">{t.createdAt}</span>
+                    <span className="text-[10px] text-foreground-muted font-medium">{t.createdAt}</span>
                   </div>
 
-                  <h3 className="text-xs font-bold text-white line-clamp-1">{t.subject}</h3>
-                  <p className="text-[11px] text-slate-400 line-clamp-1">{lastMsg}</p>
+                  <h3 className="text-xs font-bold text-foreground line-clamp-1">{t.subject}</h3>
+                  <p className="text-[11px] text-foreground-muted line-clamp-1">{lastMsg}</p>
 
                   <div className="flex items-center justify-between pt-2 border-t border-[#26282E] text-[11px]">
                     <div className="flex items-center gap-2">
                       <div className="w-5 h-5 rounded-full bg-[#121418] border border-[#26282E] text-[#DFB76C] flex items-center justify-center font-bold text-[9px]">
                         {t.user.avatar}
                       </div>
-                      <span className="font-semibold text-slate-200">{t.user.name}</span>
-                      <span className="text-[10px] px-1.5 py-0.2 bg-[#121418] border border-[#26282E] rounded text-slate-300 font-semibold">
+                      <span className="font-semibold text-foreground-secondary">{t.user.name}</span>
+                      <span className="text-[10px] px-1.5 py-0.2 bg-[#121418] border border-[#26282E] rounded text-foreground-secondary font-semibold">
                         {t.user.role}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-2.5 text-slate-400">
+                    <div className="flex items-center gap-2.5 text-foreground-muted">
                       <span className="flex items-center gap-1 text-[11px]">
                         <MessageSquare className="w-3.5 h-3.5 text-[#DFB76C]" /> {t.messages.length}
                       </span>
                       <span className={cn(
                         "px-2 py-0.5 rounded-full text-[10px] font-bold",
-                        t.status === "Open" && "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30",
-                        t.status === "In Progress" && "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30",
-                        t.status === "Escalated" && "bg-rose-500/15 text-rose-400 border border-rose-500/30",
-                        t.status === "Resolved" && "bg-slate-500/15 text-slate-400 border border-slate-500/30"
+                        t.status === "Open" && "bg-success-solid text-white/15 text-success border border-success/30",
+                        t.status === "In Progress" && "bg-info-solid text-white/15 text-info border border-info/30",
+                        t.status === "Escalated" && "bg-danger-solid text-white/15 text-danger border border-danger/30",
+                        t.status === "Resolved" && "bg-slate-500/15 text-foreground-muted border border-slate-500/30"
                       )}>
                         {t.status}
                       </span>
@@ -508,11 +508,11 @@ export default function AdminSupportPage() {
                       <span className="font-mono text-sm font-bold text-[#DFB76C]">
                         {selectedTicket.ticketNumber}
                       </span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-[#16181F] text-slate-300 border border-[#26282E] font-semibold">
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-[#16181F] text-foreground-secondary border border-[#26282E] font-semibold">
                         Assigned: {selectedTicket.assignedTo}
                       </span>
                     </div>
-                    <h2 className="text-sm font-bold text-white mt-1">{selectedTicket.subject}</h2>
+                    <h2 className="text-sm font-bold text-foreground mt-1">{selectedTicket.subject}</h2>
                   </div>
 
                   {/* Quick Status Setter */}
@@ -520,14 +520,14 @@ export default function AdminSupportPage() {
                     {selectedTicket.status !== "Resolved" ? (
                       <button
                         onClick={() => handleUpdateStatus("Resolved")}
-                        className="px-3 py-1.5 bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-400 border border-emerald-500/30 rounded-xl font-bold text-[11px] transition-colors flex items-center gap-1 cursor-pointer"
+                        className="px-3 py-1.5 bg-success-solid text-white/15 hover:bg-success-solid text-white/25 text-success border border-success/30 rounded-xl font-bold text-[11px] transition-colors flex items-center gap-1 cursor-pointer"
                       >
                         <CheckCircle2 className="w-3.5 h-3.5" /> Resolve
                       </button>
                     ) : (
                       <button
                         onClick={() => handleUpdateStatus("Open")}
-                        className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] text-slate-300 border border-[#26282E] rounded-xl font-bold text-[11px] transition-colors cursor-pointer"
+                        className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] text-foreground-secondary border border-[#26282E] rounded-xl font-bold text-[11px] transition-colors cursor-pointer"
                       >
                         Reopen Ticket
                       </button>
@@ -542,11 +542,11 @@ export default function AdminSupportPage() {
                       {selectedTicket.user.avatar}
                     </div>
                     <div>
-                      <p className="text-xs font-bold text-white">{selectedTicket.user.name}</p>
-                      <p className="text-[11px] text-slate-400 font-mono">{selectedTicket.user.email}</p>
+                      <p className="text-xs font-bold text-foreground">{selectedTicket.user.name}</p>
+                      <p className="text-[11px] text-foreground-muted font-mono">{selectedTicket.user.email}</p>
                     </div>
                   </div>
-                  <span className="px-2.5 py-1 bg-[#DFB76C]/15 text-[#DFB76C] text-[10px] font-bold rounded-lg border border-[#DFB76C]/30">
+                  <span className="px-2.5 py-1 bg-[#DFB76C]/15 text-[#DFB76C] text-[10px] font-bold rounded-lg border border-border-brand/40">
                     {selectedTicket.user.role} Verified
                   </span>
                 </div>
@@ -569,13 +569,13 @@ export default function AdminSupportPage() {
                       <div className="flex items-center justify-between text-[11px]">
                         <span className={cn(
                           "font-bold",
-                          isAdminOrBot ? "text-[#DFB76C]" : "text-white"
+                          isAdminOrBot ? "text-[#DFB76C]" : "text-foreground"
                         )}>
-                          {msg.sender} {isAdminOrBot && <span className="text-[10px] text-slate-400 font-normal">({msg.senderRole})</span>}
+                          {msg.sender} {isAdminOrBot && <span className="text-[10px] text-foreground-muted font-normal">({msg.senderRole})</span>}
                         </span>
-                        <span className="text-slate-400 text-[10px]">{msg.timestamp}</span>
+                        <span className="text-foreground-muted text-[10px]">{msg.timestamp}</span>
                       </div>
-                      <p className="text-slate-300 leading-relaxed">{msg.text}</p>
+                      <p className="text-foreground-secondary leading-relaxed">{msg.text}</p>
                     </div>
                   );
                 })}
@@ -586,19 +586,19 @@ export default function AdminSupportPage() {
                 <div className="flex gap-2 overflow-x-auto pb-1">
                   <button 
                     onClick={() => setReplyText("We have reviewed your escrow account and the payout has now been expedited.")}
-                    className="text-[10px] px-2.5 py-1 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-slate-300 rounded-lg transition-colors font-medium whitespace-nowrap cursor-pointer"
+                    className="text-[10px] px-2.5 py-1 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-secondary rounded-lg transition-colors font-medium whitespace-nowrap cursor-pointer"
                   >
                     Quick: Escrow released
                   </button>
                   <button 
                     onClick={() => setReplyText("Could you please provide your transaction ID or contract reference number?")}
-                    className="text-[10px] px-2.5 py-1 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-slate-300 rounded-lg transition-colors font-medium whitespace-nowrap cursor-pointer"
+                    className="text-[10px] px-2.5 py-1 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-secondary rounded-lg transition-colors font-medium whitespace-nowrap cursor-pointer"
                   >
                     Quick: Request ID
                   </button>
                   <button 
                     onClick={() => setReplyText("Our fraud protection team has resolved the security hold on your custody account.")}
-                    className="text-[10px] px-2.5 py-1 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-slate-300 rounded-lg transition-colors font-medium whitespace-nowrap cursor-pointer"
+                    className="text-[10px] px-2.5 py-1 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-secondary rounded-lg transition-colors font-medium whitespace-nowrap cursor-pointer"
                   >
                     Quick: Security Cleared
                   </button>
@@ -610,7 +610,7 @@ export default function AdminSupportPage() {
                     placeholder="Type official administrative reply to user..."
                     value={replyText}
                     onChange={(e) => setReplyText(e.target.value)}
-                    className="w-full bg-[#16181F] border border-[#26282E] rounded-2xl p-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C] resize-none"
+                    className="w-full bg-[#16181F] border border-[#26282E] rounded-2xl p-3 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C] resize-none"
                   />
                   <div className="absolute right-2.5 bottom-2.5 flex items-center gap-2">
                     <button 
@@ -625,7 +625,7 @@ export default function AdminSupportPage() {
 
             </div>
           ) : (
-            <div className="h-full flex items-center justify-center text-slate-400 text-xs">
+            <div className="h-full flex items-center justify-center text-foreground-muted text-xs">
               Select a support ticket from the queue to view dossier and dispatch replies.
             </div>
           )}

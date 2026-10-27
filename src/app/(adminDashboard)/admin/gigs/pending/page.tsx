@@ -113,17 +113,17 @@ export default function AdminPendingGigsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#26282E] pb-5">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#1A1D24] text-amber-400 border border-amber-500/30 uppercase tracking-wider">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#1A1D24] text-warning border border-warning/30 uppercase tracking-wider">
               Verification Queue
             </span>
-            <span className="text-xs text-slate-400 font-mono">
+            <span className="text-xs text-foreground-muted font-mono">
               {pendingGigs.length} pending review
             </span>
           </div>
-          <h1 className="text-2xl font-black text-white tracking-tight">
+          <h1 className="text-2xl font-black text-foreground tracking-tight">
             Pending Gigs Review
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Audit vendor service submissions, inspect deliverables and gallery assets, and approve or reject before they go live on Ophir
           </p>
         </div>
@@ -131,7 +131,7 @@ export default function AdminPendingGigsPage() {
         <div className="flex items-center gap-2">
           <Link
             href="/admin/gigs"
-            className="px-4 py-2 rounded-xl bg-[#16181F] border border-[#26282E] hover:bg-[#1A1D24] text-slate-200 hover:text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+            className="px-4 py-2 rounded-xl bg-[#16181F] border border-[#26282E] hover:bg-[#1A1D24] text-foreground-secondary hover:text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
           >
             <ShoppingBag className="w-3.5 h-3.5 text-[#DFB76C]" />
             <span>All Gigs Catalog</span>
@@ -142,18 +142,18 @@ export default function AdminPendingGigsPage() {
       {/* Filter / Search Bar */}
       <div className="bg-[#121418] rounded-2xl border border-[#26282E] p-4 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="relative w-full sm:w-80">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+          <Search className="w-4 h-4 text-foreground-muted absolute left-3 top-2.5" />
           <input
             type="text"
             placeholder="Search pending by title, vendor, category..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
+            className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
           />
         </div>
         <button
           onClick={() => refetch()}
-          className="px-3.5 py-1.5 rounded-xl border border-[#26282E] bg-[#16181F] hover:bg-[#1A1D24] text-slate-300 font-bold text-xs transition-colors self-end sm:self-auto cursor-pointer"
+          className="px-3.5 py-1.5 rounded-xl border border-[#26282E] bg-[#16181F] hover:bg-[#1A1D24] text-foreground-secondary font-bold text-xs transition-colors self-end sm:self-auto cursor-pointer"
         >
           Refresh Queue
         </button>
@@ -161,17 +161,17 @@ export default function AdminPendingGigsPage() {
 
       {/* Main List */}
       {isLoading ? (
-        <div className="py-24 flex flex-col items-center justify-center text-slate-400 gap-3">
+        <div className="py-24 flex flex-col items-center justify-center text-foreground-muted gap-3">
           <Loader2 className="w-8 h-8 animate-spin text-[#DFB76C]" />
-          <span className="text-xs font-medium text-slate-400">Loading pending verification queue...</span>
+          <span className="text-xs font-medium text-foreground-muted">Loading pending verification queue...</span>
         </div>
       ) : pendingGigs.length === 0 ? (
         <div className="bg-[#121418] border border-[#26282E] rounded-2xl p-12 text-center max-w-lg mx-auto my-12 space-y-3 shadow-sm">
-          <div className="w-12 h-12 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center mx-auto text-emerald-400">
+          <div className="w-12 h-12 rounded-full bg-success-solid text-white/15 border border-success/30 flex items-center justify-center mx-auto text-success">
             <CheckCircle2 className="w-6 h-6" />
           </div>
-          <h3 className="text-base font-bold text-white">All Gigs Reviewed!</h3>
-          <p className="text-xs text-slate-400 leading-relaxed">
+          <h3 className="text-base font-bold text-foreground">All Gigs Reviewed!</h3>
+          <p className="text-xs text-foreground-muted leading-relaxed">
             There are currently no service gigs awaiting verification. When vendors create or re-submit their services, they will appear here for audit.
           </p>
           <div className="pt-2">
@@ -203,7 +203,7 @@ export default function AdminPendingGigsPage() {
             return (
               <div
                 key={gig.id}
-                className="bg-[#121418] rounded-2xl border border-[#26282E] shadow-sm hover:border-[#DFB76C]/40 transition-all overflow-hidden flex flex-col justify-between group"
+                className="bg-[#121418] rounded-2xl border border-[#26282E] shadow-sm hover:border-border-brand/40 transition-all overflow-hidden flex flex-col justify-between group"
               >
                 {/* Media preview */}
                 <div className="relative aspect-video w-full bg-slate-900 overflow-hidden">
@@ -219,7 +219,7 @@ export default function AdminPendingGigsPage() {
                       Pending Approval
                     </span>
                   </div>
-                  <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-xs text-white px-2 py-0.5 rounded-md text-[10px] font-bold border border-[#26282E]">
+                  <div className="absolute top-3 right-3 bg-black/70 backdrop-blur-xs text-foreground px-2 py-0.5 rounded-md text-[10px] font-bold border border-[#26282E]">
                     {gig.gallery?.length || gig.images?.length || 1} Assets
                   </div>
                 </div>
@@ -230,33 +230,33 @@ export default function AdminPendingGigsPage() {
                     <span className="text-[10px] font-bold uppercase tracking-wider text-[#DFB76C] block">
                       {gig.category?.name || "Event Service"}
                     </span>
-                    <h3 className="font-bold text-white text-sm mt-1 line-clamp-2 leading-snug">
+                    <h3 className="font-bold text-foreground text-sm mt-1 line-clamp-2 leading-snug">
                       {gig.title}
                     </h3>
 
-                    <div className="flex items-center gap-2 mt-2 text-xs text-slate-400">
-                      <div className="w-5 h-5 rounded-full bg-[#1A1D24] border border-[#DFB76C]/30 flex items-center justify-center text-[10px] font-bold text-[#DFB76C]">
+                    <div className="flex items-center gap-2 mt-2 text-xs text-foreground-muted">
+                      <div className="w-5 h-5 rounded-full bg-[#1A1D24] border border-border-brand/40 flex items-center justify-center text-[10px] font-bold text-[#DFB76C]">
                         {vendorName.charAt(0).toUpperCase()}
                       </div>
-                      <span className="font-medium text-slate-300 truncate">{vendorName}</span>
-                      <span className="text-slate-600">•</span>
-                      <span className="text-[11px] text-slate-500 font-mono">{submittedDate}</span>
+                      <span className="font-medium text-foreground-secondary truncate">{vendorName}</span>
+                      <span className="text-foreground-secondary">•</span>
+                      <span className="text-[11px] text-foreground-muted font-mono">{submittedDate}</span>
                     </div>
                   </div>
 
                   {/* Summary badges */}
                   <div className="py-2.5 px-3 rounded-xl bg-[#16181F] border border-[#26282E] flex items-center justify-between text-xs">
                     <div>
-                      <span className="text-[9px] uppercase font-bold text-slate-400 block">Starting at</span>
+                      <span className="text-[9px] uppercase font-bold text-foreground-muted block">Starting at</span>
                       <span className="font-extrabold text-[#DFB76C]">{price}</span>
                     </div>
                     <div>
-                      <span className="text-[9px] uppercase font-bold text-slate-400 block">Tiers</span>
-                      <span className="font-bold text-slate-300">{gig.packages?.length || 1} packages</span>
+                      <span className="text-[9px] uppercase font-bold text-foreground-muted block">Tiers</span>
+                      <span className="font-bold text-foreground-secondary">{gig.packages?.length || 1} packages</span>
                     </div>
                     <div>
-                      <span className="text-[9px] uppercase font-bold text-slate-400 block">Status</span>
-                      <span className="font-bold text-amber-400">Needs Audit</span>
+                      <span className="text-[9px] uppercase font-bold text-foreground-muted block">Status</span>
+                      <span className="font-bold text-warning">Needs Audit</span>
                     </div>
                   </div>
 
@@ -264,7 +264,7 @@ export default function AdminPendingGigsPage() {
                   <div className="flex items-center gap-2 pt-1">
                     <button
                       onClick={() => handleOpenReview(gig)}
-                      className="flex-1 py-2 rounded-xl bg-[#1A1D24] hover:bg-[#222630] border border-[#26282E] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                      className="flex-1 py-2 rounded-xl bg-[#1A1D24] hover:bg-[#222630] border border-[#26282E] text-foreground font-bold text-xs flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
                     >
                       <Eye className="w-3.5 h-3.5 text-[#DFB76C]" />
                       <span>Review Details</span>
@@ -272,7 +272,7 @@ export default function AdminPendingGigsPage() {
                     <button
                       onClick={() => handleApprove(gig.id)}
                       disabled={isApproving}
-                      className="px-3 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30 font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer"
+                      className="px-3 py-2 rounded-xl bg-success-solid text-white/20 hover:bg-success-solid text-white/30 text-success border border-success/30 font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer"
                       title="Quick Approve"
                     >
                       <Check className="w-3.5 h-3.5" />
@@ -290,28 +290,28 @@ export default function AdminPendingGigsPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
           <div className="bg-[#121418] rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col shadow-2xl border border-[#26282E]">
             {/* Modal Header */}
-            <div className="px-6 py-4 border-b border-[#26282E] bg-[#16181F] text-white flex items-center justify-between">
+            <div className="px-6 py-4 border-b border-[#26282E] bg-[#16181F] text-foreground flex items-center justify-between">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-[#DFB76C] block">
                   Service Moderation Review
                 </span>
-                <h2 className="text-base font-bold text-white line-clamp-1">
+                <h2 className="text-base font-bold text-foreground line-clamp-1">
                   {selectedGig.title}
                 </h2>
               </div>
               <button
                 onClick={() => setSelectedGig(null)}
-                className="w-8 h-8 rounded-full bg-[#1A1D24] hover:bg-[#222630] text-slate-400 hover:text-white flex items-center justify-center transition-colors cursor-pointer border border-[#26282E]"
+                className="w-8 h-8 rounded-full bg-[#1A1D24] hover:bg-[#222630] text-foreground-muted hover:text-foreground flex items-center justify-center transition-colors cursor-pointer border border-[#26282E]"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Modal Body */}
-            <div className="p-6 overflow-y-auto space-y-6 text-xs text-slate-300 flex-1">
+            <div className="p-6 overflow-y-auto space-y-6 text-xs text-foreground-secondary flex-1">
               {/* Media Gallery Showcase */}
               <div>
-                <h4 className="font-bold text-white uppercase text-[11px] mb-2 tracking-wider">
+                <h4 className="font-bold text-foreground uppercase text-[11px] mb-2 tracking-wider">
                   Gallery Assets ({selectedGig.gallery?.length || selectedGig.images?.length || 1})
                 </h4>
                 {(() => {
@@ -358,39 +358,39 @@ export default function AdminPendingGigsPage() {
               {/* Vendor & Overview Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-2">
-                  <span className="text-[10px] font-bold uppercase text-slate-400 block tracking-wider">
+                  <span className="text-[10px] font-bold uppercase text-foreground-muted block tracking-wider">
                     Vendor Guild Member
                   </span>
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-[#1A1D24] text-[#DFB76C] border border-[#DFB76C]/30 font-black text-sm flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40 font-black text-sm flex items-center justify-center">
                       {(selectedGig.vendorProfile?.businessName || selectedGig.vendor?.name || "V").charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <h4 className="font-bold text-white text-sm">
+                      <h4 className="font-bold text-foreground text-sm">
                         {selectedGig.vendorProfile?.businessName || selectedGig.vendor?.name || "Vendor"}
                       </h4>
-                      <p className="text-[11px] text-slate-400">
+                      <p className="text-[11px] text-foreground-muted">
                         {selectedGig.vendor?.email || "No email available"}
                       </p>
                     </div>
                   </div>
                   <div className="pt-2 border-t border-[#26282E] flex items-center justify-between text-[11px]">
-                    <span className="text-slate-400">Level: <strong className="text-[#DFB76C]">{selectedGig.vendorProfile?.level || "PRO"}</strong></span>
-                    <span className="text-slate-400">Submitted: <strong className="text-white">{new Date(selectedGig.createdAt).toLocaleDateString()}</strong></span>
+                    <span className="text-foreground-muted">Level: <strong className="text-[#DFB76C]">{selectedGig.vendorProfile?.level || "PRO"}</strong></span>
+                    <span className="text-foreground-muted">Submitted: <strong className="text-foreground">{new Date(selectedGig.createdAt).toLocaleDateString()}</strong></span>
                   </div>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-2">
-                  <span className="text-[10px] font-bold uppercase text-slate-400 block tracking-wider">
+                  <span className="text-[10px] font-bold uppercase text-foreground-muted block tracking-wider">
                     Category & Scope
                   </span>
                   <div className="space-y-1">
-                    <p className="text-xs text-slate-400">Category: <strong className="text-white">{selectedGig.category?.name || "General Event"}</strong></p>
-                    <p className="text-xs text-slate-400">Slug: <code className="text-[11px] bg-[#121418] border border-[#26282E] px-1.5 py-0.5 rounded text-[#DFB76C]">{selectedGig.slug || selectedGig.id}</code></p>
+                    <p className="text-xs text-foreground-muted">Category: <strong className="text-foreground">{selectedGig.category?.name || "General Event"}</strong></p>
+                    <p className="text-xs text-foreground-muted">Slug: <code className="text-[11px] bg-[#121418] border border-[#26282E] px-1.5 py-0.5 rounded text-[#DFB76C]">{selectedGig.slug || selectedGig.id}</code></p>
                     {selectedGig.tags && selectedGig.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1 pt-1">
                         {selectedGig.tags.map((t: string, i: number) => (
-                          <span key={i} className="px-2 py-0.5 rounded-md bg-[#1A1D24] border border-[#DFB76C]/30 text-[#DFB76C] text-[10px] font-semibold">
+                          <span key={i} className="px-2 py-0.5 rounded-md bg-[#1A1D24] border border-border-brand/40 text-[#DFB76C] text-[10px] font-semibold">
                             #{t}
                           </span>
                         ))}
@@ -402,17 +402,17 @@ export default function AdminPendingGigsPage() {
 
               {/* Description */}
               <div>
-                <h4 className="font-bold text-white uppercase text-[11px] mb-2 tracking-wider">
+                <h4 className="font-bold text-foreground uppercase text-[11px] mb-2 tracking-wider">
                   Full Service Description
                 </h4>
-                <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] whitespace-pre-line leading-relaxed text-slate-200">
+                <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] whitespace-pre-line leading-relaxed text-foreground-secondary">
                   {selectedGig.description || "No description provided."}
                 </div>
               </div>
 
               {/* Package Tiers Comparison */}
               <div>
-                <h4 className="font-bold text-white uppercase text-[11px] mb-2 tracking-wider">
+                <h4 className="font-bold text-foreground uppercase text-[11px] mb-2 tracking-wider">
                   Pricing Package Tiers
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -421,25 +421,25 @@ export default function AdminPendingGigsPage() {
                       key={pkg.id || idx}
                       className={cn(
                         "p-4 rounded-2xl border flex flex-col justify-between space-y-3 bg-[#16181F] border-[#26282E]",
-                        idx === 1 && "border-[#DFB76C]/50 shadow-sm"
+                        idx === 1 && "border-border-brand/40 shadow-sm"
                       )}
                     >
                       <div>
                         <div className="flex items-center justify-between mb-1">
-                          <span className="font-extrabold text-white uppercase text-[11px]">{pkg.name || `Package ${idx + 1}`}</span>
+                          <span className="font-extrabold text-foreground uppercase text-[11px]">{pkg.name || `Package ${idx + 1}`}</span>
                           <span className="text-base font-black text-[#DFB76C]">${pkg.price}</span>
                         </div>
-                        <p className="text-[11px] text-slate-400 line-clamp-3 mb-2">{pkg.description}</p>
-                        <div className="text-[10px] text-slate-400 space-y-1">
-                          <p>⏱️ Turnaround: <strong className="text-white">{pkg.deliveryDays || pkg.deliveryTime || 3} days</strong></p>
-                          <p>🔄 Revisions: <strong className="text-white">{pkg.revisions ?? 2}</strong></p>
+                        <p className="text-[11px] text-foreground-muted line-clamp-3 mb-2">{pkg.description}</p>
+                        <div className="text-[10px] text-foreground-muted space-y-1">
+                          <p>⏱️ Turnaround: <strong className="text-foreground">{pkg.deliveryDays || pkg.deliveryTime || 3} days</strong></p>
+                          <p>🔄 Revisions: <strong className="text-foreground">{pkg.revisions ?? 2}</strong></p>
                         </div>
                       </div>
                       {pkg.features && Array.isArray(pkg.features) && (
                         <ul className="border-t border-[#26282E] pt-2 space-y-1">
                           {pkg.features.map((feat: string, fIdx: number) => (
-                            <li key={fIdx} className="text-[10px] text-slate-300 flex items-center gap-1">
-                              <Check className="w-2.5 h-2.5 text-emerald-400" />
+                            <li key={fIdx} className="text-[10px] text-foreground-secondary flex items-center gap-1">
+                              <Check className="w-2.5 h-2.5 text-success" />
                               <span>{feat}</span>
                             </li>
                           ))}
@@ -452,14 +452,14 @@ export default function AdminPendingGigsPage() {
 
               {/* Admin Notes */}
               <div>
-                <label className="font-bold text-slate-300 uppercase text-[11px] mb-1.5 block tracking-wider">
+                <label className="font-bold text-foreground-secondary uppercase text-[11px] mb-1.5 block tracking-wider">
                   Internal Admin Audit Notes
                 </label>
                 <textarea
                   value={adminNotes}
                   onChange={(e) => setAdminNotes(e.target.value)}
                   placeholder="Optional internal remarks, verification audit observations, or insurance notes..."
-                  className="w-full p-3 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
+                  className="w-full p-3 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
                   rows={2}
                 />
               </div>
@@ -470,7 +470,7 @@ export default function AdminPendingGigsPage() {
               <button
                 type="button"
                 onClick={() => setSelectedGig(null)}
-                className="px-4 py-2 rounded-xl border border-[#26282E] hover:bg-[#1A1D24] text-slate-300 font-bold text-xs transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-xl border border-[#26282E] hover:bg-[#1A1D24] text-foreground-secondary font-bold text-xs transition-colors cursor-pointer"
               >
                 Close Audit
               </button>
@@ -480,9 +480,9 @@ export default function AdminPendingGigsPage() {
                   type="button"
                   onClick={() => setRejectModalOpen(true)}
                   disabled={isApproving || isRejecting}
-                  className="px-4 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-400 border border-rose-500/30 font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  className="px-4 py-2 rounded-xl bg-danger-solid text-white/15 hover:bg-danger-solid text-white/25 text-danger border border-danger/30 font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                 >
-                  <XCircle className="w-4 h-4 text-rose-400" />
+                  <XCircle className="w-4 h-4 text-danger" />
                   <span>Reject Listing</span>
                 </button>
 
@@ -509,13 +509,13 @@ export default function AdminPendingGigsPage() {
       {rejectModalOpen && (
         <div className="fixed inset-0 z-60 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
           <div className="bg-[#121418] rounded-3xl max-w-lg w-full p-6 shadow-2xl border border-[#26282E] space-y-4">
-            <div className="flex items-center gap-3 text-rose-400">
-              <div className="w-10 h-10 rounded-2xl bg-rose-500/15 border border-rose-500/30 flex items-center justify-center">
-                <AlertTriangle className="w-5 h-5 text-rose-400" />
+            <div className="flex items-center gap-3 text-danger">
+              <div className="w-10 h-10 rounded-2xl bg-danger-solid text-white/15 border border-danger/30 flex items-center justify-center">
+                <AlertTriangle className="w-5 h-5 text-danger" />
               </div>
               <div>
-                <h3 className="font-bold text-white text-base">Reject Service Gig</h3>
-                <p className="text-xs text-slate-400">
+                <h3 className="font-bold text-foreground text-base">Reject Service Gig</h3>
+                <p className="text-xs text-foreground-muted">
                   Provide constructive reason for the vendor to update and resubmit.
                 </p>
               </div>
@@ -523,7 +523,7 @@ export default function AdminPendingGigsPage() {
 
             {/* Quick Reason Presets */}
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-slate-300 block">Select Common Reason:</label>
+              <label className="text-[11px] font-bold text-foreground-secondary block">Select Common Reason:</label>
               <div className="space-y-1 max-h-36 overflow-y-auto">
                 {quickRejectionReasons.map((preset, idx) => (
                   <button
@@ -536,8 +536,8 @@ export default function AdminPendingGigsPage() {
                     className={cn(
                       "w-full text-left px-3 py-2 rounded-xl text-xs border transition-all cursor-pointer",
                       selectedQuickReason === preset
-                        ? "bg-rose-500/15 border-rose-500/40 text-rose-300 font-semibold"
-                        : "bg-[#16181F] border-[#26282E] text-slate-300 hover:bg-[#1A1D24]"
+                        ? "bg-danger-solid text-white/15 border-danger/30 text-rose-300 font-semibold"
+                        : "bg-[#16181F] border-[#26282E] text-foreground-secondary hover:bg-[#1A1D24]"
                     )}
                   >
                     {preset}
@@ -548,14 +548,14 @@ export default function AdminPendingGigsPage() {
 
             {/* Custom Explanation */}
             <div>
-              <label className="text-[11px] font-bold text-slate-300 block mb-1">
+              <label className="text-[11px] font-bold text-foreground-secondary block mb-1">
                 Detailed Feedback (Mandatory):
               </label>
               <textarea
                 value={rejectionReason}
                 onChange={(e) => setRejectionReason(e.target.value)}
                 placeholder="Explain specifically what needs to be changed before this listing can be approved..."
-                className="w-full p-3 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-rose-500"
+                className="w-full p-3 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-rose-500"
                 rows={3}
               />
             </div>
@@ -564,7 +564,7 @@ export default function AdminPendingGigsPage() {
               <button
                 type="button"
                 onClick={() => setRejectModalOpen(false)}
-                className="px-4 py-2 rounded-xl border border-[#26282E] hover:bg-[#1A1D24] text-slate-300 font-bold text-xs transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-xl border border-[#26282E] hover:bg-[#1A1D24] text-foreground-secondary font-bold text-xs transition-colors cursor-pointer"
               >
                 Cancel
               </button>
@@ -572,7 +572,7 @@ export default function AdminPendingGigsPage() {
                 type="button"
                 onClick={handleRejectSubmit}
                 disabled={isRejecting || (!rejectionReason.trim() && !selectedQuickReason)}
-                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs flex items-center gap-1.5 transition-colors disabled:opacity-50 cursor-pointer"
+                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-foreground font-bold text-xs flex items-center gap-1.5 transition-colors disabled:opacity-50 cursor-pointer"
               >
                 {isRejecting ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <XCircle className="w-3.5 h-3.5" />}
                 <span>Confirm Rejection</span>

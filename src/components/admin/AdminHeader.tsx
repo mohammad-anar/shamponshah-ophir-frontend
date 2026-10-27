@@ -99,28 +99,28 @@ export default function AdminHeader({
   }
 
   return (
-    <header className="sticky top-0 z-30 h-16 bg-[#121418]/95 backdrop-blur-md border-b border-[#26282E] px-4 md:px-8 flex items-center justify-between text-white">
+    <header className="sticky top-0 z-30 h-16 bg-[#121418]/95 backdrop-blur-md border-b border-[#26282E] px-4 md:px-8 flex items-center justify-between text-foreground">
       {/* Left section: mobile hamburger & breadcrumbs */}
       <div className="flex items-center gap-3">
         <button
           onClick={onMenuToggle}
-          className="lg:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#16181F]"
+          className="lg:hidden p-2 rounded-lg text-foreground-muted hover:text-foreground hover:bg-[#16181F]"
           aria-label="Toggle navigation"
         >
           <Menu className="w-5 h-5" />
         </button>
 
         {/* Breadcrumbs */}
-        <nav className="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-slate-400">
+        <nav className="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-foreground-muted">
           {computedBreadcrumbs.map((crumb, idx) => (
             <div key={idx} className="flex items-center gap-1.5">
-              {idx > 0 && <span className="text-slate-600">/</span>}
+              {idx > 0 && <span className="text-foreground-secondary">/</span>}
               {crumb.href ? (
-                <Link href={crumb.href} className="text-slate-400 hover:text-[#DFB76C] transition-colors">
+                <Link href={crumb.href} className="text-foreground-muted hover:text-[#DFB76C] transition-colors">
                   {crumb.label}
                 </Link>
               ) : (
-                <span className="text-[#DFB76C] font-bold bg-[#1A1D24] px-2 py-0.5 rounded-md border border-[#DFB76C]/30">
+                <span className="text-[#DFB76C] font-bold bg-[#1A1D24] px-2 py-0.5 rounded-md border border-border-brand/40">
                   {crumb.label}
                 </span>
               )}
@@ -132,13 +132,13 @@ export default function AdminHeader({
       {/* Center Search Bar */}
       <div className="hidden md:flex items-center flex-1 max-w-md mx-6">
         <div className="relative w-full">
-          <Search className="w-4 h-4 text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-foreground-muted absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search users, orders, vendors, disputes..."
-            className="w-full bg-[#16181F] border border-[#26282E] rounded-lg pl-9 pr-14 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C] focus:bg-[#1A1D24] transition-all shadow-sm"
+            className="w-full bg-[#16181F] border border-[#26282E] rounded-lg pl-9 pr-14 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C] focus:bg-[#1A1D24] transition-all shadow-sm"
           />
-          <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-medium text-slate-400 bg-[#121418] border border-[#26282E] rounded shadow-xs">
+          <kbd className="absolute right-2.5 top-1/2 -translate-y-1/2 inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-medium text-foreground-muted bg-[#121418] border border-[#26282E] rounded shadow-xs">
             <Command className="w-2.5 h-2.5" /> K
           </kbd>
         </div>
@@ -147,19 +147,19 @@ export default function AdminHeader({
       {/* Right controls */}
       <div className="flex items-center gap-3 md:gap-4">
         {/* System Health Status */}
-        <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-800/40 text-emerald-400 text-[11px] font-semibold">
+        <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-success-soft text-success border border-emerald-800/40 text-success text-[11px] font-semibold">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-success-solid text-white"></span>
           </span>
           <div className="flex flex-col leading-tight">
             <span>System Operational</span>
-            <span className="text-[9px] text-emerald-500 font-normal">99.98% uptime</span>
+            <span className="text-[9px] text-success font-normal">99.98% uptime</span>
           </div>
         </div>
 
         {/* Live Pod Pill */}
-        <div className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#1A1D24] text-[#DFB76C] text-[10px] font-bold tracking-wider uppercase border border-[#DFB76C]/30">
+        <div className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-[#1A1D24] text-[#DFB76C] text-[10px] font-bold tracking-wider uppercase border border-border-brand/40">
           <Activity className="w-3 h-3 text-[#DFB76C]" />
           <span>LIVE POD 01</span>
         </div>
@@ -168,28 +168,28 @@ export default function AdminHeader({
         <div className="relative">
           <button
             onClick={() => setShowNotifications(!showNotifications)}
-            className="relative p-2 rounded-lg text-slate-400 hover:text-white hover:bg-[#16181F] transition-colors"
+            className="relative p-2 rounded-lg text-foreground-muted hover:text-foreground hover:bg-[#16181F] transition-colors"
           >
             <Bell className="w-4 h-4" />
             <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#DFB76C] border-2 border-[#121418]" />
           </button>
 
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-80 bg-[#121418] rounded-xl shadow-2xl border border-[#26282E] py-3 z-50 animate-in fade-in slide-in-from-top-2 text-white">
+            <div className="absolute right-0 mt-2 w-80 bg-[#121418] rounded-xl shadow-2xl border border-[#26282E] py-3 z-50 animate-in fade-in slide-in-from-top-2 text-foreground">
               <div className="px-4 pb-2 border-b border-[#26282E] flex items-center justify-between">
-                <span className="text-xs font-bold text-white">Action Alerts</span>
-                <span className="text-[10px] font-semibold bg-[#1A1D24] text-[#DFB76C] border border-[#DFB76C]/30 px-2 py-0.5 rounded-full">4 Pending</span>
+                <span className="text-xs font-bold text-foreground">Action Alerts</span>
+                <span className="text-[10px] font-semibold bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40 px-2 py-0.5 rounded-full">4 Pending</span>
               </div>
               <div className="divide-y divide-[#26282E] text-xs">
                 <div className="p-3 hover:bg-[#16181F] transition-colors">
-                  <p className="font-semibold text-rose-400 flex items-center gap-1">
+                  <p className="font-semibold text-danger flex items-center gap-1">
                     <ShieldAlert className="w-3.5 h-3.5" /> 1 Dispute Past 3-Day SLA
                   </p>
-                  <p className="text-[11px] text-slate-400 mt-0.5">Case #DS-1049 (Windy City Sound - $2,400 hold)</p>
+                  <p className="text-[11px] text-foreground-muted mt-0.5">Case #DS-1049 (Windy City Sound - $2,400 hold)</p>
                 </div>
                 <div className="p-3 hover:bg-[#16181F] transition-colors">
-                  <p className="font-semibold text-white">12 Vendor Applications Pending &gt;48h</p>
-                  <p className="text-[11px] text-slate-400 mt-0.5">Chicago & Atlanta regional queues awaiting check</p>
+                  <p className="font-semibold text-foreground">12 Vendor Applications Pending &gt;48h</p>
+                  <p className="text-[11px] text-foreground-muted mt-0.5">Chicago & Atlanta regional queues awaiting check</p>
                 </div>
               </div>
               <div className="px-4 pt-2 border-t border-[#26282E] text-center">
@@ -207,35 +207,35 @@ export default function AdminHeader({
             onClick={() => setShowUserMenu(!showUserMenu)}
             className="flex items-center gap-2.5 pl-2 py-1 rounded-lg hover:bg-[#16181F] transition-colors"
           >
-            <div className="w-8 h-8 rounded-full bg-[#1A1D24] text-[#DFB76C] border border-[#DFB76C]/30 flex items-center justify-center font-bold text-xs shadow-sm">
+            <div className="w-8 h-8 rounded-full bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40 flex items-center justify-center font-bold text-xs shadow-sm">
               {initials}
             </div>
             <div className="hidden lg:flex flex-col text-left leading-tight">
-              <span className="text-xs font-bold text-white">{userName}</span>
-              <span className="text-[10px] text-slate-400">{userRole}</span>
+              <span className="text-xs font-bold text-foreground">{userName}</span>
+              <span className="text-[10px] text-foreground-muted">{userRole}</span>
             </div>
-            <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+            <ChevronDown className="w-3.5 h-3.5 text-foreground-muted" />
           </button>
 
           {showUserMenu && (
-            <div className="absolute right-0 mt-2 w-52 bg-[#121418] rounded-xl shadow-2xl border border-[#26282E] py-1.5 z-50 text-xs text-white">
+            <div className="absolute right-0 mt-2 w-52 bg-[#121418] rounded-xl shadow-2xl border border-[#26282E] py-1.5 z-50 text-xs text-foreground">
               <div className="px-3 py-2 border-b border-[#26282E] lg:hidden">
-                <p className="font-bold text-white">{userName}</p>
-                <p className="text-[11px] text-slate-400">{userRole}</p>
+                <p className="font-bold text-foreground">{userName}</p>
+                <p className="text-[11px] text-foreground-muted">{userRole}</p>
               </div>
-              <Link href="/user" className="flex items-center gap-2 px-3 py-2 text-slate-300 hover:bg-[#16181F] hover:text-white">
+              <Link href="/user" className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-[#16181F] hover:text-foreground">
                 <ExternalLink className="w-3.5 h-3.5 text-[#DFB76C]" /> Switch to Client View
               </Link>
-              <Link href="/vendor" className="flex items-center gap-2 px-3 py-2 text-slate-300 hover:bg-[#16181F] hover:text-white">
+              <Link href="/vendor" className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-[#16181F] hover:text-foreground">
                 <ExternalLink className="w-3.5 h-3.5 text-[#DFB76C]" /> Switch to Vendor View
               </Link>
-              <Link href="/admin/settings" className="flex items-center gap-2 px-3 py-2 text-slate-300 hover:bg-[#16181F] hover:text-white">
-                <Settings className="w-3.5 h-3.5 text-slate-400" /> Admin Settings
+              <Link href="/admin/settings" className="flex items-center gap-2 px-3 py-2 text-foreground-secondary hover:bg-[#16181F] hover:text-foreground">
+                <Settings className="w-3.5 h-3.5 text-foreground-muted" /> Admin Settings
               </Link>
               <div className="border-t border-[#26282E] my-1" />
               <button 
                 onClick={handleSignOut}
-                className="w-full flex items-center gap-2 px-3 py-2 text-rose-400 hover:bg-rose-950/30 text-left cursor-pointer"
+                className="w-full flex items-center gap-2 px-3 py-2 text-danger hover:bg-danger-soft text-danger text-left cursor-pointer"
               >
                 <LogOut className="w-3.5 h-3.5" /> Sign Out
               </button>

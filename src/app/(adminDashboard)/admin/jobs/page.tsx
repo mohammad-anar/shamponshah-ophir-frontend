@@ -113,8 +113,8 @@ export default function AdminJobsBidsPage() {
     <div className="space-y-6 pb-12">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">Jobs &amp; Bids Monitor</h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">Jobs &amp; Bids Monitor</h1>
+          <p className="text-xs text-foreground-muted mt-1">
             Audit client celebration RFPs, inspect vendor proposal bids, review pricing spreads, and moderate custom job requests
           </p>
         </div>
@@ -133,7 +133,7 @@ export default function AdminJobsBidsPage() {
                   "px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all",
                   activeFilter === f 
                     ? "bg-[#DFB76C] text-[#0B0C0E] shadow-xs font-bold" 
-                    : "bg-[#16181F] text-slate-400 hover:text-white hover:bg-[#1A1D24] border border-[#26282E]"
+                    : "bg-[#16181F] text-foreground-muted hover:text-foreground hover:bg-[#1A1D24] border border-[#26282E]"
                 )}
               >
                 {f.replace(/_/g, " ")}
@@ -142,20 +142,20 @@ export default function AdminJobsBidsPage() {
           </div>
 
           <div className="relative w-full sm:w-64">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
+            <Search className="w-3.5 h-3.5 text-foreground-muted absolute left-3 top-2.5" />
             <input
               type="text"
               placeholder="Search RFPs, buyers, IDs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
+              className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
             />
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-[#16181F] border-b border-[#26282E] text-[11px] font-bold uppercase text-slate-400">
+            <thead className="bg-[#16181F] border-b border-[#26282E] text-[11px] font-bold uppercase text-foreground-muted">
               <tr>
                 <th className="py-3.5 px-4">Job Title &amp; ID</th>
                 <th className="py-3.5 px-4">Host (Buyer)</th>
@@ -175,7 +175,7 @@ export default function AdminJobsBidsPage() {
                   <td className="py-3.5 px-4 max-w-xs">
                     <Link
                       href={`/admin/jobs/${job.realId || job.id}`}
-                      className="font-bold text-white group-hover:text-[#DFB76C] line-clamp-1 block transition-colors"
+                      className="font-bold text-foreground group-hover:text-[#DFB76C] line-clamp-1 block transition-colors"
                     >
                       {job.title}
                     </Link>
@@ -183,7 +183,7 @@ export default function AdminJobsBidsPage() {
                       <span className="text-[10px] font-mono font-bold text-[#DFB76C] bg-[#16181F] px-1.5 py-0.5 rounded border border-[#26282E]">
                         #{job.id}
                       </span>
-                      <span className="text-[10px] text-slate-400 font-medium">
+                      <span className="text-[10px] text-foreground-muted font-medium">
                         {job.category}
                       </span>
                     </div>
@@ -193,18 +193,18 @@ export default function AdminJobsBidsPage() {
                       <div className="w-6 h-6 rounded-full bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] flex items-center justify-center font-bold text-[9px]">
                         {job.clientAvatar}
                       </div>
-                      <span className="font-semibold text-slate-200">{job.client}</span>
+                      <span className="font-semibold text-foreground-secondary">{job.client}</span>
                     </div>
                   </td>
-                  <td className="py-3.5 px-4 text-slate-300">
-                    <div className="font-medium text-slate-200 flex items-center gap-1">
-                      <Calendar className="w-3 h-3 text-slate-400" /> {job.date}
+                  <td className="py-3.5 px-4 text-foreground-secondary">
+                    <div className="font-medium text-foreground-secondary flex items-center gap-1">
+                      <Calendar className="w-3 h-3 text-foreground-muted" /> {job.date}
                     </div>
-                    <span className="text-[10px] text-slate-400 block">{job.location}</span>
+                    <span className="text-[10px] text-foreground-muted block">{job.location}</span>
                   </td>
                   <td className="py-3.5 px-4 font-bold text-[#DFB76C] font-mono">{job.budget}</td>
                   <td className="py-3.5 px-4">
-                    <span className="font-bold text-[#DFB76C] bg-[#DFB76C]/10 border border-[#DFB76C]/30 px-2 py-0.5 rounded-lg">
+                    <span className="font-bold text-[#DFB76C] bg-[#DFB76C]/10 border border-border-brand/40 px-2 py-0.5 rounded-lg">
                       {job.bidsCount} Proposals
                     </span>
                   </td>
@@ -212,8 +212,8 @@ export default function AdminJobsBidsPage() {
                     <span className={cn(
                       "px-2.5 py-0.5 rounded-full text-[10px] font-bold inline-block",
                       job.status === "OPEN_BIDDING" || job.status === "OPEN"
-                        ? "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30"
-                        : "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
+                        ? "bg-info-solid text-white/15 text-info border border-info/30"
+                        : "bg-success-solid text-white/15 text-success border border-success/30"
                     )}>
                       {job.timeLeft}
                     </span>
@@ -221,7 +221,7 @@ export default function AdminJobsBidsPage() {
                   <td className="py-3.5 px-4 text-right whitespace-nowrap">
                     <Link
                       href={`/admin/jobs/${job.realId || job.id}`}
-                      className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] text-slate-200 hover:text-white border border-[#26282E] rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-2xs"
+                      className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] text-foreground-secondary hover:text-foreground border border-[#26282E] rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-2xs"
                     >
                       <Eye className="w-3 h-3" /> Full Details
                     </Link>

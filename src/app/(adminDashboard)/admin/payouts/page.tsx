@@ -280,8 +280,8 @@ export default function AdminPayoutsPage() {
     <div className="space-y-6 pb-12">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">Vendor Payouts &amp; Disbursements</h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">Vendor Payouts &amp; Disbursements</h1>
+          <p className="text-xs text-foreground-muted mt-1">
             Automated Stripe Connect ACH settlement, escrow releases, KYC audits, and itemized order reconciliations
           </p>
         </div>
@@ -289,7 +289,7 @@ export default function AdminPayoutsPage() {
         <div className="flex items-center gap-3">
           <button 
             onClick={() => toast.success("Payout disbursement ledger CSV exported successfully.")}
-            className="px-3.5 py-2 rounded-xl bg-[#16181F] border border-[#26282E] text-xs font-bold text-slate-200 hover:bg-[#1A1D24] hover:text-white flex items-center gap-1.5 shadow-sm transition-colors"
+            className="px-3.5 py-2 rounded-xl bg-[#16181F] border border-[#26282E] text-xs font-bold text-foreground-secondary hover:bg-[#1A1D24] hover:text-foreground flex items-center gap-1.5 shadow-sm transition-colors"
           >
             <Download className="w-3.5 h-3.5 text-[#DFB76C]" />
             <span>Export Disbursement CSV</span>
@@ -300,30 +300,30 @@ export default function AdminPayoutsPage() {
       {/* Top Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
         <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm">
-          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Scheduled Today</span>
+          <span className="text-[11px] font-bold text-foreground-muted uppercase tracking-wider">Scheduled Today</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-white font-mono">$9,240.00</span>
-            <span className="text-xs font-bold text-[#DFB76C] bg-[#1A1D24] px-2 py-0.5 rounded-full border border-[#DFB76C]/30">18 Batches</span>
+            <span className="text-2xl font-black text-foreground font-mono">$9,240.00</span>
+            <span className="text-xs font-bold text-[#DFB76C] bg-[#1A1D24] px-2 py-0.5 rounded-full border border-border-brand/40">18 Batches</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Stripe ACH window opens in 2 hours</p>
+          <p className="text-[11px] text-foreground-muted mt-1">Stripe ACH window opens in 2 hours</p>
         </div>
 
         <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm">
-          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Cleared This Week</span>
+          <span className="text-[11px] font-bold text-foreground-muted uppercase tracking-wider">Cleared This Week</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-emerald-400 font-mono">$42,800.00</span>
-            <span className="text-xs font-bold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded-full border border-emerald-500/30">54 Vendors</span>
+            <span className="text-2xl font-black text-success font-mono">$42,800.00</span>
+            <span className="text-xs font-bold text-success bg-success-solid text-white/15 px-2 py-0.5 rounded-full border border-success/30">54 Vendors</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">0% ACH failure rate on Stripe Connect</p>
+          <p className="text-[11px] text-foreground-muted mt-1">0% ACH failure rate on Stripe Connect</p>
         </div>
 
-        <div className="bg-[#121418] p-5 rounded-3xl border border-amber-500/30 shadow-sm">
-          <span className="text-[11px] font-bold text-amber-400 uppercase tracking-wider">KYC Verification Holds</span>
+        <div className="bg-[#121418] p-5 rounded-3xl border border-warning/30 shadow-sm">
+          <span className="text-[11px] font-bold text-warning uppercase tracking-wider">KYC Verification Holds</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-amber-400 font-mono">$2,400.00</span>
-            <span className="text-xs font-bold text-amber-300 bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-full">1 Flagged</span>
+            <span className="text-2xl font-black text-warning font-mono">$2,400.00</span>
+            <span className="text-xs font-bold text-warning bg-warning-solid text-on-brand/15 border border-warning/30 px-2 py-0.5 rounded-full">1 Flagged</span>
           </div>
-          <p className="text-[11px] text-slate-400 mt-1">Awaiting W-9 tax document verification</p>
+          <p className="text-[11px] text-foreground-muted mt-1">Awaiting W-9 tax document verification</p>
         </div>
       </div>
 
@@ -340,7 +340,7 @@ export default function AdminPayoutsPage() {
                   "px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all",
                   activeFilter === f 
                     ? "bg-[#DFB76C] text-[#0B0C0E] shadow-sm" 
-                    : "bg-[#16181F] text-slate-300 hover:bg-[#1A1D24] border border-[#26282E]"
+                    : "bg-[#16181F] text-foreground-secondary hover:bg-[#1A1D24] border border-[#26282E]"
                 )}
               >
                 {f.replace(/_/g, " ")}
@@ -349,20 +349,20 @@ export default function AdminPayoutsPage() {
           </div>
 
           <div className="relative w-full sm:w-64">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
+            <Search className="w-3.5 h-3.5 text-foreground-muted absolute left-3 top-2.5" />
             <input
               type="text"
               placeholder="Search vendors, banks, IDs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
+              className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
             />
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-[#16181F]/80 border-b border-[#26282E] text-[11px] font-bold uppercase text-slate-400 tracking-wider">
+            <thead className="bg-[#16181F]/80 border-b border-[#26282E] text-[11px] font-bold uppercase text-foreground-muted tracking-wider">
               <tr>
                 <th className="py-3.5 px-4">Batch ID</th>
                 <th className="py-3.5 px-4">Vendor &amp; Legal Entity</th>
@@ -381,7 +381,7 @@ export default function AdminPayoutsPage() {
                   className="hover:bg-[#16181F]/50 transition-colors cursor-pointer group"
                 >
                   <td className="py-3.5 px-4 font-bold font-mono">
-                    <span className="bg-[#1A1D24] text-[#DFB76C] px-2 py-0.5 rounded-lg border border-[#DFB76C]/30">
+                    <span className="bg-[#1A1D24] text-[#DFB76C] px-2 py-0.5 rounded-lg border border-border-brand/40">
                       #{batch.id}
                     </span>
                   </td>
@@ -391,24 +391,24 @@ export default function AdminPayoutsPage() {
                         <img src={batch.vendor.avatar} alt={batch.vendor.legalName} className="w-full h-full object-cover" />
                       </div>
                       <div>
-                        <p className="font-bold text-white group-hover:text-[#DFB76C] transition-colors">
+                        <p className="font-bold text-foreground group-hover:text-[#DFB76C] transition-colors">
                           {batch.vendor.businessName}
                         </p>
-                        <p className="text-[10px] text-slate-400">{batch.vendor.legalName} &bull; {batch.vendor.email}</p>
+                        <p className="text-[10px] text-foreground-muted">{batch.vendor.legalName} &bull; {batch.vendor.email}</p>
                       </div>
                     </div>
                   </td>
                   <td className="py-3.5 px-4">
-                    <p className="font-medium text-slate-200">{batch.vendor.bankName}</p>
-                    <p className="text-[10px] text-slate-400 font-mono">•••• {batch.vendor.accountLast4}</p>
+                    <p className="font-medium text-foreground-secondary">{batch.vendor.bankName}</p>
+                    <p className="text-[10px] text-foreground-muted font-mono">•••• {batch.vendor.accountLast4}</p>
                   </td>
                   <td className="py-3.5 px-4">
-                    <span className="font-black text-white font-mono text-sm block">
+                    <span className="font-black text-foreground font-mono text-sm block">
                       ${batch.netDisbursement.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </span>
-                    <span className="text-[10px] text-slate-400">Gross: ${batch.totalGross}</span>
+                    <span className="text-[10px] text-foreground-muted">Gross: ${batch.totalGross}</span>
                   </td>
-                  <td className="py-3.5 px-4 font-semibold text-slate-300">
+                  <td className="py-3.5 px-4 font-semibold text-foreground-secondary">
                     <span className="bg-[#1A1D24] border border-[#26282E] px-2 py-0.5 rounded-md text-[11px]">
                       {batch.orders.length} orders
                     </span>
@@ -416,10 +416,10 @@ export default function AdminPayoutsPage() {
                   <td className="py-3.5 px-4">
                     <span className={cn(
                       "px-2.5 py-0.5 rounded-full text-[10px] font-bold inline-block border",
-                      batch.status === "SCHEDULED" && "bg-amber-500/15 text-amber-400 border-amber-500/30",
-                      batch.status === "PROCESSING" && "bg-blue-500/15 text-blue-400 border-blue-500/30",
-                      batch.status === "FLAGGED" && "bg-rose-500/15 text-rose-400 border-rose-500/30",
-                      batch.status === "COMPLETED" && "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+                      batch.status === "SCHEDULED" && "bg-warning-solid text-on-brand/15 text-warning border-warning/30",
+                      batch.status === "PROCESSING" && "bg-info-solid text-white/15 text-info border-info/30",
+                      batch.status === "FLAGGED" && "bg-danger-solid text-white/15 text-danger border-danger/30",
+                      batch.status === "COMPLETED" && "bg-success-solid text-white/15 text-success border-success/30",
                     )}>
                       {batch.status}
                     </span>
@@ -430,7 +430,7 @@ export default function AdminPayoutsPage() {
                         e.stopPropagation();
                         setSelectedPayout(batch);
                       }}
-                      className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-slate-200 rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-sm"
+                      className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-secondary rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-sm"
                     >
                       <Eye className="w-3 h-3 text-[#DFB76C]" /> Inspect Details
                     </button>

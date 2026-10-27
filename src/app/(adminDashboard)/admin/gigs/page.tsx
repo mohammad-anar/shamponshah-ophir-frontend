@@ -128,8 +128,8 @@ export default function AdminGigsModerationPage() {
     <div className="space-y-6 pb-12">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">Gig Catalog &amp; Moderation</h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">Gig Catalog &amp; Moderation</h1>
+          <p className="text-xs text-foreground-muted mt-1">
             Review service listings, audit pricing tiers, verify insurance and certifications, and manage marketplace listings
           </p>
         </div>
@@ -156,7 +156,7 @@ export default function AdminGigsModerationPage() {
                   "px-3 py-1.5 rounded-xl font-bold text-xs transition-all whitespace-nowrap cursor-pointer",
                   activeFilter === f 
                     ? "bg-[#DFB76C] text-[#0B0C0E] shadow-sm" 
-                    : "bg-[#16181F] text-slate-300 hover:bg-[#1A1D24] border border-[#26282E]"
+                    : "bg-[#16181F] text-foreground-secondary hover:bg-[#1A1D24] border border-[#26282E]"
                 )}
               >
                 {f === "PENDING_VERIFICATION" ? "Pending Verification" : f.replace(/_/g, " ")}
@@ -165,20 +165,20 @@ export default function AdminGigsModerationPage() {
           </div>
 
           <div className="relative w-full sm:w-64">
-            <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-2.5" />
+            <Search className="w-3.5 h-3.5 text-foreground-muted absolute left-3 top-2.5" />
             <input
               type="text"
               placeholder="Search gigs, vendors, IDs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
+              className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
             />
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-[#16181F]/80 border-b border-[#26282E] text-[11px] font-bold uppercase text-slate-400">
+            <thead className="bg-[#16181F]/80 border-b border-[#26282E] text-[11px] font-bold uppercase text-foreground-muted">
               <tr>
                 <th className="py-3.5 px-4">Service Gig</th>
                 <th className="py-3.5 px-4">Vendor</th>
@@ -199,65 +199,65 @@ export default function AdminGigsModerationPage() {
                       <div>
                         <Link 
                           href={`/admin/gigs/${gig.id}`}
-                          className="font-bold text-white hover:text-[#DFB76C] line-clamp-1 text-xs block transition-colors"
+                          className="font-bold text-foreground hover:text-[#DFB76C] line-clamp-1 text-xs block transition-colors"
                         >
                           {gig.title}
                         </Link>
                         <div className="flex items-center gap-2 mt-0.5">
-                          <span className="text-[10px] font-mono font-bold text-[#DFB76C] bg-[#1A1D24] px-1.5 py-0.2 rounded border border-[#DFB76C]/30">
+                          <span className="text-[10px] font-mono font-bold text-[#DFB76C] bg-[#1A1D24] px-1.5 py-0.2 rounded border border-border-brand/40">
                             #{gig.id}
                           </span>
                           {gig.isFeatured && (
-                            <span className="text-[9px] font-bold text-amber-300 bg-amber-500/15 border border-amber-500/30 px-1.5 py-0.2 rounded flex items-center gap-0.5">
-                              <Sparkles className="w-2.5 h-2.5 fill-amber-400 text-amber-400" /> Featured
+                            <span className="text-[9px] font-bold text-warning bg-warning-solid text-on-brand/15 border border-warning/30 px-1.5 py-0.2 rounded flex items-center gap-0.5">
+                              <Sparkles className="w-2.5 h-2.5 fill-amber-400 text-warning" /> Featured
                             </span>
                           )}
                         </div>
                       </div>
                     </div>
                   </td>
-                  <td className="py-3.5 px-4 font-semibold text-slate-200">
+                  <td className="py-3.5 px-4 font-semibold text-foreground-secondary">
                     {gig.vendor}
-                    <div className="flex items-center gap-1 text-[10px] text-amber-400 font-bold mt-0.5">
-                      <Star className="w-2.5 h-2.5 fill-amber-400 text-amber-400" /> {gig.rating}
+                    <div className="flex items-center gap-1 text-[10px] text-warning font-bold mt-0.5">
+                      <Star className="w-2.5 h-2.5 fill-amber-400 text-warning" /> {gig.rating}
                     </div>
                   </td>
-                  <td className="py-3.5 px-4 text-slate-400">
-                    <span className="font-medium text-slate-200">{gig.category}</span>
-                    <span className="text-[10px] text-slate-500 block">{gig.occasion}</span>
+                  <td className="py-3.5 px-4 text-foreground-muted">
+                    <span className="font-medium text-foreground-secondary">{gig.category}</span>
+                    <span className="text-[10px] text-foreground-muted block">{gig.occasion}</span>
                   </td>
-                  <td className="py-3.5 px-4 font-bold text-white font-mono">{gig.priceRange}</td>
+                  <td className="py-3.5 px-4 font-bold text-foreground font-mono">{gig.priceRange}</td>
                   <td className="py-3.5 px-4">
                     <span className={cn(
                       "px-2.5 py-0.5 rounded-full text-[10px] font-bold inline-block border",
                       gig.status === "ACTIVE"
-                        ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/30"
+                        ? "bg-success-solid text-white/15 text-success border-success/30"
                         : gig.status === "PENDING_VERIFICATION"
-                        ? "bg-amber-500/15 text-amber-400 border-amber-500/30 font-extrabold"
+                        ? "bg-warning-solid text-on-brand/15 text-warning border-warning/30 font-extrabold"
                         : gig.status === "SUSPENDED"
-                        ? "bg-rose-500/15 text-rose-400 border-rose-500/30 font-bold"
+                        ? "bg-danger-solid text-white/15 text-danger border-danger/30 font-bold"
                         : gig.status === "REJECTED"
-                        ? "bg-[#1A1D24] text-slate-400 border border-[#26282E]"
-                        : "bg-amber-500/15 text-amber-400 border border-amber-500/30"
+                        ? "bg-[#1A1D24] text-foreground-muted border border-[#26282E]"
+                        : "bg-warning-solid text-on-brand/15 text-warning border border-warning/30"
                     )}>
                       {gig.status === "PENDING_VERIFICATION" ? "Pending Verification" : gig.status.replace("_", " ")}
                     </span>
-                    <span className="text-[10px] text-slate-400 block mt-0.5 flex items-center gap-1">
-                      <ShieldCheck className="w-3 h-3 text-emerald-400 flex-shrink-0" />
+                    <span className="text-[10px] text-foreground-muted block mt-0.5 flex items-center gap-1">
+                      <ShieldCheck className="w-3 h-3 text-success flex-shrink-0" />
                       {gig.compliance}
                     </span>
                   </td>
                   <td className="py-3.5 px-4 text-right space-x-1.5 whitespace-nowrap">
                     <Link
                       href={`/admin/gigs/${gig.id}`}
-                      className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-slate-200 rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-sm"
+                      className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-secondary rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-sm"
                     >
                       <Eye className="w-3 h-3 text-[#DFB76C]" /> Audit Details
                     </Link>
                     {gig.status !== "ACTIVE" && (
                       <button
                         onClick={() => handleModerate(gig.id, "approved and verified")}
-                        className="px-2.5 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 border border-emerald-500/30 rounded-xl font-bold text-[11px] transition-colors"
+                        className="px-2.5 py-1.5 bg-success-solid text-white/20 hover:bg-success-solid text-white/30 text-success border border-success/30 rounded-xl font-bold text-[11px] transition-colors"
                       >
                         Approve
                       </button>

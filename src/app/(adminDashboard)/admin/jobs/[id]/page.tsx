@@ -369,13 +369,13 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
         <div className="flex items-center gap-3">
           <Link
             href="/admin/jobs"
-            className="p-2.5 rounded-xl bg-[#16181F] border border-[#26282E] hover:bg-[#1A1D24] text-slate-300 transition-colors shadow-2xs flex items-center justify-center"
+            className="p-2.5 rounded-xl bg-[#16181F] border border-[#26282E] hover:bg-[#1A1D24] text-foreground-secondary transition-colors shadow-2xs flex items-center justify-center"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">
+              <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
                 Job RFP &amp; Bids Audit
               </h1>
               <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-[#16181F] text-[#DFB76C] border border-[#26282E]">
@@ -385,17 +385,17 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
                 className={cn(
                   "px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase",
                   job.status === "OPEN_BIDDING"
-                    ? "bg-indigo-500/15 text-indigo-400 border border-indigo-500/30"
+                    ? "bg-info-solid text-white/15 text-info border border-info/30"
                     : job.status === "AWARDED"
-                    ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
-                    : "bg-slate-500/15 text-slate-400 border border-slate-500/30"
+                    ? "bg-success-solid text-white/15 text-success border border-success/30"
+                    : "bg-slate-500/15 text-foreground-muted border border-slate-500/30"
                 )}
               >
                 {job.status.replace("_", " ")}
               </span>
             </div>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Category: <span className="font-semibold text-slate-200">{job.category}</span> &bull; Occasion: <span className="font-semibold text-slate-200">{job.occasion}</span> &bull; Posted {job.createdAt}
+            <p className="text-xs text-foreground-muted mt-0.5">
+              Category: <span className="font-semibold text-foreground-secondary">{job.category}</span> &bull; Occasion: <span className="font-semibold text-foreground-secondary">{job.occasion}</span> &bull; Posted {job.createdAt}
             </p>
           </div>
         </div>
@@ -405,7 +405,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
           {job.status === "OPEN_BIDDING" && (
             <button
               onClick={() => handleStatusChange("AWARDED")}
-              className="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-xl bg-success-solid text-white hover:bg-success-solid text-white text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
             >
               <CheckCircle2 className="w-4 h-4" /> Mark as Awarded
             </button>
@@ -414,7 +414,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
           {job.status !== "CANCELLED" && (
             <button
               onClick={() => handleStatusChange("CANCELLED")}
-              className="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
             >
               <XCircle className="w-4 h-4" /> Cancel RFP
             </button>
@@ -432,7 +432,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
           <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-6 shadow-xs space-y-5">
             <div>
               <div className="flex items-center justify-between gap-2 flex-wrap">
-                <span className="px-3 py-1 rounded-full bg-[#DFB76C]/15 text-[#DFB76C] border border-[#DFB76C]/30 text-[11px] font-bold">
+                <span className="px-3 py-1 rounded-full bg-[#DFB76C]/15 text-[#DFB76C] border border-border-brand/40 text-[11px] font-bold">
                   {job.category}
                 </span>
                 <span className="text-xs text-[#DFB76C] font-bold bg-[#16181F] px-2.5 py-1 rounded-full border border-[#26282E] flex items-center gap-1">
@@ -441,7 +441,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
                 </span>
               </div>
 
-              <h2 className="text-lg md:text-xl font-black text-white mt-2">
+              <h2 className="text-lg md:text-xl font-black text-foreground mt-2">
                 {job.title}
               </h2>
             </div>
@@ -449,49 +449,49 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
             {/* Quick Stats Banner */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 bg-[#16181F] rounded-2xl border border-[#26282E]">
               <div>
-                <span className="text-slate-400 text-[10px] uppercase font-bold block">Budget Range</span>
+                <span className="text-foreground-muted text-[10px] uppercase font-bold block">Budget Range</span>
                 <span className="text-base font-black text-[#DFB76C] font-mono mt-0.5 block">
                   ${job.budgetMin} – ${job.budgetMax}
                 </span>
               </div>
               <div>
-                <span className="text-slate-400 text-[10px] uppercase font-bold block">Event Date</span>
-                <span className="text-xs font-bold text-white mt-0.5 block">{job.eventDate}</span>
-                <span className="text-[10px] text-slate-400">{job.eventTime}</span>
+                <span className="text-foreground-muted text-[10px] uppercase font-bold block">Event Date</span>
+                <span className="text-xs font-bold text-foreground mt-0.5 block">{job.eventDate}</span>
+                <span className="text-[10px] text-foreground-muted">{job.eventTime}</span>
               </div>
               <div>
-                <span className="text-slate-400 text-[10px] uppercase font-bold block">Guest Count</span>
-                <span className="text-xs font-bold text-white mt-0.5 block flex items-center gap-1">
+                <span className="text-foreground-muted text-[10px] uppercase font-bold block">Guest Count</span>
+                <span className="text-xs font-bold text-foreground mt-0.5 block flex items-center gap-1">
                   <Users className="w-3.5 h-3.5 text-[#DFB76C]" /> {job.guestCount} Guests
                 </span>
               </div>
               <div>
-                <span className="text-slate-400 text-[10px] uppercase font-bold block">Location</span>
-                <span className="text-xs font-bold text-white mt-0.5 block line-clamp-1">{job.venueName}</span>
-                <span className="text-[10px] text-slate-400 line-clamp-1">{job.location}</span>
+                <span className="text-foreground-muted text-[10px] uppercase font-bold block">Location</span>
+                <span className="text-xs font-bold text-foreground mt-0.5 block line-clamp-1">{job.venueName}</span>
+                <span className="text-[10px] text-foreground-muted line-clamp-1">{job.location}</span>
               </div>
             </div>
 
             {/* Description */}
             <div className="space-y-2">
-              <h3 className="font-bold text-white text-sm uppercase tracking-wider">
+              <h3 className="font-bold text-foreground text-sm uppercase tracking-wider">
                 Event Overview &amp; Client Description
               </h3>
-              <p className="text-slate-300 leading-relaxed text-xs">
+              <p className="text-foreground-secondary leading-relaxed text-xs">
                 {job.description}
               </p>
             </div>
 
             {/* Inclusions / Scope Checklist */}
             <div className="space-y-2.5 pt-2 border-t border-[#26282E]">
-              <h3 className="font-bold text-white text-sm flex items-center gap-1.5">
+              <h3 className="font-bold text-foreground text-sm flex items-center gap-1.5">
                 <Sparkles className="w-4 h-4 text-[#DFB76C]" /> Specific Requirements &amp; Deliverables
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                 {job.requirements.map((req, i) => (
                   <div key={i} className="flex items-start gap-2 p-2.5 rounded-xl bg-[#16181F] border border-[#26282E]">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-slate-300 leading-snug">{req}</span>
+                    <CheckCircle2 className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
+                    <span className="text-foreground-secondary leading-snug">{req}</span>
                   </div>
                 ))}
               </div>
@@ -502,10 +502,10 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
           <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-6 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-base font-black text-white flex items-center gap-2">
+                <h3 className="text-base font-black text-foreground flex items-center gap-2">
                   <Briefcase className="w-4 h-4 text-[#DFB76C]" /> Vendor Proposals &amp; Bids Received ({job.bids.length})
                 </h3>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-foreground-muted">
                   Inspect vendor quotes, proposal messages, ratings, and award contracts on behalf of buyers.
                 </p>
               </div>
@@ -513,9 +513,9 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
 
             {job.bids.length === 0 ? (
               <div className="p-8 text-center bg-[#16181F] rounded-2xl border border-dashed border-[#26282E]">
-                <Briefcase className="w-8 h-8 text-slate-500 mx-auto mb-2" />
-                <p className="text-slate-300 font-bold">No vendor bids placed yet</p>
-                <p className="text-slate-400 text-xs mt-0.5">Job is currently distributed to verified marketplace vendors.</p>
+                <Briefcase className="w-8 h-8 text-foreground-muted mx-auto mb-2" />
+                <p className="text-foreground-secondary font-bold">No vendor bids placed yet</p>
+                <p className="text-foreground-muted text-xs mt-0.5">Job is currently distributed to verified marketplace vendors.</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -525,8 +525,8 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
                     className={cn(
                       "p-4 rounded-2xl border transition-all space-y-3",
                       bid.status === "ACCEPTED"
-                        ? "bg-emerald-950/20 border-emerald-500/40 shadow-xs"
-                        : "bg-[#16181F] border-[#26282E] hover:border-[#DFB76C]/40"
+                        ? "bg-success-soft text-success border-success/30 shadow-xs"
+                        : "bg-[#16181F] border-[#26282E] hover:border-border-brand/40"
                     )}
                   >
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -537,12 +537,12 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
                         </div>
                         <div>
                           <div className="flex items-center gap-2">
-                            <h4 className="font-bold text-white text-xs sm:text-sm">{bid.vendorName}</h4>
-                            <span className="px-2 py-0.2 rounded text-[10px] font-bold bg-[#DFB76C]/15 text-[#DFB76C] border border-[#DFB76C]/30">
+                            <h4 className="font-bold text-foreground text-xs sm:text-sm">{bid.vendorName}</h4>
+                            <span className="px-2 py-0.2 rounded text-[10px] font-bold bg-[#DFB76C]/15 text-[#DFB76C] border border-border-brand/40">
                               {bid.tier}
                             </span>
                           </div>
-                          <div className="flex items-center gap-2 text-[10px] text-slate-400 mt-0.5">
+                          <div className="flex items-center gap-2 text-[10px] text-foreground-muted mt-0.5">
                             <span className="flex items-center text-[#DFB76C] font-bold">
                               <Star className="w-3 h-3 fill-[#DFB76C] mr-0.5" />
                               {bid.rating} ({bid.reviewsCount})
@@ -556,13 +556,13 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
                       {/* Bid Quote & Action */}
                       <div className="flex items-center justify-between sm:justify-end gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-[#26282E]">
                         <div className="text-left sm:text-right">
-                          <span className="text-[10px] text-slate-400 uppercase font-bold block">Bid Quote</span>
+                          <span className="text-[10px] text-foreground-muted uppercase font-bold block">Bid Quote</span>
                           <span className="text-base sm:text-lg font-black text-[#DFB76C] font-mono">${bid.bidAmount}</span>
-                          <span className="text-[10px] text-slate-400 block">{bid.deliveryTime}</span>
+                          <span className="text-[10px] text-foreground-muted block">{bid.deliveryTime}</span>
                         </div>
 
                         {bid.status === "ACCEPTED" ? (
-                          <div className="px-3 py-1.5 bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 rounded-xl text-xs font-bold flex items-center gap-1">
+                          <div className="px-3 py-1.5 bg-success-solid text-white/20 border border-success/30 text-success rounded-xl text-xs font-bold flex items-center gap-1">
                             <Check className="w-3.5 h-3.5" /> Awarded
                           </div>
                         ) : (
@@ -577,7 +577,7 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
                     </div>
 
                     {/* Proposal Pitch */}
-                    <div className="p-3 bg-[#121418] rounded-xl border border-[#26282E] text-slate-300 text-xs leading-relaxed italic">
+                    <div className="p-3 bg-[#121418] rounded-xl border border-[#26282E] text-foreground-secondary text-xs leading-relaxed italic">
                       "{bid.pitch}"
                     </div>
                   </div>
@@ -593,10 +593,10 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
           {/* Client (Host) Card */}
           <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-5 shadow-xs space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">
                 Event Host (Buyer)
               </span>
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+              <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-success-solid text-white/15 text-success border border-success/30">
                 Verified Buyer
               </span>
             </div>
@@ -606,51 +606,51 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
                 {job.client.avatar}
               </div>
               <div>
-                <h4 className="font-bold text-white text-sm flex items-center gap-1">
+                <h4 className="font-bold text-foreground text-sm flex items-center gap-1">
                   {job.client.name}
-                  {job.client.isVerified && <ShieldCheck className="w-4 h-4 text-emerald-400" />}
+                  {job.client.isVerified && <ShieldCheck className="w-4 h-4 text-success" />}
                 </h4>
-                <p className="text-slate-400 text-[11px]">{job.client.location}</p>
-                <span className="text-[10px] text-slate-500">Member since {job.client.memberSince}</span>
+                <p className="text-foreground-muted text-[11px]">{job.client.location}</p>
+                <span className="text-[10px] text-foreground-muted">Member since {job.client.memberSince}</span>
               </div>
             </div>
 
-            <div className="space-y-1.5 pt-2 border-t border-[#26282E] text-slate-300 text-xs">
+            <div className="space-y-1.5 pt-2 border-t border-[#26282E] text-foreground-secondary text-xs">
               <div className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-slate-400" />
+                <Mail className="w-3.5 h-3.5 text-foreground-muted" />
                 <span className="font-mono text-[11px]">{job.client.email}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-slate-400" />
+                <Phone className="w-3.5 h-3.5 text-foreground-muted" />
                 <span className="font-mono text-[11px]">{job.client.phone}</span>
               </div>
             </div>
           </div>
 
           {/* Escrow Custody & Fee Estimation */}
-          <div className="bg-[#121418] border border-[#26282E] text-white rounded-3xl p-5 shadow-md space-y-4">
+          <div className="bg-[#121418] border border-[#26282E] text-foreground rounded-3xl p-5 shadow-md space-y-4">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-bold text-[#DFB76C] uppercase tracking-wider">
                 Marketplace Escrow
               </span>
-              <ShieldCheck className="w-4 h-4 text-emerald-400" />
+              <ShieldCheck className="w-4 h-4 text-success" />
             </div>
 
             <div className="space-y-1">
-              <span className="text-xs text-slate-400">Budget Range Held on Reserve:</span>
+              <span className="text-xs text-foreground-muted">Budget Range Held on Reserve:</span>
               <h3 className="text-xl font-black text-[#DFB76C] font-mono">
                 ${job.budgetMin} – ${job.budgetMax}
               </h3>
             </div>
 
             <div className="p-3 bg-[#16181F] rounded-xl border border-[#26282E] space-y-1.5 text-[11px]">
-              <div className="flex justify-between text-slate-300">
+              <div className="flex justify-between text-foreground-secondary">
                 <span>Vendor Platform Fee (10%):</span>
-                <span className="font-mono font-bold text-white">${job.budgetMax * 0.1}</span>
+                <span className="font-mono font-bold text-foreground">${job.budgetMax * 0.1}</span>
               </div>
-              <div className="flex justify-between text-slate-300">
+              <div className="flex justify-between text-foreground-secondary">
                 <span>Client Service Fee (5%):</span>
-                <span className="font-mono font-bold text-white">${job.budgetMax * 0.05}</span>
+                <span className="font-mono font-bold text-foreground">${job.budgetMax * 0.05}</span>
               </div>
             </div>
           </div>
@@ -658,10 +658,10 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
           {/* Admin Internal Audit Notes */}
           <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-5 shadow-xs space-y-3.5">
             <div className="flex items-center justify-between">
-              <h4 className="font-bold text-white text-sm flex items-center gap-1.5">
+              <h4 className="font-bold text-foreground text-sm flex items-center gap-1.5">
                 <MessageSquare className="w-4 h-4 text-[#DFB76C]" /> Internal Audit Log
               </h4>
-              <span className="text-slate-400 text-[10px] font-bold">{job.adminNotes.length} notes</span>
+              <span className="text-foreground-muted text-[10px] font-bold">{job.adminNotes.length} notes</span>
             </div>
 
             {/* Note list */}
@@ -669,10 +669,10 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
               {job.adminNotes.map((note) => (
                 <div key={note.id} className="p-3 bg-[#16181F] rounded-xl border border-[#26282E] space-y-1">
                   <div className="flex items-center justify-between text-[10px]">
-                    <span className="font-bold text-white">{note.author}</span>
-                    <span className="text-slate-400">{note.date}</span>
+                    <span className="font-bold text-foreground">{note.author}</span>
+                    <span className="text-foreground-muted">{note.date}</span>
                   </div>
-                  <p className="text-slate-300 text-[11px] leading-relaxed">{note.text}</p>
+                  <p className="text-foreground-secondary text-[11px] leading-relaxed">{note.text}</p>
                 </div>
               ))}
             </div>
@@ -684,11 +684,11 @@ export default function AdminJobDetailsPage({ params }: { params: Promise<{ id: 
                 placeholder="Log internal job moderation note..."
                 value={newNote}
                 onChange={(e) => setNewNote(e.target.value)}
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
+                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
               />
               <button
                 type="submit"
-                className="w-full py-2 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-slate-200 hover:text-white rounded-xl font-bold transition-colors flex items-center justify-center gap-1.5 text-xs"
+                className="w-full py-2 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-secondary hover:text-foreground rounded-xl font-bold transition-colors flex items-center justify-center gap-1.5 text-xs"
               >
                 <Send className="w-3.5 h-3.5" /> Append Note
               </button>

@@ -458,17 +458,17 @@ export default function OrderChat({ order, className }: OrderChatProps) {
   // ── RENDER: LOCKED / UNPAID STATE ───────────────────────────
   if (isPendingPayment) {
     return (
-      <div className={cn("p-8 rounded-2xl border border-amber-500/20 bg-[#0F1015] text-center space-y-4 shadow-xl", className)}>
-        <div className="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mx-auto">
+      <div className={cn("p-8 rounded-2xl border border-warning/30 bg-[#0F1015] text-center space-y-4 shadow-xl", className)}>
+        <div className="w-14 h-14 rounded-2xl bg-warning-solid text-on-brand/10 border border-warning/30 text-warning flex items-center justify-center mx-auto">
           <Lock className="w-6 h-6" />
         </div>
         <div className="max-w-md mx-auto space-y-1.5">
-          <h3 className="font-bold text-base text-white">Order Chat Locked</h3>
-          <p className="text-xs text-slate-400 leading-relaxed">
+          <h3 className="font-bold text-base text-foreground">Order Chat Locked</h3>
+          <p className="text-xs text-foreground-muted leading-relaxed">
             Direct communication unlocks as soon as order payment is completed and held in the secure Ophir Escrow Vault.
           </p>
         </div>
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-warning-solid text-on-brand/10 border border-warning/30 text-warning text-xs font-semibold">
           <AlertCircle className="w-3.5 h-3.5" />
           <span>Payment Required to Chat</span>
         </div>
@@ -479,12 +479,12 @@ export default function OrderChat({ order, className }: OrderChatProps) {
   // ── RENDER: CANCELLED STATE ─────────────────────────────────
   if (isCancelled) {
     return (
-      <div className={cn("p-8 rounded-2xl border border-rose-500/20 bg-[#0F1015] text-center space-y-3 shadow-xl", className)}>
-        <div className="w-12 h-12 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center mx-auto">
+      <div className={cn("p-8 rounded-2xl border border-danger/30 bg-[#0F1015] text-center space-y-3 shadow-xl", className)}>
+        <div className="w-12 h-12 rounded-xl bg-danger-solid text-white/10 text-danger flex items-center justify-center mx-auto">
           <Lock className="w-5 h-5" />
         </div>
-        <h3 className="font-bold text-sm text-white">Order Closed</h3>
-        <p className="text-xs text-slate-400 max-w-sm mx-auto">
+        <h3 className="font-bold text-sm text-foreground">Order Closed</h3>
+        <p className="text-xs text-foreground-muted max-w-sm mx-auto">
           This order contract has been cancelled. Order chat history is archived.
         </p>
       </div>
@@ -493,7 +493,7 @@ export default function OrderChat({ order, className }: OrderChatProps) {
 
   // ── RENDER: ACTIVE ORDER CHAT ───────────────────────────────
   return (
-    <div className={cn("flex flex-col h-[650px] bg-[#0c0d12] border border-white/10 rounded-2xl overflow-hidden shadow-2xl relative", className)}>
+    <div className={cn("flex flex-col h-[650px] bg-[#0c0d12] border border-border rounded-2xl overflow-hidden shadow-2xl relative", className)}>
       {/* ── Media Lightbox Modal ── */}
       {previewMedia && (
         <div
@@ -502,7 +502,7 @@ export default function OrderChat({ order, className }: OrderChatProps) {
         >
           <button
             onClick={() => setPreviewMedia(null)}
-            className="absolute top-5 right-5 p-2 rounded-xl bg-white/10 text-white hover:bg-white/20 transition-colors"
+            className="absolute top-5 right-5 p-2 rounded-xl bg-surface/10 text-foreground hover:bg-surface/20 transition-colors"
           >
             <X className="w-6 h-6" />
           </button>
@@ -528,10 +528,10 @@ export default function OrderChat({ order, className }: OrderChatProps) {
       )}
 
       {/* ── Chat Header ── */}
-      <div className="px-5 py-4 bg-[#12131a] border-b border-white/10 flex items-center justify-between gap-4">
+      <div className="px-5 py-4 bg-[#12131a] border-b border-border flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-amber-500/80 flex items-center justify-center text-white font-black text-sm shadow-md">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-amber-500/80 flex items-center justify-center text-foreground font-black text-sm shadow-md">
               {peerAvatar ? (
                 <img src={peerAvatar} alt={peerName} className="w-full h-full object-cover rounded-xl" />
               ) : (
@@ -541,22 +541,22 @@ export default function OrderChat({ order, className }: OrderChatProps) {
             <span
               className={cn(
                 "absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-[#12131a]",
-                isConnected ? "bg-emerald-500" : "bg-slate-500"
+                isConnected ? "bg-success-solid text-white" : "bg-slate-500"
               )}
             />
           </div>
 
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="font-bold text-sm text-white">{peerName}</h3>
-              <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-indigo-500/15 text-indigo-300 border border-indigo-500/30">
+              <h3 className="font-bold text-sm text-foreground">{peerName}</h3>
+              <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-info-solid text-white/15 text-indigo-300 border border-info/30">
                 {peerRole}
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 mt-0.5 flex items-center gap-1.5">
+            <p className="text-[11px] text-foreground-muted mt-0.5 flex items-center gap-1.5">
               <span>Order #{order?.orderNumber || order?.id?.slice(-6).toUpperCase()}</span>
               <span>•</span>
-              <span className="text-amber-400/90 font-medium">Room order:{orderId}</span>
+              <span className="text-warning/90 font-medium">Room order:{orderId}</span>
             </p>
           </div>
         </div>
@@ -567,8 +567,8 @@ export default function OrderChat({ order, className }: OrderChatProps) {
             className={cn(
               "flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold border",
               isConnected
-                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                : "bg-rose-500/10 text-rose-400 border-rose-500/20"
+                ? "bg-success-solid text-white/10 text-success border-success/30"
+                : "bg-danger-solid text-white/10 text-danger border-danger/30"
             )}
           >
             {isConnected ? (
@@ -588,7 +588,7 @@ export default function OrderChat({ order, className }: OrderChatProps) {
 
       {/* ── Error Banner ── */}
       {socketError && (
-        <div className="px-4 py-2 bg-rose-500/10 border-b border-rose-500/20 text-rose-300 text-xs flex items-center gap-2">
+        <div className="px-4 py-2 bg-danger-solid text-white/10 border-b border-danger/30 text-rose-300 text-xs flex items-center gap-2">
           <AlertCircle className="w-4 h-4 shrink-0" />
           <span>{socketError}</span>
         </div>
@@ -606,7 +606,7 @@ export default function OrderChat({ order, className }: OrderChatProps) {
               type="button"
               onClick={handleLoadEarlier}
               disabled={isLoadingMore}
-              className="px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white text-xs font-medium border border-white/10 transition-colors inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              className="px-4 py-1.5 rounded-full bg-surface/5 hover:bg-surface/10 text-foreground-muted hover:text-foreground text-xs font-medium border border-border transition-colors inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
             >
               {isLoadingMore ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
               <span>Load earlier messages</span>
@@ -615,17 +615,17 @@ export default function OrderChat({ order, className }: OrderChatProps) {
         )}
 
         {isQueryLoading && messages.length === 0 ? (
-          <div className="h-full flex flex-col items-center justify-center text-slate-500 gap-2">
-            <Loader2 className="w-6 h-6 animate-spin text-amber-500" />
+          <div className="h-full flex flex-col items-center justify-center text-foreground-muted gap-2">
+            <Loader2 className="w-6 h-6 animate-spin text-warning" />
             <p className="text-xs">Loading order messages...</p>
           </div>
         ) : messages.length === 0 ? (
-          <div className="h-full flex flex-col items-center justify-center text-slate-500 text-center space-y-2 py-16">
-            <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-400">
+          <div className="h-full flex flex-col items-center justify-center text-foreground-muted text-center space-y-2 py-16">
+            <div className="w-12 h-12 rounded-2xl bg-surface/5 border border-border flex items-center justify-center text-foreground-muted">
               <Send className="w-5 h-5 opacity-60" />
             </div>
-            <h4 className="font-bold text-sm text-slate-300">Order Chat Initialized</h4>
-            <p className="text-xs text-slate-500 max-w-xs">
+            <h4 className="font-bold text-sm text-foreground-secondary">Order Chat Initialized</h4>
+            <p className="text-xs text-foreground-muted max-w-xs">
               This private encrypted socket room is restricted to the client, vendor, and platform mediation. Send your first message or media attachment below.
             </p>
           </div>
@@ -641,7 +641,7 @@ export default function OrderChat({ order, className }: OrderChatProps) {
               >
                 {/* Sender info */}
                 {!isMe && (
-                  <span className="text-[10px] font-semibold text-slate-400 px-1">
+                  <span className="text-[10px] font-semibold text-foreground-muted px-1">
                     {msg.senderName} • {msg.senderRole || "Artisan"}
                   </span>
                 )}
@@ -651,8 +651,8 @@ export default function OrderChat({ order, className }: OrderChatProps) {
                   className={cn(
                     "p-3.5 rounded-2xl shadow-md text-xs leading-relaxed space-y-2 relative break-words",
                     isMe
-                      ? "bg-gradient-to-br from-indigo-600 to-indigo-700 text-white rounded-tr-xs"
-                      : "bg-[#181922] text-slate-200 border border-white/10 rounded-tl-xs"
+                      ? "bg-gradient-to-br from-indigo-600 to-indigo-700 text-foreground rounded-tr-xs"
+                      : "bg-[#181922] text-foreground-secondary border border-border rounded-tl-xs"
                   )}
                 >
                   {/* Content Text */}
@@ -669,14 +669,14 @@ export default function OrderChat({ order, className }: OrderChatProps) {
                             <div
                               key={attIdx}
                               onClick={() => setPreviewMedia({ url: attUrl, type: "IMAGE" })}
-                              className="relative group rounded-xl overflow-hidden border border-white/10 bg-black/40 cursor-pointer max-w-sm"
+                              className="relative group rounded-xl overflow-hidden border border-border bg-black/40 cursor-pointer max-w-sm"
                             >
                               <img
                                 src={attUrl}
                                 alt="Attachment"
                                 className="w-full max-h-56 object-cover hover:scale-105 transition-transform duration-200"
                               />
-                              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white">
+                              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-foreground">
                                 <Maximize2 className="w-5 h-5" />
                               </div>
                             </div>
@@ -686,7 +686,7 @@ export default function OrderChat({ order, className }: OrderChatProps) {
                         return (
                           <div
                             key={attIdx}
-                            className="rounded-xl overflow-hidden border border-white/10 bg-black/60 max-w-sm"
+                            className="rounded-xl overflow-hidden border border-border bg-black/60 max-w-sm"
                           >
                             <video
                               controls
@@ -706,14 +706,14 @@ export default function OrderChat({ order, className }: OrderChatProps) {
                   <div
                     className={cn(
                       "flex items-center gap-1.5 text-[9px] font-medium pt-0.5",
-                      isMe ? "text-indigo-200 justify-end" : "text-slate-400 justify-start"
+                      isMe ? "text-indigo-200 justify-end" : "text-foreground-muted justify-start"
                     )}
                   >
                     <span>{msg.time || new Date(msg.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</span>
                     {isMe && (
                       <span title={msg.isRead ? "Read by peer" : "Delivered"}>
                         {msg.isRead ? (
-                          <CheckCheck className="w-3.5 h-3.5 text-amber-300" />
+                          <CheckCheck className="w-3.5 h-3.5 text-warning" />
                         ) : (
                           <Check className="w-3.5 h-3.5 text-indigo-300" />
                         )}
@@ -731,7 +731,7 @@ export default function OrderChat({ order, className }: OrderChatProps) {
 
       {/* ── Realtime Typing Indicator ── */}
       {peerTypingName && (
-        <div className="px-5 py-1.5 bg-[#101118] border-t border-white/5 text-[11px] text-amber-400 flex items-center gap-2 animate-in fade-in">
+        <div className="px-5 py-1.5 bg-[#101118] border-t border-white/5 text-[11px] text-warning flex items-center gap-2 animate-in fade-in">
           <span className="flex items-center gap-1">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-bounce" style={{ animationDelay: "0ms" }} />
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-bounce" style={{ animationDelay: "150ms" }} />
@@ -743,22 +743,22 @@ export default function OrderChat({ order, className }: OrderChatProps) {
 
       {/* ── Pending Attachments Bar ── */}
       {pendingAttachments.length > 0 && (
-        <div className="px-5 py-2.5 bg-[#12131d] border-t border-white/10 flex items-center gap-2 overflow-x-auto">
+        <div className="px-5 py-2.5 bg-[#12131d] border-t border-border flex items-center gap-2 overflow-x-auto">
           {pendingAttachments.map((att, idx) => (
             <div
               key={idx}
-              className="relative flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-xs text-white"
+              className="relative flex items-center gap-2 px-3 py-1.5 rounded-xl bg-surface/10 border border-white/15 text-xs text-foreground"
             >
               {att.fileType === "IMAGE" ? (
-                <ImageIcon className="w-4 h-4 text-amber-400" />
+                <ImageIcon className="w-4 h-4 text-warning" />
               ) : (
-                <VideoIcon className="w-4 h-4 text-indigo-400" />
+                <VideoIcon className="w-4 h-4 text-info" />
               )}
               <span className="max-w-[140px] truncate text-[11px] font-medium">{att.originalName}</span>
               <button
                 type="button"
                 onClick={() => removeAttachment(idx)}
-                className="p-1 rounded-full hover:bg-white/20 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                className="p-1 rounded-full hover:bg-surface/20 text-foreground-muted hover:text-foreground transition-colors cursor-pointer"
               >
                 <X className="w-3 h-3" />
               </button>
@@ -768,7 +768,7 @@ export default function OrderChat({ order, className }: OrderChatProps) {
       )}
 
       {/* ── Chat Input Footer ── */}
-      <form onSubmit={handleSendMessage} className="p-3 bg-[#12131a] border-t border-white/10 flex items-center gap-2">
+      <form onSubmit={handleSendMessage} className="p-3 bg-[#12131a] border-t border-border flex items-center gap-2">
         {/* Hidden File Input for Image & Video */}
         <input
           ref={fileInputRef}
@@ -784,10 +784,10 @@ export default function OrderChat({ order, className }: OrderChatProps) {
           onClick={() => fileInputRef.current?.click()}
           disabled={isUploading}
           title="Attach Image or Video (Max 50MB)"
-          className="w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-slate-300 hover:text-white transition-colors cursor-pointer disabled:opacity-50 shrink-0"
+          className="w-10 h-10 rounded-xl bg-surface/5 hover:bg-surface/10 border border-border flex items-center justify-center text-foreground-secondary hover:text-foreground transition-colors cursor-pointer disabled:opacity-50 shrink-0"
         >
           {isUploading ? (
-            <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
+            <Loader2 className="w-4 h-4 animate-spin text-warning" />
           ) : (
             <Paperclip className="w-4 h-4" />
           )}
@@ -799,7 +799,7 @@ export default function OrderChat({ order, className }: OrderChatProps) {
           value={inputValue}
           onChange={handleInputChange}
           placeholder={`Message ${peerName}...`}
-          className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500/50 focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium"
+          className="flex-1 bg-surface/5 border border-border rounded-xl px-4 py-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-info/30 focus:ring-1 focus:ring-indigo-500/50 transition-all font-medium"
         />
 
         {/* Send Button */}

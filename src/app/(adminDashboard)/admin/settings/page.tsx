@@ -83,12 +83,12 @@ export default function AdminSettingsPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">System &amp; Platform Governance</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#DFB76C]/15 text-[#DFB76C] border border-[#DFB76C]/30">
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">System &amp; Platform Governance</h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#DFB76C]/15 text-[#DFB76C] border border-border-brand/40">
               v2.4.0 Engine
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-foreground-muted mt-1">
             Global fee formulas, escrow custody timeout windows, automated risk parameters, and API integration hooks.
           </p>
         </div>
@@ -102,8 +102,8 @@ export default function AdminSettingsPage() {
       </div>
 
       {savedSuccess && (
-        <div className="p-4 bg-emerald-500/15 border border-emerald-500/30 rounded-2xl text-emerald-400 text-xs font-bold flex items-center gap-2 animate-in fade-in">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Platform configuration successfully synced to cloud edge.
+        <div className="p-4 bg-success-solid text-white/15 border border-success/30 rounded-2xl text-success text-xs font-bold flex items-center gap-2 animate-in fade-in">
+          <CheckCircle2 className="w-4 h-4 text-success" /> Platform configuration successfully synced to cloud edge.
         </div>
       )}
 
@@ -112,18 +112,18 @@ export default function AdminSettingsPage() {
         {/* Escrow & Financial Take Rates */}
         <div className="bg-[#121418] border border-[#26282E] rounded-3xl p-5 space-y-4 shadow-xs">
           <div className="flex items-center gap-2.5 border-b border-[#26282E] pb-3">
-            <div className="p-2 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+            <div className="p-2 rounded-xl bg-success-solid text-white/15 text-success border border-success/30">
               <DollarSign className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-black text-white">Escrow &amp; Monetization Rules</h2>
-              <p className="text-[11px] text-slate-400">Transaction take rates and payout disbursement limits</p>
+              <h2 className="text-sm font-black text-foreground">Escrow &amp; Monetization Rules</h2>
+              <p className="text-[11px] text-foreground-muted">Transaction take rates and payout disbursement limits</p>
             </div>
           </div>
 
           <div className="space-y-3.5 text-xs">
             <div>
-              <label className="block text-slate-400 font-bold mb-1">
+              <label className="block text-foreground-muted font-bold mb-1">
                 Client Service Fee (%) <span className="text-[10px] text-[#DFB76C]">(Currently 5%)</span>
               </label>
               <input
@@ -131,42 +131,42 @@ export default function AdminSettingsPage() {
                 step="0.1"
                 value={buyerFee}
                 onChange={(e) => setBuyerFee(Number(e.target.value))}
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-white font-mono font-bold focus:outline-none focus:border-[#DFB76C]"
+                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none focus:border-[#DFB76C]"
               />
-              <p className="text-[10px] text-slate-500 mt-1">Charged directly to buyers at escrow checkout.</p>
+              <p className="text-[10px] text-foreground-muted mt-1">Charged directly to buyers at escrow checkout.</p>
             </div>
 
             <div>
-              <label className="block text-slate-400 font-bold mb-1">
-                Vendor Commission Cut (%) <span className="text-[10px] text-emerald-400 font-bold">(0% — Free for Sellers)</span>
+              <label className="block text-foreground-muted font-bold mb-1">
+                Vendor Commission Cut (%) <span className="text-[10px] text-success font-bold">(0% — Free for Sellers)</span>
               </label>
               <input
                 type="number"
                 step="0.1"
                 value={vendorFee}
                 onChange={(e) => setVendorFee(Number(e.target.value))}
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-white font-mono font-bold focus:outline-none focus:border-[#DFB76C]"
+                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none focus:border-[#DFB76C]"
               />
-              <p className="text-[10px] text-slate-500 mt-1">Vendors retain 100% of quote amount.</p>
+              <p className="text-[10px] text-foreground-muted mt-1">Vendors retain 100% of quote amount.</p>
             </div>
 
             <div className="grid grid-cols-2 gap-3 pt-2">
               <div>
-                <label className="block text-slate-400 font-bold mb-1">Escrow Hold Days</label>
+                <label className="block text-foreground-muted font-bold mb-1">Escrow Hold Days</label>
                 <input
                   type="number"
                   value={payoutHoldDays}
                   onChange={(e) => setPayoutHoldDays(Number(e.target.value))}
-                  className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-white font-mono font-bold focus:outline-none focus:border-[#DFB76C]"
+                  className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none focus:border-[#DFB76C]"
                 />
               </div>
               <div>
-                <label className="block text-slate-400 font-bold mb-1">Arbitration Timeout (Hrs)</label>
+                <label className="block text-foreground-muted font-bold mb-1">Arbitration Timeout (Hrs)</label>
                 <input
                   type="number"
                   value={disputeTimeoutHours}
                   onChange={(e) => setDisputeTimeoutHours(Number(e.target.value))}
-                  className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-white font-mono font-bold focus:outline-none focus:border-[#DFB76C]"
+                  className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none focus:border-[#DFB76C]"
                 />
               </div>
             </div>
@@ -180,16 +180,16 @@ export default function AdminSettingsPage() {
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-black text-white">Trust &amp; Compliance Engine</h2>
-              <p className="text-[11px] text-slate-400">KYC checks, insurance mandates, and automated vetting</p>
+              <h2 className="text-sm font-black text-foreground">Trust &amp; Compliance Engine</h2>
+              <p className="text-[11px] text-foreground-muted">KYC checks, insurance mandates, and automated vetting</p>
             </div>
           </div>
 
           <div className="space-y-3 text-xs">
-            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-[#DFB76C]/40 transition-colors">
+            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-border-brand/40 transition-colors">
               <div>
-                <p className="font-bold text-white">Government ID Verification (Persona)</p>
-                <p className="text-[11px] text-slate-400">Require automated passport/DL scan before first payout</p>
+                <p className="font-bold text-foreground">Government ID Verification (Persona)</p>
+                <p className="text-[11px] text-foreground-muted">Require automated passport/DL scan before first payout</p>
               </div>
               <input
                 type="checkbox"
@@ -199,10 +199,10 @@ export default function AdminSettingsPage() {
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-[#DFB76C]/40 transition-colors">
+            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-border-brand/40 transition-colors">
               <div>
-                <p className="font-bold text-white">COI Liability Insurance Requirement</p>
-                <p className="text-[11px] text-slate-400">Mandatory for Venue &amp; Catering vendor tiers</p>
+                <p className="font-bold text-foreground">COI Liability Insurance Requirement</p>
+                <p className="text-[11px] text-foreground-muted">Mandatory for Venue &amp; Catering vendor tiers</p>
               </div>
               <input
                 type="checkbox"
@@ -212,10 +212,10 @@ export default function AdminSettingsPage() {
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-[#DFB76C]/40 transition-colors">
+            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-border-brand/40 transition-colors">
               <div>
-                <p className="font-bold text-white">Auto-Publish Gigs for Top Rated</p>
-                <p className="text-[11px] text-slate-400">Bypass manual gig moderation for verified 4.8+ sellers</p>
+                <p className="font-bold text-foreground">Auto-Publish Gigs for Top Rated</p>
+                <p className="text-[11px] text-foreground-muted">Bypass manual gig moderation for verified 4.8+ sellers</p>
               </div>
               <input
                 type="checkbox"
@@ -230,39 +230,39 @@ export default function AdminSettingsPage() {
         {/* Security & API Integrations */}
         <div className="bg-[#121418] border border-[#26282E] rounded-3xl p-5 space-y-4 shadow-xs">
           <div className="flex items-center gap-2.5 border-b border-[#26282E] pb-3">
-            <div className="p-2 rounded-xl bg-indigo-500/15 text-indigo-400 border border-indigo-500/30">
+            <div className="p-2 rounded-xl bg-info-solid text-white/15 text-info border border-info/30">
               <Key className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-black text-white">Payment &amp; API Integrations</h2>
-              <p className="text-[11px] text-slate-400">Stripe Connect &amp; Twilio Webhook Gateways</p>
+              <h2 className="text-sm font-black text-foreground">Payment &amp; API Integrations</h2>
+              <p className="text-[11px] text-foreground-muted">Stripe Connect &amp; Twilio Webhook Gateways</p>
             </div>
           </div>
 
           <div className="space-y-3 text-xs">
             <div>
-              <label className="block text-slate-400 font-bold mb-1">Stripe Connect Account ID</label>
+              <label className="block text-foreground-muted font-bold mb-1">Stripe Connect Account ID</label>
               <input
                 type="password"
                 defaultValue="acct_1NZxxxx9988219"
                 readOnly
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-slate-400 font-mono text-xs focus:outline-none"
+                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-foreground-muted font-mono text-xs focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-slate-400 font-bold mb-1">Live Webhook Signing Secret</label>
+              <label className="block text-foreground-muted font-bold mb-1">Live Webhook Signing Secret</label>
               <input
                 type="password"
                 defaultValue="whsec_0982348a098fa890sd"
                 readOnly
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-slate-400 font-mono text-xs focus:outline-none"
+                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-foreground-muted font-mono text-xs focus:outline-none"
               />
             </div>
 
             <div className="p-3 bg-[#16181F] rounded-2xl border border-[#26282E] flex items-center justify-between">
-              <span className="text-slate-300 font-semibold">Stripe Webhook Sync</span>
-              <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 text-[10px] font-bold border border-emerald-500/30">
+              <span className="text-foreground-secondary font-semibold">Stripe Webhook Sync</span>
+              <span className="px-2.5 py-0.5 rounded-full bg-success-solid text-white/15 text-success text-[10px] font-bold border border-success/30">
                 Operational (200 OK)
               </span>
             </div>
@@ -272,20 +272,20 @@ export default function AdminSettingsPage() {
         {/* Administrative Notifications & Escalation */}
         <div className="bg-[#121418] border border-[#26282E] rounded-3xl p-5 space-y-4 shadow-xs">
           <div className="flex items-center gap-2.5 border-b border-[#26282E] pb-3">
-            <div className="p-2 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/30">
+            <div className="p-2 rounded-xl bg-warning-solid text-on-brand/15 text-warning border border-warning/30">
               <Bell className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-black text-white">Alerts &amp; Escalation Desks</h2>
-              <p className="text-[11px] text-slate-400">Configure emergency notifications for platform supervisors</p>
+              <h2 className="text-sm font-black text-foreground">Alerts &amp; Escalation Desks</h2>
+              <p className="text-[11px] text-foreground-muted">Configure emergency notifications for platform supervisors</p>
             </div>
           </div>
 
           <div className="space-y-3 text-xs">
-            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-[#DFB76C]/40 transition-colors">
+            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-border-brand/40 transition-colors">
               <div>
-                <p className="font-bold text-white">Dispute Escalation Push Notifications</p>
-                <p className="text-[11px] text-slate-400">Notify legal admin team if dispute remains unresolved &gt;48h</p>
+                <p className="font-bold text-foreground">Dispute Escalation Push Notifications</p>
+                <p className="text-[11px] text-foreground-muted">Notify legal admin team if dispute remains unresolved &gt;48h</p>
               </div>
               <input
                 type="checkbox"
@@ -295,10 +295,10 @@ export default function AdminSettingsPage() {
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-[#DFB76C]/40 transition-colors">
+            <label className="flex items-center justify-between p-3 rounded-2xl bg-[#16181F] border border-[#26282E] cursor-pointer hover:border-border-brand/40 transition-colors">
               <div>
-                <p className="font-bold text-white">Slack Ops Webhook (#ophir-alerts)</p>
-                <p className="text-[11px] text-slate-400">Real-time alerts for refunds &gt;$1,000</p>
+                <p className="font-bold text-foreground">Slack Ops Webhook (#ophir-alerts)</p>
+                <p className="text-[11px] text-foreground-muted">Real-time alerts for refunds &gt;$1,000</p>
               </div>
               <input
                 type="checkbox"
