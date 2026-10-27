@@ -209,7 +209,7 @@ export default function PostJobWizardPage() {
               Draft saved 2m ago
             </span>
           </div>
-          <h1 className="text-xl font-bold text-[#0F0C3B] mt-0.5">Post a Job &amp; Receive Vetted Proposals</h1>
+          <h1 className="text-xl font-bold text-foreground mt-0.5">Post a Job &amp; Receive Vetted Proposals</h1>
         </div>
 
         <div className="flex items-center gap-3">
@@ -236,10 +236,10 @@ export default function PostJobWizardPage() {
               className={cn(
                 "w-7 h-7 rounded-full flex items-center justify-center font-bold text-xs transition-all",
                 step === s.num
-                  ? "bg-[#0F0C3B] text-foreground shadow-xs"
+                  ? "bg-brand text-foreground shadow-xs"
                   : step > s.num
-                  ? "bg-success-solid text-white text-foreground"
-                  : "bg-slate-200 text-foreground-secondary"
+                  ? "bg-success-solid text-foreground text-foreground"
+                  : "bg-surface-sunken text-foreground-secondary"
               )}
             >
               {step > s.num ? <Check className="w-3.5 h-3.5" /> : s.num}
@@ -247,12 +247,12 @@ export default function PostJobWizardPage() {
             <span
               className={cn(
                 "text-xs font-semibold whitespace-nowrap",
-                step === s.num ? "text-[#0F0C3B] font-bold" : "text-foreground-muted"
+                step === s.num ? "text-foreground font-bold" : "text-foreground-muted"
               )}
             >
               {s.label}
             </span>
-            {s.num < 5 && <div className="h-[2px] bg-slate-200 flex-1 ml-1" />}
+            {s.num < 5 && <div className="h-[2px] bg-surface-sunken flex-1 ml-1" />}
           </div>
         ))}
       </div>
@@ -268,7 +268,7 @@ export default function PostJobWizardPage() {
                 <span className="text-[10px] font-bold uppercase text-brand-primary tracking-wider">
                   Step 1 of 5 • Service &amp; Occasion
                 </span>
-                <h2 className="text-xl font-bold text-[#0F0C3B] mt-1">What do you need help with?</h2>
+                <h2 className="text-xl font-bold text-foreground mt-1">What do you need help with?</h2>
                 <p className="text-foreground-muted mt-0.5">
                   Select your celebration type and the specific vendor services you are seeking vetted proposals for.
                 </p>
@@ -276,7 +276,7 @@ export default function PostJobWizardPage() {
 
               {/* Occasion Grid */}
               <div>
-                <label className="block font-bold text-[#0F0C3B] mb-2">Occasion type *</label>
+                <label className="block font-bold text-foreground mb-2">Occasion type *</label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                   {occasions.map((occ) => (
                     <button
@@ -286,7 +286,7 @@ export default function PostJobWizardPage() {
                       className={cn(
                         "p-3 rounded-xl border text-left flex flex-col items-center justify-center gap-1 transition-all",
                         occasion === occ.id
-                          ? "bg-[#EDE9FE] border-brand-primary text-[#0F0C3B] font-bold shadow-xs"
+                          ? "bg-brand-soft border-brand-primary text-foreground font-bold shadow-xs"
                           : "bg-surface-elevated border-border text-foreground-secondary hover:bg-surface-sunken"
                       )}
                     >
@@ -300,7 +300,7 @@ export default function PostJobWizardPage() {
               {/* Categories / Services Required */}
               <div>
                 <div className="flex items-center justify-between mb-2">
-                  <label className="font-bold text-[#0F0C3B]">Select Service Category *</label>
+                  <label className="font-bold text-foreground">Select Service Category *</label>
                   <span className="text-foreground-muted font-semibold">{selectedServices.length} chosen</span>
                 </div>
                 {isLoadingCats ? (
@@ -308,7 +308,7 @@ export default function PostJobWizardPage() {
                     <Loader2 className="w-3.5 h-3.5 animate-spin text-brand-primary" /> Loading categories...
                   </div>
                 ) : categories.length === 0 ? (
-                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-800 text-xs">
+                  <div className="p-3 bg-warning-soft border border-warning/30 rounded-xl text-warning text-xs">
                     No categories registered yet. Please inform the administrator to configure categories.
                   </div>
                 ) : (
@@ -333,8 +333,8 @@ export default function PostJobWizardPage() {
                           className={cn(
                             "px-3 py-1.5 rounded-full text-xs font-semibold transition-all flex items-center gap-1.5 cursor-pointer",
                             isSelected
-                              ? "bg-[#0F0C3B] text-foreground shadow-xs"
-                              : "bg-surface-sunken text-foreground-secondary hover:bg-slate-200"
+                              ? "bg-brand text-foreground shadow-xs"
+                              : "bg-surface-sunken text-foreground-secondary hover:bg-surface-sunken"
                           )}
                         >
                           {isSelected && <Check className="w-3 h-3 text-success" />}
@@ -349,13 +349,13 @@ export default function PostJobWizardPage() {
 
               {/* Job Title */}
               <div>
-                <label className="block font-bold text-[#0F0C3B] mb-1">Give your job a title *</label>
+                <label className="block font-bold text-foreground mb-1">Give your job a title *</label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder="e.g. High-Energy DJ & Emcee for Emma's 5th Birthday"
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl px-3.5 py-2.5 text-xs text-[#0F0C3B] font-medium focus:outline-none focus:border-brand-primary focus:bg-surface"
+                  className="w-full bg-surface-elevated border border-border rounded-xl px-3.5 py-2.5 text-xs text-foreground font-medium focus:outline-none focus:border-brand-primary focus:bg-surface"
                 />
                 <p className="text-[11px] text-foreground-muted mt-1">
                   💡 A clear, descriptive title attracts 40% faster bids from vetted vendors.
@@ -363,15 +363,15 @@ export default function PostJobWizardPage() {
               </div>
 
               {/* Post to Family Board Toggle */}
-              <div className="p-4 rounded-xl bg-amber-50/60 border border-amber-200 flex items-center justify-between gap-3">
+              <div className="p-4 rounded-xl bg-warning-soft/60 border border-warning/30 flex items-center justify-between gap-3">
                 <div className="flex items-start gap-2.5">
-                  <div className="p-2 rounded-lg bg-amber-100 text-amber-800 mt-0.5">
+                  <div className="p-2 rounded-lg bg-warning-soft text-warning mt-0.5">
                     <Users2 className="w-4 h-4" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <h4 className="font-bold text-[#0F0C3B]">Post to Family Board first</h4>
-                      <span className="text-[9px] font-extrabold uppercase bg-amber-200 text-amber-900 px-1.5 py-0.2 rounded">
+                      <h4 className="font-bold text-foreground">Post to Family Board first</h4>
+                      <span className="text-[9px] font-extrabold uppercase bg-warning-soft text-warning px-1.5 py-0.2 rounded">
                         Collaborative Escrow Feature
                       </span>
                     </div>
@@ -388,7 +388,7 @@ export default function PostJobWizardPage() {
                     onChange={(e) => setPostToFamily(e.target.checked)}
                     className="sr-only peer"
                   />
-                  <div className="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface after:border-border after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#0F0C3B]"></div>
+                  <div className="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-border-strong after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface after:border-border after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand"></div>
                 </label>
               </div>
             </div>
@@ -401,7 +401,7 @@ export default function PostJobWizardPage() {
                 <span className="text-[10px] font-bold uppercase text-brand-primary tracking-wider">
                   Step 2 of 5 • Event Details &amp; Logistics
                 </span>
-                <h2 className="text-xl font-bold text-[#0F0C3B] mt-1">When and where is your celebration?</h2>
+                <h2 className="text-xl font-bold text-foreground mt-1">When and where is your celebration?</h2>
                 <p className="text-foreground-muted mt-0.5">
                   Vendors use date, venue type, and guest count to calculate precise travel and equipment needs.
                 </p>
@@ -409,45 +409,45 @@ export default function PostJobWizardPage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-bold text-[#0F0C3B] mb-1">Event Date *</label>
+                  <label className="block font-bold text-foreground mb-1">Event Date *</label>
                   <input
                     type="date"
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
-                    className="w-full bg-[#F8F9FD] border border-border rounded-xl px-3.5 py-2.5 text-xs text-[#0F0C3B] focus:outline-none focus:border-brand-primary"
+                    className="w-full bg-surface-elevated border border-border rounded-xl px-3.5 py-2.5 text-xs text-foreground focus:outline-none focus:border-brand-primary"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-[#0F0C3B] mb-1">Location / Venue *</label>
+                  <label className="block font-bold text-foreground mb-1">Location / Venue *</label>
                   <input
                     type="text"
                     value={location}
                     onChange={(e) => setLocation(e.target.value)}
                     placeholder="e.g. Lincoln Park, Chicago, IL"
-                    className="w-full bg-[#F8F9FD] border border-border rounded-xl px-3.5 py-2.5 text-xs text-[#0F0C3B] focus:outline-none focus:border-brand-primary"
+                    className="w-full bg-surface-elevated border border-border rounded-xl px-3.5 py-2.5 text-xs text-foreground focus:outline-none focus:border-brand-primary"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-[#0F0C3B] mb-1">Estimated Guest Count *</label>
+                  <label className="block font-bold text-foreground mb-1">Estimated Guest Count *</label>
                   <input
                     type="number"
                     value={guestCount}
                     onChange={(e) => setGuestCount(e.target.value)}
                     placeholder="e.g. 40"
-                    className="w-full bg-[#F8F9FD] border border-border rounded-xl px-3.5 py-2.5 text-xs text-[#0F0C3B] focus:outline-none focus:border-brand-primary"
+                    className="w-full bg-surface-elevated border border-border rounded-xl px-3.5 py-2.5 text-xs text-foreground focus:outline-none focus:border-brand-primary"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-[#0F0C3B] mb-1">Service Duration &amp; Hours *</label>
+                  <label className="block font-bold text-foreground mb-1">Service Duration &amp; Hours *</label>
                   <input
                     type="text"
                     value={duration}
                     onChange={(e) => setDuration(e.target.value)}
                     placeholder="e.g. 4 Hours (2:00 PM – 6:00 PM)"
-                    className="w-full bg-[#F8F9FD] border border-border rounded-xl px-3.5 py-2.5 text-xs text-[#0F0C3B] focus:outline-none focus:border-brand-primary"
+                    className="w-full bg-surface-elevated border border-border rounded-xl px-3.5 py-2.5 text-xs text-foreground focus:outline-none focus:border-brand-primary"
                   />
                 </div>
               </div>
@@ -461,28 +461,28 @@ export default function PostJobWizardPage() {
                 <span className="text-[10px] font-bold uppercase text-brand-primary tracking-wider">
                   Step 3 of 5 • Requirements &amp; Inspiration
                 </span>
-                <h2 className="text-xl font-bold text-[#0F0C3B] mt-1">Describe your vision &amp; specific needs</h2>
+                <h2 className="text-xl font-bold text-foreground mt-1">Describe your vision &amp; specific needs</h2>
               </div>
 
               <div>
-                <label className="block font-bold text-[#0F0C3B] mb-1">Detailed Description &amp; Scope *</label>
+                <label className="block font-bold text-foreground mb-1">Detailed Description &amp; Scope *</label>
                 <textarea
                   rows={4}
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Explain the atmosphere, songs, timeline, or special instructions..."
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-3 text-xs text-[#0F0C3B] focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-3 text-xs text-foreground focus:outline-none focus:border-brand-primary"
                 />
               </div>
 
               <div>
-                <label className="block font-bold text-[#0F0C3B] mb-1">Special Equipment or Safety Requests</label>
+                <label className="block font-bold text-foreground mb-1">Special Equipment or Safety Requests</label>
                 <input
                   type="text"
                   value={specialRequests}
                   onChange={(e) => setSpecialRequests(e.target.value)}
                   placeholder="e.g. Wireless battery-powered sound, strobe-free lighting"
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl px-3.5 py-2.5 text-xs text-[#0F0C3B] focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl px-3.5 py-2.5 text-xs text-foreground focus:outline-none focus:border-brand-primary"
                 />
               </div>
             </div>
@@ -495,7 +495,7 @@ export default function PostJobWizardPage() {
                 <span className="text-[10px] font-bold uppercase text-brand-primary tracking-wider">
                   Step 4 of 5 • Budget &amp; Escrow Milestones
                 </span>
-                <h2 className="text-xl font-bold text-[#0F0C3B] mt-1">Set your target budget range</h2>
+                <h2 className="text-xl font-bold text-foreground mt-1">Set your target budget range</h2>
                 <p className="text-foreground-muted mt-0.5">
                   Bids are held in escrow. You only release milestone disbursements after satisfactory delivery.
                 </p>
@@ -503,31 +503,31 @@ export default function PostJobWizardPage() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block font-bold text-[#0F0C3B] mb-1">Minimum Target Budget ($)</label>
+                  <label className="block font-bold text-foreground mb-1">Minimum Target Budget ($)</label>
                   <input
                     type="number"
                     value={budgetMin}
                     onChange={(e) => setBudgetMin(e.target.value)}
-                    className="w-full bg-[#F8F9FD] border border-border rounded-xl px-3.5 py-2.5 text-xs text-[#0F0C3B] font-bold focus:outline-none focus:border-brand-primary"
+                    className="w-full bg-surface-elevated border border-border rounded-xl px-3.5 py-2.5 text-xs text-foreground font-bold focus:outline-none focus:border-brand-primary"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-bold text-[#0F0C3B] mb-1">Maximum Target Budget ($)</label>
+                  <label className="block font-bold text-foreground mb-1">Maximum Target Budget ($)</label>
                   <input
                     type="number"
                     value={budgetMax}
                     onChange={(e) => setBudgetMax(e.target.value)}
-                    className="w-full bg-[#F8F9FD] border border-border rounded-xl px-3.5 py-2.5 text-xs text-[#0F0C3B] font-bold focus:outline-none focus:border-brand-primary"
+                    className="w-full bg-surface-elevated border border-border rounded-xl px-3.5 py-2.5 text-xs text-foreground font-bold focus:outline-none focus:border-brand-primary"
                   />
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-900 flex items-center gap-3">
-                <ShieldCheck className="w-5 h-5 text-emerald-700 flex-shrink-0" />
+              <div className="p-4 rounded-xl bg-success-soft border border-success/30 text-xs text-success flex items-center gap-3">
+                <ShieldCheck className="w-5 h-5 text-success flex-shrink-0" />
                 <div>
                   <p className="font-bold">100% Escrow Milestone Protection Guaranteed</p>
-                  <p className="text-[11px] text-emerald-700 mt-0.5">
+                  <p className="text-[11px] text-success mt-0.5">
                     Zero funds leave your custody prematurely. Standard payout splits 50% deposit and 50% upon event signoff.
                   </p>
                 </div>
@@ -542,7 +542,7 @@ export default function PostJobWizardPage() {
                 <span className="text-[10px] font-bold uppercase text-brand-primary tracking-wider">
                   Step 5 of 5 • Review &amp; Publish
                 </span>
-                <h2 className="text-xl font-bold text-[#0F0C3B] mt-1">Ready to publish your request?</h2>
+                <h2 className="text-xl font-bold text-foreground mt-1">Ready to publish your request?</h2>
                 <p className="text-foreground-muted mt-0.5">
                   Your job will be immediately broadcast to vetted Chicago vendors matching your criteria.
                 </p>
@@ -551,7 +551,7 @@ export default function PostJobWizardPage() {
               <div className="p-4 rounded-xl bg-surface-elevated border border-border space-y-3">
                 <div className="flex justify-between">
                   <span className="text-foreground-muted font-medium">Title:</span>
-                  <span className="font-bold text-[#0F0C3B] text-right">{title}</span>
+                  <span className="font-bold text-foreground text-right">{title}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-foreground-muted font-medium">Services:</span>
@@ -563,7 +563,7 @@ export default function PostJobWizardPage() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-foreground-muted font-medium">Budget:</span>
-                  <span className="font-extrabold text-[#0F0C3B]">${budgetMin} - ${budgetMax}</span>
+                  <span className="font-extrabold text-foreground">${budgetMin} - ${budgetMax}</span>
                 </div>
               </div>
             </div>
@@ -584,7 +584,7 @@ export default function PostJobWizardPage() {
               type="button"
               onClick={handleNext}
               disabled={isCreatingJob}
-              className="px-6 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold transition-all shadow-md flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
+              className="px-6 py-2.5 rounded-xl bg-brand hover:bg-surface-sunken text-foreground text-xs font-bold transition-all shadow-md flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
             >
               {isCreatingJob ? (
                 <>
@@ -604,10 +604,10 @@ export default function PostJobWizardPage() {
         {/* Right Column: Live Job Preview Card (5 cols) */}
         <div className="lg:col-span-5 space-y-4">
           <div className="flex items-center justify-between text-xs font-bold text-foreground-muted">
-            <span className="flex items-center gap-1 text-[#0F0C3B]">
+            <span className="flex items-center gap-1 text-foreground">
               <Sparkles className="w-3.5 h-3.5 text-brand-primary" /> LIVE JOB PREVIEW
             </span>
-            <span className="text-[10px] text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full font-bold">
+            <span className="text-[10px] text-warning bg-warning-soft px-2 py-0.5 rounded-full font-bold">
               ● Updates as you type
             </span>
           </div>
@@ -615,18 +615,18 @@ export default function PostJobWizardPage() {
           {/* Preview Card */}
           <div className="bg-surface rounded-2xl border border-border shadow-md overflow-hidden text-xs">
             {/* Header banner */}
-            <div className="bg-[#18124E] p-4 text-foreground flex items-center justify-between">
+            <div className="bg-surface-sunken p-4 text-foreground flex items-center justify-between">
               <span className="px-2.5 py-0.5 rounded-full bg-surface/10 text-[10px] font-bold uppercase tracking-wider">
                 {selectedOccasionObj?.icon || "🎉"} {selectedOccasionObj?.label || "Celebration"} RFP
               </span>
-              <span className="text-[10px] font-extrabold bg-warning-solid text-on-brand text-[#0F0C3B] px-2 py-0.5 rounded">
+              <span className="text-[10px] font-extrabold bg-warning-solid text-on-brand text-foreground px-2 py-0.5 rounded">
                 NEW RFP
               </span>
             </div>
 
             <div className="p-5 space-y-4">
               <div>
-                <h3 className="text-base font-bold text-[#0F0C3B] leading-tight">
+                <h3 className="text-base font-bold text-foreground leading-tight">
                   {title || "Untitled Job Request"}
                 </h3>
                 <p className="text-[11px] text-foreground-muted mt-1">
@@ -637,7 +637,7 @@ export default function PostJobWizardPage() {
               {/* Service tags */}
               <div className="flex flex-wrap gap-1.5">
                 {selectedServices.map((s) => (
-                  <span key={s} className="px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 text-[10px] font-semibold border border-indigo-100">
+                  <span key={s} className="px-2 py-0.5 rounded bg-info-soft text-info text-[10px] font-semibold border border-info/30">
                     {s}
                   </span>
                 ))}
@@ -649,37 +649,37 @@ export default function PostJobWizardPage() {
                   <span className="flex items-center gap-1.5 text-foreground-muted">
                     <Calendar className="w-3.5 h-3.5" /> Date:
                   </span>
-                  <span className="font-semibold text-[#0F0C3B]">{eventDate || "Pending (Step 2)"}</span>
+                  <span className="font-semibold text-foreground">{eventDate || "Pending (Step 2)"}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="flex items-center gap-1.5 text-foreground-muted">
                     <MapPin className="w-3.5 h-3.5" /> Location:
                   </span>
-                  <span className="font-semibold text-[#0F0C3B]">{location || "Pending (Step 2)"}</span>
+                  <span className="font-semibold text-foreground">{location || "Pending (Step 2)"}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="flex items-center gap-1.5 text-foreground-muted">
                     <DollarSign className="w-3.5 h-3.5" /> Target Budget:
                   </span>
-                  <span className="font-extrabold text-[#0F0C3B]">${budgetMin} - ${budgetMax}</span>
+                  <span className="font-extrabold text-foreground">${budgetMin} - ${budgetMax}</span>
                 </div>
               </div>
 
               {/* Host avatar */}
               <div className="pt-3 border-t border-border flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-600 to-indigo-600 text-foreground flex items-center justify-center font-bold text-[10px]">
+                  <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-purple-600 to-brand text-foreground flex items-center justify-center font-bold text-[10px]">
                     {hostInitials}
                   </div>
                   <div>
-                    <span className="font-bold text-[#0F0C3B] block">{clientName}</span>
+                    <span className="font-bold text-foreground block">{clientName}</span>
                     <span className="text-[10px] text-foreground-muted">{clientCity}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="p-2.5 rounded-xl bg-amber-50/80 border border-amber-200 text-center text-[10px] font-bold text-amber-900 flex items-center justify-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-amber-700" />
+              <div className="p-2.5 rounded-xl bg-warning-soft/80 border border-warning/30 text-center text-[10px] font-bold text-warning flex items-center justify-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-warning" />
                 <span>100% Escrow Protected Booking Guarantee</span>
               </div>
             </div>
@@ -688,10 +688,10 @@ export default function PostJobWizardPage() {
           {/* Posting Readiness */}
           <div className="p-4 rounded-xl bg-surface-elevated border border-border space-y-2 text-xs">
             <div className="flex justify-between">
-              <span className="font-bold text-[#0F0C3B]">Posting Readiness</span>
+              <span className="font-bold text-foreground">Posting Readiness</span>
               <span className="font-bold text-brand-primary">{step * 20}%</span>
             </div>
-            <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+            <div className="h-1.5 w-full bg-surface-sunken rounded-full overflow-hidden">
               <div style={{ width: `${step * 20}%` }} className="h-full bg-brand-primary rounded-full transition-all duration-300" />
             </div>
             <p className="text-[11px] text-foreground-muted">
