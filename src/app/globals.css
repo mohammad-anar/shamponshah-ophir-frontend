@@ -106,12 +106,6 @@
     -webkit-text-fill-color: transparent;
   }
 
-  .text-purple-gradient {
-    background: linear-gradient(135deg, rgb(var(--brand-hover)) 0%, rgb(var(--brand)) 50%, rgb(var(--brand-active)) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
   .bg-hero-gradient {
     background: linear-gradient(180deg, rgb(var(--surface)) 0%, rgb(var(--background)) 100%);
   }
@@ -130,12 +124,8 @@
     border: 1px solid rgba(var(--brand), 0.2);
   }
 
-  .gold-border-glow {
-    border: 1px solid rgba(var(--brand), 0.4);
-    box-shadow: 0 0 15px rgba(var(--brand), 0.15);
-  }
-
-  .purple-border-glow {
+  .gold-border-glow,
+  .border-brand-glow {
     border: 1px solid rgba(var(--brand), 0.4);
     box-shadow: 0 0 15px rgba(var(--brand), 0.15);
   }
@@ -165,50 +155,4 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(var(--brand));
-}
-
-/* =========================================================================
-   TEMPORARY TRANSITIONAL OVERRIDE BLOCK (Phase A-I)
-   Will be removed completely in Phase J once all components use tokens
-   ========================================================================= */
-.bg-white,
-[class*="bg-white"] {
-  background-color: rgb(var(--surface)) !important;
-  color: rgb(var(--foreground)) !important;
-  border-color: rgb(var(--border)) !important;
-}
-
-.bg-slate-50,
-.bg-gray-50,
-.bg-slate-100,
-.bg-gray-100,
-[class*="bg-slate-50"],
-[class*="bg-gray-50"],
-[class*="bg-slate-100"],
-[class*="bg-gray-100"] {
-  background-color: rgb(var(--surface-elevated)) !important;
-  color: rgb(var(--foreground)) !important;
-  border-color: rgb(var(--border)) !important;
-}
-
-.border-slate-200,
-.border-slate-100,
-.border-gray-200,
-.border-gray-100 {
-  border-color: rgb(var(--border)) !important;
-}
-
-.text-black,
-.text-slate-900,
-.text-gray-900,
-.text-slate-800,
-.text-gray-800 {
-  color: rgb(var(--foreground)) !important;
-}
-
-.text-slate-500,
-.text-slate-400,
-.text-gray-500,
-.text-gray-400 {
-  color: rgb(var(--foreground-muted)) !important;
 }
