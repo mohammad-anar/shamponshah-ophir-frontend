@@ -592,7 +592,7 @@ export default function AdminGigDetailsPage({ params }: { params: Promise<{ id: 
           {gig.status !== "SUSPENDED" && (
             <button
               onClick={() => handleStatusChange("SUSPENDED")}
-              className="px-3.5 py-2 rounded-xl bg-danger-solid text-white hover:bg-danger-solid text-foreground text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-xl bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
             >
               <XCircle className="w-4 h-4" /> Suspend
             </button>
