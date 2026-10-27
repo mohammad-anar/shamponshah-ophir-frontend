@@ -300,7 +300,7 @@ export default function OrderChatModal({
                 <span className="flex items-center gap-1">
                   {isConnected ? (
                     <>
-                      <span className="w-2 h-2 rounded-full bg-success-solid text-white animate-pulse" />
+                      <span className="w-2 h-2 rounded-full bg-success-solid text-foreground animate-pulse" />
                       <span className="text-success font-medium">Socket Live</span>
                     </>
                   ) : (
@@ -357,7 +357,7 @@ export default function OrderChatModal({
                 ? "bg-success-soft text-success"
                 : order?.status === "DISPUTED"
                 ? "bg-danger-soft text-danger"
-                : "bg-info-soft text-blue-800"
+                : "bg-info-soft text-info"
             )}
           >
             {order?.status?.replace("_", " ") || "ACTIVE"}
