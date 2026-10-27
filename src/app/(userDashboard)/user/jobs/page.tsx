@@ -398,7 +398,7 @@ export default function UserJobsPage() {
                 type="button"
                 onClick={handleConfirmDelete}
                 disabled={isDeleting}
-                className="px-4 py-2 rounded-xl bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 rounded-xl bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {isDeleting ? (
                   <>
@@ -533,7 +533,7 @@ export default function UserJobsPage() {
           }`}
         >
           <span>Awarded</span>
-          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-brand-soft text-purple-800">
+          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-brand-soft text-brand">
             {countAwarded}
           </span>
         </button>
@@ -588,7 +588,7 @@ export default function UserJobsPage() {
                           <Ban className="w-3 h-3" /> Cancelled RFP
                         </span>
                       ) : hasAcceptedOffer ? (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-brand-soft text-purple-800 flex items-center gap-1">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-brand-soft text-brand flex items-center gap-1">
                           <CheckCircle2 className="w-3 h-3 text-brand" /> Contract Awarded
                         </span>
                       ) : (
@@ -689,7 +689,7 @@ export default function UserJobsPage() {
 
                         <Link
                           href="/user/orders"
-                          className="px-4 py-2 rounded-xl bg-success-solid text-foreground hover:bg-success-solid text-white text-foreground font-bold text-xs transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer"
+                          className="px-4 py-2 rounded-xl bg-success-solid text-foreground hover:bg-success-solid text-foreground text-foreground font-bold text-xs transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer"
                         >
                           <ShieldCheck className="w-3.5 h-3.5 text-foreground" />
                           <span>View Order &amp; Milestones</span>
