@@ -17,7 +17,7 @@ export default function ErrorPage({
   }, [error]);
 
   return (
-    <div className="min-h-screen bg-[#FAF9F6] flex flex-col justify-between p-6">
+    <div className="min-h-screen bg-surface-elevated flex flex-col justify-between p-6">
       <div className="max-w-7xl mx-auto w-full flex justify-between items-center">
         <Logo />
         <Link href="/" className="text-xs font-semibold text-foreground-secondary hover:text-obsidian">
@@ -26,12 +26,12 @@ export default function ErrorPage({
       </div>
 
       <div className="max-w-lg mx-auto text-center space-y-6 my-auto py-12">
-        <div className="w-16 h-16 rounded-3xl bg-red-100 text-red-700 flex items-center justify-center mx-auto shadow-xs">
+        <div className="w-16 h-16 rounded-3xl bg-danger-soft text-red-700 flex items-center justify-center mx-auto shadow-xs">
           <AlertCircle className="w-8 h-8" />
         </div>
 
         <div className="space-y-2">
-          <span className="text-xs font-bold uppercase tracking-widest text-red-700 bg-red-50 px-3 py-1 rounded-full border border-red-200">
+          <span className="text-xs font-bold uppercase tracking-widest text-red-700 bg-danger-soft px-3 py-1 rounded-full border border-danger/30">
             SYSTEM NOTICE 500
           </span>
           <h1 className="font-serif text-4xl sm:text-5xl font-extrabold text-obsidian tracking-tight">
@@ -45,7 +45,7 @@ export default function ErrorPage({
         <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
           <button
             onClick={() => reset()}
-            className="w-full sm:w-auto px-6 py-3 bg-[#0F1228] hover:bg-[#1A1F40] text-foreground font-semibold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-6 py-3 bg-surface-elevated hover:bg-surface-sunken text-foreground font-semibold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-2"
           >
             <RotateCcw className="w-4 h-4" />
             <span>Try Again</span>
@@ -53,7 +53,7 @@ export default function ErrorPage({
 
           <Link
             href="/"
-            className="w-full sm:w-auto px-6 py-3 bg-surface hover:bg-surface-elevated border border-[#EAE6DF] text-foreground font-semibold text-xs rounded-xl shadow-xs transition-colors flex items-center justify-center gap-2"
+            className="w-full sm:w-auto px-6 py-3 bg-surface hover:bg-surface-elevated border border-border text-foreground font-semibold text-xs rounded-xl shadow-xs transition-colors flex items-center justify-center gap-2"
           >
             <Home className="w-4 h-4" />
             <span>Back to Home</span>
