@@ -48,12 +48,12 @@ export default function EscrowRoadmap() {
   ];
 
   return (
-    <section className="w-full py-16 lg:py-24 bg-[#0B0C0E] border-y border-[#26282E]">
+    <section className="w-full py-16 lg:py-24 bg-background border-y border-border">
       <div className="max-w-[1440px] mx-auto px-6 lg:px-10 space-y-12">
         {/* Header */}
         <div className="max-w-2xl space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#121418] text-[#DFB76C] border border-border-brand/40 text-xs font-bold uppercase tracking-wider">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#DFB76C]" />
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-surface text-brand border border-border-brand/40 text-xs font-bold uppercase tracking-wider">
+            <ShieldCheck className="w-3.5 h-3.5 text-brand" />
             <span>Ophir Escrow Vault Protocol</span>
           </div>
 
@@ -61,7 +61,7 @@ export default function EscrowRoadmap() {
             How Your Investment Remains 100% Safe
           </h2>
 
-          <p className="text-[#CBD5E1] text-sm sm:text-base leading-relaxed font-light">
+          <p className="text-foreground-muted text-sm sm:text-base leading-relaxed font-light">
             Unlike legacy unbacked deposits, Ophir Reserve locks contracted funds in segregated, FDIC-insured depository accounts released strictly upon your sign-off.
           </p>
         </div>
@@ -73,14 +73,14 @@ export default function EscrowRoadmap() {
             return (
               <div
                 key={idx}
-                className="relative bg-[#121418] p-5 sm:p-6 border border-[#26282E] hover:border-border-brand/40 transition-all space-y-4 flex flex-col justify-between"
+                className="relative bg-surface p-5 sm:p-6 border border-border hover:border-border-brand/40 transition-all space-y-4 flex flex-col justify-between"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <div className="w-10 h-10 bg-[#16181F] border border-[#26282E] text-[#DFB76C] flex items-center justify-center">
-                      <Icon className="w-5 h-5 text-[#DFB76C]" />
+                    <div className="w-10 h-10 bg-surface-elevated border border-border text-brand flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-brand" />
                     </div>
-                    <span className="text-[11px] font-bold text-[#DFB76C] tracking-widest uppercase">
+                    <span className="text-[11px] font-bold text-brand tracking-widest uppercase">
                       {step.num}
                     </span>
                   </div>
@@ -89,12 +89,12 @@ export default function EscrowRoadmap() {
                     {step.title}
                   </h3>
 
-                  <p className="text-xs text-[#CBD5E1] leading-relaxed font-light">
+                  <p className="text-xs text-foreground-muted leading-relaxed font-light">
                     {step.desc}
                   </p>
                 </div>
 
-                <div className="pt-2 border-t border-[#26282E] text-[10px] font-semibold text-success flex items-center gap-1 uppercase tracking-wider">
+                <div className="pt-2 border-t border-border text-[10px] font-semibold text-success flex items-center gap-1 uppercase tracking-wider">
                   <CheckCircle2 className="w-3 h-3 text-success" />
                   <span>Vault Guaranteed</span>
                 </div>
@@ -104,16 +104,16 @@ export default function EscrowRoadmap() {
         </div>
 
         {/* Bottom Guarantee Strip */}
-        <div className="p-5 bg-[#121418] border border-[#26282E] text-foreground flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="p-5 bg-surface border border-border text-foreground flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-[#16181F] text-[#DFB76C] border border-[#26282E] flex items-center justify-center flex-shrink-0">
+            <div className="w-10 h-10 bg-surface-elevated text-brand border border-border flex items-center justify-center flex-shrink-0">
               <Scale className="w-5 h-5" />
             </div>
             <div>
               <h4 className="font-serif font-light text-base text-foreground">
                 Independent Mediation Council
               </h4>
-              <p className="text-xs text-[#CBD5E1] font-light">
+              <p className="text-xs text-foreground-muted font-light">
                 Full 100% money-back escrow refund guarantee if an artisan fails to perform contracted milestone services.
               </p>
             </div>
@@ -121,7 +121,7 @@ export default function EscrowRoadmap() {
 
           <Link
             href="/help-center"
-            className="px-5 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer shadow-md"
+            className="px-5 py-2.5 bg-brand hover:bg-brand-hover text-on-brand text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 whitespace-nowrap cursor-pointer shadow-md"
           >
             <span>Read Escrow Terms</span>
             <ArrowRight className="w-3.5 h-3.5" />
