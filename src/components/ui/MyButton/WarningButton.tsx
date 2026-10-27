@@ -12,7 +12,7 @@ const WarningButton: FC<WarningButtonProps> = ({ text, className, icon }) => {
   return (
     <Button
       icon={icon}
-      style={{ backgroundColor: "#FAAD14", color: "#fff" }}
+      style={{ backgroundColor: "rgb(var(--warning-solid))", color: "rgb(var(--on-brand))" }}
       className={cn(className)}
     >
       {text}
