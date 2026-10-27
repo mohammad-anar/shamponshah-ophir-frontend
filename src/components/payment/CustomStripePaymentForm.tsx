@@ -133,48 +133,48 @@ function CheckoutFormInner({
   // ── Success State Screen ──────────────────────────────────
   if (isSuccess && successDetails) {
     return (
-      <div className="bg-[#0b0a17] border border-emerald-500/30 rounded-2xl p-6 sm:p-8 text-center text-white relative overflow-hidden shadow-2xl">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="bg-[#0b0a17] border border-success/30 rounded-2xl p-6 sm:p-8 text-center text-foreground relative overflow-hidden shadow-2xl">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-success-solid text-white/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-warning-solid text-on-brand/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col items-center">
-          <div className="w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center mb-4 text-emerald-400 shadow-lg shadow-emerald-500/20">
+          <div className="w-16 h-16 rounded-2xl bg-success-solid text-white/20 border border-success/30 flex items-center justify-center mb-4 text-success shadow-lg shadow-emerald-500/20">
             <ShieldCheck className="w-9 h-9" />
           </div>
 
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-950/80 border border-emerald-500/40 text-[11px] font-bold tracking-wider text-emerald-400 uppercase mb-2">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-success-soft text-success border border-success/30 text-[11px] font-bold tracking-wider text-success uppercase mb-2">
             <Lock className="w-3 h-3" /> Escrow Vault Secured
           </span>
 
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-foreground tracking-tight">
             Payment Confirmed
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400 max-w-md mt-2">
+          <p className="text-xs sm:text-sm text-foreground-muted max-w-md mt-2">
             Your payment is held in Ophir's escrow vault and will only be released after you approve the completed delivery.
           </p>
 
-          <div className="w-full max-w-md bg-[#131127] border border-white/10 rounded-xl p-4 my-6 text-left space-y-2.5 text-xs">
-            <div className="flex justify-between items-center pb-2 border-b border-white/10">
-              <span className="text-slate-400 font-medium">Order Number:</span>
-              <span className="font-mono font-bold text-amber-400">{successDetails.orderNumber}</span>
+          <div className="w-full max-w-md bg-[#131127] border border-border rounded-xl p-4 my-6 text-left space-y-2.5 text-xs">
+            <div className="flex justify-between items-center pb-2 border-b border-border">
+              <span className="text-foreground-muted font-medium">Order Number:</span>
+              <span className="font-mono font-bold text-warning">{successDetails.orderNumber}</span>
             </div>
-            <div className="flex justify-between items-center pb-2 border-b border-white/10">
-              <span className="text-slate-400 font-medium">Order Status:</span>
-              <span className="px-2 py-0.5 rounded-md bg-indigo-500/20 text-indigo-300 font-bold uppercase tracking-wider text-[10px]">
+            <div className="flex justify-between items-center pb-2 border-b border-border">
+              <span className="text-foreground-muted font-medium">Order Status:</span>
+              <span className="px-2 py-0.5 rounded-md bg-info-solid text-white/20 text-indigo-300 font-bold uppercase tracking-wider text-[10px]">
                 ACTIVE
               </span>
             </div>
-            <div className="flex justify-between items-center pb-2 border-b border-white/10">
-              <span className="text-slate-400 font-medium">Platform Escrow Fee (15%):</span>
-              <span className="font-semibold text-slate-300">${Number(successDetails.platformFee || 0).toFixed(2)}</span>
+            <div className="flex justify-between items-center pb-2 border-b border-border">
+              <span className="text-foreground-muted font-medium">Platform Escrow Fee (15%):</span>
+              <span className="font-semibold text-foreground-secondary">${Number(successDetails.platformFee || 0).toFixed(2)}</span>
             </div>
-            <div className="flex justify-between items-center pb-2 border-b border-white/10">
-              <span className="text-slate-400 font-medium">Vendor Net Protected (85%):</span>
-              <span className="font-semibold text-emerald-400">${Number(successDetails.vendorNet || 0).toFixed(2)}</span>
+            <div className="flex justify-between items-center pb-2 border-b border-border">
+              <span className="text-foreground-muted font-medium">Vendor Net Protected (85%):</span>
+              <span className="font-semibold text-success">${Number(successDetails.vendorNet || 0).toFixed(2)}</span>
             </div>
-            <div className="flex justify-between items-center pt-1 font-bold text-sm text-white">
+            <div className="flex justify-between items-center pt-1 font-bold text-sm text-foreground">
               <span>Total Charged:</span>
-              <span className="text-base text-amber-300">${Number(successDetails.amount || 0).toFixed(2)}</span>
+              <span className="text-base text-warning">${Number(successDetails.amount || 0).toFixed(2)}</span>
             </div>
           </div>
 
@@ -194,26 +194,26 @@ function CheckoutFormInner({
   // ── Payment Form ──────────────────────────────────────────
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="bg-[#131127] border border-white/10 rounded-xl p-4 space-y-2 text-xs text-white">
-        <div className="flex items-center justify-between text-slate-300">
+      <div className="bg-[#131127] border border-border rounded-xl p-4 space-y-2 text-xs text-foreground">
+        <div className="flex items-center justify-between text-foreground-secondary">
           <span>Order Reference</span>
-          <span className="font-mono font-bold text-amber-400">#{orderNumber || orderId.slice(0, 8)}</span>
+          <span className="font-mono font-bold text-warning">#{orderNumber || orderId.slice(0, 8)}</span>
         </div>
-        <div className="flex items-center justify-between text-slate-300">
+        <div className="flex items-center justify-between text-foreground-secondary">
           <span>Platform Escrow Fee (15%)</span>
-          <span className="font-semibold text-slate-400">${platformFee.toFixed(2)}</span>
+          <span className="font-semibold text-foreground-muted">${platformFee.toFixed(2)}</span>
         </div>
-        <div className="flex items-center justify-between text-slate-300">
+        <div className="flex items-center justify-between text-foreground-secondary">
           <span>Vendor Net Guaranteed (85%)</span>
-          <span className="font-semibold text-emerald-400">${vendorNet.toFixed(2)}</span>
+          <span className="font-semibold text-success">${vendorNet.toFixed(2)}</span>
         </div>
-        <div className="pt-2 border-t border-white/10 flex items-center justify-between font-bold text-sm">
+        <div className="pt-2 border-t border-border flex items-center justify-between font-bold text-sm">
           <span>Total Payable</span>
-          <span className="text-base text-amber-300">${totalAmount.toFixed(2)}</span>
+          <span className="text-base text-warning">${totalAmount.toFixed(2)}</span>
         </div>
       </div>
 
-      <div className="bg-[#131127] border border-white/10 rounded-xl p-4">
+      <div className="bg-[#131127] border border-border rounded-xl p-4">
         <PaymentElement
           options={{
             layout: "tabs",
@@ -222,8 +222,8 @@ function CheckoutFormInner({
       </div>
 
       {errorMessage && (
-        <div className="p-3 rounded-xl bg-red-950/60 border border-red-500/40 text-red-200 text-xs flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
+        <div className="p-3 rounded-xl bg-danger-soft text-danger border border-danger/30 text-red-200 text-xs flex items-center gap-2">
+          <AlertCircle className="w-4 h-4 text-danger shrink-0" />
           <span>{errorMessage}</span>
         </div>
       )}
@@ -246,8 +246,8 @@ function CheckoutFormInner({
         )}
       </button>
 
-      <div className="flex items-center justify-center gap-2 text-[11px] text-slate-400">
-        <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+      <div className="flex items-center justify-center gap-2 text-[11px] text-foreground-muted">
+        <ShieldCheck className="w-3.5 h-3.5 text-success" />
         <span>End-to-end 256-bit encrypted via Stripe Connect Escrow</span>
       </div>
     </form>
@@ -322,33 +322,37 @@ export default function CustomStripePaymentForm({
   const appearance = useMemo(() => ({
     theme: "night" as const,
     variables: {
-      colorPrimary: "#d4af37",
-      colorBackground: "#0d0c1d",
-      colorText: "#f8fafc",
-      colorDanger: "#ef4444",
-      fontFamily: "Inter, sans-serif",
-      borderRadius: "10px",
+      colorPrimary: "#DFB76C",
+      colorBackground: "#0B0C0E",
+      colorText: "#F3F4F6",
+      colorDanger: "#EF4444",
+      fontFamily: "var(--font-jakarta), var(--font-inter), sans-serif",
+      borderRadius: "0px",
     },
     rules: {
       ".Input": {
-        backgroundColor: "#16142e",
-        border: "1px solid rgba(255, 255, 255, 0.12)",
+        backgroundColor: "#121418",
+        border: "1px solid #26282E",
+        color: "#F3F4F6",
+        borderRadius: "0px",
       },
       ".Input:focus": {
-        border: "1px solid #d4af37",
-        boxShadow: "0 0 0 1px #d4af37",
+        border: "1px solid #DFB76C",
+        boxShadow: "0 0 0 1px #DFB76C",
       },
       ".Label": {
-        color: "#94a3b8",
+        color: "#CBD5E1",
         fontSize: "12px",
         fontWeight: "600",
+        letterSpacing: "0.05em",
+        textTransform: "uppercase",
       },
     },
   }), []);
 
   if (!stripePublicKey) {
     return (
-      <div className="p-6 rounded-2xl bg-amber-950/40 border border-amber-500/30 text-amber-200 text-xs">
+      <div className="p-6 rounded-2xl bg-warning-soft text-warning border border-warning/30 text-amber-200 text-xs">
         Stripe publishable key is not configured in the environment. Please set NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY.
       </div>
     );
@@ -356,8 +360,8 @@ export default function CustomStripePaymentForm({
 
   if (isLoading) {
     return (
-      <div className="p-10 rounded-2xl bg-[#0f0e21] border border-white/10 flex flex-col items-center justify-center gap-3 text-slate-400 text-xs">
-        <Loader2 className="w-8 h-8 animate-spin text-amber-400" />
+      <div className="p-10 rounded-2xl bg-[#0f0e21] border border-border flex flex-col items-center justify-center gap-3 text-foreground-muted text-xs">
+        <Loader2 className="w-8 h-8 animate-spin text-warning" />
         <span>Initializing secure escrow payment vault...</span>
       </div>
     );
@@ -365,16 +369,16 @@ export default function CustomStripePaymentForm({
 
   if (loadError) {
     return (
-      <div className="p-6 rounded-2xl bg-red-950/40 border border-red-500/30 text-red-200 text-xs space-y-3">
+      <div className="p-6 rounded-2xl bg-danger-soft text-danger border border-danger/30 text-red-200 text-xs space-y-3">
         <div className="flex items-center gap-2 font-bold text-red-300">
-          <AlertCircle className="w-4 h-4 text-red-400" />
+          <AlertCircle className="w-4 h-4 text-danger" />
           <span>Payment Error</span>
         </div>
         <p>{loadError}</p>
         {onCancel && (
           <button
             onClick={onCancel}
-            className="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white font-semibold text-xs"
+            className="px-4 py-2 rounded-lg bg-surface/10 hover:bg-surface/20 text-foreground font-semibold text-xs"
           >
             Go Back
           </button>
