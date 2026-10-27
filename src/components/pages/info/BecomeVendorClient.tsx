@@ -48,12 +48,12 @@ export default function BecomeVendorPage() {
   };
 
   return (
-    <div className="w-full bg-[#0B0C0E] text-[#F3F4F6] min-h-screen py-10 lg:py-16 space-y-16 font-sans selection:bg-[#DFB76C] selection:text-[#0B0C0E]">
+    <div className="w-full bg-background text-foreground min-h-screen py-10 lg:py-16 space-y-16 font-sans selection:bg-brand selection:text-on-brand">
       {/* Hero Section */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-none bg-[#1A1D24] text-[#DFB76C] text-xs font-bold uppercase tracking-widest border border-border-brand/40">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-none bg-surface-sunken text-brand text-xs font-bold uppercase tracking-widest border border-border-brand/40">
               <Sparkles className="w-3.5 h-3.5" />
               <span>JOIN THE OPHIR RESERVE GUILD</span>
             </div>
@@ -67,15 +67,15 @@ export default function BecomeVendorPage() {
             </p>
 
             <div className="grid grid-cols-3 gap-4 pt-2">
-              <div className="p-4 bg-[#121418] rounded-none border border-[#26282E] shadow-sm">
+              <div className="p-4 bg-surface rounded-none border border-border shadow-sm">
                 <span className="font-serif text-2xl sm:text-3xl font-light text-success block">0%</span>
                 <span className="text-xs text-foreground-muted font-medium">Commission Fee</span>
               </div>
-              <div className="p-4 bg-[#121418] rounded-none border border-[#26282E] shadow-sm">
-                <span className="font-serif text-2xl sm:text-3xl font-light text-[#DFB76C] block">100%</span>
+              <div className="p-4 bg-surface rounded-none border border-border shadow-sm">
+                <span className="font-serif text-2xl sm:text-3xl font-light text-brand block">100%</span>
                 <span className="text-xs text-foreground-muted font-medium">Escrow Backed</span>
               </div>
-              <div className="p-4 bg-[#121418] rounded-none border border-[#26282E] shadow-sm">
+              <div className="p-4 bg-surface rounded-none border border-border shadow-sm">
                 <span className="font-serif text-2xl sm:text-3xl font-light text-foreground block">4.96</span>
                 <span className="text-xs text-foreground-muted font-medium">Artisan Score</span>
               </div>
@@ -84,11 +84,11 @@ export default function BecomeVendorPage() {
 
           {/* Quick Application Card */}
           <div className="lg:col-span-5">
-            <div className="bg-[#121418] rounded-none p-6 sm:p-8 shadow-2xl border border-[#26282E] space-y-5">
+            <div className="bg-surface rounded-none p-6 sm:p-8 shadow-2xl border border-border space-y-5">
               {!submitted ? (
                 <>
                   <div className="space-y-1">
-                    <span className="text-[10px] font-bold uppercase text-[#DFB76C] tracking-[0.2em]">
+                    <span className="text-[10px] font-bold uppercase text-brand tracking-[0.2em]">
                       DIRECT GUILD FAST-TRACK
                     </span>
                     <h3 className="font-serif text-2xl font-light text-foreground">
@@ -108,7 +108,7 @@ export default function BecomeVendorPage() {
                         value={vendorName}
                         onChange={(e) => setVendorName(e.target.value)}
                         placeholder="e.g. Celestial Floral Atelier"
-                        className="w-full h-11 px-3.5 bg-[#0B0C0E] text-foreground border border-[#26282E] rounded-none focus:border-[#DFB76C] focus:outline-none"
+                        className="w-full h-11 px-3.5 bg-background text-foreground border border-border rounded-none focus:border-border-brand focus:outline-none"
                       />
                     </div>
 
@@ -117,7 +117,7 @@ export default function BecomeVendorPage() {
                       <select
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
-                        className="w-full h-11 px-3.5 bg-[#0B0C0E] text-foreground border border-[#26282E] rounded-none focus:border-[#DFB76C] focus:outline-none cursor-pointer"
+                        className="w-full h-11 px-3.5 bg-background text-foreground border border-border rounded-none focus:border-border-brand focus:outline-none cursor-pointer"
                       >
                         <option value="cinematography">Cinematography & Photo</option>
                         <option value="floral">Floral & Stage Scenography</option>
@@ -135,7 +135,7 @@ export default function BecomeVendorPage() {
                         value={city}
                         onChange={(e) => setCity(e.target.value)}
                         placeholder="e.g. Austin, TX"
-                        className="w-full h-11 px-3.5 bg-[#0B0C0E] text-foreground border border-[#26282E] rounded-none focus:border-[#DFB76C] focus:outline-none"
+                        className="w-full h-11 px-3.5 bg-background text-foreground border border-border rounded-none focus:border-border-brand focus:outline-none"
                       />
                     </div>
 
@@ -148,7 +148,7 @@ export default function BecomeVendorPage() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="vendor@studio.com"
-                          className="w-full h-11 px-3.5 bg-[#0B0C0E] text-foreground border border-[#26282E] rounded-none focus:border-[#DFB76C] focus:outline-none"
+                          className="w-full h-11 px-3.5 bg-background text-foreground border border-border rounded-none focus:border-border-brand focus:outline-none"
                         />
                       </div>
 
@@ -159,7 +159,7 @@ export default function BecomeVendorPage() {
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
                           placeholder="+1 (512) 555-0144"
-                          className="w-full h-11 px-3.5 bg-[#0B0C0E] text-foreground border border-[#26282E] rounded-none focus:border-[#DFB76C] focus:outline-none"
+                          className="w-full h-11 px-3.5 bg-background text-foreground border border-border rounded-none focus:border-border-brand focus:outline-none"
                         />
                       </div>
                     </div>
@@ -172,24 +172,24 @@ export default function BecomeVendorPage() {
                         value={portfolioLink}
                         onChange={(e) => setPortfolioLink(e.target.value)}
                         placeholder="https://instagram.com/yourhandle"
-                        className="w-full h-11 px-3.5 bg-[#0B0C0E] text-foreground border border-[#26282E] rounded-none focus:border-[#DFB76C] focus:outline-none"
+                        className="w-full h-11 px-3.5 bg-background text-foreground border border-border rounded-none focus:border-border-brand focus:outline-none"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full h-12 mt-2 bg-[#DFB76C] hover:bg-[#ECC870] active:scale-99 text-[#0B0C0E] font-bold text-xs uppercase tracking-wider rounded-none shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                      className="w-full h-12 mt-2 bg-brand hover:bg-brand-hover active:scale-99 text-on-brand font-bold text-xs uppercase tracking-wider rounded-none shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                     >
                       {isSubmitting ? (
                         <>
-                          <Loader2 className="w-4 h-4 animate-spin text-[#0B0C0E]" />
+                          <Loader2 className="w-4 h-4 animate-spin text-on-brand" />
                           <span>Submitting Application...</span>
                         </>
                       ) : (
                         <>
                           <span>Submit Application for Review</span>
-                          <ArrowRight className="w-4 h-4 text-[#0B0C0E]" />
+                          <ArrowRight className="w-4 h-4 text-on-brand" />
                         </>
                       )}
                     </button>
@@ -197,12 +197,12 @@ export default function BecomeVendorPage() {
                 </>
               ) : (
                 <div className="text-center py-6 space-y-4 animate-in fade-in">
-                  <div className="w-12 h-12 rounded-none bg-[#0D211A] text-success border border-success/30 flex items-center justify-center mx-auto">
+                  <div className="w-12 h-12 rounded-none bg-success-soft text-success border border-success/30 flex items-center justify-center mx-auto">
                     <CheckCircle2 className="w-6 h-6" />
                   </div>
                   <div className="space-y-1">
                     {applicationId && (
-                      <span className="text-[11px] font-mono font-bold text-[#DFB76C] bg-[#1A1D24] px-3 py-1 rounded-none border border-border-brand/40">
+                      <span className="text-[11px] font-mono font-bold text-brand bg-surface-sunken px-3 py-1 rounded-none border border-border-brand/40">
                         APPLICATION #{applicationId}
                       </span>
                     )}
@@ -214,7 +214,7 @@ export default function BecomeVendorPage() {
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-2 pt-2">
                     <Link
                       href="/register/select-role"
-                      className="inline-block px-5 py-2.5 bg-[#DFB76C] text-[#0B0C0E] text-xs font-bold uppercase tracking-wider rounded-none"
+                      className="inline-block px-5 py-2.5 bg-brand text-on-brand text-xs font-bold uppercase tracking-wider rounded-none"
                     >
                       Complete Profile
                     </Link>
@@ -224,7 +224,7 @@ export default function BecomeVendorPage() {
                         setVendorName("");
                         setPortfolioLink("");
                       }}
-                      className="text-xs font-semibold text-foreground-muted hover:text-[#DFB76C]"
+                      className="text-xs font-semibold text-foreground-muted hover:text-brand"
                     >
                       Submit another application
                     </button>
@@ -239,8 +239,8 @@ export default function BecomeVendorPage() {
       {/* 3 Pillars for Vendors */}
       <section className="max-w-[1440px] mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="p-8 bg-[#121418] rounded-none border border-[#26282E] shadow-sm space-y-3">
-            <div className="w-10 h-10 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] flex items-center justify-center">
+          <div className="p-8 bg-surface rounded-none border border-border shadow-sm space-y-3">
+            <div className="w-10 h-10 rounded-none bg-surface-sunken border border-border text-brand flex items-center justify-center">
               <Lock className="w-5 h-5" />
             </div>
             <h3 className="font-serif font-light text-lg text-foreground">Guaranteed Milestone Deposits</h3>
@@ -249,8 +249,8 @@ export default function BecomeVendorPage() {
             </p>
           </div>
 
-          <div className="p-8 bg-[#121418] rounded-none border border-[#26282E] shadow-sm space-y-3">
-            <div className="w-10 h-10 rounded-none bg-[#1A1D24] border border-[#26282E] text-success flex items-center justify-center">
+          <div className="p-8 bg-surface rounded-none border border-border shadow-sm space-y-3">
+            <div className="w-10 h-10 rounded-none bg-surface-sunken border border-border text-success flex items-center justify-center">
               <DollarSign className="w-5 h-5" />
             </div>
             <h3 className="font-serif font-light text-lg text-foreground">Zero Creator Commissions</h3>
@@ -259,8 +259,8 @@ export default function BecomeVendorPage() {
             </p>
           </div>
 
-          <div className="p-8 bg-[#121418] rounded-none border border-[#26282E] shadow-sm space-y-3">
-            <div className="w-10 h-10 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] flex items-center justify-center">
+          <div className="p-8 bg-surface rounded-none border border-border shadow-sm space-y-3">
+            <div className="w-10 h-10 rounded-none bg-surface-sunken border border-border text-brand flex items-center justify-center">
               <Award className="w-5 h-5" />
             </div>
             <h3 className="font-serif font-light text-lg text-foreground">Merit Guild Badges</h3>
