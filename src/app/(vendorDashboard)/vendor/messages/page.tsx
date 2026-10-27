@@ -620,7 +620,7 @@ function VendorMessagesContent() {
                   }`}
                 >
                   <div className="relative flex-shrink-0">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-800 to-indigo-900 border border-border text-foreground flex items-center justify-center font-bold text-xs shadow-xs overflow-hidden">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand to-info border border-border text-foreground flex items-center justify-center font-bold text-xs shadow-xs overflow-hidden">
                       {conv.clientAvatar.startsWith("http") ? (
                         <img src={conv.clientAvatar} alt={conv.clientName} className="w-full h-full object-cover" />
                       ) : (
@@ -664,7 +664,7 @@ function VendorMessagesContent() {
             {/* Active Header */}
             <div className="p-4 border-b border-border flex items-center justify-between bg-surface">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-800 to-indigo-900 border border-border text-foreground flex items-center justify-center font-bold text-sm shadow-xs overflow-hidden">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-brand to-info border border-border text-foreground flex items-center justify-center font-bold text-sm shadow-xs overflow-hidden">
                   {activeConv.clientAvatar.startsWith("http") ? (
                     <img src={activeConv.clientAvatar} alt={activeConv.clientName} className="w-full h-full object-cover" />
                   ) : (
@@ -757,7 +757,7 @@ function VendorMessagesContent() {
                     >
                       <div className="flex items-end gap-2 max-w-[85%] md:max-w-[70%]">
                         {!isVendor && (
-                          <div className="w-7 h-7 rounded-full bg-purple-900 border border-border text-foreground flex items-center justify-center font-bold text-[10px] flex-shrink-0 mb-1">
+                          <div className="w-7 h-7 rounded-full bg-brand-soft border border-border text-foreground flex items-center justify-center font-bold text-[10px] flex-shrink-0 mb-1">
                             {activeConv.clientAvatar}
                           </div>
                         )}
