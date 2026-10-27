@@ -314,7 +314,7 @@ export default function FamilyHubPage() {
         <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-3xl max-w-md w-full p-6 space-y-5 border border-border shadow-2xl animate-in fade-in">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-danger-soft border border-rose-100 flex items-center justify-center text-danger shrink-0">
+              <div className="w-12 h-12 rounded-2xl bg-danger-soft border border-danger/30 flex items-center justify-center text-danger shrink-0">
                 <Trash2 className="w-6 h-6" />
               </div>
               <div>
@@ -340,7 +340,7 @@ export default function FamilyHubPage() {
                 type="button"
                 disabled={isDeletingItem}
                 onClick={handleConfirmDelete}
-                className="px-5 py-2.5 rounded-xl bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-2 cursor-pointer disabled:opacity-50"
+                className="px-5 py-2.5 rounded-xl bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-2 cursor-pointer disabled:opacity-50"
               >
                 {isDeletingItem ? (
                   <span>Removing...</span>
@@ -636,7 +636,7 @@ export default function FamilyHubPage() {
               <div
                 key={m.id}
                 title={`${m.name} (${m.role})`}
-                className="inline-block h-8 w-8 rounded-full ring-2 ring-white bg-brand text-foreground text-[11px] font-bold flex items-center justify-center"
+                className="inline-block h-8 w-8 rounded-full ring-2 ring-border bg-brand text-foreground text-[11px] font-bold flex items-center justify-center"
               >
                 {m.avatar}
               </div>
