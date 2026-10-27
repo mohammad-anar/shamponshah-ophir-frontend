@@ -58,14 +58,14 @@ export default function VendorPayoutSettingsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
               Stripe Connect payout settings
             </h1>
             <span
               className={`px-2.5 py-0.5 rounded-full text-xs font-bold border ${
                 isConnected
-                  ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-                  : "bg-amber-50 text-amber-800 border-amber-200"
+                  ? "bg-success-soft text-success border-success/30"
+                  : "bg-warning-soft text-warning border-warning/30"
               }`}
             >
               {isConnected ? "Stripe Connect Active" : "Stripe Setup Pending"}
@@ -79,7 +79,7 @@ export default function VendorPayoutSettingsPage() {
       </div>
 
       {/* Stripe Connect Banner */}
-      <div className="bg-[#0F0C3B] text-foreground p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md">
+      <div className="bg-brand text-foreground p-5 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-md">
         <div className="flex items-center gap-3">
           <div className="p-3 bg-surface/10 rounded-xl flex-shrink-0">
             <ShieldCheck className="w-6 h-6 text-success" />
@@ -93,7 +93,7 @@ export default function VendorPayoutSettingsPage() {
                 </span>
               )}
             </h3>
-            <p className="text-xs text-indigo-200 mt-0.5">
+            <p className="text-xs text-info mt-0.5">
               {isConnected
                 ? "Milestone transfers arrive in your connected Stripe balance. Bank payout timing is controlled by Stripe."
                 : "Complete Stripe Connect onboarding to receive marketplace transfers."}
@@ -126,22 +126,22 @@ export default function VendorPayoutSettingsPage() {
       </div>
 
       <div className="bg-surface border border-border rounded-2xl p-6 space-y-4 shadow-xs">
-        <h2 className="text-sm font-bold text-[#0F0C3B]">Bank and payout details</h2>
+        <h2 className="text-sm font-bold text-foreground">Bank and payout details</h2>
         <p className="text-xs text-foreground-secondary">
           Add or update bank details in Stripe Express. This marketplace does not collect or store bank account or routing numbers.
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
           <div className="p-3 rounded-xl bg-surface-elevated border border-border">
             <span className="block text-foreground-muted">Transfer capability</span>
-            <strong className="text-[#0F0C3B]">{stripeStatus.transfersEnabled ? "Enabled" : "Setup required"}</strong>
+            <strong className="text-foreground">{stripeStatus.transfersEnabled ? "Enabled" : "Setup required"}</strong>
           </div>
           <div className="p-3 rounded-xl bg-surface-elevated border border-border">
             <span className="block text-foreground-muted">Bank payouts</span>
-            <strong className="text-[#0F0C3B]">{payoutsEnabled ? "Enabled" : "Setup required"}</strong>
+            <strong className="text-foreground">{payoutsEnabled ? "Enabled" : "Setup required"}</strong>
           </div>
         </div>
         {stripeStatus.requirements?.currently_due?.length > 0 && (
-          <p className="text-xs text-amber-700">
+          <p className="text-xs text-warning">
             Stripe needs more information: {stripeStatus.requirements.currently_due.join(", ")}
           </p>
         )}
