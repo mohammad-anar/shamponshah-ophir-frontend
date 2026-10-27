@@ -85,7 +85,7 @@ export default function VendorLevelsPage() {
           <div className="w-full h-4 bg-background/40 rounded-full p-0.5 border border-border">
             <div 
               style={{ width: `${progressPercent}%` }}
-              className="h-full bg-gradient-to-r from-amber-400 to-brand-active rounded-full shadow-md transition-all duration-1000"
+              className="h-full bg-gradient-to-r from-warning to-brand-active rounded-full shadow-md transition-all duration-1000"
             />
           </div>
         </div>
