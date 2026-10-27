@@ -59,7 +59,7 @@ export default function AdminOrderMediationPage() {
   if (isLoading) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center gap-3">
-        <Loader2 className="w-8 h-8 text-[#DFB76C] animate-spin" />
+        <Loader2 className="w-8 h-8 text-brand animate-spin" />
         <p className="text-xs text-foreground-muted font-medium">Loading mediation case for order #{orderId}...</p>
       </div>
     );
@@ -67,15 +67,15 @@ export default function AdminOrderMediationPage() {
 
   if (isError || !order) {
     return (
-      <div className="bg-[#121418] p-12 rounded-3xl border border-[#26282E] text-center max-w-lg mx-auto my-12 space-y-4">
-        <div className="w-14 h-14 bg-danger-solid text-white/15 text-danger rounded-full flex items-center justify-center mx-auto">
+      <div className="bg-surface p-12 rounded-3xl border border-border text-center max-w-lg mx-auto my-12 space-y-4">
+        <div className="w-14 h-14 bg-danger-solid text-foreground/15 text-danger rounded-full flex items-center justify-center mx-auto">
           <AlertTriangle className="w-7 h-7" />
         </div>
         <h2 className="text-xl font-bold text-foreground">Order Not Found</h2>
         <p className="text-xs text-foreground-muted">The requested order #{orderId} could not be loaded.</p>
         <button
           onClick={() => router.push("/admin/disputes")}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl text-xs font-bold transition-all cursor-pointer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-brand hover:bg-brand-hover text-on-brand rounded-xl text-xs font-bold transition-all cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Disputes Docket</span>
@@ -137,18 +137,18 @@ export default function AdminOrderMediationPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => router.push("/admin/disputes")}
-            className="w-9 h-9 rounded-xl border border-[#26282E] bg-[#16181F] hover:bg-[#1A1D24] flex items-center justify-center text-foreground-secondary transition-colors shadow-sm cursor-pointer"
+            className="w-9 h-9 rounded-xl border border-border bg-surface-elevated hover:bg-surface-sunken flex items-center justify-center text-foreground-secondary transition-colors shadow-sm cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs text-foreground-muted font-medium">Order Arbitration Docket</span>
-              <span className="text-xs font-bold text-[#DFB76C] bg-[#1A1D24] px-2.5 py-0.5 rounded-md border border-border-brand/40">
+              <span className="text-xs font-bold text-brand bg-surface-sunken px-2.5 py-0.5 rounded-md border border-border-brand/40">
                 #{order.orderNumber || order.id}
               </span>
               {order.escalatedToAdmin && (
-                <span className="text-xs font-bold text-danger bg-danger-solid text-white/15 px-2 py-0.5 rounded-md border border-danger/30 flex items-center gap-1 animate-pulse">
+                <span className="text-xs font-bold text-danger bg-danger-solid text-foreground/15 px-2 py-0.5 rounded-md border border-danger/30 flex items-center gap-1 animate-pulse">
                   <ShieldAlert className="w-3 h-3" /> Escalated to Admin
                 </span>
               )}
@@ -162,17 +162,17 @@ export default function AdminOrderMediationPage() {
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={() => refetch()}
-            className="px-3 py-2 rounded-xl border border-[#26282E] bg-[#16181F] hover:bg-[#1A1D24] text-foreground-secondary text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
+            className="px-3 py-2 rounded-xl border border-border bg-surface-elevated hover:bg-surface-sunken text-foreground-secondary text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
           >
-            <RefreshCw className="w-3.5 h-3.5 text-[#DFB76C]" />
+            <RefreshCw className="w-3.5 h-3.5 text-brand" />
             <span>Refresh State</span>
           </button>
           <span className={cn(
             "px-3 py-1.5 rounded-xl text-xs font-bold border",
-            order.status === "DISPUTED" && "bg-danger-solid text-white/15 border-danger/30 text-danger",
-            order.status === "COMPLETED_WITH_PARTIAL_REFUND" && "bg-purple-500/15 border-purple-500/30 text-purple-400",
-            order.status === "CANCELLED" && "bg-[#1A1D24] border-[#26282E] text-foreground-muted",
-            order.status === "COMPLETED" && "bg-success-solid text-white/15 border-success/30 text-success",
+            order.status === "DISPUTED" && "bg-danger-solid text-foreground/15 border-danger/30 text-danger",
+            order.status === "COMPLETED_WITH_PARTIAL_REFUND" && "bg-brand text-on-brand/15 border-border-brand/30 text-info",
+            order.status === "CANCELLED" && "bg-surface-sunken border-border text-foreground-muted",
+            order.status === "COMPLETED" && "bg-success-solid text-foreground/15 border-success/30 text-success",
             !["DISPUTED", "COMPLETED_WITH_PARTIAL_REFUND", "CANCELLED", "COMPLETED"].includes(order.status) && "bg-warning-solid text-on-brand/15 border-warning/30 text-warning",
           )}>
             Status: {order.status}
@@ -182,12 +182,12 @@ export default function AdminOrderMediationPage() {
 
       {/* Existing Resolution Notice if already decided */}
       {order.adminResolution && (
-        <div className="p-5 rounded-2xl border-2 border-info/30 bg-[#16181F] text-foreground-secondary flex items-start gap-3.5 shadow-sm">
+        <div className="p-5 rounded-2xl border-2 border-info/30 bg-surface-elevated text-foreground-secondary flex items-start gap-3.5 shadow-sm">
           <CheckCircle2 className="w-5 h-5 text-info shrink-0 mt-0.5" />
           <div className="text-xs space-y-1">
             <div className="flex items-center gap-2">
               <strong className="font-bold text-sm text-foreground">Arbitration Decision Finalized</strong>
-              <span className="px-2 py-0.5 rounded-md bg-[#1A1D24] text-[#DFB76C] font-bold text-[10px] border border-border-brand/40">
+              <span className="px-2 py-0.5 rounded-md bg-surface-sunken text-brand font-bold text-[10px] border border-border-brand/40">
                 {order.adminResolution}
               </span>
             </div>
@@ -196,7 +196,7 @@ export default function AdminOrderMediationPage() {
               {order.refundedAmount && ` Refunded $${Number(order.refundedAmount).toFixed(2)} to client.`}
             </p>
             {order.deliveryNotes && (
-              <p className="text-foreground-secondary italic mt-1 bg-[#121418] p-2 rounded-lg border border-[#26282E]">
+              <p className="text-foreground-secondary italic mt-1 bg-surface p-2 rounded-lg border border-border">
                 {order.deliveryNotes}
               </p>
             )}
@@ -206,7 +206,7 @@ export default function AdminOrderMediationPage() {
 
       {/* Escalation Context Banner */}
       {order.escalatedToAdmin && (
-        <div className="p-5 rounded-2xl border-2 border-danger/30 bg-[#16181F] text-foreground-secondary flex items-start gap-3.5 shadow-sm">
+        <div className="p-5 rounded-2xl border-2 border-danger/30 bg-surface-elevated text-foreground-secondary flex items-start gap-3.5 shadow-sm">
           <ShieldAlert className="w-5 h-5 text-danger shrink-0 mt-0.5" />
           <div className="text-xs space-y-1">
             <div className="flex items-center gap-2">
@@ -217,7 +217,7 @@ export default function AdminOrderMediationPage() {
                 {order.escalatedAt ? new Date(order.escalatedAt).toLocaleString() : ""}
               </span>
             </div>
-            <p className="text-rose-300">
+            <p className="text-danger">
               <strong>Reason:</strong> {order.escalationReason || "Vendor and client were unable to reach agreement."}
             </p>
           </div>
@@ -225,14 +225,14 @@ export default function AdminOrderMediationPage() {
       )}
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-[#26282E] pb-2">
+      <div className="flex items-center gap-2 border-b border-border pb-2">
         <button
           onClick={() => setActiveTab("overview")}
           className={cn(
             "px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer",
             activeTab === "overview"
-              ? "bg-[#DFB76C] text-[#0B0C0E] shadow-sm"
-              : "text-foreground-muted hover:bg-[#16181F] hover:text-foreground"
+              ? "bg-brand text-on-brand shadow-sm"
+              : "text-foreground-muted hover:bg-surface-elevated hover:text-foreground"
           )}
         >
           Case & Evidence Overview
@@ -242,8 +242,8 @@ export default function AdminOrderMediationPage() {
           className={cn(
             "px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5",
             activeTab === "chat"
-              ? "bg-[#DFB76C] text-[#0B0C0E] shadow-sm"
-              : "text-foreground-muted hover:bg-[#16181F] hover:text-foreground"
+              ? "bg-brand text-on-brand shadow-sm"
+              : "text-foreground-muted hover:bg-surface-elevated hover:text-foreground"
           )}
         >
           <MessageSquare className="w-3.5 h-3.5" />
@@ -254,8 +254,8 @@ export default function AdminOrderMediationPage() {
           className={cn(
             "px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5",
             activeTab === "deliverables"
-              ? "bg-[#DFB76C] text-[#0B0C0E] shadow-sm"
-              : "text-foreground-muted hover:bg-[#16181F] hover:text-foreground"
+              ? "bg-brand text-on-brand shadow-sm"
+              : "text-foreground-muted hover:bg-surface-elevated hover:text-foreground"
           )}
         >
           <UploadCloud className="w-3.5 h-3.5" />
@@ -265,15 +265,15 @@ export default function AdminOrderMediationPage() {
 
       {/* TAB CONTENT: Chat */}
       {activeTab === "chat" && (
-        <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-6 shadow-sm space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-[#26282E]">
+        <div className="bg-surface rounded-3xl border border-border p-6 shadow-sm space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-border">
             <div>
               <h3 className="font-extrabold text-foreground text-base">Direct Order Chat Room</h3>
               <p className="text-xs text-foreground-muted">
                 Admin is authorized to view complete communications and post binding mediator messages.
               </p>
             </div>
-            <span className="px-2.5 py-1 rounded-full bg-success-solid text-white/15 text-success text-xs font-bold border border-success/30">
+            <span className="px-2.5 py-1 rounded-full bg-success-solid text-foreground/15 text-success text-xs font-bold border border-success/30">
               Room: order:{order.id}
             </span>
           </div>
@@ -283,8 +283,8 @@ export default function AdminOrderMediationPage() {
 
       {/* TAB CONTENT: Deliverables */}
       {activeTab === "deliverables" && (
-        <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-6 shadow-sm space-y-5">
-          <div className="flex items-center justify-between pb-3 border-b border-[#26282E]">
+        <div className="bg-surface rounded-3xl border border-border p-6 shadow-sm space-y-5">
+          <div className="flex items-center justify-between pb-3 border-b border-border">
             <h3 className="font-extrabold text-foreground text-base">Deliverables Audit</h3>
             <span className="text-xs text-foreground-muted">
               Round #{order.revisionCount ? order.revisionCount + 1 : 1}
@@ -292,7 +292,7 @@ export default function AdminOrderMediationPage() {
           </div>
 
           {order.deliveryNotes ? (
-            <div className="p-4 bg-[#16181F] rounded-2xl border border-[#26282E] space-y-2">
+            <div className="p-4 bg-surface-elevated rounded-2xl border border-border space-y-2">
               <span className="text-[11px] font-bold text-foreground-muted uppercase tracking-wider block">
                 Vendor's Delivery Submission Statement:
               </span>
@@ -314,10 +314,10 @@ export default function AdminOrderMediationPage() {
                   return (
                     <div
                       key={idx}
-                      className="p-3 bg-[#16181F] rounded-xl border border-[#26282E] flex items-center justify-between gap-3 shadow-sm hover:border-border-brand/40 transition-all"
+                      className="p-3 bg-surface-elevated rounded-xl border border-border flex items-center justify-between gap-3 shadow-sm hover:border-border-brand/40 transition-all"
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="w-8 h-8 rounded-lg bg-[#1A1D24] text-[#DFB76C] flex items-center justify-center shrink-0">
+                        <div className="w-8 h-8 rounded-lg bg-surface-sunken text-brand flex items-center justify-center shrink-0">
                           <FileText className="w-4 h-4" />
                         </div>
                         <span className="text-xs font-medium text-foreground-secondary truncate">{filename}</span>
@@ -326,7 +326,7 @@ export default function AdminOrderMediationPage() {
                         href={fullUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="px-2.5 py-1 bg-[#1A1D24] hover:bg-[#222630] text-foreground-secondary hover:text-[#DFB76C] rounded-lg text-xs font-semibold transition-colors flex items-center gap-1 shrink-0 border border-[#26282E]"
+                        className="px-2.5 py-1 bg-surface-sunken hover:bg-surface-sunken text-foreground-secondary hover:text-brand rounded-lg text-xs font-semibold transition-colors flex items-center gap-1 shrink-0 border border-border"
                       >
                         <Download className="w-3 h-3" />
                         <span>View</span>
@@ -337,7 +337,7 @@ export default function AdminOrderMediationPage() {
               </div>
             </div>
           ) : (
-            <div className="p-8 text-center border-2 border-dashed border-[#26282E] rounded-2xl text-xs text-foreground-muted">
+            <div className="p-8 text-center border-2 border-dashed border-border rounded-2xl text-xs text-foreground-muted">
               No digital files uploaded in deliverables.
             </div>
           )}
@@ -351,17 +351,17 @@ export default function AdminOrderMediationPage() {
           <div className="lg:col-span-2 space-y-6">
             {/* Cancellation Request Section */}
             {order.cancelStatus && (
-              <div className="bg-[#121418] p-6 rounded-3xl border border-[#26282E] shadow-sm space-y-4">
-                <div className="flex items-center justify-between border-b border-[#26282E] pb-3">
+              <div className="bg-surface p-6 rounded-3xl border border-border shadow-sm space-y-4">
+                <div className="flex items-center justify-between border-b border-border pb-3">
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-danger-solid text-white animate-ping" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-danger-solid text-foreground animate-ping" />
                     <h3 className="font-extrabold text-foreground text-base">Cancellation Request Record</h3>
                   </div>
                   <span className={cn(
                     "px-2.5 py-0.5 rounded-full text-xs font-bold border",
                     order.cancelStatus === "REQUESTED" && "bg-warning-solid text-on-brand/15 text-warning border-warning/30",
-                    order.cancelStatus === "ACCEPTED" && "bg-success-solid text-white/15 text-success border-success/30",
-                    order.cancelStatus === "REJECTED" && "bg-danger-solid text-white/15 text-danger border-danger/30",
+                    order.cancelStatus === "ACCEPTED" && "bg-success-solid text-foreground/15 text-success border-success/30",
+                    order.cancelStatus === "REJECTED" && "bg-danger-solid text-foreground/15 text-danger border-danger/30",
                   )}>
                     Status: {order.cancelStatus}
                   </span>
@@ -369,7 +369,7 @@ export default function AdminOrderMediationPage() {
                 <div className="text-xs space-y-2 text-foreground-secondary">
                   <p><strong className="text-foreground">Reason:</strong> {order.cancelReason || "No formal reason provided"}</p>
                   {order.cancelResponseNote && (
-                    <p className="text-foreground-secondary bg-[#16181F] p-3 rounded-xl border border-[#26282E]">
+                    <p className="text-foreground-secondary bg-surface-elevated p-3 rounded-xl border border-border">
                       <strong className="text-foreground">Vendor Response:</strong> {order.cancelResponseNote}
                     </p>
                   )}
@@ -383,7 +383,7 @@ export default function AdminOrderMediationPage() {
                             href={getFileUrl(proof)}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-[#16181F] hover:bg-[#1A1D24] text-foreground-secondary hover:text-[#DFB76C] rounded-lg text-xs font-medium border border-[#26282E]"
+                            className="inline-flex items-center gap-1 px-3 py-1 bg-surface-elevated hover:bg-surface-sunken text-foreground-secondary hover:text-brand rounded-lg text-xs font-medium border border-border"
                           >
                             <ExternalLink className="w-3 h-3" />
                             <span>Evidence #{i + 1}</span>
@@ -398,17 +398,17 @@ export default function AdminOrderMediationPage() {
 
             {/* Partial Refund Request Section */}
             {order.refundStatus && (
-              <div className="bg-[#121418] p-6 rounded-3xl border border-[#26282E] shadow-sm space-y-4">
-                <div className="flex items-center justify-between border-b border-[#26282E] pb-3">
+              <div className="bg-surface p-6 rounded-3xl border border-border shadow-sm space-y-4">
+                <div className="flex items-center justify-between border-b border-border pb-3">
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-purple-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-brand text-on-brand" />
                     <h3 className="font-extrabold text-foreground text-base">Partial Refund Request Record</h3>
                   </div>
                   <span className={cn(
                     "px-2.5 py-0.5 rounded-full text-xs font-bold border",
                     order.refundStatus === "REQUESTED" && "bg-warning-solid text-on-brand/15 text-warning border-warning/30",
-                    order.refundStatus === "ACCEPTED" && "bg-success-solid text-white/15 text-success border-success/30",
-                    order.refundStatus === "REJECTED" && "bg-danger-solid text-white/15 text-danger border-danger/30",
+                    order.refundStatus === "ACCEPTED" && "bg-success-solid text-foreground/15 text-success border-success/30",
+                    order.refundStatus === "REJECTED" && "bg-danger-solid text-foreground/15 text-danger border-danger/30",
                   )}>
                     Status: {order.refundStatus}
                   </span>
@@ -416,14 +416,14 @@ export default function AdminOrderMediationPage() {
                 <div className="text-xs space-y-2 text-foreground-secondary">
                   <p>
                     <strong className="text-foreground">Requested Refund:</strong>{" "}
-                    <span className="font-bold text-purple-400 text-sm font-mono">
+                    <span className="font-bold text-info text-sm font-mono">
                       ${Number(order.partialRefundAmount || 0).toFixed(2)}
                     </span>{" "}
                     (out of total ${grandTotal.toFixed(2)})
                   </p>
                   <p><strong className="text-foreground">Reason:</strong> {order.refundReason || "Partial non-delivery or deficiency"}</p>
                   {order.refundResponseNote && (
-                    <p className="text-foreground-secondary bg-[#16181F] p-3 rounded-xl border border-[#26282E]">
+                    <p className="text-foreground-secondary bg-surface-elevated p-3 rounded-xl border border-border">
                       <strong className="text-foreground">Vendor Response:</strong> {order.refundResponseNote}
                     </p>
                   )}
@@ -437,7 +437,7 @@ export default function AdminOrderMediationPage() {
                             href={getFileUrl(proof)}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-[#16181F] hover:bg-[#1A1D24] text-foreground-secondary hover:text-purple-400 rounded-lg text-xs font-medium border border-[#26282E]"
+                            className="inline-flex items-center gap-1 px-3 py-1 bg-surface-elevated hover:bg-surface-sunken text-foreground-secondary hover:text-info rounded-lg text-xs font-medium border border-border"
                           >
                             <ExternalLink className="w-3 h-3" />
                             <span>Refund Proof #{i + 1}</span>
@@ -452,9 +452,9 @@ export default function AdminOrderMediationPage() {
 
             {/* Parties Card */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm space-y-3">
-                <div className="flex items-center gap-2.5 pb-2 border-b border-[#26282E]">
-                  <div className="w-8 h-8 rounded-full bg-info-solid text-white/15 text-info flex items-center justify-center font-bold text-xs border border-info/30">
+              <div className="bg-surface p-5 rounded-3xl border border-border shadow-sm space-y-3">
+                <div className="flex items-center gap-2.5 pb-2 border-b border-border">
+                  <div className="w-8 h-8 rounded-full bg-info-solid text-foreground/15 text-info flex items-center justify-center font-bold text-xs border border-info/30">
                     <User className="w-4 h-4" />
                   </div>
                   <div>
@@ -470,9 +470,9 @@ export default function AdminOrderMediationPage() {
                 </div>
               </div>
 
-              <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm space-y-3">
-                <div className="flex items-center gap-2.5 pb-2 border-b border-[#26282E]">
-                  <div className="w-8 h-8 rounded-full bg-success-solid text-white/15 text-success flex items-center justify-center font-bold text-xs border border-success/30">
+              <div className="bg-surface p-5 rounded-3xl border border-border shadow-sm space-y-3">
+                <div className="flex items-center gap-2.5 pb-2 border-b border-border">
+                  <div className="w-8 h-8 rounded-full bg-success-solid text-foreground/15 text-success flex items-center justify-center font-bold text-xs border border-success/30">
                     <Store className="w-4 h-4" />
                   </div>
                   <div>
@@ -484,7 +484,7 @@ export default function AdminOrderMediationPage() {
                 </div>
                 <div className="text-xs text-foreground-muted space-y-1">
                   <p>Email: <span className="text-foreground-secondary">{order.vendorProfile?.user?.email || "vendor@example.com"}</span></p>
-                  <p className="font-mono text-[11px] text-[#DFB76C] truncate">
+                  <p className="font-mono text-[11px] text-brand truncate">
                     Stripe: {order.vendorProfile?.stripeAccountId || "Not connected"}
                   </p>
                 </div>
@@ -492,21 +492,21 @@ export default function AdminOrderMediationPage() {
             </div>
 
             {/* Milestones Summary */}
-            <div className="bg-[#121418] p-6 rounded-3xl border border-[#26282E] shadow-sm space-y-3">
+            <div className="bg-surface p-6 rounded-3xl border border-border shadow-sm space-y-3">
               <h3 className="font-extrabold text-foreground text-base">Contract Milestones</h3>
               <div className="space-y-2">
                 {(order.milestones || []).map((m: any) => (
                   <div
                     key={m.id}
-                    className="p-3 bg-[#16181F] rounded-xl border border-[#26282E] flex items-center justify-between text-xs"
+                    className="p-3 bg-surface-elevated rounded-xl border border-border flex items-center justify-between text-xs"
                   >
                     <div>
                       <span className="font-bold text-foreground">{m.label}</span>
                       <span className="text-foreground-muted text-[11px] ml-2">({m.percentage}%)</span>
                     </div>
                     <div className="flex items-center gap-3 font-mono">
-                      <span className="font-bold text-[#DFB76C]">${Number(m.amount).toFixed(2)}</span>
-                      <span className="px-2 py-0.5 rounded-full bg-[#1A1D24] text-foreground-secondary text-[10px] font-bold border border-[#26282E]">
+                      <span className="font-bold text-brand">${Number(m.amount).toFixed(2)}</span>
+                      <span className="px-2 py-0.5 rounded-full bg-surface-sunken text-foreground-secondary text-[10px] font-bold border border-border">
                         {m.status}
                       </span>
                     </div>
@@ -518,13 +518,13 @@ export default function AdminOrderMediationPage() {
 
           {/* Right Column (1 Col): Admin Arbitration Action Card */}
           <div className="space-y-6">
-            <div className="bg-[#121418] p-6 rounded-3xl border-2 border-[#26282E] shadow-md space-y-5 sticky top-24">
-              <div className="flex items-center justify-between border-b border-[#26282E] pb-3">
+            <div className="bg-surface p-6 rounded-3xl border-2 border-border shadow-md space-y-5 sticky top-24">
+              <div className="flex items-center justify-between border-b border-border pb-3">
                 <div className="flex items-center gap-2">
-                  <Scale className="w-5 h-5 text-[#DFB76C]" />
+                  <Scale className="w-5 h-5 text-brand" />
                   <h3 className="font-black text-foreground text-base">Admin Judgment Panel</h3>
                 </div>
-                <span className="text-[10px] uppercase font-bold text-[#DFB76C] bg-[#1A1D24] px-2 py-0.5 rounded-md border border-border-brand/40">
+                <span className="text-[10px] uppercase font-bold text-brand bg-surface-sunken px-2 py-0.5 rounded-md border border-border-brand/40">
                   Binding Escrow
                 </span>
               </div>
@@ -538,8 +538,8 @@ export default function AdminOrderMediationPage() {
                   className={cn(
                     "p-3.5 rounded-2xl border-2 flex items-start gap-3 cursor-pointer transition-all",
                     decision === "CANCEL_FULL_REFUND"
-                      ? "border-danger/30 bg-danger-solid text-white/10"
-                      : "border-[#26282E] bg-[#16181F] hover:border-slate-600"
+                      ? "border-danger/30 bg-danger-solid text-foreground/10"
+                      : "border-border bg-surface-elevated hover:border-border-strong"
                   )}
                 >
                   <input
@@ -563,8 +563,8 @@ export default function AdminOrderMediationPage() {
                   className={cn(
                     "p-3.5 rounded-2xl border-2 flex items-start gap-3 cursor-pointer transition-all",
                     decision === "PARTIAL_REFUND"
-                      ? "border-purple-500/60 bg-purple-500/10"
-                      : "border-[#26282E] bg-[#16181F] hover:border-slate-600"
+                      ? "border-border-brand/60 bg-brand text-on-brand/10"
+                      : "border-border bg-surface-elevated hover:border-border-strong"
                   )}
                 >
                   <input
@@ -575,7 +575,7 @@ export default function AdminOrderMediationPage() {
                     className="mt-1 accent-purple-500"
                   />
                   <div className="text-xs">
-                    <strong className="font-bold text-purple-400 block">Partial Refund</strong>
+                    <strong className="font-bold text-info block">Partial Refund</strong>
                     <p className="text-foreground-muted text-[11px] mt-0.5">
                       Refund specified portion to client. Remaining balance split: 15% platform fee, 85% net to vendor.
                     </p>
@@ -588,8 +588,8 @@ export default function AdminOrderMediationPage() {
                   className={cn(
                     "p-3.5 rounded-2xl border-2 flex items-start gap-3 cursor-pointer transition-all",
                     decision === "REJECT_DISPUTE_RELEASE_VENDOR"
-                      ? "border-success/30 bg-success-solid text-white/10"
-                      : "border-[#26282E] bg-[#16181F] hover:border-slate-600"
+                      ? "border-success/30 bg-success-solid text-foreground/10"
+                      : "border-border bg-surface-elevated hover:border-border-strong"
                   )}
                 >
                   <input
@@ -610,7 +610,7 @@ export default function AdminOrderMediationPage() {
 
               {/* Partial Refund Input if chosen */}
               {decision === "PARTIAL_REFUND" && (
-                <div className="p-4 bg-[#16181F] rounded-2xl border border-purple-500/30 space-y-3">
+                <div className="p-4 bg-surface-elevated rounded-2xl border border-border-brand/30 space-y-3">
                   <label className="text-xs font-bold text-purple-300 block">
                     Refund Amount to Client ($ USD):
                   </label>
@@ -624,15 +624,15 @@ export default function AdminOrderMediationPage() {
                       value={partialRefundAmount || (requestedRefund ? String(requestedRefund) : "")}
                       onChange={(e) => setPartialRefundAmount(e.target.value)}
                       placeholder={`e.g. ${(grandTotal / 2).toFixed(2)}`}
-                      className="w-full pl-9 pr-3 py-2 bg-[#121418] rounded-xl border border-[#26282E] text-foreground text-xs font-mono font-bold focus:outline-none focus:border-[#DFB76C]"
+                      className="w-full pl-9 pr-3 py-2 bg-surface rounded-xl border border-border text-foreground text-xs font-mono font-bold focus:outline-none focus:border-border-brand"
                     />
                   </div>
 
                   {/* Live Calculation Preview */}
-                  <div className="p-3 bg-[#121418] rounded-xl border border-[#26282E] text-[11px] space-y-1">
+                  <div className="p-3 bg-surface rounded-xl border border-border text-[11px] space-y-1">
                     <div className="flex justify-between">
                       <span className="text-foreground-muted">Client Refund:</span>
-                      <span className="font-bold font-mono text-purple-400">${refundValue.toFixed(2)}</span>
+                      <span className="font-bold font-mono text-info">${refundValue.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-foreground-muted">Remaining Base:</span>
@@ -642,7 +642,7 @@ export default function AdminOrderMediationPage() {
                       <span className="text-foreground-muted">15% Platform Fee:</span>
                       <span className="font-mono text-foreground-secondary">${platformFee.toFixed(2)}</span>
                     </div>
-                    <div className="flex justify-between pt-1 border-t border-[#26282E]">
+                    <div className="flex justify-between pt-1 border-t border-border">
                       <span className="font-bold text-foreground-secondary">85% Vendor Net:</span>
                       <span className="font-bold font-mono text-success">${vendorNet.toFixed(2)}</span>
                     </div>
@@ -660,7 +660,7 @@ export default function AdminOrderMediationPage() {
                   value={resolutionNotes}
                   onChange={(e) => setResolutionNotes(e.target.value)}
                   placeholder="State the findings based on chat, delivered work, and policy reasons..."
-                  className="w-full p-3 bg-[#16181F] rounded-xl border border-[#26282E] text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C] resize-none"
+                  className="w-full p-3 bg-surface-elevated rounded-xl border border-border text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand resize-none"
                 />
               </div>
 
@@ -669,16 +669,16 @@ export default function AdminOrderMediationPage() {
                 type="button"
                 disabled={isResolving}
                 onClick={handleResolve}
-                className="w-full py-3 bg-[#DFB76C] hover:bg-[#ECC870] disabled:opacity-50 text-[#0B0C0E] rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 bg-brand hover:bg-brand-hover disabled:opacity-50 text-on-brand rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
               >
                 {isResolving ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin text-[#0B0C0E]" />
+                    <Loader2 className="w-4 h-4 animate-spin text-on-brand" />
                     <span>Executing Arbitration...</span>
                   </>
                 ) : (
                   <>
-                    <Scale className="w-4 h-4 text-[#0B0C0E]" />
+                    <Scale className="w-4 h-4 text-on-brand" />
                     <span>Finalize Arbitration Judgment</span>
                   </>
                 )}
