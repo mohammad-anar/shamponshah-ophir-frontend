@@ -160,7 +160,7 @@ export default function UserNotificationsPage() {
       case "message":
         return <MessageSquare className="w-4 h-4 text-info" />;
       case "event":
-        return <Calendar className="w-4 h-4 text-purple-600" />;
+        return <Calendar className="w-4 h-4 text-brand" />;
       case "review":
         return <Star className="w-4 h-4 text-warning" />;
       default:
@@ -174,9 +174,9 @@ export default function UserNotificationsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">Notifications Center</h1>
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">Notifications Center</h1>
             {unreadCount > 0 && (
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#0F0C3B] text-foreground">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand text-foreground">
                 {unreadCount} Unread
               </span>
             )}
@@ -189,7 +189,7 @@ export default function UserNotificationsPage() {
         {unreadCount > 0 && (
           <button
             onClick={handleMarkAllAsRead}
-            className="px-3.5 py-2 bg-surface-sunken hover:bg-slate-200 text-[#0F0C3B] rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start sm:self-auto"
+            className="px-3.5 py-2 bg-surface-sunken hover:bg-surface-sunken text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 self-start sm:self-auto"
           >
             <CheckCheck className="w-4 h-4 text-brand-primary" /> Mark All as Read
           </button>
@@ -204,7 +204,7 @@ export default function UserNotificationsPage() {
             onClick={() => setFilterType(tab)}
             className={`px-3 py-1.5 rounded-lg capitalize transition-all whitespace-nowrap ${
               filterType === tab
-                ? "bg-[#0F0C3B] text-foreground font-bold"
+                ? "bg-brand text-foreground font-bold"
                 : "text-foreground-secondary hover:bg-surface-sunken"
             }`}
           >
@@ -220,7 +220,7 @@ export default function UserNotificationsPage() {
             <div
               key={item.id}
               className={`p-4 sm:p-5 flex items-start justify-between gap-4 transition-colors ${
-                !item.read ? "bg-[#F8F9FD]" : "hover:bg-surface-elevated"
+                !item.read ? "bg-surface-elevated" : "hover:bg-surface-elevated"
               }`}
             >
               <div className="flex items-start gap-3.5">
@@ -230,7 +230,7 @@ export default function UserNotificationsPage() {
 
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <h3 className="text-xs font-bold text-[#0F0C3B]">{item.title}</h3>
+                    <h3 className="text-xs font-bold text-foreground">{item.title}</h3>
                     {!item.read && (
                       <span className="w-2 h-2 rounded-full bg-brand-primary" />
                     )}
@@ -244,7 +244,7 @@ export default function UserNotificationsPage() {
                 {item.actionUrl && (
                   <Link
                     href={item.actionUrl}
-                    className="px-3 py-1.5 bg-[#0F0C3B] hover:bg-indigo-900 text-foreground rounded-lg text-xs font-bold transition-all flex items-center gap-1 shadow-xs"
+                    className="px-3 py-1.5 bg-brand hover:bg-info-soft text-foreground rounded-lg text-xs font-bold transition-all flex items-center gap-1 shadow-xs"
                   >
                     {item.actionLabel || "View"} <ChevronRight className="w-3.5 h-3.5" />
                   </Link>
@@ -252,7 +252,7 @@ export default function UserNotificationsPage() {
 
                 <button
                   onClick={() => handleDelete(item.id)}
-                  className="p-1.5 text-foreground-muted hover:text-rose-600 rounded-lg hover:bg-rose-50 transition-colors"
+                  className="p-1.5 text-foreground-muted hover:text-danger rounded-lg hover:bg-danger-soft transition-colors"
                   title="Delete notification"
                 >
                   <Trash2 className="w-4 h-4" />
