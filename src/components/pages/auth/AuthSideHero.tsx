@@ -30,7 +30,7 @@ export default function AuthSideHero({
   stats,
 }: AuthSideHeroProps) {
   return (
-    <div className="relative hidden lg:flex flex-col justify-between w-full h-full min-h-[680px] p-8 xl:p-12 rounded-[28px] overflow-hidden shadow-2xl bg-[#090C19] text-white">
+    <div className="relative hidden lg:flex flex-col justify-between w-full h-full min-h-[680px] p-8 xl:p-12 rounded-[28px] overflow-hidden shadow-2xl bg-[#090C19] text-foreground">
       {/* Background Ambience Image with Rich Gradient Overlays */}
       <div 
         className="absolute inset-0 bg-cover bg-center mix-blend-luminosity opacity-40 scale-105 transition-transform duration-1000"
@@ -44,14 +44,14 @@ export default function AuthSideHero({
 
       {/* Top Badges */}
       <div className="relative z-10 flex flex-wrap items-center justify-between gap-3">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-medium text-amber-200">
-          <ShieldCheck className="w-3.5 h-3.5 text-amber-300" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface/10 backdrop-blur-md border border-white/15 text-xs font-medium text-amber-200">
+          <ShieldCheck className="w-3.5 h-3.5 text-warning" />
           <span>{badge}</span>
         </div>
 
         {vaultScore && (
           <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md border border-gold/30 text-xs font-semibold text-gold-300">
-            <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+            <Star className="w-3.5 h-3.5 text-warning fill-amber-400" />
             <span>{vaultScore}</span>
           </div>
         )}
@@ -64,21 +64,21 @@ export default function AuthSideHero({
           <span>Financially Protected Gatherings</span>
         </div>
 
-        <h2 className="font-serif text-3xl xl:text-4xl 2xl:text-5xl font-bold leading-[1.15] text-white tracking-tight">
+        <h2 className="font-serif text-3xl xl:text-4xl 2xl:text-5xl font-bold leading-[1.15] text-foreground tracking-tight">
           {headline}
         </h2>
 
-        <p className="text-slate-300 text-sm xl:text-base leading-relaxed font-normal">
+        <p className="text-foreground-secondary text-sm xl:text-base leading-relaxed font-normal">
           {subheadline}
         </p>
 
         {/* Optional Stats row */}
         {stats && stats.length > 0 && (
-          <div className="grid grid-cols-3 gap-4 pt-4 border-t border-white/10">
+          <div className="grid grid-cols-3 gap-4 pt-4 border-t border-border">
             {stats.map((s, idx) => (
               <div key={idx} className="space-y-0.5">
                 <div className="font-serif text-2xl font-bold text-gold-300">{s.value}</div>
-                <div className="text-[11px] text-slate-400 uppercase tracking-wider">{s.label}</div>
+                <div className="text-[11px] text-foreground-muted uppercase tracking-wider">{s.label}</div>
               </div>
             ))}
           </div>
@@ -86,13 +86,13 @@ export default function AuthSideHero({
       </div>
 
       {/* Bottom Testimonial Box */}
-      <div className="relative z-10 p-5 rounded-2xl bg-white/[0.08] backdrop-blur-xl border border-white/15 shadow-xl space-y-3">
+      <div className="relative z-10 p-5 rounded-2xl bg-surface/[0.08] backdrop-blur-xl border border-white/15 shadow-xl space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1">
             {[...Array(5)].map((_, i) => (
-              <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+              <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-warning" />
             ))}
-            <span className="text-xs font-semibold text-slate-200 ml-1.5">{badgeLabel}</span>
+            <span className="text-xs font-semibold text-foreground-secondary ml-1.5">{badgeLabel}</span>
           </div>
 
           <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded bg-gold-500/20 text-gold-300 border border-gold-500/30">
@@ -100,22 +100,22 @@ export default function AuthSideHero({
           </span>
         </div>
 
-        <p className="text-xs xl:text-sm text-slate-200 italic leading-relaxed">
+        <p className="text-xs xl:text-sm text-foreground-secondary italic leading-relaxed">
           &ldquo;{quote}&rdquo;
         </p>
 
-        <div className="flex items-center justify-between pt-2 border-t border-white/10 text-xs">
+        <div className="flex items-center justify-between pt-2 border-t border-border text-xs">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-gold-600 to-gold-400 text-obsidian font-bold flex items-center justify-center text-xs shadow-sm">
               {authorName.slice(0, 2).toUpperCase()}
             </div>
             <div>
-              <div className="font-semibold text-white">{authorName}</div>
-              <div className="text-[11px] text-slate-400">{authorRole}</div>
+              <div className="font-semibold text-foreground">{authorName}</div>
+              <div className="text-[11px] text-foreground-muted">{authorRole}</div>
             </div>
           </div>
 
-          <div className="flex items-center gap-1 text-[11px] text-emerald-400 font-medium">
+          <div className="flex items-center gap-1 text-[11px] text-success font-medium">
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>Escrow Released</span>
           </div>

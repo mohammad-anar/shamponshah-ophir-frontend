@@ -57,7 +57,7 @@ export default function ResetPasswordPage() {
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-6xl">
           {/* Left: Reset Password Form Card */}
           <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-center">
-            <div className="w-full max-w-md mx-auto bg-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-luxury border border-[#EAE6DF] space-y-6">
+            <div className="w-full max-w-md mx-auto bg-surface rounded-3xl p-6 sm:p-8 lg:p-10 shadow-luxury border border-[#EAE6DF] space-y-6">
               {/* Shield Icon */}
               <div className="w-12 h-12 rounded-2xl bg-[#EEF2FF] text-[#3730A3] flex items-center justify-center shadow-xs">
                 <ShieldCheck className="w-6 h-6" />
@@ -68,7 +68,7 @@ export default function ResetPasswordPage() {
                 <h1 className="font-serif text-3xl sm:text-4xl font-bold text-obsidian tracking-tight">
                   Set new password
                 </h1>
-                <p className="text-slate-500 text-xs sm:text-sm">
+                <p className="text-foreground-muted text-xs sm:text-sm">
                   Choose a strong, unique password to secure your celebration bookings and escrow vault.
                 </p>
               </div>
@@ -76,7 +76,7 @@ export default function ResetPasswordPage() {
               {/* Form Fields */}
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-slate-700">
+                  <label className="block text-xs font-semibold text-foreground-secondary">
                     New password
                   </label>
                   <div className="relative">
@@ -86,20 +86,20 @@ export default function ResetPasswordPage() {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••••••"
-                      className="w-full h-11 px-3.5 pr-10 text-sm bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-white focus:border-gold-500 focus:outline-none transition-all"
+                      className="w-full h-11 px-3.5 pr-10 text-sm bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-surface focus:border-gold-500 focus:outline-none transition-all"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-obsidian"
+                      className="absolute right-3.5 top-1/2 -translate-y-1/2 text-foreground-muted hover:text-obsidian"
                     >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4 text-slate-600" />}
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4 text-foreground-secondary" />}
                     </button>
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-semibold text-slate-700">
+                  <label className="block text-xs font-semibold text-foreground-secondary">
                     Confirm new password
                   </label>
                   <div className="relative">
@@ -109,31 +109,31 @@ export default function ResetPasswordPage() {
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       placeholder="••••••••••••"
-                      className="w-full h-11 px-3.5 pr-10 text-sm bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-white focus:border-gold-500 focus:outline-none transition-all"
+                      className="w-full h-11 px-3.5 pr-10 text-sm bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-surface focus:border-gold-500 focus:outline-none transition-all"
                     />
                     {isMatch && (
-                      <CheckCircle2 className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-600" />
+                      <CheckCircle2 className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-success" />
                     )}
                   </div>
                 </div>
 
                 {/* Password Requirements */}
                 <div className="p-3.5 rounded-xl bg-[#F8F7F4] border border-[#EAE6DF] space-y-1.5 text-xs">
-                  <div className="font-semibold text-slate-700">Password requirements:</div>
-                  <div className="space-y-1 text-slate-500">
-                    <div className={cn("flex items-center gap-1.5", isLengthValid && "text-emerald-600 font-medium")}>
+                  <div className="font-semibold text-foreground-secondary">Password requirements:</div>
+                  <div className="space-y-1 text-foreground-muted">
+                    <div className={cn("flex items-center gap-1.5", isLengthValid && "text-success font-medium")}>
                       <Check className="w-3.5 h-3.5" />
                       <span>At least 8 characters long</span>
                     </div>
-                    <div className={cn("flex items-center gap-1.5", hasNumber && "text-emerald-600 font-medium")}>
+                    <div className={cn("flex items-center gap-1.5", hasNumber && "text-success font-medium")}>
                       <Check className="w-3.5 h-3.5" />
                       <span>Includes at least one number</span>
                     </div>
-                    <div className={cn("flex items-center gap-1.5", hasSymbol && "text-emerald-600 font-medium")}>
+                    <div className={cn("flex items-center gap-1.5", hasSymbol && "text-success font-medium")}>
                       <Check className="w-3.5 h-3.5" />
                       <span>Includes at least one special symbol</span>
                     </div>
-                    <div className={cn("flex items-center gap-1.5", isMatch && "text-emerald-600 font-medium")}>
+                    <div className={cn("flex items-center gap-1.5", isMatch && "text-success font-medium")}>
                       <Check className="w-3.5 h-3.5" />
                       <span>Passwords match</span>
                     </div>
@@ -144,7 +144,7 @@ export default function ResetPasswordPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full h-12 flex items-center justify-center gap-2 bg-[#4F46E5] hover:bg-[#4338CA] active:scale-99 text-white font-semibold rounded-xl shadow-md transition-all mt-2"
+                  className="w-full h-12 flex items-center justify-center gap-2 bg-[#4F46E5] hover:bg-[#4338CA] active:scale-99 text-foreground font-semibold rounded-xl shadow-md transition-all mt-2"
                 >
                   {isLoading ? (
                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -158,7 +158,7 @@ export default function ResetPasswordPage() {
               </form>
 
               {/* Back to sign in */}
-              <div className="pt-2 text-center text-xs text-slate-600 border-t border-[#EAE6DF]">
+              <div className="pt-2 text-center text-xs text-foreground-secondary border-t border-[#EAE6DF]">
                 <span>Remember your old password? </span>
                 <Link
                   href="/login"

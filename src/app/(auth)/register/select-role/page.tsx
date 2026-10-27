@@ -29,14 +29,14 @@ export default function SelectRolePage() {
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-6xl">
           {/* Left: Role Selection Form Card */}
           <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-center">
-            <div className="w-full max-w-md mx-auto bg-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-luxury border border-[#EAE6DF] space-y-6">
+            <div className="w-full max-w-md mx-auto bg-surface rounded-3xl p-6 sm:p-8 lg:p-10 shadow-luxury border border-[#EAE6DF] space-y-6">
               {/* Step indicator */}
               <div className="flex items-center justify-between">
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EEF2FF] text-[#3730A3] text-xs font-bold uppercase tracking-wider">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#3730A3]" />
                   STEP 2 OF 3
                 </span>
-                <span className="text-xs font-semibold text-slate-400">
+                <span className="text-xs font-semibold text-foreground-muted">
                   Escrow Ready Setup
                 </span>
               </div>
@@ -46,7 +46,7 @@ export default function SelectRolePage() {
                 <h1 className="font-serif text-3xl sm:text-4xl font-bold text-obsidian tracking-tight">
                   How will you use Ophir Reserve?
                 </h1>
-                <p className="text-slate-500 text-xs sm:text-sm">
+                <p className="text-foreground-muted text-xs sm:text-sm">
                   Select how you&apos;d like to get started. You can hire or offer verified services from within one unified ecosystem.
                 </p>
               </div>
@@ -60,7 +60,7 @@ export default function SelectRolePage() {
                     "relative p-4 sm:p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between space-y-3",
                     selectedRole === "client"
                       ? "bg-[#FAF9F5] border-[#0F1228] shadow-sm"
-                      : "bg-white border-[#EAE6DF] hover:border-slate-300"
+                      : "bg-surface border-[#EAE6DF] hover:border-border"
                   )}
                 >
                   <div className="flex items-start justify-between">
@@ -72,8 +72,8 @@ export default function SelectRolePage() {
                       className={cn(
                         "w-6 h-6 rounded-full flex items-center justify-center transition-all",
                         selectedRole === "client"
-                          ? "bg-[#0F1228] text-white"
-                          : "border-2 border-slate-300 bg-white"
+                          ? "bg-[#0F1228] text-foreground"
+                          : "border-2 border-border bg-surface"
                       )}
                     >
                       {selectedRole === "client" && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -84,12 +84,12 @@ export default function SelectRolePage() {
                     <h3 className="font-serif font-bold text-base text-obsidian">
                       I want to hire
                     </h3>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
+                    <p className="text-[11px] text-foreground-muted mt-0.5">
                       Find vendors & plan milestone celebrations.
                     </p>
                   </div>
 
-                  <div className="space-y-1.5 pt-1 text-[11px] text-slate-700">
+                  <div className="space-y-1.5 pt-1 text-[11px] text-foreground-secondary">
                     <div className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
                       <span>FDIC milestone escrow</span>
@@ -112,7 +112,7 @@ export default function SelectRolePage() {
                     "relative p-4 sm:p-5 rounded-2xl border-2 cursor-pointer transition-all flex flex-col justify-between space-y-3",
                     selectedRole === "vendor"
                       ? "bg-[#FAF9F5] border-[#0F1228] shadow-sm"
-                      : "bg-white border-[#EAE6DF] hover:border-slate-300"
+                      : "bg-surface border-[#EAE6DF] hover:border-border"
                   )}
                 >
                   <div className="flex items-start justify-between">
@@ -124,8 +124,8 @@ export default function SelectRolePage() {
                       className={cn(
                         "w-6 h-6 rounded-full flex items-center justify-center transition-all",
                         selectedRole === "vendor"
-                          ? "bg-[#0F1228] text-white"
-                          : "border-2 border-slate-300 bg-white"
+                          ? "bg-[#0F1228] text-foreground"
+                          : "border-2 border-border bg-surface"
                       )}
                     >
                       {selectedRole === "vendor" && <Check className="w-3.5 h-3.5 stroke-[3]" />}
@@ -136,12 +136,12 @@ export default function SelectRolePage() {
                     <h3 className="font-serif font-bold text-base text-obsidian">
                       I offer services
                     </h3>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
+                    <p className="text-[11px] text-foreground-muted mt-0.5">
                       Get booked and scale creative vendor operations.
                     </p>
                   </div>
 
-                  <div className="space-y-1.5 pt-1 text-[11px] text-slate-700">
+                  <div className="space-y-1.5 pt-1 text-[11px] text-foreground-secondary">
                     <div className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-amber-600 flex-shrink-0" />
                       <span>0% commission on gigs</span>
@@ -159,8 +159,8 @@ export default function SelectRolePage() {
               </div>
 
               {/* Escrow Guarantee Callout */}
-              <div className="p-3.5 rounded-xl bg-[#F8F7F4] border border-[#EAE6DF] text-xs text-slate-600 flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-lg bg-white border border-[#E2DDD3] flex items-center justify-center flex-shrink-0 text-slate-700">
+              <div className="p-3.5 rounded-xl bg-[#F8F7F4] border border-[#EAE6DF] text-xs text-foreground-secondary flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg bg-surface border border-[#E2DDD3] flex items-center justify-center flex-shrink-0 text-foreground-secondary">
                   <Lock className="w-3.5 h-3.5" />
                 </div>
                 <div>
@@ -172,7 +172,7 @@ export default function SelectRolePage() {
               <button
                 type="button"
                 onClick={handleContinue}
-                className="w-full h-12 flex items-center justify-center gap-2 bg-[#0F1228] hover:bg-[#1A1F40] active:scale-99 text-white font-semibold rounded-xl shadow-md transition-all"
+                className="w-full h-12 flex items-center justify-center gap-2 bg-[#0F1228] hover:bg-[#1A1F40] active:scale-99 text-foreground font-semibold rounded-xl shadow-md transition-all"
               >
                 <span>
                   {selectedRole === "client" ? "Continue with Client Account" : "Continue with Vendor Studio"}
@@ -180,12 +180,12 @@ export default function SelectRolePage() {
                 <ArrowRight className="w-4 h-4" />
               </button>
 
-              <p className="text-center text-[11px] text-slate-400">
+              <p className="text-center text-[11px] text-foreground-muted">
                 You can switch roles or run dual accounts anytime from settings.
               </p>
 
               {/* Bottom Sign In Link */}
-              <div className="pt-2 text-center text-xs text-slate-600 border-t border-[#EAE6DF]">
+              <div className="pt-2 text-center text-xs text-foreground-secondary border-t border-[#EAE6DF]">
                 <span>Already have an account? </span>
                 <Link
                   href="/login"

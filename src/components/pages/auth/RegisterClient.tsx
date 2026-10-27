@@ -264,7 +264,7 @@ export default function RegisterClient() {
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch max-w-6xl">
           {/* Left Column: Sign Up Form Card */}
           <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-center">
-            <div className="w-full max-w-md mx-auto bg-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-luxury border border-[#EAE6DF] space-y-6">
+            <div className="w-full max-w-md mx-auto bg-surface rounded-3xl p-6 sm:p-8 lg:p-10 shadow-luxury border border-[#EAE6DF] space-y-6">
               
               {/* STATE A: "Check your email" after signup */}
               {registeredEmail ? (
@@ -275,13 +275,13 @@ export default function RegisterClient() {
 
                   <div className="space-y-1.5">
                     <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-success-solid text-white" />
                       Registration Received
                     </span>
                     <h1 className="font-serif text-3xl font-bold text-obsidian tracking-tight">
                       Check your email
                     </h1>
-                    <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                    <p className="text-foreground-muted text-xs sm:text-sm leading-relaxed">
                       We sent a 6-digit verification code to{" "}
                       <span className="font-semibold text-obsidian">{registeredEmail}</span>.
                       Enter the code below to activate your account.
@@ -291,7 +291,7 @@ export default function RegisterClient() {
                   {isVerifiedSuccess ? (
                     <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs space-y-2">
                       <div className="flex items-center gap-2 font-bold text-sm text-emerald-950">
-                        <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                        <CheckCircle2 className="w-5 h-5 text-success" />
                         <span>Account Activated!</span>
                       </div>
                       <p className="text-emerald-800">
@@ -313,7 +313,7 @@ export default function RegisterClient() {
                             value={digit}
                             onChange={(e) => handleOtpChange(idx, e.target.value)}
                             onKeyDown={(e) => handleOtpKeyDown(idx, e)}
-                            className="w-full aspect-square text-center font-bold text-lg sm:text-xl text-obsidian bg-[#F9F8F5] border border-[#E2DDD3] focus:border-[#0F1228] focus:bg-white rounded-xl focus:outline-none transition-all shadow-xs"
+                            className="w-full aspect-square text-center font-bold text-lg sm:text-xl text-obsidian bg-[#F9F8F5] border border-[#E2DDD3] focus:border-[#0F1228] focus:bg-surface rounded-xl focus:outline-none transition-all shadow-xs"
                           />
                         ))}
                       </div>
@@ -321,7 +321,7 @@ export default function RegisterClient() {
                       <button
                         type="submit"
                         disabled={isVerifyingOtp}
-                        className="w-full h-12 flex items-center justify-center gap-2 bg-[#0B0C0E] hover:bg-[#1A1D24] text-white font-semibold rounded-xl shadow-md transition-all active:scale-99 cursor-pointer disabled:opacity-50"
+                        className="w-full h-12 flex items-center justify-center gap-2 bg-[#0B0C0E] hover:bg-[#1A1D24] text-foreground font-semibold rounded-xl shadow-md transition-all active:scale-99 cursor-pointer disabled:opacity-50"
                       >
                         {isVerifyingOtp ? (
                           <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -334,9 +334,9 @@ export default function RegisterClient() {
                       </button>
 
                       {/* Resend Verification Option */}
-                      <div className="pt-2 border-t border-[#EAE6DF] flex items-center justify-between text-xs text-slate-500">
+                      <div className="pt-2 border-t border-[#EAE6DF] flex items-center justify-between text-xs text-foreground-muted">
                         <div className="flex items-center gap-1.5">
-                          <Clock className="w-3.5 h-3.5 text-slate-400" />
+                          <Clock className="w-3.5 h-3.5 text-foreground-muted" />
                           {resendCooldown > 0 ? (
                             <span>
                               Resend code in{" "}
@@ -361,7 +361,7 @@ export default function RegisterClient() {
                             setRegisteredEmail(null);
                             setOtp(["", "", "", "", "", ""]);
                           }}
-                          className="font-semibold text-slate-600 hover:text-obsidian hover:underline cursor-pointer"
+                          className="font-semibold text-foreground-secondary hover:text-obsidian hover:underline cursor-pointer"
                         >
                           Edit details
                         </button>
@@ -381,11 +381,11 @@ export default function RegisterClient() {
                       className={cn(
                         "py-2.5 px-3 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 select-none",
                         activeRole === "client"
-                          ? "bg-[#0B0C0E] text-white shadow-sm"
-                          : "text-slate-600 hover:text-slate-900 bg-transparent hover:bg-white/50"
+                          ? "bg-[#0B0C0E] text-foreground shadow-sm"
+                          : "text-foreground-secondary hover:text-foreground bg-transparent hover:bg-surface/50"
                       )}
                     >
-                      <User className={cn("w-3.5 h-3.5", activeRole === "client" ? "text-[#DFB76C]" : "text-slate-400")} />
+                      <User className={cn("w-3.5 h-3.5", activeRole === "client" ? "text-[#DFB76C]" : "text-foreground-muted")} />
                       <span>Register as a Client</span>
                     </button>
 
@@ -396,11 +396,11 @@ export default function RegisterClient() {
                       className={cn(
                         "py-2.5 px-3 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 select-none",
                         activeRole === "vendor"
-                          ? "bg-[#0B0C0E] text-white shadow-sm"
-                          : "text-slate-600 hover:text-slate-900 bg-transparent hover:bg-white/50"
+                          ? "bg-[#0B0C0E] text-foreground shadow-sm"
+                          : "text-foreground-secondary hover:text-foreground bg-transparent hover:bg-surface/50"
                       )}
                     >
-                      <Store className={cn("w-3.5 h-3.5", activeRole === "vendor" ? "text-[#DFB76C]" : "text-slate-400")} />
+                      <Store className={cn("w-3.5 h-3.5", activeRole === "vendor" ? "text-[#DFB76C]" : "text-foreground-muted")} />
                       <span>Become a Vendor</span>
                     </button>
                   </div>
@@ -412,13 +412,13 @@ export default function RegisterClient() {
                         <Sparkles className="w-3 h-3 text-amber-600" />
                         {activeRole === "vendor" ? "Artisan Vendor Studio" : "Celebration Host"}
                       </span>
-                      <span className="text-[11px] text-slate-400 font-medium">Quick Onboarding</span>
+                      <span className="text-[11px] text-foreground-muted font-medium">Quick Onboarding</span>
                     </div>
 
                     <h1 className="font-serif text-2xl sm:text-3xl font-bold text-obsidian tracking-tight pt-1">
                       {activeRole === "vendor" ? "Join as a Verified Vendor" : "Create your Client Account"}
                     </h1>
-                    <p className="text-slate-500 text-xs sm:text-sm">
+                    <p className="text-foreground-muted text-xs sm:text-sm">
                       {activeRole === "vendor"
                         ? "Register your studio to publish milestone gigs and receive direct escrow bookings."
                         : "Post milestone event requests and reserve award-winning cultural artisans."}
@@ -449,7 +449,7 @@ export default function RegisterClient() {
                         toast.info("Connecting to Google authentication...");
                         setTimeout(() => router.push("/verify-email"), 800);
                       }}
-                      className="h-10 px-3 flex items-center justify-center gap-2 bg-[#F8F7F4] hover:bg-[#F2EFE8] border border-[#E2DDD3] text-slate-800 text-xs font-semibold rounded-xl transition-all shadow-2xs cursor-pointer"
+                      className="h-10 px-3 flex items-center justify-center gap-2 bg-[#F8F7F4] hover:bg-[#F2EFE8] border border-[#E2DDD3] text-foreground text-xs font-semibold rounded-xl transition-all shadow-2xs cursor-pointer"
                     >
                       <FcGoogle className="w-4 h-4 text-base" />
                       <span>Google</span>
@@ -461,7 +461,7 @@ export default function RegisterClient() {
                         toast.info("Connecting to Apple authentication...");
                         setTimeout(() => router.push("/verify-email"), 800);
                       }}
-                      className="h-10 px-3 flex items-center justify-center gap-2 bg-[#F8F7F4] hover:bg-[#F2EFE8] border border-[#E2DDD3] text-slate-800 text-xs font-semibold rounded-xl transition-all shadow-2xs cursor-pointer"
+                      className="h-10 px-3 flex items-center justify-center gap-2 bg-[#F8F7F4] hover:bg-[#F2EFE8] border border-[#E2DDD3] text-foreground text-xs font-semibold rounded-xl transition-all shadow-2xs cursor-pointer"
                     >
                       <FaApple className="w-4 h-4 text-base text-black" />
                       <span>Apple</span>
@@ -471,7 +471,7 @@ export default function RegisterClient() {
                   {/* Divider */}
                   <div className="relative flex items-center justify-center">
                     <div className="w-full border-t border-[#EAE6DF]" />
-                    <span className="absolute bg-white px-3 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                    <span className="absolute bg-surface px-3 text-[10px] font-bold text-foreground-muted uppercase tracking-widest">
                       OR REGISTER WITH EMAIL
                     </span>
                   </div>
@@ -491,8 +491,8 @@ export default function RegisterClient() {
 
                     {/* Full Name (Shared across both tabs) */}
                     <div className="space-y-1">
-                      <label className="block text-xs font-semibold text-slate-700">
-                        Full Name <span className="text-red-500">*</span>
+                      <label className="block text-xs font-semibold text-foreground-secondary">
+                        Full Name <span className="text-danger">*</span>
                       </label>
                       <div className="relative">
                         <input
@@ -501,9 +501,9 @@ export default function RegisterClient() {
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
                           placeholder="e.g. Sarah Jenkins"
-                          className="w-full h-11 px-3.5 pl-9 text-sm bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-white focus:border-[#0F1228] focus:outline-none transition-all"
+                          className="w-full h-11 px-3.5 pl-9 text-sm bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-surface focus:border-[#0F1228] focus:outline-none transition-all"
                         />
-                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
                       </div>
                     </div>
 
@@ -511,8 +511,8 @@ export default function RegisterClient() {
                     {activeRole === "vendor" && (
                       <div className="space-y-4 p-3.5 rounded-2xl bg-[#FBF9F5] border border-[#E8E4DA] animate-in fade-in duration-200">
                         <div className="space-y-1">
-                          <label className="block text-xs font-semibold text-slate-800">
-                            Studio / Business Display Name <span className="text-red-500">*</span>
+                          <label className="block text-xs font-semibold text-foreground">
+                            Studio / Business Display Name <span className="text-danger">*</span>
                           </label>
                           <div className="relative">
                             <input
@@ -521,14 +521,14 @@ export default function RegisterClient() {
                               value={businessName}
                               onChange={(e) => setBusinessName(e.target.value)}
                               placeholder="e.g. Luminary Cinematic Films"
-                              className="w-full h-11 px-3.5 pl-9 text-sm bg-white text-obsidian border border-[#DCD6C9] rounded-xl focus:border-[#0F1228] focus:outline-none transition-all"
+                              className="w-full h-11 px-3.5 pl-9 text-sm bg-surface text-obsidian border border-[#DCD6C9] rounded-xl focus:border-[#0F1228] focus:outline-none transition-all"
                             />
-                            <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                            <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
                           </div>
                         </div>
 
                         <div className="space-y-1">
-                          <label className="block text-xs font-semibold text-slate-800">
+                          <label className="block text-xs font-semibold text-foreground">
                             Contact Phone Number
                           </label>
                           <div className="relative">
@@ -537,11 +537,11 @@ export default function RegisterClient() {
                               value={phone}
                               onChange={(e) => setPhone(e.target.value)}
                               placeholder="e.g. +1 (512) 555-0199"
-                              className="w-full h-11 px-3.5 pl-9 text-sm bg-white text-obsidian border border-[#DCD6C9] rounded-xl focus:border-[#0F1228] focus:outline-none transition-all"
+                              className="w-full h-11 px-3.5 pl-9 text-sm bg-surface text-obsidian border border-[#DCD6C9] rounded-xl focus:border-[#0F1228] focus:outline-none transition-all"
                             />
-                            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                            <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
                           </div>
-                          <p className="text-[10px] text-slate-400 pt-0.5">
+                          <p className="text-[10px] text-foreground-muted pt-0.5">
                             Portfolio, bio, skills, and payout settings are completed right after signup from your vendor studio dashboard.
                           </p>
                         </div>
@@ -550,8 +550,8 @@ export default function RegisterClient() {
 
                     {/* Email Address (Shared across both tabs) */}
                     <div className="space-y-1">
-                      <label className="block text-xs font-semibold text-slate-700">
-                        Email Address <span className="text-red-500">*</span>
+                      <label className="block text-xs font-semibold text-foreground-secondary">
+                        Email Address <span className="text-danger">*</span>
                       </label>
                       <div className="relative">
                         <input
@@ -564,19 +564,19 @@ export default function RegisterClient() {
                           }}
                           placeholder="name@example.com"
                           className={cn(
-                            "w-full h-11 px-3.5 pl-9 pr-10 text-sm bg-[#F9F8F5] text-obsidian border rounded-xl focus:bg-white focus:outline-none transition-all",
+                            "w-full h-11 px-3.5 pl-9 pr-10 text-sm bg-[#F9F8F5] text-obsidian border rounded-xl focus:bg-surface focus:outline-none transition-all",
                             isEmailValid
                               ? "border-emerald-500 focus:border-emerald-600"
                               : "border-[#E2DDD3] focus:border-[#0F1228]"
                           )}
                         />
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
                         {isEmailValid && (
-                          <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-emerald-600" />
+                          <CheckCircle2 className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-success" />
                         )}
                       </div>
                       {isEmailValid && (
-                        <p className="text-[11px] text-emerald-600 font-medium flex items-center gap-1 pt-0.5">
+                        <p className="text-[11px] text-success font-medium flex items-center gap-1 pt-0.5">
                           <Check className="w-3 h-3 stroke-[3]" />
                           <span>Valid email format</span>
                         </p>
@@ -585,8 +585,8 @@ export default function RegisterClient() {
 
                     {/* Password Field with Show/Hide Toggle */}
                     <div className="space-y-1.5">
-                      <label className="block text-xs font-semibold text-slate-700">
-                        Password <span className="text-red-500">*</span>
+                      <label className="block text-xs font-semibold text-foreground-secondary">
+                        Password <span className="text-danger">*</span>
                       </label>
                       <div className="relative">
                         <input
@@ -595,15 +595,15 @@ export default function RegisterClient() {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="At least 8 characters"
-                          className="w-full h-11 px-3.5 pl-9 pr-10 text-sm bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-white focus:border-[#0F1228] focus:outline-none transition-all"
+                          className="w-full h-11 px-3.5 pl-9 pr-10 text-sm bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-surface focus:border-[#0F1228] focus:outline-none transition-all"
                         />
-                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
                         <button
                           type="button"
                           onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-obsidian cursor-pointer"
+                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-foreground-muted hover:text-obsidian cursor-pointer"
                         >
-                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4 text-slate-600" />}
+                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4 text-foreground-secondary" />}
                         </button>
                       </div>
 
@@ -615,19 +615,19 @@ export default function RegisterClient() {
                               <div
                                 className={cn(
                                   "h-1.5 flex-1 rounded-full transition-colors",
-                                  strengthScore >= 1 ? "bg-emerald-500" : "bg-slate-200"
+                                  strengthScore >= 1 ? "bg-success-solid text-white" : "bg-slate-200"
                                 )}
                               />
                               <div
                                 className={cn(
                                   "h-1.5 flex-1 rounded-full transition-colors",
-                                  strengthScore >= 2 ? "bg-emerald-500" : "bg-slate-200"
+                                  strengthScore >= 2 ? "bg-success-solid text-white" : "bg-slate-200"
                                 )}
                               />
                               <div
                                 className={cn(
                                   "h-1.5 flex-1 rounded-full transition-colors",
-                                  strengthScore >= 3 ? "bg-emerald-500" : "bg-slate-200"
+                                  strengthScore >= 3 ? "bg-success-solid text-white" : "bg-slate-200"
                                 )}
                               />
                             </div>
@@ -635,24 +635,24 @@ export default function RegisterClient() {
                               className={cn(
                                 "font-bold text-[10px]",
                                 strengthScore === 3
-                                  ? "text-emerald-600"
+                                  ? "text-success"
                                   : strengthScore === 2
                                   ? "text-amber-600"
-                                  : "text-slate-400"
+                                  : "text-foreground-muted"
                               )}
                             >
                               {strengthLabel}
                             </span>
                           </div>
 
-                          <div className="flex items-center gap-3 text-[10px] text-slate-500 pt-0.5">
-                            <span className={cn("flex items-center gap-1", isLengthValid ? "text-emerald-600 font-medium" : "text-slate-400")}>
+                          <div className="flex items-center gap-3 text-[10px] text-foreground-muted pt-0.5">
+                            <span className={cn("flex items-center gap-1", isLengthValid ? "text-success font-medium" : "text-foreground-muted")}>
                               <Check className="w-3 h-3 stroke-[3]" /> 8+ chars
                             </span>
-                            <span className={cn("flex items-center gap-1", hasNumber ? "text-emerald-600 font-medium" : "text-slate-400")}>
+                            <span className={cn("flex items-center gap-1", hasNumber ? "text-success font-medium" : "text-foreground-muted")}>
                               <Check className="w-3 h-3 stroke-[3]" /> Number
                             </span>
-                            <span className={cn("flex items-center gap-1", hasSymbol ? "text-emerald-600 font-medium" : "text-slate-400")}>
+                            <span className={cn("flex items-center gap-1", hasSymbol ? "text-success font-medium" : "text-foreground-muted")}>
                               <Check className="w-3 h-3 stroke-[3]" /> Symbol
                             </span>
                           </div>
@@ -662,8 +662,8 @@ export default function RegisterClient() {
 
                     {/* Confirm Password Field with Show/Hide Toggle */}
                     <div className="space-y-1">
-                      <label className="block text-xs font-semibold text-slate-700">
-                        Confirm Password <span className="text-red-500">*</span>
+                      <label className="block text-xs font-semibold text-foreground-secondary">
+                        Confirm Password <span className="text-danger">*</span>
                       </label>
                       <div className="relative">
                         <input
@@ -673,7 +673,7 @@ export default function RegisterClient() {
                           onChange={(e) => setConfirmPassword(e.target.value)}
                           placeholder="Re-enter password"
                           className={cn(
-                            "w-full h-11 px-3.5 pl-9 pr-10 text-sm bg-[#F9F8F5] text-obsidian border rounded-xl focus:bg-white focus:outline-none transition-all",
+                            "w-full h-11 px-3.5 pl-9 pr-10 text-sm bg-[#F9F8F5] text-obsidian border rounded-xl focus:bg-surface focus:outline-none transition-all",
                             passwordsMatch
                               ? "border-emerald-500 focus:border-emerald-600"
                               : passwordsMismatch
@@ -681,18 +681,18 @@ export default function RegisterClient() {
                               : "border-[#E2DDD3] focus:border-[#0F1228]"
                           )}
                         />
-                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
                         <button
                           type="button"
                           onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-obsidian cursor-pointer"
+                          className="absolute right-3.5 top-1/2 -translate-y-1/2 text-foreground-muted hover:text-obsidian cursor-pointer"
                         >
-                          {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4 text-slate-600" />}
+                          {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4 text-foreground-secondary" />}
                         </button>
                       </div>
 
                       {passwordsMatch && (
-                        <p className="text-[11px] text-emerald-600 font-medium flex items-center gap-1 pt-0.5">
+                        <p className="text-[11px] text-success font-medium flex items-center gap-1 pt-0.5">
                           <Check className="w-3 h-3 stroke-[3]" />
                           <span>Passwords match</span>
                         </p>
@@ -706,14 +706,14 @@ export default function RegisterClient() {
                     </div>
 
                     {/* Terms & Privacy Policy Checkbox (Mandatory) */}
-                    <div className="pt-2 text-xs text-slate-600">
+                    <div className="pt-2 text-xs text-foreground-secondary">
                       <label className="flex items-start gap-2.5 cursor-pointer select-none">
                         <input
                           type="checkbox"
                           required
                           checked={agreedTerms}
                           onChange={(e) => setAgreedTerms(e.target.checked)}
-                          className="w-4 h-4 mt-0.5 rounded border-slate-300 text-[#0B0C0E] focus:ring-0 cursor-pointer"
+                          className="w-4 h-4 mt-0.5 rounded border-border text-[#0B0C0E] focus:ring-0 cursor-pointer"
                         />
                         <span>
                           I agree to the{" "}
@@ -733,7 +733,7 @@ export default function RegisterClient() {
                     <button
                       type="submit"
                       disabled={isRegistering}
-                      className="w-full h-12 flex items-center justify-center gap-2 bg-[#0B0C0E] hover:bg-[#1A1D24] text-white font-semibold rounded-xl shadow-md transition-all active:scale-99 cursor-pointer mt-4 disabled:opacity-50"
+                      className="w-full h-12 flex items-center justify-center gap-2 bg-[#0B0C0E] hover:bg-[#1A1D24] text-foreground font-semibold rounded-xl shadow-md transition-all active:scale-99 cursor-pointer mt-4 disabled:opacity-50"
                     >
                       {isRegistering ? (
                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -749,7 +749,7 @@ export default function RegisterClient() {
                   </form>
 
                   {/* Bottom Log In Link */}
-                  <div className="pt-3 text-center text-xs text-slate-600 border-t border-[#EAE6DF]">
+                  <div className="pt-3 text-center text-xs text-foreground-secondary border-t border-[#EAE6DF]">
                     <span>Already have an account? </span>
                     <Link
                       href="/login"

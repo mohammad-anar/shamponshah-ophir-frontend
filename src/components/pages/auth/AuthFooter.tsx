@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function AuthFooter() {
   return (
-    <footer className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 border-t border-[#26282E] mt-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+    <footer className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 border-t border-[#26282E] mt-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-foreground-muted">
       <div>
         <p>© {new Date().getFullYear()} Ophir Technologies Inc. All rights reserved.</p>
       </div>
