@@ -247,7 +247,7 @@ export default function VendorSettingsPage() {
               />
             </div>
 
-            <div className="p-3 bg-success-soft rounded-xl border border-emerald-100 flex items-center justify-between">
+            <div className="p-3 bg-success-soft rounded-xl border border-success/30 flex items-center justify-between">
               <span className="text-success font-bold">W-9 Form Status</span>
               <span className="px-2 py-0.5 rounded-full bg-success-solid text-foreground text-foreground text-[10px] font-bold">
                 Active on File
