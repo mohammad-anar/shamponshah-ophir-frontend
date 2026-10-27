@@ -35,7 +35,7 @@ const MyFormOTP = ({
     <div className="flex flex-col justify-center gap-1">
       {/* Label */}
       {label && (
-        <p className={labelClassName || "ps-1 mb-2 text-[#101828] text-base font-normal leading-6"}>
+        <p className={labelClassName || "ps-1 mb-2 text-foreground text-base font-normal leading-6"}>
           {label}
         </p>
       )}
