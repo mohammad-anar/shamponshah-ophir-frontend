@@ -17,7 +17,7 @@ const User = () => {
       label: (
         <Title
           level={5}
-          className="!text-black !font-semibold !text-base !m-0"
+          className="!text-foreground !font-semibold !text-base !m-0"
           style={{ margin: 0 }}
         >
           Pamelam
