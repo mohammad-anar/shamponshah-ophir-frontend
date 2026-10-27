@@ -547,7 +547,7 @@ export default function AdminOrderMediationPage() {
                     name="decision"
                     checked={decision === "CANCEL_FULL_REFUND"}
                     onChange={() => setDecision("CANCEL_FULL_REFUND")}
-                    className="mt-1 accent-rose-500"
+                    className="mt-1 accent-danger"
                   />
                   <div className="text-xs">
                     <strong className="font-bold text-danger block">Cancel & Full Refund</strong>
@@ -572,7 +572,7 @@ export default function AdminOrderMediationPage() {
                     name="decision"
                     checked={decision === "PARTIAL_REFUND"}
                     onChange={() => setDecision("PARTIAL_REFUND")}
-                    className="mt-1 accent-purple-500"
+                    className="mt-1 accent-brand"
                   />
                   <div className="text-xs">
                     <strong className="font-bold text-info block">Partial Refund</strong>
@@ -597,7 +597,7 @@ export default function AdminOrderMediationPage() {
                     name="decision"
                     checked={decision === "REJECT_DISPUTE_RELEASE_VENDOR"}
                     onChange={() => setDecision("REJECT_DISPUTE_RELEASE_VENDOR")}
-                    className="mt-1 accent-emerald-500"
+                    className="mt-1 accent-success"
                   />
                   <div className="text-xs">
                     <strong className="font-bold text-success block">Reject Dispute & Release to Vendor</strong>
@@ -611,7 +611,7 @@ export default function AdminOrderMediationPage() {
               {/* Partial Refund Input if chosen */}
               {decision === "PARTIAL_REFUND" && (
                 <div className="p-4 bg-surface-elevated rounded-2xl border border-border-brand/30 space-y-3">
-                  <label className="text-xs font-bold text-purple-300 block">
+                  <label className="text-xs font-bold text-brand block">
                     Refund Amount to Client ($ USD):
                   </label>
                   <div className="relative">
