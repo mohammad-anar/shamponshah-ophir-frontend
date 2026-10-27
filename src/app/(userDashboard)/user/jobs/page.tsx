@@ -197,11 +197,11 @@ export default function UserJobsPage() {
 
       {/* Edit Job Modal */}
       {jobToEdit && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200 overflow-y-auto">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/60 backdrop-blur-xs animate-in fade-in duration-200 overflow-y-auto">
           <div className="bg-surface w-full max-w-xl rounded-2xl p-6 shadow-2xl border border-border space-y-4 my-8">
             <div className="flex items-start justify-between border-b border-border pb-3">
               <div>
-                <h3 className="text-base font-bold text-[#0F0C3B]">Edit Job RFP</h3>
+                <h3 className="text-base font-bold text-foreground">Edit Job RFP</h3>
                 <p className="text-xs text-foreground-muted mt-0.5">
                   Update celebration requirements before accepting bids
                 </p>
@@ -224,7 +224,7 @@ export default function UserJobsPage() {
                   value={editTitle}
                   onChange={(e) => setEditTitle(e.target.value)}
                   placeholder="e.g. Vintage Jazz Band & Saxophonist"
-                  className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-focus-ring"
                 />
               </div>
 
@@ -234,7 +234,7 @@ export default function UserJobsPage() {
                   <select
                     value={editOccasion}
                     onChange={(e) => setEditOccasion(e.target.value)}
-                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500 capitalize"
+                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-focus-ring capitalize"
                   >
                     {occasionOptions.map((occ) => (
                       <option key={occ.id} value={occ.id}>
@@ -250,7 +250,7 @@ export default function UserJobsPage() {
                     type="date"
                     value={editEventDate}
                     onChange={(e) => setEditEventDate(e.target.value)}
-                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-focus-ring"
                   />
                 </div>
               </div>
@@ -263,7 +263,7 @@ export default function UserJobsPage() {
                     value={editLocation}
                     onChange={(e) => setEditLocation(e.target.value)}
                     placeholder="e.g. Chicago, IL"
-                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-focus-ring"
                   />
                 </div>
 
@@ -274,7 +274,7 @@ export default function UserJobsPage() {
                     value={editGuestCount}
                     onChange={(e) => setEditGuestCount(e.target.value)}
                     placeholder="e.g. 100"
-                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-focus-ring"
                   />
                 </div>
               </div>
@@ -287,7 +287,7 @@ export default function UserJobsPage() {
                     value={editBudgetMin}
                     onChange={(e) => setEditBudgetMin(e.target.value)}
                     placeholder="50"
-                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-focus-ring"
                   />
                 </div>
 
@@ -298,7 +298,7 @@ export default function UserJobsPage() {
                     value={editBudgetMax}
                     onChange={(e) => setEditBudgetMax(e.target.value)}
                     placeholder="500"
-                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-focus-ring"
                   />
                 </div>
               </div>
@@ -310,7 +310,7 @@ export default function UserJobsPage() {
                   value={editDescription}
                   onChange={(e) => setEditDescription(e.target.value)}
                   placeholder="Describe your vision, timeline, and deliverables..."
-                  className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-focus-ring"
                 />
               </div>
 
@@ -321,7 +321,7 @@ export default function UserJobsPage() {
                   value={editSpecialRequests}
                   onChange={(e) => setEditSpecialRequests(e.target.value)}
                   placeholder="e.g. Requires wireless lavalier microphones"
-                  className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-border rounded-xl focus:outline-none focus:ring-1 focus:ring-focus-ring"
                 />
               </div>
 
@@ -337,7 +337,7 @@ export default function UserJobsPage() {
                 <button
                   type="submit"
                   disabled={isUpdating}
-                  className="px-5 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  className="px-5 py-2.5 rounded-xl bg-brand hover:bg-surface-sunken text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 >
                   {isUpdating ? (
                     <>
@@ -359,14 +359,14 @@ export default function UserJobsPage() {
 
       {/* Delete Confirmation Modal */}
       {jobToDelete && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/60 backdrop-blur-xs animate-in fade-in duration-200">
           <div className="bg-surface w-full max-w-md rounded-2xl p-6 shadow-2xl border border-border space-y-4">
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-danger-soft text-danger flex items-center justify-center shrink-0">
                 <Trash2 className="w-5 h-5" />
               </div>
               <div className="flex-1">
-                <h3 className="text-base font-bold text-[#0F0C3B]">Delete Job RFP?</h3>
+                <h3 className="text-base font-bold text-foreground">Delete Job RFP?</h3>
                 <p className="text-xs text-foreground-muted mt-1 leading-relaxed">
                   Are you sure you want to permanently delete{" "}
                   <span className="font-semibold text-foreground-secondary">&ldquo;{jobToDelete.title}&rdquo;</span>?
@@ -398,7 +398,7 @@ export default function UserJobsPage() {
                 type="button"
                 onClick={handleConfirmDelete}
                 disabled={isDeleting}
-                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 rounded-xl bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {isDeleting ? (
                   <>
@@ -419,14 +419,14 @@ export default function UserJobsPage() {
 
       {/* Confirmation Modal for Job Cancellation */}
       {jobToCancel && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/50 backdrop-blur-xs animate-in fade-in duration-200">
           <div className="bg-surface w-full max-w-md rounded-2xl p-6 shadow-2xl border border-border space-y-4">
             <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-xl bg-danger-soft text-danger flex items-center justify-center shrink-0">
                 <AlertTriangle className="w-5 h-5" />
               </div>
               <div className="flex-1">
-                <h3 className="text-base font-bold text-[#0F0C3B]">Cancel Job RFP?</h3>
+                <h3 className="text-base font-bold text-foreground">Cancel Job RFP?</h3>
                 <p className="text-xs text-foreground-muted mt-1 leading-relaxed">
                   Are you sure you want to cancel{" "}
                   <span className="font-semibold text-foreground-secondary">&ldquo;{jobToCancel.title}&rdquo;</span>?
@@ -458,7 +458,7 @@ export default function UserJobsPage() {
                 type="button"
                 onClick={handleConfirmCancel}
                 disabled={isCancelling}
-                className="px-4 py-2 rounded-xl bg-warning-solid text-on-brand hover:bg-amber-700 text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                className="px-4 py-2 rounded-xl bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
               >
                 {isCancelling ? (
                   <>
@@ -480,7 +480,7 @@ export default function UserJobsPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#0F0C3B]">My Jobs &amp; RFPs</h1>
+          <h1 className="text-2xl font-bold text-foreground">My Jobs &amp; RFPs</h1>
           <p className="text-xs text-foreground-muted mt-1">
             Compare received vendor proposals, review equipment checklists, or edit and delete open celebration requests
           </p>
@@ -488,7 +488,7 @@ export default function UserJobsPage() {
 
         <Link
           href="/user/post-job"
-          className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 self-start cursor-pointer"
+          className="px-4 py-2 rounded-xl bg-brand hover:bg-surface-sunken text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 self-start cursor-pointer"
         >
           <Plus className="w-3.5 h-3.5" /> Post Another Job
         </Link>
@@ -500,12 +500,12 @@ export default function UserJobsPage() {
           onClick={() => setActiveTab("ALL")}
           className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
             activeTab === "ALL"
-              ? "bg-[#0F0C3B] text-foreground shadow-xs"
+              ? "bg-brand text-foreground shadow-xs"
               : "text-foreground-secondary hover:bg-surface-sunken"
           }`}
         >
           <span>All RFPs</span>
-          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-slate-200/60 text-foreground-secondary">
+          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-surface-sunken/60 text-foreground-secondary">
             {allJobs.length}
           </span>
         </button>
@@ -514,12 +514,12 @@ export default function UserJobsPage() {
           onClick={() => setActiveTab("OPEN")}
           className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
             activeTab === "OPEN"
-              ? "bg-[#0F0C3B] text-foreground shadow-xs"
+              ? "bg-brand text-foreground shadow-xs"
               : "text-foreground-secondary hover:bg-surface-sunken"
           }`}
         >
           <span>Bidding Open</span>
-          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-emerald-100 text-emerald-800">
+          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-success-soft text-success">
             {countOpen}
           </span>
         </button>
@@ -528,12 +528,12 @@ export default function UserJobsPage() {
           onClick={() => setActiveTab("AWARDED")}
           className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
             activeTab === "AWARDED"
-              ? "bg-[#0F0C3B] text-foreground shadow-xs"
+              ? "bg-brand text-foreground shadow-xs"
               : "text-foreground-secondary hover:bg-surface-sunken"
           }`}
         >
           <span>Awarded</span>
-          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-purple-100 text-purple-800">
+          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-brand-soft text-purple-800">
             {countAwarded}
           </span>
         </button>
@@ -542,12 +542,12 @@ export default function UserJobsPage() {
           onClick={() => setActiveTab("CANCELLED")}
           className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
             activeTab === "CANCELLED"
-              ? "bg-[#0F0C3B] text-foreground shadow-xs"
+              ? "bg-brand text-foreground shadow-xs"
               : "text-foreground-secondary hover:bg-surface-sunken"
           }`}
         >
           <span>Cancelled</span>
-          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-rose-100 text-rose-800">
+          <span className="text-[10px] px-1.5 py-0.2 rounded-full bg-danger-soft text-danger">
             {countCancelled}
           </span>
         </button>
@@ -584,27 +584,27 @@ export default function UserJobsPage() {
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
                       {isCancelled ? (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-100 text-rose-700 flex items-center gap-1">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-danger-soft text-danger flex items-center gap-1">
                           <Ban className="w-3 h-3" /> Cancelled RFP
                         </span>
                       ) : hasAcceptedOffer ? (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-800 flex items-center gap-1">
-                          <CheckCircle2 className="w-3 h-3 text-purple-600" /> Contract Awarded
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-brand-soft text-purple-800 flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3 text-brand" /> Contract Awarded
                         </span>
                       ) : (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 flex items-center gap-1">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-success-soft text-success flex items-center gap-1">
                           <Clock className="w-3 h-3" /> Bidding Active
                         </span>
                       )}
 
                       {!isCancelled && !hasAcceptedOffer && (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-warning-soft text-warning">
                           {job.offers?.length || job._count?.offers || 0} Offers Received
                         </span>
                       )}
 
                       {hasAcceptedOffer && (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 flex items-center gap-1">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-success-soft text-success flex items-center gap-1">
                           <Check className="w-3 h-3 text-success" /> Offer Accepted
                         </span>
                       )}
@@ -615,7 +615,7 @@ export default function UserJobsPage() {
                         </span>
                       )}
                     </div>
-                    <h3 className="text-base font-bold text-[#0F0C3B] mt-1.5">{job.title}</h3>
+                    <h3 className="text-base font-bold text-foreground mt-1.5">{job.title}</h3>
                     <p className="text-foreground-muted mt-0.5">
                       Target: {job.eventDate ? new Date(job.eventDate).toLocaleDateString() : "TBD"} • {job.location || "USA"} • {job.guestCount || 0} guests
                     </p>
@@ -623,7 +623,7 @@ export default function UserJobsPage() {
 
                   <div className="text-left sm:text-right">
                     <span className="text-[10px] uppercase font-bold text-foreground-muted block">Target Budget</span>
-                    <span className="text-lg font-extrabold text-[#0F0C3B]">
+                    <span className="text-lg font-extrabold text-foreground">
                       ${Number(job.budgetMin || 0).toLocaleString()} - ${Number(job.budgetMax || 0).toLocaleString()}
                     </span>
                   </div>
@@ -632,12 +632,12 @@ export default function UserJobsPage() {
                 <div className="p-4 rounded-xl bg-surface-elevated border border-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div className="text-foreground-secondary font-medium">
                     {isCancelled ? (
-                      <span className="text-rose-600 font-medium flex items-center gap-1.5">
+                      <span className="text-danger font-medium flex items-center gap-1.5">
                         <XCircle className="w-4 h-4 shrink-0" />
                         This RFP was cancelled. No new proposals are accepted.
                       </span>
                     ) : hasAcceptedOffer ? (
-                      <span className="text-purple-700 font-medium flex items-center gap-1.5">
+                      <span className="text-brand font-medium flex items-center gap-1.5">
                         <ShieldCheck className="w-4 h-4 shrink-0 text-success" />
                         Vendor proposal accepted! Escrow contract is active.
                       </span>
@@ -667,7 +667,7 @@ export default function UserJobsPage() {
                       <button
                         type="button"
                         onClick={() => setJobToDelete(job)}
-                        className="px-3 py-2 rounded-xl border border-rose-200 hover:bg-rose-50 text-rose-600 hover:text-rose-700 font-bold text-xs transition-colors shadow-xs flex items-center gap-1.5 cursor-pointer"
+                        className="px-3 py-2 rounded-xl border border-danger/30 hover:bg-danger-soft text-danger hover:text-danger font-bold text-xs transition-colors shadow-xs flex items-center gap-1.5 cursor-pointer"
                         title="Delete this RFP permanently"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -689,7 +689,7 @@ export default function UserJobsPage() {
 
                         <Link
                           href="/user/orders"
-                          className="px-4 py-2 rounded-xl bg-success-solid text-white hover:bg-emerald-700 text-foreground font-bold text-xs transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer"
+                          className="px-4 py-2 rounded-xl bg-success-solid text-foreground hover:bg-success-solid text-white text-foreground font-bold text-xs transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer"
                         >
                           <ShieldCheck className="w-3.5 h-3.5 text-foreground" />
                           <span>View Order &amp; Milestones</span>
@@ -699,7 +699,7 @@ export default function UserJobsPage() {
                     ) : !isCancelled ? (
                       <button
                         onClick={() => handleOpenCompare(job)}
-                        className="px-4 py-2 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground font-bold text-xs transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer"
+                        className="px-4 py-2 rounded-xl bg-brand hover:bg-surface-sunken text-foreground font-bold text-xs transition-colors shadow-sm flex items-center gap-1.5 cursor-pointer"
                       >
                         <Sparkles className="w-3.5 h-3.5 text-warning" />
                         <span>Compare Offers</span>
@@ -714,10 +714,10 @@ export default function UserJobsPage() {
         ) : (
           /* Clean Empty State */
           <div className="bg-surface rounded-2xl p-12 border border-dashed border-border text-center space-y-3">
-            <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-brand-primary flex items-center justify-center mx-auto text-2xl font-bold">
+            <div className="w-14 h-14 rounded-2xl bg-info-soft text-brand-primary flex items-center justify-center mx-auto text-2xl font-bold">
               <Briefcase className="w-7 h-7 text-brand-primary" />
             </div>
-            <h3 className="text-base font-bold text-[#0F0C3B]">
+            <h3 className="text-base font-bold text-foreground">
               {activeTab === "ALL"
                 ? "No celebration RFPs found"
                 : `No ${activeTab.toLowerCase()} RFPs`}
@@ -728,7 +728,7 @@ export default function UserJobsPage() {
             <div className="pt-2">
               <Link
                 href="/user/post-job"
-                className="px-5 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold transition-all shadow-sm inline-flex items-center gap-1.5"
+                className="px-5 py-2.5 rounded-xl bg-brand hover:bg-surface-sunken text-foreground text-xs font-bold transition-all shadow-sm inline-flex items-center gap-1.5"
               >
                 <Plus className="w-3.5 h-3.5" /> Post Your First RFP
               </Link>
