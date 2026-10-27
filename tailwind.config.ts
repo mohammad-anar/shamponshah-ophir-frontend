@@ -8,7 +8,7 @@ export default {
     "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    // Sharp architectural edges across the entire design system
+    // Sharp architectural edges across the entire design system, while keeping avatars/profile pictures rounded
     borderRadius: {
       none: "0px",
       sm: "0px",
@@ -18,7 +18,7 @@ export default {
       xl: "0px",
       "2xl": "0px",
       "3xl": "0px",
-      full: "0px",
+      full: "9999px",
     },
     extend: {
       fontFamily: {
