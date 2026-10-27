@@ -145,7 +145,7 @@ export default function AdminEscrowReleaseModal({
                   onClick={() => setSelectedAction("release")}
                   className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                     selectedAction === "release"
-                      ? "bg-success-soft text-success border-success/30 text-foreground font-bold ring-1 ring-emerald-500"
+                      ? "bg-success-soft text-success border-success/30 text-foreground font-bold ring-1 ring-success"
                       : "bg-surface-elevated border-border text-foreground-secondary hover:border-border-strong"
                   }`}
                 >
@@ -159,7 +159,7 @@ export default function AdminEscrowReleaseModal({
                   onClick={() => setSelectedAction("full_refund")}
                   className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                     selectedAction === "full_refund"
-                      ? "bg-danger-soft text-danger border-rose-500 text-foreground font-bold ring-1 ring-danger"
+                      ? "bg-danger-soft text-danger border-danger text-foreground font-bold ring-1 ring-danger"
                       : "bg-surface-elevated border-border text-foreground-secondary hover:border-border-strong"
                   }`}
                 >
@@ -248,7 +248,7 @@ export default function AdminEscrowReleaseModal({
                   selectedAction === "release"
                     ? "bg-success-solid text-foreground hover:bg-success-solid text-foreground text-foreground"
                     : selectedAction === "full_refund"
-                    ? "bg-danger-solid text-white hover:bg-danger-solid text-foreground text-foreground"
+                    ? "bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground"
                     : "bg-brand hover:bg-brand-hover text-on-brand"
                 }`}
               >
