@@ -63,7 +63,7 @@ export default function ForPc() {
   };
 
   return (
-    <header className="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-[#0B0C0E]/95 backdrop-blur-md border-b border-[#26282E] shadow-2xl transition-all">
+    <header className="hidden lg:block fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-[#26282E] shadow-2xl transition-all">
       <div className="max-w-[1440px] mx-auto px-6 h-[72px] flex items-center justify-between gap-4">
         {/* Brand Logo & Global Search */}
         <div className="flex items-center gap-6">
@@ -86,7 +86,7 @@ export default function ForPc() {
                   if (e.key === "Escape") setIsSearchOpen(false);
                 }}
                 placeholder="Search artisans, traditions, services..."
-                className="w-full h-9 pl-9 pr-9 text-xs bg-[#121418] hover:bg-[#16181F] focus:bg-[#121418] text-white placeholder:text-[#94A3B8] rounded-none border border-[#26282E] focus:border-[#DFB76C] focus:outline-none transition-all"
+                className="w-full h-9 pl-9 pr-9 text-xs bg-[#121418] hover:bg-[#16181F] focus:bg-[#121418] text-foreground placeholder:text-[#94A3B8] rounded-none border border-[#26282E] focus:border-[#DFB76C] focus:outline-none transition-all"
               />
               {searchQuery && (
                 <button
@@ -95,7 +95,7 @@ export default function ForPc() {
                     setSearchQuery("");
                     setIsSearchOpen(false);
                   }}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-0.5 cursor-pointer"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground-muted hover:text-foreground p-0.5 cursor-pointer"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -108,7 +108,7 @@ export default function ForPc() {
                 className="absolute top-full left-0 right-0 mt-2 bg-[#121418] rounded-none shadow-2xl border border-[#26282E] z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150"
               >
                 {/* Header */}
-                <div className="px-3.5 py-2 bg-[#0B0C0E] border-b border-[#26282E] flex items-center justify-between text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
+                <div className="px-3.5 py-2 bg-[#0B0C0E] border-b border-[#26282E] flex items-center justify-between text-[11px] font-semibold text-foreground-muted uppercase tracking-wider">
                   <span>Matching Artisans & Services</span>
                   {isSearchingGigs && (
                     <span className="flex items-center gap-1 text-[#DFB76C]">
@@ -142,10 +142,10 @@ export default function ForPc() {
                         >
                           <div className="flex items-start justify-between gap-2">
                             <div className="min-w-0 flex-1">
-                              <p className="text-xs font-bold text-slate-200 group-hover:text-[#DFB76C] transition-colors line-clamp-1 font-serif">
+                              <p className="text-xs font-bold text-foreground-secondary group-hover:text-[#DFB76C] transition-colors line-clamp-1 font-serif">
                                 {service.title}
                               </p>
-                              <div className="flex items-center gap-2 mt-1 text-[11px] text-slate-400">
+                              <div className="flex items-center gap-2 mt-1 text-[11px] text-foreground-muted">
                                 {service.category?.name && (
                                   <span className="inline-block px-1.5 py-0.5 rounded-none bg-[#1E222A] text-[#DFB76C] font-medium text-[10px] uppercase tracking-wider">
                                     {service.category.name}
@@ -158,7 +158,7 @@ export default function ForPc() {
                             </div>
                             {price && (
                               <div className="text-right flex-shrink-0">
-                                <span className="text-[10px] text-slate-500 block font-medium uppercase tracking-wider">Starts at</span>
+                                <span className="text-[10px] text-foreground-muted block font-medium uppercase tracking-wider">Starts at</span>
                                 <span className="text-xs font-bold text-[#DFB76C] font-mono">${price}</span>
                               </div>
                             )}
@@ -167,7 +167,7 @@ export default function ForPc() {
                       );
                     })
                   ) : !isSearchingGigs ? (
-                    <div className="p-4 text-center text-xs text-slate-500">
+                    <div className="p-4 text-center text-xs text-foreground-muted">
                       No services matching &quot;{searchQuery}&quot;
                     </div>
                   ) : null}
@@ -194,7 +194,7 @@ export default function ForPc() {
               "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium transition-colors",
               pathname.startsWith("/services")
                 ? "text-[#DFB76C] font-bold"
-                : "text-slate-300 hover:text-[#DFB76C]"
+                : "text-foreground-secondary hover:text-[#DFB76C]"
             )}
           >
             Services
@@ -206,7 +206,7 @@ export default function ForPc() {
               "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium transition-colors",
               pathname.startsWith("/vendors")
                 ? "text-[#DFB76C] font-bold"
-                : "text-slate-300 hover:text-[#DFB76C]"
+                : "text-foreground-secondary hover:text-[#DFB76C]"
             )}
           >
             Artisans
@@ -215,7 +215,7 @@ export default function ForPc() {
           <Link
             href="/how-it-works"
             className={cn(
-              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium text-slate-300 hover:text-[#DFB76C] transition-colors",
+              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium text-foreground-secondary hover:text-[#DFB76C] transition-colors",
               pathname === "/how-it-works" && "text-[#DFB76C] font-bold"
             )}
           >
@@ -225,7 +225,7 @@ export default function ForPc() {
           <Link
             href="/help-center"
             className={cn(
-              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium text-slate-300 hover:text-[#DFB76C] transition-colors",
+              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium text-foreground-secondary hover:text-[#DFB76C] transition-colors",
               pathname === "/help-center" && "text-[#DFB76C] font-bold"
             )}
           >
@@ -257,14 +257,14 @@ export default function ForPc() {
             <>
               <Link
                 href="/signup?role=vendor"
-                className="px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-semibold text-slate-300 hover:text-[#DFB76C] transition-colors"
+                className="px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-semibold text-foreground-secondary hover:text-[#DFB76C] transition-colors"
               >
                 Become a Vendor
               </Link>
 
               <Link
                 href="/login"
-                className="px-3 py-2 text-xs uppercase tracking-[0.18em] font-semibold text-slate-300 hover:text-[#DFB76C] transition-colors"
+                className="px-3 py-2 text-xs uppercase tracking-[0.18em] font-semibold text-foreground-secondary hover:text-[#DFB76C] transition-colors"
               >
                 Sign In
               </Link>
