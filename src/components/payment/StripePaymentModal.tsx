@@ -24,14 +24,14 @@ export default function StripePaymentModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200">
       <div
-        className="relative w-full max-w-lg bg-[#0c0a1a] border border-warning/30 rounded-2xl shadow-2xl p-6 sm:p-7 text-foreground overflow-hidden my-8"
+        className="relative w-full max-w-lg bg-surface border border-border-brand/40 rounded-none shadow-2xl p-6 sm:p-7 text-foreground overflow-hidden my-8"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Glow Effects */}
-        <div className="absolute top-0 right-1/4 w-40 h-40 bg-warning-solid text-on-brand/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/4 w-40 h-40 bg-info-solid text-white/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-1/4 w-40 h-40 bg-brand/10 rounded-none blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/4 w-40 h-40 bg-brand/5 rounded-none blur-3xl pointer-events-none" />
 
         {/* Modal Header */}
         <div className="relative z-10 flex items-start justify-between pb-4 border-b border-border mb-5">
