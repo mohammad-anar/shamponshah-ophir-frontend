@@ -54,8 +54,8 @@ const navSections: NavSection[] = [
     items: [
       { label: "Overview", href: "/admin", icon: LayoutDashboard },
       { label: "Users", href: "/admin/users", icon: Users },
-      { label: "Vendor Approvals", href: "/admin/vendor-approvals", icon: UserCheck, badge: "0", badgeColor: "bg-warning-solid text-on-brand text-[#0B0C0E]" },
-      { label: "Pending Gigs", href: "/admin/gigs/pending", icon: Clock, badge: "0", badgeColor: "bg-amber-400 text-slate-950" },
+      { label: "Vendor Approvals", href: "/admin/vendor-approvals", icon: UserCheck, badge: "0", badgeColor: "bg-warning-solid text-on-brand text-on-brand" },
+      { label: "Pending Gigs", href: "/admin/gigs/pending", icon: Clock, badge: "0", badgeColor: "bg-warning-solid text-on-brand text-on-brand" },
       { label: "Gigs Catalog", href: "/admin/gigs", icon: ShoppingBag },
       { label: "Jobs & Bids", href: "/admin/jobs", icon: Briefcase },
     ],
@@ -72,8 +72,8 @@ const navSections: NavSection[] = [
   {
     title: "TRUST & SAFETY",
     items: [
-      { label: "Disputes", href: "/admin/disputes", icon: Scale, badge: "0", badgeColor: "bg-danger-solid text-white text-foreground" },
-      { label: "Service Reports", href: "/admin/reports", icon: AlertTriangle, badge: "0", badgeColor: "bg-danger-solid text-white text-foreground" },
+      { label: "Disputes", href: "/admin/disputes", icon: Scale, badge: "0", badgeColor: "bg-danger-solid text-foreground text-foreground" },
+      { label: "Service Reports", href: "/admin/reports", icon: AlertTriangle, badge: "0", badgeColor: "bg-danger-solid text-foreground text-foreground" },
       { label: "Reviews & Reports", href: "/admin/reviews-reports", icon: Star },
       { label: "Support Tickets", href: "/admin/support", icon: LifeBuoy },
     ],
@@ -139,20 +139,20 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
       {isOpen && (
         <div 
           onClick={onClose} 
-          className="fixed inset-0 bg-black/60 z-40 lg:hidden backdrop-blur-sm transition-opacity" 
+          className="fixed inset-0 bg-background/60 z-40 lg:hidden backdrop-blur-sm transition-opacity" 
         />
       )}
 
       <aside className={cn(
-        "fixed top-0 bottom-0 left-0 z-50 w-64 bg-[#121418] text-foreground flex flex-col transition-transform duration-300 ease-in-out border-r border-[#26282E] lg:translate-x-0",
+        "fixed top-0 bottom-0 left-0 z-50 w-64 bg-surface text-foreground flex flex-col transition-transform duration-300 ease-in-out border-r border-border lg:translate-x-0",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         {/* Brand header */}
-        <div className="h-16 flex items-center justify-between px-5 border-b border-[#26282E]">
+        <div className="h-16 flex items-center justify-between px-5 border-b border-border">
           <Logo variant="admin" href="/admin" />
           <button 
             onClick={onClose}
-            className="lg:hidden p-1.5 rounded-lg text-foreground-muted hover:text-foreground hover:bg-[#16181F]"
+            className="lg:hidden p-1.5 rounded-lg text-foreground-muted hover:text-foreground hover:bg-surface-elevated"
           >
             <X className="w-5 h-5" />
           </button>
@@ -162,7 +162,7 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
         <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6 custom-scrollbar">
           {dynamicSections.map((section) => (
             <div key={section.title}>
-              <p className="px-3 text-[11px] font-semibold text-[#DFB76C]/80 tracking-wider mb-2 uppercase">
+              <p className="px-3 text-[11px] font-semibold text-brand/80 tracking-wider mb-2 uppercase">
                 {section.title}
               </p>
               <div className="space-y-0.5">
@@ -177,12 +177,12 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
                       className={cn(
                         "flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all group",
                         isActive
-                          ? "bg-[#1A1D24] text-foreground border-l-4 border-[#DFB76C] font-semibold"
-                          : "text-foreground-muted hover:bg-[#16181F] hover:text-foreground"
+                          ? "bg-surface-sunken text-foreground border-l-4 border-border-brand font-semibold"
+                          : "text-foreground-muted hover:bg-surface-elevated hover:text-foreground"
                       )}
                     >
                       <div className="flex items-center gap-2.5">
-                        <Icon className={cn("w-4 h-4 transition-colors", isActive ? "text-[#DFB76C]" : "text-foreground-muted group-hover:text-foreground-secondary")} />
+                        <Icon className={cn("w-4 h-4 transition-colors", isActive ? "text-brand" : "text-foreground-muted group-hover:text-foreground-secondary")} />
                         <span>{item.label}</span>
                       </div>
                       {item.badge && (
@@ -199,9 +199,9 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
         </div>
 
         {/* Footer status */}
-        <div className="p-3 border-t border-[#26282E] bg-[#0B0C0E] flex items-center justify-between text-[11px] text-foreground-muted">
+        <div className="p-3 border-t border-border bg-background flex items-center justify-between text-[11px] text-foreground-muted">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-success-solid text-white animate-pulse" />
             <span>Internal Ops v2.4</span>
           </div>
           <Lock className="w-3.5 h-3.5 text-foreground-muted" />
