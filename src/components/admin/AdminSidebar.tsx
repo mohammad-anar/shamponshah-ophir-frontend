@@ -201,7 +201,7 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
         {/* Footer status */}
         <div className="p-3 border-t border-border bg-background flex items-center justify-between text-[11px] text-foreground-muted">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-success-solid text-white animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-success-solid text-foreground animate-pulse" />
             <span>Internal Ops v2.4</span>
           </div>
           <Lock className="w-3.5 h-3.5 text-foreground-muted" />
