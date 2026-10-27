@@ -21,17 +21,17 @@ export default function FaqAccordion() {
   };
 
   return (
-    <section className="w-full py-16 lg:py-24 bg-[#0B0C0E] border-t border-[#26282E]">
+    <section className="w-full py-16 lg:py-24 bg-background border-t border-border">
       <div className="max-w-4xl mx-auto px-6 space-y-10">
         {/* Section Header */}
         <div className="text-center space-y-2">
-          <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#DFB76C]">
+          <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-brand">
             GOVERNANCE & PROTOCOLS
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light text-foreground tracking-tight">
             Frequently Asked Questions
           </h2>
-          <p className="text-[#CBD5E1] text-xs sm:text-sm max-w-xl mx-auto font-light leading-relaxed">
+          <p className="text-foreground-muted text-xs sm:text-sm max-w-xl mx-auto font-light leading-relaxed">
             Everything you need to know about milestone escrow security, vendor vetting, and collaborative planning.
           </p>
         </div>
@@ -43,20 +43,20 @@ export default function FaqAccordion() {
             return (
               <div
                 key={idx}
-                className="bg-[#121418] border border-[#26282E] overflow-hidden transition-all"
+                className="bg-surface border border-border overflow-hidden transition-all"
               >
                 <button
                   type="button"
                   onClick={() => toggle(idx)}
-                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 hover:bg-[#1A1D24] transition-colors cursor-pointer"
+                  className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 hover:bg-surface-sunken transition-colors cursor-pointer"
                 >
                   <span className="font-serif text-base sm:text-lg text-foreground font-light">
                     {faq.q}
                   </span>
                   <div
                     className={cn(
-                      "w-8 h-8 bg-[#16181F] border border-[#26282E] flex items-center justify-center text-[#DFB76C] transition-transform duration-200 flex-shrink-0",
-                      isOpen && "rotate-180 bg-[#DFB76C] text-[#0B0C0E]"
+                      "w-8 h-8 bg-surface-elevated border border-border flex items-center justify-center text-brand transition-transform duration-200 flex-shrink-0",
+                      isOpen && "rotate-180 bg-brand text-on-brand"
                     )}
                   >
                     <ChevronDown className="w-4 h-4" />
@@ -64,7 +64,7 @@ export default function FaqAccordion() {
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 sm:px-6 pb-6 text-xs sm:text-sm text-[#CBD5E1] leading-relaxed border-t border-[#26282E] pt-4 font-light animate-in fade-in duration-200">
+                  <div className="px-5 sm:px-6 pb-6 text-xs sm:text-sm text-foreground-muted leading-relaxed border-t border-border pt-4 font-light animate-in fade-in duration-200">
                     {faq.a}
                   </div>
                 )}
