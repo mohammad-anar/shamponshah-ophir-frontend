@@ -186,6 +186,34 @@ export const paymentsApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["payments", "orders"],
     }),
+    payOrder: builder.mutation<
+      {
+        success: boolean;
+        orderId: string;
+        orderNumber?: string;
+        status: string;
+        paymentStatus: string;
+        amount: number;
+        platformFee: number;
+        vendorNet: number;
+      },
+      {
+        orderId: string;
+        paymentMethodId?: string;
+        cardNumber?: string;
+        cardExpiry?: string;
+        cardCvc?: string;
+        cardholderName?: string;
+        saveCard?: boolean;
+      }
+    >({
+      query: (body) => ({
+        url: "/payments/pay-order",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["payments", "orders", "vendors"],
+    }),
     getVendorWallet: builder.query<
       {
         walletId: string;
@@ -242,5 +270,6 @@ export const {
   useGetVendorDisputesQuery,
   useCreateOrderPaymentIntentMutation,
   useConfirmOrderPaymentMutation,
+  usePayOrderMutation,
   useGetVendorWalletQuery,
 } = paymentsApi;
