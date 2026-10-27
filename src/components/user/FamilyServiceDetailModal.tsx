@@ -174,7 +174,7 @@ export default function FamilyServiceDetailModal({
           {/* Modal Scrollable Content */}
           <div className="p-5 sm:p-6 overflow-y-auto space-y-6 flex-1 custom-scrollbar text-xs">
             {/* Celebration Event Assignment Bar */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-gradient-to-r from-indigo-50/80 to-purple-50/50 rounded-2xl border border-info/30">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 bg-gradient-to-r from-surface-elevated to-surface rounded-2xl border border-info/30">
               <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-xl bg-surface border border-info/30 flex items-center justify-center text-brand-primary shadow-xs">
                   <Calendar className="w-4 h-4 text-info" />
@@ -367,7 +367,7 @@ export default function FamilyServiceDetailModal({
                       onClose();
                     }
                   }}
-                  className="px-3.5 py-2 text-xs font-semibold text-danger hover:text-danger hover:bg-danger-soft rounded-xl transition-all flex items-center gap-1.5 border border-rose-100 mr-1"
+                  className="px-3.5 py-2 text-xs font-semibold text-danger hover:text-danger hover:bg-danger-soft rounded-xl transition-all flex items-center gap-1.5 border border-danger/30 mr-1"
                   title="Remove this service from hub"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
