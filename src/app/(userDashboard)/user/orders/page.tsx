@@ -122,7 +122,7 @@ export default function UserOrdersPage() {
               milestoneBadgeClass = "bg-danger-soft text-danger border border-danger/30";
             } else if (ord.status === "COMPLETED" && scheduledMs > 0) {
               milestoneStatusText = `Approved · ${scheduledMs} Transfer${scheduledMs === 1 ? "" : "s"} in 7-day hold`;
-              milestoneBadgeClass = "bg-info-soft text-blue-800 border border-info/30";
+              milestoneBadgeClass = "bg-info-soft text-info border border-info/30";
             } else if (ord.status === "COMPLETED" || (totalMs > 0 && releasedMs === totalMs)) {
               milestoneStatusText = "All Milestones Transferred";
               milestoneBadgeClass = "bg-success-soft text-success border border-success/30/60";
@@ -131,7 +131,7 @@ export default function UserOrdersPage() {
               milestoneBadgeClass = "bg-warning-soft text-warning border border-warning/30/60 animate-pulse";
             } else if (fundedMs > 0) {
               milestoneStatusText = `${fundedMs} of ${totalMs} Milestones Funded`;
-              milestoneBadgeClass = "bg-info-soft text-blue-800 border border-info/30/60";
+              milestoneBadgeClass = "bg-info-soft text-info border border-info/30/60";
             } else if (totalMs === 1) {
               milestoneStatusText = "1 Milestone • Payment Locked";
               milestoneBadgeClass = "bg-info-soft text-info border border-info/30";
