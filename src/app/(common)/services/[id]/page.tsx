@@ -154,8 +154,8 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
 
   if (isGigLoading) {
     return (
-      <div className="min-h-[75vh] bg-[#0B0C0E] flex flex-col items-center justify-center space-y-4">
-        <Loader2 className="w-10 h-10 text-[#DFB76C] animate-spin" />
+      <div className="min-h-[75vh] bg-background flex flex-col items-center justify-center space-y-4">
+        <Loader2 className="w-10 h-10 text-brand animate-spin" />
         <p className="text-xs uppercase tracking-widest text-foreground-muted font-bold">
           Loading ceremonial artisan service details...
         </p>
@@ -165,8 +165,8 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
 
   if (!service) {
     return (
-      <div className="min-h-[75vh] bg-[#0B0C0E] flex flex-col items-center justify-center p-6 text-center space-y-4">
-        <div className="w-14 h-14 rounded-none bg-[#121418] border border-[#26282E] flex items-center justify-center text-[#DFB76C]">
+      <div className="min-h-[75vh] bg-background flex flex-col items-center justify-center p-6 text-center space-y-4">
+        <div className="w-14 h-14 rounded-none bg-surface border border-border flex items-center justify-center text-brand">
           <AlertTriangle className="w-7 h-7" />
         </div>
         <h1 className="font-serif text-3xl font-light text-foreground">Ceremonial Service Not Found</h1>
@@ -175,7 +175,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
         </p>
         <Link
           href="/services"
-          className="mt-2 px-6 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold uppercase tracking-widest shadow-gold-glow-sm"
+          className="mt-2 px-6 py-2.5 bg-brand hover:bg-brand-hover text-on-brand text-xs font-bold uppercase tracking-widest shadow-gold-glow-sm"
         >
           Browse Service Directory
         </Link>
@@ -186,7 +186,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
   const activePackage = service.packages[selectedPackageIndex] || service.packages[0];
 
   return (
-    <div className="min-h-screen bg-[#0B0C0E] text-[#F3F4F6] pb-24">
+    <div className="min-h-screen bg-background text-foreground pb-24">
       {/* Add To Family Hub Modal */}
       {hubModalOpen && (
         <AddToFamilyHubModal
@@ -205,10 +205,10 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
 
       {/* Report Service Modal */}
       {reportModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-[#121418] border border-[#26282E] max-w-md w-full p-6 text-foreground space-y-4 shadow-2xl">
+        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-surface border border-border max-w-md w-full p-6 text-foreground space-y-4 shadow-2xl">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-danger-solid text-white/10 border border-danger/30 text-danger flex items-center justify-center">
+              <div className="w-10 h-10 bg-danger-solid text-foreground/10 border border-danger/30 text-danger flex items-center justify-center">
                 <Flag className="w-5 h-5" />
               </div>
               <div>
@@ -227,7 +227,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                 <select
                   value={reportReason}
                   onChange={(e) => setReportReason(e.target.value)}
-                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-foreground-secondary text-xs focus:border-[#DFB76C] outline-none"
+                  className="w-full p-2.5 bg-surface-sunken border border-border text-foreground-secondary text-xs focus:border-border-brand outline-none"
                 >
                   <option value="Misleading pricing or inaccurate deliverables">Misleading pricing or inaccurate deliverables</option>
                   <option value="Inappropriate or offensive content">Inappropriate or offensive content</option>
@@ -248,7 +248,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                   onChange={(e) => setReportDescription(e.target.value)}
                   placeholder="Explain clearly what violates platform terms, with relevant details..."
                   rows={4}
-                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-foreground-secondary text-xs focus:border-[#DFB76C] outline-none"
+                  className="w-full p-2.5 bg-surface-sunken border border-border text-foreground-secondary text-xs focus:border-border-brand outline-none"
                 />
               </div>
 
@@ -259,7 +259,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                   value={reporterName}
                   onChange={(e) => setReporterName(e.target.value)}
                   placeholder="Your full name"
-                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-foreground-secondary text-xs focus:border-[#DFB76C] outline-none"
+                  className="w-full p-2.5 bg-surface-sunken border border-border text-foreground-secondary text-xs focus:border-border-brand outline-none"
                 />
               </div>
 
@@ -270,7 +270,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                   value={reporterEmail}
                   onChange={(e) => setReporterEmail(e.target.value)}
                   placeholder="your.email@example.com"
-                  className="w-full p-2.5 bg-[#1A1D24] border border-[#26282E] text-foreground-secondary text-xs focus:border-[#DFB76C] outline-none"
+                  className="w-full p-2.5 bg-surface-sunken border border-border text-foreground-secondary text-xs focus:border-border-brand outline-none"
                 />
               </div>
             </div>
@@ -279,7 +279,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               <button
                 type="button"
                 onClick={() => setReportModalOpen(false)}
-                className="flex-1 py-2.5 border border-[#26282E] text-xs font-bold text-foreground-muted hover:text-foreground hover:bg-[#1A1D24] cursor-pointer"
+                className="flex-1 py-2.5 border border-border text-xs font-bold text-foreground-muted hover:text-foreground hover:bg-surface-sunken cursor-pointer"
               >
                 Cancel
               </button>
@@ -287,7 +287,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                 type="button"
                 onClick={handleSubmitReport}
                 disabled={isSubmittingReport}
-                className="flex-1 py-2.5 bg-rose-600 hover:bg-rose-700 text-foreground text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                className="flex-1 py-2.5 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
               >
                 {isSubmittingReport ? <Loader2 className="w-4 h-4 animate-spin" /> : <Flag className="w-4 h-4" />}
                 <span>Submit Report</span>
@@ -298,16 +298,16 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
       )}
 
       {/* Breadcrumb Navigation */}
-      <div className="bg-[#121418] border-b border-[#26282E]">
+      <div className="bg-surface border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
           <div className="flex items-center gap-2 text-xs text-foreground-muted flex-wrap">
-            <Link href="/" className="hover:text-[#DFB76C] transition-colors">Home</Link>
+            <Link href="/" className="hover:text-brand transition-colors">Home</Link>
             <ChevronRight className="w-3.5 h-3.5 text-foreground-secondary" />
-            <Link href="/services" className="hover:text-[#DFB76C] transition-colors">Services</Link>
+            <Link href="/services" className="hover:text-brand transition-colors">Services</Link>
             <ChevronRight className="w-3.5 h-3.5 text-foreground-secondary" />
             <span className="font-medium text-foreground-secondary">{service.category}</span>
             <ChevronRight className="w-3.5 h-3.5 text-foreground-secondary" />
-            <span className="font-bold text-[#DFB76C] truncate max-w-xs">{service.title}</span>
+            <span className="font-bold text-brand truncate max-w-xs">{service.title}</span>
           </div>
         </div>
       </div>
@@ -317,15 +317,15 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="space-y-2">
             <div className="flex items-center gap-2.5 flex-wrap">
-              <span className="px-3 py-1 rounded-none bg-[#121418] border border-border-brand/40 text-[#DFB76C] text-xs font-bold tracking-widest uppercase">
+              <span className="px-3 py-1 rounded-none bg-surface border border-border-brand/40 text-brand text-xs font-bold tracking-widest uppercase">
                 {service.category}
               </span>
-              <span className="px-2.5 py-1 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] text-xs font-bold flex items-center gap-1">
-                <Star className="w-3.5 h-3.5 fill-[#DFB76C] text-[#DFB76C]" />
+              <span className="px-2.5 py-1 rounded-none bg-surface-sunken border border-border text-brand text-xs font-bold flex items-center gap-1">
+                <Star className="w-3.5 h-3.5 fill-brand text-brand" />
                 {service.rating} ({service.reviewCount} verified ceremonies)
               </span>
               <span className="text-xs text-foreground-muted flex items-center gap-1 font-medium">
-                <MapPin className="w-3.5 h-3.5 text-[#DFB76C]" />
+                <MapPin className="w-3.5 h-3.5 text-brand" />
                 {service.location}
               </span>
             </div>
@@ -338,9 +338,9 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
           <div className="flex items-center gap-3">
             <button
               onClick={() => setHubModalOpen(true)}
-              className="px-4 py-2.5 rounded-none border border-[#26282E] bg-[#121418] hover:bg-[#1A1D24] text-[#DFB76C] text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-2xs"
+              className="px-4 py-2.5 rounded-none border border-border bg-surface hover:bg-surface-sunken text-brand text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-2xs"
             >
-              <Users2 className="w-4 h-4 text-[#DFB76C]" />
+              <Users2 className="w-4 h-4 text-brand" />
               <span>Collaborative Hub</span>
             </button>
 
@@ -349,7 +349,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                 navigator.clipboard.writeText(window.location.href);
                 toast.success("Service link copied to clipboard!");
               }}
-              className="p-2.5 rounded-none bg-[#121418] border border-[#26282E] text-foreground-secondary hover:text-[#DFB76C] transition-colors cursor-pointer"
+              className="p-2.5 rounded-none bg-surface border border-border text-foreground-secondary hover:text-brand transition-colors cursor-pointer"
               title="Share Service"
             >
               <Share2 className="w-4 h-4" />
@@ -357,7 +357,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
 
             <button
               onClick={() => setReportModalOpen(true)}
-              className="p-2.5 rounded-none bg-[#121418] border border-[#26282E] text-foreground-muted hover:text-danger hover:border-danger/30 transition-colors cursor-pointer"
+              className="p-2.5 rounded-none bg-surface border border-border text-foreground-muted hover:text-danger hover:border-danger/30 transition-colors cursor-pointer"
               title="Report this service"
             >
               <Flag className="w-4 h-4" />
@@ -372,9 +372,9 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
           {/* Left Column (8 cols): Gallery, Vendor Profile, Inclusions, Reviews */}
           <div className="lg:col-span-8 space-y-8">
             {/* Gallery Section */}
-            <div className="bg-[#121418] rounded-none p-4 sm:p-5 border border-[#26282E] shadow-xl space-y-3">
+            <div className="bg-surface rounded-none p-4 sm:p-5 border border-border shadow-xl space-y-3">
               {/* Main Active Image */}
-              <div className="relative h-72 sm:h-96 md:h-[440px] w-full rounded-none overflow-hidden bg-[#0B0C0E]">
+              <div className="relative h-72 sm:h-96 md:h-[440px] w-full rounded-none overflow-hidden bg-background">
                 <Image
                   src={service.images[activeImageIndex] || service.images[0]}
                   alt={service.title}
@@ -383,8 +383,8 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                   priority
                 />
                 <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 rounded-none bg-[#0B0C0E]/85 backdrop-blur-md text-[#DFB76C] border border-border-brand/40 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5">
-                    <Sparkles className="w-3 h-3 text-[#DFB76C]" />
+                  <span className="px-3 py-1 rounded-none bg-background/85 backdrop-blur-md text-brand border border-border-brand/40 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                    <Sparkles className="w-3 h-3 text-brand" />
                     Verified Portfolio
                   </span>
                 </div>
@@ -401,8 +401,8 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                         onClick={() => setActiveImageIndex(idx)}
                         className={`relative h-16 sm:h-20 rounded-none overflow-hidden border transition-all cursor-pointer ${
                           isActive
-                            ? "border-[#DFB76C] ring-1 ring-[#DFB76C]"
-                            : "border-[#26282E] opacity-70 hover:opacity-100"
+                            ? "border-border-brand ring-1 ring-focus-ring"
+                            : "border-border opacity-70 hover:opacity-100"
                         }`}
                       >
                         <Image src={img} alt={`View ${idx + 1}`} fill className="object-cover" />
@@ -414,10 +414,10 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
             </div>
 
             {/* Vendor Vendor Bio Card */}
-            <div className="bg-[#121418] rounded-none p-6 sm:p-7 border border-[#26282E] shadow-xl space-y-5">
+            <div className="bg-surface rounded-none p-6 sm:p-7 border border-border shadow-xl space-y-5">
               <div className="flex items-center justify-between gap-4 flex-wrap">
                 <div className="flex items-center gap-4">
-                  <div className="relative w-16 h-16 rounded-none overflow-hidden border border-[#26282E] shadow-sm shrink-0 bg-[#0B0C0E]">
+                  <div className="relative w-16 h-16 rounded-none overflow-hidden border border-border shadow-sm shrink-0 bg-background">
                     <Image
                       src={service.vendorAvatar}
                       alt={service.vendorName}
@@ -430,7 +430,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                       <h3 className="font-serif font-bold text-lg text-foreground">
                         {service.vendorName}
                       </h3>
-                      <span className="px-2 py-0.5 rounded-none text-[10px] font-bold uppercase tracking-wider bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40">
+                      <span className="px-2 py-0.5 rounded-none text-[10px] font-bold uppercase tracking-wider bg-surface-sunken text-brand border border-border-brand/40">
                         {service.vendorTier}
                       </span>
                     </div>
@@ -442,7 +442,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
 
                 <Link
                   href={`/vendors/${service.vendorId}`}
-                  className="px-4 py-2 rounded-none bg-[#1A1D24] hover:bg-[#22252F] text-xs font-bold uppercase tracking-wider text-foreground-secondary border border-[#26282E] transition-colors"
+                  className="px-4 py-2 rounded-none bg-surface-sunken hover:bg-surface-sunken text-xs font-bold uppercase tracking-wider text-foreground-secondary border border-border transition-colors"
                 >
                   View Artisan Profile
                 </Link>
@@ -453,25 +453,25 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               </p>
 
               {/* Service Assurance Badges */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-[#26282E] text-xs">
-                <div className="flex items-center gap-2.5 p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] text-foreground-secondary">
-                  <ShieldCheck className="w-4 h-4 text-[#DFB76C] shrink-0" />
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-border text-xs">
+                <div className="flex items-center gap-2.5 p-3 rounded-none bg-background border border-border text-foreground-secondary">
+                  <ShieldCheck className="w-4 h-4 text-brand shrink-0" />
                   <div>
                     <span className="font-bold block text-foreground">Escrow Custody</span>
                     <span className="text-[11px] text-foreground-muted">Released upon acceptance</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2.5 p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] text-foreground-secondary">
-                  <Clock className="w-4 h-4 text-[#DFB76C] shrink-0" />
+                <div className="flex items-center gap-2.5 p-3 rounded-none bg-background border border-border text-foreground-secondary">
+                  <Clock className="w-4 h-4 text-brand shrink-0" />
                   <div>
                     <span className="font-bold block text-foreground">Punctual Arrival</span>
                     <span className="text-[11px] text-foreground-muted">Guaranteed schedule lock</span>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2.5 p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] text-foreground-secondary">
-                  <Award className="w-4 h-4 text-[#DFB76C] shrink-0" />
+                <div className="flex items-center gap-2.5 p-3 rounded-none bg-background border border-border text-foreground-secondary">
+                  <Award className="w-4 h-4 text-brand shrink-0" />
                   <div>
                     <span className="font-bold block text-foreground">Vetted Master</span>
                     <span className="text-[11px] text-foreground-muted">Identity & craft authenticated</span>
@@ -481,7 +481,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
             </div>
 
             {/* Package Details & What's Included */}
-            <div className="bg-[#121418] rounded-none p-6 sm:p-7 border border-[#26282E] shadow-xl space-y-5">
+            <div className="bg-surface rounded-none p-6 sm:p-7 border border-border shadow-xl space-y-5">
               <h3 className="font-serif font-bold text-xl text-foreground">
                 What is Included in the Selected Package
               </h3>
@@ -490,9 +490,9 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                 {activePackage.features.map((feature: string, idx: number) => (
                   <div
                     key={idx}
-                    className="p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] flex items-start gap-2.5 text-xs text-foreground-secondary"
+                    className="p-3 rounded-none bg-background border border-border flex items-start gap-2.5 text-xs text-foreground-secondary"
                   >
-                    <CheckCircle2 className="w-4 h-4 text-[#DFB76C] shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-brand shrink-0 mt-0.5" />
                     <span className="font-medium leading-relaxed">{feature}</span>
                   </div>
                 ))}
@@ -500,7 +500,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
             </div>
 
             {/* Client Reviews Section */}
-            <div className="bg-[#121418] rounded-none p-6 sm:p-7 border border-[#26282E] shadow-xl space-y-6">
+            <div className="bg-surface rounded-none p-6 sm:p-7 border border-border shadow-xl space-y-6">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="font-serif font-bold text-xl text-foreground">
@@ -510,8 +510,8 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                     Verified client feedback backed by completed escrow milestones
                   </p>
                 </div>
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-none bg-[#0B0C0E] border border-[#26282E] text-[#DFB76C] font-bold text-sm">
-                  <Star className="w-4 h-4 fill-[#DFB76C] text-[#DFB76C]" />
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-none bg-background border border-border text-brand font-bold text-sm">
+                  <Star className="w-4 h-4 fill-brand text-brand" />
                   <span>{service.rating} / 5.0</span>
                 </div>
               </div>
@@ -520,15 +520,15 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                 {service.reviews.map((rev: any, i: number) => (
                   <div
                     key={i}
-                    className="p-4 rounded-none bg-[#0B0C0E] border border-[#26282E] space-y-2 text-xs"
+                    className="p-4 rounded-none bg-background border border-border space-y-2 text-xs"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="w-7 h-7 rounded-none bg-[#1A1D24] text-[#DFB76C] font-bold flex items-center justify-center text-xs border border-[#26282E]">
+                        <div className="w-7 h-7 rounded-none bg-surface-sunken text-brand font-bold flex items-center justify-center text-xs border border-border">
                           {rev.author.slice(0, 2).toUpperCase()}
                         </div>
                         <span className="font-bold text-foreground">{rev.author}</span>
-                        <span className="text-[10px] text-success font-semibold bg-[#0D211A] border border-success/30 px-2 py-0.5 rounded-none">
+                        <span className="text-[10px] text-success font-semibold bg-success-soft border border-success/30 px-2 py-0.5 rounded-none">
                           Verified Ceremony
                         </span>
                       </div>
@@ -541,7 +541,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                           key={starI}
                           className={`w-3.5 h-3.5 ${
                             starI < rev.rating
-                              ? "fill-[#DFB76C] text-[#DFB76C]"
+                              ? "fill-brand text-brand"
                               : "text-foreground-secondary"
                           }`}
                         />
@@ -558,10 +558,10 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
           {/* Right Column (4 cols): Sticky Package Selector & Booking Action Card */}
           <div className="lg:col-span-4 sticky top-24 space-y-5">
             {/* Package Selector Card */}
-            <div className="bg-[#121418] rounded-none p-6 border border-[#26282E] shadow-2xl space-y-5">
+            <div className="bg-surface rounded-none p-6 border border-border shadow-2xl space-y-5">
               {/* Package Tabs */}
               {service.packages.length > 1 && (
-                <div className="flex rounded-none bg-[#0B0C0E] p-1 gap-1 border border-[#26282E]">
+                <div className="flex rounded-none bg-background p-1 gap-1 border border-border">
                   {service.packages.map((pkg: any, idx: number) => {
                     const isSelected = idx === selectedPackageIndex;
                     return (
@@ -570,7 +570,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                         onClick={() => setSelectedPackageIndex(idx)}
                         className={`flex-1 py-2 rounded-none text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${
                           isSelected
-                            ? "bg-[#DFB76C] text-[#0B0C0E] shadow-gold-glow-sm"
+                            ? "bg-brand text-on-brand shadow-gold-glow-sm"
                             : "text-foreground-muted hover:text-foreground"
                         }`}
                       >
@@ -582,11 +582,11 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               )}
 
               {/* Price & Summary */}
-              <div className="border-b border-[#26282E] pb-5 space-y-2">
+              <div className="border-b border-border pb-5 space-y-2">
                 <div className="flex items-baseline justify-between">
                   <span className="text-xs font-bold text-foreground-muted uppercase tracking-widest">Reserve Price</span>
                   <div className="text-right">
-                    <span className="text-3xl font-bold font-mono text-[#DFB76C]">
+                    <span className="text-3xl font-bold font-mono text-brand">
                       ${activePackage.price.toLocaleString()}
                     </span>
                     <span className="text-xs text-foreground-muted block font-normal">Escrow-safeguarded total</span>
@@ -603,13 +603,13 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
 
               {/* Turnaround & Coverage Specs */}
               <div className="grid grid-cols-2 gap-2 text-xs">
-                <div className="p-3 rounded-none bg-[#0B0C0E] border border-[#26282E]">
+                <div className="p-3 rounded-none bg-background border border-border">
                   <span className="text-[9px] font-bold text-foreground-muted uppercase tracking-widest block">Coverage</span>
                   <span className="font-bold text-foreground">{activePackage.hours || "Ceremonial Duration"}</span>
                 </div>
-                <div className="p-3 rounded-none bg-[#0B0C0E] border border-[#26282E]">
+                <div className="p-3 rounded-none bg-background border border-border">
                   <span className="text-[9px] font-bold text-foreground-muted uppercase tracking-widest block">Turnaround</span>
-                  <span className="font-bold text-[#DFB76C]">{activePackage.turnaround}</span>
+                  <span className="font-bold text-brand">{activePackage.turnaround}</span>
                 </div>
               </div>
 
@@ -617,7 +617,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               <div className="space-y-2 text-xs">
                 {activePackage.features.slice(0, 4).map((f: string, i: number) => (
                   <div key={i} className="flex items-center gap-2 text-foreground-secondary">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#DFB76C] shrink-0" />
+                    <CheckCircle2 className="w-3.5 h-3.5 text-brand shrink-0" />
                     <span>{f}</span>
                   </div>
                 ))}
@@ -627,24 +627,24 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
               <div className="pt-2 space-y-2.5">
                 <Link
                   href={`/checkout?vendorId=${service.vendorId}&packageId=${activePackage.id}`}
-                  className="w-full py-3.5 px-4 rounded-none bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] font-bold text-xs uppercase tracking-widest text-center shadow-gold-glow transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3.5 px-4 rounded-none bg-brand hover:bg-brand-hover text-on-brand font-bold text-xs uppercase tracking-widest text-center shadow-gold-glow transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <Lock className="w-4 h-4 text-[#0B0C0E]" />
+                  <Lock className="w-4 h-4 text-on-brand" />
                   <span>Reserve & Lock Escrow</span>
                   <ArrowRight className="w-4 h-4" />
                 </Link>
 
                 <button
                   onClick={() => setHubModalOpen(true)}
-                  className="w-full py-2.5 px-3 rounded-none border border-[#26282E] bg-[#1A1D24] hover:bg-[#22252F] text-[#DFB76C] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                  className="w-full py-2.5 px-3 rounded-none border border-border bg-surface-sunken hover:bg-surface-sunken text-brand text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors cursor-pointer"
                 >
-                  <Users2 className="w-4 h-4 text-[#DFB76C]" />
+                  <Users2 className="w-4 h-4 text-brand" />
                   <span>Collaborative Hub</span>
                 </button>
               </div>
 
               {/* Escrow Guarantee Footer Note */}
-              <div className="p-3.5 rounded-none bg-[#0D211A] border border-success/30 text-[11px] text-emerald-300 space-y-1">
+              <div className="p-3.5 rounded-none bg-success-soft border border-success/30 text-[11px] text-success space-y-1">
                 <div className="flex items-center gap-1.5 font-bold">
                   <ShieldCheck className="w-4 h-4 text-success shrink-0" />
                   <span>100% Milestone Escrow Protection</span>
