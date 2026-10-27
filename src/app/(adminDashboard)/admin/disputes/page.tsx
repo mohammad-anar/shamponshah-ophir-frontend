@@ -113,35 +113,35 @@ export default function AdminDisputesPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">
+            <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">
               Disputes &amp; Arbitration Console
             </h1>
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#EDE9FE] text-[#0F0C3B] border border-indigo-200">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#1A1D24] text-[#DFB76C] border border-[#DFB76C]/30">
               Stripe Connect Vault Arbitration
             </span>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
+          <p className="text-xs text-slate-400 mt-1">
             Binding arbitration docket, evidentiary review, and manual/partial split refunds via Stripe Connect
           </p>
         </div>
 
         <button
           onClick={() => setIsEscrowModalOpen(true)}
-          className="px-4 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white text-xs font-bold rounded-xl shadow-sm flex items-center gap-2"
+          className="px-4 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold rounded-xl shadow-sm flex items-center gap-2 cursor-pointer transition-colors"
         >
-          <Scale className="w-4 h-4 text-amber-300" /> Open Escrow Settlement Console
+          <Scale className="w-4 h-4 text-[#0B0C0E]" /> Open Escrow Settlement Console
         </button>
       </div>
 
       {/* Overdue Alert Banner */}
-      <div className="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 flex items-center justify-between text-xs text-rose-800">
+      <div className="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-between text-xs text-rose-300">
         <div className="flex items-center gap-2 font-bold">
-          <AlertTriangle className="w-4 h-4 text-rose-600 flex-shrink-0" />
+          <AlertTriangle className="w-4 h-4 text-rose-400 flex-shrink-0" />
           <span>Case #{selectedDispute.id} Exceeded 72h SLA: Immediate Arbitrator Decision Required</span>
         </div>
         <button 
           onClick={() => setIsEscrowModalOpen(true)}
-          className="font-bold text-rose-900 hover:underline flex items-center gap-1 cursor-pointer"
+          className="font-bold text-rose-400 hover:text-rose-300 hover:underline flex items-center gap-1 cursor-pointer"
         >
           <span>Execute Settlement</span>
           <ArrowRight className="w-3.5 h-3.5" />
@@ -153,9 +153,9 @@ export default function AdminDisputesPage() {
         
         {/* Left Queue (4 cols) */}
         <div className="lg:col-span-4 space-y-3">
-          <div className="flex items-center justify-between text-xs text-slate-500 font-bold px-1">
+          <div className="flex items-center justify-between text-xs text-slate-400 font-bold px-1">
             <span className="uppercase tracking-wider">Active Disputes Queue ({disputes.length})</span>
-            <span className="text-[10px] text-slate-400 font-normal">Sorted by SLA Urgency</span>
+            <span className="text-[10px] text-slate-500 font-normal">Sorted by SLA Urgency</span>
           </div>
 
           <div className="space-y-2.5">
@@ -168,40 +168,40 @@ export default function AdminDisputesPage() {
                   className={cn(
                     "p-4 rounded-3xl border transition-all cursor-pointer space-y-2.5",
                     isSelected
-                      ? "bg-indigo-50/60 border-brand-primary shadow-xs ring-1 ring-brand-primary/30"
-                      : "bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50/50"
+                      ? "bg-[#16181F] border-[#DFB76C] shadow-sm ring-1 ring-[#DFB76C]/30"
+                      : "bg-[#121418] border-[#26282E] hover:border-slate-700 hover:bg-[#16181F]/40"
                   )}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-brand-primary font-mono bg-white px-2 py-0.5 rounded border border-slate-200">
+                        <span className="text-xs font-bold text-[#DFB76C] font-mono bg-[#1A1D24] px-2 py-0.5 rounded border border-[#DFB76C]/30">
                           #{d.id}
                         </span>
                         <span className="text-[10px] text-slate-400 font-medium">Order #{d.orderId}</span>
                       </div>
-                      <p className="text-xs font-bold text-[#0F0C3B] mt-1.5">
-                        {d.client} <span className="text-slate-400 font-normal">vs</span> {d.vendor}
+                      <p className="text-xs font-bold text-white mt-1.5">
+                        {d.client} <span className="text-slate-500 font-normal">vs</span> {d.vendor}
                       </p>
                     </div>
 
                     <span className={cn(
-                      "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase",
-                      d.status === "OVERDUE" && "bg-rose-100 text-rose-800 border border-rose-200",
-                      d.status === "ACTIVE" && "bg-amber-100 text-amber-800 border border-amber-200",
-                      d.status === "EVIDENCE_PENDING" && "bg-purple-100 text-purple-800 border border-purple-200",
+                      "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase border",
+                      d.status === "OVERDUE" && "bg-rose-500/15 text-rose-400 border-rose-500/30",
+                      d.status === "ACTIVE" && "bg-amber-500/15 text-amber-400 border-amber-500/30",
+                      d.status === "EVIDENCE_PENDING" && "bg-purple-500/15 text-purple-400 border-purple-500/30",
                     )}>
                       {d.statusText}
                     </span>
                   </div>
 
-                  <p className="text-[11px] text-slate-600 line-clamp-2 leading-relaxed bg-[#F8F9FD] p-2.5 rounded-xl border border-slate-100">
+                  <p className="text-[11px] text-slate-300 line-clamp-2 leading-relaxed bg-[#0B0C0E]/60 p-2.5 rounded-xl border border-[#26282E]">
                     {d.summary}
                   </p>
 
-                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                    <span className="font-bold text-emerald-700 flex items-center gap-1 font-mono">
-                      <Lock className="w-3 h-3 text-slate-400" /> Escrow: ${d.amount.toLocaleString()}
+                  <div className="pt-2 border-t border-[#26282E] flex items-center justify-between text-[11px]">
+                    <span className="font-bold text-emerald-400 flex items-center gap-1 font-mono">
+                      <Lock className="w-3 h-3 text-slate-500" /> Escrow: ${d.amount.toLocaleString()}
                     </span>
                     <span className="text-slate-400 font-medium">{d.occasion}</span>
                   </div>
@@ -215,46 +215,46 @@ export default function AdminDisputesPage() {
         <div className="lg:col-span-8 space-y-5">
           
           {/* Case Header Details Card */}
-          <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs space-y-4">
+          <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm space-y-4">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#0F0C3B] bg-indigo-50 px-2.5 py-0.5 rounded-full border border-indigo-100">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#DFB76C] bg-[#1A1D24] px-2.5 py-0.5 rounded-full border border-[#DFB76C]/30">
                   Priority Arbitration Docket
                 </span>
-                <h2 className="text-base font-black text-[#0F0C3B] mt-1.5">
+                <h2 className="text-base font-black text-white mt-1.5">
                   Case #{selectedDispute.id}: {selectedDispute.client} vs. {selectedDispute.vendor}
                 </h2>
               </div>
-              <span className="px-3 py-1 rounded-full bg-rose-50 text-rose-800 border border-rose-200 text-xs font-bold flex items-center gap-1">
-                <Clock className="w-3.5 h-3.5 text-rose-600" /> Overdue 18h
+              <span className="px-3 py-1 rounded-full bg-rose-500/15 text-rose-400 border border-rose-500/30 text-xs font-bold flex items-center gap-1">
+                <Clock className="w-3.5 h-3.5 text-rose-400" /> Overdue 18h
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-100 text-xs">
-              <div className="p-3 bg-[#F8F9FD] rounded-2xl border border-slate-100">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-[#26282E] text-xs">
+              <div className="p-3 bg-[#16181F] rounded-2xl border border-[#26282E]">
                 <span className="text-slate-400 text-[10px] uppercase font-bold block">Escrow in Custody</span>
-                <p className="text-base font-black text-[#0F0C3B] font-mono mt-0.5">${selectedDispute.amount.toLocaleString()}</p>
+                <p className="text-base font-black text-white font-mono mt-0.5">${selectedDispute.amount.toLocaleString()}</p>
               </div>
-              <div className="p-3 bg-[#F8F9FD] rounded-2xl border border-slate-100">
+              <div className="p-3 bg-[#16181F] rounded-2xl border border-[#26282E]">
                 <span className="text-slate-400 text-[10px] uppercase font-bold block">Parent Order</span>
-                <p className="font-bold text-[#0F0C3B] mt-0.5">#{selectedDispute.orderId}</p>
+                <p className="font-bold text-white mt-0.5">#{selectedDispute.orderId}</p>
               </div>
-              <div className="p-3 bg-[#F8F9FD] rounded-2xl border border-slate-100">
+              <div className="p-3 bg-[#16181F] rounded-2xl border border-[#26282E]">
                 <span className="text-slate-400 text-[10px] uppercase font-bold block">Vendor Stripe ID</span>
-                <p className="font-mono text-emerald-700 text-[11px] font-bold mt-0.5 truncate">{selectedDispute.vendorStripeAccountId}</p>
+                <p className="font-mono text-[#DFB76C] text-[11px] font-bold mt-0.5 truncate">{selectedDispute.vendorStripeAccountId}</p>
               </div>
-              <div className="p-3 bg-[#F8F9FD] rounded-2xl border border-slate-100">
+              <div className="p-3 bg-[#16181F] rounded-2xl border border-[#26282E]">
                 <span className="text-slate-400 text-[10px] uppercase font-bold block">Arbitration Rule</span>
-                <p className="font-bold text-brand-primary mt-0.5">Policy v3.2 Escrow</p>
+                <p className="font-bold text-slate-200 mt-0.5">Policy v3.2 Escrow</p>
               </div>
             </div>
           </div>
 
           {/* Evidence Dossier */}
-          <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs space-y-4">
+          <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="font-bold text-[#0F0C3B] text-sm flex items-center gap-2">
-                <FileText className="w-4 h-4 text-brand-primary" />
+              <h3 className="font-bold text-white text-sm flex items-center gap-2">
+                <FileText className="w-4 h-4 text-[#DFB76C]" />
                 Party Submissions &amp; Evidentiary Dossier
               </h3>
               <span className="text-xs text-slate-400 font-medium">2 Submissions Lodged</span>
@@ -262,58 +262,58 @@ export default function AdminDisputesPage() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
               {/* Client Statement */}
-              <div className="p-4 rounded-2xl bg-[#F8F9FD] border border-slate-200 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-[#0F0C3B] text-white flex items-center justify-center font-bold text-[10px]">
+                    <div className="w-7 h-7 rounded-full bg-[#1A1D24] text-[#DFB76C] border border-[#DFB76C]/30 flex items-center justify-center font-bold text-[10px]">
                       EC
                     </div>
                     <div>
-                      <p className="font-bold text-[#0F0C3B]">{selectedDispute.client}</p>
+                      <p className="font-bold text-white">{selectedDispute.client}</p>
                       <p className="text-[10px] text-slate-400">Claimant (Buyer)</p>
                     </div>
                   </div>
                   <span className="text-[10px] text-slate-400">Nov 12, 10:30 AM</span>
                 </div>
 
-                <p className="text-slate-700 text-[11px] leading-relaxed italic bg-white p-3 rounded-xl border border-slate-200/80">
+                <p className="text-slate-300 text-[11px] leading-relaxed italic bg-[#121418] p-3 rounded-xl border border-[#26282E]">
                   &ldquo;{selectedDispute.clientStatement}&rdquo;
                 </p>
 
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-[10px] font-bold text-slate-700">
+                  <span className="px-2.5 py-1 rounded-lg bg-[#1A1D24] border border-[#26282E] text-[10px] font-bold text-slate-300">
                     📸 cords_draped.jpg
                   </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-[10px] font-bold text-slate-700">
+                  <span className="px-2.5 py-1 rounded-lg bg-[#1A1D24] border border-[#26282E] text-[10px] font-bold text-slate-300">
                     📄 contract_rider.pdf
                   </span>
                 </div>
               </div>
 
               {/* Vendor Statement */}
-              <div className="p-4 rounded-2xl bg-[#F8F9FD] border border-slate-200 space-y-3">
+              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-amber-600 text-white flex items-center justify-center font-bold text-[10px]">
+                    <div className="w-7 h-7 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30 flex items-center justify-center font-bold text-[10px]">
                       WC
                     </div>
                     <div>
-                      <p className="font-bold text-[#0F0C3B]">{selectedDispute.vendor}</p>
+                      <p className="font-bold text-white">{selectedDispute.vendor}</p>
                       <p className="text-[10px] text-slate-400">Respondent (Vendor)</p>
                     </div>
                   </div>
                   <span className="text-[10px] text-slate-400">Nov 13, 03:15 PM</span>
                 </div>
 
-                <p className="text-slate-700 text-[11px] leading-relaxed italic bg-white p-3 rounded-xl border border-slate-200/80">
+                <p className="text-slate-300 text-[11px] leading-relaxed italic bg-[#121418] p-3 rounded-xl border border-[#26282E]">
                   &ldquo;{selectedDispute.vendorStatement}&rdquo;
                 </p>
 
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-[10px] font-bold text-slate-700">
+                  <span className="px-2.5 py-1 rounded-lg bg-[#1A1D24] border border-[#26282E] text-[10px] font-bold text-slate-300">
                     📸 mist_conditions.jpg
                   </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 text-[10px] font-bold text-slate-700">
+                  <span className="px-2.5 py-1 rounded-lg bg-[#1A1D24] border border-[#26282E] text-[10px] font-bold text-slate-300">
                     🌦️ weather_log.pdf
                   </span>
                 </div>
@@ -322,10 +322,10 @@ export default function AdminDisputesPage() {
           </div>
 
           {/* Settle Dispute CTA Card */}
-          <div className="bg-gradient-to-r from-[#0F0C3B] to-[#1E175E] text-white p-6 rounded-3xl shadow-md flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="bg-[#16181F] border border-[#DFB76C]/30 text-white p-6 rounded-3xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
               <h3 className="text-sm font-bold text-white">Execute Binding Escrow Settlement</h3>
-              <p className="text-xs text-indigo-200 mt-0.5">
+              <p className="text-xs text-slate-400 mt-0.5">
                 Release 100% to vendor Stripe Connect account, issue 100% full refund to buyer card, or execute custom partial split refund.
               </p>
             </div>
@@ -333,16 +333,16 @@ export default function AdminDisputesPage() {
             <div className="flex items-center gap-2 flex-wrap flex-shrink-0">
               <Link
                 href={`/admin/orders/${(selectedDispute as any).dbOrderId || selectedDispute.orderId}`}
-                className="px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
+                className="px-4 py-2.5 bg-[#1A1D24] hover:bg-[#222630] border border-[#26282E] text-slate-200 hover:text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5"
               >
-                <MessageSquare className="w-4 h-4" />
+                <MessageSquare className="w-4 h-4 text-[#DFB76C]" />
                 <span>Join Order Page & Chat</span>
               </Link>
               <button
                 onClick={() => setIsEscrowModalOpen(true)}
-                className="px-4 py-2.5 bg-white hover:bg-slate-100 text-[#0F0C3B] rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer"
+                className="px-4 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
               >
-                <Scale className="w-4 h-4 text-brand-primary" />
+                <Scale className="w-4 h-4 text-[#0B0C0E]" />
                 <span>Settlement Console</span>
               </button>
             </div>
