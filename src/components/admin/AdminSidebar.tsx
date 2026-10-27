@@ -144,15 +144,15 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
       )}
 
       <aside className={cn(
-        "fixed top-0 bottom-0 left-0 z-50 w-64 bg-[#0F0C3B] text-white flex flex-col transition-transform duration-300 ease-in-out border-r border-white/5 lg:translate-x-0",
+        "fixed top-0 bottom-0 left-0 z-50 w-64 bg-[#121418] text-white flex flex-col transition-transform duration-300 ease-in-out border-r border-[#26282E] lg:translate-x-0",
         isOpen ? "translate-x-0" : "-translate-x-full"
       )}>
         {/* Brand header */}
-        <div className="h-16 flex items-center justify-between px-5 border-b border-white/10">
+        <div className="h-16 flex items-center justify-between px-5 border-b border-[#26282E]">
           <Logo variant="admin" href="/admin" />
           <button 
             onClick={onClose}
-            className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10"
+            className="lg:hidden p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-[#16181F]"
           >
             <X className="w-5 h-5" />
           </button>
@@ -162,7 +162,7 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
         <div className="flex-1 overflow-y-auto px-3 py-4 space-y-6 custom-scrollbar">
           {dynamicSections.map((section) => (
             <div key={section.title}>
-              <p className="px-3 text-[11px] font-semibold text-indigo-300/60 tracking-wider mb-2 uppercase">
+              <p className="px-3 text-[11px] font-semibold text-[#DFB76C]/80 tracking-wider mb-2 uppercase">
                 {section.title}
               </p>
               <div className="space-y-0.5">
@@ -177,12 +177,12 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
                       className={cn(
                         "flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all group",
                         isActive
-                          ? "bg-indigo-600/30 text-white border-l-3 border-indigo-400 font-semibold"
-                          : "text-slate-300 hover:bg-white/5 hover:text-white"
+                          ? "bg-[#1A1D24] text-white border-l-4 border-[#DFB76C] font-semibold"
+                          : "text-slate-400 hover:bg-[#16181F] hover:text-white"
                       )}
                     >
                       <div className="flex items-center gap-2.5">
-                        <Icon className={cn("w-4 h-4 transition-colors", isActive ? "text-indigo-400" : "text-slate-400 group-hover:text-slate-200")} />
+                        <Icon className={cn("w-4 h-4 transition-colors", isActive ? "text-[#DFB76C]" : "text-slate-500 group-hover:text-slate-300")} />
                         <span>{item.label}</span>
                       </div>
                       {item.badge && (
@@ -199,12 +199,12 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
         </div>
 
         {/* Footer status */}
-        <div className="p-3 border-t border-white/10 bg-[#0A0826]/80 flex items-center justify-between text-[11px] text-slate-400">
+        <div className="p-3 border-t border-[#26282E] bg-[#0B0C0E] flex items-center justify-between text-[11px] text-slate-400">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             <span>Internal Ops v2.4</span>
           </div>
-          <Lock className="w-3.5 h-3.5 text-slate-400" />
+          <Lock className="w-3.5 h-3.5 text-slate-500" />
         </div>
       </aside>
     </>
