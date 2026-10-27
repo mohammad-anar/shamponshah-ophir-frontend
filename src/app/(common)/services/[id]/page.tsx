@@ -287,7 +287,7 @@ export default function ServiceDetailPage({ params }: ServiceDetailPageProps) {
                 type="button"
                 onClick={handleSubmitReport}
                 disabled={isSubmittingReport}
-                className="flex-1 py-2.5 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
+                className="flex-1 py-2.5 bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground text-xs font-bold transition-colors flex items-center justify-center gap-1.5 disabled:opacity-50 cursor-pointer"
               >
                 {isSubmittingReport ? <Loader2 className="w-4 h-4 animate-spin" /> : <Flag className="w-4 h-4" />}
                 <span>Submit Report</span>
