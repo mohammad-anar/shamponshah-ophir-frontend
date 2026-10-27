@@ -114,7 +114,7 @@ export default function UserDisputesPage() {
 
         <button
           onClick={() => setShowNewModal(true)}
-          className="px-4 py-2.5 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start md:self-auto"
+          className="px-4 py-2.5 bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start md:self-auto"
         >
           <Scale className="w-4 h-4" /> Open New Resolution Case
         </button>
@@ -151,7 +151,7 @@ export default function UserDisputesPage() {
 
               <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
                 d.status === "Under Mediation" ? "bg-warning-soft text-warning border border-warning/30" :
-                d.status === "Vendor Response Pending" ? "bg-info-soft text-blue-700 border border-info/30" :
+                d.status === "Vendor Response Pending" ? "bg-info-soft text-info border border-info/30" :
                 "bg-success-soft text-success"
               }`}>
                 {d.status}
@@ -257,7 +257,7 @@ export default function UserDisputesPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl font-bold"
+                  className="px-5 py-2 bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground rounded-xl font-bold"
                 >
                   Submit Dispute to Trust Desk
                 </button>
