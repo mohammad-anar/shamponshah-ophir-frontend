@@ -238,7 +238,7 @@ export default function CompareOffersModal({
     <div className="fixed inset-0 z-50 overflow-y-auto bg-background/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5">
       <div className="bg-surface rounded-3xl max-w-5xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden border border-border animate-in fade-in zoom-in-95 duration-200">
         {/* Modal Header */}
-        <div className="px-6 py-4.5 border-b border-border flex items-center justify-between bg-gradient-to-r from-slate-50 via-white to-indigo-50/30">
+        <div className="px-6 py-4.5 border-b border-border flex items-center justify-between bg-gradient-to-r from-surface-elevated via-white to-surface">
           <div>
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs font-bold text-foreground-muted uppercase tracking-wider">
@@ -338,11 +338,11 @@ export default function CompareOffersModal({
                     className={cn(
                       "w-full bg-surface rounded-2xl border transition-all p-5 sm:p-6 shadow-xs relative flex flex-col justify-between space-y-5",
                       isAccepted
-                        ? "border-emerald-400 ring-2 ring-emerald-100 bg-success-soft/20"
+                        ? "border-success ring-2 ring-success/20 bg-success-soft/20"
                         : isRejected || isOtherAccepted
                         ? "border-border bg-surface-elevated/60 opacity-75"
                         : c.bestValue
-                        ? "border-info/30 ring-1 ring-indigo-100 hover:border-info/30"
+                        ? "border-info/30 ring-1 ring-info/20 hover:border-info/30"
                         : "border-border hover:border-border"
                     )}
                   >
@@ -618,7 +618,7 @@ export default function CompareOffersModal({
                   type="button"
                   onClick={handleCancelJob}
                   disabled={isCancelling}
-                  className="px-4 py-1.5 rounded-xl bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  className="px-4 py-1.5 rounded-xl bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
                 >
                   {isCancelling ? (
                     <>
