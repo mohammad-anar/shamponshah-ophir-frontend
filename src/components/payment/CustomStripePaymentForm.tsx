@@ -222,7 +222,7 @@ function CheckoutFormInner({
       </div>
 
       {errorMessage && (
-        <div className="p-3 rounded-xl bg-danger-soft text-danger border border-danger/30 text-red-200 text-xs flex items-center gap-2">
+        <div className="p-3 rounded-xl bg-danger-soft text-danger border border-danger/30 text-danger text-xs flex items-center gap-2">
           <AlertCircle className="w-4 h-4 text-danger shrink-0" />
           <span>{errorMessage}</span>
         </div>
@@ -369,7 +369,7 @@ export default function CustomStripePaymentForm({
 
   if (loadError) {
     return (
-      <div className="p-6 rounded-2xl bg-danger-soft text-danger border border-danger/30 text-red-200 text-xs space-y-3">
+      <div className="p-6 rounded-2xl bg-danger-soft text-danger border border-danger/30 text-danger text-xs space-y-3">
         <div className="flex items-center gap-2 font-bold text-danger">
           <AlertCircle className="w-4 h-4 text-danger" />
           <span>Payment Error</span>
