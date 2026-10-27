@@ -149,7 +149,7 @@ export default function AdminHeader({
         {/* System Health Status */}
         <div className="hidden xl:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-success-soft text-success border border-success/30/40 text-success text-[11px] font-semibold">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-solid text-white opacity-75"></span>
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-solid text-foreground opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-success-solid text-foreground"></span>
           </span>
           <div className="flex flex-col leading-tight">
