@@ -123,7 +123,7 @@ export default function VendorAnalyticsPage() {
             <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
               Performance & Analytics
             </h1>
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-purple-500/10 to-indigo-500/10 text-info border border-info/30/60">
+            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-brand/10 to-info/10 text-info border border-info/30/60">
               <Sparkles className="w-3.5 h-3.5 text-warning" />
               {vendorProfile?.tier || "Professional Seller"}
             </span>
@@ -245,7 +245,7 @@ export default function VendorAnalyticsPage() {
               <span className="text-[11px] font-black tracking-wider text-foreground-muted uppercase">
                 Profile Views
               </span>
-              <div className="p-2 rounded-xl bg-info-soft text-blue-600">
+              <div className="p-2 rounded-xl bg-info-soft text-info">
                 <UserCheck className="w-4 h-4" />
               </div>
             </div>
@@ -257,7 +257,7 @@ export default function VendorAnalyticsPage() {
           </div>
           <p className="text-[11px] text-foreground-muted mt-3 pt-2 border-t border-border flex items-center justify-between">
             <span>Direct vendor page visits</span>
-            <span className="font-bold text-blue-600 text-[10px]">Verified</span>
+            <span className="font-bold text-info text-[10px]">Verified</span>
           </p>
         </div>
 
@@ -316,12 +316,12 @@ export default function VendorAnalyticsPage() {
               <span className="text-[11px] font-black tracking-wider text-foreground-muted uppercase">
                 Delivery Rate
               </span>
-              <div className="p-2 rounded-xl bg-teal-50 text-teal-600">
+              <div className="p-2 rounded-xl bg-success-soft text-success">
                 <CheckCircle2 className="w-4 h-4" />
               </div>
             </div>
             <div className="mt-2 flex items-baseline gap-2">
-              <span className="text-2xl font-black text-teal-600">
+              <span className="text-2xl font-black text-success">
                 {isLoading ? "..." : `${summary.completionRate ?? 100}%`}
               </span>
               <span className="text-[10px] font-bold text-foreground-muted">Target &gt;95%</span>
@@ -451,14 +451,14 @@ export default function VendorAnalyticsPage() {
                 <span className="font-bold text-foreground-secondary">
                   {timeSeries[hoveredPointIndex].formattedDate}
                 </span>
-                <span className="h-3 w-px bg-slate-600" />
+                <span className="h-3 w-px bg-surface-elevated" />
                 {activeChartMetric === "earnings" && (
                   <span className="font-black text-success">
                     ${timeSeries[hoveredPointIndex].earnings.toLocaleString()} Earned
                   </span>
                 )}
                 {activeChartMetric === "traffic" && (
-                  <span className="font-bold text-purple-300">
+                  <span className="font-bold text-brand">
                     {timeSeries[hoveredPointIndex].impressions} Impr · {timeSeries[hoveredPointIndex].clicks} Clicks
                   </span>
                 )}
@@ -499,15 +499,15 @@ export default function VendorAnalyticsPage() {
                         className={`w-full rounded-t-lg transition-all duration-300 ${
                           activeChartMetric === "earnings"
                             ? isHovered
-                              ? "bg-gradient-to-t from-emerald-600 to-teal-400"
+                              ? "bg-gradient-to-t from-success to-success"
                               : "bg-gradient-to-t from-brand to-brand"
                             : activeChartMetric === "traffic"
                             ? isHovered
-                              ? "bg-gradient-to-t from-purple-700 to-indigo-400"
-                              : "bg-gradient-to-t from-indigo-700 to-purple-500"
+                              ? "bg-gradient-to-t from-brand to-info"
+                              : "bg-gradient-to-t from-info to-brand"
                             : isHovered
-                            ? "bg-gradient-to-t from-brand to-amber-400"
-                            : "bg-gradient-to-t from-slate-700 to-brand-active"
+                            ? "bg-gradient-to-t from-brand to-warning"
+                            : "bg-gradient-to-t from-surface-elevated to-brand-active"
                         }`}
                       />
                     </div>
@@ -603,7 +603,7 @@ export default function VendorAnalyticsPage() {
             <div className="space-y-1">
               <div className="flex justify-between items-center text-foreground-secondary">
                 <span className="font-bold flex items-center gap-1.5">
-                  <span className="w-4 h-4 rounded-full bg-info-soft text-blue-700 text-[10px] flex items-center justify-center font-black">3</span>
+                  <span className="w-4 h-4 rounded-full bg-info-soft text-info text-[10px] flex items-center justify-center font-black">3</span>
                   Deep Details Views
                 </span>
                 <span className="font-black text-foreground">
@@ -638,7 +638,7 @@ export default function VendorAnalyticsPage() {
             </div>
           </div>
 
-          <div className="p-3.5 bg-gradient-to-br from-indigo-50/60 to-purple-50/60 rounded-xl border border-info/30/80 text-[11px] text-foreground-secondary leading-relaxed">
+          <div className="p-3.5 bg-gradient-to-br from-surface-elevated to-surface rounded-xl border border-info/30/80 text-[11px] text-foreground-secondary leading-relaxed">
             <strong className="text-info font-bold">Pro Growth Tip:</strong>{" "}
             High CTR with low conversion indicates buyers are intrigued by your thumbnail, but may hesitate at your package prices or FAQ clarity.
           </div>
@@ -721,7 +721,7 @@ export default function VendorAnalyticsPage() {
                             <span className="text-[10px] text-foreground-muted font-medium">
                               {gig.category}
                             </span>
-                            <span className="w-1 h-1 rounded-full bg-slate-300" />
+                            <span className="w-1 h-1 rounded-full bg-surface-elevated" />
                             <span className={`text-[10px] font-black uppercase px-1.5 py-0.2 rounded ${
                               gig.status === "ACTIVE" 
                                 ? "bg-success-soft text-success border border-success/30/50" 
@@ -746,7 +746,7 @@ export default function VendorAnalyticsPage() {
 
                     {/* CTR */}
                     <td className="py-4 px-4 text-right">
-                      <span className="font-black text-brand bg-brand-soft px-2 py-0.5 rounded-full border border-purple-200/60 text-[11px]">
+                      <span className="font-black text-brand bg-brand-soft px-2 py-0.5 rounded-full border border-border-brand/40 text-[11px]">
                         {gig.ctr}%
                       </span>
                     </td>
