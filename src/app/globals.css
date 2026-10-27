@@ -125,12 +125,20 @@
 .bg-\[\#F8F9FD\],
 .bg-\[\#F7F5EE\],
 .bg-\[\#F9F8F5\],
+.bg-\[\#F5F2EB\],
+.bg-\[\#FBF9F5\],
+.bg-\[\#F8F7F4\],
 .bg-slate-50,
 .bg-gray-50,
 .bg-zinc-50,
-.bg-neutral-50 {
-  background-color: #0B0C0E !important;
+.bg-neutral-50,
+[class*="bg-slate-50"],
+[class*="bg-gray-50"],
+[class*="bg-zinc-50"],
+[class*="bg-neutral-50"] {
+  background-color: #16181F !important;
   color: #F3F4F6 !important;
+  border-color: #26282E !important;
 }
 
 /* 3. Deep Charcoal Luxury Card & Modal surfaces (NEVER white shade) */
@@ -149,7 +157,13 @@
 .bg-gray-100,
 .bg-gray-200,
 .bg-zinc-100,
-.bg-neutral-100 {
+.bg-neutral-100,
+[class*="bg-slate-100"],
+[class*="bg-slate-200"],
+[class*="bg-gray-100"],
+[class*="bg-gray-200"],
+[class*="bg-zinc-100"],
+[class*="bg-neutral-100"] {
   background-color: #16181F !important;
   color: #E2E8F0 !important;
   border-color: #26282E !important;
@@ -164,7 +178,11 @@
 .border-gray-200,
 .border-gray-100,
 .border-zinc-200,
-.border-neutral-200 {
+.border-neutral-200,
+[class*="border-slate-100"],
+[class*="border-slate-200"],
+[class*="border-gray-100"],
+[class*="border-gray-200"] {
   border-color: #26282E !important;
 }
 
