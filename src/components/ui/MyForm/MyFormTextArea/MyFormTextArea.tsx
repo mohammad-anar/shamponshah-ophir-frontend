@@ -37,7 +37,7 @@ const MyFormTextArea = ({
         }}
         render={({ field, fieldState: { error } }) => (
           <div className="flex flex-col justify-center gap-2 w-full">
-            <p className={cn("ps-1 text-[#101828] text-base font-normal leading-6", labelClassName)}>
+            <p className={cn("ps-1 text-foreground text-base font-normal leading-6", labelClassName)}>
               {label}
             </p>
             <Form.Item style={{ marginBottom: "0px" }}>
@@ -99,7 +99,7 @@ export default MyFormTextArea;
 //         render={({ field, fieldState: { error } }) => (
 //           <div className="flex flex-col justify-center gap-2 w-full">
 //             {label && (
-//               <p className={cn("ps-1 text-[#101828] text-base font-normal leading-6", labelClassName)}>
+//               <p className={cn("ps-1 text-foreground text-base font-normal leading-6", labelClassName)}>
 //                 {label}
 //               </p>
 //             )}
