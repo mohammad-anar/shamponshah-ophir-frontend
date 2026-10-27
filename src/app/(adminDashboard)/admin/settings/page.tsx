@@ -195,7 +195,7 @@ export default function AdminSettingsPage() {
                 type="checkbox"
                 checked={requireIdVerification}
                 onChange={(e) => setRequireIdVerification(e.target.checked)}
-                className="w-4 h-4 accent-[#DFB76C] rounded cursor-pointer"
+                className="w-4 h-4 accent-brand rounded cursor-pointer"
               />
             </label>
 
@@ -208,7 +208,7 @@ export default function AdminSettingsPage() {
                 type="checkbox"
                 checked={requireInsurance}
                 onChange={(e) => setRequireInsurance(e.target.checked)}
-                className="w-4 h-4 accent-[#DFB76C] rounded cursor-pointer"
+                className="w-4 h-4 accent-brand rounded cursor-pointer"
               />
             </label>
 
@@ -221,7 +221,7 @@ export default function AdminSettingsPage() {
                 type="checkbox"
                 checked={autoApproveTopRated}
                 onChange={(e) => setAutoApproveTopRated(e.target.checked)}
-                className="w-4 h-4 accent-[#DFB76C] rounded cursor-pointer"
+                className="w-4 h-4 accent-brand rounded cursor-pointer"
               />
             </label>
           </div>
@@ -291,7 +291,7 @@ export default function AdminSettingsPage() {
                 type="checkbox"
                 checked={emailAlerts}
                 onChange={(e) => setEmailAlerts(e.target.checked)}
-                className="w-4 h-4 accent-[#DFB76C] rounded cursor-pointer"
+                className="w-4 h-4 accent-brand rounded cursor-pointer"
               />
             </label>
 
@@ -304,7 +304,7 @@ export default function AdminSettingsPage() {
                 type="checkbox"
                 checked={slackWebhookAlerts}
                 onChange={(e) => setSlackWebhookAlerts(e.target.checked)}
-                className="w-4 h-4 accent-[#DFB76C] rounded cursor-pointer"
+                className="w-4 h-4 accent-brand rounded cursor-pointer"
               />
             </label>
           </div>
