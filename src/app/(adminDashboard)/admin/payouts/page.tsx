@@ -280,8 +280,8 @@ export default function AdminPayoutsPage() {
     <div className="space-y-6 pb-12">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">Vendor Payouts &amp; Disbursements</h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <h1 className="text-xl md:text-2xl font-black text-white tracking-tight">Vendor Payouts &amp; Disbursements</h1>
+          <p className="text-xs text-slate-400 mt-1">
             Automated Stripe Connect ACH settlement, escrow releases, KYC audits, and itemized order reconciliations
           </p>
         </div>
@@ -289,9 +289,9 @@ export default function AdminPayoutsPage() {
         <div className="flex items-center gap-3">
           <button 
             onClick={() => toast.success("Payout disbursement ledger CSV exported successfully.")}
-            className="px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:bg-slate-50 flex items-center gap-1.5 shadow-xs"
+            className="px-3.5 py-2 rounded-xl bg-[#16181F] border border-[#26282E] text-xs font-bold text-slate-200 hover:bg-[#1A1D24] hover:text-white flex items-center gap-1.5 shadow-sm transition-colors"
           >
-            <Download className="w-3.5 h-3.5 text-brand-primary" />
+            <Download className="w-3.5 h-3.5 text-[#DFB76C]" />
             <span>Export Disbursement CSV</span>
           </button>
         </div>
@@ -299,39 +299,39 @@ export default function AdminPayoutsPage() {
 
       {/* Top Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-        <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs">
+        <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm">
           <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Scheduled Today</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-[#0F0C3B] font-mono">$9,240.00</span>
-            <span className="text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">18 Batches</span>
+            <span className="text-2xl font-black text-white font-mono">$9,240.00</span>
+            <span className="text-xs font-bold text-[#DFB76C] bg-[#1A1D24] px-2 py-0.5 rounded-full border border-[#DFB76C]/30">18 Batches</span>
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">Stripe ACH window opens in 2 hours</p>
+          <p className="text-[11px] text-slate-400 mt-1">Stripe ACH window opens in 2 hours</p>
         </div>
 
-        <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-xs">
+        <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm">
           <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Cleared This Week</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-emerald-600 font-mono">$42,800.00</span>
-            <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">54 Vendors</span>
+            <span className="text-2xl font-black text-emerald-400 font-mono">$42,800.00</span>
+            <span className="text-xs font-bold text-emerald-400 bg-emerald-500/15 px-2 py-0.5 rounded-full border border-emerald-500/30">54 Vendors</span>
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">0% ACH failure rate on Stripe Connect</p>
+          <p className="text-[11px] text-slate-400 mt-1">0% ACH failure rate on Stripe Connect</p>
         </div>
 
-        <div className="bg-white p-5 rounded-3xl border border-amber-200 shadow-xs bg-amber-50/20">
-          <span className="text-[11px] font-bold text-amber-900 uppercase tracking-wider">KYC Verification Holds</span>
+        <div className="bg-[#121418] p-5 rounded-3xl border border-amber-500/30 shadow-sm">
+          <span className="text-[11px] font-bold text-amber-400 uppercase tracking-wider">KYC Verification Holds</span>
           <div className="flex items-baseline gap-2 mt-1">
-            <span className="text-2xl font-black text-amber-800 font-mono">$2,400.00</span>
-            <span className="text-xs font-bold text-amber-900 bg-amber-200 px-2 py-0.5 rounded-full">1 Flagged</span>
+            <span className="text-2xl font-black text-amber-400 font-mono">$2,400.00</span>
+            <span className="text-xs font-bold text-amber-300 bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-full">1 Flagged</span>
           </div>
-          <p className="text-[11px] text-slate-500 mt-1">Awaiting W-9 tax document verification</p>
+          <p className="text-[11px] text-slate-400 mt-1">Awaiting W-9 tax document verification</p>
         </div>
       </div>
 
       {/* Payout Batches Table */}
-      <div className="bg-white rounded-3xl border border-slate-200 shadow-xs overflow-hidden text-xs">
+      <div className="bg-[#121418] rounded-3xl border border-[#26282E] shadow-sm overflow-hidden text-xs">
         {/* Search & Filter Bar */}
-        <div className="p-4 border-b border-slate-200 flex items-center justify-between gap-4 flex-wrap bg-[#F8F9FD]/50">
-          <div className="flex items-center gap-2">
+        <div className="p-4 border-b border-[#26282E] flex items-center justify-between gap-4 flex-wrap bg-[#16181F]/40">
+          <div className="flex items-center gap-2 flex-wrap">
             {["ALL", "SCHEDULED", "PROCESSING", "FLAGGED", "COMPLETED"].map((f) => (
               <button
                 key={f}
@@ -339,8 +339,8 @@ export default function AdminPayoutsPage() {
                 className={cn(
                   "px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all",
                   activeFilter === f 
-                    ? "bg-[#0F0C3B] text-white shadow-xs" 
-                    : "bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80"
+                    ? "bg-[#DFB76C] text-[#0B0C0E] shadow-sm" 
+                    : "bg-[#16181F] text-slate-300 hover:bg-[#1A1D24] border border-[#26282E]"
                 )}
               >
                 {f.replace(/_/g, " ")}
@@ -355,14 +355,14 @@ export default function AdminPayoutsPage() {
               placeholder="Search vendors, banks, IDs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-white border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-brand-primary"
+              className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C]"
             />
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-[#EDE9FE]/40 border-b border-slate-200 text-[11px] font-bold uppercase text-slate-500 tracking-wider">
+            <thead className="bg-[#16181F]/80 border-b border-[#26282E] text-[11px] font-bold uppercase text-slate-400 tracking-wider">
               <tr>
                 <th className="py-3.5 px-4">Batch ID</th>
                 <th className="py-3.5 px-4">Vendor &amp; Legal Entity</th>
@@ -373,25 +373,25 @@ export default function AdminPayoutsPage() {
                 <th className="py-3.5 px-4 text-right">Disbursement Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-[#26282E]/60">
               {filteredBatches.map((batch) => (
                 <tr 
                   key={batch.id} 
                   onClick={() => setSelectedPayout(batch)}
-                  className="hover:bg-slate-50/70 transition-colors cursor-pointer group"
+                  className="hover:bg-[#16181F]/50 transition-colors cursor-pointer group"
                 >
-                  <td className="py-3.5 px-4 font-bold text-[#0F0C3B] font-mono">
-                    <span className="bg-indigo-50 text-brand-primary px-2 py-0.5 rounded-lg border border-indigo-100">
+                  <td className="py-3.5 px-4 font-bold font-mono">
+                    <span className="bg-[#1A1D24] text-[#DFB76C] px-2 py-0.5 rounded-lg border border-[#DFB76C]/30">
                       #{batch.id}
                     </span>
                   </td>
                   <td className="py-3.5 px-4">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-full overflow-hidden border border-slate-200 flex-shrink-0">
+                      <div className="w-8 h-8 rounded-full overflow-hidden border border-[#26282E] flex-shrink-0">
                         <img src={batch.vendor.avatar} alt={batch.vendor.legalName} className="w-full h-full object-cover" />
                       </div>
                       <div>
-                        <p className="font-bold text-[#0F0C3B] group-hover:text-brand-primary transition-colors">
+                        <p className="font-bold text-white group-hover:text-[#DFB76C] transition-colors">
                           {batch.vendor.businessName}
                         </p>
                         <p className="text-[10px] text-slate-400">{batch.vendor.legalName} &bull; {batch.vendor.email}</p>
@@ -399,27 +399,27 @@ export default function AdminPayoutsPage() {
                     </div>
                   </td>
                   <td className="py-3.5 px-4">
-                    <p className="font-medium text-slate-800">{batch.vendor.bankName}</p>
+                    <p className="font-medium text-slate-200">{batch.vendor.bankName}</p>
                     <p className="text-[10px] text-slate-400 font-mono">•••• {batch.vendor.accountLast4}</p>
                   </td>
                   <td className="py-3.5 px-4">
-                    <span className="font-black text-[#0F0C3B] font-mono text-sm block">
+                    <span className="font-black text-white font-mono text-sm block">
                       ${batch.netDisbursement.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </span>
                     <span className="text-[10px] text-slate-400">Gross: ${batch.totalGross}</span>
                   </td>
-                  <td className="py-3.5 px-4 font-semibold text-slate-700">
-                    <span className="bg-slate-100 px-2 py-0.5 rounded-md text-[11px]">
+                  <td className="py-3.5 px-4 font-semibold text-slate-300">
+                    <span className="bg-[#1A1D24] border border-[#26282E] px-2 py-0.5 rounded-md text-[11px]">
                       {batch.orders.length} orders
                     </span>
                   </td>
                   <td className="py-3.5 px-4">
                     <span className={cn(
-                      "px-2.5 py-0.5 rounded-full text-[10px] font-bold inline-block",
-                      batch.status === "SCHEDULED" && "bg-amber-100 text-amber-800 border border-amber-200",
-                      batch.status === "PROCESSING" && "bg-indigo-100 text-indigo-800 border border-indigo-200",
-                      batch.status === "FLAGGED" && "bg-rose-100 text-rose-800 border border-rose-200",
-                      batch.status === "COMPLETED" && "bg-emerald-100 text-emerald-800 border border-emerald-200",
+                      "px-2.5 py-0.5 rounded-full text-[10px] font-bold inline-block border",
+                      batch.status === "SCHEDULED" && "bg-amber-500/15 text-amber-400 border-amber-500/30",
+                      batch.status === "PROCESSING" && "bg-blue-500/15 text-blue-400 border-blue-500/30",
+                      batch.status === "FLAGGED" && "bg-rose-500/15 text-rose-400 border-rose-500/30",
+                      batch.status === "COMPLETED" && "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
                     )}>
                       {batch.status}
                     </span>
@@ -430,9 +430,9 @@ export default function AdminPayoutsPage() {
                         e.stopPropagation();
                         setSelectedPayout(batch);
                       }}
-                      className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-[#0F0C3B] rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-2xs"
+                      className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-slate-200 rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-sm"
                     >
-                      <Eye className="w-3 h-3 text-brand-primary" /> Inspect Details
+                      <Eye className="w-3 h-3 text-[#DFB76C]" /> Inspect Details
                     </button>
 
                     {batch.status === "SCHEDULED" && (
@@ -441,9 +441,9 @@ export default function AdminPayoutsPage() {
                           e.stopPropagation();
                           handleApprovePayout(batch.id);
                         }}
-                        className="px-3 py-1.5 bg-[#0F0C3B] hover:bg-indigo-900 text-white rounded-xl font-bold text-[11px] transition-colors shadow-2xs inline-flex items-center gap-1"
+                        className="px-3 py-1.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl font-bold text-[11px] transition-colors shadow-sm inline-flex items-center gap-1"
                       >
-                        <CheckCircle2 className="w-3 h-3 text-amber-300" /> Release Now
+                        <CheckCircle2 className="w-3 h-3 text-[#0B0C0E]" /> Release Now
                       </button>
                     )}
                   </td>
