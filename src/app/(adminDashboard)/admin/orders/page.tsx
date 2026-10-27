@@ -214,7 +214,7 @@ export default function AdminOrdersEscrowPage() {
           <div className="flex items-center gap-2 text-xs text-foreground-muted font-semibold">
             <span>Stripe Webhook Gateway:</span>
             <span className="px-2.5 py-0.5 bg-success-solid text-foreground/15 text-success rounded-full font-bold text-[10px] border border-success/30 flex items-center gap-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-success-solid text-white animate-pulse"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-success-solid text-foreground animate-pulse"></span>
               200 OK Live
             </span>
           </div>
