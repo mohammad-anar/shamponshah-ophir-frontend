@@ -53,18 +53,18 @@ export default function Logo({
       {showText && (
         <div className="flex flex-col">
           <div className="flex items-center gap-2">
-            <span className="font-serif font-bold text-sm sm:text-base tracking-[0.22em] text-[#DFB76C] uppercase leading-none">
+            <span className="font-serif font-bold text-sm sm:text-base tracking-[0.22em] text-brand uppercase leading-none">
               Ophir Reserve
             </span>
 
             {variant === "admin" && (
-              <span className="text-[9px] font-bold tracking-widest px-1.5 py-0.5 rounded-none bg-[#DFB76C] text-[#0B0C0E] uppercase">
+              <span className="text-[9px] font-bold tracking-widest px-1.5 py-0.5 rounded-none bg-brand text-on-brand uppercase">
                 ADMIN
               </span>
             )}
 
             {variant === "vendor" && (
-              <span className="text-[9px] font-bold tracking-widest px-1.5 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] uppercase border border-border-brand/40">
+              <span className="text-[9px] font-bold tracking-widest px-1.5 py-0.5 rounded-none bg-surface-sunken text-brand uppercase border border-border-brand/40">
                 PORTAL
               </span>
             )}
@@ -76,13 +76,13 @@ export default function Logo({
       )}
 
       {!showText && variant === "admin" && (
-        <span className="text-[9px] font-bold tracking-widest px-1.5 py-0.5 rounded-none bg-[#DFB76C] text-[#0B0C0E] uppercase">
+        <span className="text-[9px] font-bold tracking-widest px-1.5 py-0.5 rounded-none bg-brand text-on-brand uppercase">
           ADMIN
         </span>
       )}
 
       {!showText && variant === "vendor" && (
-        <span className="text-[9px] font-bold tracking-widest px-1.5 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] uppercase border border-border-brand/40">
+        <span className="text-[9px] font-bold tracking-widest px-1.5 py-0.5 rounded-none bg-surface-sunken text-brand uppercase border border-border-brand/40">
           PORTAL
         </span>
       )}
