@@ -59,23 +59,23 @@ export default function AdminOrderMediationPage() {
   if (isLoading) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center gap-3">
-        <Loader2 className="w-8 h-8 text-indigo-600 animate-spin" />
-        <p className="text-xs text-slate-500 font-medium">Loading mediation case for order #{orderId}...</p>
+        <Loader2 className="w-8 h-8 text-[#DFB76C] animate-spin" />
+        <p className="text-xs text-slate-400 font-medium">Loading mediation case for order #{orderId}...</p>
       </div>
     );
   }
 
   if (isError || !order) {
     return (
-      <div className="bg-white p-12 rounded-3xl border border-slate-200 text-center max-w-lg mx-auto my-12 space-y-4">
-        <div className="w-14 h-14 bg-rose-50 text-rose-500 rounded-full flex items-center justify-center mx-auto">
+      <div className="bg-[#121418] p-12 rounded-3xl border border-[#26282E] text-center max-w-lg mx-auto my-12 space-y-4">
+        <div className="w-14 h-14 bg-rose-500/15 text-rose-400 rounded-full flex items-center justify-center mx-auto">
           <AlertTriangle className="w-7 h-7" />
         </div>
-        <h2 className="text-xl font-bold text-[#0F0C3B]">Order Not Found</h2>
-        <p className="text-xs text-slate-500">The requested order #{orderId} could not be loaded.</p>
+        <h2 className="text-xl font-bold text-white">Order Not Found</h2>
+        <p className="text-xs text-slate-400">The requested order #{orderId} could not be loaded.</p>
         <button
           onClick={() => router.push("/admin/disputes")}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-700 transition-all cursor-pointer"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl text-xs font-bold transition-all cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Disputes Docket</span>
@@ -137,23 +137,23 @@ export default function AdminOrderMediationPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => router.push("/admin/disputes")}
-            className="w-9 h-9 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 transition-colors shadow-xs cursor-pointer"
+            className="w-9 h-9 rounded-xl border border-[#26282E] bg-[#16181F] hover:bg-[#1A1D24] flex items-center justify-center text-slate-300 transition-colors shadow-sm cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs text-slate-400 font-medium">Order Arbitration Docket</span>
-              <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-0.5 rounded-md border border-indigo-100">
+              <span className="text-xs font-bold text-[#DFB76C] bg-[#1A1D24] px-2.5 py-0.5 rounded-md border border-[#DFB76C]/30">
                 #{order.orderNumber || order.id}
               </span>
               {order.escalatedToAdmin && (
-                <span className="text-xs font-bold text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200 flex items-center gap-1 animate-pulse">
+                <span className="text-xs font-bold text-rose-400 bg-rose-500/15 px-2 py-0.5 rounded-md border border-rose-500/30 flex items-center gap-1 animate-pulse">
                   <ShieldAlert className="w-3 h-3" /> Escalated to Admin
                 </span>
               )}
             </div>
-            <h1 className="text-xl sm:text-2xl font-black text-[#0F0C3B] tracking-tight mt-0.5">
+            <h1 className="text-xl sm:text-2xl font-black text-white tracking-tight mt-0.5">
               {order.gig?.title || "Contractual Milestone Order"}
             </h1>
           </div>
@@ -162,18 +162,18 @@ export default function AdminOrderMediationPage() {
         <div className="flex items-center gap-2 flex-wrap">
           <button
             onClick={() => refetch()}
-            className="px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer shadow-xs"
+            className="px-3 py-2 rounded-xl border border-[#26282E] bg-[#16181F] hover:bg-[#1A1D24] text-slate-300 text-xs font-semibold transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
           >
-            <RefreshCw className="w-3.5 h-3.5" />
+            <RefreshCw className="w-3.5 h-3.5 text-[#DFB76C]" />
             <span>Refresh State</span>
           </button>
           <span className={cn(
             "px-3 py-1.5 rounded-xl text-xs font-bold border",
-            order.status === "DISPUTED" && "bg-rose-50 border-rose-200 text-rose-700",
-            order.status === "COMPLETED_WITH_PARTIAL_REFUND" && "bg-purple-50 border-purple-200 text-purple-700",
-            order.status === "CANCELLED" && "bg-slate-100 border-slate-200 text-slate-700",
-            order.status === "COMPLETED" && "bg-emerald-50 border-emerald-200 text-emerald-700",
-            !["DISPUTED", "COMPLETED_WITH_PARTIAL_REFUND", "CANCELLED", "COMPLETED"].includes(order.status) && "bg-amber-50 border-amber-200 text-amber-700",
+            order.status === "DISPUTED" && "bg-rose-500/15 border-rose-500/30 text-rose-400",
+            order.status === "COMPLETED_WITH_PARTIAL_REFUND" && "bg-purple-500/15 border-purple-500/30 text-purple-400",
+            order.status === "CANCELLED" && "bg-[#1A1D24] border-[#26282E] text-slate-400",
+            order.status === "COMPLETED" && "bg-emerald-500/15 border-emerald-500/30 text-emerald-400",
+            !["DISPUTED", "COMPLETED_WITH_PARTIAL_REFUND", "CANCELLED", "COMPLETED"].includes(order.status) && "bg-amber-500/15 border-amber-500/30 text-amber-400",
           )}>
             Status: {order.status}
           </span>
@@ -182,21 +182,21 @@ export default function AdminOrderMediationPage() {
 
       {/* Existing Resolution Notice if already decided */}
       {order.adminResolution && (
-        <div className="p-5 rounded-2xl border-2 border-indigo-200 bg-indigo-50/70 text-indigo-900 flex items-start gap-3.5 shadow-xs">
-          <CheckCircle2 className="w-5 h-5 text-indigo-600 shrink-0 mt-0.5" />
+        <div className="p-5 rounded-2xl border-2 border-indigo-500/30 bg-[#16181F] text-slate-200 flex items-start gap-3.5 shadow-sm">
+          <CheckCircle2 className="w-5 h-5 text-indigo-400 shrink-0 mt-0.5" />
           <div className="text-xs space-y-1">
             <div className="flex items-center gap-2">
-              <strong className="font-bold text-sm text-indigo-950">Arbitration Decision Finalized</strong>
-              <span className="px-2 py-0.5 rounded-md bg-indigo-200 text-indigo-900 font-bold text-[10px]">
+              <strong className="font-bold text-sm text-white">Arbitration Decision Finalized</strong>
+              <span className="px-2 py-0.5 rounded-md bg-[#1A1D24] text-[#DFB76C] font-bold text-[10px] border border-[#DFB76C]/30">
                 {order.adminResolution}
               </span>
             </div>
-            <p className="text-indigo-800">
+            <p className="text-slate-300">
               Resolved on {order.adminResolvedAt ? new Date(order.adminResolvedAt).toLocaleString() : "Recently"}.
               {order.refundedAmount && ` Refunded $${Number(order.refundedAmount).toFixed(2)} to client.`}
             </p>
             {order.deliveryNotes && (
-              <p className="text-indigo-700/90 italic mt-1 bg-white/70 p-2 rounded-lg border border-indigo-100">
+              <p className="text-slate-300 italic mt-1 bg-[#121418] p-2 rounded-lg border border-[#26282E]">
                 {order.deliveryNotes}
               </p>
             )}
@@ -206,18 +206,18 @@ export default function AdminOrderMediationPage() {
 
       {/* Escalation Context Banner */}
       {order.escalatedToAdmin && (
-        <div className="p-5 rounded-2xl border-2 border-rose-300 bg-rose-50/80 text-rose-900 flex items-start gap-3.5 shadow-xs">
-          <ShieldAlert className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
+        <div className="p-5 rounded-2xl border-2 border-rose-500/30 bg-[#16181F] text-slate-200 flex items-start gap-3.5 shadow-sm">
+          <ShieldAlert className="w-5 h-5 text-rose-400 shrink-0 mt-0.5" />
           <div className="text-xs space-y-1">
             <div className="flex items-center gap-2">
-              <strong className="font-bold text-sm text-rose-950">
+              <strong className="font-bold text-sm text-white">
                 Case Escalated by {order.escalatedBy || "Party"}
               </strong>
-              <span className="text-slate-500 text-[11px]">
+              <span className="text-slate-400 text-[11px]">
                 {order.escalatedAt ? new Date(order.escalatedAt).toLocaleString() : ""}
               </span>
             </div>
-            <p className="text-rose-800">
+            <p className="text-rose-300">
               <strong>Reason:</strong> {order.escalationReason || "Vendor and client were unable to reach agreement."}
             </p>
           </div>
@@ -225,14 +225,14 @@ export default function AdminOrderMediationPage() {
       )}
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-slate-200 pb-2">
+      <div className="flex items-center gap-2 border-b border-[#26282E] pb-2">
         <button
           onClick={() => setActiveTab("overview")}
           className={cn(
             "px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer",
             activeTab === "overview"
-              ? "bg-indigo-600 text-white shadow-xs"
-              : "text-slate-600 hover:bg-slate-100"
+              ? "bg-[#DFB76C] text-[#0B0C0E] shadow-sm"
+              : "text-slate-400 hover:bg-[#16181F] hover:text-white"
           )}
         >
           Case & Evidence Overview
@@ -242,8 +242,8 @@ export default function AdminOrderMediationPage() {
           className={cn(
             "px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5",
             activeTab === "chat"
-              ? "bg-indigo-600 text-white shadow-xs"
-              : "text-slate-600 hover:bg-slate-100"
+              ? "bg-[#DFB76C] text-[#0B0C0E] shadow-sm"
+              : "text-slate-400 hover:bg-[#16181F] hover:text-white"
           )}
         >
           <MessageSquare className="w-3.5 h-3.5" />
@@ -254,8 +254,8 @@ export default function AdminOrderMediationPage() {
           className={cn(
             "px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5",
             activeTab === "deliverables"
-              ? "bg-indigo-600 text-white shadow-xs"
-              : "text-slate-600 hover:bg-slate-100"
+              ? "bg-[#DFB76C] text-[#0B0C0E] shadow-sm"
+              : "text-slate-400 hover:bg-[#16181F] hover:text-white"
           )}
         >
           <UploadCloud className="w-3.5 h-3.5" />
@@ -265,15 +265,15 @@ export default function AdminOrderMediationPage() {
 
       {/* TAB CONTENT: Chat */}
       {activeTab === "chat" && (
-        <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-6 shadow-sm space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#26282E]">
             <div>
-              <h3 className="font-extrabold text-[#0F0C3B] text-base">Direct Order Chat Room</h3>
-              <p className="text-xs text-slate-500">
+              <h3 className="font-extrabold text-white text-base">Direct Order Chat Room</h3>
+              <p className="text-xs text-slate-400">
                 Admin is authorized to view complete communications and post binding mediator messages.
               </p>
             </div>
-            <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200">
+            <span className="px-2.5 py-1 rounded-full bg-emerald-500/15 text-emerald-400 text-xs font-bold border border-emerald-500/30">
               Room: order:{order.id}
             </span>
           </div>
@@ -283,30 +283,30 @@ export default function AdminOrderMediationPage() {
 
       {/* TAB CONTENT: Deliverables */}
       {activeTab === "deliverables" && (
-        <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-5">
-          <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-            <h3 className="font-extrabold text-[#0F0C3B] text-base">Deliverables Audit</h3>
-            <span className="text-xs text-slate-500">
+        <div className="bg-[#121418] rounded-3xl border border-[#26282E] p-6 shadow-sm space-y-5">
+          <div className="flex items-center justify-between pb-3 border-b border-[#26282E]">
+            <h3 className="font-extrabold text-white text-base">Deliverables Audit</h3>
+            <span className="text-xs text-slate-400">
               Round #{order.revisionCount ? order.revisionCount + 1 : 1}
             </span>
           </div>
 
           {order.deliveryNotes ? (
-            <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-              <span className="text-[11px] font-bold text-slate-600 uppercase tracking-wider block">
+            <div className="p-4 bg-[#16181F] rounded-2xl border border-[#26282E] space-y-2">
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
                 Vendor's Delivery Submission Statement:
               </span>
-              <p className="text-xs text-slate-800 leading-relaxed whitespace-pre-line">
+              <p className="text-xs text-slate-200 leading-relaxed whitespace-pre-line">
                 {order.deliveryNotes}
               </p>
             </div>
           ) : (
-            <p className="text-xs text-slate-400 italic">No delivery message submitted yet.</p>
+            <p className="text-xs text-slate-500 italic">No delivery message submitted yet.</p>
           )}
 
           {Array.isArray(order.deliveryFiles) && order.deliveryFiles.length > 0 ? (
             <div className="space-y-3">
-              <span className="text-xs font-bold text-slate-700 block">Submitted Files ({order.deliveryFiles.length}):</span>
+              <span className="text-xs font-bold text-slate-300 block">Submitted Files ({order.deliveryFiles.length}):</span>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {order.deliveryFiles.map((fileUrl: string, idx: number) => {
                   const fullUrl = getFileUrl(fileUrl);
@@ -314,19 +314,19 @@ export default function AdminOrderMediationPage() {
                   return (
                     <div
                       key={idx}
-                      className="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between gap-3 shadow-2xs hover:border-indigo-300 transition-all"
+                      className="p-3 bg-[#16181F] rounded-xl border border-[#26282E] flex items-center justify-between gap-3 shadow-sm hover:border-[#DFB76C]/40 transition-all"
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
-                        <div className="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                        <div className="w-8 h-8 rounded-lg bg-[#1A1D24] text-[#DFB76C] flex items-center justify-center shrink-0">
                           <FileText className="w-4 h-4" />
                         </div>
-                        <span className="text-xs font-medium text-slate-800 truncate">{filename}</span>
+                        <span className="text-xs font-medium text-slate-200 truncate">{filename}</span>
                       </div>
                       <a
                         href={fullUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="px-2.5 py-1 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 text-slate-600 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1 shrink-0"
+                        className="px-2.5 py-1 bg-[#1A1D24] hover:bg-[#222630] text-slate-300 hover:text-[#DFB76C] rounded-lg text-xs font-semibold transition-colors flex items-center gap-1 shrink-0 border border-[#26282E]"
                       >
                         <Download className="w-3 h-3" />
                         <span>View</span>
@@ -337,7 +337,7 @@ export default function AdminOrderMediationPage() {
               </div>
             </div>
           ) : (
-            <div className="p-8 text-center border-2 border-dashed border-slate-200 rounded-2xl text-xs text-slate-400">
+            <div className="p-8 text-center border-2 border-dashed border-[#26282E] rounded-2xl text-xs text-slate-500">
               No digital files uploaded in deliverables.
             </div>
           )}
@@ -351,31 +351,31 @@ export default function AdminOrderMediationPage() {
           <div className="lg:col-span-2 space-y-6">
             {/* Cancellation Request Section */}
             {order.cancelStatus && (
-              <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="bg-[#121418] p-6 rounded-3xl border border-[#26282E] shadow-sm space-y-4">
+                <div className="flex items-center justify-between border-b border-[#26282E] pb-3">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-ping" />
-                    <h3 className="font-extrabold text-[#0F0C3B] text-base">Cancellation Request Record</h3>
+                    <h3 className="font-extrabold text-white text-base">Cancellation Request Record</h3>
                   </div>
                   <span className={cn(
-                    "px-2.5 py-0.5 rounded-full text-xs font-bold",
-                    order.cancelStatus === "REQUESTED" && "bg-amber-100 text-amber-800",
-                    order.cancelStatus === "ACCEPTED" && "bg-emerald-100 text-emerald-800",
-                    order.cancelStatus === "REJECTED" && "bg-rose-100 text-rose-800",
+                    "px-2.5 py-0.5 rounded-full text-xs font-bold border",
+                    order.cancelStatus === "REQUESTED" && "bg-amber-500/15 text-amber-400 border-amber-500/30",
+                    order.cancelStatus === "ACCEPTED" && "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+                    order.cancelStatus === "REJECTED" && "bg-rose-500/15 text-rose-400 border-rose-500/30",
                   )}>
                     Status: {order.cancelStatus}
                   </span>
                 </div>
-                <div className="text-xs space-y-2">
-                  <p><strong>Reason:</strong> {order.cancelReason || "No formal reason provided"}</p>
+                <div className="text-xs space-y-2 text-slate-300">
+                  <p><strong className="text-white">Reason:</strong> {order.cancelReason || "No formal reason provided"}</p>
                   {order.cancelResponseNote && (
-                    <p className="text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                      <strong>Vendor Response:</strong> {order.cancelResponseNote}
+                    <p className="text-slate-300 bg-[#16181F] p-3 rounded-xl border border-[#26282E]">
+                      <strong className="text-white">Vendor Response:</strong> {order.cancelResponseNote}
                     </p>
                   )}
                   {Array.isArray(order.cancelProof) && order.cancelProof.length > 0 && (
                     <div className="pt-2">
-                      <strong className="block mb-1.5 text-slate-700">Proof Evidence:</strong>
+                      <strong className="block mb-1.5 text-slate-300">Proof Evidence:</strong>
                       <div className="flex flex-wrap gap-2">
                         {order.cancelProof.map((proof: string, i: number) => (
                           <a
@@ -383,7 +383,7 @@ export default function AdminOrderMediationPage() {
                             href={getFileUrl(proof)}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-slate-100 hover:bg-indigo-50 text-slate-700 hover:text-indigo-600 rounded-lg text-xs font-medium border border-slate-200"
+                            className="inline-flex items-center gap-1 px-3 py-1 bg-[#16181F] hover:bg-[#1A1D24] text-slate-300 hover:text-[#DFB76C] rounded-lg text-xs font-medium border border-[#26282E]"
                           >
                             <ExternalLink className="w-3 h-3" />
                             <span>Evidence #{i + 1}</span>
@@ -398,38 +398,38 @@ export default function AdminOrderMediationPage() {
 
             {/* Partial Refund Request Section */}
             {order.refundStatus && (
-              <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <div className="bg-[#121418] p-6 rounded-3xl border border-[#26282E] shadow-sm space-y-4">
+                <div className="flex items-center justify-between border-b border-[#26282E] pb-3">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-purple-500" />
-                    <h3 className="font-extrabold text-[#0F0C3B] text-base">Partial Refund Request Record</h3>
+                    <h3 className="font-extrabold text-white text-base">Partial Refund Request Record</h3>
                   </div>
                   <span className={cn(
-                    "px-2.5 py-0.5 rounded-full text-xs font-bold",
-                    order.refundStatus === "REQUESTED" && "bg-amber-100 text-amber-800",
-                    order.refundStatus === "ACCEPTED" && "bg-emerald-100 text-emerald-800",
-                    order.refundStatus === "REJECTED" && "bg-rose-100 text-rose-800",
+                    "px-2.5 py-0.5 rounded-full text-xs font-bold border",
+                    order.refundStatus === "REQUESTED" && "bg-amber-500/15 text-amber-400 border-amber-500/30",
+                    order.refundStatus === "ACCEPTED" && "bg-emerald-500/15 text-emerald-400 border-emerald-500/30",
+                    order.refundStatus === "REJECTED" && "bg-rose-500/15 text-rose-400 border-rose-500/30",
                   )}>
                     Status: {order.refundStatus}
                   </span>
                 </div>
-                <div className="text-xs space-y-2">
+                <div className="text-xs space-y-2 text-slate-300">
                   <p>
-                    <strong>Requested Refund:</strong>{" "}
-                    <span className="font-bold text-purple-700 text-sm font-mono">
+                    <strong className="text-white">Requested Refund:</strong>{" "}
+                    <span className="font-bold text-purple-400 text-sm font-mono">
                       ${Number(order.partialRefundAmount || 0).toFixed(2)}
                     </span>{" "}
                     (out of total ${grandTotal.toFixed(2)})
                   </p>
-                  <p><strong>Reason:</strong> {order.refundReason || "Partial non-delivery or deficiency"}</p>
+                  <p><strong className="text-white">Reason:</strong> {order.refundReason || "Partial non-delivery or deficiency"}</p>
                   {order.refundResponseNote && (
-                    <p className="text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100">
-                      <strong>Vendor Response:</strong> {order.refundResponseNote}
+                    <p className="text-slate-300 bg-[#16181F] p-3 rounded-xl border border-[#26282E]">
+                      <strong className="text-white">Vendor Response:</strong> {order.refundResponseNote}
                     </p>
                   )}
                   {Array.isArray(order.refundProof) && order.refundProof.length > 0 && (
                     <div className="pt-2">
-                      <strong className="block mb-1.5 text-slate-700">Proof Evidence:</strong>
+                      <strong className="block mb-1.5 text-slate-300">Proof Evidence:</strong>
                       <div className="flex flex-wrap gap-2">
                         {order.refundProof.map((proof: string, i: number) => (
                           <a
@@ -437,7 +437,7 @@ export default function AdminOrderMediationPage() {
                             href={getFileUrl(proof)}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1 px-3 py-1 bg-slate-100 hover:bg-purple-50 text-slate-700 hover:text-purple-700 rounded-lg text-xs font-medium border border-slate-200"
+                            className="inline-flex items-center gap-1 px-3 py-1 bg-[#16181F] hover:bg-[#1A1D24] text-slate-300 hover:text-purple-400 rounded-lg text-xs font-medium border border-[#26282E]"
                           >
                             <ExternalLink className="w-3 h-3" />
                             <span>Refund Proof #{i + 1}</span>
@@ -452,39 +452,39 @@ export default function AdminOrderMediationPage() {
 
             {/* Parties Card */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-2xs space-y-3">
-                <div className="flex items-center gap-2.5 pb-2 border-b border-slate-100">
-                  <div className="w-8 h-8 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-xs">
+              <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm space-y-3">
+                <div className="flex items-center gap-2.5 pb-2 border-b border-[#26282E]">
+                  <div className="w-8 h-8 rounded-full bg-blue-500/15 text-blue-400 flex items-center justify-center font-bold text-xs border border-blue-500/30">
                     <User className="w-4 h-4" />
                   </div>
                   <div>
                     <span className="text-[10px] text-slate-400 font-bold uppercase">Client Host</span>
-                    <h4 className="font-bold text-[#0F0C3B] text-sm">
+                    <h4 className="font-bold text-white text-sm">
                       {order.clientProfile?.displayName || "Client"}
                     </h4>
                   </div>
                 </div>
-                <div className="text-xs text-slate-600 space-y-1">
-                  <p>Email: {order.clientProfile?.user?.email || "client@example.com"}</p>
-                  <p>Phone: {order.clientProfile?.phone || "Not specified"}</p>
+                <div className="text-xs text-slate-400 space-y-1">
+                  <p>Email: <span className="text-slate-300">{order.clientProfile?.user?.email || "client@example.com"}</span></p>
+                  <p>Phone: <span className="text-slate-300">{order.clientProfile?.phone || "Not specified"}</span></p>
                 </div>
               </div>
 
-              <div className="bg-white p-5 rounded-3xl border border-slate-200 shadow-2xs space-y-3">
-                <div className="flex items-center gap-2.5 pb-2 border-b border-slate-100">
-                  <div className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-xs">
+              <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm space-y-3">
+                <div className="flex items-center gap-2.5 pb-2 border-b border-[#26282E]">
+                  <div className="w-8 h-8 rounded-full bg-emerald-500/15 text-emerald-400 flex items-center justify-center font-bold text-xs border border-emerald-500/30">
                     <Store className="w-4 h-4" />
                   </div>
                   <div>
                     <span className="text-[10px] text-slate-400 font-bold uppercase">Vendor Professional</span>
-                    <h4 className="font-bold text-[#0F0C3B] text-sm">
+                    <h4 className="font-bold text-white text-sm">
                       {order.vendorProfile?.businessName || "Vendor"}
                     </h4>
                   </div>
                 </div>
-                <div className="text-xs text-slate-600 space-y-1">
-                  <p>Email: {order.vendorProfile?.user?.email || "vendor@example.com"}</p>
-                  <p className="font-mono text-[11px] text-slate-500 truncate">
+                <div className="text-xs text-slate-400 space-y-1">
+                  <p>Email: <span className="text-slate-300">{order.vendorProfile?.user?.email || "vendor@example.com"}</span></p>
+                  <p className="font-mono text-[11px] text-[#DFB76C] truncate">
                     Stripe: {order.vendorProfile?.stripeAccountId || "Not connected"}
                   </p>
                 </div>
@@ -492,21 +492,21 @@ export default function AdminOrderMediationPage() {
             </div>
 
             {/* Milestones Summary */}
-            <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm space-y-3">
-              <h3 className="font-extrabold text-[#0F0C3B] text-base">Contract Milestones</h3>
+            <div className="bg-[#121418] p-6 rounded-3xl border border-[#26282E] shadow-sm space-y-3">
+              <h3 className="font-extrabold text-white text-base">Contract Milestones</h3>
               <div className="space-y-2">
                 {(order.milestones || []).map((m: any) => (
                   <div
                     key={m.id}
-                    className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs"
+                    className="p-3 bg-[#16181F] rounded-xl border border-[#26282E] flex items-center justify-between text-xs"
                   >
                     <div>
-                      <span className="font-bold text-slate-800">{m.label}</span>
+                      <span className="font-bold text-white">{m.label}</span>
                       <span className="text-slate-400 text-[11px] ml-2">({m.percentage}%)</span>
                     </div>
                     <div className="flex items-center gap-3 font-mono">
-                      <span className="font-bold text-slate-900">${Number(m.amount).toFixed(2)}</span>
-                      <span className="px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 text-[10px] font-bold">
+                      <span className="font-bold text-[#DFB76C]">${Number(m.amount).toFixed(2)}</span>
+                      <span className="px-2 py-0.5 rounded-full bg-[#1A1D24] text-slate-300 text-[10px] font-bold border border-[#26282E]">
                         {m.status}
                       </span>
                     </div>
@@ -518,19 +518,19 @@ export default function AdminOrderMediationPage() {
 
           {/* Right Column (1 Col): Admin Arbitration Action Card */}
           <div className="space-y-6">
-            <div className="bg-white p-6 rounded-3xl border-2 border-indigo-200 shadow-md space-y-5 sticky top-24">
-              <div className="flex items-center justify-between border-b border-indigo-100 pb-3">
+            <div className="bg-[#121418] p-6 rounded-3xl border-2 border-[#26282E] shadow-md space-y-5 sticky top-24">
+              <div className="flex items-center justify-between border-b border-[#26282E] pb-3">
                 <div className="flex items-center gap-2">
-                  <Scale className="w-5 h-5 text-indigo-600" />
-                  <h3 className="font-black text-[#0F0C3B] text-base">Admin Judgment Panel</h3>
+                  <Scale className="w-5 h-5 text-[#DFB76C]" />
+                  <h3 className="font-black text-white text-base">Admin Judgment Panel</h3>
                 </div>
-                <span className="text-[10px] uppercase font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md">
+                <span className="text-[10px] uppercase font-bold text-[#DFB76C] bg-[#1A1D24] px-2 py-0.5 rounded-md border border-[#DFB76C]/30">
                   Binding Escrow
                 </span>
               </div>
 
               <div className="space-y-3">
-                <span className="text-xs font-bold text-slate-700 block">Select Official Ruling:</span>
+                <span className="text-xs font-bold text-slate-300 block">Select Official Ruling:</span>
 
                 {/* Ruling 1: Full Refund */}
                 <label
@@ -538,8 +538,8 @@ export default function AdminOrderMediationPage() {
                   className={cn(
                     "p-3.5 rounded-2xl border-2 flex items-start gap-3 cursor-pointer transition-all",
                     decision === "CANCEL_FULL_REFUND"
-                      ? "border-rose-500 bg-rose-50/50"
-                      : "border-slate-200 hover:border-slate-300"
+                      ? "border-rose-500/60 bg-rose-500/10"
+                      : "border-[#26282E] bg-[#16181F] hover:border-slate-600"
                   )}
                 >
                   <input
@@ -547,11 +547,11 @@ export default function AdminOrderMediationPage() {
                     name="decision"
                     checked={decision === "CANCEL_FULL_REFUND"}
                     onChange={() => setDecision("CANCEL_FULL_REFUND")}
-                    className="mt-1"
+                    className="mt-1 accent-rose-500"
                   />
                   <div className="text-xs">
-                    <strong className="font-bold text-rose-900 block">Cancel & Full Refund</strong>
-                    <p className="text-slate-600 text-[11px] mt-0.5">
+                    <strong className="font-bold text-rose-400 block">Cancel & Full Refund</strong>
+                    <p className="text-slate-400 text-[11px] mt-0.5">
                       100% (${grandTotal.toFixed(2)}) returned to client via Stripe. Reverses any transfers and closes order as CANCELLED.
                     </p>
                   </div>
@@ -563,8 +563,8 @@ export default function AdminOrderMediationPage() {
                   className={cn(
                     "p-3.5 rounded-2xl border-2 flex items-start gap-3 cursor-pointer transition-all",
                     decision === "PARTIAL_REFUND"
-                      ? "border-purple-500 bg-purple-50/50"
-                      : "border-slate-200 hover:border-slate-300"
+                      ? "border-purple-500/60 bg-purple-500/10"
+                      : "border-[#26282E] bg-[#16181F] hover:border-slate-600"
                   )}
                 >
                   <input
@@ -572,11 +572,11 @@ export default function AdminOrderMediationPage() {
                     name="decision"
                     checked={decision === "PARTIAL_REFUND"}
                     onChange={() => setDecision("PARTIAL_REFUND")}
-                    className="mt-1"
+                    className="mt-1 accent-purple-500"
                   />
                   <div className="text-xs">
-                    <strong className="font-bold text-purple-900 block">Partial Refund</strong>
-                    <p className="text-slate-600 text-[11px] mt-0.5">
+                    <strong className="font-bold text-purple-400 block">Partial Refund</strong>
+                    <p className="text-slate-400 text-[11px] mt-0.5">
                       Refund specified portion to client. Remaining balance split: 15% platform fee, 85% net to vendor.
                     </p>
                   </div>
@@ -588,8 +588,8 @@ export default function AdminOrderMediationPage() {
                   className={cn(
                     "p-3.5 rounded-2xl border-2 flex items-start gap-3 cursor-pointer transition-all",
                     decision === "REJECT_DISPUTE_RELEASE_VENDOR"
-                      ? "border-emerald-500 bg-emerald-50/50"
-                      : "border-slate-200 hover:border-slate-300"
+                      ? "border-emerald-500/60 bg-emerald-500/10"
+                      : "border-[#26282E] bg-[#16181F] hover:border-slate-600"
                   )}
                 >
                   <input
@@ -597,11 +597,11 @@ export default function AdminOrderMediationPage() {
                     name="decision"
                     checked={decision === "REJECT_DISPUTE_RELEASE_VENDOR"}
                     onChange={() => setDecision("REJECT_DISPUTE_RELEASE_VENDOR")}
-                    className="mt-1"
+                    className="mt-1 accent-emerald-500"
                   />
                   <div className="text-xs">
-                    <strong className="font-bold text-emerald-900 block">Reject Dispute & Release to Vendor</strong>
-                    <p className="text-slate-600 text-[11px] mt-0.5">
+                    <strong className="font-bold text-emerald-400 block">Reject Dispute & Release to Vendor</strong>
+                    <p className="text-slate-400 text-[11px] mt-0.5">
                       Dispute rejected. Vendor fulfillment validated. Releases net payout (85%) to vendor after 15% platform fee.
                     </p>
                   </div>
@@ -610,12 +610,12 @@ export default function AdminOrderMediationPage() {
 
               {/* Partial Refund Input if chosen */}
               {decision === "PARTIAL_REFUND" && (
-                <div className="p-4 bg-purple-50/60 rounded-2xl border border-purple-200 space-y-3">
-                  <label className="text-xs font-bold text-purple-950 block">
+                <div className="p-4 bg-[#16181F] rounded-2xl border border-purple-500/30 space-y-3">
+                  <label className="text-xs font-bold text-purple-300 block">
                     Refund Amount to Client ($ USD):
                   </label>
                   <div className="relative">
-                    <DollarSign className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <DollarSign className="w-4 h-4 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
                     <input
                       type="number"
                       min="1"
@@ -624,27 +624,27 @@ export default function AdminOrderMediationPage() {
                       value={partialRefundAmount || (requestedRefund ? String(requestedRefund) : "")}
                       onChange={(e) => setPartialRefundAmount(e.target.value)}
                       placeholder={`e.g. ${(grandTotal / 2).toFixed(2)}`}
-                      className="w-full pl-9 pr-3 py-2 bg-white rounded-xl border border-purple-300 text-xs font-mono font-bold focus:outline-indigo-600"
+                      className="w-full pl-9 pr-3 py-2 bg-[#121418] rounded-xl border border-[#26282E] text-white text-xs font-mono font-bold focus:outline-none focus:border-[#DFB76C]"
                     />
                   </div>
 
                   {/* Live Calculation Preview */}
-                  <div className="p-3 bg-white rounded-xl border border-purple-100 text-[11px] space-y-1">
+                  <div className="p-3 bg-[#121418] rounded-xl border border-[#26282E] text-[11px] space-y-1">
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Client Refund:</span>
-                      <span className="font-bold font-mono text-purple-700">${refundValue.toFixed(2)}</span>
+                      <span className="text-slate-400">Client Refund:</span>
+                      <span className="font-bold font-mono text-purple-400">${refundValue.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Remaining Base:</span>
-                      <span className="font-mono">${remainingPortion.toFixed(2)}</span>
+                      <span className="text-slate-400">Remaining Base:</span>
+                      <span className="font-mono text-slate-200">${remainingPortion.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500">15% Platform Fee:</span>
-                      <span className="font-mono text-slate-700">${platformFee.toFixed(2)}</span>
+                      <span className="text-slate-400">15% Platform Fee:</span>
+                      <span className="font-mono text-slate-300">${platformFee.toFixed(2)}</span>
                     </div>
-                    <div className="flex justify-between pt-1 border-t border-slate-100">
-                      <span className="font-bold text-slate-800">85% Vendor Net:</span>
-                      <span className="font-bold font-mono text-emerald-700">${vendorNet.toFixed(2)}</span>
+                    <div className="flex justify-between pt-1 border-t border-[#26282E]">
+                      <span className="font-bold text-slate-200">85% Vendor Net:</span>
+                      <span className="font-bold font-mono text-emerald-400">${vendorNet.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>
@@ -652,15 +652,15 @@ export default function AdminOrderMediationPage() {
 
               {/* Resolution Notes */}
               <div className="space-y-1.5">
-                <label className="text-xs font-bold text-slate-700 block">
-                  Formal Arbitration Ruling & Explanation <span className="text-rose-500">*</span>:
+                <label className="text-xs font-bold text-slate-300 block">
+                  Formal Arbitration Ruling & Explanation <span className="text-rose-400">*</span>:
                 </label>
                 <textarea
                   rows={3}
                   value={resolutionNotes}
                   onChange={(e) => setResolutionNotes(e.target.value)}
                   placeholder="State the findings based on chat, delivered work, and policy reasons..."
-                  className="w-full p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs focus:outline-indigo-600 resize-none"
+                  className="w-full p-3 bg-[#16181F] rounded-xl border border-[#26282E] text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#DFB76C] resize-none"
                 />
               </div>
 
@@ -669,16 +669,16 @@ export default function AdminOrderMediationPage() {
                 type="button"
                 disabled={isResolving}
                 onClick={handleResolve}
-                className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full py-3 bg-[#DFB76C] hover:bg-[#ECC870] disabled:opacity-50 text-[#0B0C0E] rounded-xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer"
               >
                 {isResolving ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <Loader2 className="w-4 h-4 animate-spin text-[#0B0C0E]" />
                     <span>Executing Arbitration...</span>
                   </>
                 ) : (
                   <>
-                    <Scale className="w-4 h-4" />
+                    <Scale className="w-4 h-4 text-[#0B0C0E]" />
                     <span>Finalize Arbitration Judgment</span>
                   </>
                 )}
