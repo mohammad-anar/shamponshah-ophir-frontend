@@ -85,19 +85,19 @@ export default function FamilyPaymentModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
       <div className="bg-surface rounded-3xl max-w-lg w-full shadow-2xl overflow-hidden border border-border animate-in fade-in">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-border flex items-center justify-between bg-[#F8F9FD]">
+        <div className="px-6 py-4 border-b border-border flex items-center justify-between bg-surface-elevated">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-emerald-50 text-emerald-700">
+            <div className="p-2 rounded-xl bg-success-soft text-success">
               <ShieldCheck className="w-5 h-5" />
             </div>
             <div>
               <span className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">
                 Full Escrow Booking
               </span>
-              <h3 className="text-sm font-bold text-[#0F0C3B] mt-0.5">Book Service & 100% Full Payment</h3>
+              <h3 className="text-sm font-bold text-foreground mt-0.5">Book Service & 100% Full Payment</h3>
             </div>
           </div>
 
@@ -112,24 +112,24 @@ export default function FamilyPaymentModal({
         {/* Body */}
         <div className="p-6 space-y-4 text-xs">
           {/* Service Info Banner */}
-          <div className="p-4 rounded-2xl bg-[#F8F9FD] border border-border/80 space-y-2">
+          <div className="p-4 rounded-2xl bg-surface-elevated border border-border/80 space-y-2">
             <div className="flex items-start justify-between">
               <div>
                 <span className="text-[10px] font-bold uppercase tracking-wider text-brand-primary block">
                   Service To Be Booked
                 </span>
-                <h4 className="text-xs font-bold text-[#0F0C3B] mt-0.5">{service.title}</h4>
+                <h4 className="text-xs font-bold text-foreground mt-0.5">{service.title}</h4>
                 <p className="text-[11px] text-foreground-muted">By {service.vendorName}</p>
               </div>
               <div className="text-right">
                 <span className="text-[10px] text-foreground-muted font-semibold block uppercase">Full Contract Fee</span>
-                <span className="text-base font-black text-[#0F0C3B] font-mono">
+                <span className="text-base font-black text-foreground font-mono">
                   ${fullAmount.toLocaleString()}
                 </span>
               </div>
             </div>
 
-            <div className="pt-2 border-t border-border flex items-center gap-2 text-[11px] text-emerald-700 font-bold">
+            <div className="pt-2 border-t border-border flex items-center gap-2 text-[11px] text-success font-bold">
               <Check className="w-3.5 h-3.5 text-success" />
               <span>Full 100% payment required to confirm reservation with vendor</span>
             </div>
@@ -145,7 +145,7 @@ export default function FamilyPaymentModal({
                   required
                   value={payerName}
                   onChange={(e) => setPayerName(e.target.value)}
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 />
               </div>
 
@@ -155,7 +155,7 @@ export default function FamilyPaymentModal({
                   type="text"
                   value={bookingNote}
                   onChange={(e) => setBookingNote(e.target.value)}
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary"
                 />
               </div>
             </div>
@@ -197,16 +197,16 @@ export default function FamilyPaymentModal({
             </div>
 
             {/* Fee summary */}
-            <div className="p-3 bg-[#EDE9FE]/60 rounded-xl border border-indigo-100 space-y-1 text-foreground-secondary text-[11px]">
+            <div className="p-3 bg-brand-soft/60 rounded-xl border border-info/30 space-y-1 text-foreground-secondary text-[11px]">
               <div className="flex justify-between">
                 <span>Vendor 100% Contract Fee:</span>
-                <span className="font-bold text-[#0F0C3B] font-mono">${fullAmount.toFixed(2)}</span>
+                <span className="font-bold text-foreground font-mono">${fullAmount.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
                 <span>Client platform escrow fee (5%):</span>
-                <span className="font-bold text-[#0F0C3B] font-mono">${platformFee.toFixed(2)}</span>
+                <span className="font-bold text-foreground font-mono">${platformFee.toFixed(2)}</span>
               </div>
-              <div className="flex justify-between pt-1 border-t border-indigo-200 font-bold text-xs text-[#0F0C3B]">
+              <div className="flex justify-between pt-1 border-t border-info/30 font-bold text-xs text-foreground">
                 <span>Total charged to card:</span>
                 <span className="font-mono text-brand-primary font-black">${totalCharged.toFixed(2)}</span>
               </div>
@@ -224,7 +224,7 @@ export default function FamilyPaymentModal({
               <button
                 type="submit"
                 disabled={isProcessing || isSuccess}
-                className="px-6 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-indigo-900 text-foreground text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
+                className="px-6 py-2.5 rounded-xl bg-brand hover:bg-info-soft text-foreground text-xs font-bold transition-all shadow-md flex items-center gap-1.5"
               >
                 {isProcessing ? (
                   <span>Contacting Stripe Escrow...</span>
