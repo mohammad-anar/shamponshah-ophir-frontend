@@ -87,10 +87,10 @@ export default function AdminReportsPage() {
   return (
     <div className="space-y-6 pb-16">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[#26282E] pb-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-border pb-5">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-danger-solid text-white/15 text-danger border border-danger/30 uppercase tracking-wider">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-danger-solid text-foreground/15 text-danger border border-danger/30 uppercase tracking-wider">
               Safety &amp; Compliance
             </span>
             <span className="text-xs text-foreground-muted font-mono">
@@ -107,14 +107,14 @@ export default function AdminReportsPage() {
 
         <button
           onClick={() => refetch()}
-          className="px-4 py-2 rounded-xl bg-[#16181F] border border-[#26282E] hover:bg-[#1A1D24] text-foreground-secondary hover:text-foreground text-xs font-bold transition-all shadow-2xs self-start sm:self-auto cursor-pointer"
+          className="px-4 py-2 rounded-xl bg-surface-elevated border border-border hover:bg-surface-sunken text-foreground-secondary hover:text-foreground text-xs font-bold transition-all shadow-2xs self-start sm:self-auto cursor-pointer"
         >
           Refresh Feed
         </button>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="bg-[#121418] rounded-2xl border border-[#26282E] p-4 shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
+      <div className="bg-surface rounded-2xl border border-border p-4 shadow-xs flex flex-col md:flex-row items-center justify-between gap-3">
         {/* Tabs */}
         <div className="flex items-center gap-1.5 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
           {["ALL", "PENDING", "RESOLVED", "DISMISSED"].map((tab) => (
@@ -124,8 +124,8 @@ export default function AdminReportsPage() {
               className={cn(
                 "px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all cursor-pointer whitespace-nowrap",
                 activeTab === tab
-                  ? "bg-[#DFB76C] text-[#0B0C0E] shadow-xs font-bold"
-                  : "bg-[#16181F] text-foreground-muted hover:text-foreground hover:bg-[#1A1D24] border border-[#26282E]"
+                  ? "bg-brand text-on-brand shadow-xs font-bold"
+                  : "bg-surface-elevated text-foreground-muted hover:text-foreground hover:bg-surface-sunken border border-border"
               )}
             >
               {tab === "ALL" ? "All Reports" : tab.charAt(0) + tab.slice(1).toLowerCase()}
@@ -141,7 +141,7 @@ export default function AdminReportsPage() {
             placeholder="Search reason, gig title, reporter..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
+            className="w-full pl-9 pr-3 py-1.5 bg-surface-elevated border border-border rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand"
           />
         </div>
       </div>
@@ -149,12 +149,12 @@ export default function AdminReportsPage() {
       {/* Reports Table / Card List */}
       {isLoading ? (
         <div className="py-24 flex flex-col items-center justify-center text-foreground-muted gap-3">
-          <Loader2 className="w-8 h-8 animate-spin text-[#DFB76C]" />
+          <Loader2 className="w-8 h-8 animate-spin text-brand" />
           <span className="text-xs font-medium text-foreground-muted">Loading service reports...</span>
         </div>
       ) : reports.length === 0 ? (
-        <div className="bg-[#121418] border border-[#26282E] rounded-2xl p-12 text-center max-w-lg mx-auto my-12 space-y-3 shadow-xs">
-          <div className="w-12 h-12 rounded-full bg-success-solid text-white/15 border border-success/30 flex items-center justify-center mx-auto text-success">
+        <div className="bg-surface border border-border rounded-2xl p-12 text-center max-w-lg mx-auto my-12 space-y-3 shadow-xs">
+          <div className="w-12 h-12 rounded-full bg-success-solid text-foreground/15 border border-success/30 flex items-center justify-center mx-auto text-success">
             <CheckCircle2 className="w-6 h-6" />
           </div>
           <h3 className="text-base font-bold text-foreground">Zero Reports in this Filter</h3>
@@ -180,21 +180,21 @@ export default function AdminReportsPage() {
                 key={report.id}
                 className={cn(
                   "rounded-2xl border p-5 shadow-xs transition-all space-y-4",
-                  isPending ? "bg-[#121418] border-warning/30 ring-1 ring-amber-500/20" : "bg-[#121418] border-[#26282E]"
+                  isPending ? "bg-surface border-warning/30 ring-1 ring-amber-500/20" : "bg-surface border-border"
                 )}
               >
                 {/* Header row: Report metadata & Status */}
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#26282E] pb-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-3">
                   <div className="flex items-center gap-2">
                     <span className={cn(
                       "px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase",
                       isPending ? "bg-warning-solid text-on-brand/15 text-warning border border-warning/30 animate-pulse" :
-                      isResolved ? "bg-success-solid text-white/15 text-success border border-success/30" :
-                      "bg-slate-500/15 text-foreground-muted border border-slate-500/30"
+                      isResolved ? "bg-success-solid text-foreground/15 text-success border border-success/30" :
+                      "bg-surface-sunken/15 text-foreground-muted border border-border-strong/30"
                     )}>
                       {report.status}
                     </span>
-                    <span className="text-xs font-bold text-danger bg-danger-solid text-white/15 border border-danger/30 px-2 py-0.5 rounded-md flex items-center gap-1">
+                    <span className="text-xs font-bold text-danger bg-danger-solid text-foreground/15 border border-danger/30 px-2 py-0.5 rounded-md flex items-center gap-1">
                       <AlertTriangle className="w-3 h-3 text-danger" />
                       {report.reason}
                     </span>
@@ -213,13 +213,13 @@ export default function AdminReportsPage() {
                 {/* Body: Gig info + Complaint Details */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
                   {/* Left: Reported Gig Card (4 cols) */}
-                  <div className="lg:col-span-4 p-3 rounded-xl bg-[#16181F] border border-[#26282E] flex items-start gap-3">
-                    <div className="w-16 h-14 rounded-lg overflow-hidden bg-slate-900 flex-shrink-0 border border-[#26282E]">
+                  <div className="lg:col-span-4 p-3 rounded-xl bg-surface-elevated border border-border flex items-start gap-3">
+                    <div className="w-16 h-14 rounded-lg overflow-hidden bg-surface-sunken flex-shrink-0 border border-border">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={coverImage} alt={gig?.title || "Gig"} className="w-full h-full object-cover" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <span className="text-[10px] font-bold uppercase text-[#DFB76C] block truncate">
+                      <span className="text-[10px] font-bold uppercase text-brand block truncate">
                         {gig?.category?.name || "Service Listing"}
                       </span>
                       <h4 className="font-bold text-foreground text-xs line-clamp-1">
@@ -231,9 +231,9 @@ export default function AdminReportsPage() {
                       <div className="flex items-center gap-2 mt-1.5">
                         <span className={cn(
                           "px-1.5 py-0.2 rounded text-[9px] font-bold",
-                          gig?.status === "ACTIVE" ? "bg-success-solid text-white/15 text-success border border-success/30" :
-                          gig?.status === "SUSPENDED" ? "bg-danger-solid text-white/15 text-danger border border-danger/30" :
-                          "bg-slate-800 text-foreground-muted border border-slate-700"
+                          gig?.status === "ACTIVE" ? "bg-success-solid text-foreground/15 text-success border border-success/30" :
+                          gig?.status === "SUSPENDED" ? "bg-danger-solid text-foreground/15 text-danger border border-danger/30" :
+                          "bg-surface-sunken text-foreground-muted border border-slate-700"
                         )}>
                           Status: {gig?.status || "UNKNOWN"}
                         </span>
@@ -241,7 +241,7 @@ export default function AdminReportsPage() {
                           <Link
                             href={`/services/${gig.id}`}
                             target="_blank"
-                            className="text-[10px] text-[#DFB76C] hover:underline font-bold flex items-center gap-0.5"
+                            className="text-[10px] text-brand hover:underline font-bold flex items-center gap-0.5"
                           >
                             <span>Live Page</span>
                             <ExternalLink className="w-2.5 h-2.5" />
@@ -253,7 +253,7 @@ export default function AdminReportsPage() {
 
                   {/* Right: Complaint Description & Notes (8 cols) */}
                   <div className="lg:col-span-8 flex flex-col justify-between space-y-3">
-                    <div className="p-3.5 rounded-xl bg-danger-solid text-white/10 border border-danger/30 text-xs text-foreground-secondary">
+                    <div className="p-3.5 rounded-xl bg-danger-solid text-foreground/10 border border-danger/30 text-xs text-foreground-secondary">
                       <span className="text-[10px] font-bold uppercase text-danger block mb-1">
                         Complainant Description:
                       </span>
@@ -263,8 +263,8 @@ export default function AdminReportsPage() {
                     </div>
 
                     {report.adminNotes && (
-                      <div className="p-2.5 rounded-lg bg-[#16181F] border border-[#26282E] text-[11px] text-foreground-secondary">
-                        <strong className="text-[#DFB76C] block">Admin Audit Log:</strong>
+                      <div className="p-2.5 rounded-lg bg-surface-elevated border border-border text-[11px] text-foreground-secondary">
+                        <strong className="text-brand block">Admin Audit Log:</strong>
                         <span>{report.adminNotes}</span>
                       </div>
                     )}
@@ -273,11 +273,11 @@ export default function AdminReportsPage() {
 
                 {/* Actions Row */}
                 {isPending && (
-                  <div className="flex items-center justify-end gap-2 pt-2 border-t border-[#26282E]">
+                  <div className="flex items-center justify-end gap-2 pt-2 border-t border-border">
                     <button
                       type="button"
                       onClick={() => handleOpenAction(report, "DISMISS")}
-                      className="px-3.5 py-1.5 rounded-xl border border-[#26282E] bg-[#16181F] hover:bg-[#1A1D24] text-foreground-secondary hover:text-foreground font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer"
+                      className="px-3.5 py-1.5 rounded-xl border border-border bg-surface-elevated hover:bg-surface-sunken text-foreground-secondary hover:text-foreground font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer"
                     >
                       <X className="w-3.5 h-3.5" />
                       <span>Dismiss Report</span>
@@ -286,7 +286,7 @@ export default function AdminReportsPage() {
                     <button
                       type="button"
                       onClick={() => handleOpenAction(report, "RESOLVE")}
-                      className="px-3.5 py-1.5 rounded-xl bg-success-solid text-white/15 hover:bg-success-solid text-white/25 text-success border border-success/30 font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer"
+                      className="px-3.5 py-1.5 rounded-xl bg-success-solid text-foreground/15 hover:bg-success-solid text-foreground/25 text-success border border-success/30 font-bold text-xs transition-colors flex items-center gap-1 cursor-pointer"
                     >
                       <Check className="w-3.5 h-3.5" />
                       <span>Mark Resolved</span>
@@ -295,7 +295,7 @@ export default function AdminReportsPage() {
                     <button
                       type="button"
                       onClick={() => handleOpenAction(report, "SUSPEND_GIG")}
-                      className="px-4 py-1.5 rounded-xl bg-rose-600 hover:bg-danger-solid text-white text-foreground font-bold text-xs transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
+                      className="px-4 py-1.5 rounded-xl bg-danger-solid text-white hover:bg-danger-solid text-foreground text-foreground font-bold text-xs transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
                     >
                       <ShieldAlert className="w-3.5 h-3.5" />
                       <span>Suspend / Hide Gig</span>
@@ -310,14 +310,14 @@ export default function AdminReportsPage() {
 
       {/* ACTION CONFIRMATION MODAL */}
       {selectedReport && actionType && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs">
-          <div className="bg-[#121418] rounded-3xl max-w-md w-full p-6 shadow-2xl border border-[#26282E] space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-background/80 backdrop-blur-xs">
+          <div className="bg-surface rounded-3xl max-w-md w-full p-6 shadow-2xl border border-border space-y-4">
             <div className="flex items-center gap-3">
               <div className={cn(
                 "w-10 h-10 rounded-2xl flex items-center justify-center",
-                actionType === "SUSPEND_GIG" ? "bg-danger-solid text-white/15 text-danger border border-danger/30" :
-                actionType === "RESOLVE" ? "bg-success-solid text-white/15 text-success border border-success/30" :
-                "bg-[#16181F] text-foreground-muted border border-[#26282E]"
+                actionType === "SUSPEND_GIG" ? "bg-danger-solid text-foreground/15 text-danger border border-danger/30" :
+                actionType === "RESOLVE" ? "bg-success-solid text-foreground/15 text-success border border-success/30" :
+                "bg-surface-elevated text-foreground-muted border border-border"
               )}>
                 {actionType === "SUSPEND_GIG" ? <ShieldAlert className="w-5 h-5" /> :
                  actionType === "RESOLVE" ? <CheckCircle2 className="w-5 h-5" /> :
@@ -347,7 +347,7 @@ export default function AdminReportsPage() {
                 value={adminNotes}
                 onChange={(e) => setAdminNotes(e.target.value)}
                 placeholder="Audit observation or message recorded in moderation logs..."
-                className="w-full p-3 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
+                className="w-full p-3 bg-surface-elevated border border-border rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand"
                 rows={3}
               />
             </div>
@@ -359,7 +359,7 @@ export default function AdminReportsPage() {
                   setSelectedReport(null);
                   setActionType(null);
                 }}
-                className="px-4 py-2 rounded-xl border border-[#26282E] bg-[#16181F] hover:bg-[#1A1D24] text-foreground-secondary hover:text-foreground font-bold text-xs transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-xl border border-border bg-surface-elevated hover:bg-surface-sunken text-foreground-secondary hover:text-foreground font-bold text-xs transition-colors cursor-pointer"
               >
                 Cancel
               </button>
@@ -369,8 +369,8 @@ export default function AdminReportsPage() {
                 disabled={isModerating}
                 className={cn(
                   "px-4 py-2 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer text-foreground",
-                  actionType === "SUSPEND_GIG" ? "bg-rose-600 hover:bg-danger-solid text-white" :
-                  actionType === "RESOLVE" ? "bg-success-solid text-white hover:bg-success-solid text-white" :
+                  actionType === "SUSPEND_GIG" ? "bg-danger-solid text-white hover:bg-danger-solid text-foreground" :
+                  actionType === "RESOLVE" ? "bg-success-solid text-foreground hover:bg-success-solid text-foreground" :
                   "bg-slate-700 hover:bg-slate-600"
                 )}
               >
