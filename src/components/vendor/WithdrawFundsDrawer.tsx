@@ -123,7 +123,7 @@ export default function WithdrawFundsDrawer({
                 className={cn(
                   "p-3 rounded-xl border text-left transition-all",
                   payoutMethod === "instant"
-                    ? "bg-info-soft/60 border-brand-primary ring-2 ring-indigo-50"
+                    ? "bg-info-soft/60 border-brand-primary ring-2 ring-info/20"
                     : "bg-surface border-border hover:bg-surface-elevated"
                 )}
               >
@@ -139,7 +139,7 @@ export default function WithdrawFundsDrawer({
                 className={cn(
                   "p-3 rounded-xl border text-left transition-all",
                   payoutMethod === "standard"
-                    ? "bg-info-soft/60 border-brand-primary ring-2 ring-indigo-50"
+                    ? "bg-info-soft/60 border-brand-primary ring-2 ring-info/20"
                     : "bg-surface border-border hover:bg-surface-elevated"
                 )}
               >
