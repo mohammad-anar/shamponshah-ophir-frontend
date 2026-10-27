@@ -106,10 +106,10 @@ export default function UserSettingsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
               Account &amp; Security Settings
             </h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#EDE9FE] text-[#0F0C3B]">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-soft text-foreground">
               {(profileData?.data || profileData)?.user?.isEmailVerified ? "Email verified" : "Client account"}
             </span>
           </div>
@@ -121,7 +121,7 @@ export default function UserSettingsPage() {
         <button
           onClick={handleSave}
           disabled={isUpdatingProfile}
-          className="px-5 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start sm:self-auto cursor-pointer disabled:opacity-50"
+          className="px-5 py-2.5 bg-brand hover:bg-info-soft text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start sm:self-auto cursor-pointer disabled:opacity-50"
         >
           {isUpdatingProfile ? (
             <>
@@ -138,7 +138,7 @@ export default function UserSettingsPage() {
       </div>
 
       {savedSuccess && (
-        <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs font-bold flex items-center gap-2 animate-in fade-in">
+        <div className="p-4 bg-success-soft border border-success/30 rounded-xl text-success text-xs font-bold flex items-center gap-2 animate-in fade-in">
           <CheckCircle2 className="w-4 h-4 text-success" /> Account preferences saved successfully!
         </div>
       )}
@@ -149,12 +149,12 @@ export default function UserSettingsPage() {
         <form onSubmit={handleSave} className="bg-surface border border-border rounded-2xl p-5 space-y-4 shadow-xs">
           <div className="flex items-center gap-3 border-b border-border pb-4">
             <div className="relative">
-              <div className="relative w-14 h-14 overflow-hidden rounded-full bg-gradient-to-tr from-purple-500 to-indigo-600 text-foreground flex items-center justify-center font-bold text-lg shadow-sm">
+              <div className="relative w-14 h-14 overflow-hidden rounded-full bg-gradient-to-tr from-purple-500 to-brand text-foreground flex items-center justify-center font-bold text-lg shadow-sm">
                 {avatarUrl ? <img src={avatarUrl} alt="Profile" className="absolute inset-0 h-full w-full object-cover" /> : (name.split(" ").map((n) => n[0]).join("").slice(0, 2) || "")}
               </div>
             </div>
             <div>
-              <h2 className="text-sm font-bold text-[#0F0C3B]">Personal Details</h2>
+              <h2 className="text-sm font-bold text-foreground">Personal Details</h2>
               <p className="text-xs text-foreground-muted">Visible to vendors when you post event jobs</p>
             </div>
           </div>
@@ -162,7 +162,7 @@ export default function UserSettingsPage() {
           <div className="space-y-3.5 text-xs">
             <div>
               <label className="block text-foreground-secondary font-bold mb-1">Profile image URL</label>
-              <input type="url" value={avatarUrl} onChange={(e) => setAvatarUrl(e.target.value)} placeholder="https://…" className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary font-medium" />
+              <input type="url" value={avatarUrl} onChange={(e) => setAvatarUrl(e.target.value)} placeholder="https://…" className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary font-medium" />
             </div>
             <div>
               <label className="block text-foreground-secondary font-bold mb-1">Full Name</label>
@@ -170,7 +170,7 @@ export default function UserSettingsPage() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary font-medium"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary font-medium"
               />
             </div>
 
@@ -190,7 +190,7 @@ export default function UserSettingsPage() {
                 type="text"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary font-medium"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary font-medium"
               />
             </div>
 
@@ -200,7 +200,7 @@ export default function UserSettingsPage() {
                 type="text"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary font-medium"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary font-medium"
               />
             </div>
           </div>
@@ -213,11 +213,11 @@ export default function UserSettingsPage() {
         >
           <div>
             <div className="flex items-center gap-2.5 border-b border-border pb-4">
-              <div className="p-2 rounded-xl bg-indigo-50 text-brand-primary">
+              <div className="p-2 rounded-xl bg-info-soft text-brand-primary">
                 <Lock className="w-4 h-4" />
               </div>
               <div>
-                <h2 className="text-sm font-bold text-[#0F0C3B]">Security &amp; Password</h2>
+                <h2 className="text-sm font-bold text-foreground">Security &amp; Password</h2>
                 <p className="text-xs text-foreground-muted">Keep your account guarded with AES encryption</p>
               </div>
             </div>
@@ -230,7 +230,7 @@ export default function UserSettingsPage() {
                   value={currentPass}
                   onChange={(e) => setCurrentPass(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary font-mono"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary font-mono"
                   required
                 />
               </div>
@@ -242,7 +242,7 @@ export default function UserSettingsPage() {
                   value={newPass}
                   onChange={(e) => setNewPass(e.target.value)}
                   placeholder="Minimum 8 characters"
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary font-mono"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary font-mono"
                   required
                 />
               </div>
@@ -254,7 +254,7 @@ export default function UserSettingsPage() {
                   value={confirmPass}
                   onChange={(e) => setConfirmPass(e.target.value)}
                   placeholder="Repeat new password"
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary font-mono"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary font-mono"
                   required
                 />
               </div>
@@ -264,7 +264,7 @@ export default function UserSettingsPage() {
           <button
             type="submit"
             disabled={isChangingPassword}
-            className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-foreground font-bold rounded-xl transition-colors shadow-xs flex items-center justify-center gap-2 mt-4 cursor-pointer disabled:opacity-50"
+            className="w-full py-2.5 bg-surface-sunken hover:bg-surface-sunken text-foreground font-bold rounded-xl transition-colors shadow-xs flex items-center justify-center gap-2 mt-4 cursor-pointer disabled:opacity-50"
           >
             {isChangingPassword ? (
               <>
@@ -280,19 +280,19 @@ export default function UserSettingsPage() {
         {/* Notification Preferences */}
         <div className="bg-surface border border-border rounded-2xl p-5 space-y-4 shadow-xs md:col-span-2">
           <div className="flex items-center gap-2.5 border-b border-border pb-4">
-            <div className="p-2 rounded-xl bg-amber-50 text-amber-600">
+            <div className="p-2 rounded-xl bg-warning-soft text-warning">
               <Bell className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-[#0F0C3B]">Communication &amp; Alert Preferences</h2>
+              <h2 className="text-sm font-bold text-foreground">Communication &amp; Alert Preferences</h2>
               <p className="text-xs text-foreground-muted">Choose when and how Ophir notifies you</p>
             </div>
           </div>
 
           <div className="space-y-3 text-xs">
-            <label className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FD] border border-border/80 cursor-pointer hover:bg-surface-elevated">
+            <label className="flex items-center justify-between p-3 rounded-xl bg-surface-elevated border border-border/80 cursor-pointer hover:bg-surface-elevated">
               <div>
-                <p className="font-bold text-[#0F0C3B]">Instant Proposal &amp; Bid Alerts (Email)</p>
+                <p className="font-bold text-foreground">Instant Proposal &amp; Bid Alerts (Email)</p>
                 <p className="text-foreground-muted text-[11px]">Receive immediate notification when an vendor bids on your event</p>
               </div>
               <input
@@ -303,9 +303,9 @@ export default function UserSettingsPage() {
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FD] border border-border/80 cursor-pointer hover:bg-surface-elevated">
+            <label className="flex items-center justify-between p-3 rounded-xl bg-surface-elevated border border-border/80 cursor-pointer hover:bg-surface-elevated">
               <div>
-                <p className="font-bold text-[#0F0C3B]">Milestone Signoff &amp; Escrow Releases (SMS)</p>
+                <p className="font-bold text-foreground">Milestone Signoff &amp; Escrow Releases (SMS)</p>
                 <p className="text-foreground-muted text-[11px]">Get a text message when a vendor submits milestone completion deliverables</p>
               </div>
               <input
@@ -316,9 +316,9 @@ export default function UserSettingsPage() {
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FD] border border-border/80 cursor-pointer hover:bg-surface-elevated">
+            <label className="flex items-center justify-between p-3 rounded-xl bg-surface-elevated border border-border/80 cursor-pointer hover:bg-surface-elevated">
               <div>
-                <p className="font-bold text-[#0F0C3B]">Family Hub Activity Digest</p>
+                <p className="font-bold text-foreground">Family Hub Activity Digest</p>
                 <p className="text-foreground-muted text-[11px]">Weekly email summary of family votes and pledged budget contributions</p>
               </div>
               <input
