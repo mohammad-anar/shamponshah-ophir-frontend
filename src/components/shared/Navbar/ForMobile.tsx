@@ -49,14 +49,14 @@ export default function ForMobile() {
   };
 
   return (
-    <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-[#26282E] shadow-2xl">
+    <header className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border shadow-2xl">
       <div className="px-4 h-[68px] flex items-center justify-between">
         <Logo />
 
         <div className="flex items-center gap-2">
           <Link
             href={user?.id ? dashboardLink : "/login"}
-            className="w-8 h-8 rounded-none bg-[#1A1D24] border border-[#26282E] text-[#DFB76C] flex items-center justify-center text-xs font-bold"
+            className="w-8 h-8 rounded-none bg-surface-sunken border border-border text-brand flex items-center justify-center text-xs font-bold"
             title={user?.name || user?.email || "Account Profile"}
           >
             {user?.id ? userInitials : <User className="w-3.5 h-3.5" />}
@@ -64,7 +64,7 @@ export default function ForMobile() {
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 rounded-none text-foreground-secondary hover:text-[#DFB76C] transition-colors"
+            className="p-2 rounded-none text-foreground-secondary hover:text-brand transition-colors"
             aria-label="Toggle menu"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -74,18 +74,18 @@ export default function ForMobile() {
 
       {/* Mobile Drawer */}
       {isOpen && (
-        <div className="fixed inset-x-0 top-[68px] bottom-0 bg-[#0B0C0E] z-50 flex flex-col justify-between p-5 overflow-y-auto animate-in slide-in-from-top-4 duration-200 border-t border-[#26282E]">
+        <div className="fixed inset-x-0 top-[68px] bottom-0 bg-background z-50 flex flex-col justify-between p-5 overflow-y-auto animate-in slide-in-from-top-4 duration-200 border-t border-border">
           <div className="space-y-5">
             {/* Mobile Search */}
             <div className="relative">
               <form onSubmit={handleSearch} className="relative">
-                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#DFB76C]" />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-brand" />
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search artisans, traditions, services..."
-                  className="w-full h-10 pl-10 pr-9 text-xs bg-[#121418] text-foreground placeholder:text-[#94A3B8] rounded-none border border-[#26282E] focus:border-[#DFB76C] focus:outline-none"
+                  className="w-full h-10 pl-10 pr-9 text-xs bg-surface text-foreground placeholder:text-foreground-muted rounded-none border border-border focus:border-border-brand focus:outline-none"
                 />
                 {searchQuery && (
                   <button
@@ -100,18 +100,18 @@ export default function ForMobile() {
 
               {/* Mobile Services Dropdown (max-height = 1/3 screen) */}
               {searchQuery.trim().length > 0 && (
-                <div className="mt-2 bg-[#121418] rounded-none shadow-2xl border border-[#26282E] overflow-hidden">
-                  <div className="px-3.5 py-2 bg-[#0B0C0E] border-b border-[#26282E] flex items-center justify-between text-[10px] font-bold text-foreground-muted uppercase tracking-widest">
+                <div className="mt-2 bg-surface rounded-none shadow-2xl border border-border overflow-hidden">
+                  <div className="px-3.5 py-2 bg-background border-b border-border flex items-center justify-between text-[10px] font-bold text-foreground-muted uppercase tracking-widest">
                     <span>Matching Artisans & Services</span>
                     {isSearchingGigs && (
-                      <span className="flex items-center gap-1 text-[#DFB76C]">
+                      <span className="flex items-center gap-1 text-brand">
                         <Loader2 className="w-3 h-3 animate-spin" /> Searching...
                       </span>
                     )}
                   </div>
 
                   <div 
-                    className="overflow-y-auto divide-y divide-[#1A1D24]"
+                    className="overflow-y-auto divide-y divide-surface-sunken"
                     style={{ maxHeight: "33.33vh" }}
                   >
                     {matchingServices.length > 0 ? (
@@ -128,7 +128,7 @@ export default function ForMobile() {
                             key={service.id}
                             href={targetUrl}
                             onClick={() => setIsOpen(false)}
-                            className="p-3 block hover:bg-[#1A1D24] transition-colors"
+                            className="p-3 block hover:bg-surface-sunken transition-colors"
                           >
                             <p className="text-xs font-bold text-foreground-secondary line-clamp-1 font-serif">
                               {service.title}
@@ -136,7 +136,7 @@ export default function ForMobile() {
                             <div className="flex items-center justify-between text-[11px] text-foreground-muted mt-1">
                               <span className="truncate">{vendorName ? `by ${vendorName}` : service.category?.name}</span>
                               {price && (
-                                <span className="font-bold text-[#DFB76C] font-mono text-xs ml-2">
+                                <span className="font-bold text-brand font-mono text-xs ml-2">
                                   ${price}
                                 </span>
                               )}
@@ -154,7 +154,7 @@ export default function ForMobile() {
                   <Link
                     href={`/vendors?q=${encodeURIComponent(searchQuery.trim())}`}
                     onClick={() => setIsOpen(false)}
-                    className="block px-3.5 py-2.5 bg-[#0B0C0E] hover:bg-[#16181F] text-xs font-bold text-[#DFB76C] text-center border-t border-[#26282E] uppercase tracking-wider"
+                    className="block px-3.5 py-2.5 bg-background hover:bg-surface-elevated text-xs font-bold text-brand text-center border-t border-border uppercase tracking-wider"
                   >
                     View all results &rarr;
                   </Link>
@@ -168,8 +168,8 @@ export default function ForMobile() {
                 href="/services"
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "block py-3 text-xs uppercase tracking-widest border-b border-[#26282E]",
-                  pathname.startsWith("/services") ? "text-[#DFB76C] font-bold" : "text-foreground-secondary hover:text-[#DFB76C]"
+                  "block py-3 text-xs uppercase tracking-widest border-b border-border",
+                  pathname.startsWith("/services") ? "text-brand font-bold" : "text-foreground-secondary hover:text-brand"
                 )}
               >
                 Services Catalog
@@ -179,8 +179,8 @@ export default function ForMobile() {
                 href="/vendors"
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "block py-3 text-xs uppercase tracking-widest border-b border-[#26282E]",
-                  pathname.startsWith("/vendors") ? "text-[#DFB76C] font-bold" : "text-foreground-secondary hover:text-[#DFB76C]"
+                  "block py-3 text-xs uppercase tracking-widest border-b border-border",
+                  pathname.startsWith("/vendors") ? "text-brand font-bold" : "text-foreground-secondary hover:text-brand"
                 )}
               >
                 Premier Artisans
@@ -189,7 +189,7 @@ export default function ForMobile() {
               <Link
                 href="/how-it-works"
                 onClick={() => setIsOpen(false)}
-                className="block py-3 text-xs uppercase tracking-widest text-foreground-secondary hover:text-[#DFB76C] border-b border-[#26282E]"
+                className="block py-3 text-xs uppercase tracking-widest text-foreground-secondary hover:text-brand border-b border-border"
               >
                 The Process
               </Link>
@@ -197,7 +197,7 @@ export default function ForMobile() {
               <Link
                 href="/help-center"
                 onClick={() => setIsOpen(false)}
-                className="block py-3 text-xs uppercase tracking-widest text-foreground-secondary hover:text-[#DFB76C] border-b border-[#26282E]"
+                className="block py-3 text-xs uppercase tracking-widest text-foreground-secondary hover:text-brand border-b border-border"
               >
                 Escrow Vault
               </Link>
@@ -205,7 +205,7 @@ export default function ForMobile() {
               <Link
                 href="/signup?role=vendor"
                 onClick={() => setIsOpen(false)}
-                className="block py-3 text-xs uppercase tracking-widest text-[#DFB76C] font-bold border-b border-[#26282E]"
+                className="block py-3 text-xs uppercase tracking-widest text-brand font-bold border-b border-border"
               >
                 Become a Vendor
               </Link>
@@ -213,12 +213,12 @@ export default function ForMobile() {
           </div>
 
           {/* Bottom Actions */}
-          <div className="space-y-3 pt-6 border-t border-[#26282E]">
+          <div className="space-y-3 pt-6 border-t border-border">
             {user?.id ? (
               <Link
                 href={dashboardLink}
                 onClick={() => setIsOpen(false)}
-                className="w-full py-2.5 text-center block text-xs font-bold uppercase tracking-wider text-[#DFB76C] bg-[#121418] hover:bg-[#1A1D24] rounded-none border border-[#26282E]"
+                className="w-full py-2.5 text-center block text-xs font-bold uppercase tracking-wider text-brand bg-surface hover:bg-surface-sunken rounded-none border border-border"
               >
                 Dashboard ({user?.role === "VENDOR" ? "Artisan Portal" : user?.role === "ADMIN" ? "Admin Console" : "Client Portal"})
               </Link>
@@ -227,14 +227,14 @@ export default function ForMobile() {
                 <Link
                   href="/login"
                   onClick={() => setIsOpen(false)}
-                  className="py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-foreground-secondary bg-[#121418] border border-[#26282E] hover:bg-[#1A1D24] rounded-none"
+                  className="py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-foreground-secondary bg-surface border border-border hover:bg-surface-sunken rounded-none"
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/signup?role=client"
                   onClick={() => setIsOpen(false)}
-                  className="py-2.5 text-center text-xs font-bold uppercase tracking-widest text-[#0B0C0E] bg-[#DFB76C] hover:bg-[#ECC870] rounded-none"
+                  className="py-2.5 text-center text-xs font-bold uppercase tracking-widest text-on-brand bg-brand hover:bg-brand-hover rounded-none"
                 >
                   Register
                 </Link>
