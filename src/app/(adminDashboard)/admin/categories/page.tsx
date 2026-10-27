@@ -237,7 +237,7 @@ export default function AdminCategoriesPage() {
           <p className="font-bold text-sm">Failed to load marketplace categories</p>
           <button 
             onClick={() => refetch()}
-            className="px-4 py-2 bg-danger-solid text-white text-foreground rounded-xl text-xs font-bold hover:bg-danger-solid text-foreground transition"
+            className="px-4 py-2 bg-danger-solid text-foreground text-foreground rounded-xl text-xs font-bold hover:bg-danger-solid text-foreground transition"
           >
             Retry Connection
           </button>
@@ -406,7 +406,7 @@ export default function AdminCategoriesPage() {
                     placeholder="e.g. Photography & Cinema"
                     value={newCatName}
                     onChange={(e) => setNewCatName(e.target.value)}
-                    className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-bold placeholder-slate-600 focus:outline-none focus:border-border-brand"
+                    className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-bold placeholder:text-foreground-muted focus:outline-none focus:border-border-brand"
                     required
                   />
                 </div>
@@ -419,7 +419,7 @@ export default function AdminCategoriesPage() {
                   placeholder="Professional photography, videography, and drone event coverage..."
                   value={newCatDesc}
                   onChange={(e) => setNewCatDesc(e.target.value)}
-                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground placeholder-slate-600 focus:outline-none focus:border-border-brand resize-none"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand resize-none"
                 />
               </div>
 
@@ -431,7 +431,7 @@ export default function AdminCategoriesPage() {
                     placeholder="https://images.unsplash.com/..."
                     value={newCatImage}
                     onChange={(e) => setNewCatImage(e.target.value)}
-                    className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground placeholder-slate-600 focus:outline-none focus:border-border-brand"
+                    className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand"
                   />
                 </div>
                 <div>
