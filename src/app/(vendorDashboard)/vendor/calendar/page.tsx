@@ -292,8 +292,8 @@ export default function VendorCalendarPage() {
                   >
                     <div className="flex items-center justify-between">
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase ${
-                        evt.status === "CONFIRMED" ? "bg-emerald-200 text-success" :
-                        evt.status === "BLOCKED" ? "bg-rose-200 text-danger" :
+                        evt.status === "CONFIRMED" ? "bg-success/30 text-success" :
+                        evt.status === "BLOCKED" ? "bg-danger/30 text-danger" :
                         "bg-warning-soft text-warning"
                       }`}>
                         {evt.status}
@@ -395,7 +395,7 @@ export default function VendorCalendarPage() {
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl font-bold"
+                  className="px-5 py-2 bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground rounded-xl font-bold"
                 >
                   Apply Date Block
                 </button>
