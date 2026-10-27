@@ -93,13 +93,13 @@ export default function AddToFamilyHubModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-[#121418] rounded-none max-w-lg w-full shadow-2xl overflow-hidden border border-[#26282E] animate-in fade-in">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-background/80 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-surface rounded-none max-w-lg w-full shadow-2xl overflow-hidden border border-border animate-in fade-in">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#26282E] flex items-center justify-between bg-[#0B0C0E]">
+        <div className="px-6 py-4 border-b border-border flex items-center justify-between bg-background">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-none bg-[#1A1D24] text-[#DFB76C] border border-[#26282E]">
-              <Users2 className="w-5 h-5 text-[#DFB76C]" />
+            <div className="p-2 rounded-none bg-surface-sunken text-brand border border-border">
+              <Users2 className="w-5 h-5 text-brand" />
             </div>
             <div>
               <h3 className="font-serif font-bold text-base text-foreground">Recommend to Collaborative Hub</h3>
@@ -116,14 +116,14 @@ export default function AddToFamilyHubModal({
 
         {/* Selected Service Card */}
         <div className="p-6 space-y-4 text-xs">
-          <div className="p-3.5 rounded-none bg-[#0B0C0E] border border-[#26282E] flex items-center justify-between gap-3">
+          <div className="p-3.5 rounded-none bg-background border border-border flex items-center justify-between gap-3">
             <div>
-              <span className="text-[9px] font-bold text-[#DFB76C] uppercase tracking-widest">{service.category}</span>
+              <span className="text-[9px] font-bold text-brand uppercase tracking-widest">{service.category}</span>
               <h4 className="text-xs font-bold text-foreground mt-0.5">{service.name}</h4>
               <p className="text-[11px] text-foreground-muted">By {service.vendorName}</p>
             </div>
             <div className="text-right flex-shrink-0">
-              <span className="text-base font-mono font-bold text-[#DFB76C]">
+              <span className="text-base font-mono font-bold text-brand">
                 ${service.price.toLocaleString()}
               </span>
               {service.priceUnit && (
@@ -139,9 +139,9 @@ export default function AddToFamilyHubModal({
               <label className="block font-bold text-foreground-secondary uppercase tracking-wider text-[10px] mb-1.5">
                 Target Collaborative Workspace
               </label>
-              <div className="p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] flex items-center justify-between">
+              <div className="p-3 rounded-none bg-background border border-border flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-none bg-[#DFB76C] text-[#0B0C0E] flex items-center justify-center font-bold text-xs">
+                  <div className="w-8 h-8 rounded-none bg-brand text-on-brand flex items-center justify-center font-bold text-xs">
                     {hubName.charAt(0)}
                   </div>
                   <div>
@@ -152,7 +152,7 @@ export default function AddToFamilyHubModal({
                   </div>
                 </div>
 
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40 uppercase tracking-wider">
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-none bg-surface-sunken text-brand border border-border-brand/40 uppercase tracking-wider">
                   Active Hub
                 </span>
               </div>
@@ -168,24 +168,24 @@ export default function AddToFamilyHubModal({
                 value={personalNote}
                 onChange={(e) => setPersonalNote(e.target.value)}
                 placeholder="Why do you recommend this artisan?"
-                className="w-full bg-[#0B0C0E] border border-[#26282E] rounded-none p-3 text-xs text-foreground-secondary placeholder:text-foreground-secondary focus:outline-none focus:border-[#DFB76C] resize-none"
+                className="w-full bg-background border border-border rounded-none p-3 text-xs text-foreground-secondary placeholder:text-foreground-secondary focus:outline-none focus:border-border-brand resize-none"
               />
             </div>
 
             {isAlreadyAdded ? (
-              <div className="p-3 rounded-none bg-[#222018] border border-warning/30 flex items-center gap-2 text-[11px] text-warning font-medium">
-                <CheckCircle2 className="w-4 h-4 text-[#DFB76C] shrink-0" />
+              <div className="p-3 rounded-none bg-brand-soft border border-warning/30 flex items-center gap-2 text-[11px] text-warning font-medium">
+                <CheckCircle2 className="w-4 h-4 text-brand shrink-0" />
                 <span>This service is already recommended in your Collaborative Hub.</span>
               </div>
             ) : (
-              <div className="p-3 rounded-none bg-[#0B0C0E] border border-[#26282E] flex items-center gap-2 text-[11px] text-foreground-muted">
-                <ShieldCheck className="w-4 h-4 text-[#DFB76C] shrink-0" />
+              <div className="p-3 rounded-none bg-background border border-border flex items-center gap-2 text-[11px] text-foreground-muted">
+                <ShieldCheck className="w-4 h-4 text-brand shrink-0" />
                 <span>All family members can review, collaborate, and reserve with 100% milestone escrow protection.</span>
               </div>
             )}
 
             {/* Action Buttons */}
-            <div className="pt-2 flex items-center justify-end gap-3 border-t border-[#26282E]">
+            <div className="pt-2 flex items-center justify-end gap-3 border-t border-border">
               <button
                 type="button"
                 onClick={onClose}
@@ -198,8 +198,8 @@ export default function AddToFamilyHubModal({
                 disabled={isAdding || isSuccess || isAlreadyAdded}
                 className={`px-6 py-2.5 rounded-none text-xs font-bold uppercase tracking-widest transition-all shadow-md flex items-center gap-1.5 cursor-pointer disabled:opacity-60 ${
                   isAlreadyAdded
-                    ? "bg-[#1A1D24] text-foreground-muted border border-[#26282E] cursor-not-allowed"
-                    : "bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] shadow-gold-glow-sm"
+                    ? "bg-surface-sunken text-foreground-muted border border-border cursor-not-allowed"
+                    : "bg-brand hover:bg-brand-hover text-on-brand shadow-gold-glow-sm"
                 }`}
               >
                 {isAlreadyAdded ? (
@@ -209,7 +209,7 @@ export default function AddToFamilyHubModal({
                   </>
                 ) : isSuccess ? (
                   <>
-                    <CheckCircle2 className="w-4 h-4 text-[#0B0C0E]" />
+                    <CheckCircle2 className="w-4 h-4 text-on-brand" />
                     <span>Added to Hub!</span>
                   </>
                 ) : isAdding ? (
