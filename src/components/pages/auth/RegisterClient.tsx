@@ -257,24 +257,24 @@ export default function RegisterClient() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#FAF9F5]">
+    <div className="flex flex-col min-h-screen bg-surface-elevated">
       <AuthHeader />
 
       <main className="w-full max-w-7xl mx-auto px-4 sm:px-6 py-6 md:py-10 flex-1 flex items-center justify-center">
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch max-w-6xl">
           {/* Left Column: Sign Up Form Card */}
           <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-center">
-            <div className="w-full max-w-md mx-auto bg-surface rounded-3xl p-6 sm:p-8 lg:p-10 shadow-luxury border border-[#EAE6DF] space-y-6">
+            <div className="w-full max-w-md mx-auto bg-surface rounded-3xl p-6 sm:p-8 lg:p-10 shadow-luxury border border-border space-y-6">
               
               {/* STATE A: "Check your email" after signup */}
               {registeredEmail ? (
                 <div className="space-y-6 animate-in fade-in duration-300">
-                  <div className="w-12 h-12 rounded-2xl bg-[#EEF2FF] text-[#3730A3] flex items-center justify-center shadow-xs">
+                  <div className="w-12 h-12 rounded-2xl bg-surface-sunken text-brand flex items-center justify-center shadow-xs">
                     <Mail className="w-6 h-6" />
                   </div>
 
                   <div className="space-y-1.5">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                    <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-success bg-success-soft px-2.5 py-0.5 rounded-full border border-success/30">
                       <span className="w-1.5 h-1.5 rounded-full bg-success-solid text-foreground" />
                       Registration Received
                     </span>
@@ -289,12 +289,12 @@ export default function RegisterClient() {
                   </div>
 
                   {isVerifiedSuccess ? (
-                    <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 text-xs space-y-2">
-                      <div className="flex items-center gap-2 font-bold text-sm text-emerald-950">
+                    <div className="p-4 rounded-2xl bg-success-soft border border-success/30 text-success text-xs space-y-2">
+                      <div className="flex items-center gap-2 font-bold text-sm text-success">
                         <CheckCircle2 className="w-5 h-5 text-success" />
                         <span>Account Activated!</span>
                       </div>
-                      <p className="text-emerald-800">
+                      <p className="text-success">
                         Redirecting you to your {activeRole === "vendor" ? "vendor dashboard" : "client portal"}...
                       </p>
                     </div>
@@ -313,7 +313,7 @@ export default function RegisterClient() {
                             value={digit}
                             onChange={(e) => handleOtpChange(idx, e.target.value)}
                             onKeyDown={(e) => handleOtpKeyDown(idx, e)}
-                            className="w-full aspect-square text-center font-bold text-lg sm:text-xl text-obsidian bg-[#F9F8F5] border border-[#E2DDD3] focus:border-[#0F1228] focus:bg-surface rounded-xl focus:outline-none transition-all shadow-xs"
+                            className="w-full aspect-square text-center font-bold text-lg sm:text-xl text-obsidian bg-surface-elevated border border-border focus:border-border focus:bg-surface rounded-xl focus:outline-none transition-all shadow-xs"
                           />
                         ))}
                       </div>
@@ -321,20 +321,20 @@ export default function RegisterClient() {
                       <button
                         type="submit"
                         disabled={isVerifyingOtp}
-                        className="w-full h-12 flex items-center justify-center gap-2 bg-[#0B0C0E] hover:bg-[#1A1D24] text-foreground font-semibold rounded-xl shadow-md transition-all active:scale-99 cursor-pointer disabled:opacity-50"
+                        className="w-full h-12 flex items-center justify-center gap-2 bg-background hover:bg-surface-sunken text-foreground font-semibold rounded-xl shadow-md transition-all active:scale-99 cursor-pointer disabled:opacity-50"
                       >
                         {isVerifyingOtp ? (
-                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          <div className="w-5 h-5 border-2 border-border-strong/30 border-t-white rounded-full animate-spin" />
                         ) : (
                           <>
                             <span>Verify and activate</span>
-                            <ArrowRight className="w-4 h-4 text-[#DFB76C]" />
+                            <ArrowRight className="w-4 h-4 text-brand" />
                           </>
                         )}
                       </button>
 
                       {/* Resend Verification Option */}
-                      <div className="pt-2 border-t border-[#EAE6DF] flex items-center justify-between text-xs text-foreground-muted">
+                      <div className="pt-2 border-t border-border flex items-center justify-between text-xs text-foreground-muted">
                         <div className="flex items-center gap-1.5">
                           <Clock className="w-3.5 h-3.5 text-foreground-muted" />
                           {resendCooldown > 0 ? (
@@ -347,7 +347,7 @@ export default function RegisterClient() {
                               type="button"
                               onClick={handleResend}
                               disabled={isResendingVerification}
-                              className="font-bold text-[#0F1228] hover:text-[#DFB76C] hover:underline flex items-center gap-1 cursor-pointer disabled:opacity-50"
+                              className="font-bold text-foreground hover:text-brand hover:underline flex items-center gap-1 cursor-pointer disabled:opacity-50"
                             >
                               <RefreshCw className={cn("w-3 h-3", isResendingVerification && "animate-spin")} />
                               <span>Resend verification email</span>
@@ -373,7 +373,7 @@ export default function RegisterClient() {
                 /* STATE B: Sign Up Form with 2 Luxury Tabs */
                 <>
                   {/* Two Main Tabs: "Register as a Client" & "Become a Vendor" */}
-                  <div className="grid grid-cols-2 p-1.5 rounded-2xl bg-[#F4F1EA] border border-[#E2DDD3]">
+                  <div className="grid grid-cols-2 p-1.5 rounded-none bg-surface-sunken border border-border">
                     <button
                       type="button"
                       id="tab-register-client"
@@ -381,11 +381,11 @@ export default function RegisterClient() {
                       className={cn(
                         "py-2.5 px-3 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 select-none",
                         activeRole === "client"
-                          ? "bg-[#0B0C0E] text-foreground shadow-sm"
+                          ? "bg-background text-foreground shadow-sm"
                           : "text-foreground-secondary hover:text-foreground bg-transparent hover:bg-surface/50"
                       )}
                     >
-                      <User className={cn("w-3.5 h-3.5", activeRole === "client" ? "text-[#DFB76C]" : "text-foreground-muted")} />
+                      <User className={cn("w-3.5 h-3.5", activeRole === "client" ? "text-brand" : "text-foreground-muted")} />
                       <span>Register as a Client</span>
                     </button>
 
@@ -396,11 +396,11 @@ export default function RegisterClient() {
                       className={cn(
                         "py-2.5 px-3 text-xs font-bold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 select-none",
                         activeRole === "vendor"
-                          ? "bg-[#0B0C0E] text-foreground shadow-sm"
+                          ? "bg-background text-foreground shadow-sm"
                           : "text-foreground-secondary hover:text-foreground bg-transparent hover:bg-surface/50"
                       )}
                     >
-                      <Store className={cn("w-3.5 h-3.5", activeRole === "vendor" ? "text-[#DFB76C]" : "text-foreground-muted")} />
+                      <Store className={cn("w-3.5 h-3.5", activeRole === "vendor" ? "text-brand" : "text-foreground-muted")} />
                       <span>Become a Vendor</span>
                     </button>
                   </div>
@@ -408,8 +408,8 @@ export default function RegisterClient() {
                   {/* Header Title & Subtitle */}
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
-                        <Sparkles className="w-3 h-3 text-amber-600" />
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-warning bg-warning-soft px-2.5 py-0.5 rounded-full border border-warning/30">
+                        <Sparkles className="w-3 h-3 text-warning" />
                         {activeRole === "vendor" ? "Artisan Vendor Studio" : "Celebration Host"}
                       </span>
                       <span className="text-[11px] text-foreground-muted font-medium">Quick Onboarding</span>
@@ -427,7 +427,7 @@ export default function RegisterClient() {
 
                   {/* Duplicate Email Error Callout */}
                   {duplicateEmailError && (
-                    <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs flex items-start gap-2.5 animate-in fade-in duration-200">
+                    <div className="p-3.5 rounded-xl bg-danger-soft border border-danger/30 text-red-800 text-xs flex items-start gap-2.5 animate-in fade-in duration-200">
                       <AlertCircle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
                       <div className="space-y-1">
                         <p className="font-semibold text-red-900">{duplicateEmailError}</p>
@@ -449,7 +449,7 @@ export default function RegisterClient() {
                         toast.info("Connecting to Google authentication...");
                         setTimeout(() => router.push("/verify-email"), 800);
                       }}
-                      className="h-10 px-3 flex items-center justify-center gap-2 bg-[#F8F7F4] hover:bg-[#F2EFE8] border border-[#E2DDD3] text-foreground text-xs font-semibold rounded-xl transition-all shadow-2xs cursor-pointer"
+                      className="h-10 px-3 flex items-center justify-center gap-2 bg-surface-elevated hover:bg-surface-elevated border border-border text-foreground text-xs font-semibold rounded-xl transition-all shadow-2xs cursor-pointer"
                     >
                       <FcGoogle className="w-4 h-4 text-base" />
                       <span>Google</span>
@@ -461,7 +461,7 @@ export default function RegisterClient() {
                         toast.info("Connecting to Apple authentication...");
                         setTimeout(() => router.push("/verify-email"), 800);
                       }}
-                      className="h-10 px-3 flex items-center justify-center gap-2 bg-[#F8F7F4] hover:bg-[#F2EFE8] border border-[#E2DDD3] text-foreground text-xs font-semibold rounded-xl transition-all shadow-2xs cursor-pointer"
+                      className="h-10 px-3 flex items-center justify-center gap-2 bg-surface-elevated hover:bg-surface-elevated border border-border text-foreground text-xs font-semibold rounded-xl transition-all shadow-2xs cursor-pointer"
                     >
                       <FaApple className="w-4 h-4 text-base text-black" />
                       <span>Apple</span>
@@ -470,7 +470,7 @@ export default function RegisterClient() {
 
                   {/* Divider */}
                   <div className="relative flex items-center justify-center">
-                    <div className="w-full border-t border-[#EAE6DF]" />
+                    <div className="w-full border-t border-border" />
                     <span className="absolute bg-surface px-3 text-[10px] font-bold text-foreground-muted uppercase tracking-widest">
                       OR REGISTER WITH EMAIL
                     </span>
@@ -501,7 +501,7 @@ export default function RegisterClient() {
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
                           placeholder="e.g. Sarah Jenkins"
-                          className="w-full h-11 px-3.5 pl-9 text-sm bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-surface focus:border-[#0F1228] focus:outline-none transition-all"
+                          className="w-full h-11 px-3.5 pl-9 text-sm bg-surface-elevated text-obsidian border border-border rounded-xl focus:bg-surface focus:border-border focus:outline-none transition-all"
                         />
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
                       </div>
@@ -509,7 +509,7 @@ export default function RegisterClient() {
 
                     {/* Vendor-Only Fields: Display/Business Name & Phone */}
                     {activeRole === "vendor" && (
-                      <div className="space-y-4 p-3.5 rounded-2xl bg-[#FBF9F5] border border-[#E8E4DA] animate-in fade-in duration-200">
+                      <div className="space-y-4 p-3.5 rounded-none bg-surface-elevated border border-border animate-in fade-in duration-200">
                         <div className="space-y-1">
                           <label className="block text-xs font-semibold text-foreground">
                             Studio / Business Display Name <span className="text-danger">*</span>
@@ -521,7 +521,7 @@ export default function RegisterClient() {
                               value={businessName}
                               onChange={(e) => setBusinessName(e.target.value)}
                               placeholder="e.g. Luminary Cinematic Films"
-                              className="w-full h-11 px-3.5 pl-9 text-sm bg-surface text-obsidian border border-[#DCD6C9] rounded-xl focus:border-[#0F1228] focus:outline-none transition-all"
+                              className="w-full h-11 px-3.5 pl-9 text-sm bg-surface text-obsidian border border-border rounded-xl focus:border-border focus:outline-none transition-all"
                             />
                             <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
                           </div>
@@ -537,7 +537,7 @@ export default function RegisterClient() {
                               value={phone}
                               onChange={(e) => setPhone(e.target.value)}
                               placeholder="e.g. +1 (512) 555-0199"
-                              className="w-full h-11 px-3.5 pl-9 text-sm bg-surface text-obsidian border border-[#DCD6C9] rounded-xl focus:border-[#0F1228] focus:outline-none transition-all"
+                              className="w-full h-11 px-3.5 pl-9 text-sm bg-surface text-obsidian border border-border rounded-xl focus:border-border focus:outline-none transition-all"
                             />
                             <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
                           </div>
@@ -564,10 +564,10 @@ export default function RegisterClient() {
                           }}
                           placeholder="name@example.com"
                           className={cn(
-                            "w-full h-11 px-3.5 pl-9 pr-10 text-sm bg-[#F9F8F5] text-obsidian border rounded-xl focus:bg-surface focus:outline-none transition-all",
+                            "w-full h-11 px-3.5 pl-9 pr-10 text-sm bg-surface-elevated text-obsidian border rounded-xl focus:bg-surface focus:outline-none transition-all",
                             isEmailValid
-                              ? "border-emerald-500 focus:border-emerald-600"
-                              : "border-[#E2DDD3] focus:border-[#0F1228]"
+                              ? "border-success/30 focus:border-emerald-600"
+                              : "border-border focus:border-border"
                           )}
                         />
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
@@ -595,7 +595,7 @@ export default function RegisterClient() {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="At least 8 characters"
-                          className="w-full h-11 px-3.5 pl-9 pr-10 text-sm bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-surface focus:border-[#0F1228] focus:outline-none transition-all"
+                          className="w-full h-11 px-3.5 pl-9 pr-10 text-sm bg-surface-elevated text-obsidian border border-border rounded-xl focus:bg-surface focus:border-border focus:outline-none transition-all"
                         />
                         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
                         <button
@@ -615,19 +615,19 @@ export default function RegisterClient() {
                               <div
                                 className={cn(
                                   "h-1.5 flex-1 rounded-full transition-colors",
-                                  strengthScore >= 1 ? "bg-success-solid text-foreground" : "bg-slate-200"
+                                  strengthScore >= 1 ? "bg-success-solid text-foreground" : "bg-surface-sunken"
                                 )}
                               />
                               <div
                                 className={cn(
                                   "h-1.5 flex-1 rounded-full transition-colors",
-                                  strengthScore >= 2 ? "bg-success-solid text-foreground" : "bg-slate-200"
+                                  strengthScore >= 2 ? "bg-success-solid text-foreground" : "bg-surface-sunken"
                                 )}
                               />
                               <div
                                 className={cn(
                                   "h-1.5 flex-1 rounded-full transition-colors",
-                                  strengthScore >= 3 ? "bg-success-solid text-foreground" : "bg-slate-200"
+                                  strengthScore >= 3 ? "bg-success-solid text-foreground" : "bg-surface-sunken"
                                 )}
                               />
                             </div>
@@ -637,7 +637,7 @@ export default function RegisterClient() {
                                 strengthScore === 3
                                   ? "text-success"
                                   : strengthScore === 2
-                                  ? "text-amber-600"
+                                  ? "text-warning"
                                   : "text-foreground-muted"
                               )}
                             >
@@ -673,12 +673,12 @@ export default function RegisterClient() {
                           onChange={(e) => setConfirmPassword(e.target.value)}
                           placeholder="Re-enter password"
                           className={cn(
-                            "w-full h-11 px-3.5 pl-9 pr-10 text-sm bg-[#F9F8F5] text-obsidian border rounded-xl focus:bg-surface focus:outline-none transition-all",
+                            "w-full h-11 px-3.5 pl-9 pr-10 text-sm bg-surface-elevated text-obsidian border rounded-xl focus:bg-surface focus:outline-none transition-all",
                             passwordsMatch
-                              ? "border-emerald-500 focus:border-emerald-600"
+                              ? "border-success/30 focus:border-emerald-600"
                               : passwordsMismatch
                               ? "border-red-400 focus:border-red-500"
-                              : "border-[#E2DDD3] focus:border-[#0F1228]"
+                              : "border-border focus:border-border"
                           )}
                         />
                         <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
@@ -713,15 +713,15 @@ export default function RegisterClient() {
                           required
                           checked={agreedTerms}
                           onChange={(e) => setAgreedTerms(e.target.checked)}
-                          className="w-4 h-4 mt-0.5 rounded border-border text-[#0B0C0E] focus:ring-0 cursor-pointer"
+                          className="w-4 h-4 mt-0.5 rounded border-border text-on-brand focus:ring-0 cursor-pointer"
                         />
                         <span>
                           I agree to the{" "}
-                          <Link href="/terms" target="_blank" className="font-semibold text-obsidian underline hover:text-[#DFB76C]">
+                          <Link href="/terms" target="_blank" className="font-semibold text-obsidian underline hover:text-brand">
                             Terms of Service
                           </Link>{" "}
                           and{" "}
-                          <Link href="/privacy" target="_blank" className="font-semibold text-obsidian underline hover:text-[#DFB76C]">
+                          <Link href="/privacy" target="_blank" className="font-semibold text-obsidian underline hover:text-brand">
                             Privacy Policy
                           </Link>
                           .
@@ -733,27 +733,27 @@ export default function RegisterClient() {
                     <button
                       type="submit"
                       disabled={isRegistering}
-                      className="w-full h-12 flex items-center justify-center gap-2 bg-[#0B0C0E] hover:bg-[#1A1D24] text-foreground font-semibold rounded-xl shadow-md transition-all active:scale-99 cursor-pointer mt-4 disabled:opacity-50"
+                      className="w-full h-12 flex items-center justify-center gap-2 bg-background hover:bg-surface-sunken text-foreground font-semibold rounded-xl shadow-md transition-all active:scale-99 cursor-pointer mt-4 disabled:opacity-50"
                     >
                       {isRegistering ? (
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <div className="w-5 h-5 border-2 border-border-strong/30 border-t-white rounded-full animate-spin" />
                       ) : (
                         <>
                           <span>
                             {activeRole === "vendor" ? "Register Vendor Studio" : "Create Client Account"}
                           </span>
-                          <ArrowRight className="w-4 h-4 text-[#DFB76C]" />
+                          <ArrowRight className="w-4 h-4 text-brand" />
                         </>
                       )}
                     </button>
                   </form>
 
                   {/* Bottom Log In Link */}
-                  <div className="pt-3 text-center text-xs text-foreground-secondary border-t border-[#EAE6DF]">
+                  <div className="pt-3 text-center text-xs text-foreground-secondary border-t border-border">
                     <span>Already have an account? </span>
                     <Link
                       href="/login"
-                      className="font-bold text-[#0F1228] hover:text-[#DFB76C] hover:underline"
+                      className="font-bold text-foreground hover:text-brand hover:underline"
                     >
                       Log in
                     </Link>
