@@ -15,7 +15,7 @@ const NavMenu = ({
       <Link href={"/"}>
         <div
           className={cn(
-            "cursor-pointer  hover:underline text-md text-white hover:text-tomato transition duration-200",
+            "cursor-pointer  hover:underline text-md text-foreground hover:text-tomato transition duration-200",
             pathname === "/" && "text-tomato font-semibold"
           )}
         >
@@ -25,7 +25,7 @@ const NavMenu = ({
       <Link href={"/services"}>
         <div
           className={cn(
-            "cursor-pointer hover:underline text-md text-white hover:text-tomato transition duration-200",
+            "cursor-pointer hover:underline text-md text-foreground hover:text-tomato transition duration-200",
             pathname === "/services" && "text-tomato font-semibold"
           )}
         >
@@ -35,7 +35,7 @@ const NavMenu = ({
       <Link href={"/about-us"}>
         <div
           className={cn(
-            "cursor-pointer hover:underline text-md text-white hover:text-tomato transition duration-200",
+            "cursor-pointer hover:underline text-md text-foreground hover:text-tomato transition duration-200",
             pathname === "/about-us" && "text-tomato font-semibold"
           )}
         >
@@ -45,7 +45,7 @@ const NavMenu = ({
       <Link href={"/contact-us"}>
         <div
           className={cn(
-            "cursor-pointer hover:underline text-md text-white hover:text-tomato transition duration-200",
+            "cursor-pointer hover:underline text-md text-foreground hover:text-tomato transition duration-200",
             pathname === "/contact-us" && "text-tomato font-semibold"
           )}
         >
@@ -55,7 +55,7 @@ const NavMenu = ({
       <Link href={"/faq"}>
         <div
           className={cn(
-            "cursor-pointer hover:underline text-md text-white hover:text-tomato transition duration-200",
+            "cursor-pointer hover:underline text-md text-foreground hover:text-tomato transition duration-200",
             pathname === "/faq" && "text-tomato font-semibold"
           )}
         >
