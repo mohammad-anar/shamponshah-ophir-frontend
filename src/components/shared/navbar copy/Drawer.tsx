@@ -66,7 +66,7 @@ const DrawerPage = ({ open, setOpen }: DrawerProps) => {
     <>
       <Drawer
         title=""
-        closeIcon={<CloseOutlined className="text-2xl !text-black" />}
+        closeIcon={<CloseOutlined className="text-2xl !text-foreground" />}
         className="!border-none"
         onClose={onClose}
         open={open}
