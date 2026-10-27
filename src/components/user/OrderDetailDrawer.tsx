@@ -104,12 +104,12 @@ export default function OrderDetailDrawer({ isOpen, onClose, order }: OrderDetai
     vendorName: "Windy City Sound (Marcus Reed)",
     serviceTitle: "DJ and Emcee for 5th Birthday Party",
     totalAmount: "$850.00",
-    eventDate: "Saturday, November 14, 2026 (2:00 PM â€“ 6:00 PM)",
+    eventDate: "Saturday, November 14, 2026 (2:00 PM - 6:00 PM)",
     location: "Lincoln Park Conservatory, Chicago, IL",
     status: "IN_PROGRESS",
     milestones: [
-      { id: "m-1", name: "Milestone 1 â€¢ Booking Deposit (50%)", amount: "$425.00", status: "RELEASED" as const },
-      { id: "m-2", name: "Milestone 2 â€¢ Post-Event Delivery Approval (50%)", amount: "$425.00", status: "PENDING" as const },
+      { id: "m-1", name: "Milestone 1 • Booking Deposit (50%)", amount: "$425.00", status: "RELEASED" as const },
+      { id: "m-2", name: "Milestone 2 • Post-Event Delivery Approval (50%)", amount: "$425.00", status: "PENDING" as const },
     ],
   };
 
