@@ -240,7 +240,7 @@ export default function ClientDashboardOverview() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         {/* Active Bookings & Escrow Hero Card (7 cols) */}
         <div className="lg:col-span-7 bg-surface rounded-3xl p-6 sm:p-7 border border-border shadow-xl flex flex-col justify-between relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-bl from-brand/10 via-indigo-950/20 to-transparent rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-72 h-72 bg-gradient-to-bl from-brand/10 via-surface-elevated to-transparent rounded-full blur-3xl pointer-events-none" />
 
           <div>
             <div className="flex items-center justify-between gap-2 mb-3">
@@ -419,7 +419,7 @@ export default function ClientDashboardOverview() {
                           <span>Milestones: {paidMilestones} of {totalMilestones} released</span>
                           <span className="font-bold text-success">{progressPct}%</span>
                         </div>
-                        <div className="h-1.5 w-full bg-[#26282E] rounded-full overflow-hidden">
+                        <div className="h-1.5 w-full bg-surface-elevated rounded-full overflow-hidden">
                           <div
                             className="h-full bg-success-solid text-foreground rounded-full transition-all"
                             style={{ width: `${progressPct}%` }}
