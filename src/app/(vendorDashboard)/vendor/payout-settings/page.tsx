@@ -113,7 +113,7 @@ export default function VendorPayoutSettingsPage() {
           <button
             onClick={handleConnectStripe}
             disabled={isConnecting || isStatusLoading}
-            className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shadow-md cursor-pointer disabled:opacity-50"
+            className="px-4 py-2 bg-gradient-to-r from-success to-success hover:from-success hover:to-success text-foreground rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap shadow-md cursor-pointer disabled:opacity-50"
           >
             {isConnecting ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
