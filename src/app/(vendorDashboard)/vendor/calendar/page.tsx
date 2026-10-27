@@ -139,8 +139,8 @@ export default function VendorCalendarPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">Calendar & Event Availability</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#EDE9FE] text-[#0F0C3B]">
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">Calendar & Event Availability</h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-soft text-foreground">
               4 Booked Dates
             </span>
           </div>
@@ -152,7 +152,7 @@ export default function VendorCalendarPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setShowBlockModal(true)}
-            className="px-4 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-indigo-900 text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 self-start sm:self-auto"
+            className="px-4 py-2.5 rounded-xl bg-brand hover:bg-info-soft text-foreground text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 self-start sm:self-auto"
           >
             <Lock className="w-3.5 h-3.5 text-warning" /> Block Unavailable Dates
           </button>
@@ -167,7 +167,7 @@ export default function VendorCalendarPage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <CalendarDays className="w-5 h-5 text-brand-primary" />
-              <h2 className="text-base font-black text-[#0F0C3B]">{monthLabel}</h2>
+              <h2 className="text-base font-black text-foreground">{monthLabel}</h2>
             </div>
 
             <div className="flex items-center gap-1.5">
@@ -208,7 +208,7 @@ export default function VendorCalendarPage() {
                   onClick={() => setSelectedDay(dayNum)}
                   className={`h-20 sm:h-24 p-1.5 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
                     isSelected
-                      ? "border-brand-primary bg-indigo-50/50 ring-2 ring-brand-primary/30"
+                      ? "border-brand-primary bg-info-soft/50 ring-2 ring-brand-primary/30"
                       : "border-border hover:border-border hover:bg-surface-elevated"
                   }`}
                 >
@@ -218,7 +218,7 @@ export default function VendorCalendarPage() {
                     </span>
                     {dayEvents.length > 0 && (
                       <span className={`w-2 h-2 rounded-full ${
-                        hasConfirmed ? "bg-success-solid text-white" : hasBlocked ? "bg-danger-solid text-white" : "bg-warning-solid text-on-brand"
+                        hasConfirmed ? "bg-success-solid text-foreground" : hasBlocked ? "bg-danger-solid text-foreground" : "bg-warning-solid text-on-brand"
                       }`} />
                     )}
                   </div>
@@ -230,10 +230,10 @@ export default function VendorCalendarPage() {
                         key={evt.id}
                         className={`text-[9px] font-bold p-1 rounded-md truncate leading-tight ${
                           evt.status === "CONFIRMED"
-                            ? "bg-emerald-100 text-emerald-900"
+                            ? "bg-success-soft text-success"
                             : evt.status === "BLOCKED"
-                            ? "bg-rose-100 text-rose-900"
-                            : "bg-amber-100 text-amber-900"
+                            ? "bg-danger-soft text-danger"
+                            : "bg-warning-soft text-warning"
                         }`}
                       >
                         {evt.title}
@@ -253,7 +253,7 @@ export default function VendorCalendarPage() {
           {/* Legend */}
           <div className="flex flex-wrap items-center gap-4 pt-3 border-t border-border text-xs text-foreground-secondary">
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-success-solid text-white" />
+              <span className="w-2.5 h-2.5 rounded-full bg-success-solid text-foreground" />
               <span>Confirmed Booking</span>
             </div>
             <div className="flex items-center gap-1.5">
@@ -261,7 +261,7 @@ export default function VendorCalendarPage() {
               <span>Pending Offer / Hold</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-danger-solid text-white" />
+              <span className="w-2.5 h-2.5 rounded-full bg-danger-solid text-foreground" />
               <span>Blocked / Vacation</span>
             </div>
           </div>
@@ -272,7 +272,7 @@ export default function VendorCalendarPage() {
           <div className="space-y-4">
             <div className="border-b border-border pb-3">
               <span className="text-[10px] text-foreground-muted uppercase font-bold tracking-wider">Day Schedule</span>
-              <h3 className="text-base font-black text-[#0F0C3B]">
+              <h3 className="text-base font-black text-foreground">
                 {selectedDay ? `October ${selectedDay}, 2025` : "Select a date"}
               </h3>
             </div>
@@ -284,17 +284,17 @@ export default function VendorCalendarPage() {
                     key={evt.id}
                     className={`p-4 rounded-xl border space-y-2 ${
                       evt.status === "CONFIRMED"
-                        ? "bg-emerald-50/50 border-emerald-200"
+                        ? "bg-success-soft/50 border-success/30"
                         : evt.status === "BLOCKED"
-                        ? "bg-rose-50/50 border-rose-200"
-                        : "bg-amber-50/50 border-amber-200"
+                        ? "bg-danger-soft/50 border-danger/30"
+                        : "bg-warning-soft/50 border-warning/30"
                     }`}
                   >
                     <div className="flex items-center justify-between">
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase ${
-                        evt.status === "CONFIRMED" ? "bg-emerald-200 text-emerald-900" :
-                        evt.status === "BLOCKED" ? "bg-rose-200 text-rose-900" :
-                        "bg-amber-200 text-amber-900"
+                        evt.status === "CONFIRMED" ? "bg-emerald-200 text-success" :
+                        evt.status === "BLOCKED" ? "bg-rose-200 text-danger" :
+                        "bg-warning-soft text-warning"
                       }`}>
                         {evt.status}
                       </span>
@@ -305,7 +305,7 @@ export default function VendorCalendarPage() {
                       )}
                     </div>
 
-                    <h4 className="text-xs font-bold text-[#0F0C3B]">{evt.title}</h4>
+                    <h4 className="text-xs font-bold text-foreground">{evt.title}</h4>
 
                     <div className="space-y-1 text-[11px] text-foreground-secondary">
                       <div className="flex items-center gap-1.5">
@@ -321,7 +321,7 @@ export default function VendorCalendarPage() {
                 ))}
               </div>
             ) : (
-              <div className="p-8 text-center bg-[#F8F9FD] rounded-xl border border-dashed border-border space-y-2">
+              <div className="p-8 text-center bg-surface-elevated rounded-xl border border-dashed border-border space-y-2">
                 <CalendarIcon className="w-8 h-8 text-foreground-secondary mx-auto" />
                 <p className="text-xs font-bold text-foreground-secondary">Date is Open & Available</p>
                 <p className="text-[11px] text-foreground-muted">Clients can book instant gigs or submit job invitations for this day.</p>
@@ -336,7 +336,7 @@ export default function VendorCalendarPage() {
                 setShowBlockModal(true);
               }
             }}
-            className="w-full py-2.5 bg-surface-sunken hover:bg-slate-200 text-[#0F0C3B] rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
+            className="w-full py-2.5 bg-surface-sunken hover:bg-surface-sunken text-foreground rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
           >
             <Lock className="w-3.5 h-3.5" /> Block This Day
           </button>
@@ -345,11 +345,11 @@ export default function VendorCalendarPage() {
 
       {/* Block Date Range Modal */}
       {showBlockModal && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl border border-border">
             <div className="flex items-center justify-between border-b border-border pb-3">
-              <h2 className="text-sm font-bold text-[#0F0C3B] flex items-center gap-2">
-                <Lock className="w-4 h-4 text-rose-600" /> Block Calendar Date
+              <h2 className="text-sm font-bold text-foreground flex items-center gap-2">
+                <Lock className="w-4 h-4 text-danger" /> Block Calendar Date
               </h2>
               <button onClick={() => setShowBlockModal(false)} className="text-foreground-muted hover:text-foreground-secondary">
                 <X className="w-4 h-4" />
@@ -365,7 +365,7 @@ export default function VendorCalendarPage() {
                   max={31}
                   value={blockDayNumber}
                   onChange={(e) => setBlockDayNumber(Number(e.target.value))}
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none"
                 />
               </div>
 
@@ -377,11 +377,11 @@ export default function VendorCalendarPage() {
                   placeholder="e.g. Private Wedding, Family Vacation, Equipment Maintenance"
                   value={blockReason}
                   onChange={(e) => setBlockReason(e.target.value)}
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary"
                 />
               </div>
 
-              <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-[11px] text-amber-900">
+              <div className="p-3 bg-warning-soft rounded-xl border border-warning/30 text-[11px] text-warning">
                 Clients searching for services on this date will see your status as "Fully Booked".
               </div>
 
@@ -389,13 +389,13 @@ export default function VendorCalendarPage() {
                 <button
                   type="button"
                   onClick={() => setShowBlockModal(false)}
-                  className="px-4 py-2 bg-surface-sunken hover:bg-slate-200 text-foreground-secondary rounded-xl font-bold"
+                  className="px-4 py-2 bg-surface-sunken hover:bg-surface-sunken text-foreground-secondary rounded-xl font-bold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-5 py-2 bg-rose-600 hover:bg-rose-700 text-foreground rounded-xl font-bold"
+                  className="px-5 py-2 bg-danger-solid text-white hover:bg-danger-solid text-white text-foreground rounded-xl font-bold"
                 >
                   Apply Date Block
                 </button>
