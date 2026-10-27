@@ -83,16 +83,16 @@ export default function AdminEscrowReleaseModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-[#121418] text-foreground rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden border border-[#26282E] animate-in fade-in">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-background/80 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="bg-surface text-foreground rounded-3xl max-w-xl w-full shadow-2xl overflow-hidden border border-border animate-in fade-in">
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#26282E] flex items-center justify-between bg-[#121418]">
+        <div className="px-6 py-4 border-b border-border flex items-center justify-between bg-surface">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40">
+            <div className="p-2 rounded-xl bg-surface-sunken text-brand border border-border-brand/40">
               <Scale className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-[10px] font-bold text-[#DFB76C] uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-brand uppercase tracking-wider">
                 Stripe Escrow Custody Desk
               </span>
               <h3 className="text-sm font-bold text-foreground mt-0.5">
@@ -103,7 +103,7 @@ export default function AdminEscrowReleaseModal({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-foreground-muted hover:text-foreground hover:bg-[#16181F] cursor-pointer"
+            className="p-1.5 rounded-lg text-foreground-muted hover:text-foreground hover:bg-surface-elevated cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -112,14 +112,14 @@ export default function AdminEscrowReleaseModal({
         {/* Body */}
         <div className="p-6 space-y-4 text-xs">
           {/* Stripe Account Dossier Card */}
-          <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-2">
+          <div className="p-4 rounded-2xl bg-surface-elevated border border-border space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-foreground-muted">Locked Escrow Custody:</span>
-              <span className="text-base font-black text-[#DFB76C] font-mono">
+              <span className="text-base font-black text-brand font-mono">
                 ${order.escrowLockedAmount.toLocaleString()} USD
               </span>
             </div>
-            <div className="flex items-center justify-between text-[11px] text-foreground-muted pt-1 border-t border-[#26282E]">
+            <div className="flex items-center justify-between text-[11px] text-foreground-muted pt-1 border-t border-border">
               <span>Stripe Payment Intent:</span>
               <span className="font-mono text-foreground-secondary">{order.stripePaymentIntentId || "pi_3N9xKl9928198"}</span>
             </div>
@@ -145,8 +145,8 @@ export default function AdminEscrowReleaseModal({
                   onClick={() => setSelectedAction("release")}
                   className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                     selectedAction === "release"
-                      ? "bg-success-soft text-success border-emerald-500 text-foreground font-bold ring-1 ring-emerald-500"
-                      : "bg-[#16181F] border-[#26282E] text-foreground-secondary hover:border-slate-600"
+                      ? "bg-success-soft text-success border-success/30 text-foreground font-bold ring-1 ring-emerald-500"
+                      : "bg-surface-elevated border-border text-foreground-secondary hover:border-border-strong"
                   }`}
                 >
                   <CheckCircle2 className="w-4 h-4 text-success mb-1" />
@@ -159,8 +159,8 @@ export default function AdminEscrowReleaseModal({
                   onClick={() => setSelectedAction("full_refund")}
                   className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                     selectedAction === "full_refund"
-                      ? "bg-danger-soft text-danger border-rose-500 text-foreground font-bold ring-1 ring-rose-500"
-                      : "bg-[#16181F] border-[#26282E] text-foreground-secondary hover:border-slate-600"
+                      ? "bg-danger-soft text-danger border-rose-500 text-foreground font-bold ring-1 ring-danger"
+                      : "bg-surface-elevated border-border text-foreground-secondary hover:border-border-strong"
                   }`}
                 >
                   <RotateCcw className="w-4 h-4 text-danger mb-1" />
@@ -173,11 +173,11 @@ export default function AdminEscrowReleaseModal({
                   onClick={() => setSelectedAction("split_refund")}
                   className={`p-3 rounded-xl border text-left transition-all cursor-pointer ${
                     selectedAction === "split_refund"
-                      ? "bg-[#1A1D24] border-[#DFB76C] text-foreground font-bold ring-1 ring-[#DFB76C]"
-                      : "bg-[#16181F] border-[#26282E] text-foreground-secondary hover:border-slate-600"
+                      ? "bg-surface-sunken border-border-brand text-foreground font-bold ring-1 ring-focus-ring"
+                      : "bg-surface-elevated border-border text-foreground-secondary hover:border-border-strong"
                   }`}
                 >
-                  <Scale className="w-4 h-4 text-[#DFB76C] mb-1" />
+                  <Scale className="w-4 h-4 text-brand mb-1" />
                   <p className="font-bold">Partial Split</p>
                   <p className="text-[10px] text-foreground-muted">Custom Ratio</p>
                 </button>
@@ -186,7 +186,7 @@ export default function AdminEscrowReleaseModal({
 
             {/* Split Slider Section */}
             {selectedAction === "split_refund" && (
-              <div className="p-4 rounded-2xl bg-[#16181F] border border-[#26282E] space-y-3">
+              <div className="p-4 rounded-2xl bg-surface-elevated border border-border space-y-3">
                 <div className="flex items-center justify-between font-bold">
                   <span className="text-danger">Client Refund: {clientRefundPct}%</span>
                   <span className="text-success">Vendor Payout: {vendorPayoutPct}%</span>
@@ -199,16 +199,16 @@ export default function AdminEscrowReleaseModal({
                   step="5"
                   value={clientRefundPct}
                   onChange={(e) => setClientRefundPct(Number(e.target.value))}
-                  className="w-full accent-[#DFB76C] cursor-pointer"
+                  className="w-full accent-brand cursor-pointer"
                 />
 
-                <div className="grid grid-cols-2 gap-3 pt-2 border-t border-[#26282E] text-xs">
-                  <div className="p-2.5 rounded-xl bg-danger-soft text-danger border border-rose-800/40">
-                    <span className="text-[10px] text-rose-300 uppercase font-bold block">Refunded to Client</span>
+                <div className="grid grid-cols-2 gap-3 pt-2 border-t border-border text-xs">
+                  <div className="p-2.5 rounded-none bg-danger-soft text-danger border border-danger/30">
+                    <span className="text-[10px] text-danger uppercase font-bold block">Refunded to Client</span>
                     <span className="text-sm font-black text-foreground font-mono">${clientRefundDollar.toLocaleString()}</span>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-success-soft text-success border border-emerald-800/40">
-                    <span className="text-[10px] text-emerald-300 uppercase font-bold block">Transferred to Vendor</span>
+                  <div className="p-2.5 rounded-none bg-success-soft text-success border border-success/30">
+                    <span className="text-[10px] text-success uppercase font-bold block">Transferred to Vendor</span>
                     <span className="text-sm font-black text-foreground font-mono">${vendorPayoutDollar.toLocaleString()}</span>
                   </div>
                 </div>
@@ -222,18 +222,18 @@ export default function AdminEscrowReleaseModal({
                 rows={2}
                 value={reasonNote}
                 onChange={(e) => setReasonNote(e.target.value)}
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl p-2.5 text-xs text-foreground focus:outline-none focus:border-[#DFB76C] resize-none"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-xs text-foreground focus:outline-none focus:border-border-brand resize-none"
               />
             </div>
 
             {/* Security Guarantee */}
-            <div className="p-3 rounded-xl bg-[#16181F] border border-[#26282E] flex items-center gap-2 text-[11px] text-foreground-secondary">
-              <Lock className="w-4 h-4 text-[#DFB76C] flex-shrink-0" />
+            <div className="p-3 rounded-xl bg-surface-elevated border border-border flex items-center gap-2 text-[11px] text-foreground-secondary">
+              <Lock className="w-4 h-4 text-brand flex-shrink-0" />
               <span>Transfers are processed via Stripe Connect API with real-time webhook audit logs.</span>
             </div>
 
             {/* Actions */}
-            <div className="pt-2 flex items-center justify-end gap-3 border-t border-[#26282E]">
+            <div className="pt-2 flex items-center justify-end gap-3 border-t border-border">
               <button
                 type="button"
                 onClick={onClose}
@@ -246,10 +246,10 @@ export default function AdminEscrowReleaseModal({
                 disabled={isSubmitting || isSuccess}
                 className={`px-6 py-2.5 rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5 cursor-pointer ${
                   selectedAction === "release"
-                    ? "bg-success-solid text-white hover:bg-success-solid text-white text-foreground"
+                    ? "bg-success-solid text-foreground hover:bg-success-solid text-foreground text-foreground"
                     : selectedAction === "full_refund"
-                    ? "bg-rose-600 hover:bg-danger-solid text-white text-foreground"
-                    : "bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E]"
+                    ? "bg-danger-solid text-white hover:bg-danger-solid text-foreground text-foreground"
+                    : "bg-brand hover:bg-brand-hover text-on-brand"
                 }`}
               >
                 {isSubmitting ? (
