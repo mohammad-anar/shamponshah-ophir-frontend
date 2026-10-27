@@ -106,8 +106,8 @@ export default function UserSavedVendorsPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2.5">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">Saved Vendors & Shortlist</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#EDE9FE] text-[#0F0C3B]">
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">Saved Vendors & Shortlist</h1>
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-soft text-foreground">
               {vendors.length} Saved
             </span>
           </div>
@@ -119,9 +119,9 @@ export default function UserSavedVendorsPage() {
         <div className="flex items-center gap-3">
           <Link
             href="/services"
-            className="px-4 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-[#0F0C3B] rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-2"
+            className="px-4 py-2.5 bg-gradient-to-r from-brand to-brand-active hover:from-brand hover:to-brand-active text-foreground rounded-xl text-xs font-bold transition-all shadow-xs flex items-center gap-2"
           >
-            <Sparkles className="w-4 h-4 text-[#0F0C3B]" /> Browse All Services
+            <Sparkles className="w-4 h-4 text-foreground" /> Browse All Services
           </Link>
         </div>
       </div>
@@ -135,7 +135,7 @@ export default function UserSavedVendorsPage() {
             placeholder="Search saved vendors or specialties..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#F8F9FD] border border-border rounded-xl pl-9 pr-3 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-brand-primary"
+            className="w-full bg-surface-elevated border border-border rounded-xl pl-9 pr-3 py-2 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-brand-primary"
           />
         </div>
 
@@ -143,7 +143,7 @@ export default function UserSavedVendorsPage() {
           <select
             value={categoryFilter}
             onChange={(e) => setCategoryFilter(e.target.value)}
-            className="bg-[#F8F9FD] border border-border rounded-xl px-3 py-2 text-xs font-semibold text-foreground-secondary focus:outline-none cursor-pointer"
+            className="bg-surface-elevated border border-border rounded-xl px-3 py-2 text-xs font-semibold text-foreground-secondary focus:outline-none cursor-pointer"
           >
             {availableCategories.map((c) => (
               <option key={c} value={c}>
@@ -176,13 +176,13 @@ export default function UserSavedVendorsPage() {
                     alt={v.name}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-background/20" />
                   
                   <div className="absolute top-3 right-3 flex items-center gap-2">
                     <button
                       onClick={() => handleRemove(v.id, v.name)}
                       disabled={isRemoving}
-                      className="p-2 rounded-xl bg-surface/90 hover:bg-surface text-foreground-secondary hover:text-rose-600 shadow-xs transition-colors cursor-pointer"
+                      className="p-2 rounded-xl bg-surface/90 hover:bg-surface text-foreground-secondary hover:text-danger shadow-xs transition-colors cursor-pointer"
                       title="Remove from saved"
                     >
                       <Trash2 className="w-4 h-4" />
@@ -190,7 +190,7 @@ export default function UserSavedVendorsPage() {
                   </div>
 
                   <div className="absolute bottom-3 left-3">
-                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#0F0C3B]/90 text-foreground backdrop-blur-xs shadow-xs">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-brand/90 text-foreground backdrop-blur-xs shadow-xs">
                       {v.tier}
                     </span>
                   </div>
@@ -200,13 +200,13 @@ export default function UserSavedVendorsPage() {
                 <div className="p-5 space-y-3">
                   <div className="flex items-start justify-between gap-2">
                     <div>
-                      <h3 className="text-base font-bold text-[#0F0C3B] group-hover:text-brand-primary transition-colors">
+                      <h3 className="text-base font-bold text-foreground group-hover:text-brand-primary transition-colors">
                         {v.name}
                       </h3>
                       <p className="text-xs text-brand-primary font-semibold mt-0.5">{v.category}</p>
                     </div>
 
-                    <div className="flex items-center text-warning text-xs font-black bg-amber-50 px-2.5 py-1 rounded-xl border border-amber-200">
+                    <div className="flex items-center text-warning text-xs font-black bg-warning-soft px-2.5 py-1 rounded-xl border border-warning/30">
                       <Star className="w-3.5 h-3.5 fill-amber-400" />
                       <span className="ml-1">{v.rating}</span>
                       <span className="text-foreground-muted font-normal ml-0.5">({v.reviewsCount})</span>
@@ -222,10 +222,10 @@ export default function UserSavedVendorsPage() {
                     <span className="truncate">{v.location}</span>
                   </div>
 
-                  <div className="p-3 bg-[#F8F9FD] rounded-2xl border border-border flex items-center justify-between">
+                  <div className="p-3 bg-surface-elevated rounded-2xl border border-border flex items-center justify-between">
                     <div>
                       <span className="text-[10px] text-foreground-muted uppercase font-bold tracking-wider">Starting Rate</span>
-                      <p className="text-sm font-black text-[#0F0C3B]">
+                      <p className="text-sm font-black text-foreground">
                         ${v.startingPrice.toLocaleString()} <span className="text-xs font-normal text-foreground-muted">/ {v.priceUnit}</span>
                       </p>
                     </div>
@@ -241,13 +241,13 @@ export default function UserSavedVendorsPage() {
               <div className="p-5 pt-0 grid grid-cols-2 gap-3">
                 <Link
                   href="/user/messages"
-                  className="w-full py-2.5 bg-surface-sunken hover:bg-slate-200 text-[#0F0C3B] rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5"
+                  className="w-full py-2.5 bg-surface-sunken hover:bg-surface-sunken text-foreground rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5"
                 >
                   <MessageSquare className="w-3.5 h-3.5" /> Message
                 </Link>
                 <Link
                   href={`/vendors/${v.slug || v.id}`}
-                  className="w-full py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-foreground rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 shadow-xs"
+                  className="w-full py-2.5 bg-brand hover:bg-info-soft text-foreground rounded-xl text-xs font-bold transition-all text-center flex items-center justify-center gap-1.5 shadow-xs"
                 >
                   View Profile <ChevronRight className="w-3.5 h-3.5" />
                 </Link>
@@ -258,11 +258,11 @@ export default function UserSavedVendorsPage() {
       ) : (
         /* Clean Real Empty State */
         <div className="bg-surface border border-border rounded-3xl p-14 text-center space-y-4 max-w-lg mx-auto shadow-xs">
-          <div className="w-14 h-14 rounded-3xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-brand-primary mx-auto">
+          <div className="w-14 h-14 rounded-3xl bg-info-soft border border-info/30 flex items-center justify-center text-brand-primary mx-auto">
             <Bookmark className="w-7 h-7 text-brand-primary" />
           </div>
           <div>
-            <h3 className="text-lg font-serif font-bold text-[#0F0C3B]">No Saved Vendors Yet</h3>
+            <h3 className="text-lg font-serif font-bold text-foreground">No Saved Vendors Yet</h3>
             <p className="text-xs text-foreground-muted mt-1 max-w-sm mx-auto leading-relaxed">
               You haven&apos;t shortlisted any vendors yet. Browse through verified event professionals and click the bookmark or heart icon to save your favorites here.
             </p>
@@ -270,14 +270,14 @@ export default function UserSavedVendorsPage() {
           <div className="pt-2 flex items-center justify-center gap-3">
             <Link
               href="/services"
-              className="px-5 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-foreground rounded-xl text-xs font-bold shadow-xs transition-all flex items-center gap-2"
+              className="px-5 py-2.5 bg-brand hover:bg-info-soft text-foreground rounded-xl text-xs font-bold shadow-xs transition-all flex items-center gap-2"
             >
               <span>Explore Services</span>
               <ChevronRight className="w-4 h-4" />
             </Link>
             <Link
               href="/vendors"
-              className="px-4 py-2.5 bg-surface-sunken hover:bg-slate-200 text-foreground-secondary rounded-xl text-xs font-bold transition-all"
+              className="px-4 py-2.5 bg-surface-sunken hover:bg-surface-sunken text-foreground-secondary rounded-xl text-xs font-bold transition-all"
             >
               Browse Vendors
             </Link>
