@@ -195,13 +195,13 @@ const Navbar = () => {
             onClick={() => setSearchOpen(!searchOpen)}
             className="mr-5 bg-transparent hover:!bg-gray-300 duration-300 p-2 rounded-full cursor-pointer"
           >
-            <FaSearch size={20} className="text-white" />
+            <FaSearch size={20} className="text-foreground" />
           </div>
           <Link href={"/signup"} className="hover:text-primary duration-300">
             Sign Up
           </Link>
           |
-          <Button className="!p-5 !border-none hover:!bg-primary/80 hover:!text-white">
+          <Button className="!p-5 !border-none hover:!bg-primary/80 hover:!text-foreground">
             List with us
           </Button>
         </div>
@@ -211,11 +211,11 @@ const Navbar = () => {
             onClick={() => setSearchOpen(!searchOpen)}
             className="mr-5 bg-transparent hover:!bg-gray-300 duration-300 p-2 rounded-full cursor-pointer"
           >
-            <FaSearch size={20} className="text-white" />
+            <FaSearch size={20} className="text-foreground" />
           </div>
           <div
             onClick={() => setOpen(true)}
-            className=" lg:!hidden border p-3 py-2 hover:!bg-primary hover:!text-white"
+            className=" lg:!hidden border p-3 py-2 hover:!bg-primary hover:!text-foreground"
           >
             <MenuOutlined className="text-xl mt-1 " />
           </div>
