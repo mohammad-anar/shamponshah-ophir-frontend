@@ -221,7 +221,7 @@ export default function AdminOperationsOverview() {
           <div className="flex items-center justify-between text-foreground-muted mb-2">
             <div className="flex items-center gap-1.5">
               <span className="text-[11px] font-bold tracking-wider uppercase text-foreground-muted">Open Disputes</span>
-              <span className="text-[9px] font-bold bg-rose-950 text-danger border border-danger/30/40 px-1.5 py-0.2 rounded">Priority</span>
+              <span className="text-[9px] font-bold bg-danger-soft text-danger border border-danger/30/40 px-1.5 py-0.2 rounded">Priority</span>
             </div>
             <span className="p-1.5 rounded-lg bg-surface-elevated text-danger border border-border">
               <Scale className="w-4 h-4" />
@@ -349,7 +349,7 @@ export default function AdminOperationsOverview() {
                   </div>
                   <div className="h-2 w-full bg-surface-elevated rounded-full overflow-hidden flex border border-border">
                     <div style={{ width: `${row.pct}%` }} className="bg-brand" />
-                    <div style={{ width: `${100 - row.pct}%` }} className="bg-slate-700" />
+                    <div style={{ width: `${100 - row.pct}%` }} className="bg-surface-elevated" />
                   </div>
                 </div>
               ))}
@@ -378,9 +378,9 @@ export default function AdminOperationsOverview() {
               {[
                 { name: "Weddings & Receptions", pct: 42, rev: "$119,532", count: "142 orders", color: "bg-brand" },
                 { name: "Birthdays & Milestones", pct: 28, rev: "$79,688", count: "210 orders", color: "bg-warning-solid text-on-brand" },
-                { name: "Corporate & Galas", pct: 16, rev: "$45,536", count: "58 orders", color: "bg-indigo-400" },
-                { name: "Baby Showers & Holuds", pct: 9, rev: "$25,614", count: "84 orders", color: "bg-purple-400" },
-                { name: "Quinceañeras & Anniversaries", pct: 5, rev: "$14,230", count: "36 orders", color: "bg-success-solid text-white" },
+                { name: "Corporate & Galas", pct: 16, rev: "$45,536", count: "58 orders", color: "bg-info" },
+                { name: "Baby Showers & Holuds", pct: 9, rev: "$25,614", count: "84 orders", color: "bg-brand" },
+                { name: "Quinceañeras & Anniversaries", pct: 5, rev: "$14,230", count: "36 orders", color: "bg-success-solid text-foreground" },
               ].map((cat) => (
                 <div key={cat.name} className="space-y-1.5">
                   <div className="flex items-center justify-between">
@@ -412,16 +412,16 @@ export default function AdminOperationsOverview() {
           <div>
             <div className="flex items-center justify-between mb-2">
               <p className="text-[11px] font-bold tracking-wider uppercase text-foreground-muted">Action Required</p>
-              <span className="text-[10px] font-bold bg-rose-950 text-danger border border-danger/30/40 px-2 py-0.5 rounded-full">4 Pending Actions</span>
+              <span className="text-[10px] font-bold bg-danger-soft text-danger border border-danger/30/40 px-2 py-0.5 rounded-full">4 Pending Actions</span>
             </div>
             <h3 className="text-base font-bold text-foreground mb-3">Alerts & Escalations</h3>
 
             <div className="space-y-2.5">
               {/* Alert: Pending Gigs Moderation */}
               {Number(stats.pendingGigs || 0) > 0 && (
-                <div className="p-3 rounded-lg bg-warning-soft text-warning border border-amber-800/50 flex items-start justify-between gap-3">
+                <div className="p-3 rounded-lg bg-warning-soft text-warning border border-warning/50 flex items-start justify-between gap-3">
                   <div className="flex items-start gap-2.5">
-                    <div className="p-1.5 rounded-md bg-amber-900/60 text-warning mt-0.5">
+                    <div className="p-1.5 rounded-md bg-warning-soft text-warning mt-0.5">
                       <Clock className="w-4 h-4" />
                     </div>
                     <div>
@@ -436,7 +436,7 @@ export default function AdminOperationsOverview() {
                   </div>
                   <Link
                     href="/admin/gigs/pending"
-                    className="text-xs font-bold text-on-brand bg-warning-solid text-on-brand hover:bg-amber-300 px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
+                    className="text-xs font-bold text-on-brand bg-warning-solid text-on-brand hover:bg-warning px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
                   >
                     Audit &amp; Approve →
                   </Link>
@@ -447,22 +447,22 @@ export default function AdminOperationsOverview() {
               {Number(stats.pendingReports || 0) > 0 && (
                 <div className="p-3 rounded-lg bg-danger-soft text-danger border border-danger/30/50 flex items-start justify-between gap-3">
                   <div className="flex items-start gap-2.5">
-                    <div className="p-1.5 rounded-md bg-rose-900/60 text-danger mt-0.5">
+                    <div className="p-1.5 rounded-md bg-danger-soft text-danger mt-0.5">
                       <AlertTriangle className="w-4 h-4 text-danger" />
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <h4 className="text-xs font-bold text-rose-200">
+                        <h4 className="text-xs font-bold text-danger">
                           {stats.pendingReports} urgent user service {stats.pendingReports === 1 ? "report" : "reports"}
                         </h4>
-                        <span className="text-[9px] font-bold bg-danger-solid text-white text-foreground px-1.5 py-0.2 rounded uppercase">Safety</span>
+                        <span className="text-[9px] font-bold bg-danger-solid text-foreground text-foreground px-1.5 py-0.2 rounded uppercase">Safety</span>
                       </div>
                       <p className="text-[11px] text-danger/80 mt-0.5">User complaints alleging misleading pricing, policy breaches, or fraud</p>
                     </div>
                   </div>
                   <Link
                     href="/admin/reports"
-                    className="text-xs font-bold text-foreground bg-danger-solid text-white hover:bg-danger-solid text-foreground px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
+                    className="text-xs font-bold text-foreground bg-danger-solid text-foreground hover:bg-danger-solid text-foreground px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
                   >
                     Review Reports →
                   </Link>
@@ -471,24 +471,24 @@ export default function AdminOperationsOverview() {
 
               {/* Alert: Open Disputes */}
               {Number(stats.openDisputes || 0) > 0 && (
-                <div className="p-3 rounded-lg bg-danger-soft text-danger border border-red-800/50 flex items-start justify-between gap-3">
+                <div className="p-3 rounded-lg bg-danger-soft text-danger border border-danger/50 flex items-start justify-between gap-3">
                   <div className="flex items-start gap-2.5">
-                    <div className="p-1.5 rounded-md bg-red-900/60 text-danger mt-0.5">
+                    <div className="p-1.5 rounded-md bg-danger-soft text-danger mt-0.5">
                       <ShieldAlert className="w-4 h-4" />
                     </div>
                     <div>
                       <div className="flex items-center gap-1.5">
-                        <h4 className="text-xs font-bold text-red-200">
+                        <h4 className="text-xs font-bold text-danger">
                           {stats.openDisputes} order {stats.openDisputes === 1 ? "dispute" : "disputes"} open
                         </h4>
-                        <span className="text-[9px] font-bold bg-red-600 text-foreground px-1.5 py-0.2 rounded uppercase">Escrow SLA</span>
+                        <span className="text-[9px] font-bold bg-danger text-foreground px-1.5 py-0.2 rounded uppercase">Escrow SLA</span>
                       </div>
                       <p className="text-[11px] text-foreground-muted mt-0.5">Disputed milestone orders requiring admin decision and Stripe refund</p>
                     </div>
                   </div>
                   <Link
                     href="/admin/disputes"
-                    className="text-xs font-semibold text-foreground bg-red-600 hover:bg-danger-solid text-foreground px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
+                    className="text-xs font-semibold text-foreground bg-danger hover:bg-danger-solid text-foreground px-2.5 py-1 rounded transition-colors whitespace-nowrap shadow-xs"
                   >
                     Resolve Disputes →
                   </Link>
@@ -561,13 +561,13 @@ export default function AdminOperationsOverview() {
         <div className="flex items-center gap-2.5 flex-wrap w-full md:w-auto">
           <Link
             href="/admin/gigs/pending"
-            className="px-3.5 py-2 rounded-lg bg-warning-solid text-on-brand hover:bg-amber-300 text-on-brand text-xs font-extrabold transition-colors shadow-xs"
+            className="px-3.5 py-2 rounded-lg bg-warning-solid text-on-brand hover:bg-warning text-on-brand text-xs font-extrabold transition-colors shadow-xs"
           >
             Review Pending Gigs ({stats.pendingGigs || 0})
           </Link>
           <Link
             href="/admin/reports"
-            className="px-3.5 py-2 rounded-lg bg-danger-solid text-white hover:bg-danger-solid text-foreground text-foreground text-xs font-bold transition-colors shadow-xs"
+            className="px-3.5 py-2 rounded-lg bg-danger-solid text-foreground hover:bg-danger-solid text-foreground text-foreground text-xs font-bold transition-colors shadow-xs"
           >
             Safety Reports ({stats.pendingReports || 0})
           </Link>
