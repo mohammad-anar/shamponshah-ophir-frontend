@@ -85,11 +85,11 @@ const DrawerPage = ({ open, setOpen }: DrawerProps) => {
         <div className="flex flex-col items-center justify-center gap-2 ">
           <Button
             onClick={handleSignupClick}
-            className="!p-5 !border-primary w-full !bg-transparent hover:!bg-primary !text-primary hover:!text-white"
+            className="!p-5 !border-primary w-full !bg-transparent hover:!bg-primary !text-primary hover:!text-foreground"
           >
             Sign Up
           </Button>
-          <Button className="!p-5 !border-none w-full hover:!bg-primary/80 hover:!text-white">
+          <Button className="!p-5 !border-none w-full hover:!bg-primary/80 hover:!text-foreground">
             List with us
           </Button>
         </div>
