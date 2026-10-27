@@ -93,7 +93,7 @@ export default function VendorFindJobsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-surface p-6 rounded-2xl border border-border shadow-xs">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-indigo-50 text-indigo-700 border border-indigo-100 flex items-center gap-1">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase bg-info-soft text-info border border-info/30 flex items-center gap-1">
               <Sparkles className="w-3 h-3 text-info" />
               Live Client Job Board
             </span>
@@ -101,7 +101,7 @@ export default function VendorFindJobsPage() {
               {liveJobs.length} {liveJobs.length === 1 ? "Job" : "Jobs"} Available
             </span>
           </div>
-          <h1 className="text-2xl font-bold text-[#0F0C3B] mt-1.5">Find Jobs &amp; Opportunities</h1>
+          <h1 className="text-2xl font-bold text-foreground mt-1.5">Find Jobs &amp; Opportunities</h1>
           <p className="text-xs text-foreground-muted mt-0.5">
             Browse verified client celebration requests and submit staged milestone or full payment proposals
           </p>
@@ -126,7 +126,7 @@ export default function VendorFindJobsPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by title, location, occasion..."
-            className="w-full pl-9 pr-4 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            className="w-full pl-9 pr-4 py-2 border border-border rounded-xl text-xs focus:outline-none focus:ring-1 focus:ring-focus-ring"
           />
         </div>
 
@@ -135,7 +135,7 @@ export default function VendorFindJobsPage() {
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full sm:w-auto px-3 py-2 border border-border rounded-xl text-xs bg-surface text-foreground-secondary focus:outline-none focus:ring-1 focus:ring-indigo-500 font-medium"
+            className="w-full sm:w-auto px-3 py-2 border border-border rounded-xl text-xs bg-surface text-foreground-secondary focus:outline-none focus:ring-1 focus:ring-focus-ring font-medium"
           >
             <option value="all">All Categories</option>
             <option value="photo">Photography &amp; Media</option>
@@ -151,16 +151,16 @@ export default function VendorFindJobsPage() {
       <div className="space-y-4">
         {isLoading ? (
           <div className="py-16 bg-surface rounded-2xl border border-border flex flex-col items-center justify-center text-foreground-muted gap-3 text-xs">
-            <Loader2 className="w-6 h-6 animate-spin text-[#0F0C3B]" />
+            <Loader2 className="w-6 h-6 animate-spin text-foreground" />
             <span className="font-medium">Loading live client job opportunities...</span>
           </div>
         ) : filteredJobs.length === 0 ? (
           <div className="py-16 bg-surface rounded-2xl border border-border flex flex-col items-center justify-center text-center p-6 space-y-3">
-            <div className="w-12 h-12 rounded-2xl bg-indigo-50 text-info flex items-center justify-center">
+            <div className="w-12 h-12 rounded-2xl bg-info-soft text-info flex items-center justify-center">
               <Briefcase className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="font-bold text-sm text-[#0F0C3B]">No Matching Jobs Found</h3>
+              <h3 className="font-bold text-sm text-foreground">No Matching Jobs Found</h3>
               <p className="text-xs text-foreground-muted max-w-sm mt-1">
                 {searchQuery || selectedCategory !== "all"
                   ? "Try resetting your search filters or clearing search keywords."
@@ -173,7 +173,7 @@ export default function VendorFindJobsPage() {
                   setSearchQuery("");
                   setSelectedCategory("all");
                 }}
-                className="px-4 py-2 rounded-xl bg-surface-sunken text-foreground-secondary font-bold text-xs hover:bg-slate-200 transition-colors"
+                className="px-4 py-2 rounded-xl bg-surface-sunken text-foreground-secondary font-bold text-xs hover:bg-surface-sunken transition-colors"
               >
                 Clear Filters
               </button>
@@ -203,20 +203,20 @@ export default function VendorFindJobsPage() {
                 className={cn(
                   "bg-surface p-6 rounded-2xl border transition-all shadow-xs space-y-4 text-xs",
                   hasSubmitted
-                    ? "border-emerald-300 ring-1 ring-emerald-100 bg-emerald-50/10"
-                    : "border-border hover:border-indigo-200"
+                    ? "border-success/30 ring-1 ring-emerald-100 bg-success-soft/10"
+                    : "border-border hover:border-info/30"
                 )}
               >
                 {/* Header row */}
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-200">
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-warning-soft text-warning border border-warning/30">
                         2 Bid Credits
                       </span>
 
                       {job.category?.name && (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-info-soft text-info border border-info/30">
                           {job.category.name}
                         </span>
                       )}
@@ -230,7 +230,7 @@ export default function VendorFindJobsPage() {
                       <span className="text-foreground-muted font-mono text-[10px]">#{job.id.slice(-6)}</span>
                     </div>
 
-                    <h3 className="text-base font-bold text-[#0F0C3B] mt-1.5">{job.title}</h3>
+                    <h3 className="text-base font-bold text-foreground mt-1.5">{job.title}</h3>
                     <p className="text-foreground-muted mt-0.5">
                       Posted by <strong>{clientName}</strong> • {distance}
                     </p>
@@ -240,7 +240,7 @@ export default function VendorFindJobsPage() {
                     <span className="text-[10px] uppercase font-bold text-foreground-muted block">
                       Client Target Budget
                     </span>
-                    <span className="text-lg font-extrabold text-[#0F0C3B]">{budgetText}</span>
+                    <span className="text-lg font-extrabold text-foreground">{budgetText}</span>
                   </div>
                 </div>
 
@@ -268,7 +268,7 @@ export default function VendorFindJobsPage() {
                     Location: <strong className="text-foreground-secondary">{distance}</strong>
                   </span>
 
-                  <span className="flex items-center gap-1.5 ml-auto text-indigo-700 font-bold">
+                  <span className="flex items-center gap-1.5 ml-auto text-info font-bold">
                     <span>{bidsCount} Proposal{bidsCount === 1 ? "" : "s"} Received</span>
                   </span>
                 </div>
@@ -284,7 +284,7 @@ export default function VendorFindJobsPage() {
 
                   {hasSubmitted ? (
                     <div className="flex items-center gap-2">
-                      <div className="px-4 py-2 rounded-xl bg-emerald-100 text-emerald-800 text-xs font-bold flex items-center gap-1.5">
+                      <div className="px-4 py-2 rounded-xl bg-success-soft text-success text-xs font-bold flex items-center gap-1.5">
                         <CheckCircle2 className="w-4 h-4 text-success" />
                         <span>Proposal Submitted ({myOffer ? `$${myOffer.price}` : "Pending"})</span>
                       </div>
@@ -292,7 +292,7 @@ export default function VendorFindJobsPage() {
                   ) : (
                     <button
                       onClick={() => handleOpenProposal(job, budgetText, clientName)}
-                      className="px-5 py-2.5 bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-2 cursor-pointer"
+                      className="px-5 py-2.5 bg-brand hover:bg-surface-sunken text-foreground text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-2 cursor-pointer"
                     >
                       <Send className="w-3.5 h-3.5 text-warning" />
                       <span>Send Custom Proposal (2 Credits)</span>
