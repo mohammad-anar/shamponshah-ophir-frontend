@@ -64,12 +64,12 @@ export default function Logo({
             )}
 
             {variant === "vendor" && (
-              <span className="text-[9px] font-bold tracking-widest px-1.5 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] uppercase border border-[#DFB76C]/30">
+              <span className="text-[9px] font-bold tracking-widest px-1.5 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] uppercase border border-border-brand/40">
                 PORTAL
               </span>
             )}
           </div>
-          <span className="text-[9px] uppercase tracking-[0.25em] text-slate-400 font-sans mt-0.5">
+          <span className="text-[9px] uppercase tracking-[0.25em] text-foreground-muted font-sans mt-0.5">
             Curated Heritage
           </span>
         </div>
@@ -82,7 +82,7 @@ export default function Logo({
       )}
 
       {!showText && variant === "vendor" && (
-        <span className="text-[9px] font-bold tracking-widest px-1.5 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] uppercase border border-[#DFB76C]/30">
+        <span className="text-[9px] font-bold tracking-widest px-1.5 py-0.5 rounded-none bg-[#1A1D24] text-[#DFB76C] uppercase border border-border-brand/40">
           PORTAL
         </span>
       )}
