@@ -437,7 +437,7 @@ export default function AdminSupportPage() {
                     "p-4 rounded-2xl border transition-all cursor-pointer space-y-2",
                     isSelected 
                       ? "bg-surface-sunken border-border-brand shadow-xs ring-1 ring-focus-ring/30" 
-                      : "bg-surface-elevated border-border hover:border-slate-700 hover:bg-surface-sunken/60"
+                      : "bg-surface-elevated border-border hover:border-border hover:bg-surface-sunken/60"
                   )}
                 >
                   <div className="flex items-center justify-between gap-2">
