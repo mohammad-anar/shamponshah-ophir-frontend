@@ -34,9 +34,9 @@ export default function ForgotPasswordPage() {
         <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch max-w-6xl">
           {/* Left: Recovery Form Card */}
           <div className="lg:col-span-6 xl:col-span-6 flex flex-col justify-center">
-            <div className="w-full max-w-md mx-auto bg-surface rounded-3xl p-6 sm:p-8 lg:p-10 shadow-luxury border border-[#EAE6DF] space-y-6">
+            <div className="w-full max-w-md mx-auto bg-surface rounded-3xl p-6 sm:p-8 lg:p-10 shadow-luxury border border-border space-y-6">
               {/* Key Icon */}
-              <div className="w-12 h-12 rounded-2xl bg-[#FEF3C7] text-[#B45309] flex items-center justify-center shadow-xs">
+              <div className="w-12 h-12 rounded-2xl bg-brand-soft text-brand flex items-center justify-center shadow-xs">
                 <KeyRound className="w-6 h-6" />
               </div>
 
@@ -63,13 +63,13 @@ export default function ForgotPasswordPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="name@example.com"
-                        className="w-full h-11 px-3.5 pr-10 text-sm bg-[#F9F8F5] text-obsidian border border-[#E2DDD3] rounded-xl focus:bg-surface focus:border-gold-500 focus:outline-none transition-all"
+                        className="w-full h-11 px-3.5 pr-10 text-sm bg-surface-elevated text-obsidian border border-border rounded-xl focus:bg-surface focus:border-gold-500 focus:outline-none transition-all"
                       />
                       <Mail className="absolute right-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground-muted" />
                     </div>
                   </div>
 
-                  <div className="p-3.5 rounded-xl bg-[#F8F7F4] border border-[#EAE6DF] text-xs text-foreground-secondary flex items-start gap-2.5">
+                  <div className="p-3.5 rounded-xl bg-surface-elevated border border-border text-xs text-foreground-secondary flex items-start gap-2.5">
                     <ShieldCheck className="w-4 h-4 text-success flex-shrink-0 mt-0.5" />
                     <div>
                       We will verify your identity before allowing password updates to secure your active milestone escrow funds.
@@ -80,10 +80,10 @@ export default function ForgotPasswordPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full h-12 flex items-center justify-center gap-2 bg-[#4F46E5] hover:bg-[#4338CA] active:scale-99 text-foreground font-semibold rounded-xl shadow-md transition-all mt-2"
+                    className="w-full h-12 flex items-center justify-center gap-2 bg-brand text-on-brand hover:bg-brand text-on-brand active:scale-99 text-foreground font-semibold rounded-xl shadow-md transition-all mt-2"
                   >
                     {isLoading ? (
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                      <div className="w-5 h-5 border-2 border-border-strong/30 border-t-white rounded-full animate-spin" />
                     ) : (
                       <>
                         <span>Send reset link</span>
@@ -94,19 +94,19 @@ export default function ForgotPasswordPage() {
                 </form>
               ) : (
                 <div className="space-y-4 animate-in fade-in duration-200">
-                  <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 space-y-2">
-                    <div className="flex items-center gap-2 text-emerald-800 font-bold text-sm">
+                  <div className="p-4 rounded-2xl bg-success-soft border border-success/30 space-y-2">
+                    <div className="flex items-center gap-2 text-success font-bold text-sm">
                       <CheckCircle2 className="w-5 h-5 text-success" />
                       <span>Check your inbox</span>
                     </div>
-                    <p className="text-xs text-emerald-700">
+                    <p className="text-xs text-success">
                       We have sent instructions to <span className="font-semibold">{email}</span>. Click the link in the email to set your new password.
                     </p>
                   </div>
 
                   <Link
                     href="/reset-password"
-                    className="w-full h-12 flex items-center justify-center gap-2 bg-[#0F1228] text-foreground text-sm font-semibold rounded-xl"
+                    className="w-full h-12 flex items-center justify-center gap-2 bg-surface-elevated text-foreground text-sm font-semibold rounded-xl"
                   >
                     <span>Proceed to Set New Password</span>
                     <ArrowRight className="w-4 h-4" />
@@ -115,10 +115,10 @@ export default function ForgotPasswordPage() {
               )}
 
               {/* Back to sign in */}
-              <div className="pt-2 text-center text-xs text-foreground-secondary border-t border-[#EAE6DF]">
+              <div className="pt-2 text-center text-xs text-foreground-secondary border-t border-border">
                 <Link
                   href="/login"
-                  className="inline-flex items-center gap-1.5 font-bold text-[#0F1228] hover:text-gold-600 hover:underline"
+                  className="inline-flex items-center gap-1.5 font-bold text-foreground hover:text-gold-600 hover:underline"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>Back to sign in</span>
