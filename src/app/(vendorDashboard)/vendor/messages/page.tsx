@@ -757,8 +757,16 @@ function VendorMessagesContent() {
                     >
                       <div className="flex items-end gap-2 max-w-[85%] md:max-w-[70%]">
                         {!isVendor && (
-                          <div className="w-7 h-7 rounded-full bg-brand-soft border border-border text-foreground flex items-center justify-center font-bold text-[10px] flex-shrink-0 mb-1">
-                            {activeConv.clientAvatar}
+                          <div className="w-7 h-7 rounded-full bg-brand-soft border border-border text-foreground flex items-center justify-center font-bold text-[10px] flex-shrink-0 mb-1 overflow-hidden">
+                            {activeConv.clientAvatar && (activeConv.clientAvatar.startsWith("http") || activeConv.clientAvatar.startsWith("/")) ? (
+                              <img
+                                src={activeConv.clientAvatar}
+                                alt={activeConv.clientName}
+                                className="w-full h-full object-cover rounded-full"
+                              />
+                            ) : (
+                              activeConv.clientAvatar
+                            )}
                           </div>
                         )}
 
