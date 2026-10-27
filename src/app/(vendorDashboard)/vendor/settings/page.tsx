@@ -87,10 +87,10 @@ export default function VendorSettingsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <h1 className="text-xl md:text-2xl font-black text-[#0F0C3B] tracking-tight">
+            <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
               Business &amp; Account Settings
             </h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#EDE9FE] text-[#0F0C3B]">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-brand-soft text-foreground">
               Tax Verified
             </span>
           </div>
@@ -102,7 +102,7 @@ export default function VendorSettingsPage() {
         <button
           onClick={handleSave}
           disabled={isUpdating}
-          className="px-5 py-2.5 bg-[#0F0C3B] hover:bg-indigo-900 text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start sm:self-auto cursor-pointer disabled:opacity-50"
+          className="px-5 py-2.5 bg-brand hover:bg-info-soft text-foreground rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 self-start sm:self-auto cursor-pointer disabled:opacity-50"
         >
           {isUpdating ? (
             <>
@@ -119,20 +119,20 @@ export default function VendorSettingsPage() {
       </div>
 
       {savedSuccess && (
-        <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-800 text-xs font-bold flex items-center gap-2 animate-in fade-in">
+        <div className="p-4 bg-success-soft border border-success/30 rounded-xl text-success text-xs font-bold flex items-center gap-2 animate-in fade-in">
           <CheckCircle2 className="w-4 h-4 text-success" /> Business preferences successfully updated.
         </div>
       )}
 
       {/* Vacation Mode Banner */}
-      <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-between gap-4 text-xs">
+      <div className="p-4 rounded-2xl bg-warning-soft border border-warning/30 flex items-center justify-between gap-4 text-xs">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-amber-100 text-amber-900">
+          <div className="p-2.5 rounded-xl bg-warning-soft text-warning">
             <Palmtree className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="font-bold text-amber-950">Vacation &amp; Hiatus Mode</h4>
-            <p className="text-[11px] text-amber-800 mt-0.5">
+            <h4 className="font-bold text-warning">Vacation &amp; Hiatus Mode</h4>
+            <p className="text-[11px] text-warning mt-0.5">
               Temporarily hide your listings from search results while preserving all reviews and guild level ranking.
             </p>
           </div>
@@ -144,8 +144,8 @@ export default function VendorSettingsPage() {
           disabled={isTogglingVacation}
           className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
             isVacationMode
-              ? "bg-warning-solid text-on-brand hover:bg-amber-700 text-foreground shadow-xs"
-              : "bg-surface border border-amber-300 text-amber-900 hover:bg-amber-100/50"
+              ? "bg-warning-solid text-on-brand hover:bg-warning-solid text-on-brand text-foreground shadow-xs"
+              : "bg-surface border border-warning/30 text-warning hover:bg-warning-soft/50"
           }`}
         >
           {isVacationMode ? "Vacation Active (Turn Off)" : "Take a Break"}
@@ -157,11 +157,11 @@ export default function VendorSettingsPage() {
         {/* Marketplace Public Profile */}
         <div className="bg-surface border border-border rounded-2xl p-5 space-y-4 shadow-xs">
           <div className="flex items-center gap-2.5 border-b border-border pb-3">
-            <div className="p-2 rounded-xl bg-indigo-50 text-brand-primary">
+            <div className="p-2 rounded-xl bg-info-soft text-brand-primary">
               <FileText className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-[#0F0C3B]">Vendor Public Profile</h2>
+              <h2 className="text-sm font-bold text-foreground">Vendor Public Profile</h2>
               <p className="text-xs text-foreground-muted">Visible to clients across the directory</p>
             </div>
           </div>
@@ -173,7 +173,7 @@ export default function VendorSettingsPage() {
                 type="text"
                 value={businessName}
                 onChange={(e) => setBusinessName(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
               />
             </div>
 
@@ -183,7 +183,7 @@ export default function VendorSettingsPage() {
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
               />
             </div>
 
@@ -194,7 +194,7 @@ export default function VendorSettingsPage() {
                   type="text"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 />
               </div>
               <div>
@@ -203,7 +203,7 @@ export default function VendorSettingsPage() {
                   type="number"
                   value={startingPrice}
                   onChange={(e) => setStartingPrice(e.target.value)}
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 />
               </div>
             </div>
@@ -213,11 +213,11 @@ export default function VendorSettingsPage() {
         {/* Legal & Tax Entity */}
         <div className="bg-surface border border-border rounded-2xl p-5 space-y-4 shadow-xs">
           <div className="flex items-center gap-2.5 border-b border-border pb-3">
-            <div className="p-2 rounded-xl bg-purple-50 text-purple-600">
+            <div className="p-2 rounded-xl bg-brand-soft text-brand">
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-[#0F0C3B]">Legal Entity &amp; 1099 Tax Info</h2>
+              <h2 className="text-sm font-bold text-foreground">Legal Entity &amp; 1099 Tax Info</h2>
               <p className="text-xs text-foreground-muted">For annual IRS reporting and escrow payouts</p>
             </div>
           </div>
@@ -228,7 +228,7 @@ export default function VendorSettingsPage() {
               <select
                 value={businessType}
                 onChange={(e) => setBusinessType(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none"
               >
                 <option value="LLC">Limited Liability Company (LLC)</option>
                 <option value="Sole">Sole Proprietorship</option>
@@ -243,13 +243,13 @@ export default function VendorSettingsPage() {
                 type="text"
                 value={taxEin}
                 onChange={(e) => setTaxEin(e.target.value)}
-                className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none"
+                className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-mono font-bold focus:outline-none"
               />
             </div>
 
-            <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-100 flex items-center justify-between">
-              <span className="text-emerald-900 font-bold">W-9 Form Status</span>
-              <span className="px-2 py-0.5 rounded-full bg-success-solid text-white text-foreground text-[10px] font-bold">
+            <div className="p-3 bg-success-soft rounded-xl border border-emerald-100 flex items-center justify-between">
+              <span className="text-success font-bold">W-9 Form Status</span>
+              <span className="px-2 py-0.5 rounded-full bg-success-solid text-foreground text-foreground text-[10px] font-bold">
                 Active on File
               </span>
             </div>
@@ -259,19 +259,19 @@ export default function VendorSettingsPage() {
         {/* Lead Alerts & Notifications */}
         <div className="bg-surface border border-border rounded-2xl p-5 space-y-4 shadow-xs md:col-span-2">
           <div className="flex items-center gap-2.5 border-b border-border pb-3">
-            <div className="p-2 rounded-xl bg-amber-50 text-amber-600">
+            <div className="p-2 rounded-xl bg-warning-soft text-warning">
               <Bell className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-bold text-[#0F0C3B]">Lead Matching &amp; Notifications</h2>
+              <h2 className="text-sm font-bold text-foreground">Lead Matching &amp; Notifications</h2>
               <p className="text-xs text-foreground-muted">Configure alerts when new events are posted near you</p>
             </div>
           </div>
 
           <div className="space-y-3 text-xs">
-            <label className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FD] border border-border/80 cursor-pointer hover:bg-surface-elevated">
+            <label className="flex items-center justify-between p-3 rounded-xl bg-surface-elevated border border-border/80 cursor-pointer hover:bg-surface-elevated">
               <div>
-                <p className="font-bold text-[#0F0C3B]">Instant SMS for &lt;50 mi Job Matches</p>
+                <p className="font-bold text-foreground">Instant SMS for &lt;50 mi Job Matches</p>
                 <p className="text-foreground-muted text-[11px]">Receive an immediate text when a client posts a job in your category</p>
               </div>
               <input
@@ -282,9 +282,9 @@ export default function VendorSettingsPage() {
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FD] border border-border/80 cursor-pointer hover:bg-surface-elevated">
+            <label className="flex items-center justify-between p-3 rounded-xl bg-surface-elevated border border-border/80 cursor-pointer hover:bg-surface-elevated">
               <div>
-                <p className="font-bold text-[#0F0C3B]">Direct Gig Instant Booking</p>
+                <p className="font-bold text-foreground">Direct Gig Instant Booking</p>
                 <p className="text-foreground-muted text-[11px]">Allow verified clients to book open calendar dates without prior inquiry</p>
               </div>
               <input
@@ -295,9 +295,9 @@ export default function VendorSettingsPage() {
               />
             </label>
 
-            <label className="flex items-center justify-between p-3 rounded-xl bg-[#F8F9FD] border border-border/80 cursor-pointer hover:bg-surface-elevated">
+            <label className="flex items-center justify-between p-3 rounded-xl bg-surface-elevated border border-border/80 cursor-pointer hover:bg-surface-elevated">
               <div>
-                <p className="font-bold text-[#0F0C3B]">Weekly Performance Summary Email</p>
+                <p className="font-bold text-foreground">Weekly Performance Summary Email</p>
                 <p className="text-foreground-muted text-[11px]">Weekly breakdown of impressions, bids won, and level progress</p>
               </div>
               <input
