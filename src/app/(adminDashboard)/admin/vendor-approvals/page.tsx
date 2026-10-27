@@ -181,7 +181,7 @@ export default function VendorApprovalsPage() {
         <div>
           <div className="flex items-center gap-2.5">
             <h1 className="text-2xl font-bold text-foreground">Vendor Approvals</h1>
-            <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40">
+            <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-surface-sunken text-brand border border-border-brand/40">
               12 applicants pending • 48h SLA: 91.6% met
             </span>
           </div>
@@ -196,11 +196,11 @@ export default function VendorApprovalsPage() {
               type="text"
               placeholder="Filter applications..."
               aria-label="Filter applications"
-              className="bg-[#16181F] border border-[#26282E] rounded-lg pl-3 pr-8 py-1.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
+              className="bg-surface-elevated border border-border rounded-lg pl-3 pr-8 py-1.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand"
             />
             <Filter className="w-3.5 h-3.5 text-foreground-muted absolute right-2.5 top-1/2 -translate-y-1/2" />
           </div>
-          <button className="px-3 py-1.5 rounded-lg bg-[#16181F] border border-[#26282E] text-xs font-semibold text-foreground-secondary hover:text-foreground hover:bg-[#1A1D24] flex items-center gap-1.5 cursor-pointer">
+          <button className="px-3 py-1.5 rounded-lg bg-surface-elevated border border-border text-xs font-semibold text-foreground-secondary hover:text-foreground hover:bg-surface-sunken flex items-center gap-1.5 cursor-pointer">
             <RefreshCw className="w-3.5 h-3.5 text-foreground-muted" />
             <span>Bulk Actions</span>
           </button>
@@ -208,7 +208,7 @@ export default function VendorApprovalsPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex items-center gap-2 border-b border-[#26282E] pb-2">
+      <div className="flex items-center gap-2 border-b border-border pb-2">
         {[
           { label: "Pending", count: 12 },
           { label: "Needs Info", count: 3 },
@@ -221,14 +221,14 @@ export default function VendorApprovalsPage() {
             className={cn(
               "px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer",
               activeTab === tab.label
-                ? "bg-[#DFB76C] text-[#0B0C0E]"
-                : "text-foreground-muted hover:bg-[#16181F] hover:text-foreground"
+                ? "bg-brand text-on-brand"
+                : "text-foreground-muted hover:bg-surface-elevated hover:text-foreground"
             )}
           >
             <span>{tab.label}</span>
             <span className={cn(
               "px-1.5 py-0.2 rounded-full text-[10px]",
-              activeTab === tab.label ? "bg-[#0B0C0E]/20 text-[#0B0C0E]" : "bg-[#16181F] text-foreground-secondary border border-[#26282E]"
+              activeTab === tab.label ? "bg-background/20 text-on-brand" : "bg-surface-elevated text-foreground-secondary border border-border"
             )}>
               {tab.count}
             </span>
@@ -253,15 +253,15 @@ export default function VendorApprovalsPage() {
                   key={app.id}
                   onClick={() => setSelectedApp(app)}
                   className={cn(
-                    "p-3.5 rounded-xl border transition-all cursor-pointer bg-[#121418]",
+                    "p-3.5 rounded-xl border transition-all cursor-pointer bg-surface",
                     isSelected
-                      ? "border-[#DFB76C] ring-2 ring-[#DFB76C]/20 shadow-md"
-                      : "border-[#26282E] hover:border-slate-600"
+                      ? "border-border-brand ring-2 ring-focus-ring/20 shadow-md"
+                      : "border-border hover:border-border-strong"
                   )}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-9 h-9 rounded-lg bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                      <div className="w-9 h-9 rounded-lg bg-surface-sunken text-brand border border-border-brand/40 flex items-center justify-center font-bold text-xs flex-shrink-0">
                         {app.name.substring(0, 2).toUpperCase()}
                       </div>
                       <div>
@@ -273,14 +273,14 @@ export default function VendorApprovalsPage() {
                     <span className={cn(
                       "px-2 py-0.5 rounded text-[10px] font-bold uppercase",
                       app.status === "REVIEWING" && "bg-purple-950 text-purple-300 border border-purple-800/40",
-                      app.status === "QUEUED" && "bg-[#16181F] text-foreground-secondary border border-[#26282E]",
-                      app.status === "NEW" && "bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40",
+                      app.status === "QUEUED" && "bg-surface-elevated text-foreground-secondary border border-border",
+                      app.status === "NEW" && "bg-surface-sunken text-brand border border-border-brand/40",
                     )}>
                       {app.status}
                     </span>
                   </div>
 
-                  <div className="mt-3 flex items-center justify-between text-[11px] text-foreground-muted pt-2 border-t border-[#26282E]">
+                  <div className="mt-3 flex items-center justify-between text-[11px] text-foreground-muted pt-2 border-t border-border">
                     <span className="flex items-center gap-1">
                       <MapPin className="w-3 h-3 text-foreground-muted" />
                       {app.location.split("(")[0]}
@@ -298,16 +298,16 @@ export default function VendorApprovalsPage() {
         {/* Right Column: Inspection Workspace (8 cols) */}
         <div className="lg:col-span-8 space-y-5">
           {/* Header Card */}
-          <div className="bg-[#121418] p-5 rounded-xl border border-[#26282E] shadow-sm">
+          <div className="bg-surface p-5 rounded-xl border border-border shadow-sm">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40 flex items-center justify-center text-lg font-bold">
+                <div className="w-12 h-12 rounded-xl bg-surface-sunken text-brand border border-border-brand/40 flex items-center justify-center text-lg font-bold">
                   {selectedApp.name.substring(0, 1)}
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
                     <h2 className="text-lg font-bold text-foreground">{selectedApp.name}</h2>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-surface-sunken text-brand border border-border-brand/40">
                       APPLICATION #{selectedApp.id}
                     </span>
                   </div>
@@ -318,11 +318,11 @@ export default function VendorApprovalsPage() {
               </div>
 
               <div className="flex items-center gap-2">
-                <button className="px-3 py-1.5 rounded-lg border border-[#26282E] bg-[#16181F] text-xs font-semibold text-foreground-secondary hover:text-foreground hover:border-[#DFB76C] flex items-center gap-1.5 cursor-pointer">
-                  <ExternalLink className="w-3.5 h-3.5 text-[#DFB76C]" />
+                <button className="px-3 py-1.5 rounded-lg border border-border bg-surface-elevated text-xs font-semibold text-foreground-secondary hover:text-foreground hover:border-border-brand flex items-center gap-1.5 cursor-pointer">
+                  <ExternalLink className="w-3.5 h-3.5 text-brand" />
                   <span>View Public Draft</span>
                 </button>
-                <button className="p-1.5 rounded-lg border border-[#26282E] bg-[#16181F] text-foreground-muted hover:text-foreground cursor-pointer">
+                <button className="p-1.5 rounded-lg border border-border bg-surface-elevated text-foreground-muted hover:text-foreground cursor-pointer">
                   <Printer className="w-4 h-4" />
                 </button>
               </div>
@@ -332,10 +332,10 @@ export default function VendorApprovalsPage() {
           {/* 2-Col Breakdown: Profile details & Checklist */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* Applicant Profile */}
-            <div className="bg-[#121418] p-5 rounded-xl border border-[#26282E] shadow-sm space-y-4 text-xs">
+            <div className="bg-surface p-5 rounded-xl border border-border shadow-sm space-y-4 text-xs">
               <div className="flex items-center justify-between">
                 <h3 className="font-bold text-foreground text-sm">Applicant Profile</h3>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#1A1D24] text-[#DFB76C] border border-border-brand/40">
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-surface-sunken text-brand border border-border-brand/40">
                   {selectedApp.tag}
                 </span>
               </div>
@@ -359,7 +359,7 @@ export default function VendorApprovalsPage() {
                 </div>
               </div>
 
-              <div className="p-3 rounded-lg bg-[#16181F] border border-[#26282E] italic text-foreground-secondary text-xs">
+              <div className="p-3 rounded-lg bg-surface-elevated border border-border italic text-foreground-secondary text-xs">
                 &ldquo;Full-service high-energy DJ & live interactive MC for luxury weddings, milestones, and family celebrations.&rdquo;
               </div>
 
@@ -372,7 +372,7 @@ export default function VendorApprovalsPage() {
                 <span className="text-foreground-muted block text-[10px] uppercase font-semibold mb-1.5">Declared Specialties</span>
                 <div className="flex flex-wrap gap-1.5">
                   {selectedApp.specialties.map((spec: string) => (
-                    <span key={spec} className="px-2 py-0.5 rounded bg-[#16181F] text-[#DFB76C] text-[10px] font-medium border border-[#26282E]">
+                    <span key={spec} className="px-2 py-0.5 rounded bg-surface-elevated text-brand text-[10px] font-medium border border-border">
                       {spec}
                     </span>
                   ))}
@@ -381,11 +381,11 @@ export default function VendorApprovalsPage() {
             </div>
 
             {/* Inspection Checklist */}
-            <div className="bg-[#121418] p-5 rounded-xl border border-[#26282E] shadow-sm flex flex-col justify-between text-xs">
+            <div className="bg-surface p-5 rounded-xl border border-border shadow-sm flex flex-col justify-between text-xs">
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="font-bold text-foreground text-sm">Inspection Checklist</h3>
-                  <span className="font-bold text-[#DFB76C]">{completedCount} of 6 completed</span>
+                  <span className="font-bold text-brand">{completedCount} of 6 completed</span>
                 </div>
 
                 <div className="space-y-2.5">
@@ -400,13 +400,13 @@ export default function VendorApprovalsPage() {
                     <label
                       key={item.key}
                       onClick={() => toggleCheck(item.key)}
-                      className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-[#16181F] cursor-pointer transition-colors"
+                      className="flex items-start gap-2.5 p-2 rounded-lg hover:bg-surface-elevated cursor-pointer transition-colors"
                     >
                       <input
                         type="checkbox"
                         checked={checklist[item.key]}
                         onChange={() => {}}
-                        className="mt-0.5 rounded text-[#DFB76C] focus:ring-[#DFB76C] w-4 h-4 accent-[#DFB76C]"
+                        className="mt-0.5 rounded text-brand focus:ring-focus-ring w-4 h-4 accent-[#DFB76C]"
                       />
                       <span className={cn(
                         "text-[11px] leading-tight",
@@ -420,7 +420,7 @@ export default function VendorApprovalsPage() {
               </div>
 
               {/* Tier Assignment */}
-              <div className="mt-4 pt-3 border-t border-[#26282E] flex items-center justify-between">
+              <div className="mt-4 pt-3 border-t border-border flex items-center justify-between">
                 <span className="text-foreground-muted font-medium text-[11px]">Assign Initial Badge:</span>
                 <div className="flex items-center gap-1.5">
                   {(["Rising", "Pro", "Master"] as const).map((tier) => (
@@ -430,8 +430,8 @@ export default function VendorApprovalsPage() {
                       className={cn(
                         "px-2 py-1 rounded text-[10px] font-bold uppercase transition-all cursor-pointer",
                         assignedTier === tier
-                          ? "bg-[#DFB76C] text-[#0B0C0E] shadow-xs font-bold"
-                          : "bg-[#16181F] text-foreground-muted hover:text-foreground border border-[#26282E]"
+                          ? "bg-brand text-on-brand shadow-xs font-bold"
+                          : "bg-surface-elevated text-foreground-muted hover:text-foreground border border-border"
                       )}
                     >
                       {tier}
@@ -443,7 +443,7 @@ export default function VendorApprovalsPage() {
           </div>
 
           {/* Automated Verification Engine */}
-          <div className="bg-[#121418] p-5 rounded-xl border border-[#26282E] shadow-sm space-y-3">
+          <div className="bg-surface p-5 rounded-xl border border-border shadow-sm space-y-3">
             <div className="flex items-center justify-between">
               <h3 className="font-bold text-foreground text-sm flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-success" />
@@ -453,9 +453,9 @@ export default function VendorApprovalsPage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-              <div className="p-3 rounded-lg bg-success-soft text-success border border-emerald-800/40 flex items-center justify-between">
+              <div className="p-3 rounded-lg bg-success-soft text-success border border-success/30/40 flex items-center justify-between">
                 <div>
-                  <p className="font-bold text-emerald-300">Government ID Verification</p>
+                  <p className="font-bold text-success">Government ID Verification</p>
                   <p className="text-[10px] text-success/80">Illinois Real ID Driver License • 99.4% biometric selfie match</p>
                 </div>
                 <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-900/60 text-emerald-200 border border-emerald-700/50">
@@ -463,9 +463,9 @@ export default function VendorApprovalsPage() {
                 </span>
               </div>
 
-              <div className="p-3 rounded-lg bg-success-soft text-success border border-emerald-800/40 flex items-center justify-between">
+              <div className="p-3 rounded-lg bg-success-soft text-success border border-success/30/40 flex items-center justify-between">
                 <div>
-                  <p className="font-bold text-emerald-300">Trust & Background Screening</p>
+                  <p className="font-bold text-success">Trust & Background Screening</p>
                   <p className="text-[10px] text-success/80">Cook County court database, sex offender registry</p>
                 </div>
                 <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-900/60 text-emerald-200 border border-emerald-700/50">
@@ -473,9 +473,9 @@ export default function VendorApprovalsPage() {
                 </span>
               </div>
 
-              <div className="p-3 rounded-lg bg-success-soft text-success border border-emerald-800/40 flex items-center justify-between">
+              <div className="p-3 rounded-lg bg-success-soft text-success border border-success/30/40 flex items-center justify-between">
                 <div>
-                  <p className="font-bold text-emerald-300">Commercial General Liability</p>
+                  <p className="font-bold text-success">Commercial General Liability</p>
                   <p className="text-[10px] text-success/80">Hartford Casualty • Policy #GL-8820491 ($2,000,000 aggregate)</p>
                 </div>
                 <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-900/60 text-emerald-200 border border-emerald-700/50">
@@ -488,7 +488,7 @@ export default function VendorApprovalsPage() {
                   <p className="font-bold text-warning">Stripe Escrow Bank Payout</p>
                   <p className="text-[10px] text-warning/80">Pending vendor bank account onboarding (Allowed post-approval)</p>
                 </div>
-                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-900/60 text-amber-200 border border-amber-700/50">
+                <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-900/60 text-warning border border-amber-700/50">
                   Not yet connected
                 </span>
               </div>
@@ -496,7 +496,7 @@ export default function VendorApprovalsPage() {
           </div>
 
           {/* Operator Decision Box */}
-          <div className="bg-[#121418] p-5 rounded-xl border border-[#26282E] space-y-4">
+          <div className="bg-surface p-5 rounded-xl border border-border space-y-4">
             <div>
               <label className="block text-xs font-bold text-foreground mb-1">
                 Operator Decision & Feedback Notes
@@ -506,7 +506,7 @@ export default function VendorApprovalsPage() {
                 value={operatorNotes}
                 onChange={(e) => setOperatorNotes(e.target.value)}
                 placeholder="Provide constructive feedback if requesting info or explaining approval tier / rejection..."
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-lg p-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
+                className="w-full bg-surface-elevated border border-border rounded-lg p-2.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand"
               />
             </div>
 
@@ -514,14 +514,14 @@ export default function VendorApprovalsPage() {
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleRequestInfo}
-                  className="px-4 py-2 rounded-lg bg-[#16181F] hover:bg-[#1A1D24] text-warning border border-[#26282E] text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2 rounded-lg bg-surface-elevated hover:bg-surface-sunken text-warning border border-border text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <HelpCircle className="w-3.5 h-3.5" />
                   <span>Request Info</span>
                 </button>
                 <button
                   onClick={handleReject}
-                  className="px-4 py-2 rounded-lg bg-danger-soft text-danger hover:bg-rose-900/60 text-rose-300 border border-rose-800/40 text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer"
+                  className="px-4 py-2 rounded-lg bg-danger-soft text-danger hover:bg-rose-900/60 text-danger border border-danger/30/40 text-xs font-bold transition-colors flex items-center gap-1.5 cursor-pointer"
                 >
                   <X className="w-3.5 h-3.5" />
                   <span>Reject</span>
@@ -530,9 +530,9 @@ export default function VendorApprovalsPage() {
 
               <button
                 onClick={handleApprove}
-                className="px-6 py-2.5 rounded-lg bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] text-xs font-bold transition-colors flex items-center gap-2 shadow-sm cursor-pointer"
+                className="px-6 py-2.5 rounded-lg bg-brand hover:bg-brand-hover text-on-brand text-xs font-bold transition-colors flex items-center gap-2 shadow-sm cursor-pointer"
               >
-                <Check className="w-4 h-4 text-[#0B0C0E]" />
+                <Check className="w-4 h-4 text-on-brand" />
                 <span>Approve Vendor (Assign {assignedTier} Tier & Publish)</span>
               </button>
             </div>
