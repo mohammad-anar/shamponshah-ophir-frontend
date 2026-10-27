@@ -157,13 +157,13 @@ export function getAvailableTransitions(
 }
 
 export const ORDER_STATUS_LABELS: Record<OrderStatus, { label: string; color: string; bg: string; border: string }> = {
-  PENDING_PAYMENT: { label: 'Pending Payment', color: 'text-amber-400', bg: 'bg-amber-500/10', border: 'border-amber-500/30' },
-  ACTIVE: { label: 'Active (Escrow Locked)', color: 'text-blue-400', bg: 'bg-blue-500/10', border: 'border-blue-500/30' },
-  DELIVERED: { label: 'Delivered', color: 'text-purple-400', bg: 'bg-purple-500/10', border: 'border-purple-500/30' },
+  PENDING_PAYMENT: { label: 'Pending Payment', color: 'text-warning', bg: 'bg-warning-solid text-on-brand/10', border: 'border-amber-500/30' },
+  ACTIVE: { label: 'Active (Escrow Locked)', color: 'text-info', bg: 'bg-info-solid text-white/10', border: 'border-blue-500/30' },
+  DELIVERED: { label: 'Delivered', color: 'text-info', bg: 'bg-brand text-on-brand/10', border: 'border-border-brand/30' },
   REVISION_REQUESTED: { label: 'Revision Requested', color: 'text-orange-400', bg: 'bg-orange-500/10', border: 'border-orange-500/30' },
-  COMPLETED: { label: 'Completed (Clearing)', color: 'text-emerald-400', bg: 'bg-emerald-500/10', border: 'border-emerald-500/30' },
-  CANCELLED: { label: 'Cancelled', color: 'text-slate-400', bg: 'bg-slate-500/10', border: 'border-slate-500/30' },
-  DISPUTED: { label: 'Disputed', color: 'text-red-400', bg: 'bg-red-500/10', border: 'border-red-500/30' },
+  COMPLETED: { label: 'Completed (Clearing)', color: 'text-success', bg: 'bg-success-solid text-white/10', border: 'border-success/30/30' },
+  CANCELLED: { label: 'Cancelled', color: 'text-foreground-muted', bg: 'bg-surface-sunken/10', border: 'border-border-strong/30' },
+  DISPUTED: { label: 'Disputed', color: 'text-danger', bg: 'bg-danger-solid text-white/10', border: 'border-red-500/30' },
   COMPLETED_WITH_PARTIAL_REFUND: { label: 'Partial Refund Settlement', color: 'text-yellow-400', bg: 'bg-yellow-500/10', border: 'border-yellow-500/30' },
-  REFUNDED: { label: 'Refunded', color: 'text-rose-400', bg: 'bg-rose-500/10', border: 'border-rose-500/30' },
+  REFUNDED: { label: 'Refunded', color: 'text-danger', bg: 'bg-danger-solid text-white/10', border: 'border-rose-500/30' },
 };
