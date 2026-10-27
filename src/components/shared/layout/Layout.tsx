@@ -54,15 +54,15 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, menu }) => {
     <Layout style={{ height: "100vh" }}>
       <Sider
         width={220}
-        className={`!bg-[#EDE8DF] !overflow-y-auto !fixed lg:!static h-full z-50 ${
+        className={`!bg-surface !overflow-y-auto !fixed lg:!static h-full z-50 ${
           open ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0`}
+        } lg:translate-x-0 border-r border-border`}
         theme="dark"
         collapsed={false}
       >
         <Link
           href={"/"}
-          className="flex justify-center items-center py-3 border-b border-[#ffffff1a]"
+          className="flex justify-center items-center py-3 border-b border-border"
         >
           <Image className="w-[130px]" src={logo} alt="logo" />
         </Link>
@@ -73,7 +73,8 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, menu }) => {
           onClick={handleClick}
           items={menu}
           style={{
-            backgroundColor: "#EDE8DF",
+            backgroundColor: "rgb(var(--surface))",
+            color: "rgb(var(--foreground))",
             fontWeight: "500",
           }}
           inlineIndent={16}
@@ -85,7 +86,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, menu }) => {
         <Header
           style={{
             padding: 0,
-            background: colorBgContainer,
+            background: "rgb(var(--surface))",
+            borderBottom: "1px solid rgb(var(--border))",
+            color: "rgb(var(--foreground))",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
@@ -93,17 +96,17 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, menu }) => {
             paddingLeft: "24px",
           }}
         >
-          <h2 className="text-xl hidden lg:block  sm:text-2xl lg:text-3xl font-semibold w-full ">
+          <h2 className="text-xl hidden lg:block sm:text-2xl lg:text-3xl font-semibold w-full text-foreground">
             Welcome back!
           </h2>
 
           <MenuOutlined
             onClick={() => setOpen(!open)}
-            className="lg:!hidden text-2xl"
+            className="lg:!hidden text-2xl text-foreground cursor-pointer"
           />
         </Header>
         <Content
-          className="!overflow-y-auto !overflow-x-hidden"
+          className="!overflow-y-auto !overflow-x-hidden bg-background text-foreground"
           onClick={() => setOpen(false)}
           style={{ padding: "24px", height: "100%" }}
         >
@@ -112,7 +115,9 @@ const AdminLayout: React.FC<AdminLayoutProps> = ({ children, menu }) => {
         <Footer
           style={{
             textAlign: "start",
-            background: "white",
+            background: "rgb(var(--surface))",
+            color: "rgb(var(--foreground-muted))",
+            borderTop: "1px solid rgb(var(--border))",
             padding: "16px 24px",
           }}
         >
