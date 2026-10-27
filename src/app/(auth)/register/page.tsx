@@ -12,7 +12,7 @@ export const metadata: Metadata = constructMetadata({
 
 export default function RegisterPage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-[#0B0C0E]" />}>
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
       <RegisterClient />
     </Suspense>
   );
