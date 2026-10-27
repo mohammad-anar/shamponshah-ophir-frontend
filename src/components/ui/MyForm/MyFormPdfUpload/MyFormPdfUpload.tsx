@@ -60,7 +60,7 @@ const MyFormPdfUpload = ({
                 <button
                   type="button"
                   onClick={handleRemoveFile}
-                  className="px-1 py-1 bg-black bg-opacity-80 text-foreground rounded-md"
+                  className="px-1 py-1 bg-background bg-opacity-80 text-foreground rounded-md"
                 >
                   <RiDeleteBinLine size={20} className="hover:text-danger" />
                 </button>
