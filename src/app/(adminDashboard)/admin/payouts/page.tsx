@@ -289,9 +289,9 @@ export default function AdminPayoutsPage() {
         <div className="flex items-center gap-3">
           <button 
             onClick={() => toast.success("Payout disbursement ledger CSV exported successfully.")}
-            className="px-3.5 py-2 rounded-xl bg-[#16181F] border border-[#26282E] text-xs font-bold text-foreground-secondary hover:bg-[#1A1D24] hover:text-foreground flex items-center gap-1.5 shadow-sm transition-colors"
+            className="px-3.5 py-2 rounded-xl bg-surface-elevated border border-border text-xs font-bold text-foreground-secondary hover:bg-surface-sunken hover:text-foreground flex items-center gap-1.5 shadow-sm transition-colors"
           >
-            <Download className="w-3.5 h-3.5 text-[#DFB76C]" />
+            <Download className="w-3.5 h-3.5 text-brand" />
             <span>Export Disbursement CSV</span>
           </button>
         </div>
@@ -299,25 +299,25 @@ export default function AdminPayoutsPage() {
 
       {/* Top Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-        <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm">
+        <div className="bg-surface p-5 rounded-3xl border border-border shadow-sm">
           <span className="text-[11px] font-bold text-foreground-muted uppercase tracking-wider">Scheduled Today</span>
           <div className="flex items-baseline gap-2 mt-1">
             <span className="text-2xl font-black text-foreground font-mono">$9,240.00</span>
-            <span className="text-xs font-bold text-[#DFB76C] bg-[#1A1D24] px-2 py-0.5 rounded-full border border-border-brand/40">18 Batches</span>
+            <span className="text-xs font-bold text-brand bg-surface-sunken px-2 py-0.5 rounded-full border border-border-brand/40">18 Batches</span>
           </div>
           <p className="text-[11px] text-foreground-muted mt-1">Stripe ACH window opens in 2 hours</p>
         </div>
 
-        <div className="bg-[#121418] p-5 rounded-3xl border border-[#26282E] shadow-sm">
+        <div className="bg-surface p-5 rounded-3xl border border-border shadow-sm">
           <span className="text-[11px] font-bold text-foreground-muted uppercase tracking-wider">Cleared This Week</span>
           <div className="flex items-baseline gap-2 mt-1">
             <span className="text-2xl font-black text-success font-mono">$42,800.00</span>
-            <span className="text-xs font-bold text-success bg-success-solid text-white/15 px-2 py-0.5 rounded-full border border-success/30">54 Vendors</span>
+            <span className="text-xs font-bold text-success bg-success-solid text-foreground/15 px-2 py-0.5 rounded-full border border-success/30">54 Vendors</span>
           </div>
           <p className="text-[11px] text-foreground-muted mt-1">0% ACH failure rate on Stripe Connect</p>
         </div>
 
-        <div className="bg-[#121418] p-5 rounded-3xl border border-warning/30 shadow-sm">
+        <div className="bg-surface p-5 rounded-3xl border border-warning/30 shadow-sm">
           <span className="text-[11px] font-bold text-warning uppercase tracking-wider">KYC Verification Holds</span>
           <div className="flex items-baseline gap-2 mt-1">
             <span className="text-2xl font-black text-warning font-mono">$2,400.00</span>
@@ -328,9 +328,9 @@ export default function AdminPayoutsPage() {
       </div>
 
       {/* Payout Batches Table */}
-      <div className="bg-[#121418] rounded-3xl border border-[#26282E] shadow-sm overflow-hidden text-xs">
+      <div className="bg-surface rounded-3xl border border-border shadow-sm overflow-hidden text-xs">
         {/* Search & Filter Bar */}
-        <div className="p-4 border-b border-[#26282E] flex items-center justify-between gap-4 flex-wrap bg-[#16181F]/40">
+        <div className="p-4 border-b border-border flex items-center justify-between gap-4 flex-wrap bg-surface-elevated/40">
           <div className="flex items-center gap-2 flex-wrap">
             {["ALL", "SCHEDULED", "PROCESSING", "FLAGGED", "COMPLETED"].map((f) => (
               <button
@@ -339,8 +339,8 @@ export default function AdminPayoutsPage() {
                 className={cn(
                   "px-3.5 py-1.5 rounded-xl font-bold text-xs transition-all",
                   activeFilter === f 
-                    ? "bg-[#DFB76C] text-[#0B0C0E] shadow-sm" 
-                    : "bg-[#16181F] text-foreground-secondary hover:bg-[#1A1D24] border border-[#26282E]"
+                    ? "bg-brand text-on-brand shadow-sm" 
+                    : "bg-surface-elevated text-foreground-secondary hover:bg-surface-sunken border border-border"
                 )}
               >
                 {f.replace(/_/g, " ")}
@@ -355,14 +355,14 @@ export default function AdminPayoutsPage() {
               placeholder="Search vendors, banks, IDs..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-1.5 bg-[#16181F] border border-[#26282E] rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
+              className="w-full pl-9 pr-3 py-1.5 bg-surface-elevated border border-border rounded-xl text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand"
             />
           </div>
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left">
-            <thead className="bg-[#16181F]/80 border-b border-[#26282E] text-[11px] font-bold uppercase text-foreground-muted tracking-wider">
+            <thead className="bg-surface-elevated/80 border-b border-border text-[11px] font-bold uppercase text-foreground-muted tracking-wider">
               <tr>
                 <th className="py-3.5 px-4">Batch ID</th>
                 <th className="py-3.5 px-4">Vendor &amp; Legal Entity</th>
@@ -373,25 +373,25 @@ export default function AdminPayoutsPage() {
                 <th className="py-3.5 px-4 text-right">Disbursement Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#26282E]/60">
+            <tbody className="divide-y divide-border/60">
               {filteredBatches.map((batch) => (
                 <tr 
                   key={batch.id} 
                   onClick={() => setSelectedPayout(batch)}
-                  className="hover:bg-[#16181F]/50 transition-colors cursor-pointer group"
+                  className="hover:bg-surface-elevated/50 transition-colors cursor-pointer group"
                 >
                   <td className="py-3.5 px-4 font-bold font-mono">
-                    <span className="bg-[#1A1D24] text-[#DFB76C] px-2 py-0.5 rounded-lg border border-border-brand/40">
+                    <span className="bg-surface-sunken text-brand px-2 py-0.5 rounded-lg border border-border-brand/40">
                       #{batch.id}
                     </span>
                   </td>
                   <td className="py-3.5 px-4">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-8 h-8 rounded-full overflow-hidden border border-[#26282E] flex-shrink-0">
+                      <div className="w-8 h-8 rounded-full overflow-hidden border border-border flex-shrink-0">
                         <img src={batch.vendor.avatar} alt={batch.vendor.legalName} className="w-full h-full object-cover" />
                       </div>
                       <div>
-                        <p className="font-bold text-foreground group-hover:text-[#DFB76C] transition-colors">
+                        <p className="font-bold text-foreground group-hover:text-brand transition-colors">
                           {batch.vendor.businessName}
                         </p>
                         <p className="text-[10px] text-foreground-muted">{batch.vendor.legalName} &bull; {batch.vendor.email}</p>
@@ -409,7 +409,7 @@ export default function AdminPayoutsPage() {
                     <span className="text-[10px] text-foreground-muted">Gross: ${batch.totalGross}</span>
                   </td>
                   <td className="py-3.5 px-4 font-semibold text-foreground-secondary">
-                    <span className="bg-[#1A1D24] border border-[#26282E] px-2 py-0.5 rounded-md text-[11px]">
+                    <span className="bg-surface-sunken border border-border px-2 py-0.5 rounded-md text-[11px]">
                       {batch.orders.length} orders
                     </span>
                   </td>
@@ -417,9 +417,9 @@ export default function AdminPayoutsPage() {
                     <span className={cn(
                       "px-2.5 py-0.5 rounded-full text-[10px] font-bold inline-block border",
                       batch.status === "SCHEDULED" && "bg-warning-solid text-on-brand/15 text-warning border-warning/30",
-                      batch.status === "PROCESSING" && "bg-info-solid text-white/15 text-info border-info/30",
-                      batch.status === "FLAGGED" && "bg-danger-solid text-white/15 text-danger border-danger/30",
-                      batch.status === "COMPLETED" && "bg-success-solid text-white/15 text-success border-success/30",
+                      batch.status === "PROCESSING" && "bg-info-solid text-foreground/15 text-info border-info/30",
+                      batch.status === "FLAGGED" && "bg-danger-solid text-foreground/15 text-danger border-danger/30",
+                      batch.status === "COMPLETED" && "bg-success-solid text-foreground/15 text-success border-success/30",
                     )}>
                       {batch.status}
                     </span>
@@ -430,9 +430,9 @@ export default function AdminPayoutsPage() {
                         e.stopPropagation();
                         setSelectedPayout(batch);
                       }}
-                      className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-secondary rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-sm"
+                      className="px-3 py-1.5 bg-surface-elevated hover:bg-surface-sunken border border-border text-foreground-secondary rounded-xl font-bold text-[11px] transition-all inline-flex items-center gap-1 shadow-sm"
                     >
-                      <Eye className="w-3 h-3 text-[#DFB76C]" /> Inspect Details
+                      <Eye className="w-3 h-3 text-brand" /> Inspect Details
                     </button>
 
                     {batch.status === "SCHEDULED" && (
@@ -441,9 +441,9 @@ export default function AdminPayoutsPage() {
                           e.stopPropagation();
                           handleApprovePayout(batch.id);
                         }}
-                        className="px-3 py-1.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl font-bold text-[11px] transition-colors shadow-sm inline-flex items-center gap-1"
+                        className="px-3 py-1.5 bg-brand hover:bg-brand-hover text-on-brand rounded-xl font-bold text-[11px] transition-colors shadow-sm inline-flex items-center gap-1"
                       >
-                        <CheckCircle2 className="w-3 h-3 text-[#0B0C0E]" /> Release Now
+                        <CheckCircle2 className="w-3 h-3 text-on-brand" /> Release Now
                       </button>
                     )}
                   </td>
