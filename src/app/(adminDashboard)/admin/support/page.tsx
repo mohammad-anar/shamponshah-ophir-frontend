@@ -307,7 +307,7 @@ export default function AdminSupportPage() {
             <h1 className="text-xl md:text-2xl font-black text-foreground tracking-tight">
               Support Ticket Command
             </h1>
-            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#16181F] text-[#DFB76C] border border-[#26282E]">
+            <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-surface-elevated text-brand border border-border">
               Live Queue ({tickets.length})
             </span>
           </div>
@@ -321,51 +321,51 @@ export default function AdminSupportPage() {
             onClick={() => {
               toast.success("AI Triage complete: 2 urgent escrow tickets prioritized.");
             }}
-            className="px-4 py-2 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer"
+            className="px-4 py-2 bg-brand hover:bg-brand-hover text-on-brand rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2 cursor-pointer"
           >
-            <Sparkles className="w-4 h-4 text-[#0B0C0E]" /> Run AI Triage
+            <Sparkles className="w-4 h-4 text-on-brand" /> Run AI Triage
           </button>
         </div>
       </div>
 
       {/* KPI Stats Bar */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
-        <div className="p-5 rounded-3xl bg-[#121418] border border-[#26282E] shadow-xs">
+        <div className="p-5 rounded-3xl bg-surface border border-border shadow-xs">
           <p className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">Open Inquiries</p>
           <div className="flex items-baseline justify-between mt-1">
             <span className="text-2xl font-black text-foreground font-mono">
               {tickets.filter(t => t.status === "Open" || t.status === "In Progress").length}
             </span>
-            <span className="text-[10px] text-danger font-bold bg-danger-solid text-white/15 px-2 py-0.5 rounded-full border border-danger/30">
+            <span className="text-[10px] text-danger font-bold bg-danger-solid text-foreground/15 px-2 py-0.5 rounded-full border border-danger/30">
               2 Urgent
             </span>
           </div>
           <p className="text-[10px] text-foreground-muted mt-1">Assigned across 4 support agents</p>
         </div>
 
-        <div className="p-5 rounded-3xl bg-[#121418] border border-[#26282E] shadow-xs">
+        <div className="p-5 rounded-3xl bg-surface border border-border shadow-xs">
           <p className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">Avg First Response</p>
           <div className="flex items-baseline justify-between mt-1">
             <span className="text-2xl font-black text-success font-mono">4.2 min</span>
-            <span className="text-[10px] text-success font-bold bg-success-solid text-white/15 px-2 py-0.5 rounded-full border border-success/30">
+            <span className="text-[10px] text-success font-bold bg-success-solid text-foreground/15 px-2 py-0.5 rounded-full border border-success/30">
               -18% faster
             </span>
           </div>
           <p className="text-[10px] text-foreground-muted mt-1">SLA guarantee: &lt; 15 mins</p>
         </div>
 
-        <div className="p-5 rounded-3xl bg-[#121418] border border-[#26282E] shadow-xs">
+        <div className="p-5 rounded-3xl bg-surface border border-border shadow-xs">
           <p className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">Resolution Rate</p>
           <div className="flex items-baseline justify-between mt-1">
             <span className="text-2xl font-black text-foreground font-mono">96.8%</span>
-            <span className="text-[10px] text-[#DFB76C] font-bold bg-[#DFB76C]/15 px-2 py-0.5 rounded-full border border-border-brand/40">
+            <span className="text-[10px] text-brand font-bold bg-brand/15 px-2 py-0.5 rounded-full border border-border-brand/40">
               Target 95%
             </span>
           </div>
           <p className="text-[10px] text-foreground-muted mt-1">First contact resolution</p>
         </div>
 
-        <div className="p-5 rounded-3xl bg-[#121418] border border-[#26282E] shadow-xs">
+        <div className="p-5 rounded-3xl bg-surface border border-border shadow-xs">
           <p className="text-[10px] font-bold text-foreground-muted uppercase tracking-wider">CSAT Score</p>
           <div className="flex items-baseline justify-between mt-1">
             <span className="text-2xl font-black text-warning font-mono">4.92 / 5</span>
@@ -381,7 +381,7 @@ export default function AdminSupportPage() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 text-xs">
         
         {/* Left Side: Ticket Queue & Filters */}
-        <div className="lg:col-span-6 bg-[#121418] border border-[#26282E] rounded-3xl p-5 shadow-xs space-y-4">
+        <div className="lg:col-span-6 bg-surface border border-border rounded-3xl p-5 shadow-xs space-y-4">
           
           {/* Search & Filter Controls */}
           <div className="flex flex-col sm:flex-row gap-2.5 items-center justify-between">
@@ -392,7 +392,7 @@ export default function AdminSupportPage() {
                 placeholder="Search tickets, names, subjects..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-[#16181F] border border-[#26282E] rounded-xl pl-9 pr-3 py-1.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C]"
+                className="w-full bg-surface-elevated border border-border rounded-xl pl-9 pr-3 py-1.5 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand"
               />
             </div>
 
@@ -400,7 +400,7 @@ export default function AdminSupportPage() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="bg-[#16181F] border border-[#26282E] rounded-xl px-2.5 py-1.5 text-xs text-foreground-secondary font-semibold focus:outline-none focus:border-[#DFB76C]"
+                className="bg-surface-elevated border border-border rounded-xl px-2.5 py-1.5 text-xs text-foreground-secondary font-semibold focus:outline-none focus:border-border-brand"
               >
                 <option value="All">All Status</option>
                 <option value="Open">Open</option>
@@ -412,7 +412,7 @@ export default function AdminSupportPage() {
               <select
                 value={priorityFilter}
                 onChange={(e) => setPriorityFilter(e.target.value)}
-                className="bg-[#16181F] border border-[#26282E] rounded-xl px-2.5 py-1.5 text-xs text-foreground-secondary font-semibold focus:outline-none focus:border-[#DFB76C]"
+                className="bg-surface-elevated border border-border rounded-xl px-2.5 py-1.5 text-xs text-foreground-secondary font-semibold focus:outline-none focus:border-border-brand"
               >
                 <option value="All">All Priority</option>
                 <option value="Urgent">Urgent</option>
@@ -436,21 +436,21 @@ export default function AdminSupportPage() {
                   className={cn(
                     "p-4 rounded-2xl border transition-all cursor-pointer space-y-2",
                     isSelected 
-                      ? "bg-[#1A1D24] border-[#DFB76C] shadow-xs ring-1 ring-[#DFB76C]/30" 
-                      : "bg-[#16181F] border-[#26282E] hover:border-slate-700 hover:bg-[#1A1D24]/60"
+                      ? "bg-surface-sunken border-border-brand shadow-xs ring-1 ring-focus-ring/30" 
+                      : "bg-surface-elevated border-border hover:border-slate-700 hover:bg-surface-sunken/60"
                   )}
                 >
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="font-mono text-xs font-bold text-[#DFB76C] bg-[#121418] px-2 py-0.5 rounded-md border border-[#26282E]">
+                      <span className="font-mono text-xs font-bold text-brand bg-surface px-2 py-0.5 rounded-md border border-border">
                         {t.ticketNumber}
                       </span>
                       <span className={cn(
                         "px-2 py-0.5 rounded-full text-[10px] font-bold uppercase",
-                        t.priority === "Urgent" && "bg-danger-solid text-white/15 text-danger border border-danger/30",
+                        t.priority === "Urgent" && "bg-danger-solid text-foreground/15 text-danger border border-danger/30",
                         t.priority === "High" && "bg-warning-solid text-on-brand/15 text-warning border border-warning/30",
-                        t.priority === "Medium" && "bg-info-solid text-white/15 text-info border border-info/30",
-                        t.priority === "Low" && "bg-slate-500/15 text-foreground-muted border border-slate-500/30"
+                        t.priority === "Medium" && "bg-info-solid text-foreground/15 text-info border border-info/30",
+                        t.priority === "Low" && "bg-surface-sunken/15 text-foreground-muted border border-border-strong/30"
                       )}>
                         {t.priority}
                       </span>
@@ -463,27 +463,27 @@ export default function AdminSupportPage() {
                   <h3 className="text-xs font-bold text-foreground line-clamp-1">{t.subject}</h3>
                   <p className="text-[11px] text-foreground-muted line-clamp-1">{lastMsg}</p>
 
-                  <div className="flex items-center justify-between pt-2 border-t border-[#26282E] text-[11px]">
+                  <div className="flex items-center justify-between pt-2 border-t border-border text-[11px]">
                     <div className="flex items-center gap-2">
-                      <div className="w-5 h-5 rounded-full bg-[#121418] border border-[#26282E] text-[#DFB76C] flex items-center justify-center font-bold text-[9px]">
+                      <div className="w-5 h-5 rounded-full bg-surface border border-border text-brand flex items-center justify-center font-bold text-[9px]">
                         {t.user.avatar}
                       </div>
                       <span className="font-semibold text-foreground-secondary">{t.user.name}</span>
-                      <span className="text-[10px] px-1.5 py-0.2 bg-[#121418] border border-[#26282E] rounded text-foreground-secondary font-semibold">
+                      <span className="text-[10px] px-1.5 py-0.2 bg-surface border border-border rounded text-foreground-secondary font-semibold">
                         {t.user.role}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-2.5 text-foreground-muted">
                       <span className="flex items-center gap-1 text-[11px]">
-                        <MessageSquare className="w-3.5 h-3.5 text-[#DFB76C]" /> {t.messages.length}
+                        <MessageSquare className="w-3.5 h-3.5 text-brand" /> {t.messages.length}
                       </span>
                       <span className={cn(
                         "px-2 py-0.5 rounded-full text-[10px] font-bold",
-                        t.status === "Open" && "bg-success-solid text-white/15 text-success border border-success/30",
-                        t.status === "In Progress" && "bg-info-solid text-white/15 text-info border border-info/30",
-                        t.status === "Escalated" && "bg-danger-solid text-white/15 text-danger border border-danger/30",
-                        t.status === "Resolved" && "bg-slate-500/15 text-foreground-muted border border-slate-500/30"
+                        t.status === "Open" && "bg-success-solid text-foreground/15 text-success border border-success/30",
+                        t.status === "In Progress" && "bg-info-solid text-foreground/15 text-info border border-info/30",
+                        t.status === "Escalated" && "bg-danger-solid text-foreground/15 text-danger border border-danger/30",
+                        t.status === "Resolved" && "bg-surface-sunken/15 text-foreground-muted border border-border-strong/30"
                       )}>
                         {t.status}
                       </span>
@@ -496,19 +496,19 @@ export default function AdminSupportPage() {
         </div>
 
         {/* Right Side: Active Ticket Thread & Reply Center */}
-        <div className="lg:col-span-6 bg-[#121418] border border-[#26282E] rounded-3xl p-5 shadow-xs flex flex-col justify-between">
+        <div className="lg:col-span-6 bg-surface border border-border rounded-3xl p-5 shadow-xs flex flex-col justify-between">
           {selectedTicket ? (
             <div className="space-y-4 flex-1 flex flex-col justify-between">
               
               {/* Ticket Header & Status Controls */}
-              <div className="space-y-3 pb-3 border-b border-[#26282E]">
+              <div className="space-y-3 pb-3 border-b border-border">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-mono text-sm font-bold text-[#DFB76C]">
+                      <span className="font-mono text-sm font-bold text-brand">
                         {selectedTicket.ticketNumber}
                       </span>
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-[#16181F] text-foreground-secondary border border-[#26282E] font-semibold">
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-surface-elevated text-foreground-secondary border border-border font-semibold">
                         Assigned: {selectedTicket.assignedTo}
                       </span>
                     </div>
@@ -520,14 +520,14 @@ export default function AdminSupportPage() {
                     {selectedTicket.status !== "Resolved" ? (
                       <button
                         onClick={() => handleUpdateStatus("Resolved")}
-                        className="px-3 py-1.5 bg-success-solid text-white/15 hover:bg-success-solid text-white/25 text-success border border-success/30 rounded-xl font-bold text-[11px] transition-colors flex items-center gap-1 cursor-pointer"
+                        className="px-3 py-1.5 bg-success-solid text-foreground/15 hover:bg-success-solid text-foreground/25 text-success border border-success/30 rounded-xl font-bold text-[11px] transition-colors flex items-center gap-1 cursor-pointer"
                       >
                         <CheckCircle2 className="w-3.5 h-3.5" /> Resolve
                       </button>
                     ) : (
                       <button
                         onClick={() => handleUpdateStatus("Open")}
-                        className="px-3 py-1.5 bg-[#16181F] hover:bg-[#1A1D24] text-foreground-secondary border border-[#26282E] rounded-xl font-bold text-[11px] transition-colors cursor-pointer"
+                        className="px-3 py-1.5 bg-surface-elevated hover:bg-surface-sunken text-foreground-secondary border border-border rounded-xl font-bold text-[11px] transition-colors cursor-pointer"
                       >
                         Reopen Ticket
                       </button>
@@ -536,9 +536,9 @@ export default function AdminSupportPage() {
                 </div>
 
                 {/* User Card */}
-                <div className="p-3 bg-[#16181F] rounded-2xl border border-[#26282E] flex items-center justify-between">
+                <div className="p-3 bg-surface-elevated rounded-2xl border border-border flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-[#121418] border border-[#26282E] text-[#DFB76C] font-bold flex items-center justify-center text-xs shadow-xs">
+                    <div className="w-8 h-8 rounded-full bg-surface border border-border text-brand font-bold flex items-center justify-center text-xs shadow-xs">
                       {selectedTicket.user.avatar}
                     </div>
                     <div>
@@ -546,7 +546,7 @@ export default function AdminSupportPage() {
                       <p className="text-[11px] text-foreground-muted font-mono">{selectedTicket.user.email}</p>
                     </div>
                   </div>
-                  <span className="px-2.5 py-1 bg-[#DFB76C]/15 text-[#DFB76C] text-[10px] font-bold rounded-lg border border-border-brand/40">
+                  <span className="px-2.5 py-1 bg-brand/15 text-brand text-[10px] font-bold rounded-lg border border-border-brand/40">
                     {selectedTicket.user.role} Verified
                   </span>
                 </div>
@@ -562,14 +562,14 @@ export default function AdminSupportPage() {
                       className={cn(
                         "p-3.5 rounded-2xl space-y-1 text-xs",
                         isAdminOrBot 
-                          ? "bg-[#1A1D24] border border-[#26282E] ml-5" 
-                          : "bg-[#16181F] border border-[#26282E] mr-5"
+                          ? "bg-surface-sunken border border-border ml-5" 
+                          : "bg-surface-elevated border border-border mr-5"
                       )}
                     >
                       <div className="flex items-center justify-between text-[11px]">
                         <span className={cn(
                           "font-bold",
-                          isAdminOrBot ? "text-[#DFB76C]" : "text-foreground"
+                          isAdminOrBot ? "text-brand" : "text-foreground"
                         )}>
                           {msg.sender} {isAdminOrBot && <span className="text-[10px] text-foreground-muted font-normal">({msg.senderRole})</span>}
                         </span>
@@ -582,23 +582,23 @@ export default function AdminSupportPage() {
               </div>
 
               {/* Reply Box */}
-              <div className="space-y-2 pt-3 border-t border-[#26282E]">
+              <div className="space-y-2 pt-3 border-t border-border">
                 <div className="flex gap-2 overflow-x-auto pb-1">
                   <button 
                     onClick={() => setReplyText("We have reviewed your escrow account and the payout has now been expedited.")}
-                    className="text-[10px] px-2.5 py-1 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-secondary rounded-lg transition-colors font-medium whitespace-nowrap cursor-pointer"
+                    className="text-[10px] px-2.5 py-1 bg-surface-elevated hover:bg-surface-sunken border border-border text-foreground-secondary rounded-lg transition-colors font-medium whitespace-nowrap cursor-pointer"
                   >
                     Quick: Escrow released
                   </button>
                   <button 
                     onClick={() => setReplyText("Could you please provide your transaction ID or contract reference number?")}
-                    className="text-[10px] px-2.5 py-1 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-secondary rounded-lg transition-colors font-medium whitespace-nowrap cursor-pointer"
+                    className="text-[10px] px-2.5 py-1 bg-surface-elevated hover:bg-surface-sunken border border-border text-foreground-secondary rounded-lg transition-colors font-medium whitespace-nowrap cursor-pointer"
                   >
                     Quick: Request ID
                   </button>
                   <button 
                     onClick={() => setReplyText("Our fraud protection team has resolved the security hold on your custody account.")}
-                    className="text-[10px] px-2.5 py-1 bg-[#16181F] hover:bg-[#1A1D24] border border-[#26282E] text-foreground-secondary rounded-lg transition-colors font-medium whitespace-nowrap cursor-pointer"
+                    className="text-[10px] px-2.5 py-1 bg-surface-elevated hover:bg-surface-sunken border border-border text-foreground-secondary rounded-lg transition-colors font-medium whitespace-nowrap cursor-pointer"
                   >
                     Quick: Security Cleared
                   </button>
@@ -610,12 +610,12 @@ export default function AdminSupportPage() {
                     placeholder="Type official administrative reply to user..."
                     value={replyText}
                     onChange={(e) => setReplyText(e.target.value)}
-                    className="w-full bg-[#16181F] border border-[#26282E] rounded-2xl p-3 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-[#DFB76C] resize-none"
+                    className="w-full bg-surface-elevated border border-border rounded-2xl p-3 text-xs text-foreground placeholder:text-foreground-muted focus:outline-none focus:border-border-brand resize-none"
                   />
                   <div className="absolute right-2.5 bottom-2.5 flex items-center gap-2">
                     <button 
                       type="submit"
-                      className="px-4 py-1.5 bg-[#DFB76C] hover:bg-[#ECC870] text-[#0B0C0E] rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
+                      className="px-4 py-1.5 bg-brand hover:bg-brand-hover text-on-brand rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
                     >
                       <Send className="w-3.5 h-3.5" /> Dispatch Reply
                     </button>
