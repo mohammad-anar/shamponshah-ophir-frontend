@@ -116,7 +116,7 @@ export default function VendorOrdersPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-[#0F0C3B]">Fulfillment &amp; Client Orders</h1>
+          <h1 className="text-2xl font-bold text-foreground">Fulfillment &amp; Client Orders</h1>
           <p className="text-xs text-foreground-muted mt-1">
             Submit work for funded milestones. Client approval starts the 7-day transfer hold.
           </p>
@@ -137,7 +137,7 @@ export default function VendorOrdersPage() {
               className={cn(
                 "px-3 py-1.5 rounded-lg transition-colors cursor-pointer",
                 filterStatus === tab.id 
-                  ? "bg-[#0F0C3B] text-foreground" 
+                  ? "bg-brand text-foreground" 
                   : "text-foreground-secondary hover:text-foreground hover:bg-surface-elevated"
               )}
             >
@@ -157,7 +157,7 @@ export default function VendorOrdersPage() {
         ) : filteredOrders.length === 0 ? (
           <div className="bg-surface rounded-2xl border border-border p-12 text-center text-foreground-muted">
             <ShoppingBag className="w-8 h-8 text-foreground-secondary mx-auto mb-2" />
-            <p className="font-bold text-[#0F0C3B]">No orders matching status</p>
+            <p className="font-bold text-foreground">No orders matching status</p>
             <p className="text-xs text-foreground-muted mt-0.5">Change filters or browse open client RFPs</p>
           </div>
         ) : (
@@ -177,31 +177,31 @@ export default function VendorOrdersPage() {
                 className="bg-surface p-5 rounded-2xl border border-border shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all hover:border-border"
               >
                 <div className="flex items-start gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-indigo-50 text-brand-primary flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">
+                  <div className="w-11 h-11 rounded-xl bg-info-soft text-brand-primary flex items-center justify-center font-bold text-lg flex-shrink-0 mt-0.5">
                     <ShoppingBag className="w-5 h-5" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-bold text-[#0F0C3B] text-sm">{title}</span>
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-800 font-mono">
+                      <span className="font-bold text-foreground text-sm">{title}</span>
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-info-soft text-info font-mono">
                         #{ord.id.slice(-6).toUpperCase()}
                       </span>
                       {isCompleted ? (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-success-soft text-success border border-success/30 flex items-center gap-1">
                           <CheckCircle2 className="w-3 h-3 text-success" />
                           Delivered
                         </span>
                       ) : hasPendingApproval ? (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-300 flex items-center gap-1 animate-pulse">
-                          <Clock className="w-3 h-3 text-amber-600" />
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-warning-soft text-warning border border-warning/30 flex items-center gap-1 animate-pulse">
+                          <Clock className="w-3 h-3 text-warning" />
                           Waiting for Client Approval
                         </span>
                       ) : ord.status === "DISPUTED" ? (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-danger-soft text-danger border border-danger/30">
                           Disputed
                         </span>
                       ) : (
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-info-soft text-info border border-info/30">
                           In Progress
                         </span>
                       )}
@@ -213,13 +213,13 @@ export default function VendorOrdersPage() {
 
                     <div className="flex items-center gap-2 mt-1.5 flex-wrap">
                       {isCompleted ? (
-                        <span className="text-[11px] font-bold text-emerald-700 flex items-center gap-1">
+                        <span className="text-[11px] font-bold text-success flex items-center gap-1">
                           <CheckCircle2 className="w-3.5 h-3.5 text-success" />
                           Client approved · transfer follows the 7-day hold
                         </span>
                       ) : hasPendingApproval ? (
-                        <span className="text-[11px] font-bold text-amber-800 flex items-center gap-1">
-                          <Clock className="w-3.5 h-3.5 text-amber-600" />
+                        <span className="text-[11px] font-bold text-warning flex items-center gap-1">
+                          <Clock className="w-3.5 h-3.5 text-warning" />
                           Waiting for Client Approval {ord.deliveryNotes ? "• Deliverables Submitted" : ""}
                         </span>
                       ) : (
@@ -239,8 +239,8 @@ export default function VendorOrdersPage() {
                                 key={m.id || idx}
                                 className={cn(
                                   "px-2 py-0.5 rounded text-[9px] font-bold",
-                                  isRel ? "bg-emerald-100 text-emerald-800 border border-emerald-200" :
-                                  isPend ? "bg-amber-100 text-amber-900 border border-amber-300 font-extrabold" :
+                                  isRel ? "bg-success-soft text-success border border-success/30" :
+                                  isPend ? "bg-warning-soft text-warning border border-warning/30 font-extrabold" :
                                   "bg-surface-sunken text-foreground-secondary"
                                 )}
                               >
@@ -256,7 +256,7 @@ export default function VendorOrdersPage() {
 
                 <div className="flex items-center gap-3 self-end md:self-center flex-wrap">
                   <div className="text-right mr-2">
-                    <span className="text-base font-extrabold text-[#0F0C3B] block">{amountStr}</span>
+                    <span className="text-base font-extrabold text-foreground block">{amountStr}</span>
                     <span className="text-[10px] text-foreground-muted font-bold">Stripe Connect payments</span>
                   </div>
 
@@ -264,7 +264,7 @@ export default function VendorOrdersPage() {
                     <button
                       type="button"
                       onClick={() => handleOpenChat(ord)}
-                      className="px-3 py-2 rounded-xl border border-border hover:bg-indigo-50 hover:text-brand-primary hover:border-indigo-200 text-foreground-secondary transition-all flex items-center gap-1.5 cursor-pointer font-bold text-xs shadow-2xs"
+                      className="px-3 py-2 rounded-xl border border-border hover:bg-info-soft hover:text-brand-primary hover:border-info/30 text-foreground-secondary transition-all flex items-center gap-1.5 cursor-pointer font-bold text-xs shadow-2xs"
                       title="Live Chat Modal via Socket.IO"
                     >
                       <MessageSquare className="w-4 h-4 text-brand-primary" />
@@ -281,7 +281,7 @@ export default function VendorOrdersPage() {
 
                   {isCompleted ? (
                     <div className="flex items-center gap-1.5">
-                      <div className="px-3.5 py-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold flex items-center gap-1.5 shadow-2xs">
+                      <div className="px-3.5 py-2.5 rounded-xl bg-success-soft border border-success/30 text-success text-xs font-bold flex items-center gap-1.5 shadow-2xs">
                         <CheckCircle2 className="w-4 h-4 text-success" />
                         <span>Delivered</span>
                       </div>
@@ -296,15 +296,15 @@ export default function VendorOrdersPage() {
                     </div>
                   ) : hasPendingApproval ? (
                     <div className="flex items-center gap-2">
-                      <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 bg-amber-50 border border-amber-200 px-2.5 py-2.5 rounded-xl">
-                        <Clock className="w-3.5 h-3.5 text-amber-600 animate-spin" />
+                      <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-bold text-warning bg-warning-soft border border-warning/30 px-2.5 py-2.5 rounded-xl">
+                        <Clock className="w-3.5 h-3.5 text-warning animate-spin" />
                         Waiting for Client Approval
                       </span>
                     </div>
                   ) : (!ord.milestones?.length || ord.milestones?.some((m: any) => m.status === "FUNDED")) ? (
                     <button
                       onClick={() => handleOpenDelivery(ord)}
-                      className="px-4 py-2.5 rounded-xl bg-[#0F0C3B] hover:bg-[#18124E] text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
+                      className="px-4 py-2.5 rounded-xl bg-brand hover:bg-surface-sunken text-foreground text-xs font-bold transition-all shadow-xs flex items-center gap-1.5 cursor-pointer"
                     >
                       <UploadCloud className="w-3.5 h-3.5 text-warning" />
                       <span>Submit Funded Milestone</span>
@@ -319,14 +319,14 @@ export default function VendorOrdersPage() {
 
       {/* Deliver Milestone Modal */}
       {deliveryModalOpen && selectedOrder && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-surface rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-border animate-in fade-in">
             <div className="flex items-center justify-between border-b border-border pb-3">
               <div>
                 <span className="font-mono text-xs font-bold text-brand-primary">
                   Order #{selectedOrder.orderNumber || selectedOrder.id?.slice(-6).toUpperCase()}
                 </span>
-                <h2 className="text-base font-bold text-[#0F0C3B]">
+                <h2 className="text-base font-bold text-foreground">
                   {selectedOrder.milestones?.some((m: any) => m.status === "PENDING_RELEASE") || (!selectedOrder.milestones?.length && selectedOrder.status === "IN_PROGRESS" && selectedOrder.deliveryNotes)
                     ? "Deliver Again / Update Deliverables"
                     : "Submit Deliverables to Client"}
@@ -347,7 +347,7 @@ export default function VendorOrdersPage() {
                 <select
                   value={selectedMilestoneId}
                   onChange={(e) => setSelectedMilestoneId(e.target.value)}
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground font-semibold focus:outline-none focus:border-brand-primary"
                 >
                   {selectedOrder.milestones && selectedOrder.milestones.length > 0 ? (
                     <>
@@ -373,7 +373,7 @@ export default function VendorOrdersPage() {
                   onChange={(e) => setDeliveryNotes(e.target.value)}
                   placeholder="Provide completion details, summary of work done for client review..."
                   required
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary resize-none leading-relaxed"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary resize-none leading-relaxed"
                 />
               </div>
 
@@ -385,11 +385,11 @@ export default function VendorOrdersPage() {
                   value={proofUrl}
                   onChange={(e) => setProofUrl(e.target.value)}
                   placeholder="https://drive.google.com/... or cloud share link"
-                  className="w-full bg-[#F8F9FD] border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary"
+                  className="w-full bg-surface-elevated border border-border rounded-xl p-2.5 text-foreground focus:outline-none focus:border-brand-primary"
                 />
               </div>
 
-              <div className="p-3 bg-indigo-50/70 border border-indigo-100 rounded-xl text-indigo-900 flex items-start gap-2">
+              <div className="p-3 bg-info-soft/70 border border-info/30 rounded-xl text-info flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-brand-primary mt-0.5 flex-shrink-0" />
                 <p>
                   Submitting this delivery changes milestone status to <strong>PENDING RELEASE</strong> and notifies the client to inspect and release funds.
@@ -400,14 +400,14 @@ export default function VendorOrdersPage() {
                 <button
                   type="button"
                   onClick={() => setDeliveryModalOpen(false)}
-                  className="px-4 py-2 bg-surface-sunken hover:bg-slate-200 text-foreground-secondary rounded-xl font-bold transition-colors cursor-pointer"
+                  className="px-4 py-2 bg-surface-sunken hover:bg-surface-sunken text-foreground-secondary rounded-xl font-bold transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-5 py-2 bg-[#0F0C3B] hover:bg-[#18124E] text-foreground rounded-xl font-bold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer"
+                  className="px-5 py-2 bg-brand hover:bg-surface-sunken text-foreground rounded-xl font-bold flex items-center gap-1.5 transition-colors shadow-xs cursor-pointer"
                 >
                   {isSubmitting ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
