@@ -659,4 +659,5 @@ export default function AdminReviewsReportsPage() {
         </div>
       )}
     </div>
+  );
 }
