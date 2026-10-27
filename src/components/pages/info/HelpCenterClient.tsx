@@ -48,11 +48,11 @@ export default function HelpCenterPage() {
   ];
 
   return (
-    <div className="w-full bg-[#0B0C0E] text-[#F3F4F6] min-h-screen py-10 lg:py-16 space-y-16 font-sans selection:bg-[#DFB76C] selection:text-[#0B0C0E]">
+    <div className="w-full bg-background text-foreground min-h-screen py-10 lg:py-16 space-y-16 font-sans selection:bg-brand selection:text-on-brand">
       {/* Search Hero */}
       <section className="max-w-4xl mx-auto px-6 text-center space-y-6">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-[#121418] text-[#DFB76C] border border-border-brand/40 text-xs font-bold uppercase tracking-wider">
-          <HelpCircle className="w-3.5 h-3.5 text-[#DFB76C]" />
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 bg-surface text-brand border border-border-brand/40 text-xs font-bold uppercase tracking-wider">
+          <HelpCircle className="w-3.5 h-3.5 text-brand" />
           <span>OPHIR RESERVE KNOWLEDGE BASE</span>
         </div>
 
@@ -60,7 +60,7 @@ export default function HelpCenterPage() {
           Help Center & Escrow Governance
         </h1>
 
-        <p className="text-[#CBD5E1] text-sm sm:text-base max-w-xl mx-auto font-light leading-relaxed">
+        <p className="text-foreground-muted text-sm sm:text-base max-w-xl mx-auto font-light leading-relaxed">
           Search articles, understand milestone payment safeguards, or contact our 24/7 concierge support desk.
         </p>
 
@@ -71,28 +71,28 @@ export default function HelpCenterPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search questions (e.g. 'How do milestone releases work?')..."
-            className="w-full h-14 pl-12 pr-4 bg-[#121418] text-foreground rounded-none border border-[#26282E] shadow-xl focus:border-[#DFB76C] focus:outline-none text-sm placeholder-[#94A3B8]"
+            className="w-full h-14 pl-12 pr-4 bg-surface text-foreground rounded-none border border-border shadow-xl focus:border-border-brand focus:outline-none text-sm placeholder:text-foreground-muted"
           />
         </div>
 
         {/* Live Search Results Dropdown / Card */}
         {searchQuery.trim().length > 0 && (
-          <div className="max-w-2xl mx-auto bg-[#121418] rounded-none border border-[#26282E] shadow-2xl p-5 text-left space-y-3 animate-in fade-in slide-in-from-top-2">
-            <div className="flex items-center justify-between text-xs text-[#CBD5E1] border-b border-[#26282E] pb-2">
-              <span className="font-bold text-[#DFB76C]">Search Results ({matchedQuestions.length})</span>
-              <button onClick={() => setSearchQuery("")} className="text-[#CBD5E1] hover:text-foreground cursor-pointer">Clear</button>
+          <div className="max-w-2xl mx-auto bg-surface rounded-none border border-border shadow-2xl p-5 text-left space-y-3 animate-in fade-in slide-in-from-top-2">
+            <div className="flex items-center justify-between text-xs text-foreground-muted border-b border-border pb-2">
+              <span className="font-bold text-brand">Search Results ({matchedQuestions.length})</span>
+              <button onClick={() => setSearchQuery("")} className="text-foreground-muted hover:text-foreground cursor-pointer">Clear</button>
             </div>
             {matchedQuestions.length === 0 ? (
-              <p className="text-xs text-[#CBD5E1] py-3 text-center font-light">
+              <p className="text-xs text-foreground-muted py-3 text-center font-light">
                 No exact article matches found for &ldquo;{searchQuery}&rdquo;. Try contacting our 24/7 Concierge Hospitality desk.
               </p>
             ) : (
-              <div className="space-y-3 divide-y divide-[#26282E] max-h-80 overflow-y-auto">
+              <div className="space-y-3 divide-y divide-border max-h-80 overflow-y-auto">
                 {matchedQuestions.map((item, idx) => (
                   <div key={idx} className="pt-2.5 first:pt-0 space-y-1">
-                    <span className="text-[10px] uppercase font-bold text-[#DFB76C] tracking-wider">{item.category || "General"}</span>
+                    <span className="text-[10px] uppercase font-bold text-brand tracking-wider">{item.category || "General"}</span>
                     <h4 className="text-xs font-bold text-foreground">{item.q}</h4>
-                    <p className="text-xs text-[#CBD5E1] leading-relaxed font-light">{item.a}</p>
+                    <p className="text-xs text-foreground-muted leading-relaxed font-light">{item.a}</p>
                   </div>
                 ))}
               </div>
@@ -107,23 +107,23 @@ export default function HelpCenterPage() {
           {categories.map((cat, idx) => (
             <div
               key={idx}
-              className="p-6 bg-[#121418] border border-[#26282E] hover:border-border-brand/40 transition-all space-y-3 flex flex-col justify-between"
+              className="p-6 bg-surface border border-border hover:border-border-brand/40 transition-all space-y-3 flex flex-col justify-between"
             >
               <div className="space-y-2">
-                <div className="w-10 h-10 bg-[#16181F] border border-[#26282E] flex items-center justify-center text-[#DFB76C]">
+                <div className="w-10 h-10 bg-surface-elevated border border-border flex items-center justify-center text-brand">
                   <FileText className="w-5 h-5" />
                 </div>
                 <h3 className="font-serif font-light text-lg text-foreground">
                   {cat.title}
                 </h3>
-                <p className="text-xs text-[#CBD5E1] leading-relaxed font-light">
+                <p className="text-xs text-foreground-muted leading-relaxed font-light">
                   {cat.desc}
                 </p>
               </div>
 
-              <div className="pt-2 text-xs font-semibold text-[#DFB76C] flex items-center justify-between border-t border-[#26282E]">
+              <div className="pt-2 text-xs font-semibold text-brand flex items-center justify-between border-t border-border">
                 <span>{cat.articles} articles</span>
-                <ArrowRight className="w-3.5 h-3.5 text-[#DFB76C]" />
+                <ArrowRight className="w-3.5 h-3.5 text-brand" />
               </div>
             </div>
           ))}
