@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -71,6 +71,11 @@ interface RecommendedService {
 
 export default function FamilyHubPage() {
   const router = useRouter();
+
+  useEffect(() => {
+    router.replace("/user/collaboration");
+  }, [router]);
+
   const { data: meData } = useGetMeQuery();
   const { data: wsData, isLoading: isWsLoading } = useGetWorkspaceQuery();
   const { data: publicGigsResp } = useGetPublicGigsQuery();

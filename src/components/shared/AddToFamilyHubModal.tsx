@@ -37,7 +37,7 @@ export default function AddToFamilyHubModal({
   const { data: wsData, isLoading: isWsLoading } = useGetWorkspaceQuery();
   const [addBoardItem, { isLoading: isAdding }] = useAddBoardItemMutation();
   const [personalNote, setPersonalNote] = useState(
-    `Hey everyone! I found this amazing ${service.category} service by ${service.vendorName}. What do you think about booking them for our family?`
+    `Hey team! I found this amazing ${service.category} service by ${service.vendorName}. What do you think about shortlisting them for our event?`
   );
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -45,7 +45,7 @@ export default function AddToFamilyHubModal({
 
   const ws = wsData?.data || wsData;
   const primaryBoard = ws?.boards?.[0];
-  const hubName = ws?.name || "Family Collaboration Hub";
+  const hubName = ws?.name || "Event Collaboration Hub";
   const membersCount = (ws?.members?.length || 0) + 1;
 
   const existingItems = primaryBoard?.items || [];
@@ -58,7 +58,7 @@ export default function AddToFamilyHubModal({
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isAlreadyAdded) {
-      toast.error("This service has already been added to your Family Hub");
+      toast.error("This service has already been added to your Collaboration Hub");
       return;
     }
 
@@ -88,7 +88,7 @@ export default function AddToFamilyHubModal({
         onClose();
       }, 1000);
     } catch (err: any) {
-      toast.error(err?.data?.message || "Failed to add service to Family Hub");
+      toast.error(err?.data?.message || "Failed to add service to Collaboration Hub");
     }
   };
 
@@ -102,8 +102,8 @@ export default function AddToFamilyHubModal({
               <Users2 className="w-5 h-5 text-brand" />
             </div>
             <div>
-              <h3 className="font-serif font-bold text-base text-foreground">Recommend to Collaborative Hub</h3>
-              <p className="text-[11px] text-foreground-muted">Collaborate with family before securing reservation</p>
+              <h3 className="font-serif font-bold text-base text-foreground">Recommend to Collaborator Hub</h3>
+              <p className="text-[11px] text-foreground-muted">Collaborate with planners and team before securing reservation</p>
             </div>
           </div>
           <button
@@ -134,10 +134,10 @@ export default function AddToFamilyHubModal({
 
           {/* Form */}
           <form onSubmit={handleAdd} className="space-y-4">
-            {/* Target Family Hub */}
+            {/* Target Collaboration Hub */}
             <div>
               <label className="block font-bold text-foreground-secondary uppercase tracking-wider text-[10px] mb-1.5">
-                Target Collaborative Workspace
+                Target Collaboration Workspace
               </label>
               <div className="p-3 rounded-none bg-background border border-border flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -147,7 +147,7 @@ export default function AddToFamilyHubModal({
                   <div>
                     <p className="font-bold text-xs text-foreground">{hubName}</p>
                     <p className="text-[10px] text-foreground-muted">
-                      {membersCount} family member{membersCount === 1 ? "" : "s"} active
+                      {membersCount} collaborator{membersCount === 1 ? "" : "s"} active
                     </p>
                   </div>
                 </div>
@@ -158,10 +158,10 @@ export default function AddToFamilyHubModal({
               </div>
             </div>
 
-            {/* Note to Family Members */}
+            {/* Note to Collaborators */}
             <div>
               <label className="block font-bold text-foreground-secondary uppercase tracking-wider text-[10px] mb-1">
-                Recommendation Note for Family Members
+                Recommendation Note for Collaborators
               </label>
               <textarea
                 rows={3}
@@ -175,12 +175,12 @@ export default function AddToFamilyHubModal({
             {isAlreadyAdded ? (
               <div className="p-3 rounded-none bg-brand-soft border border-warning/30 flex items-center gap-2 text-[11px] text-warning font-medium">
                 <CheckCircle2 className="w-4 h-4 text-brand shrink-0" />
-                <span>This service is already recommended in your Collaborative Hub.</span>
+                <span>This service is already recommended in your Collaboration Hub.</span>
               </div>
             ) : (
               <div className="p-3 rounded-none bg-background border border-border flex items-center gap-2 text-[11px] text-foreground-muted">
                 <ShieldCheck className="w-4 h-4 text-brand shrink-0" />
-                <span>All family members can review, collaborate, and reserve with 100% milestone escrow protection.</span>
+                <span>All team collaborators can review, vote, and reserve with 100% milestone escrow protection.</span>
               </div>
             )}
 

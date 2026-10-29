@@ -77,7 +77,7 @@ export default function UserSidebar({ isOpen, onClose }: UserSidebarProps) {
       title: "PLAN",
       items: [
         { label: "Saved Vendors", href: "/user/saved-vendors", icon: Bookmark },
-        { label: "Family Hub", href: "/user/family-hub", icon: Users2, dot: true },
+        { label: "Collaboration", href: "/user/collaboration", icon: Users2, dot: true },
       ],
     },
     {

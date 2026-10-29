@@ -201,6 +201,18 @@ export default function ForPc() {
           </Link>
 
           <Link
+            href="/cultural-traditions"
+            className={cn(
+              "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium transition-colors",
+              pathname.startsWith("/cultural-traditions")
+                ? "text-brand font-bold"
+                : "text-foreground-secondary hover:text-brand"
+            )}
+          >
+            Cultural Traditions
+          </Link>
+
+          <Link
             href="/vendors"
             className={cn(
               "px-3 py-1.5 text-xs uppercase tracking-[0.18em] font-medium transition-colors",

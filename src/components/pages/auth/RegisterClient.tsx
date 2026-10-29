@@ -41,8 +41,9 @@ export default function RegisterClient() {
   const searchParams = useSearchParams();
   const dispatch = useAppDispatch();
 
-  // Role query param determines active tab: /signup?role=client or /signup?role=vendor
+  // Role query param determines active tab: /signup?role=client or /signup?role=vendor or /signup?role=collaborator
   const roleParam = searchParams.get("role")?.toLowerCase();
+  const isCollaborator = roleParam === "collaborator";
   const activeRole: "client" | "vendor" = roleParam === "vendor" ? "vendor" : "client";
 
   // Shared form state (persists across tab switches)
@@ -408,18 +409,20 @@ export default function RegisterClient() {
                   {/* Header Title & Subtitle */}
                   <div className="space-y-1">
                     <div className="flex items-center justify-between">
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-warning bg-warning-soft px-2.5 py-0.5 rounded-full border border-warning/30">
-                        <Sparkles className="w-3 h-3 text-warning" />
-                        {activeRole === "vendor" ? "Artisan Vendor Studio" : "Celebration Host"}
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-brand bg-brand-soft px-2.5 py-0.5 rounded-none border border-brand/30">
+                        <Sparkles className="w-3 h-3 text-brand" />
+                        {isCollaborator ? "Team Collaborator" : activeRole === "vendor" ? "Artisan Vendor Studio" : "Celebration Host"}
                       </span>
                       <span className="text-[11px] text-foreground-muted font-medium">Quick Onboarding</span>
                     </div>
 
                     <h1 className="font-serif text-2xl sm:text-3xl font-bold text-obsidian tracking-tight pt-1">
-                      {activeRole === "vendor" ? "Join as a Verified Vendor" : "Create your Client Account"}
+                      {isCollaborator ? "Join as a Team Collaborator" : activeRole === "vendor" ? "Join as a Verified Vendor" : "Create your Client Account"}
                     </h1>
                     <p className="text-foreground-muted text-xs sm:text-sm">
-                      {activeRole === "vendor"
+                      {isCollaborator
+                        ? "Create your account to collaborate on celebration planning, brainstorm vendors, and cast decision votes."
+                        : activeRole === "vendor"
                         ? "Register your studio to publish milestone gigs and receive direct escrow bookings."
                         : "Post milestone event requests and reserve award-winning cultural artisans."}
                     </p>

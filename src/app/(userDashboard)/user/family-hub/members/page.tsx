@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { 
   Users2, 
   UserPlus, 
@@ -85,6 +86,12 @@ const initialMembers: Member[] = [
 ];
 
 export default function FamilyHubMembersPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace("/user/collaboration/members");
+  }, [router]);
+
   const { data: workspaceData, refetch } = useGetWorkspaceQuery();
   const [inviteMemberMutation, { isLoading: isInviting }] = useInviteMemberMutation();
   const [removeMemberMutation] = useRemoveMemberMutation();

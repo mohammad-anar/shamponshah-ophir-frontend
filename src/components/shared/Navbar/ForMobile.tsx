@@ -176,6 +176,17 @@ export default function ForMobile() {
               </Link>
 
               <Link
+                href="/cultural-traditions"
+                onClick={() => setIsOpen(false)}
+                className={cn(
+                  "block py-3 text-xs uppercase tracking-widest border-b border-border",
+                  pathname.startsWith("/cultural-traditions") ? "text-brand font-bold" : "text-foreground-secondary hover:text-brand"
+                )}
+              >
+                Cultural Traditions
+              </Link>
+
+              <Link
                 href="/vendors"
                 onClick={() => setIsOpen(false)}
                 className={cn(
